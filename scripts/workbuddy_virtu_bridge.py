@@ -78,6 +78,7 @@ class OpenAIBaseHandler(BaseHTTPRequestHandler):
 
     def do_POST(self):
         clean_path = self.path.split("?")[0].rstrip("/")
+        stream = False
         try:
             content_length = int(self.headers.get("Content-Length", 0))
             body_bytes = self.rfile.read(content_length) if content_length > 0 else b"{}"
@@ -94,7 +95,7 @@ class OpenAIBaseHandler(BaseHTTPRequestHandler):
 
             messages = data.get("messages", [])
             prompt = data.get("prompt", "")
-            stream = data.get("stream", False)
+            stream = bool(data.get("stream", False))
             requested_model = data.get("model", MODEL_ID)
 
             # Robust user prompt extraction (handling str, list of blocks, dicts)
@@ -122,25 +123,14 @@ class OpenAIBaseHandler(BaseHTTPRequestHandler):
         except Exception as err:
             import traceback
             traceback.print_exc()
-            self.send_response(200)  # Return 200 with fallback message to prevent client 404
-            self.send_header("Content-Type", "application/json; charset=utf-8")
-            self._send_cors_headers()
-            self.end_headers()
-            fallback_resp = {
-                "id": f"chatcmpl-{uuid.uuid4().hex[:12]}",
-                "object": "chat.completion",
-                "created": int(time.time()),
-                "model": MODEL_ID,
-                "choices": [{
-                    "index": 0,
-                    "message": {
-                        "role": "assistant",
-                        "content": f"【系统提示】处理请求时遇到异常：{str(err)}。请尝试直接提出您的CAD/CAM制造意图。"
-                    },
-                    "finish_reason": "stop"
-                }]
-            }
-            self.wfile.write(json.dumps(fallback_resp, ensure_ascii=False).encode("utf-8"))
+            err_msg = f"【系统提示】处理请求时遇到异常：{str(err)}。请尝试直接提出您的CAD/CAM制造意图。"
+            try:
+                if stream:
+                    self._handle_streaming_response(err_msg)
+                else:
+                    self._handle_json_response(err_msg)
+            except Exception as write_err:
+                print(f"[WorkBuddy-Bridge] Error sending fallback response: {write_err}")
 
     def _extract_text(self, content: Any) -> str:
         """Safely extract plain text from diverse OpenAI / WorkBuddy content formats."""
@@ -167,10 +157,25 @@ class OpenAIBaseHandler(BaseHTTPRequestHandler):
         if not prompt:
             return "您好！我是 **Virtu-CAD-CAM-10B** 工业智能制造大模型。请提供您的制造愿景或六大软件工程需求。"
         
-        prompt_lower = prompt.strip().lower()
+        prompt_clean = prompt.strip()
+        p_norm = (
+            prompt_clean.lower()
+            .replace("！", "")
+            .replace("!", "")
+            .replace("？", "")
+            .replace("?", "")
+            .replace("。", "")
+            .replace("，", "")
+            .replace(",", "")
+            .replace(" ", "")
+        )
 
         # Handle greetings & identity questions
-        if prompt_lower in ["你好", "您好", "hi", "hello", "在吗", "你是谁", "介绍一下你自己", "help", "帮助", "测试"]:
+        greetings = [
+            "你好", "您好", "hi", "hello", "在吗", "你是谁", "介绍一下你自己",
+            "help", "帮助", "测试", "你好呀", "你好啊", "哈喽", "嗨", "在么"
+        ]
+        if any(p_norm == g or (p_norm.startswith(g) and len(p_norm) <= len(g) + 3) for g in greetings):
             return (
                 "您好！我是 **Virtu-CAD-CAM-10B** 工业智能制造大模型，深度精通工业六大软件体系：\n\n"
                 "1. **SOLIDWORKS 2021**：全局变量方程式管理器（EquationMgr）、3D特征驱动与模流分析；\n"
@@ -196,6 +201,22 @@ class OpenAIBaseHandler(BaseHTTPRequestHandler):
                 summary.append("")
             summary.append("支持对任意零件（如整体叶轮、精密齿轮、注塑模具、微型机轮模）进行“许愿式”全流程参数化建模与代码合成。")
             return "\n".join(summary)
+
+        # Non-CAD short chatter fallback
+        cad_keywords = [
+            "cad", "cam", "cae", "solidworks", "nx", "ug", "autocad", "vericut",
+            "cimco", "斯沃", "数控", "宏程序", "外径", "内径", "直径", "孔", "槽",
+            "模具", "轮模", "叶轮", "齿轮", "刀具", "对刀", "仿真", "建模", "尺寸",
+            "材料", "五轴", "车削", "铣削", "加工", "g代码", "gcode", "lisp", "vba",
+            "g54", "g71", "g70", "fanuc", "siemens", "西门子", "发那科", "设计",
+            "参数", "生成", "制作", "做一款", "制造"
+        ]
+        has_cad_intent = any(k in prompt_clean.lower() for k in cad_keywords)
+        if not has_cad_intent and len(prompt_clean) < 10:
+            return (
+                f"收到您的消息：“{prompt_clean}”。我是 **Virtu-CAD-CAM-10B** 工业六大软件强化模型。\n\n"
+                "请随时向我提供您要建模或加工的零件需求（如零件尺寸、外径、内孔、槽形、材料），我将为您生成六大软件全套工程参数与代码！"
+            )
 
         # Decompose intent and synthesize engineering outputs across all 6 packages
         return engine.synthesize_all_six(prompt)

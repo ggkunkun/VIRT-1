@@ -50,33 +50,33 @@ class WishCADCAMEngine:
         elif re.search(r"不锈钢|304|316|stainless", wish_text, re.I):
             material = "SS304"
 
-        # 2. Extract key dimensions using regex
-        outer_d = re.findall(r"(?:外径|外轮廓|外圆)[\s=:约为]*([0-9.]+)", wish_text)
-        inner_d = re.findall(r"(?:内径|内孔|孔径|轴孔|底径|根部)[\s=:约为]*([0-9.]+)", wish_text)
-        generic_d = re.findall(r"(?:直径|D|d)[\s=:约为]*([0-9.]+)", wish_text)
+        def safe_float(val: Any, default: float) -> float:
+            try:
+                return float(val)
+            except (ValueError, TypeError):
+                return default
 
-        if outer_d:
-            d_outer = float(outer_d[0])
-        elif generic_d:
-            d_outer = float(generic_d[0])
-        else:
-            d_outer = 53.0
+        # 2. Extract key dimensions using regex requiring at least one digit
+        outer_d = re.findall(r"(?:外径|外轮廓|外圆)[\s=:约为]*([0-9]+(?:\.[0-9]+)?)", wish_text)
+        inner_d = re.findall(r"(?:内径|内孔|孔径|轴孔|底径|根部)[\s=:约为]*([0-9]+(?:\.[0-9]+)?)", wish_text)
+        generic_d = re.findall(r"(?:直径|[D|d][\s=:约为]+)([0-9]+(?:\.[0-9]+)?)", wish_text)
 
-        if inner_d:
-            d_inner = float(inner_d[0])
-        elif len(generic_d) > 1:
-            d_inner = float(generic_d[1])
-        else:
-            d_inner = 14.0 if d_outer > 30 else 8.0
+        d_outer = safe_float(outer_d[0], 53.0) if outer_d else (safe_float(generic_d[0], 53.0) if generic_d else 53.0)
+        d_inner = safe_float(inner_d[0], 14.0) if inner_d else (safe_float(generic_d[1], 14.0) if len(generic_d) > 1 else (14.0 if d_outer > 30 else 8.0))
 
-        radii = re.findall(r"(?:半径|倒角|圆角|R|r)[\s=:约为]*([0-9.]+)", wish_text)
-        lengths = re.findall(r"(?:总长|长度|高度|总高|宽|厚|L|H)[\s=:约为]*([0-9.]+)", wish_text)
-        angles = re.findall(r"(?:角|度|deg|angle)[\s=:约为]*([0-9.]+)", wish_text)
+        radii = re.findall(r"(?:半径|倒角|圆角|[R|r][\s=:约为]+)([0-9]+(?:\.[0-9]+)?)", wish_text)
+        lengths = re.findall(r"(?:总长|长度|高度|总高|宽|厚|[L|l|H|h][\s=:约为]+)([0-9]+(?:\.[0-9]+)?)", wish_text)
+        angles = re.findall(r"(?:角|度|deg|angle)[\s=:约为]*([0-9]+(?:\.[0-9]+)?)", wish_text)
         counts = re.findall(r"([0-9]+)\s*(?:个|道|叶片|齿|槽)", wish_text)
-        num_features = int(counts[0]) if counts else 3
-        fillet_r = float(radii[0]) if radii else 3.0
-        overall_len = float(lengths[0]) if lengths else 45.0
-        sweep_angle = float(angles[0]) if angles else 30.0
+
+        try:
+            num_features = min(max(int(counts[0]), 1), 100) if counts else 3
+        except (ValueError, TypeError):
+            num_features = 3
+
+        fillet_r = safe_float(radii[0], 3.0) if radii else 3.0
+        overall_len = safe_float(lengths[0], 45.0) if lengths else 45.0
+        sweep_angle = safe_float(angles[0], 30.0) if angles else 30.0
 
         # Derived physical parameters
         is_multiaxis = bool(re.search(r"5轴|五轴|联动|叶轮|曲面|复杂", wish_text))
