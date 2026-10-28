@@ -22,8 +22,23 @@ class WishCADCAMEngine:
     def __init__(self):
         self.ontology = SOFTWARE_ONTOLOGY
 
-    def parse_wish_intent(self, wish_text: str) -> Dict[str, Any]:
+    def parse_wish_intent(self, wish_text: Any) -> Dict[str, Any]:
         """Extract geometric, material, and manufacturing constraints from natural text."""
+        # Sanitize input if passed as list of blocks or non-string
+        if not isinstance(wish_text, str):
+            if isinstance(wish_text, list):
+                parts = []
+                for item in wish_text:
+                    if isinstance(item, dict):
+                        parts.append(str(item.get("text", "")))
+                    else:
+                        parts.append(str(item))
+                wish_text = " ".join(parts)
+            elif isinstance(wish_text, dict):
+                wish_text = str(wish_text.get("text", wish_text))
+            else:
+                wish_text = str(wish_text)
+
         # 1. Extract material
         material = "Cr12MoV"
         if re.search(r"钛合金|ti-?6al-?4v|titanium", wish_text, re.I):
