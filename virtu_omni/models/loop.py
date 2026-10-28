@@ -113,7 +113,12 @@ class LoopStepController:
     def get_summary(self) -> Dict[str, Any]:
         """Return execution summary statistics."""
         if not self.step_history:
-            return {"total_steps": 0, "avg_delta": 0.0, "converged_steps": 0}
+            return {
+                "total_steps": 0,
+                "avg_delta": 0.0,
+                "converged_steps": 0,
+                "max_configured_steps": self._max_loop_steps,
+            }
         total = len(self.step_history)
         avg_delta = sum(item["delta"] for item in self.step_history) / total
         converged = sum(1 for item in self.step_history if item["converged"])

@@ -84,8 +84,8 @@ class UniRoPE(nn.Module):
 
         freqs = torch.einsum("bi,j->bij", positions.float(), self.inv_freq_1d)
         emb = torch.cat((freqs, freqs), dim=-1)  # [B, S, D]
-        cos = emb.cos().unsqueeze(2)  # [B, S, 1, D]
-        sin = emb.sin().unsqueeze(2)
+        cos = emb.cos().unsqueeze(2).to(q.dtype)  # [B, S, 1, D]
+        sin = emb.sin().unsqueeze(2).to(q.dtype)
 
         q_rot = (q * cos) + (self._rotate_half(q) * sin)
         k_rot = (k * cos) + (self._rotate_half(k) * sin)
@@ -105,8 +105,8 @@ class UniRoPE(nn.Module):
         emb_x = torch.cat((freqs_x, freqs_x), dim=-1)
         emb_2d = torch.cat((emb_y, emb_x), dim=-1)  # [N_patches, D]
 
-        cos = emb_2d.cos().unsqueeze(0).unsqueeze(2)  # [1, N_patches, 1, D]
-        sin = emb_2d.sin().unsqueeze(0).unsqueeze(2)
+        cos = emb_2d.cos().unsqueeze(0).unsqueeze(2).to(q.dtype)  # [1, N_patches, 1, D]
+        sin = emb_2d.sin().unsqueeze(0).unsqueeze(2).to(q.dtype)
 
         q_rot = (q * cos) + (self._rotate_half(q) * sin)
         k_rot = (k * cos) + (self._rotate_half(k) * sin)
@@ -186,7 +186,7 @@ class VirtuAttention(nn.Module):
         if attention_mask is not None:
             attn_weights = attn_weights + attention_mask
 
-        attn_probs = F.softmax(attn_weights, dim=-1, dtype=torch.float32).to(q.dtype)
+        attn_probs = F.softmax(attn_weights, dim=-1, dtype=torch.float32).to(v.dtype)
         output = torch.matmul(attn_probs, v)  # [B, H, S, D]
         output = output.transpose(1, 2).contiguous().view(batch_size, seq_len, -1)
 
