@@ -422,3 +422,63 @@ M30
 - 调入宏程序 `O2026.NC`，闭合防护门，切入【自动加工 (AUTO)】模式，单段试切无过切后按下【循环启动 (CYCLE START)】。
 """
         return guide
+
+    def synthesize_all_six(self, wish_text: str) -> str:
+        """Decompose intent and synthesize engineering deliverables across all 6 software packages."""
+        spec = self.parse_wish_intent(wish_text)
+        sw = self.generate_solidworks_macro(spec)
+        nx = self.generate_nx12_script(spec)
+        cad = self.generate_autocad_lisp(spec)
+        vericut = self.generate_vericut_config(spec)
+        cimco = self.generate_cimco_macro(spec)
+        sscnc = self.generate_sscnc_setup_guide(spec)
+
+        return f"""# 【许愿式工业制造全流程求解报告】
+
+### 1. 意图解析与物理几何规格
+- **用户制造愿景**: {spec['wish']}
+- **工程材质选择**: `{spec['material']}`
+- **几何轮廓规格**: 理论外径 $D_{{max}} = {spec['d_outer']:.2f}\\,\\text{{mm}}$ | 内孔径 $D_{{bore}} = {spec['d_inner']:.2f}\\,\\text{{mm}}$
+- **零件总长/高度**: $L_T = {spec['overall_len']:.2f}\\,\\text{{mm}}$ | 主特征数: {spec['num_features']} | 倒圆角: $R = {spec['fillet_r']:.2f}\\,\\text{{mm}}$
+- **工况判定**: 多轴联动复杂曲面: {spec['is_multiaxis']} | 模具工装结构: {spec['is_die_mold']}
+
+---
+
+### 2. SOLIDWORKS 2021 参数化方程式驱动宏
+```vb
+{sw}
+```
+
+---
+
+### 3. Siemens NX 12.0 Python Open API 造型脚本
+```python
+{nx}
+```
+
+---
+
+### 4. AutoCAD 2026 AutoLISP 工程图自动绘制与标注
+```lisp
+{cad}
+```
+
+---
+
+### 5. Vericut 9.6 物理力学切削与五轴运动学仿真配置
+```plaintext
+{vericut}
+```
+
+---
+
+### 6. CIMCO Edit 2026 FANUC Macro B 参数化数控宏程序
+```gcode
+{cimco}
+```
+
+---
+
+### 7. 斯沃数控仿真软件 (SSCNC 7.2) 现场装夹与 G54 对刀规程
+{sscnc}
+"""
