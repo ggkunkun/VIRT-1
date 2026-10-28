@@ -1,0 +1,119 @@
+{
+  "total_tested": 10,
+  "passed": 10,
+  "pass_rate": 1.0,
+  "verdict": "PASS_ALL_PROGRAMMING_SMELTED",
+  "details": [
+    {
+      "id": "PROG-FANUC-MACRO",
+      "question": "使用发那科Fanuc Macro B编写多层下刀WHILE循环椭圆台宏程序关键代码是什么？",
+      "predicted_subsystem": "数控编程与宏程序 (programming)",
+      "expected_subsystem": "数控编程与宏程序 (programming)",
+      "subsystem_match": true,
+      "jev_score_pos": 1.0,
+      "jev_score_neg": 2.04335395825872e-10,
+      "jev_margin": 0.9999999997956646,
+      "pass": true
+    },
+    {
+      "id": "PROG-SIEMENS-840D",
+      "question": "西门子840D高级编程中如何调用CYCLE800实现空间30度五轴定向倾斜？",
+      "predicted_subsystem": "数控编程与宏程序 (programming)",
+      "expected_subsystem": "数控编程与宏程序 (programming)",
+      "subsystem_match": true,
+      "jev_score_pos": 1.0,
+      "jev_score_neg": 2.147216154879672e-10,
+      "jev_margin": 0.9999999997852784,
+      "pass": true
+    },
+    {
+      "id": "PROG-HEIDENHAIN",
+      "question": "海德汉Klartext语言中如何通过Q参数计算与LBL标签跳转实现分层精铣？",
+      "predicted_subsystem": "数控编程与宏程序 (programming)",
+      "expected_subsystem": "数控编程与宏程序 (programming)",
+      "subsystem_match": true,
+      "jev_score_pos": 1.0,
+      "jev_score_neg": 2.020064532315402e-10,
+      "jev_margin": 0.9999999997979936,
+      "pass": true
+    },
+    {
+      "id": "PROG-SCL-PLC",
+      "question": "西门子SCL结构化文本如何编写FB_ServoAxisControl伺服超程与急停保护？",
+      "predicted_subsystem": "PLC/PMC梯形图与接口 (plc)",
+      "expected_subsystem": "PLC/PMC梯形图与接口 (plc)",
+      "subsystem_match": true,
+      "jev_score_pos": 1.0,
+      "jev_score_neg": 2.2568827362512422e-10,
+      "jev_margin": 0.9999999997743118,
+      "pass": true
+    },
+    {
+      "id": "PROG-OPCUA-PYTHON",
+      "question": "使用Python编写OPC UA客户端订阅西门子PLC的转速与报警状态字代码逻辑是什么？",
+      "predicted_subsystem": "PLC/PMC梯形图与接口 (plc)",
+      "expected_subsystem": "PLC/PMC梯形图与接口 (plc)",
+      "subsystem_match": true,
+      "jev_score_pos": 1.0,
+      "jev_score_neg": 2.022454703709542e-10,
+      "jev_margin": 0.9999999997977546,
+      "pass": true
+    },
+    {
+      "id": "PROG-ABB-RAPID",
+      "question": "ABB工业机器人RAPID语言如何编写SingArea Wrist与TriggL力控打磨去毛刺程序？",
+      "predicted_subsystem": "数控编程与宏程序 (programming)",
+      "expected_subsystem": "数控编程与宏程序 (programming)",
+      "subsystem_match": true,
+      "jev_score_pos": 1.0,
+      "jev_score_neg": 2.2266870292053653e-10,
+      "jev_margin": 0.9999999997773313,
+      "pass": true
+    },
+    {
+      "id": "PROG-KUKA-KRL",
+      "question": "KUKA机器人KRL语言中如何配置TOOL_DATA、BASE_DATA并调用RSI进行闭环打磨？",
+      "predicted_subsystem": "数控编程与宏程序 (programming)",
+      "expected_subsystem": "数控编程与宏程序 (programming)",
+      "subsystem_match": true,
+      "jev_score_pos": 1.0,
+      "jev_score_neg": 2.0462517791308699e-10,
+      "jev_margin": 0.9999999997953748,
+      "pass": true
+    },
+    {
+      "id": "PROG-FANUC-KAREL",
+      "question": "发那科KAREL语言如何通过GET_REG与SET_POS_REG_XYZ向TP传递动态偏置？",
+      "predicted_subsystem": "数控编程与宏程序 (programming)",
+      "expected_subsystem": "数控编程与宏程序 (programming)",
+      "subsystem_match": true,
+      "jev_score_pos": 1.0,
+      "jev_score_neg": 1.958115475320099e-10,
+      "jev_margin": 0.9999999998041884,
+      "pass": true
+    },
+    {
+      "id": "PROG-UR-URSCRIPT",
+      "question": "优傲协作机器人URScript中force_mode力控模式参数配置与轴孔柔顺装配编程是什么？",
+      "predicted_subsystem": "数控编程与宏程序 (programming)",
+      "expected_subsystem": "数控编程与宏程序 (programming)",
+      "subsystem_match": true,
+      "jev_score_pos": 1.0,
+      "jev_score_neg": 1.9832535613772961e-10,
+      "jev_margin": 0.9999999998016746,
+      "pass": true
+    },
+    {
+      "id": "PROG-ROS2-MOVEIT",
+      "question": "ROS 2 MoveIt 2中如何通过Pilz Industrial Motion Planner执行确定性LIN笛卡尔直线？",
+      "predicted_subsystem": "数控编程与宏程序 (programming)",
+      "expected_subsystem": "数控编程与宏程序 (programming)",
+      "subsystem_match": true,
+      "jev_score_pos": 1.0,
+      "jev_score_neg": 2.1755623691444015e-10,
+      "jev_margin": 0.9999999997824438,
+      "pass": true
+    }
+  ],
+  "timestamp": "2026-10-17 23:34:31"
+}

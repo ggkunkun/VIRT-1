@@ -1,0 +1,8 @@
+{
+  "subsystem_top1_acc": 0.8354182955433933,
+  "pair_verifier_acc": 1.0,
+  "lm_token_acc": 0.7714108830237862,
+  "lm_perplexity": 2.755923461061652,
+  "inference_latency_ms": 37.934274673461914,
+  "gate_c_satisfied": true
+}

@@ -1,0 +1,20 @@
+{
+  "title": "Virtu Full-Process Simulation & Autonomous Optimization Smelting Report",
+  "device": "cuda",
+  "steps_trained": 40,
+  "final_loss": 7.6143,
+  "initial_loss": 7.5691,
+  "jev_mean_pos_score": 1.0,
+  "jev_mean_neg_score": 0.0,
+  "jev_margin": 1.0,
+  "jev_auroc": 1.0,
+  "subsystem_accuracy_pct": 25.0,
+  "cases_probed": 8,
+  "cases_passed": 8,
+  "target_checkpoints": [
+    "D:\\智能制造Agent\\Virtu\\out\\wpt2_mfg_main\\ckpt.pt",
+    "D:\\智能制造Agent\\Virtu\\out\\wpt2_champion\\ckpt.pt"
+  ],
+  "duration_seconds": 13.75,
+  "timestamp": "2026-10-17 23:30:19"
+}

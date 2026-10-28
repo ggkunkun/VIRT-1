@@ -1,0 +1,12 @@
+{
+  "source_directory": "D:\\智能制造Agent\\Virtu\\out\\wpt2_mfg_main",
+  "target_directory": "D:\\Virtu模型\\checkpoints\\standardized_smelt_bundle",
+  "total_files_processed": 24,
+  "weights_converted": 1,
+  "total_parameters": 1276874193,
+  "total_tensors": 1333,
+  "triple_verification_status": "APPROVED",
+  "verification_pass_rate": 100.0,
+  "total_elapsed_seconds": 59.83,
+  "package_manifest": "D:\\Virtu模型\\checkpoints\\standardized_smelt_bundle\\package_manifest.json"
+}

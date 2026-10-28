@@ -1,0 +1,13 @@
+{
+  "method": "slerp",
+  "output_checkpoint": "checkpoints\\virtu_merged_edge.pt",
+  "file_size_mb": 0.05,
+  "merged_tensors_count": 3,
+  "total_parameters": 12352,
+  "duration_sec": 0.009,
+  "metadata": {
+    "task_A": "Python-Spec",
+    "task_B": "Systems-Spec",
+    "method": "SLERP"
+  }
+}

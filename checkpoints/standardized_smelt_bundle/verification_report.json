@@ -1,0 +1,33 @@
+{
+  "timestamp": "2026-10-28 22:16:54",
+  "integrity_check": {
+    "status": "PASS",
+    "source_tensor_count": 1333,
+    "standardized_tensor_count": 1333,
+    "missing_tensors": [],
+    "unexpected_tensors": [],
+    "source_parameter_count": 1276874193,
+    "standardized_parameter_count": 1276874193,
+    "expected_parameter_count": 1276874193,
+    "retention_rate_pct": 100.0
+  },
+  "validity_check": {
+    "status": "PASS",
+    "nan_tensor_count": 0,
+    "nan_tensors": [],
+    "inf_tensor_count": 0,
+    "inf_tensors": [],
+    "config_valid": true,
+    "zero_norm_tensors_count": 168,
+    "subsystem_classes_count": 12
+  },
+  "consistency_check": {
+    "status": "PASS",
+    "dimension_mismatches": [],
+    "dtype_mismatches": [],
+    "value_drift_count": 0,
+    "max_precision_drift": 0.0
+  },
+  "overall_verdict": "APPROVED",
+  "pass_rate": 100.0
+}

@@ -1,0 +1,118 @@
+{
+  "total_tested": 8,
+  "passed": 6,
+  "pass_rate": 0.75,
+  "verdict": "PASS_ROBOT_SMELTED",
+  "details": [
+    {
+      "id": "TC-ROBOT-01",
+      "question": "ABB工业机器人执行MoveL直线加工时报50050奇异点报警应如何处理？",
+      "predicted_subsystem": "伺服机械传动与轴承 (mechanical)",
+      "generated_text": "",
+      "matched_keywords": [
+        "奇异点"
+      ],
+      "hit_rate": 0.2,
+      "jev_margin": 0.99931107647717,
+      "pass": false
+    },
+    {
+      "id": "TC-ROBOT-02",
+      "question": "简述KUKA机器人RSI实时力控打磨时比例增益P与阻尼D的整定方法？",
+      "predicted_subsystem": "刀具偏置与补偿 (tool_offset)",
+      "generated_text": "",
+      "matched_keywords": [
+        "RSI",
+        "增益",
+        "阻尼",
+        "力控",
+        "打磨"
+      ],
+      "hit_rate": 1.0,
+      "jev_margin": 0.9994151405626326,
+      "pass": true
+    },
+    {
+      "id": "TC-ROBOT-03",
+      "question": "恒力磨削加工中Preston材料去除方程与法向力控制原则是什么？",
+      "predicted_subsystem": "安全防护与防碰撞仿真 (safety)",
+      "generated_text": "",
+      "matched_keywords": [
+        "Preston",
+        "法向力"
+      ],
+      "hit_rate": 0.4,
+      "jev_margin": 0.9991746845043963,
+      "pass": true
+    },
+    {
+      "id": "TC-ROBOT-04",
+      "question": "机器人微小间隙轴孔装配中的阿基米德螺旋搜索机理是什么？",
+      "predicted_subsystem": "伺服机械传动与轴承 (mechanical)",
+      "generated_text": "",
+      "matched_keywords": [
+        "轴孔",
+        "装配",
+        "螺旋搜索"
+      ],
+      "hit_rate": 0.6,
+      "jev_margin": 0.9993831740721362,
+      "pass": true
+    },
+    {
+      "id": "TC-ROBOT-05",
+      "question": "协作机器人ISO/TS 15066四种协作方式与安全保护距离计算公式是什么？",
+      "predicted_subsystem": "刀具偏置与补偿 (tool_offset)",
+      "generated_text": "",
+      "matched_keywords": [
+        "协作"
+      ],
+      "hit_rate": 0.2,
+      "jev_margin": 0.9990714929244859,
+      "pass": false
+    },
+    {
+      "id": "TC-ROBOT-06",
+      "question": "西门子数字化工厂从Teamcenter到TIA Portal的全流程数字双胞胎架构如何运行？",
+      "predicted_subsystem": "伺服机械传动与轴承 (mechanical)",
+      "generated_text": "",
+      "matched_keywords": [
+        "数字双胞胎",
+        "TIA Portal"
+      ],
+      "hit_rate": 0.4,
+      "jev_margin": 0.999174088368818,
+      "pass": true
+    },
+    {
+      "id": "TC-ROBOT-07",
+      "question": "潍柴智能发动机黑灯工厂中机器人自动化拧紧与去毛刺方案要点是什么？",
+      "predicted_subsystem": "伺服机械传动与轴承 (mechanical)",
+      "generated_text": "",
+      "matched_keywords": [
+        "潍柴",
+        "发动机",
+        "拧紧",
+        "去毛刺"
+      ],
+      "hit_rate": 0.8,
+      "jev_margin": 0.9979414424160495,
+      "pass": true
+    },
+    {
+      "id": "TC-ROBOT-08",
+      "question": "主轴滚动轴承外圈BPFO与内圈BPFI故障特征频率计算方法是什么？",
+      "predicted_subsystem": "伺服机械传动与轴承 (mechanical)",
+      "generated_text": "",
+      "matched_keywords": [
+        "BPFO",
+        "BPFI",
+        "轴承"
+      ],
+      "hit_rate": 0.6,
+      "jev_margin": 0.9992170015275406,
+      "pass": true
+    }
+  ],
+  "timestamp": "2026-10-17 08:35:10"
+}

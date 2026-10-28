@@ -1,0 +1,72 @@
+[
+  {
+    "case_id": "GUP-01",
+    "domain": "GitHub NLP 架构与因果自注意力",
+    "title": "Transformer 因果注意力掩码与数据防泄漏",
+    "subsys_expected": "代码开发与重构 (coding_dev)",
+    "subsys_predicted": "数控制造与切削动力学 (cnc_mfg)",
+    "subsys_correct": false,
+    "score_positive": 6.035079002380371,
+    "score_negative": -9.90278148651123,
+    "prob_positive": 0.9976123571395874,
+    "prob_negative": 5.0032813305733725e-05,
+    "margin": 15.937860488891602,
+    "passed": false
+  },
+  {
+    "case_id": "GUP-02",
+    "domain": "GitHub 工业视觉表面缺陷质检",
+    "title": "金属精密切削表面 Ra 0.4um 划痕质检",
+    "subsys_expected": "数控制造与切削动力学 (cnc_mfg)",
+    "subsys_predicted": "数控制造与切削动力学 (cnc_mfg)",
+    "subsys_correct": true,
+    "score_positive": 4.689545631408691,
+    "score_negative": -10.4325590133667,
+    "prob_positive": 0.990892767906189,
+    "prob_negative": 2.9456721676979214e-05,
+    "margin": 15.12210464477539,
+    "passed": true
+  },
+  {
+    "case_id": "GUP-03",
+    "domain": "智能数控五轴与刀具磨损监测",
+    "title": "数控加工中心刀具磨损与崩刃破损监测",
+    "subsys_expected": "数控制造与切削动力学 (cnc_mfg)",
+    "subsys_predicted": "数控制造与切削动力学 (cnc_mfg)",
+    "subsys_correct": true,
+    "score_positive": 2.035759449005127,
+    "score_negative": -12.738740921020508,
+    "prob_positive": 0.8845008015632629,
+    "prob_negative": 2.9351738248806214e-06,
+    "margin": 14.774500370025635,
+    "passed": true
+  },
+  {
+    "case_id": "GUP-04",
+    "domain": "虚拟数字孪生与极端工况推演",
+    "title": "高速铣削再生型突发切削颤振自愈",
+    "subsys_expected": "数控制造与切削动力学 (cnc_mfg)",
+    "subsys_predicted": "数控制造与切削动力学 (cnc_mfg)",
+    "subsys_correct": true,
+    "score_positive": 6.087312698364258,
+    "score_negative": -12.048069953918457,
+    "prob_positive": 0.9977335929870605,
+    "prob_negative": 5.855812560184859e-06,
+    "margin": 18.135382652282715,
+    "passed": true
+  },
+  {
+    "case_id": "GUP-05",
+    "domain": "全机 AI 跨平台系统运维与调度",
+    "title": "系统终端长期训练任务运维与防死锁",
+    "subsys_expected": "终端命令与系统运维 (shell_sys)",
+    "subsys_predicted": "数控制造与切削动力学 (cnc_mfg)",
+    "subsys_correct": false,
+    "score_positive": 5.8124566078186035,
+    "score_negative": -11.610881805419922,
+    "prob_positive": 0.9970188140869141,
+    "prob_negative": 9.066802704182919e-06,
+    "margin": 17.423338413238525,
+    "passed": false
+  }
+]

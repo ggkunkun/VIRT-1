@@ -1,0 +1,131 @@
+{
+  "title": "Virtu Unified Model (merged from the wpt2_main shape family)",
+  "name": "soup_champ_swa",
+  "created_at": "2026-10-21 16:12:02",
+  "checkpoint": "Virtu/out/soup_champ_swa/ckpt.pt",
+  "architecture": {
+    "d_model": 768,
+    "text_vocab": 4096,
+    "embed_dim": 512,
+    "params": 501173457
+  },
+  "merge": {
+    "tool": "tools/merge_virtu_models.py",
+    "created_at": "2026-10-21 16:04:36",
+    "base": "Virtu/out/wpt2_main/ckpt.pt",
+    "members": [
+      {
+        "path": "Virtu/out/wpt2_main/ckpt.pt",
+        "weight": 0.5
+      },
+      {
+        "path": "out/stable_swa_run/ckpt_swa.pt",
+        "weight": 0.5
+      }
+    ],
+    "method": "weighted average of state_dict tensors (float32 accumulation)",
+    "non_float_tensors": "copied from base",
+    "non_float_mismatches": [],
+    "acceptance": {
+      "measured_at": "2026-10-21 16:06:24",
+      "judge": "virtu.evolution_supervisor.ArenaEvaluator (omni val_tensors.pt)",
+      "cpi": 68.582,
+      "components": {
+        "subsystem_top1_acc": 0.6806098514464425,
+        "benchmark_pass_rate": 0.08333333333333333,
+        "pair_verifier_acc": 1.0,
+        "code_anti_hallucination_rate": 1.0,
+        "lm_token_acc": 0.6497034864776801
+      },
+      "component_delta_vs_base": {
+        "subsystem_top1_acc": 0.014464,
+        "benchmark_pass_rate": 0.0,
+        "pair_verifier_acc": 0.0,
+        "code_anti_hallucination_rate": 0.0,
+        "lm_token_acc": 0.0
+      },
+      "wins": [
+        "subsystem_top1_acc"
+      ],
+      "losses": [],
+      "ties": [
+        "benchmark_pass_rate",
+        "pair_verifier_acc",
+        "code_anti_hallucination_rate",
+        "lm_token_acc"
+      ],
+      "verdict": "ACCEPTED",
+      "accepted": true,
+      "code_measured": true,
+      "lm_perplexity": 4.82,
+      "inference_latency_ms": 35.28,
+      "base": {
+        "path": "D:\\智能制造Agent\\Virtu\\out\\wpt2_main\\ckpt.pt",
+        "cpi": 68.148,
+        "components": {
+          "subsystem_top1_acc": 0.6661454261141517,
+          "benchmark_pass_rate": 0.08333333333333333,
+          "pair_verifier_acc": 1.0,
+          "code_anti_hallucination_rate": 1.0,
+          "lm_token_acc": 0.6497034864776801
+        },
+        "code_measured": true,
+        "lm_perplexity": 4.82,
+        "inference_latency_ms": 32.27
+      }
+    }
+  },
+  "acceptance": {
+    "measured_at": "2026-10-21 16:06:24",
+    "judge": "virtu.evolution_supervisor.ArenaEvaluator (omni val_tensors.pt)",
+    "cpi": 68.582,
+    "components": {
+      "subsystem_top1_acc": 0.6806098514464425,
+      "benchmark_pass_rate": 0.08333333333333333,
+      "pair_verifier_acc": 1.0,
+      "code_anti_hallucination_rate": 1.0,
+      "lm_token_acc": 0.6497034864776801
+    },
+    "component_delta_vs_base": {
+      "subsystem_top1_acc": 0.014464,
+      "benchmark_pass_rate": 0.0,
+      "pair_verifier_acc": 0.0,
+      "code_anti_hallucination_rate": 0.0,
+      "lm_token_acc": 0.0
+    },
+    "wins": [
+      "subsystem_top1_acc"
+    ],
+    "losses": [],
+    "ties": [
+      "benchmark_pass_rate",
+      "pair_verifier_acc",
+      "code_anti_hallucination_rate",
+      "lm_token_acc"
+    ],
+    "verdict": "ACCEPTED",
+    "accepted": true,
+    "code_measured": true,
+    "lm_perplexity": 4.82,
+    "inference_latency_ms": 35.28,
+    "base": {
+      "path": "D:\\智能制造Agent\\Virtu\\out\\wpt2_main\\ckpt.pt",
+      "cpi": 68.148,
+      "components": {
+        "subsystem_top1_acc": 0.6661454261141517,
+        "benchmark_pass_rate": 0.08333333333333333,
+        "pair_verifier_acc": 1.0,
+        "code_anti_hallucination_rate": 1.0,
+        "lm_token_acc": 0.6497034864776801
+      },
+      "code_measured": true,
+      "lm_perplexity": 4.82,
+      "inference_latency_ms": 32.27
+    }
+  },
+  "switch": {
+    "serve": "set VIRTU_CKPT=soup_champ_swa  (virtu.serve resolves Virtu/out/<name>/ckpt.pt)",
+    "evaluate": "python -m virtu.evaluate --ckpt soup_champ_swa --tag soup_champ_swa",
+    "arena": "python -m virtu.evolution_supervisor battle --challenger out/soup_champ_swa"
+  }
+}

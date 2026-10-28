@@ -1,0 +1,152 @@
+{
+  "checkpoint": "D:\\智能制造Agent\\Virtu\\out\\wpt2_mfg_main\\ckpt.pt",
+  "device": "cuda",
+  "total_params": 65640913,
+  "subsystem_classification": {
+    "top1_accuracy": 0.8011114360924246,
+    "top3_accuracy": 0.8625329043579995,
+    "macro_f1": 0.18851571559218241,
+    "chance_baseline": 0.08333333333333333,
+    "majority_baseline": 0.5302720093594618,
+    "lift_over_chance": 9.61,
+    "verdict": "PASS_SUPERIOR"
+  },
+  "context_action_verification": {
+    "accuracy": 0.9996666666666667,
+    "auroc": 1.0,
+    "pos_mean_score": 0.9993364214897156,
+    "neg_mean_score": 1.691649049462285e-05,
+    "separation_margin": 0.999319504999221,
+    "chance_baseline": 0.5,
+    "verdict": "PASS_STRONG_GROUNDING"
+  },
+  "language_modeling": {
+    "token_accuracy": 0.5065471315471316,
+    "perplexity": 10.936424707529461,
+    "vocab_size": 4096
+  },
+  "inference_latency_ms": {
+    "p50": 24.872541427612305,
+    "p90": 31.85267448425293,
+    "p95": 35.93274354934692,
+    "max": 49.82280731201172,
+    "gate_c_target": 500.0,
+    "gate_c_passed": true,
+    "margin_x": 13.9
+  },
+  "benchmark_prompts": {
+    "total": 12,
+    "passed": 7,
+    "pass_rate": 0.5833333333333334,
+    "details": [
+      {
+        "name": "工件坐标系与对刀 (G54-G59 WCS)",
+        "text": "工件坐标系设定: 使用光电寻边器在工件基准面寻边对刀，计算原点并写入G54工作零点偏置。",
+        "expected": 0,
+        "predicted": 0,
+        "predicted_name": "工件坐标系与对刀找正 (coordinate)",
+        "confidence": 0.9969745874404907,
+        "correct": true
+      },
+      {
+        "name": "刀具偏置与半径补偿 (G41/G42/G43 Tool Offset)",
+        "text": "刀具补偿设定: 采用G43调用H01刀长补偿，在试切后测量孔径根据公差在D01输入磨耗偏置值。",
+        "expected": 1,
+        "predicted": 1,
+        "predicted_name": "刀具偏置与补偿 (tool_offset)",
+        "confidence": 0.7008360624313354,
+        "correct": true
+      },
+      {
+        "name": "主轴与切削动力学 (Spindle & Cutting Dynamics)",
+        "text": "主轴动力学控制: 开启主轴恒线速控制，最高转速限制8000RPM，监测主轴切削负载功率与颤振谱。",
+        "expected": 2,
+        "predicted": 11,
+        "predicted_name": "安全防护与防碰撞仿真 (safety)",
+        "confidence": 0.6559001207351685,
+        "correct": false
+      },
+      {
+        "name": "进给与切削参数 (Feed & DOC/WOC)",
+        "text": "切削进给与余量: 粗加工进给速度F300，背吃刀量ap=2.5mm，侧吃刀量ae=6.0mm，预留0.3mm精加工余量。",
+        "expected": 3,
+        "predicted": 6,
+        "predicted_name": "切削力学与材料特性 (parameter)",
+        "confidence": 0.6913325786590576,
+        "correct": false
+      },
+      {
+        "name": "数控编程与宏程序 (G-code & Canned Cycles)",
+        "text": "数控加工编程: 编写外圆复合固定循环G71粗车内孔与端面，调用G70精加工，子程序M98调用四次。",
+        "expected": 4,
+        "predicted": 4,
+        "predicted_name": "数控编程与宏程序 (programming)",
+        "confidence": 0.945723831653595,
+        "correct": true
+      },
+      {
+        "name": "机床报警与故障诊断 (Alarm & Diagnostics)",
+        "text": "数控机床报警维修: 发生401伺服准备未绪报警及轴向硬限位超程，排查急停回路与伺服放大器模块。",
+        "expected": 5,
+        "predicted": 5,
+        "predicted_name": "数控机床报警与故障诊断 (alarm)",
+        "confidence": 0.3979646563529968,
+        "correct": true
+      },
+      {
+        "name": "切削力学与材料特性 (Cutting Mechanics & kc)",
+        "text": "材料切削力学分析: 7075-T6航空铝合金比切削力kc=750 N/mm2，按切屑截面积计算切削力Fc与表面粗糙度Ra。",
+        "expected": 6,
+        "predicted": 6,
+        "predicted_name": "切削力学与材料特性 (parameter)",
+        "confidence": 0.710724949836731,
+        "correct": true
+      },
+      {
+        "name": "机床操作面板控制 (Machine Control Panel)",
+        "text": "数控机床面板操作: 将工作方式旋钮切换至手轮JOG方式，选择X轴与100微米倍率，手动微调对刀零位。",
+        "expected": 7,
+        "predicted": 10,
+        "predicted_name": "润滑冷却与切削液 (lubrication)",
+        "confidence": 0.36263608932495117,
+        "correct": false
+      },
+      {
+        "name": "PLC/PMC梯形图接口 (PLC/PMC Ladder & Interlocks)",
+        "text": "PLC/PMC逻辑控制: 检查梯形图X信号与Y信号输出，卡盘夹紧到位无回馈信号触发主轴启动互锁保护。",
+        "expected": 8,
+        "predicted": 9,
+        "predicted_name": "伺服机械传动与轴承 (mechanical)",
+        "confidence": 0.39712515473365784,
+        "correct": false
+      },
+      {
+        "name": "伺服驱动与机械传动 (Ball Screw & Servo)",
+        "text": "伺服驱动与机械结构: 检查Z轴滚珠丝杠预紧力与直线滚动导轨间隙，清理反向间隙补偿参数。",
+        "expected": 9,
+        "predicted": 1,
+        "predicted_name": "刀具偏置与补偿 (tool_offset)",
+        "confidence": 0.546095073223114,
+        "correct": false
+      },
+      {
+        "name": "冷却润滑与排屑系统 (Lubrication & Coolant)",
+        "text": "冷却润滑与切削液: 检查机床导轨油供油压力，开启高压主轴内冷冲屑，防止深孔钻削发生排屑堵塞。",
+        "expected": 10,
+        "predicted": 10,
+        "predicted_name": "润滑冷却与切削液 (lubrication)",
+        "confidence": 0.35409611463546753,
+        "correct": true
+      },
+      {
+        "name": "安全防护与防碰撞仿真 (VERICUT & Safety Guards)",
+        "text": "五轴防碰撞仿真验证: 将机床运动学模型与后处理NC代码导入VERICUT仿真器进行过切与干涉碰撞校验。",
+        "expected": 11,
+        "predicted": 11,
+        "predicted_name": "安全防护与防碰撞仿真 (safety)",
+        "confidence": 0.6518110632896423,
+        "correct": true
+      }
+    ]
+  }
+}

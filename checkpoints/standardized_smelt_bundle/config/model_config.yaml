@@ -1,0 +1,7 @@
+total: 1276874193
+title: Virtu-1.28B Industrial Omni-Flagship Champion (1.28B)
+model_key: 1.28b
+switched_at: '2026-10-22 18:32:27'
+source: D:\智能制造Agent\Virtu\out\wpt2_1b_wide_d1152_deep10\ckpt.pt
+size_mb: 2435.84
+tensors: 1333

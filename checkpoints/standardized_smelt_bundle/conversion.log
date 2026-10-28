@@ -1,0 +1,27 @@
+[2026-10-28 22:16:09] [INIT] Conversion logger initialized at D:\Virtu模型\checkpoints\standardized_smelt_bundle\conversion.log
+[2026-10-28 22:16:09] [INFO] [PIPELINE_START] ========================================================
+[2026-10-28 22:16:09] [INFO] [PIPELINE_START]   Virtu: Smelting Folder Full Parsing & Standardization  
+[2026-10-28 22:16:09] [INFO] [PIPELINE_START] ========================================================
+[2026-10-28 22:16:09] [INFO] [SCAN] Starting recursive scan of source directory: D:\智能制造Agent\Virtu\out\wpt2_mfg_main
+[2026-10-28 22:16:09] [INFO] [SCAN] Traversal complete: 24 files discovered in 0.0030s
+    {"file_count": 24}
+[2026-10-28 22:16:09] [INFO] [WEIGHTS_LOAD] Loading raw checkpoint: D:\智能制造Agent\Virtu\out\wpt2_mfg_main\ckpt.pt (2,554,159,445 bytes)
+[2026-10-28 22:16:18] [INFO] [WEIGHTS_LOAD] Checkpoint loaded: 1333 tensors, 1,276,874,193 scalar parameters
+    {"tensors": 1333, "total_parameters": 1276874193, "top_level_keys": ["cfg", "tag", "total_params", "trainable_params", "champion_title", "subsystem_names", "gstep", "eval", "quantized", "model", "merged_from", "state", "wide_init"]}
+[2026-10-28 22:16:43] [INFO] [WEIGHTS_SAVE] Saving standardized weights to D:\Virtu模型\checkpoints\standardized_smelt_bundle\weights\standardized_weights.pt...
+[2026-10-28 22:16:54] [INFO] [WEIGHTS_DONE] Parameter standardization complete: 1333 tensors, 1,276,874,193 parameters in 45.39s
+    {"total_tensors": 1333, "total_parameters": 1276874193, "file_size_bytes": 2554157397, "sha256": "9889c1e7b128575d1f51234f00aeeb5a8d6a912f08fd42508087d7529511baf6", "hierarchy_breakdown": {"lm_pos": 69120, "txt": 164168064, "img": 95925888, "aud": 103051008, "pool_txt": 15939072, "pool_img": 15939072, "pool_aud": 15939072, "fusion": 175358592, "rnn": 16832256, "core": 7677697, "head_count": 3076, "head_color": 6152, "head_shapes": 6152, "head_rel": 2307, "head_subsystem": 9228, "head_op": 6152, "head_material": 6152, "mfg_pair": 1971713, "p_count": 13836, "p_shapes": 27672, "lm": 4718592, "lm_in": 4718592, "lm_norm": 1152, "dec": 212520960, "dec_norm": 1152, "seq_emb": 134784, "seq_rnn": 7971840, "seq_out": 89973, "seq_ctx": 885888, "proj": 5759232, "audio_proj": 1328256, "predictor": 3154944, "verifier": 5915139, "target": 363144960, "target_proj": 5759232, "target_pool": 47817216}, "duration_seconds": 45.3913}
+[2026-10-28 22:16:54] [INFO] [VERIFY] Initiating Triple Verification Suite (Integrity, Validity, Consistency)...
+[2026-10-28 22:16:54] [INFO] [VERIFY_INTEGRITY] Executing Integrity Check: confirming 100% parameter coverage...
+[2026-10-28 22:16:54] [INFO] [VERIFY_INTEGRITY] Integrity Check: PASS (Retention: 100.0%)
+[2026-10-28 22:16:54] [INFO] [VERIFY_VALIDITY] Executing Validity Check: checking numerical sanity (NaN/Inf) & domains...
+[2026-10-28 22:17:00] [INFO] [VERIFY_VALIDITY] Validity Check: PASS (NaNs: 0, Infs: 0)
+[2026-10-28 22:17:00] [INFO] [VERIFY_CONSISTENCY] Executing Consistency Check: shape matching, dtype alignment, zero loss...
+[2026-10-28 22:17:03] [INFO] [VERIFY_CONSISTENCY] Consistency Check: PASS (Drifts: 0)
+[2026-10-28 22:17:03] [INFO] [VERIFY_COMPLETE] Triple Verification completed with verdict: [APPROVED]
+    {"verdict": "APPROVED", "report_path": "D:\\Virtu模型\\checkpoints\\standardized_smelt_bundle\\verification_report.json"}
+[2026-10-28 22:17:03] [INFO] [AUX_TRANSFER] Transferring and standardizing auxiliary smelting assets...
+[2026-10-28 22:17:03] [INFO] [AUX_TRANSFER] Successfully organized and transferred 23 auxiliary files.
+[2026-10-28 22:17:08] [INFO] [PACKAGE_MANIFEST] Package manifest generated with 24 files.
+[2026-10-28 22:17:08] [INFO] [PIPELINE_COMPLETE] All operations finished in 59.83s. Bundle ready at D:\Virtu模型\checkpoints\standardized_smelt_bundle
+    {"source_directory": "D:\\智能制造Agent\\Virtu\\out\\wpt2_mfg_main", "target_directory": "D:\\Virtu模型\\checkpoints\\standardized_smelt_bundle", "total_files_processed": 24, "weights_converted": 1, "total_parameters": 1276874193, "total_tensors": 1333, "triple_verification_status": "APPROVED", "verification_pass_rate": 100.0, "total_elapsed_seconds": 59.83, "package_manifest": "D:\\Virtu模型\\checkpoints\\standardized_smelt_bundle\\package_manifest.json"}

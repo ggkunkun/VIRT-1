@@ -1,0 +1,56 @@
+[
+  {
+    "epoch": 1,
+    "duration_s": 259.7,
+    "train_loss": {
+      "loss_total": 1.869704736004705,
+      "loss_lm": 1.6086162840801737,
+      "loss_subsys": 0.7535368671106255,
+      "loss_pair": 0.07005477834674204
+    },
+    "val_metrics": {
+      "subsystem_top1_acc": 0.8221266614542612,
+      "pair_verifier_acc": 1.0,
+      "lm_token_acc": 0.722952101661779,
+      "lm_perplexity": 3.432351608715849,
+      "inference_latency_ms": 22.97436237335205,
+      "gate_c_satisfied": true
+    }
+  },
+  {
+    "epoch": 2,
+    "duration_s": 142.2,
+    "train_loss": {
+      "loss_total": 1.3775571439577186,
+      "loss_lm": 1.1915785372775534,
+      "loss_subsys": 0.6199286682968554,
+      "loss_pair": 3.0547055495727913e-09
+    },
+    "val_metrics": {
+      "subsystem_top1_acc": 0.8272087568412823,
+      "pair_verifier_acc": 1.0,
+      "lm_token_acc": 0.7627435646790486,
+      "lm_perplexity": 2.8678897391489167,
+      "inference_latency_ms": 28.84984016418457,
+      "gate_c_satisfied": true
+    }
+  },
+  {
+    "epoch": 3,
+    "duration_s": 281.2,
+    "train_loss": {
+      "loss_total": 1.249313144787498,
+      "loss_lm": 1.0738583475610484,
+      "loss_subsys": 0.5848492934651996,
+      "loss_pair": 2.1698370651936625e-09
+    },
+    "val_metrics": {
+      "subsystem_top1_acc": 0.8354182955433933,
+      "pair_verifier_acc": 1.0,
+      "lm_token_acc": 0.7714108830237862,
+      "lm_perplexity": 2.755923461061652,
+      "inference_latency_ms": 37.934274673461914,
+      "gate_c_satisfied": true
+    }
+  }
+]

@@ -16,6 +16,9 @@ __all__ = [
     "StreamingMultimodalDataPipeline",
     "Distributed3DTrainer",
     "TrainingHealthMonitor",
+    "StandardizedSmeltBundle",
+    "StandardizedSmeltTokenizer",
+    "load_standardized_bundle",
 ]
 
 from virtu_omni.config import VirtuOmniConfig
@@ -25,3 +28,8 @@ from virtu_omni.alignment.aligner import AlignmentValidator
 from virtu_omni.data.pipeline import StreamingMultimodalDataPipeline
 from virtu_omni.training.trainer import Distributed3DTrainer
 from virtu_omni.training.monitor import TrainingHealthMonitor
+from virtu_omni.models.smelt_loader import (
+    StandardizedSmeltBundle,
+    StandardizedSmeltTokenizer,
+    load_standardized_bundle,
+)

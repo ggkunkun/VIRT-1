@@ -1,0 +1,225 @@
+{
+  "timestamp": "2026-10-17T15:45:10Z",
+  "ckpt": "D:\\智能制造Agent\\Virtu\\out\\wpt2_mfg_main\\ckpt.pt",
+  "steps": 30,
+  "duration_s": 47.27,
+  "loss_start": 1.3914,
+  "loss_end": 1.1474,
+  "baseline_eval": {
+    "subsystem_acc": 1.0,
+    "anti_hallucination_pass_rate": 1.0,
+    "test_cases_total": 10,
+    "test_cases_passed": 10,
+    "details": [
+      {
+        "id": "PROG-FANUC-MACRO",
+        "expected_subsys": 4,
+        "pred_subsys": 4,
+        "subsys_correct": true,
+        "pos_safety_score": 1.0,
+        "neg_hallucination_score": 0.0,
+        "margin": 1.0,
+        "anti_hallucination_passed": true
+      },
+      {
+        "id": "PROG-SIEMENS-840D",
+        "expected_subsys": 4,
+        "pred_subsys": 4,
+        "subsys_correct": true,
+        "pos_safety_score": 1.0,
+        "neg_hallucination_score": 0.0,
+        "margin": 1.0,
+        "anti_hallucination_passed": true
+      },
+      {
+        "id": "PROG-HEIDENHAIN",
+        "expected_subsys": 4,
+        "pred_subsys": 4,
+        "subsys_correct": true,
+        "pos_safety_score": 1.0,
+        "neg_hallucination_score": 0.0,
+        "margin": 1.0,
+        "anti_hallucination_passed": true
+      },
+      {
+        "id": "PROG-SCL-PLC",
+        "expected_subsys": 8,
+        "pred_subsys": 8,
+        "subsys_correct": true,
+        "pos_safety_score": 1.0,
+        "neg_hallucination_score": 0.0,
+        "margin": 1.0,
+        "anti_hallucination_passed": true
+      },
+      {
+        "id": "PROG-OPCUA-PYTHON",
+        "expected_subsys": 8,
+        "pred_subsys": 8,
+        "subsys_correct": true,
+        "pos_safety_score": 1.0,
+        "neg_hallucination_score": 0.0,
+        "margin": 1.0,
+        "anti_hallucination_passed": true
+      },
+      {
+        "id": "PROG-ABB-RAPID",
+        "expected_subsys": 4,
+        "pred_subsys": 4,
+        "subsys_correct": true,
+        "pos_safety_score": 1.0,
+        "neg_hallucination_score": 0.0,
+        "margin": 1.0,
+        "anti_hallucination_passed": true
+      },
+      {
+        "id": "PROG-KUKA-KRL",
+        "expected_subsys": 4,
+        "pred_subsys": 4,
+        "subsys_correct": true,
+        "pos_safety_score": 1.0,
+        "neg_hallucination_score": 0.0,
+        "margin": 1.0,
+        "anti_hallucination_passed": true
+      },
+      {
+        "id": "PROG-FANUC-KAREL",
+        "expected_subsys": 4,
+        "pred_subsys": 4,
+        "subsys_correct": true,
+        "pos_safety_score": 1.0,
+        "neg_hallucination_score": 0.0,
+        "margin": 1.0,
+        "anti_hallucination_passed": true
+      },
+      {
+        "id": "PROG-UR-URSCRIPT",
+        "expected_subsys": 4,
+        "pred_subsys": 4,
+        "subsys_correct": true,
+        "pos_safety_score": 1.0,
+        "neg_hallucination_score": 0.0,
+        "margin": 1.0,
+        "anti_hallucination_passed": true
+      },
+      {
+        "id": "PROG-ROS2-MOVEIT",
+        "expected_subsys": 4,
+        "pred_subsys": 4,
+        "subsys_correct": true,
+        "pos_safety_score": 1.0,
+        "neg_hallucination_score": 0.0,
+        "margin": 1.0,
+        "anti_hallucination_passed": true
+      }
+    ]
+  },
+  "post_eval": {
+    "subsystem_acc": 1.0,
+    "anti_hallucination_pass_rate": 1.0,
+    "test_cases_total": 10,
+    "test_cases_passed": 10,
+    "details": [
+      {
+        "id": "PROG-FANUC-MACRO",
+        "expected_subsys": 4,
+        "pred_subsys": 4,
+        "subsys_correct": true,
+        "pos_safety_score": 1.0,
+        "neg_hallucination_score": 0.0,
+        "margin": 1.0,
+        "anti_hallucination_passed": true
+      },
+      {
+        "id": "PROG-SIEMENS-840D",
+        "expected_subsys": 4,
+        "pred_subsys": 4,
+        "subsys_correct": true,
+        "pos_safety_score": 1.0,
+        "neg_hallucination_score": 0.0,
+        "margin": 1.0,
+        "anti_hallucination_passed": true
+      },
+      {
+        "id": "PROG-HEIDENHAIN",
+        "expected_subsys": 4,
+        "pred_subsys": 4,
+        "subsys_correct": true,
+        "pos_safety_score": 1.0,
+        "neg_hallucination_score": 0.0,
+        "margin": 1.0,
+        "anti_hallucination_passed": true
+      },
+      {
+        "id": "PROG-SCL-PLC",
+        "expected_subsys": 8,
+        "pred_subsys": 8,
+        "subsys_correct": true,
+        "pos_safety_score": 1.0,
+        "neg_hallucination_score": 0.0,
+        "margin": 1.0,
+        "anti_hallucination_passed": true
+      },
+      {
+        "id": "PROG-OPCUA-PYTHON",
+        "expected_subsys": 8,
+        "pred_subsys": 8,
+        "subsys_correct": true,
+        "pos_safety_score": 1.0,
+        "neg_hallucination_score": 0.0,
+        "margin": 1.0,
+        "anti_hallucination_passed": true
+      },
+      {
+        "id": "PROG-ABB-RAPID",
+        "expected_subsys": 4,
+        "pred_subsys": 4,
+        "subsys_correct": true,
+        "pos_safety_score": 1.0,
+        "neg_hallucination_score": 0.0,
+        "margin": 1.0,
+        "anti_hallucination_passed": true
+      },
+      {
+        "id": "PROG-KUKA-KRL",
+        "expected_subsys": 4,
+        "pred_subsys": 4,
+        "subsys_correct": true,
+        "pos_safety_score": 1.0,
+        "neg_hallucination_score": 0.0,
+        "margin": 1.0,
+        "anti_hallucination_passed": true
+      },
+      {
+        "id": "PROG-FANUC-KAREL",
+        "expected_subsys": 4,
+        "pred_subsys": 4,
+        "subsys_correct": true,
+        "pos_safety_score": 1.0,
+        "neg_hallucination_score": 0.0,
+        "margin": 1.0,
+        "anti_hallucination_passed": true
+      },
+      {
+        "id": "PROG-UR-URSCRIPT",
+        "expected_subsys": 4,
+        "pred_subsys": 4,
+        "subsys_correct": true,
+        "pos_safety_score": 1.0,
+        "neg_hallucination_score": 0.0,
+        "margin": 1.0,
+        "anti_hallucination_passed": true
+      },
+      {
+        "id": "PROG-ROS2-MOVEIT",
+        "expected_subsys": 4,
+        "pred_subsys": 4,
+        "subsys_correct": true,
+        "pos_safety_score": 1.0,
+        "neg_hallucination_score": 0.0,
+        "margin": 1.0,
+        "anti_hallucination_passed": true
+      }
+    ]
+  },
+  "hallucination_drop_demonstrated": true
+}

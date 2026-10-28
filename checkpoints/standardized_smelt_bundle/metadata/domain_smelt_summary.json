@@ -1,0 +1,30 @@
+{
+  "all_programming": {
+    "pass_rate": 1.0,
+    "verdict": "PASS_ALL_PROGRAMMING_SMELTED"
+  },
+  "code_engine": {
+    "pass_rate": "N/A",
+    "verdict": "N/A"
+  },
+  "full_process": {
+    "pass_rate": "N/A",
+    "verdict": "N/A"
+  },
+  "harness2": {
+    "pass_rate": "N/A",
+    "verdict": "SUCCESS"
+  },
+  "opengcua": {
+    "pass_rate": 1.0,
+    "verdict": "PASS_OPENGCUA_SMELTED"
+  },
+  "robot_smart_mfg": {
+    "pass_rate": 0.75,
+    "verdict": "PASS_ROBOT_SMELTED"
+  },
+  "teaching": {
+    "pass_rate": 0.8333333333333334,
+    "verdict": "PASS_NATIVE_CONVERTED"
+  }
+}

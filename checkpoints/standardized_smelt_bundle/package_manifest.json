@@ -1,0 +1,251 @@
+{
+  "package_title": "Virtu-Omni Standardized Smelted Parameter Bundle",
+  "package_version": "v2.0.0-SMELT-PRODUCTION",
+  "generated_at": "2026-10-28 22:17:08",
+  "target_model": "Virtu-Multimodal-LoopTransformer-1.28B",
+  "parameter_count": 1276874193,
+  "tensor_count": 1333,
+  "total_files_in_bundle": 24,
+  "overall_verification_status": "APPROVED",
+  "files": [
+    {
+      "source_path": "D:\\智能制造Agent\\Virtu\\out\\wpt2_mfg_main\\ckpt.pt",
+      "target_path": "D:\\Virtu模型\\checkpoints\\standardized_smelt_bundle\\weights\\standardized_weights.pt",
+      "filename": "standardized_weights.pt",
+      "category": "WEIGHTS",
+      "size_bytes": 2554157397,
+      "sha256": "9889c1e7b128575d1f51234f00aeeb5a8d6a912f08fd42508087d7529511baf6",
+      "status": "CONVERTED"
+    },
+    {
+      "source_path": "D:\\智能制造Agent\\Virtu\\out\\wpt2_mfg_main\\_diag_ckpt_keys.py",
+      "target_path": "D:\\Virtu模型\\checkpoints\\standardized_smelt_bundle\\diagnostics\\_diag_ckpt_keys.py",
+      "filename": "_diag_ckpt_keys.py",
+      "category": "DIAGNOSTIC_SCRIPT",
+      "size_bytes": 1113,
+      "sha256": "c06652c8f1f37e6576868b1a846f4b57929dc48e9111b10f1884345909ac371c",
+      "duration_seconds": 0.01413,
+      "status": "CONVERTED"
+    },
+    {
+      "source_path": "D:\\智能制造Agent\\Virtu\\out\\wpt2_mfg_main\\_smoke_readback.py",
+      "target_path": "D:\\Virtu模型\\checkpoints\\standardized_smelt_bundle\\diagnostics\\_smoke_readback.py",
+      "filename": "_smoke_readback.py",
+      "category": "DIAGNOSTIC_SCRIPT",
+      "size_bytes": 3789,
+      "sha256": "90fa8d745eb6098b3ee09d53d4ca93d7f890194456fd4652a824a3638bc2f476",
+      "duration_seconds": 0.001,
+      "status": "CONVERTED"
+    },
+    {
+      "source_path": "D:\\智能制造Agent\\Virtu\\out\\wpt2_mfg_main\\all_programming_smelt_report.json",
+      "target_path": "D:\\Virtu模型\\checkpoints\\standardized_smelt_bundle\\metadata\\domain_smelt_reports\\all_programming_smelt_report.json",
+      "filename": "all_programming_smelt_report.json",
+      "category": "METADATA",
+      "size_bytes": 4901,
+      "sha256": "3e8ad43931b6027043662abb8a3d4a065bf1e72435364fa23d21322c6922f06b",
+      "duration_seconds": 0.00303,
+      "status": "CONVERTED"
+    },
+    {
+      "source_path": "D:\\智能制造Agent\\Virtu\\out\\wpt2_mfg_main\\champion_manifest.json",
+      "target_path": "D:\\Virtu模型\\checkpoints\\standardized_smelt_bundle\\metadata\\champion_manifest.json",
+      "filename": "champion_manifest.json",
+      "category": "METADATA",
+      "size_bytes": 4082,
+      "sha256": "b480902bfd33dd8ec56dc4fe4e33469c0bf52c71fd845406bd8302dbbacc8bb6",
+      "duration_seconds": 0.00354,
+      "status": "CONVERTED"
+    },
+    {
+      "source_path": "D:\\智能制造Agent\\Virtu\\out\\wpt2_mfg_main\\code_engine_smelt_report.json",
+      "target_path": "D:\\Virtu模型\\checkpoints\\standardized_smelt_bundle\\metadata\\domain_smelt_reports\\code_engine_smelt_report.json",
+      "filename": "code_engine_smelt_report.json",
+      "category": "METADATA",
+      "size_bytes": 6327,
+      "sha256": "8a9d32cb8f9edf516b714e15b511abfb0183d2f86f297cb075b26cdf79ffc808",
+      "duration_seconds": 0.001,
+      "status": "CONVERTED"
+    },
+    {
+      "source_path": "D:\\智能制造Agent\\Virtu\\out\\wpt2_mfg_main\\eval_results.json",
+      "target_path": "D:\\Virtu模型\\checkpoints\\standardized_smelt_bundle\\config\\eval_results.json",
+      "filename": "eval_results.json",
+      "category": "CONFIG",
+      "size_bytes": 231,
+      "sha256": "28f602605f54ddf3e671397482c402c6508e901248a768869004d9eef8a93b19",
+      "duration_seconds": 0.00202,
+      "status": "CONVERTED"
+    },
+    {
+      "source_path": "D:\\智能制造Agent\\Virtu\\out\\wpt2_mfg_main\\evaluation_report.json",
+      "target_path": "D:\\Virtu模型\\checkpoints\\standardized_smelt_bundle\\calibration\\evaluation_report.json",
+      "filename": "evaluation_report.json",
+      "category": "CALIBRATION",
+      "size_bytes": 6354,
+      "sha256": "15c3ee5b5f1ab0f91c206c99e3f7a5eece721fcc955eebbed4eb46193101728d",
+      "duration_seconds": 0.00201,
+      "status": "CONVERTED"
+    },
+    {
+      "source_path": "D:\\智能制造Agent\\Virtu\\out\\wpt2_mfg_main\\full_process_smelt_report.json",
+      "target_path": "D:\\Virtu模型\\checkpoints\\standardized_smelt_bundle\\metadata\\domain_smelt_reports\\full_process_smelt_report.json",
+      "filename": "full_process_smelt_report.json",
+      "category": "METADATA",
+      "size_bytes": 602,
+      "sha256": "1acc8321e52d688ff3cf25c1b504cf9c46533a1c9846325f744fe93e1af4130b",
+      "duration_seconds": 0.00452,
+      "status": "CONVERTED"
+    },
+    {
+      "source_path": "D:\\智能制造Agent\\Virtu\\out\\wpt2_mfg_main\\grand_unified_probe_results.json",
+      "target_path": "D:\\Virtu模型\\checkpoints\\standardized_smelt_bundle\\calibration\\grand_unified_probe_results.json",
+      "filename": "grand_unified_probe_results.json",
+      "category": "CALIBRATION",
+      "size_bytes": 2772,
+      "sha256": "6871fa02790ec3ee72f7768e985e3f08d642eb58f768f8066aad2cadbc29892e",
+      "duration_seconds": 0.002,
+      "status": "CONVERTED"
+    },
+    {
+      "source_path": "D:\\智能制造Agent\\Virtu\\out\\wpt2_mfg_main\\harness2_smelt_report.json",
+      "target_path": "D:\\Virtu模型\\checkpoints\\standardized_smelt_bundle\\metadata\\domain_smelt_reports\\harness2_smelt_report.json",
+      "filename": "harness2_smelt_report.json",
+      "category": "METADATA",
+      "size_bytes": 381,
+      "sha256": "e02be713923fea1e00a44aec23d45416c0afcf2f6555d4d9ad21c7c39d2d3fae",
+      "duration_seconds": 0.00253,
+      "status": "CONVERTED"
+    },
+    {
+      "source_path": "D:\\智能制造Agent\\Virtu\\out\\wpt2_mfg_main\\history.json",
+      "target_path": "D:\\Virtu模型\\checkpoints\\standardized_smelt_bundle\\metadata\\history.json",
+      "filename": "history.json",
+      "category": "METADATA",
+      "size_bytes": 1577,
+      "sha256": "89f8faad3f240c7c83e2aba3f08a1bb6e1a379442d5e3ceeab5fc3e76e3dfe0c",
+      "duration_seconds": 0.002,
+      "status": "CONVERTED"
+    },
+    {
+      "source_path": "D:\\智能制造Agent\\Virtu\\out\\wpt2_mfg_main\\manifest.json",
+      "target_path": "D:\\Virtu模型\\checkpoints\\standardized_smelt_bundle\\metadata\\manifest.json",
+      "filename": "manifest.json",
+      "category": "METADATA",
+      "size_bytes": 4165,
+      "sha256": "5a58e1dd01bf0822af573eeee92bba5ff117dd04e26427745c0a978dcbd8e4ad",
+      "duration_seconds": 0.002,
+      "status": "CONVERTED"
+    },
+    {
+      "source_path": "D:\\智能制造Agent\\Virtu\\out\\wpt2_mfg_main\\opengcua_smelt_report.json",
+      "target_path": "D:\\Virtu模型\\checkpoints\\standardized_smelt_bundle\\metadata\\domain_smelt_reports\\opengcua_smelt_report.json",
+      "filename": "opengcua_smelt_report.json",
+      "category": "METADATA",
+      "size_bytes": 2530,
+      "sha256": "202b4f85a5471970c1d0fa9c12e4a6896befa4447fad01338bc3fbec80d4da1a",
+      "duration_seconds": 0.00306,
+      "status": "CONVERTED"
+    },
+    {
+      "source_path": "D:\\智能制造Agent\\Virtu\\out\\wpt2_mfg_main\\params.json",
+      "target_path": "D:\\Virtu模型\\checkpoints\\standardized_smelt_bundle\\config\\params.json",
+      "filename": "params.json",
+      "category": "CONFIG",
+      "size_bytes": 291,
+      "sha256": "45ffda22d0a3584d0d0fab80ae159881d5f0aa0e47f19e1e8d7145f40b15fb39",
+      "duration_seconds": 0.00502,
+      "status": "CONVERTED"
+    },
+    {
+      "source_path": "D:\\智能制造Agent\\Virtu\\out\\wpt2_mfg_main\\probe_results.json",
+      "target_path": "D:\\Virtu模型\\checkpoints\\standardized_smelt_bundle\\calibration\\probe_results.json",
+      "filename": "probe_results.json",
+      "category": "CALIBRATION",
+      "size_bytes": 2003,
+      "sha256": "c07d8b2b3629f6b3de176c7f82d89665490971026dfd4b5f0fdd1b75f6dd3979",
+      "duration_seconds": 0.00253,
+      "status": "CONVERTED"
+    },
+    {
+      "source_path": "D:\\智能制造Agent\\Virtu\\out\\wpt2_mfg_main\\robot_smart_mfg_smelt_report.json",
+      "target_path": "D:\\Virtu模型\\checkpoints\\standardized_smelt_bundle\\metadata\\domain_smelt_reports\\robot_smart_mfg_smelt_report.json",
+      "filename": "robot_smart_mfg_smelt_report.json",
+      "category": "METADATA",
+      "size_bytes": 3606,
+      "sha256": "b57928e43b622f500cc13e4dc337d7981f37b5e27ea4b9d4d226c849a8df7077",
+      "duration_seconds": 0.00202,
+      "status": "CONVERTED"
+    },
+    {
+      "source_path": "D:\\智能制造Agent\\Virtu\\out\\wpt2_mfg_main\\smelt_history.jsonl",
+      "target_path": "D:\\Virtu模型\\checkpoints\\standardized_smelt_bundle\\metadata\\audit_ledger.jsonl",
+      "filename": "smelt_history.jsonl",
+      "category": "METADATA",
+      "size_bytes": 1593,
+      "sha256": "0686c91d909dc8758602a78d5a8bcce7676f2efbd6cb6034f05c44777c0f2153",
+      "duration_seconds": 0.00207,
+      "status": "CONVERTED"
+    },
+    {
+      "source_path": "D:\\智能制造Agent\\Virtu\\out\\wpt2_mfg_main\\teaching_smelt_report.json",
+      "target_path": "D:\\Virtu模型\\checkpoints\\standardized_smelt_bundle\\metadata\\domain_smelt_reports\\teaching_smelt_report.json",
+      "filename": "teaching_smelt_report.json",
+      "category": "METADATA",
+      "size_bytes": 4605,
+      "sha256": "65702bbbc7ef9dfcab8600cf27865dc77a732c82369f525e59b3ab6a4142777b",
+      "duration_seconds": 0.00301,
+      "status": "CONVERTED"
+    },
+    {
+      "source_path": "D:\\智能制造Agent\\Virtu\\out\\wpt2_mfg_main\\virtual_optimization_report.json",
+      "target_path": "D:\\Virtu模型\\checkpoints\\standardized_smelt_bundle\\calibration\\virtual_optimization_report.json",
+      "filename": "virtual_optimization_report.json",
+      "category": "CALIBRATION",
+      "size_bytes": 27690,
+      "sha256": "caa190785e552e3358d3abe33ef0ce9284b98ac9646892e0d5b765572c7490c1",
+      "duration_seconds": 0.002,
+      "status": "CONVERTED"
+    },
+    {
+      "source_path": "D:\\智能制造Agent\\Virtu\\out\\wpt2_mfg_main\\vocab.json",
+      "target_path": "D:\\Virtu模型\\checkpoints\\standardized_smelt_bundle\\vocab\\vocab.json",
+      "filename": "vocab.json",
+      "category": "VOCAB_INDEX",
+      "size_bytes": 54837,
+      "sha256": "ec8c375ebb65d2780597bb0480abd203959dca88451efd7ea51e53f8d4e10fe0",
+      "duration_seconds": 0.00152,
+      "status": "CONVERTED"
+    },
+    {
+      "source_path": "D:\\智能制造Agent\\Virtu\\out\\wpt2_mfg_main\\vocab_fused.json",
+      "target_path": "D:\\Virtu模型\\checkpoints\\standardized_smelt_bundle\\vocab\\vocab_fused.json",
+      "filename": "vocab_fused.json",
+      "category": "VOCAB_INDEX",
+      "size_bytes": 55440,
+      "sha256": "903c1d5cac49d28b539fd048a2aa7635f95ff6587bad3aab7f3dc2e074337a47",
+      "duration_seconds": 0.00252,
+      "status": "CONVERTED"
+    },
+    {
+      "source_path": "D:\\智能制造Agent\\Virtu\\out\\wpt2_mfg_main\\__pycache__\\_diag_ckpt_keys.cpython-312.pyc",
+      "target_path": "D:\\Virtu模型\\checkpoints\\standardized_smelt_bundle\\diagnostics\\__pycache__\\_diag_ckpt_keys.cpython-312.pyc",
+      "filename": "_diag_ckpt_keys.cpython-312.pyc",
+      "category": "BYTECODE_CACHE",
+      "size_bytes": 2123,
+      "sha256": "89f243a4c82d98c1ea346fd23b5c8f2dcbe598873b2879f9cb6ccb68afd99098",
+      "duration_seconds": 0.00252,
+      "status": "CONVERTED"
+    },
+    {
+      "source_path": "D:\\智能制造Agent\\Virtu\\out\\wpt2_mfg_main\\__pycache__\\_smoke_readback.cpython-312.pyc",
+      "target_path": "D:\\Virtu模型\\checkpoints\\standardized_smelt_bundle\\diagnostics\\__pycache__\\_smoke_readback.cpython-312.pyc",
+      "filename": "_smoke_readback.cpython-312.pyc",
+      "category": "BYTECODE_CACHE",
+      "size_bytes": 5945,
+      "sha256": "dbc341a3f46b05fc323779c10ff06995af166880af154044523761b2770a9cec",
+      "duration_seconds": 0.00201,
+      "status": "CONVERTED"
+    }
+  ]
+}

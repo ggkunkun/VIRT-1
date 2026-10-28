@@ -1,0 +1,863 @@
+{
+  "title": "Virtu Smart Manufacturing Full-Process Virtual Space Autonomous Optimization Report",
+  "device": "cuda",
+  "materials_covered": [
+    "al6061",
+    "steel4140",
+    "ti6al4v"
+  ],
+  "material_results": {
+    "al6061": {
+      "material": "al6061",
+      "generations": 10,
+      "population_size": 10,
+      "baseline": {
+        "params": {
+          "spindle_rpm": 7500.0,
+          "feed_per_tooth": 0.11,
+          "axial_depth_ap": 3.58,
+          "radial_width_ae": 8.0,
+          "clamp_pressure_bar": 32.0,
+          "chip_blast_time_s": 0.6,
+          "agv_speed_m_s": 1.0
+        },
+        "fitness_score": 110.87,
+        "surface_roughness_ra_um": 0.667,
+        "tool_wear_delta_vb_mm": 0.00251,
+        "cycle_time_s": 82.7,
+        "total_energy_kj": 167.75,
+        "is_chattering": false,
+        "quality_passed": true,
+        "defect_reasons": []
+      },
+      "optimized": {
+        "params": {
+          "spindle_rpm": 8243.0,
+          "feed_per_tooth": 0.057,
+          "axial_depth_ap": 4.5,
+          "radial_width_ae": 9.6,
+          "clamp_pressure_bar": 49.4,
+          "chip_blast_time_s": 1.5,
+          "agv_speed_m_s": 1.65
+        },
+        "fitness_score": 125.23,
+        "surface_roughness_ra_um": 0.32,
+        "tool_wear_delta_vb_mm": 0.00248,
+        "tool_life_parts": 112,
+        "cycle_time_s": 76.34,
+        "mrr_cm3_min": 81.19,
+        "vibration_g": 0.402,
+        "total_energy_kj": 190.15,
+        "specific_energy_kj_cm3": 5.282,
+        "is_chattering": false,
+        "quality_passed": true,
+        "zero_defect": true,
+        "wpt2_subsystem": "刀具偏置与补偿 (tool_offset)",
+        "wpt2_confidence": 1.0,
+        "jev_consistency_score": 0.9981
+      },
+      "improvements": {
+        "ra_improvement_pct": 52.0,
+        "tool_wear_reduction_pct": 1.2,
+        "cycle_time_reduction_pct": 7.7,
+        "energy_saving_pct": -13.4,
+        "fitness_gain_pct": 13.0,
+        "zero_defect_achieved": true
+      },
+      "convergence_history": [
+        {
+          "generation": 1,
+          "best_fitness": 123.53,
+          "avg_fitness": 94.81,
+          "best_ra_um": 0.282,
+          "avg_ra_um": 0.55,
+          "best_cycle_time_s": 85.74,
+          "avg_cycle_time_s": 134.2,
+          "best_tool_delta_vb": 0.00269,
+          "best_energy_kj": 228.69,
+          "pass_rate_pct": 90.0,
+          "is_chattering": false,
+          "best_params": {
+            "spindle_rpm": 8117.0,
+            "feed_per_tooth": 0.05,
+            "axial_depth_ap": 3.84,
+            "radial_width_ae": 9.6,
+            "clamp_pressure_bar": 52.7,
+            "chip_blast_time_s": 1.5,
+            "agv_speed_m_s": 1.66
+          }
+        },
+        {
+          "generation": 2,
+          "best_fitness": 123.53,
+          "avg_fitness": 113.76,
+          "best_ra_um": 0.282,
+          "avg_ra_um": 0.505,
+          "best_cycle_time_s": 85.74,
+          "avg_cycle_time_s": 90.2,
+          "best_tool_delta_vb": 0.00269,
+          "best_energy_kj": 228.69,
+          "pass_rate_pct": 100.0,
+          "is_chattering": false,
+          "best_params": {
+            "spindle_rpm": 8117.0,
+            "feed_per_tooth": 0.05,
+            "axial_depth_ap": 3.84,
+            "radial_width_ae": 9.6,
+            "clamp_pressure_bar": 52.7,
+            "chip_blast_time_s": 1.5,
+            "agv_speed_m_s": 1.66
+          }
+        },
+        {
+          "generation": 3,
+          "best_fitness": 123.55,
+          "avg_fitness": 120.95,
+          "best_ra_um": 0.294,
+          "avg_ra_um": 0.37,
+          "best_cycle_time_s": 84.68,
+          "avg_cycle_time_s": 84.0,
+          "best_tool_delta_vb": 0.0026,
+          "best_energy_kj": 219.97,
+          "pass_rate_pct": 100.0,
+          "is_chattering": false,
+          "best_params": {
+            "spindle_rpm": 7979.0,
+            "feed_per_tooth": 0.053,
+            "axial_depth_ap": 3.96,
+            "radial_width_ae": 9.4,
+            "clamp_pressure_bar": 49.6,
+            "chip_blast_time_s": 1.2,
+            "agv_speed_m_s": 1.56
+          }
+        },
+        {
+          "generation": 4,
+          "best_fitness": 124.13,
+          "avg_fitness": 123.08,
+          "best_ra_um": 0.259,
+          "avg_ra_um": 0.296,
+          "best_cycle_time_s": 86.92,
+          "avg_cycle_time_s": 85.9,
+          "best_tool_delta_vb": 0.00261,
+          "best_energy_kj": 234.9,
+          "pass_rate_pct": 100.0,
+          "is_chattering": false,
+          "best_params": {
+            "spindle_rpm": 8091.0,
+            "feed_per_tooth": 0.044,
+            "axial_depth_ap": 4.25,
+            "radial_width_ae": 9.6,
+            "clamp_pressure_bar": 52.0,
+            "chip_blast_time_s": 1.5,
+            "agv_speed_m_s": 1.65
+          }
+        },
+        {
+          "generation": 5,
+          "best_fitness": 124.46,
+          "avg_fitness": 123.65,
+          "best_ra_um": 0.29,
+          "avg_ra_um": 0.298,
+          "best_cycle_time_s": 81.72,
+          "avg_cycle_time_s": 83.6,
+          "best_tool_delta_vb": 0.00261,
+          "best_energy_kj": 212.8,
+          "pass_rate_pct": 100.0,
+          "is_chattering": false,
+          "best_params": {
+            "spindle_rpm": 8218.0,
+            "feed_per_tooth": 0.051,
+            "axial_depth_ap": 4.21,
+            "radial_width_ae": 9.6,
+            "clamp_pressure_bar": 52.0,
+            "chip_blast_time_s": 1.6,
+            "agv_speed_m_s": 1.65
+          }
+        },
+        {
+          "generation": 6,
+          "best_fitness": 124.64,
+          "avg_fitness": 124.05,
+          "best_ra_um": 0.313,
+          "avg_ra_um": 0.304,
+          "best_cycle_time_s": 78.8,
+          "avg_cycle_time_s": 81.7,
+          "best_tool_delta_vb": 0.00251,
+          "best_energy_kj": 198.69,
+          "pass_rate_pct": 100.0,
+          "is_chattering": false,
+          "best_params": {
+            "spindle_rpm": 8152.0,
+            "feed_per_tooth": 0.056,
+            "axial_depth_ap": 4.27,
+            "radial_width_ae": 9.6,
+            "clamp_pressure_bar": 50.4,
+            "chip_blast_time_s": 1.6,
+            "agv_speed_m_s": 1.64
+          }
+        },
+        {
+          "generation": 7,
+          "best_fitness": 124.94,
+          "avg_fitness": 124.35,
+          "best_ra_um": 0.283,
+          "avg_ra_um": 0.302,
+          "best_cycle_time_s": 81.0,
+          "avg_cycle_time_s": 81.0,
+          "best_tool_delta_vb": 0.00256,
+          "best_energy_kj": 211.39,
+          "pass_rate_pct": 100.0,
+          "is_chattering": false,
+          "best_params": {
+            "spindle_rpm": 8225.0,
+            "feed_per_tooth": 0.049,
+            "axial_depth_ap": 4.45,
+            "radial_width_ae": 9.6,
+            "clamp_pressure_bar": 51.5,
+            "chip_blast_time_s": 1.4,
+            "agv_speed_m_s": 1.65
+          }
+        },
+        {
+          "generation": 8,
+          "best_fitness": 125.19,
+          "avg_fitness": 124.58,
+          "best_ra_um": 0.312,
+          "avg_ra_um": 0.297,
+          "best_cycle_time_s": 77.19,
+          "avg_cycle_time_s": 80.9,
+          "best_tool_delta_vb": 0.00253,
+          "best_energy_kj": 194.27,
+          "pass_rate_pct": 100.0,
+          "is_chattering": false,
+          "best_params": {
+            "spindle_rpm": 8310.0,
+            "feed_per_tooth": 0.055,
+            "axial_depth_ap": 4.5,
+            "radial_width_ae": 9.6,
+            "clamp_pressure_bar": 50.3,
+            "chip_blast_time_s": 1.5,
+            "agv_speed_m_s": 1.64
+          }
+        },
+        {
+          "generation": 9,
+          "best_fitness": 125.19,
+          "avg_fitness": 124.84,
+          "best_ra_um": 0.312,
+          "avg_ra_um": 0.31,
+          "best_cycle_time_s": 77.19,
+          "avg_cycle_time_s": 78.6,
+          "best_tool_delta_vb": 0.00253,
+          "best_energy_kj": 194.27,
+          "pass_rate_pct": 100.0,
+          "is_chattering": false,
+          "best_params": {
+            "spindle_rpm": 8310.0,
+            "feed_per_tooth": 0.055,
+            "axial_depth_ap": 4.5,
+            "radial_width_ae": 9.6,
+            "clamp_pressure_bar": 50.3,
+            "chip_blast_time_s": 1.5,
+            "agv_speed_m_s": 1.64
+          }
+        },
+        {
+          "generation": 10,
+          "best_fitness": 125.23,
+          "avg_fitness": 124.97,
+          "best_ra_um": 0.32,
+          "avg_ra_um": 0.316,
+          "best_cycle_time_s": 76.34,
+          "avg_cycle_time_s": 77.6,
+          "best_tool_delta_vb": 0.00248,
+          "best_energy_kj": 190.15,
+          "pass_rate_pct": 100.0,
+          "is_chattering": false,
+          "best_params": {
+            "spindle_rpm": 8243.0,
+            "feed_per_tooth": 0.057,
+            "axial_depth_ap": 4.5,
+            "radial_width_ae": 9.6,
+            "clamp_pressure_bar": 49.4,
+            "chip_blast_time_s": 1.5,
+            "agv_speed_m_s": 1.65
+          }
+        }
+      ],
+      "timestamp": "2026-10-17 22:08:53"
+    },
+    "steel4140": {
+      "material": "steel4140",
+      "generations": 10,
+      "population_size": 10,
+      "baseline": {
+        "params": {
+          "spindle_rpm": 3000.0,
+          "feed_per_tooth": 0.075,
+          "axial_depth_ap": 2.6,
+          "radial_width_ae": 8.0,
+          "clamp_pressure_bar": 32.0,
+          "chip_blast_time_s": 0.6,
+          "agv_speed_m_s": 1.0
+        },
+        "fitness_score": 112.73,
+        "surface_roughness_ra_um": 0.4,
+        "tool_wear_delta_vb_mm": 0.00195,
+        "cycle_time_s": 175.23,
+        "total_energy_kj": 505.86,
+        "is_chattering": false,
+        "quality_passed": true,
+        "defect_reasons": []
+      },
+      "optimized": {
+        "params": {
+          "spindle_rpm": 3350.0,
+          "feed_per_tooth": 0.076,
+          "axial_depth_ap": 3.2,
+          "radial_width_ae": 8.9,
+          "clamp_pressure_bar": 36.1,
+          "chip_blast_time_s": 1.2,
+          "agv_speed_m_s": 1.72
+        },
+        "fitness_score": 120.19,
+        "surface_roughness_ra_um": 0.432,
+        "tool_wear_delta_vb_mm": 0.00224,
+        "tool_life_parts": 125,
+        "cycle_time_s": 123.26,
+        "mrr_cm3_min": 29.0,
+        "vibration_g": 0.423,
+        "total_energy_kj": 400.04,
+        "specific_energy_kj_cm3": 11.112,
+        "is_chattering": false,
+        "quality_passed": true,
+        "zero_defect": true,
+        "wpt2_subsystem": "刀具偏置与补偿 (tool_offset)",
+        "wpt2_confidence": 1.0,
+        "jev_consistency_score": 0.9981
+      },
+      "improvements": {
+        "ra_improvement_pct": -8.0,
+        "tool_wear_reduction_pct": -14.9,
+        "cycle_time_reduction_pct": 29.7,
+        "energy_saving_pct": 20.9,
+        "fitness_gain_pct": 6.6,
+        "zero_defect_achieved": true
+      },
+      "convergence_history": [
+        {
+          "generation": 1,
+          "best_fitness": 118.54,
+          "avg_fitness": 101.47,
+          "best_ra_um": 0.556,
+          "avg_ra_um": 0.335,
+          "best_cycle_time_s": 111.12,
+          "avg_cycle_time_s": 288.5,
+          "best_tool_delta_vb": 0.00221,
+          "best_energy_kj": 358.04,
+          "pass_rate_pct": 90.0,
+          "is_chattering": false,
+          "best_params": {
+            "spindle_rpm": 3372.0,
+            "feed_per_tooth": 0.093,
+            "axial_depth_ap": 3.07,
+            "radial_width_ae": 9.0,
+            "clamp_pressure_bar": 32.5,
+            "chip_blast_time_s": 1.3,
+            "agv_speed_m_s": 1.73
+          }
+        },
+        {
+          "generation": 2,
+          "best_fitness": 118.54,
+          "avg_fitness": 115.18,
+          "best_ra_um": 0.556,
+          "avg_ra_um": 0.409,
+          "best_cycle_time_s": 111.12,
+          "avg_cycle_time_s": 154.5,
+          "best_tool_delta_vb": 0.00221,
+          "best_energy_kj": 358.04,
+          "pass_rate_pct": 100.0,
+          "is_chattering": false,
+          "best_params": {
+            "spindle_rpm": 3372.0,
+            "feed_per_tooth": 0.093,
+            "axial_depth_ap": 3.07,
+            "radial_width_ae": 9.0,
+            "clamp_pressure_bar": 32.5,
+            "chip_blast_time_s": 1.3,
+            "agv_speed_m_s": 1.73
+          }
+        },
+        {
+          "generation": 3,
+          "best_fitness": 118.67,
+          "avg_fitness": 116.35,
+          "best_ra_um": 0.497,
+          "avg_ra_um": 0.431,
+          "best_cycle_time_s": 122.36,
+          "avg_cycle_time_s": 143.3,
+          "best_tool_delta_vb": 0.00183,
+          "best_energy_kj": 386.01,
+          "pass_rate_pct": 100.0,
+          "is_chattering": false,
+          "best_params": {
+            "spindle_rpm": 3146.0,
+            "feed_per_tooth": 0.086,
+            "axial_depth_ap": 3.06,
+            "radial_width_ae": 8.9,
+            "clamp_pressure_bar": 33.6,
+            "chip_blast_time_s": 1.3,
+            "agv_speed_m_s": 1.7
+          }
+        },
+        {
+          "generation": 4,
+          "best_fitness": 119.31,
+          "avg_fitness": 117.83,
+          "best_ra_um": 0.429,
+          "avg_ra_um": 0.484,
+          "best_cycle_time_s": 129.52,
+          "avg_cycle_time_s": 127.7,
+          "best_tool_delta_vb": 0.00183,
+          "best_energy_kj": 411.32,
+          "pass_rate_pct": 100.0,
+          "is_chattering": false,
+          "best_params": {
+            "spindle_rpm": 3132.0,
+            "feed_per_tooth": 0.076,
+            "axial_depth_ap": 3.2,
+            "radial_width_ae": 8.8,
+            "clamp_pressure_bar": 31.7,
+            "chip_blast_time_s": 1.0,
+            "agv_speed_m_s": 1.68
+          }
+        },
+        {
+          "generation": 5,
+          "best_fitness": 119.31,
+          "avg_fitness": 118.29,
+          "best_ra_um": 0.429,
+          "avg_ra_um": 0.519,
+          "best_cycle_time_s": 129.52,
+          "avg_cycle_time_s": 120.0,
+          "best_tool_delta_vb": 0.00183,
+          "best_energy_kj": 411.32,
+          "pass_rate_pct": 100.0,
+          "is_chattering": false,
+          "best_params": {
+            "spindle_rpm": 3132.0,
+            "feed_per_tooth": 0.076,
+            "axial_depth_ap": 3.2,
+            "radial_width_ae": 8.8,
+            "clamp_pressure_bar": 31.7,
+            "chip_blast_time_s": 1.0,
+            "agv_speed_m_s": 1.68
+          }
+        },
+        {
+          "generation": 6,
+          "best_fitness": 119.72,
+          "avg_fitness": 118.89,
+          "best_ra_um": 0.452,
+          "avg_ra_um": 0.486,
+          "best_cycle_time_s": 123.37,
+          "avg_cycle_time_s": 122.2,
+          "best_tool_delta_vb": 0.002,
+          "best_energy_kj": 394.67,
+          "pass_rate_pct": 100.0,
+          "is_chattering": false,
+          "best_params": {
+            "spindle_rpm": 3239.0,
+            "feed_per_tooth": 0.079,
+            "axial_depth_ap": 3.2,
+            "radial_width_ae": 8.9,
+            "clamp_pressure_bar": 34.1,
+            "chip_blast_time_s": 1.5,
+            "agv_speed_m_s": 1.7
+          }
+        },
+        {
+          "generation": 7,
+          "best_fitness": 119.75,
+          "avg_fitness": 119.35,
+          "best_ra_um": 0.458,
+          "avg_ra_um": 0.45,
+          "best_cycle_time_s": 121.13,
+          "avg_cycle_time_s": 125.2,
+          "best_tool_delta_vb": 0.00229,
+          "best_energy_kj": 392.38,
+          "pass_rate_pct": 100.0,
+          "is_chattering": false,
+          "best_params": {
+            "spindle_rpm": 3371.0,
+            "feed_per_tooth": 0.08,
+            "axial_depth_ap": 3.11,
+            "radial_width_ae": 8.9,
+            "clamp_pressure_bar": 37.1,
+            "chip_blast_time_s": 1.2,
+            "agv_speed_m_s": 1.72
+          }
+        },
+        {
+          "generation": 8,
+          "best_fitness": 120.18,
+          "avg_fitness": 119.49,
+          "best_ra_um": 0.439,
+          "avg_ra_um": 0.47,
+          "best_cycle_time_s": 121.83,
+          "avg_cycle_time_s": 121.1,
+          "best_tool_delta_vb": 0.00229,
+          "best_energy_kj": 396.11,
+          "pass_rate_pct": 100.0,
+          "is_chattering": false,
+          "best_params": {
+            "spindle_rpm": 3376.0,
+            "feed_per_tooth": 0.077,
+            "axial_depth_ap": 3.2,
+            "radial_width_ae": 8.9,
+            "clamp_pressure_bar": 36.8,
+            "chip_blast_time_s": 1.3,
+            "agv_speed_m_s": 1.72
+          }
+        },
+        {
+          "generation": 9,
+          "best_fitness": 120.18,
+          "avg_fitness": 119.42,
+          "best_ra_um": 0.439,
+          "avg_ra_um": 0.456,
+          "best_cycle_time_s": 121.83,
+          "avg_cycle_time_s": 123.4,
+          "best_tool_delta_vb": 0.00229,
+          "best_energy_kj": 396.11,
+          "pass_rate_pct": 100.0,
+          "is_chattering": false,
+          "best_params": {
+            "spindle_rpm": 3376.0,
+            "feed_per_tooth": 0.077,
+            "axial_depth_ap": 3.2,
+            "radial_width_ae": 8.9,
+            "clamp_pressure_bar": 36.8,
+            "chip_blast_time_s": 1.3,
+            "agv_speed_m_s": 1.72
+          }
+        },
+        {
+          "generation": 10,
+          "best_fitness": 120.19,
+          "avg_fitness": 119.54,
+          "best_ra_um": 0.432,
+          "avg_ra_um": 0.421,
+          "best_cycle_time_s": 123.26,
+          "avg_cycle_time_s": 128.2,
+          "best_tool_delta_vb": 0.00224,
+          "best_energy_kj": 400.04,
+          "pass_rate_pct": 100.0,
+          "is_chattering": false,
+          "best_params": {
+            "spindle_rpm": 3350.0,
+            "feed_per_tooth": 0.076,
+            "axial_depth_ap": 3.2,
+            "radial_width_ae": 8.9,
+            "clamp_pressure_bar": 36.1,
+            "chip_blast_time_s": 1.2,
+            "agv_speed_m_s": 1.72
+          }
+        }
+      ],
+      "timestamp": "2026-10-17 22:08:59"
+    },
+    "ti6al4v": {
+      "material": "ti6al4v",
+      "generations": 10,
+      "population_size": 10,
+      "baseline": {
+        "params": {
+          "spindle_rpm": 1550.0,
+          "feed_per_tooth": 0.05,
+          "axial_depth_ap": 1.62,
+          "radial_width_ae": 8.0,
+          "clamp_pressure_bar": 32.0,
+          "chip_blast_time_s": 0.6,
+          "agv_speed_m_s": 1.0
+        },
+        "fitness_score": 104.29,
+        "surface_roughness_ra_um": 0.236,
+        "tool_wear_delta_vb_mm": 0.0005,
+        "cycle_time_s": 597.48,
+        "total_energy_kj": 1415.36,
+        "is_chattering": false,
+        "quality_passed": true,
+        "defect_reasons": []
+      },
+      "optimized": {
+        "params": {
+          "spindle_rpm": 1923.0,
+          "feed_per_tooth": 0.048,
+          "axial_depth_ap": 2.0,
+          "radial_width_ae": 8.9,
+          "clamp_pressure_bar": 49.4,
+          "chip_blast_time_s": 1.1,
+          "agv_speed_m_s": 1.18
+        },
+        "fitness_score": 109.09,
+        "surface_roughness_ra_um": 0.245,
+        "tool_wear_delta_vb_mm": 0.00062,
+        "tool_life_parts": 451,
+        "cycle_time_s": 384.66,
+        "mrr_cm3_min": 6.57,
+        "vibration_g": 0.348,
+        "total_energy_kj": 1022.18,
+        "specific_energy_kj_cm3": 28.394,
+        "is_chattering": false,
+        "quality_passed": true,
+        "zero_defect": true,
+        "wpt2_subsystem": "刀具偏置与补偿 (tool_offset)",
+        "wpt2_confidence": 1.0,
+        "jev_consistency_score": 0.998
+      },
+      "improvements": {
+        "ra_improvement_pct": -3.8,
+        "tool_wear_reduction_pct": -24.0,
+        "cycle_time_reduction_pct": 35.6,
+        "energy_saving_pct": 27.8,
+        "fitness_gain_pct": 4.6,
+        "zero_defect_achieved": true
+      },
+      "convergence_history": [
+        {
+          "generation": 1,
+          "best_fitness": 105.02,
+          "avg_fitness": 78.36,
+          "best_ra_um": 0.151,
+          "avg_ra_um": 0.204,
+          "best_cycle_time_s": 763.31,
+          "avg_cycle_time_s": 1530.0,
+          "best_tool_delta_vb": 0.00065,
+          "best_energy_kj": 1863.05,
+          "pass_rate_pct": 70.0,
+          "is_chattering": false,
+          "best_params": {
+            "spindle_rpm": 1873.0,
+            "feed_per_tooth": 0.025,
+            "axial_depth_ap": 1.79,
+            "radial_width_ae": 9.1,
+            "clamp_pressure_bar": 53.0,
+            "chip_blast_time_s": 1.4,
+            "agv_speed_m_s": 1.23
+          }
+        },
+        {
+          "generation": 2,
+          "best_fitness": 105.02,
+          "avg_fitness": 103.0,
+          "best_ra_um": 0.151,
+          "avg_ra_um": 0.165,
+          "best_cycle_time_s": 763.31,
+          "avg_cycle_time_s": 1132.5,
+          "best_tool_delta_vb": 0.00065,
+          "best_energy_kj": 1863.05,
+          "pass_rate_pct": 100.0,
+          "is_chattering": false,
+          "best_params": {
+            "spindle_rpm": 1873.0,
+            "feed_per_tooth": 0.025,
+            "axial_depth_ap": 1.79,
+            "radial_width_ae": 9.1,
+            "clamp_pressure_bar": 53.0,
+            "chip_blast_time_s": 1.4,
+            "agv_speed_m_s": 1.23
+          }
+        },
+        {
+          "generation": 3,
+          "best_fitness": 105.96,
+          "avg_fitness": 104.16,
+          "best_ra_um": 0.195,
+          "avg_ra_um": 0.16,
+          "best_cycle_time_s": 576.12,
+          "avg_cycle_time_s": 884.6,
+          "best_tool_delta_vb": 0.0005,
+          "best_energy_kj": 1415.65,
+          "pass_rate_pct": 100.0,
+          "is_chattering": false,
+          "best_params": {
+            "spindle_rpm": 1696.0,
+            "feed_per_tooth": 0.038,
+            "axial_depth_ap": 1.9,
+            "radial_width_ae": 8.5,
+            "clamp_pressure_bar": 40.4,
+            "chip_blast_time_s": 0.9,
+            "agv_speed_m_s": 1.11
+          }
+        },
+        {
+          "generation": 4,
+          "best_fitness": 105.96,
+          "avg_fitness": 104.98,
+          "best_ra_um": 0.195,
+          "avg_ra_um": 0.174,
+          "best_cycle_time_s": 576.12,
+          "avg_cycle_time_s": 710.7,
+          "best_tool_delta_vb": 0.0005,
+          "best_energy_kj": 1415.65,
+          "pass_rate_pct": 100.0,
+          "is_chattering": false,
+          "best_params": {
+            "spindle_rpm": 1696.0,
+            "feed_per_tooth": 0.038,
+            "axial_depth_ap": 1.9,
+            "radial_width_ae": 8.5,
+            "clamp_pressure_bar": 40.4,
+            "chip_blast_time_s": 0.9,
+            "agv_speed_m_s": 1.11
+          }
+        },
+        {
+          "generation": 5,
+          "best_fitness": 106.66,
+          "avg_fitness": 105.71,
+          "best_ra_um": 0.182,
+          "avg_ra_um": 0.181,
+          "best_cycle_time_s": 556.63,
+          "avg_cycle_time_s": 632.1,
+          "best_tool_delta_vb": 0.00073,
+          "best_energy_kj": 1415.97,
+          "pass_rate_pct": 100.0,
+          "is_chattering": false,
+          "best_params": {
+            "spindle_rpm": 1946.0,
+            "feed_per_tooth": 0.034,
+            "axial_depth_ap": 1.81,
+            "radial_width_ae": 9.0,
+            "clamp_pressure_bar": 48.9,
+            "chip_blast_time_s": 1.3,
+            "agv_speed_m_s": 1.21
+          }
+        },
+        {
+          "generation": 6,
+          "best_fitness": 106.87,
+          "avg_fitness": 106.32,
+          "best_ra_um": 0.203,
+          "avg_ra_um": 0.194,
+          "best_cycle_time_s": 512.69,
+          "avg_cycle_time_s": 559.1,
+          "best_tool_delta_vb": 0.0005,
+          "best_energy_kj": 1288.51,
+          "pass_rate_pct": 100.0,
+          "is_chattering": false,
+          "best_params": {
+            "spindle_rpm": 1744.0,
+            "feed_per_tooth": 0.039,
+            "axial_depth_ap": 2.0,
+            "radial_width_ae": 8.7,
+            "clamp_pressure_bar": 42.6,
+            "chip_blast_time_s": 1.1,
+            "agv_speed_m_s": 1.16
+          }
+        },
+        {
+          "generation": 7,
+          "best_fitness": 107.43,
+          "avg_fitness": 106.42,
+          "best_ra_um": 0.195,
+          "avg_ra_um": 0.194,
+          "best_cycle_time_s": 496.35,
+          "avg_cycle_time_s": 554.4,
+          "best_tool_delta_vb": 0.00076,
+          "best_energy_kj": 1285.54,
+          "pass_rate_pct": 100.0,
+          "is_chattering": false,
+          "best_params": {
+            "spindle_rpm": 1979.0,
+            "feed_per_tooth": 0.037,
+            "axial_depth_ap": 1.86,
+            "radial_width_ae": 9.0,
+            "clamp_pressure_bar": 48.4,
+            "chip_blast_time_s": 1.3,
+            "agv_speed_m_s": 1.2
+          }
+        },
+        {
+          "generation": 8,
+          "best_fitness": 107.43,
+          "avg_fitness": 106.56,
+          "best_ra_um": 0.195,
+          "avg_ra_um": 0.195,
+          "best_cycle_time_s": 496.35,
+          "avg_cycle_time_s": 546.5,
+          "best_tool_delta_vb": 0.00076,
+          "best_energy_kj": 1285.54,
+          "pass_rate_pct": 100.0,
+          "is_chattering": false,
+          "best_params": {
+            "spindle_rpm": 1979.0,
+            "feed_per_tooth": 0.037,
+            "axial_depth_ap": 1.86,
+            "radial_width_ae": 9.0,
+            "clamp_pressure_bar": 48.4,
+            "chip_blast_time_s": 1.3,
+            "agv_speed_m_s": 1.2
+          }
+        },
+        {
+          "generation": 9,
+          "best_fitness": 107.94,
+          "avg_fitness": 107.11,
+          "best_ra_um": 0.189,
+          "avg_ra_um": 0.197,
+          "best_cycle_time_s": 480.38,
+          "avg_cycle_time_s": 510.6,
+          "best_tool_delta_vb": 0.001,
+          "best_energy_kj": 1278.95,
+          "pass_rate_pct": 100.0,
+          "is_chattering": false,
+          "best_params": {
+            "spindle_rpm": 2102.0,
+            "feed_per_tooth": 0.034,
+            "axial_depth_ap": 2.0,
+            "radial_width_ae": 8.9,
+            "clamp_pressure_bar": 51.0,
+            "chip_blast_time_s": 1.2,
+            "agv_speed_m_s": 1.19
+          }
+        },
+        {
+          "generation": 10,
+          "best_fitness": 109.09,
+          "avg_fitness": 107.7,
+          "best_ra_um": 0.245,
+          "avg_ra_um": 0.202,
+          "best_cycle_time_s": 384.66,
+          "avg_cycle_time_s": 477.4,
+          "best_tool_delta_vb": 0.00062,
+          "best_energy_kj": 1022.18,
+          "pass_rate_pct": 100.0,
+          "is_chattering": false,
+          "best_params": {
+            "spindle_rpm": 1923.0,
+            "feed_per_tooth": 0.048,
+            "axial_depth_ap": 2.0,
+            "radial_width_ae": 8.9,
+            "clamp_pressure_bar": 49.4,
+            "chip_blast_time_s": 1.1,
+            "agv_speed_m_s": 1.18
+          }
+        }
+      ],
+      "timestamp": "2026-10-17 22:09:04"
+    }
+  },
+  "overall_summary": {
+    "all_materials_passed": true,
+    "all_zero_defect": true,
+    "average_ra_improvement_pct": 13.4,
+    "average_wear_reduction_pct": -12.6,
+    "average_cycle_reduction_pct": 24.3,
+    "average_energy_saving_pct": 11.8
+  },
+  "timestamp": "2026-10-17 22:09:04"
+}

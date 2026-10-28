@@ -1,0 +1,54 @@
+[
+  {
+    "case_id": "CASE-01",
+    "title": "异步高并发服务与事件循环防阻塞 (Python/Coding)",
+    "subsys_expected": "代码开发与重构 (coding_dev)",
+    "subsys_predicted": "版本控制与仓库管理 (git_vcs)",
+    "subsys_correct": false,
+    "score_positive": 19.730623245239258,
+    "score_negative": -23.594825744628906,
+    "prob_positive": 1.0,
+    "prob_negative": 5.661055305083984e-11,
+    "margin": 43.325448989868164,
+    "passed": false
+  },
+  {
+    "case_id": "CASE-02",
+    "title": "五轴联动高速精加工与空间安全防撞刀 (CNC/Manufacturing)",
+    "subsys_expected": "数控制造与切削动力学 (cnc_mfg)",
+    "subsys_predicted": "智能体编排与调度 (auto_orchestrate)",
+    "subsys_correct": false,
+    "score_positive": 19.723766326904297,
+    "score_negative": -23.191007614135742,
+    "prob_positive": 1.0,
+    "prob_negative": 8.477608198775854e-11,
+    "margin": 42.91477394104004,
+    "passed": false
+  },
+  {
+    "case_id": "CASE-03",
+    "title": "系统终端任务运维与防死锁阻塞 (Shell/DevOps)",
+    "subsys_expected": "终端命令与系统运维 (shell_sys)",
+    "subsys_predicted": "终端命令与系统运维 (shell_sys)",
+    "subsys_correct": true,
+    "score_positive": 19.746429443359375,
+    "score_negative": -23.513568878173828,
+    "prob_positive": 1.0,
+    "prob_negative": 6.140260522258245e-11,
+    "margin": 43.2599983215332,
+    "passed": true
+  },
+  {
+    "case_id": "CASE-04",
+    "title": "智能体规划反思与工具异常自愈决策 (Agent Reasoning)",
+    "subsys_expected": "故障诊断与异常修复 (debug_troubleshoot)",
+    "subsys_predicted": "数控制造与切削动力学 (cnc_mfg)",
+    "subsys_correct": false,
+    "score_positive": 19.7320613861084,
+    "score_negative": -23.519948959350586,
+    "prob_positive": 1.0,
+    "prob_negative": 6.101209815145836e-11,
+    "margin": 43.252010345458984,
+    "passed": false
+  }
+]

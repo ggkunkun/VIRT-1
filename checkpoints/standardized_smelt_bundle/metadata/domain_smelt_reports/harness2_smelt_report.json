@@ -1,0 +1,17 @@
+{
+  "ok": true,
+  "engine": "Virtu Harness² Smelter v1.0",
+  "corpus_records": 10,
+  "training_steps": 4,
+  "mean_loss": 8.8569,
+  "final_loss": 8.8189,
+  "elapsed_seconds": 1.55,
+  "saved_checkpoint": "D:\\智能制造Agent\\Virtu\\out\\wpt2_harness2_smelted\\ckpt.pt",
+  "loss_history": [
+    8.9017,
+    8.849,
+    8.858,
+    8.8189
+  ],
+  "convergence": true
+}

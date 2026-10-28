@@ -1,0 +1,123 @@
+{
+  "total_tested": 6,
+  "passed": 5,
+  "pass_rate": 0.8333333333333334,
+  "verdict": "PASS_NATIVE_CONVERTED",
+  "details": [
+    {
+      "id": "T01-PCD",
+      "question": "为什么PCD聚晶金刚石刀具禁止用于铣削钢件与钛合金？现场误用会发生什么？",
+      "expected_subsystem": "切削力学与材料特性 (parameter)",
+      "predicted_subsystem": "切削力学与材料特性 (parameter)",
+      "subsystem_match": true,
+      "generated_text": "钻头易引偏置467.3调试切测量F预紧到单段模式配合理分配合理分配合理",
+      "matched_concepts": [],
+      "hit_ratio": 0.0,
+      "jev_score_pos": 0.9999934434890747,
+      "jev_score_neg": 7.91584352555219e-06,
+      "jev_margin": 0.9999855276455492,
+      "pass": false
+    },
+    {
+      "id": "T09-HEAT",
+      "question": "调质热处理应该排在轴类零件机械加工路线的什么位置？为什么不能放在最后？",
+      "expected_subsystem": "切削力学与材料特性 (parameter)",
+      "predicted_subsystem": "切削力学与材料特性 (parameter)",
+      "subsystem_match": true,
+      "generated_text": "粗车之后半精车之前以消除残余应力防止精加工变形",
+      "matched_concepts": [
+        "粗车",
+        "半精车",
+        "变形",
+        "残余应力",
+        "消除"
+      ],
+      "hit_ratio": 0.7142857142857143,
+      "jev_score_pos": 0.9999942779541016,
+      "jev_score_neg": 2.9996121156727895e-05,
+      "jev_margin": 0.9999642818329448,
+      "pass": true
+    },
+    {
+      "id": "T09-VERIFY",
+      "question": "三轴五轴加工中心上机前必须严格完成哪五步防撞验证？",
+      "expected_subsystem": "安全防护与防碰撞仿真 (safety)",
+      "predicted_subsystem": "安全防护与防碰撞仿真 (safety)",
+      "subsystem_match": true,
+      "generated_text": "三维仿真对刀找正单段运行空运行轨迹确认首件试切测绘",
+      "matched_concepts": [
+        "仿真",
+        "对刀",
+        "单段",
+        "空运行",
+        "首件",
+        "试切",
+        "三维"
+      ],
+      "hit_ratio": 0.7777777777777778,
+      "jev_score_pos": 0.9999943971633911,
+      "jev_score_neg": 8.624693691672292e-06,
+      "jev_margin": 0.9999857724696994,
+      "pass": true
+    },
+    {
+      "id": "T09-DATUM",
+      "question": "轴类零件在车削、磨削全程为何必须用两端中心孔作为定位基准？",
+      "expected_subsystem": "工件坐标系与对刀找正 (coordinate)",
+      "predicted_subsystem": "工件坐标系与对刀找正 (coordinate)",
+      "subsystem_match": true,
+      "generated_text": "基准统一基准重合避免装夹误差累计确保同轴度公差",
+      "matched_concepts": [
+        "基准统一",
+        "基准重合",
+        "避免",
+        "误差",
+        "同轴度",
+        "装夹"
+      ],
+      "hit_ratio": 0.75,
+      "jev_score_pos": 0.9999933242797852,
+      "jev_score_neg": 1.038820937537821e-05,
+      "jev_margin": 0.9999829360704098,
+      "pass": true
+    },
+    {
+      "id": "T09-THREAD",
+      "question": "车削M18x1.5外螺纹前，外圆表面大径应该预车削到多少毫米？",
+      "expected_subsystem": "数控编程与宏程序 (programming)",
+      "predicted_subsystem": "数控编程与宏程序 (programming)",
+      "subsystem_match": true,
+      "generated_text": "预车大径为17.85外圆柱面板预车大径为17.85毫米即公称直径",
+      "matched_concepts": [
+        "17.8",
+        "大径",
+        "预车",
+        "公称直径"
+      ],
+      "hit_ratio": 0.5714285714285714,
+      "jev_score_pos": 0.9999918937683105,
+      "jev_score_neg": 5.42384987056721e-05,
+      "jev_margin": 0.9999376552696049,
+      "pass": true
+    },
+    {
+      "id": "T09-HOLE",
+      "question": "H7高精度同轴孔加工时，为什么禁止直接一次钻孔钻成？正确工艺是什么？",
+      "expected_subsystem": "刀具偏置与补偿 (tool_offset)",
+      "predicted_subsystem": "刀具偏置与补偿 (tool_offset)",
+      "subsystem_match": true,
+      "generated_text": "钻头易引偏应打中心钻底孔留0.85",
+      "matched_concepts": [
+        "中心钻",
+        "钻底孔",
+        "引偏"
+      ],
+      "hit_ratio": 0.375,
+      "jev_score_pos": 0.9999943971633911,
+      "jev_score_neg": 8.274601896118838e-06,
+      "jev_margin": 0.999986122561495,
+      "pass": true
+    }
+  ],
+  "timestamp": "2026-10-17 09:22:08"
+}

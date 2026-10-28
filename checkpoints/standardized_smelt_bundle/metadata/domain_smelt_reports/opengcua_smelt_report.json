@@ -1,0 +1,110 @@
+{
+  "total_tested": 10,
+  "passed_subsystem": 10,
+  "passed_pair": 10,
+  "passed": 10,
+  "pass_rate": 1.0,
+  "verdict": "PASS_OPENGCUA_SMELTED",
+  "details": [
+    {
+      "id": "OPENGCUA-CODE-ACTION-PARADIGM",
+      "expected_subsys": 4,
+      "pred_subsys": 4,
+      "subsys_correct": true,
+      "score_pos": 1.0,
+      "score_neg": 0.0,
+      "margin": 1.0,
+      "pair_ok": true
+    },
+    {
+      "id": "OPENGCUA-5LAYER-HARNESS",
+      "expected_subsys": 8,
+      "pred_subsys": 8,
+      "subsys_correct": true,
+      "score_pos": 1.0,
+      "score_neg": 0.0,
+      "margin": 1.0,
+      "pair_ok": true
+    },
+    {
+      "id": "OPENGCUA-DESKTOP-UIA",
+      "expected_subsys": 8,
+      "pred_subsys": 8,
+      "subsys_correct": true,
+      "score_pos": 1.0,
+      "score_neg": 0.0,
+      "margin": 1.0,
+      "pair_ok": true
+    },
+    {
+      "id": "OPENGCUA-BROWSER-PLAYWRIGHT",
+      "expected_subsys": 4,
+      "pred_subsys": 4,
+      "subsys_correct": true,
+      "score_pos": 1.0,
+      "score_neg": 0.0,
+      "margin": 1.0,
+      "pair_ok": true
+    },
+    {
+      "id": "OPENGCUA-SHELL-TERMINAL",
+      "expected_subsys": 8,
+      "pred_subsys": 8,
+      "subsys_correct": true,
+      "score_pos": 1.0,
+      "score_neg": 0.0,
+      "margin": 1.0,
+      "pair_ok": true
+    },
+    {
+      "id": "OPENGCUA-CROSS-DEVICE",
+      "expected_subsys": 8,
+      "pred_subsys": 8,
+      "subsys_correct": true,
+      "score_pos": 1.0,
+      "score_neg": 0.0,
+      "margin": 1.0,
+      "pair_ok": true
+    },
+    {
+      "id": "OPENGCUA-GROUNDING-COORD",
+      "expected_subsys": 8,
+      "pred_subsys": 8,
+      "subsys_correct": true,
+      "score_pos": 1.0,
+      "score_neg": 0.0,
+      "margin": 1.0,
+      "pair_ok": true
+    },
+    {
+      "id": "OPENGCUA-CADCAM-AUTO",
+      "expected_subsys": 4,
+      "pred_subsys": 4,
+      "subsys_correct": true,
+      "score_pos": 1.0,
+      "score_neg": 0.0,
+      "margin": 1.0,
+      "pair_ok": true
+    },
+    {
+      "id": "OPENGCUA-ERROR-RECOVERY",
+      "expected_subsys": 5,
+      "pred_subsys": 5,
+      "subsys_correct": true,
+      "score_pos": 1.0,
+      "score_neg": 0.0,
+      "margin": 1.0,
+      "pair_ok": true
+    },
+    {
+      "id": "OPENGCUA-SAFETY-INTERLOCK",
+      "expected_subsys": 11,
+      "pred_subsys": 11,
+      "subsys_correct": true,
+      "score_pos": 1.0,
+      "score_neg": 0.0,
+      "margin": 1.0,
+      "pair_ok": true
+    }
+  ]
+}
