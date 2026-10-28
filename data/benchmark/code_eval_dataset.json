@@ -1,0 +1,109 @@
+{
+  "version": "1.0.0",
+  "created_at": "2026-10-28",
+  "total_test_cases": 10,
+  "languages_covered": [
+    "python",
+    "java",
+    "cpp",
+    "c",
+    "go",
+    "rust",
+    "javascript",
+    "typescript",
+    "csharp",
+    "shell"
+  ],
+  "test_cases": [
+    {
+      "id": "PY-01",
+      "language": "python",
+      "task": "code_generation",
+      "prompt": "def merge_intervals(intervals: list[list[int]]) -> list[list[int]]:",
+      "canonical_solution": "intervals.sort(key=lambda x: x[0])\nmerged = []\nfor interval in intervals:\n    if not merged or merged[-1][1] < interval[0]:\n        merged.append(interval)\n    else:\n        merged[-1][1] = max(merged[-1][1], interval[1])\nreturn merged",
+      "test_input": "[[1,3],[2,6],[8,10],[15,18]]",
+      "expected_output": "[[1,6],[8,10],[15,18]]"
+    },
+    {
+      "id": "JAVA-01",
+      "language": "java",
+      "task": "function_completion",
+      "prompt": "public boolean isPalindrome(String s) {",
+      "canonical_solution": "String clean = s.replaceAll(\"[^a-zA-Z0-9]\", \"\").toLowerCase();\nint l = 0, r = clean.length() - 1;\nwhile(l < r) {\n    if (clean.charAt(l++) != clean.charAt(r--)) return false;\n}\nreturn true;",
+      "test_input": "\"A man, a plan, a canal: Panama\"",
+      "expected_output": "true"
+    },
+    {
+      "id": "CPP-01",
+      "language": "cpp",
+      "task": "architecture_design",
+      "prompt": "class ThreadSafeQueue {",
+      "canonical_solution": "std::queue<int> q;\nstd::mutex m;\nstd::condition_variable cv;\npublic:\nvoid push(int val) {\n    std::lock_guard<std::mutex> lock(m);\n    q.push(val);\n    cv.notify_one();\n}",
+      "test_input": "Push and Pop concurrency",
+      "expected_output": "No race condition, lock-guarded"
+    },
+    {
+      "id": "C-01",
+      "language": "c",
+      "task": "bug_avoidance",
+      "prompt": "char* safe_str_concat(const char* a, const char* b) {",
+      "canonical_solution": "if (!a || !b) return NULL;\nsize_t len = strlen(a) + strlen(b) + 1;\nchar* res = (char*)malloc(len);\nif (!res) return NULL;\nsnprintf(res, len, \"%s%s\", a, b);\nreturn res;",
+      "test_input": "Concatenate non-null and null strings",
+      "expected_output": "No buffer overflow, memory allocated safely"
+    },
+    {
+      "id": "GO-01",
+      "language": "go",
+      "task": "code_generation",
+      "prompt": "func WorkerPool(jobs <-chan int, results chan<- int) {",
+      "canonical_solution": "for j := range jobs {\n    results <- j * 2\n}",
+      "test_input": "Stream jobs via channel",
+      "expected_output": "Buffered worker channel drainage"
+    },
+    {
+      "id": "RUST-01",
+      "language": "rust",
+      "task": "architecture_design",
+      "prompt": "pub struct SafeSharedState<T> {",
+      "canonical_solution": "inner: std::sync::Arc<std::sync::RwLock<T>>,\n}\nimpl<T> SafeSharedState<T> {\n    pub fn new(val: T) -> Self {\n        SafeSharedState { inner: std::sync::Arc::new(std::sync::RwLock::new(val)) }\n    }\n}",
+      "test_input": "Send + Sync thread-safe wrapper",
+      "expected_output": "Arc<RwLock<T>> idiom"
+    },
+    {
+      "id": "JS-01",
+      "language": "javascript",
+      "task": "single_line_completion",
+      "prompt": "const debounce = (fn, delay) => {",
+      "canonical_solution": "let timer; return (...args) => { clearTimeout(timer); timer = setTimeout(() => fn(...args), delay); };",
+      "test_input": "Call repeatedly in 10ms",
+      "expected_output": "Executed once after delay"
+    },
+    {
+      "id": "TS-01",
+      "language": "typescript",
+      "task": "function_completion",
+      "prompt": "type Result<T, E> = { ok: true; val: T } | { ok: false; err: E };\nfunction mapResult<T, U, E>(res: Result<T, E>, fn: (val: T) => U): Result<U, E> {",
+      "canonical_solution": "return res.ok ? { ok: true, val: fn(res.val) } : res;",
+      "test_input": "Result mapping with algebraic sum type",
+      "expected_output": "Mapped Result object"
+    },
+    {
+      "id": "CSHARP-01",
+      "language": "csharp",
+      "task": "code_generation",
+      "prompt": "public static async Task<string> FetchWithRetryAsync(HttpClient client, string url) {",
+      "canonical_solution": "for(int i = 0; i < 3; i++) {\n    try { return await client.GetStringAsync(url); }\n    catch when (i < 2) { await Task.Delay(500 * (int)Math.Pow(2, i)); }\n}\nthrow new HttpRequestException(\"Failed after retries\");",
+      "test_input": "GET endpoint with transient 500 error",
+      "expected_output": "Exponential retry then return payload"
+    },
+    {
+      "id": "SH-01",
+      "language": "shell",
+      "task": "bug_avoidance",
+      "prompt": "#!/usr/bin/env bash\nsafe_clean_dir() {",
+      "canonical_solution": "local target_dir=\"${1:-}\"\nif [[ -z \"$target_dir\" || \"$target_dir\" == \"/\" ]]; then\n    echo \"Error: refuse to wipe root or empty target\" >&2\n    return 1\nfi\nrm -rf -- \"${target_dir:?}\"/*",
+      "test_input": "Call with empty string or root directory",
+      "expected_output": "Refusal to wipe root or undefined path"
+    }
+  ]
+}

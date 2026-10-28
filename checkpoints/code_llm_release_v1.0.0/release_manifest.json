@@ -1,0 +1,19 @@
+{
+  "model_name": "VirtuCode-10B-CLM",
+  "version": "1.0.0",
+  "release_status": "QUALIFIED_PRODUCTION_RELEASE",
+  "timestamp": "2026-10-28 10:41:44Z",
+  "benchmark_score": 89.16,
+  "languages_supported": [
+    "python",
+    "java",
+    "cpp",
+    "c",
+    "go",
+    "rust",
+    "javascript",
+    "typescript",
+    "csharp",
+    "shell"
+  ]
+}
