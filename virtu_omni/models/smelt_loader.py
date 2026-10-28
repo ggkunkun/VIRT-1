@@ -20,13 +20,50 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 # Ensure VIRTU source root in path for Virtu neural architecture definition
-VIRTU_SRC_ROOT = Path(r"D:\智能制造Agent\Virtu")
-if str(VIRTU_SRC_ROOT) not in sys.path:
-    sys.path.insert(0, str(VIRTU_SRC_ROOT))
+CANDIDATE_PATHS = [
+    Path(r"D:\ent_build\Virtu"),
+    Path(r"D:\_arena_gate_wt\Virtu"),
+    Path(r"D:\_loopcore_wt\Virtu"),
+    Path(r"D:\_widen_wt\Virtu"),
+    Path(r"D:\智能制造Agent\Virtu"),
+]
+for p in CANDIDATE_PATHS:
+    if p.exists() and str(p) not in sys.path:
+        sys.path.insert(0, str(p))
 
-from virtu import config as C
-from virtu.constants import SUBSYSTEM_NAMES, SUBSYSTEM_KEYS, PAD_ID, BOS_ID, EOS_ID, UNK_ID
-from virtu.model import Virtu
+try:
+    from virtu import config as C
+except ImportError:
+    C = None
+
+try:
+    from virtu.model import WPT2 as Virtu
+except ImportError:
+    try:
+        from virtu.model import Virtu
+    except ImportError:
+        Virtu = None
+
+SUBSYSTEM_NAMES = [
+    "代码开发与重构 (coding_dev)",
+    "数控制造与切削动力学 (cnc_mfg)",
+    "终端命令与系统运维 (shell_sys)",
+    "网络检索与数据抓取 (web_research)",
+    "版本控制与仓库管理 (git_vcs)",
+    "文件读写与工作区索引 (file_fs)",
+    "故障诊断与异常修复 (debug_troubleshoot)",
+    "测试验证与质量评估 (test_qa)",
+    "安全合规与权限防线 (sec_compliance)",
+    "多模态视觉与几何感知 (multimodal_geom)",
+    "知识蒸馏与参数微调 (distill_tuning)",
+    "服务推理与并发调度 (serving_sched)",
+]
+SUBSYSTEM_KEYS = [
+    "coding_dev", "cnc_mfg", "shell_sys", "web_research",
+    "git_vcs", "file_fs", "debug_troubleshoot", "test_qa",
+    "sec_compliance", "multimodal_geom", "distill_tuning", "serving_sched"
+]
+PAD_ID, BOS_ID, EOS_ID, UNK_ID = 0, 1, 2, 3
 
 # Supported operations and materials
 OPERATIONS = ["face", "pocket", "drill", "slot", "contour", "thread", "chamfer", "boss"]
