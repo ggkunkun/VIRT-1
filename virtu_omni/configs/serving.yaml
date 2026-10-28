@@ -1,0 +1,9 @@
+serving:
+  host: "0.0.0.0"
+  port: 8080
+  workers: 4
+  max_concurrency: 64
+  target_latency_ms: 200.0
+  enable_paged_attention: true
+  enable_smoothquant_int8: false
+  timeout_seconds: 30.0

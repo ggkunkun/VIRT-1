@@ -1,0 +1,23 @@
+# Python & Virtualenv
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Model checkpoints & large binary dumps
+*.pt
+*.pth
+*.bin
+*.safetensors
+checkpoints/*.pt
+
+# OS & Logs
+.DS_Store
+Thumbs.db
+*.log
+logs/

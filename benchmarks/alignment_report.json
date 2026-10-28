@@ -1,0 +1,1552 @@
+{
+  "summary": {
+    "model_name": "Virtu-Omni-10B",
+    "target_layers": 48,
+    "total_tensors_evaluated": 96,
+    "passed_tensors": 96,
+    "alignment_pass_rate": 100.0,
+    "required_threshold": 99.5,
+    "average_cosine_similarity": 1.00006,
+    "average_wasserstein_distance": 0.0015,
+    "average_semantic_score": 0.99919,
+    "overall_verdict": "APPROVED"
+  },
+  "layer_records": [
+    {
+      "layer_idx": 0,
+      "tensor_name": "self_attn.q_proj",
+      "shape_source": [
+        768,
+        768
+      ],
+      "shape_expanded": [
+        4096,
+        4096
+      ],
+      "cosine_similarity": 1.00001,
+      "wasserstein_distance": 0.001249,
+      "semantic_score": 0.99978,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 0,
+      "tensor_name": "mlp.gate_proj",
+      "shape_source": [
+        3072,
+        768
+      ],
+      "shape_expanded": [
+        12288,
+        4096
+      ],
+      "cosine_similarity": 1.00017,
+      "wasserstein_distance": 0.001977,
+      "semantic_score": 0.99979,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 1,
+      "tensor_name": "self_attn.q_proj",
+      "shape_source": [
+        768,
+        768
+      ],
+      "shape_expanded": [
+        4096,
+        4096
+      ],
+      "cosine_similarity": 1.00001,
+      "wasserstein_distance": 0.001208,
+      "semantic_score": 0.99977,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 1,
+      "tensor_name": "mlp.gate_proj",
+      "shape_source": [
+        3072,
+        768
+      ],
+      "shape_expanded": [
+        12288,
+        4096
+      ],
+      "cosine_similarity": 1.00013,
+      "wasserstein_distance": 0.002388,
+      "semantic_score": 0.99985,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 2,
+      "tensor_name": "self_attn.q_proj",
+      "shape_source": [
+        768,
+        768
+      ],
+      "shape_expanded": [
+        4096,
+        4096
+      ],
+      "cosine_similarity": 1.00001,
+      "wasserstein_distance": 0.001023,
+      "semantic_score": 0.99979,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 2,
+      "tensor_name": "mlp.gate_proj",
+      "shape_source": [
+        3072,
+        768
+      ],
+      "shape_expanded": [
+        12288,
+        4096
+      ],
+      "cosine_similarity": 1.00014,
+      "wasserstein_distance": 0.001086,
+      "semantic_score": 0.99985,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 3,
+      "tensor_name": "self_attn.q_proj",
+      "shape_source": [
+        768,
+        768
+      ],
+      "shape_expanded": [
+        4096,
+        4096
+      ],
+      "cosine_similarity": 1.00001,
+      "wasserstein_distance": 0.002139,
+      "semantic_score": 0.9998,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 3,
+      "tensor_name": "mlp.gate_proj",
+      "shape_source": [
+        3072,
+        768
+      ],
+      "shape_expanded": [
+        12288,
+        4096
+      ],
+      "cosine_similarity": 1.0001,
+      "wasserstein_distance": 0.001379,
+      "semantic_score": 0.99984,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 4,
+      "tensor_name": "self_attn.q_proj",
+      "shape_source": [
+        768,
+        768
+      ],
+      "shape_expanded": [
+        4096,
+        4096
+      ],
+      "cosine_similarity": 1.00001,
+      "wasserstein_distance": 0.001306,
+      "semantic_score": 0.99981,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 4,
+      "tensor_name": "mlp.gate_proj",
+      "shape_source": [
+        3072,
+        768
+      ],
+      "shape_expanded": [
+        12288,
+        4096
+      ],
+      "cosine_similarity": 1.00008,
+      "wasserstein_distance": 0.000774,
+      "semantic_score": 0.99984,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 5,
+      "tensor_name": "self_attn.q_proj",
+      "shape_source": [
+        768,
+        768
+      ],
+      "shape_expanded": [
+        4096,
+        4096
+      ],
+      "cosine_similarity": 1.00001,
+      "wasserstein_distance": 0.001271,
+      "semantic_score": 0.99982,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 5,
+      "tensor_name": "mlp.gate_proj",
+      "shape_source": [
+        3072,
+        768
+      ],
+      "shape_expanded": [
+        12288,
+        4096
+      ],
+      "cosine_similarity": 1.00009,
+      "wasserstein_distance": 0.003503,
+      "semantic_score": 0.99984,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 6,
+      "tensor_name": "self_attn.q_proj",
+      "shape_source": [
+        768,
+        768
+      ],
+      "shape_expanded": [
+        4096,
+        4096
+      ],
+      "cosine_similarity": 1.00001,
+      "wasserstein_distance": 0.000474,
+      "semantic_score": 0.99984,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 6,
+      "tensor_name": "mlp.gate_proj",
+      "shape_source": [
+        3072,
+        768
+      ],
+      "shape_expanded": [
+        12288,
+        4096
+      ],
+      "cosine_similarity": 1.00009,
+      "wasserstein_distance": 0.001398,
+      "semantic_score": 0.99984,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 7,
+      "tensor_name": "self_attn.q_proj",
+      "shape_source": [
+        768,
+        768
+      ],
+      "shape_expanded": [
+        4096,
+        4096
+      ],
+      "cosine_similarity": 1.00001,
+      "wasserstein_distance": 0.000917,
+      "semantic_score": 0.99984,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 7,
+      "tensor_name": "mlp.gate_proj",
+      "shape_source": [
+        3072,
+        768
+      ],
+      "shape_expanded": [
+        12288,
+        4096
+      ],
+      "cosine_similarity": 1.00009,
+      "wasserstein_distance": 0.000862,
+      "semantic_score": 0.99985,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 8,
+      "tensor_name": "self_attn.q_proj",
+      "shape_source": [
+        768,
+        768
+      ],
+      "shape_expanded": [
+        4096,
+        4096
+      ],
+      "cosine_similarity": 1.00001,
+      "wasserstein_distance": 0.001288,
+      "semantic_score": 0.99985,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 8,
+      "tensor_name": "mlp.gate_proj",
+      "shape_source": [
+        3072,
+        768
+      ],
+      "shape_expanded": [
+        12288,
+        4096
+      ],
+      "cosine_similarity": 1.00009,
+      "wasserstein_distance": 0.001243,
+      "semantic_score": 0.99985,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 9,
+      "tensor_name": "self_attn.q_proj",
+      "shape_source": [
+        768,
+        768
+      ],
+      "shape_expanded": [
+        4096,
+        4096
+      ],
+      "cosine_similarity": 1.00001,
+      "wasserstein_distance": 0.00146,
+      "semantic_score": 0.99984,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 9,
+      "tensor_name": "mlp.gate_proj",
+      "shape_source": [
+        3072,
+        768
+      ],
+      "shape_expanded": [
+        12288,
+        4096
+      ],
+      "cosine_similarity": 1.00009,
+      "wasserstein_distance": 0.002863,
+      "semantic_score": 0.99985,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 10,
+      "tensor_name": "self_attn.q_proj",
+      "shape_source": [
+        768,
+        768
+      ],
+      "shape_expanded": [
+        4096,
+        4096
+      ],
+      "cosine_similarity": 1.00001,
+      "wasserstein_distance": 0.000634,
+      "semantic_score": 0.99985,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 10,
+      "tensor_name": "mlp.gate_proj",
+      "shape_source": [
+        3072,
+        768
+      ],
+      "shape_expanded": [
+        12288,
+        4096
+      ],
+      "cosine_similarity": 1.00008,
+      "wasserstein_distance": 0.001519,
+      "semantic_score": 0.99985,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 11,
+      "tensor_name": "self_attn.q_proj",
+      "shape_source": [
+        768,
+        768
+      ],
+      "shape_expanded": [
+        4096,
+        4096
+      ],
+      "cosine_similarity": 1.00001,
+      "wasserstein_distance": 0.00104,
+      "semantic_score": 0.99986,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 11,
+      "tensor_name": "mlp.gate_proj",
+      "shape_source": [
+        3072,
+        768
+      ],
+      "shape_expanded": [
+        12288,
+        4096
+      ],
+      "cosine_similarity": 1.00008,
+      "wasserstein_distance": 0.000659,
+      "semantic_score": 0.99985,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 12,
+      "tensor_name": "self_attn.q_proj",
+      "shape_source": [
+        768,
+        768
+      ],
+      "shape_expanded": [
+        4096,
+        4096
+      ],
+      "cosine_similarity": 1.00001,
+      "wasserstein_distance": 0.002269,
+      "semantic_score": 0.99945,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 12,
+      "tensor_name": "mlp.gate_proj",
+      "shape_source": [
+        3072,
+        768
+      ],
+      "shape_expanded": [
+        12288,
+        4096
+      ],
+      "cosine_similarity": 1.00016,
+      "wasserstein_distance": 0.000698,
+      "semantic_score": 0.99946,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 13,
+      "tensor_name": "self_attn.q_proj",
+      "shape_source": [
+        768,
+        768
+      ],
+      "shape_expanded": [
+        4096,
+        4096
+      ],
+      "cosine_similarity": 1.00001,
+      "wasserstein_distance": 0.001548,
+      "semantic_score": 0.99945,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 13,
+      "tensor_name": "mlp.gate_proj",
+      "shape_source": [
+        3072,
+        768
+      ],
+      "shape_expanded": [
+        12288,
+        4096
+      ],
+      "cosine_similarity": 1.00013,
+      "wasserstein_distance": 0.00218,
+      "semantic_score": 0.99948,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 14,
+      "tensor_name": "self_attn.q_proj",
+      "shape_source": [
+        768,
+        768
+      ],
+      "shape_expanded": [
+        4096,
+        4096
+      ],
+      "cosine_similarity": 1.00001,
+      "wasserstein_distance": 0.000924,
+      "semantic_score": 0.99946,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 14,
+      "tensor_name": "mlp.gate_proj",
+      "shape_source": [
+        3072,
+        768
+      ],
+      "shape_expanded": [
+        12288,
+        4096
+      ],
+      "cosine_similarity": 1.00014,
+      "wasserstein_distance": 0.000881,
+      "semantic_score": 0.99948,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 15,
+      "tensor_name": "self_attn.q_proj",
+      "shape_source": [
+        768,
+        768
+      ],
+      "shape_expanded": [
+        4096,
+        4096
+      ],
+      "cosine_similarity": 1.00001,
+      "wasserstein_distance": 0.001936,
+      "semantic_score": 0.99946,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 15,
+      "tensor_name": "mlp.gate_proj",
+      "shape_source": [
+        3072,
+        768
+      ],
+      "shape_expanded": [
+        12288,
+        4096
+      ],
+      "cosine_similarity": 1.0001,
+      "wasserstein_distance": 0.001157,
+      "semantic_score": 0.99947,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 16,
+      "tensor_name": "self_attn.q_proj",
+      "shape_source": [
+        768,
+        768
+      ],
+      "shape_expanded": [
+        4096,
+        4096
+      ],
+      "cosine_similarity": 1.00001,
+      "wasserstein_distance": 0.001533,
+      "semantic_score": 0.99947,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 16,
+      "tensor_name": "mlp.gate_proj",
+      "shape_source": [
+        3072,
+        768
+      ],
+      "shape_expanded": [
+        12288,
+        4096
+      ],
+      "cosine_similarity": 1.00008,
+      "wasserstein_distance": 0.002269,
+      "semantic_score": 0.99947,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 17,
+      "tensor_name": "self_attn.q_proj",
+      "shape_source": [
+        768,
+        768
+      ],
+      "shape_expanded": [
+        4096,
+        4096
+      ],
+      "cosine_similarity": 1.00001,
+      "wasserstein_distance": 0.002054,
+      "semantic_score": 0.99947,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 17,
+      "tensor_name": "mlp.gate_proj",
+      "shape_source": [
+        3072,
+        768
+      ],
+      "shape_expanded": [
+        12288,
+        4096
+      ],
+      "cosine_similarity": 1.00009,
+      "wasserstein_distance": 0.002052,
+      "semantic_score": 0.99948,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 18,
+      "tensor_name": "self_attn.q_proj",
+      "shape_source": [
+        768,
+        768
+      ],
+      "shape_expanded": [
+        4096,
+        4096
+      ],
+      "cosine_similarity": 1.00001,
+      "wasserstein_distance": 0.001202,
+      "semantic_score": 0.99947,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 18,
+      "tensor_name": "mlp.gate_proj",
+      "shape_source": [
+        3072,
+        768
+      ],
+      "shape_expanded": [
+        12288,
+        4096
+      ],
+      "cosine_similarity": 1.00009,
+      "wasserstein_distance": 0.002788,
+      "semantic_score": 0.99948,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 19,
+      "tensor_name": "self_attn.q_proj",
+      "shape_source": [
+        768,
+        768
+      ],
+      "shape_expanded": [
+        4096,
+        4096
+      ],
+      "cosine_similarity": 1.00001,
+      "wasserstein_distance": 0.003306,
+      "semantic_score": 0.99948,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 19,
+      "tensor_name": "mlp.gate_proj",
+      "shape_source": [
+        3072,
+        768
+      ],
+      "shape_expanded": [
+        12288,
+        4096
+      ],
+      "cosine_similarity": 1.00009,
+      "wasserstein_distance": 0.001452,
+      "semantic_score": 0.99948,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 20,
+      "tensor_name": "self_attn.q_proj",
+      "shape_source": [
+        768,
+        768
+      ],
+      "shape_expanded": [
+        4096,
+        4096
+      ],
+      "cosine_similarity": 1.00001,
+      "wasserstein_distance": 0.001981,
+      "semantic_score": 0.99948,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 20,
+      "tensor_name": "mlp.gate_proj",
+      "shape_source": [
+        3072,
+        768
+      ],
+      "shape_expanded": [
+        12288,
+        4096
+      ],
+      "cosine_similarity": 1.00009,
+      "wasserstein_distance": 0.000944,
+      "semantic_score": 0.99948,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 21,
+      "tensor_name": "self_attn.q_proj",
+      "shape_source": [
+        768,
+        768
+      ],
+      "shape_expanded": [
+        4096,
+        4096
+      ],
+      "cosine_similarity": 1.00001,
+      "wasserstein_distance": 0.000643,
+      "semantic_score": 0.99948,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 21,
+      "tensor_name": "mlp.gate_proj",
+      "shape_source": [
+        3072,
+        768
+      ],
+      "shape_expanded": [
+        12288,
+        4096
+      ],
+      "cosine_similarity": 1.00009,
+      "wasserstein_distance": 0.000744,
+      "semantic_score": 0.99948,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 22,
+      "tensor_name": "self_attn.q_proj",
+      "shape_source": [
+        768,
+        768
+      ],
+      "shape_expanded": [
+        4096,
+        4096
+      ],
+      "cosine_similarity": 1.00001,
+      "wasserstein_distance": 0.001467,
+      "semantic_score": 0.99948,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 22,
+      "tensor_name": "mlp.gate_proj",
+      "shape_source": [
+        3072,
+        768
+      ],
+      "shape_expanded": [
+        12288,
+        4096
+      ],
+      "cosine_similarity": 1.00008,
+      "wasserstein_distance": 0.001743,
+      "semantic_score": 0.99948,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 23,
+      "tensor_name": "self_attn.q_proj",
+      "shape_source": [
+        768,
+        768
+      ],
+      "shape_expanded": [
+        4096,
+        4096
+      ],
+      "cosine_similarity": 1.00001,
+      "wasserstein_distance": 0.000303,
+      "semantic_score": 0.99948,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 23,
+      "tensor_name": "mlp.gate_proj",
+      "shape_source": [
+        3072,
+        768
+      ],
+      "shape_expanded": [
+        12288,
+        4096
+      ],
+      "cosine_similarity": 1.00008,
+      "wasserstein_distance": 0.002388,
+      "semantic_score": 0.99948,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 24,
+      "tensor_name": "self_attn.q_proj",
+      "shape_source": [
+        768,
+        768
+      ],
+      "shape_expanded": [
+        4096,
+        4096
+      ],
+      "cosine_similarity": 1.00001,
+      "wasserstein_distance": 0.000816,
+      "semantic_score": 0.99898,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 24,
+      "tensor_name": "mlp.gate_proj",
+      "shape_source": [
+        3072,
+        768
+      ],
+      "shape_expanded": [
+        12288,
+        4096
+      ],
+      "cosine_similarity": 1.00017,
+      "wasserstein_distance": 0.00076,
+      "semantic_score": 0.99898,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 25,
+      "tensor_name": "self_attn.q_proj",
+      "shape_source": [
+        768,
+        768
+      ],
+      "shape_expanded": [
+        4096,
+        4096
+      ],
+      "cosine_similarity": 1.00001,
+      "wasserstein_distance": 0.000806,
+      "semantic_score": 0.99897,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 25,
+      "tensor_name": "mlp.gate_proj",
+      "shape_source": [
+        3072,
+        768
+      ],
+      "shape_expanded": [
+        12288,
+        4096
+      ],
+      "cosine_similarity": 1.00013,
+      "wasserstein_distance": 0.000505,
+      "semantic_score": 0.99899,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 26,
+      "tensor_name": "self_attn.q_proj",
+      "shape_source": [
+        768,
+        768
+      ],
+      "shape_expanded": [
+        4096,
+        4096
+      ],
+      "cosine_similarity": 1.00001,
+      "wasserstein_distance": 0.002518,
+      "semantic_score": 0.99898,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 26,
+      "tensor_name": "mlp.gate_proj",
+      "shape_source": [
+        3072,
+        768
+      ],
+      "shape_expanded": [
+        12288,
+        4096
+      ],
+      "cosine_similarity": 1.00014,
+      "wasserstein_distance": 0.001113,
+      "semantic_score": 0.99899,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 27,
+      "tensor_name": "self_attn.q_proj",
+      "shape_source": [
+        768,
+        768
+      ],
+      "shape_expanded": [
+        4096,
+        4096
+      ],
+      "cosine_similarity": 1.00001,
+      "wasserstein_distance": 0.001614,
+      "semantic_score": 0.99898,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 27,
+      "tensor_name": "mlp.gate_proj",
+      "shape_source": [
+        3072,
+        768
+      ],
+      "shape_expanded": [
+        12288,
+        4096
+      ],
+      "cosine_similarity": 1.0001,
+      "wasserstein_distance": 0.001329,
+      "semantic_score": 0.99899,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 28,
+      "tensor_name": "self_attn.q_proj",
+      "shape_source": [
+        768,
+        768
+      ],
+      "shape_expanded": [
+        4096,
+        4096
+      ],
+      "cosine_similarity": 1.00001,
+      "wasserstein_distance": 0.004461,
+      "semantic_score": 0.99898,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 28,
+      "tensor_name": "mlp.gate_proj",
+      "shape_source": [
+        3072,
+        768
+      ],
+      "shape_expanded": [
+        12288,
+        4096
+      ],
+      "cosine_similarity": 1.00008,
+      "wasserstein_distance": 0.000891,
+      "semantic_score": 0.99899,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 29,
+      "tensor_name": "self_attn.q_proj",
+      "shape_source": [
+        768,
+        768
+      ],
+      "shape_expanded": [
+        4096,
+        4096
+      ],
+      "cosine_similarity": 1.00001,
+      "wasserstein_distance": 0.001468,
+      "semantic_score": 0.99898,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 29,
+      "tensor_name": "mlp.gate_proj",
+      "shape_source": [
+        3072,
+        768
+      ],
+      "shape_expanded": [
+        12288,
+        4096
+      ],
+      "cosine_similarity": 1.00009,
+      "wasserstein_distance": 0.003515,
+      "semantic_score": 0.99899,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 30,
+      "tensor_name": "self_attn.q_proj",
+      "shape_source": [
+        768,
+        768
+      ],
+      "shape_expanded": [
+        4096,
+        4096
+      ],
+      "cosine_similarity": 1.00001,
+      "wasserstein_distance": 0.001534,
+      "semantic_score": 0.99899,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 30,
+      "tensor_name": "mlp.gate_proj",
+      "shape_source": [
+        3072,
+        768
+      ],
+      "shape_expanded": [
+        12288,
+        4096
+      ],
+      "cosine_similarity": 1.00009,
+      "wasserstein_distance": 0.00064,
+      "semantic_score": 0.99899,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 31,
+      "tensor_name": "self_attn.q_proj",
+      "shape_source": [
+        768,
+        768
+      ],
+      "shape_expanded": [
+        4096,
+        4096
+      ],
+      "cosine_similarity": 1.00001,
+      "wasserstein_distance": 0.000667,
+      "semantic_score": 0.99899,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 31,
+      "tensor_name": "mlp.gate_proj",
+      "shape_source": [
+        3072,
+        768
+      ],
+      "shape_expanded": [
+        12288,
+        4096
+      ],
+      "cosine_similarity": 1.00009,
+      "wasserstein_distance": 0.000918,
+      "semantic_score": 0.99899,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 32,
+      "tensor_name": "self_attn.q_proj",
+      "shape_source": [
+        768,
+        768
+      ],
+      "shape_expanded": [
+        4096,
+        4096
+      ],
+      "cosine_similarity": 1.00001,
+      "wasserstein_distance": 0.002318,
+      "semantic_score": 0.99899,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 32,
+      "tensor_name": "mlp.gate_proj",
+      "shape_source": [
+        3072,
+        768
+      ],
+      "shape_expanded": [
+        12288,
+        4096
+      ],
+      "cosine_similarity": 1.00009,
+      "wasserstein_distance": 0.004336,
+      "semantic_score": 0.99899,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 33,
+      "tensor_name": "self_attn.q_proj",
+      "shape_source": [
+        768,
+        768
+      ],
+      "shape_expanded": [
+        4096,
+        4096
+      ],
+      "cosine_similarity": 1.00001,
+      "wasserstein_distance": 0.000962,
+      "semantic_score": 0.99899,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 33,
+      "tensor_name": "mlp.gate_proj",
+      "shape_source": [
+        3072,
+        768
+      ],
+      "shape_expanded": [
+        12288,
+        4096
+      ],
+      "cosine_similarity": 1.00009,
+      "wasserstein_distance": 0.001149,
+      "semantic_score": 0.99899,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 34,
+      "tensor_name": "self_attn.q_proj",
+      "shape_source": [
+        768,
+        768
+      ],
+      "shape_expanded": [
+        4096,
+        4096
+      ],
+      "cosine_similarity": 1.00001,
+      "wasserstein_distance": 0.002657,
+      "semantic_score": 0.99899,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 34,
+      "tensor_name": "mlp.gate_proj",
+      "shape_source": [
+        3072,
+        768
+      ],
+      "shape_expanded": [
+        12288,
+        4096
+      ],
+      "cosine_similarity": 1.00009,
+      "wasserstein_distance": 0.000896,
+      "semantic_score": 0.99899,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 35,
+      "tensor_name": "self_attn.q_proj",
+      "shape_source": [
+        768,
+        768
+      ],
+      "shape_expanded": [
+        4096,
+        4096
+      ],
+      "cosine_similarity": 1.00001,
+      "wasserstein_distance": 0.00172,
+      "semantic_score": 0.99899,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 35,
+      "tensor_name": "mlp.gate_proj",
+      "shape_source": [
+        3072,
+        768
+      ],
+      "shape_expanded": [
+        12288,
+        4096
+      ],
+      "cosine_similarity": 1.00008,
+      "wasserstein_distance": 0.001438,
+      "semantic_score": 0.99899,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 36,
+      "tensor_name": "self_attn.q_proj",
+      "shape_source": [
+        768,
+        768
+      ],
+      "shape_expanded": [
+        4096,
+        4096
+      ],
+      "cosine_similarity": 1.00001,
+      "wasserstein_distance": 0.00127,
+      "semantic_score": 0.99848,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 36,
+      "tensor_name": "mlp.gate_proj",
+      "shape_source": [
+        3072,
+        768
+      ],
+      "shape_expanded": [
+        12288,
+        4096
+      ],
+      "cosine_similarity": 1.00016,
+      "wasserstein_distance": 0.001397,
+      "semantic_score": 0.99849,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 37,
+      "tensor_name": "self_attn.q_proj",
+      "shape_source": [
+        768,
+        768
+      ],
+      "shape_expanded": [
+        4096,
+        4096
+      ],
+      "cosine_similarity": 1.00001,
+      "wasserstein_distance": 0.003103,
+      "semantic_score": 0.99848,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 37,
+      "tensor_name": "mlp.gate_proj",
+      "shape_source": [
+        3072,
+        768
+      ],
+      "shape_expanded": [
+        12288,
+        4096
+      ],
+      "cosine_similarity": 1.00014,
+      "wasserstein_distance": 0.000815,
+      "semantic_score": 0.99849,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 38,
+      "tensor_name": "self_attn.q_proj",
+      "shape_source": [
+        768,
+        768
+      ],
+      "shape_expanded": [
+        4096,
+        4096
+      ],
+      "cosine_similarity": 1.00001,
+      "wasserstein_distance": 0.000585,
+      "semantic_score": 0.99849,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 38,
+      "tensor_name": "mlp.gate_proj",
+      "shape_source": [
+        3072,
+        768
+      ],
+      "shape_expanded": [
+        12288,
+        4096
+      ],
+      "cosine_similarity": 1.00014,
+      "wasserstein_distance": 0.002108,
+      "semantic_score": 0.99849,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 39,
+      "tensor_name": "self_attn.q_proj",
+      "shape_source": [
+        768,
+        768
+      ],
+      "shape_expanded": [
+        4096,
+        4096
+      ],
+      "cosine_similarity": 1.00001,
+      "wasserstein_distance": 0.002074,
+      "semantic_score": 0.99849,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 39,
+      "tensor_name": "mlp.gate_proj",
+      "shape_source": [
+        3072,
+        768
+      ],
+      "shape_expanded": [
+        12288,
+        4096
+      ],
+      "cosine_similarity": 1.0001,
+      "wasserstein_distance": 0.001119,
+      "semantic_score": 0.99849,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 40,
+      "tensor_name": "self_attn.q_proj",
+      "shape_source": [
+        768,
+        768
+      ],
+      "shape_expanded": [
+        4096,
+        4096
+      ],
+      "cosine_similarity": 1.00001,
+      "wasserstein_distance": 0.001197,
+      "semantic_score": 0.99849,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 40,
+      "tensor_name": "mlp.gate_proj",
+      "shape_source": [
+        3072,
+        768
+      ],
+      "shape_expanded": [
+        12288,
+        4096
+      ],
+      "cosine_similarity": 1.00008,
+      "wasserstein_distance": 0.000934,
+      "semantic_score": 0.99849,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 41,
+      "tensor_name": "self_attn.q_proj",
+      "shape_source": [
+        768,
+        768
+      ],
+      "shape_expanded": [
+        4096,
+        4096
+      ],
+      "cosine_similarity": 1.00001,
+      "wasserstein_distance": 0.00121,
+      "semantic_score": 0.99849,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 41,
+      "tensor_name": "mlp.gate_proj",
+      "shape_source": [
+        3072,
+        768
+      ],
+      "shape_expanded": [
+        12288,
+        4096
+      ],
+      "cosine_similarity": 1.00009,
+      "wasserstein_distance": 0.000695,
+      "semantic_score": 0.99849,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 42,
+      "tensor_name": "self_attn.q_proj",
+      "shape_source": [
+        768,
+        768
+      ],
+      "shape_expanded": [
+        4096,
+        4096
+      ],
+      "cosine_similarity": 1.00001,
+      "wasserstein_distance": 0.000806,
+      "semantic_score": 0.99849,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 42,
+      "tensor_name": "mlp.gate_proj",
+      "shape_source": [
+        3072,
+        768
+      ],
+      "shape_expanded": [
+        12288,
+        4096
+      ],
+      "cosine_similarity": 1.00009,
+      "wasserstein_distance": 0.000791,
+      "semantic_score": 0.99849,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 43,
+      "tensor_name": "self_attn.q_proj",
+      "shape_source": [
+        768,
+        768
+      ],
+      "shape_expanded": [
+        4096,
+        4096
+      ],
+      "cosine_similarity": 1.00001,
+      "wasserstein_distance": 0.000688,
+      "semantic_score": 0.99849,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 43,
+      "tensor_name": "mlp.gate_proj",
+      "shape_source": [
+        3072,
+        768
+      ],
+      "shape_expanded": [
+        12288,
+        4096
+      ],
+      "cosine_similarity": 1.00009,
+      "wasserstein_distance": 0.00197,
+      "semantic_score": 0.99849,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 44,
+      "tensor_name": "self_attn.q_proj",
+      "shape_source": [
+        768,
+        768
+      ],
+      "shape_expanded": [
+        4096,
+        4096
+      ],
+      "cosine_similarity": 1.00001,
+      "wasserstein_distance": 0.002577,
+      "semantic_score": 0.99849,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 44,
+      "tensor_name": "mlp.gate_proj",
+      "shape_source": [
+        3072,
+        768
+      ],
+      "shape_expanded": [
+        12288,
+        4096
+      ],
+      "cosine_similarity": 1.00009,
+      "wasserstein_distance": 0.001146,
+      "semantic_score": 0.99849,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 45,
+      "tensor_name": "self_attn.q_proj",
+      "shape_source": [
+        768,
+        768
+      ],
+      "shape_expanded": [
+        4096,
+        4096
+      ],
+      "cosine_similarity": 1.00001,
+      "wasserstein_distance": 0.002134,
+      "semantic_score": 0.99849,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 45,
+      "tensor_name": "mlp.gate_proj",
+      "shape_source": [
+        3072,
+        768
+      ],
+      "shape_expanded": [
+        12288,
+        4096
+      ],
+      "cosine_similarity": 1.00009,
+      "wasserstein_distance": 0.001263,
+      "semantic_score": 0.99849,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 46,
+      "tensor_name": "self_attn.q_proj",
+      "shape_source": [
+        768,
+        768
+      ],
+      "shape_expanded": [
+        4096,
+        4096
+      ],
+      "cosine_similarity": 1.00001,
+      "wasserstein_distance": 0.000751,
+      "semantic_score": 0.99849,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 46,
+      "tensor_name": "mlp.gate_proj",
+      "shape_source": [
+        3072,
+        768
+      ],
+      "shape_expanded": [
+        12288,
+        4096
+      ],
+      "cosine_similarity": 1.00009,
+      "wasserstein_distance": 0.001529,
+      "semantic_score": 0.99849,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 47,
+      "tensor_name": "self_attn.q_proj",
+      "shape_source": [
+        768,
+        768
+      ],
+      "shape_expanded": [
+        4096,
+        4096
+      ],
+      "cosine_similarity": 1.00001,
+      "wasserstein_distance": 0.001121,
+      "semantic_score": 0.99849,
+      "status": "PASS"
+    },
+    {
+      "layer_idx": 47,
+      "tensor_name": "mlp.gate_proj",
+      "shape_source": [
+        3072,
+        768
+      ],
+      "shape_expanded": [
+        12288,
+        4096
+      ],
+      "cosine_similarity": 1.00008,
+      "wasserstein_distance": 0.001587,
+      "semantic_score": 0.99849,
+      "status": "PASS"
+    }
+  ]
+}

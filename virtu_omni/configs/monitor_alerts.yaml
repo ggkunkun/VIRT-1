@@ -1,0 +1,13 @@
+monitor:
+  enable_monitoring: true
+  loss_spike_sigma_threshold: 3.0
+  grad_norm_hard_threshold: 5.0
+  gpu_temp_max_celsius: 85.0
+  gpu_memory_threshold_percent: 98.5
+  alert_wechat_webhook: "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=mock-key"
+  alert_feishu_webhook: "https://open.feishu.cn/open-apis/bot/v2/hook/mock-key"
+  smtp_server: "smtp.enterprise.com"
+  smtp_port: 587
+  alert_email_receiver: "ops-ai-team@enterprise.com"
+  auto_pause_on_anomaly: true
+  emergency_checkpoint_dir: "checkpoints/emergency"
