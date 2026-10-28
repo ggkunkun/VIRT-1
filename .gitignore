@@ -16,8 +16,6 @@ htmlcov/
 *.safetensors
 checkpoints/*.pt
 
-# OS & Logs
+# OS
 .DS_Store
 Thumbs.db
-*.log
-logs/
