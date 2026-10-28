@@ -33,6 +33,15 @@ class ModelConfig:
     use_qk_norm: bool = True
     dropout_prob: float = 0.0
 
+    # Loop Transformer Recurrent Iterative Configuration
+    max_loop_steps: int = 1
+    convergence_threshold: float = 1e-4
+    enable_state_cache: bool = True
+    loop_norm_type: str = "rms"
+    loop_gating: bool = True
+    adaptive_loop: bool = True
+    loop_exit_metric: str = "relative_l2"
+
     @property
     def total_estimated_parameters(self) -> int:
         """Calculate exact theoretical parameter count."""

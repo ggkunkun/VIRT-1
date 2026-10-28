@@ -17,3 +17,10 @@ model:
   initializer_range: 0.02
   use_qk_norm: true
   dropout_prob: 0.0
+  max_loop_steps: 1
+  convergence_threshold: 0.0001
+  enable_state_cache: true
+  loop_norm_type: "rms"
+  loop_gating: true
+  adaptive_loop: true
+  loop_exit_metric: "relative_l2"
