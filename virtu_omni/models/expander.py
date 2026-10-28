@@ -157,6 +157,19 @@ class BaseParameterExpander:
             layer_weights[f"{prefix}.self_attn.q_norm.weight"] = torch.ones(self.config.head_dim)
             layer_weights[f"{prefix}.self_attn.k_norm.weight"] = torch.ones(self.config.head_dim)
 
+        # Loop Transformer recurrent norm and state gate
+        layer_weights[f"{prefix}.loop_norm.weight"] = torch.ones(self.config.hidden_dim)
+        if self.config.loop_gating:
+            layer_weights[f"{prefix}.state_gate.w_gate.weight"] = torch.zeros(
+                self.config.hidden_dim, self.config.hidden_dim
+            )
+            layer_weights[f"{prefix}.state_gate.w_gate.bias"] = torch.full(
+                (self.config.hidden_dim,), 10.0
+            )
+            layer_weights[f"{prefix}.state_gate.u_gate.weight"] = torch.zeros(
+                self.config.hidden_dim, self.config.hidden_dim
+            )
+
         return layer_weights
 
     def build_expanded_10b_state_dict(

@@ -18,6 +18,13 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 from virtu_omni.config import ModelConfig
+from virtu_omni.models.loop import (
+    LoopRMSNorm,
+    LoopStateGate,
+    LoopStepController,
+    LoopConvergenceCriterion,
+    LoopStateCache,
+)
 
 
 class VirtuRMSNorm(nn.Module):
@@ -202,15 +209,28 @@ class VirtuSwiGLU(nn.Module):
         return self.down_proj(F.silu(self.gate_proj(x)) * self.up_proj(x))
 
 
-class VirtuTransformerBlock(nn.Module):
-    """Transformer Layer Block with Pre-RMSNorm and Residual Bypass."""
+class LoopTransformerBlock(nn.Module):
+    """Loop Transformer Recurrent Block.
 
-    def __init__(self, config: ModelConfig) -> None:
+    Replaces standard feedforward Transformer blocks with a recurrent iterative
+    unit adhering to Loop Transformer standard specifications:
+    - Pre-Norm Grouped-Query Attention (VirtuAttention)
+    - Pre-Norm SwiGLU Feed-Forward Network (VirtuSwiGLU)
+    - Loop Normalization Layer (LoopRMSNorm)
+    - State Gating Unit (LoopStateGate)
+    - Dynamic Loop Step Iteration with Convergence Early Exit
+    """
+
+    def __init__(self, config: ModelConfig, layer_idx: int = 0) -> None:
         super().__init__()
+        self.config = config
+        self.layer_idx = layer_idx
         self.input_layernorm = VirtuRMSNorm(config.hidden_dim, eps=config.rms_norm_eps)
         self.self_attn = VirtuAttention(config)
         self.post_attention_layernorm = VirtuRMSNorm(config.hidden_dim, eps=config.rms_norm_eps)
         self.mlp = VirtuSwiGLU(config)
+        self.loop_norm = LoopRMSNorm(config.hidden_dim, eps=config.rms_norm_eps)
+        self.state_gate = LoopStateGate(config.hidden_dim) if config.loop_gating else None
 
     def forward(
         self,
@@ -219,24 +239,90 @@ class VirtuTransformerBlock(nn.Module):
         rope_engine: Optional[UniRoPE] = None,
         is_visual: bool = False,
         grid_hw: Optional[Tuple[int, int]] = None,
+        step_controller: Optional[LoopStepController] = None,
+        convergence_criterion: Optional[LoopConvergenceCriterion] = None,
+        state_cache: Optional[LoopStateCache] = None,
+        loop_steps: Optional[int] = None,
     ) -> torch.Tensor:
-        # Pre-Norm Attention
-        normed_attn_in = self.input_layernorm(hidden_states)
-        attn_out = self.self_attn(
-            normed_attn_in,
-            attention_mask=attention_mask,
-            rope_engine=rope_engine,
-            is_visual=is_visual,
-            grid_hw=grid_hw,
+        """Execute recurrent loop iterations over the Transformer block.
+
+        When loop_steps <= 1, executes a single pass mathematically identical
+        to the baseline standard Transformer block.
+        """
+        max_steps = (
+            loop_steps
+            if loop_steps is not None
+            else (step_controller.max_loop_steps if step_controller is not None else self.config.max_loop_steps)
         )
-        hidden_states = hidden_states + attn_out
 
-        # Pre-Norm MLP
-        normed_mlp_in = self.post_attention_layernorm(hidden_states)
-        mlp_out = self.mlp(normed_mlp_in)
-        hidden_states = hidden_states + mlp_out
+        if max_steps <= 1:
+            # Baseline single-pass execution (bitwise identical to original)
+            normed_attn_in = self.input_layernorm(hidden_states)
+            attn_out = self.self_attn(
+                normed_attn_in,
+                attention_mask=attention_mask,
+                rope_engine=rope_engine,
+                is_visual=is_visual,
+                grid_hw=grid_hw,
+            )
+            hidden_states = hidden_states + attn_out
 
-        return hidden_states
+            normed_mlp_in = self.post_attention_layernorm(hidden_states)
+            mlp_out = self.mlp(normed_mlp_in)
+            hidden_states = hidden_states + mlp_out
+            return hidden_states
+
+        # Recurrent iterative loop execution (Loop Transformer core mechanism)
+        h_prev = hidden_states
+        h_curr = hidden_states
+
+        for step_idx in range(max_steps):
+            if step_idx == 0:
+                step_in = h_prev
+            else:
+                step_in = self.loop_norm(h_prev)
+
+            # Pre-Norm Attention
+            normed_attn = self.input_layernorm(step_in)
+            attn_out = self.self_attn(
+                normed_attn,
+                attention_mask=attention_mask,
+                rope_engine=rope_engine,
+                is_visual=is_visual,
+                grid_hw=grid_hw,
+            )
+            h_mid = step_in + attn_out
+
+            # Pre-Norm MLP
+            normed_mlp = self.post_attention_layernorm(h_mid)
+            mlp_out = self.mlp(normed_mlp)
+            h_candidate = h_mid + mlp_out
+
+            # State Gating with previous step state
+            if step_idx > 0 and self.state_gate is not None:
+                h_curr = self.state_gate(h_candidate, h_prev)
+            else:
+                h_curr = h_candidate
+
+            # Cache current step state
+            if state_cache is not None:
+                state_cache.set_state(f"L{self.layer_idx}_S{step_idx}", h_curr)
+
+            # Dynamic Convergence Evaluation
+            if step_idx > 0 and convergence_criterion is not None and self.config.adaptive_loop:
+                converged, delta = convergence_criterion.evaluate(h_curr, h_prev)
+                if step_controller is not None:
+                    step_controller.record_step(step_idx, delta, converged, self.layer_idx)
+                if converged:
+                    h_prev = h_curr
+                    break
+
+            h_prev = h_curr
+
+        return h_curr
+
+
+VirtuTransformerBlock = LoopTransformerBlock
 
 
 class ContinuousVisionProjector(nn.Module):
@@ -319,15 +405,37 @@ class VirtuOmni10B(nn.Module):
         self.embed_tokens = nn.Embedding(self.config.vocab_size, self.config.hidden_dim)
         self.vision_projector = ContinuousVisionProjector(self.config)
 
-        # 48-Layer Transformer Backbone
+        # Loop Transformer Core Controllers & Cache
+        self.step_controller = LoopStepController(self.config)
+        self.convergence_criterion = LoopConvergenceCriterion(
+            threshold=self.config.convergence_threshold,
+            metric=self.config.loop_exit_metric,
+        )
+        self.state_cache = LoopStateCache(enabled=self.config.enable_state_cache)
+
+        # 48-Layer Loop Transformer Backbone
         self.layers = nn.ModuleList([
-            VirtuTransformerBlock(self.config) for _ in range(self.config.num_layers)
+            LoopTransformerBlock(self.config, layer_idx=i)
+            for i in range(self.config.num_layers)
         ])
         self.final_norm = VirtuRMSNorm(self.config.hidden_dim, eps=self.config.rms_norm_eps)
 
         # Decoupled Dual Output Heads
         self.lm_head = LanguageModelHead(self.config)
         self.vision_gen_head = DiscreteLatentHead(self.config)
+
+    def set_loop_steps(self, steps: int) -> None:
+        """Dynamically configure runtime loop step budget."""
+        self.step_controller.set_max_steps(steps)
+
+    def get_loop_stats(self) -> Dict[str, Any]:
+        """Retrieve telemetry from the loop controller."""
+        return self.step_controller.get_summary()
+
+    def reset_loop_state(self) -> None:
+        """Reset state cache and telemetry controller."""
+        self.step_controller.reset()
+        self.state_cache.clear()
 
     def get_num_params(self) -> int:
         """Return total trainable parameter count."""
@@ -359,9 +467,14 @@ class VirtuOmni10B(nn.Module):
         images: Optional[torch.Tensor] = None,
         labels: Optional[torch.Tensor] = None,
         mode: str = "text_gen",  # 'text_gen', 'image_gen', or 'multimodal_eval'
+        loop_steps: Optional[int] = None,
     ) -> Dict[str, Any]:
-        """Unified forward pass processing interleaved or separate modalities."""
+        """Unified forward pass processing interleaved or separate modalities with Loop Transformer."""
         device = input_ids.device if input_ids is not None else images.device
+
+        # Reset loop telemetry and transient cache per forward pass
+        self.state_cache.clear()
+        self.step_controller.reset()
 
         # Process Modalities
         num_vision = 0
@@ -394,7 +507,7 @@ class VirtuOmni10B(nn.Module):
         else:
             raise ValueError("At least one modality (input_ids or images) must be provided.")
 
-        # Pass through 48 Transformer Layers
+        # Pass through Loop Transformer Backbone Layers
         for layer in self.layers:
             hidden_states = layer(
                 hidden_states,
@@ -402,12 +515,19 @@ class VirtuOmni10B(nn.Module):
                 rope_engine=self.rope_engine,
                 is_visual=(images is not None and input_ids is None),
                 grid_hw=grid_hw,
+                step_controller=self.step_controller,
+                convergence_criterion=self.convergence_criterion,
+                state_cache=self.state_cache,
+                loop_steps=loop_steps,
             )
 
         hidden_states = self.final_norm(hidden_states)
 
         # Output Head Routing
-        outputs: Dict[str, Any] = {"hidden_states": hidden_states}
+        outputs: Dict[str, Any] = {
+            "hidden_states": hidden_states,
+            "loop_stats": self.step_controller.get_summary(),
+        }
 
         if mode == "text_gen" or mode == "multimodal_eval":
             # Compute text logits over text token positions
