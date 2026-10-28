@@ -1,9 +1,10 @@
 {
   "status": "COMPLETED",
-  "global_step": 114,
-  "train_loss": 0.23858842528639607,
+  "global_step": 308,
+  "train_loss": 0.12020061488940635,
   "gpu": "NVIDIA L40S",
   "adapter_dir": "/root/cad_cam_finetune/output_checkpoints/cad_cam_six_software_lora_final",
+  "num_samples": 1226,
   "software_enhanced": [
     "SOLIDWORKS 2021",
     "Siemens NX 12.0",

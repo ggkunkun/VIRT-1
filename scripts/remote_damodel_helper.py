@@ -24,8 +24,8 @@ def exec_remote(cmd, stream_output=False):
     if stream_output:
         for line in stdout:
             print(line, end="")
-    out = stdout.read().decode()
-    err = stderr.read().decode()
+    out = stdout.read().decode("utf-8", errors="replace")
+    err = stderr.read().decode("utf-8", errors="replace")
     client.close()
     return out, err
 

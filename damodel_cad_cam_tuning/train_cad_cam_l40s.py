@@ -1,12 +1,13 @@
 """Fine-Tuning Script for Qwen3-8B on NVIDIA L40S (48GB VRAM).
 
-Focuses on:
-1. SOLIDWORKS 2021 (Parametric Equations & Macros)
-2. Siemens NX 12.0 (NXOpen Python & Revolve Modeling)
-3. AutoCAD 2026 (AutoLISP & 2D Engineering Drawings)
-4. Vericut 9.6 (Simulation Setup & Tool Libraries)
-5. CIMCO Edit 2026 (Macro B G-code & Backplot)
-6. 斯沃数控仿真软件 (FANUC 0i-TF & G54 WCS Setup)
+Reinforces:
+1. SOLIDWORKS 2021 (Parametric Equations, Macros, Simulation CAE, Plastics, Motion)
+2. Siemens NX 12.0 (NXOpen Python, ExpressionCollection, Multiaxis CAM, Nastran)
+3. AutoCAD 2026 (AutoLISP with layer discipline, GD&T, and Parametric Constraints)
+4. Vericut 9.6 (Kinematic machine simulation, OptiPath/Force, Auto-Diff)
+5. CIMCO Edit 2026 (FANUC Macro B parametric NC code, variable logic)
+6. 斯沃数控仿真 SSCNC (FANUC 0i-TF & G54 WCS Setup, Tool Quadrants T1-T9)
+7. Wish-Style Intent-to-Parametric CAD/CAM/CAE Blind-Testing Engine
 """
 
 import json
@@ -23,7 +24,7 @@ from transformers import (
 )
 
 BASE_MODEL_PATH = "/root/public-storage/model/Qwen/Qwen3-8B"
-DATASET_PATH = "/root/cad_cam_finetune/six_software_parametric_sft.jsonl"
+DATASET_PATH = "/root/cad_cam_finetune/comprehensive_wish_cad_cam_sft_1200.jsonl"
 OUTPUT_DIR = "/root/cad_cam_finetune/output_checkpoints"
 
 
@@ -32,39 +33,44 @@ def load_dataset(data_path, tokenizer, max_length=2048):
     samples = []
     with open(data_path, "r", encoding="utf-8") as f:
         for line in f:
-            if line.strip():
+            line = line.strip()
+            if line:
                 samples.append(json.loads(line))
 
     print(f"Loaded {len(samples)} instruction samples.")
 
     formatted_data = []
     for item in samples:
-        inst = item["instruction"]
-        inp = item.get("input", "")
-        out = item["output"]
+        if "messages" in item:
+            msgs = item["messages"]
+            sys_msg = next((m["content"] for m in msgs if m["role"] == "system"), "你是一个资深的工业级 CAD/CAM/CAE 智能体与参数化建模专家。")
+            user_msg = next((m["content"] for m in msgs if m["role"] == "user"), "")
+            asst_msg = next((m["content"] for m in msgs if m["role"] == "assistant"), "")
+        else:
+            inst = item.get("instruction", "")
+            inp = item.get("input", "")
+            asst_msg = item.get("output", "")
+            sys_msg = "你是一个资深的工业级 CAD/CAM/CNC 智能体与参数化建模专家，精通 SOLIDWORKS、Siemens NX、AutoCAD、Vericut、CIMCO Edit 以及斯沃数控仿真软件的底层脚本开发、方程式驱动建模与高精数控代码编程。"
+            user_msg = f"{inst}\n【输入参数与背景】: {inp}" if inp else inst
 
-        user_content = f"{inst}\n【输入参数与背景】: {inp}" if inp else inst
-        
         # Apply Qwen ChatML formatting
         prompt = (
-            f"<|im_start|>system\n"
-            f"你是一个资深的工业级 CAD/CAM/CNC 智能体与参数化建模专家，精通 SOLIDWORKS、Siemens NX、AutoCAD、Vericut、CIMCO Edit 以及斯沃数控仿真软件的底层脚本开发、方程式驱动建模与高精数控代码编程。<|im_end|>\n"
-            f"<|im_start|>user\n"
-            f"{user_content}<|im_end|>\n"
+            f"<|im_start|>system\n{sys_msg}<|im_end|>\n"
+            f"<|im_start|>user\n{user_msg}<|im_end|>\n"
             f"<|im_start|>assistant\n"
         )
-        full_text = prompt + out + "<|im_end|>"
-        
+        full_text = prompt + asst_msg + "<|im_end|>"
+
         prompt_ids = tokenizer.encode(prompt, add_special_tokens=False)
         full_ids = tokenizer.encode(full_text, add_special_tokens=False)
-        
+
         if len(full_ids) > max_length:
             full_ids = full_ids[:max_length]
-        
+
         labels = [-100] * len(prompt_ids) + full_ids[len(prompt_ids):]
         if len(labels) > max_length:
             labels = labels[:max_length]
-            
+
         formatted_data.append({
             "input_ids": full_ids,
             "labels": labels,
@@ -78,7 +84,7 @@ def main():
     os.makedirs(OUTPUT_DIR, exist_ok=True)
     device = "cuda" if torch.cuda.is_available() else "cpu"
     print(f"Using device: {device} | GPU: {torch.cuda.get_device_name(0) if torch.cuda.is_available() else 'None'}")
-    
+
     # 1. Load Tokenizer
     print("Loading tokenizer...")
     tokenizer = AutoTokenizer.from_pretrained(BASE_MODEL_PATH, trust_remote_code=True)
@@ -110,17 +116,17 @@ def main():
     # 4. Prepare Dataset
     dataset = load_dataset(DATASET_PATH, tokenizer)
 
-    # 5. Training Arguments
+    # 5. Training Arguments (Optimized for L40S throughput)
     training_args = TrainingArguments(
         output_dir=OUTPUT_DIR,
         per_device_train_batch_size=2,
         gradient_accumulation_steps=4,
         learning_rate=1e-4,
         weight_decay=0.01,
-        warmup_steps=10,
-        num_train_epochs=3,
-        logging_steps=5,
-        save_steps=25,
+        warmup_steps=15,
+        num_train_epochs=2,
+        logging_steps=10,
+        save_steps=50,
         save_total_limit=2,
         bf16=True,
         gradient_checkpointing=True,
@@ -142,7 +148,7 @@ def main():
         data_collator=data_collator,
     )
 
-    print("\n================ STARTING TRAINING ON NVIDIA L40S ================")
+    print("\n================ STARTING COMPREHENSIVE TRAINING ON NVIDIA L40S ================")
     train_result = trainer.train()
     print("================ TRAINING COMPLETE ================")
     print(train_result)
@@ -161,6 +167,7 @@ def main():
             "train_loss": train_result.training_loss,
             "gpu": torch.cuda.get_device_name(0),
             "adapter_dir": final_adapter_dir,
+            "num_samples": len(dataset),
             "software_enhanced": [
                 "SOLIDWORKS 2021",
                 "Siemens NX 12.0",

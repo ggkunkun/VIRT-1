@@ -21,15 +21,19 @@ __all__ = [
     "load_standardized_bundle",
 ]
 
-from virtu_omni.config import VirtuOmniConfig
-from virtu_omni.models.architecture import VirtuOmni10B
-from virtu_omni.models.expander import BaseParameterExpander
-from virtu_omni.alignment.aligner import AlignmentValidator
-from virtu_omni.data.pipeline import StreamingMultimodalDataPipeline
-from virtu_omni.training.trainer import Distributed3DTrainer
-from virtu_omni.training.monitor import TrainingHealthMonitor
-from virtu_omni.models.smelt_loader import (
-    StandardizedSmeltBundle,
-    StandardizedSmeltTokenizer,
-    load_standardized_bundle,
-)
+try:
+    from virtu_omni.config import VirtuOmniConfig
+    from virtu_omni.models.architecture import VirtuOmni10B
+    from virtu_omni.models.expander import BaseParameterExpander
+    from virtu_omni.alignment.aligner import AlignmentValidator
+    from virtu_omni.data.pipeline import StreamingMultimodalDataPipeline
+    from virtu_omni.training.trainer import Distributed3DTrainer
+    from virtu_omni.training.monitor import TrainingHealthMonitor
+    from virtu_omni.models.smelt_loader import (
+        StandardizedSmeltBundle,
+        StandardizedSmeltTokenizer,
+        load_standardized_bundle,
+    )
+except ImportError:
+    # Allow importing modules that do not depend on torch/heavy deps
+    pass
