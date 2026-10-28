@@ -1,0 +1,103 @@
+{
+  "generated_at": "2026-10-28T10:30:39Z",
+  "total_candidates": 8,
+  "approved_count": 5,
+  "latest_audit_hash": "ed1157a179a84a61e6e34c671d968ebe70ef5f1f50c4a490e2a0d8a299dca207",
+  "repositories": [
+    {
+      "full_name": "psf/requests",
+      "url": "https://github.com/psf/requests",
+      "license_spdx": "Apache-2.0",
+      "license_name": "Apache License 2.0",
+      "stars": 52000,
+      "days_since_last_commit": 12,
+      "contributors_count": 850,
+      "avg_issue_resolution_days": 4,
+      "business_loc": 28400,
+      "structure_tree": [
+        "src",
+        "tests",
+        "README.md",
+        "setup.py"
+      ],
+      "is_fork": false,
+      "primary_language": "Python"
+    },
+    {
+      "full_name": "spring-projects/spring-boot",
+      "url": "https://github.com/spring-projects/spring-boot",
+      "license_spdx": "Apache-2.0",
+      "license_name": "Apache License 2.0",
+      "stars": 74000,
+      "days_since_last_commit": 2,
+      "contributors_count": 1200,
+      "avg_issue_resolution_days": 3,
+      "business_loc": 450000,
+      "structure_tree": [
+        "src",
+        "test",
+        "README.md",
+        "pom.xml"
+      ],
+      "is_fork": false,
+      "primary_language": "Java"
+    },
+    {
+      "full_name": "tokio-rs/tokio",
+      "url": "https://github.com/tokio-rs/tokio",
+      "license_spdx": "MIT",
+      "license_name": "MIT License",
+      "stars": 28000,
+      "days_since_last_commit": 5,
+      "contributors_count": 480,
+      "avg_issue_resolution_days": 6,
+      "business_loc": 85000,
+      "structure_tree": [
+        "tokio/src",
+        "tests",
+        "README.md",
+        "Cargo.toml"
+      ],
+      "is_fork": false,
+      "primary_language": "Rust"
+    },
+    {
+      "full_name": "golang/tools",
+      "url": "https://github.com/golang/tools",
+      "license_spdx": "BSD-3-Clause",
+      "license_name": "BSD 3-Clause License",
+      "stars": 12000,
+      "days_since_last_commit": 8,
+      "contributors_count": 320,
+      "avg_issue_resolution_days": 7,
+      "business_loc": 120000,
+      "structure_tree": [
+        "go/src",
+        "testdata",
+        "README.md",
+        "go.mod"
+      ],
+      "is_fork": false,
+      "primary_language": "Go"
+    },
+    {
+      "full_name": "expressjs/express",
+      "url": "https://github.com/expressjs/express",
+      "license_spdx": "MIT",
+      "license_name": "MIT License",
+      "stars": 64000,
+      "days_since_last_commit": 20,
+      "contributors_count": 310,
+      "avg_issue_resolution_days": 10,
+      "business_loc": 18000,
+      "structure_tree": [
+        "lib",
+        "test",
+        "README.md",
+        "package.json"
+      ],
+      "is_fork": false,
+      "primary_language": "JavaScript"
+    }
+  ]
+}

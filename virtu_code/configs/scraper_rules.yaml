@@ -1,0 +1,47 @@
+scraper:
+  max_requests_per_minute: 50
+  request_timeout_seconds: 15
+  max_retries: 3
+  backoff_factor: 2.0
+  circuit_breaker_failures: 5
+  circuit_breaker_cooldown_seconds: 60
+
+  # Level 1: License Filter (OSI Permissive ONLY)
+  allowed_licenses:
+    - MIT
+    - Apache-2.0
+    - BSD-2-Clause
+    - BSD-3-Clause
+    - ISC
+    - Unlicense
+    - CC0-1.0
+  prohibited_licenses:
+    - GPL-2.0
+    - GPL-3.0
+    - AGPL-3.0
+    - LGPL-2.1
+    - LGPL-3.0
+    - MPL-2.0
+    - SSPL-1.0
+    - CC-BY-NC-4.0
+    - CC-BY-NC-ND-4.0
+
+  # Level 2: Project Activity Filter
+  min_stars: 50
+  max_stars: 500000
+  max_days_since_last_commit: 180
+  min_contributors: 3
+  max_issue_resolution_days: 14
+
+  # Level 3: Quality & Structure Filter
+  required_structural_markers:
+    - README
+    - test
+    - src
+    - lib
+    - build
+  min_business_loc: 500
+  exclude_forks_with_zero_delta: true
+
+  output_dir: data/raw
+  audit_log_path: logs/scraper_audit.jsonl
