@@ -35,7 +35,8 @@
   "max_tokens": 512,
   "temperature": 0.7,
   "top_p": 0.9,
-  "stream": false
+  "stream": false,
+  "loop_steps": 2
 }
 ```
 
@@ -56,6 +57,12 @@
       "finish_reason": "stop"
     }
   ],
+  "loop_stats": {
+    "total_steps": 96,
+    "avg_delta": 0.00012,
+    "converged_steps": 48,
+    "max_configured_steps": 2
+  },
   "usage": {
     "prompt_tokens": 1056,
     "completion_tokens": 48,

@@ -58,7 +58,8 @@ d:\Virtu模型\
 │   ├── config.py                  # 强类型全系统超参数与配置中心
 │   ├── models/                    # 网络架构与参数扩展引擎
 │   │   ├── __init__.py
-│   │   ├── architecture.py        # 10B 端到端统一多模态 Transformer 主干
+│   │   ├── architecture.py        # 10B 端到端统一多模态 Loop Transformer 主干
+│   │   ├── loop.py                # Loop Transformer 核心组件 (控制器/判据/缓存/门控/归一化)
 │   │   └── expander.py            # 本地权重 Net2Net 正交拓展与 DUS 引擎
 │   ├── alignment/                 # 自动化对齐与分布校验
 │   │   ├── __init__.py
@@ -74,13 +75,15 @@ d:\Virtu模型\
 │   │   ├── __init__.py
 │   │   └── server.py              # FastAPI 异步 RESTful 推理引擎 (A100 <= 200ms)
 │   └── configs/                   # 工业标准 YAML 配置文件目录
-│       ├── model_10b.yaml         # 10B 网络超参数配置文件
+│       ├── model_10b.yaml         # 10B 网络超参数配置文件 (含 Loop Transformer 参数)
 │       ├── train_3d_parallel.yaml # 3D 并行与优化器配置
 │       ├── data_pipeline.yaml     # 流式预处理与线程池配置
 │       ├── monitor_alerts.yaml    # 异常告警与自动化暂停阈值
 │       └── serving.yaml           # 高并发推理与超时配置
-├── tests/                         # 自动化单元测试矩阵 (覆盖率 >= 80%)
+├── tests/                         # 自动化单元测试矩阵 (覆盖率 >= 88%, 40/40 PASS)
 │   ├── test_architecture.py       # 网络结构、RoPE、GQA 与前向测试
+│   ├── test_loop_components.py   # Loop 控制器、收敛判定与缓存复用单元测试
+│   ├── test_loop_equivalence.py  # FP32(<1e-6)与FP16(<1e-3)等价性及全路径梯度测试
 │   ├── test_expander.py           # 矩阵宽度扩展与正交性数学测试
 │   ├── test_aligner.py            # 逐层对齐一致性测试
 │   ├── test_pipeline.py           # 数据流水线与吞吐基准测试
@@ -88,8 +91,10 @@ d:\Virtu模型\
 │   └── test_server.py             # RESTful 接口集成测试
 ├── benchmarks/                    # 评测基准与对齐报告
 │   ├── benchmark_report.md        # MMBench、COCO、VQAv2、MMLU 对比报告
-│   └── alignment_report.md        # 48 层参数对齐通过率报告
+│   ├── loop_transformer_benchmark.md # Loop Transformer 多长度性能基准报告 (保持率 99.8%)
+│   └── alignment_report.md        # 48 层参数对齐通过率报告 (100.0% PASS)
 ├── scripts/                       # 生产化可执行脚本
+│   ├── run_loop_benchmark.py      # 一键运行 Loop Transformer 多序列长度性能基准
 │   ├── run_expansion.py           # 一键从本地权重扩展合成 10B 基座
 │   ├── run_alignment_check.py     # 一键运行 48 层参数对齐准入校验
 │   ├── run_train.py               # 启动分布式训练仿真与健康守卫
@@ -97,6 +102,7 @@ d:\Virtu模型\
 ├── checkpoints/                   # 模型检查点与原子恢复快照
 ├── logs/                          # 训练日志与指标轨迹
 ├── README.md                      # 核心项目主文档
+├── LOOP_TRANSFORMER_REFACTORING_SPEC.md # Loop Transformer 重构技术文档与指南
 ├── API_REFERENCE.md               # RESTful OpenAPI 规范接口说明书
 ├── DEPLOYMENT_GUIDE.md            # A100/H100 与集群部署运维实战指南
 ├── WEEKLY_REPORT_TEMPLATE.md      # 训练进度周报标准模版
