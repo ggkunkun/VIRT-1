@@ -438,6 +438,59 @@ M30
 """
         return guide
 
+    def generate_slider_dashboard(self, spec: Dict[str, Any]) -> str:
+        """Generate interactive parametric slider UI and physical variation indicators."""
+        d_out = float(spec.get("d_outer", 53.0))
+        d_in = float(spec.get("d_inner", 14.0))
+        length = float(spec.get("overall_len", 45.0))
+        r = float(spec.get("fillet_r", 10.0))
+        mat = str(spec.get("material", "HT200"))
+
+        # Density mapping (g/cm^3)
+        density_map = {
+            "HT200": 7.2, "灰铸铁": 7.2, "Steel45": 7.85, "45号钢": 7.85,
+            "Cr12MoV": 7.7, "AL6061-T6": 2.7, "AL7075-T6": 2.81, "Ti-6Al-4V": 4.43
+        }
+        density = density_map.get(mat, 7.8)
+
+        # Physical calculation (cylindrical envelope approx minus bore)
+        vol_cm3 = max(0.1, (3.14159 * ((d_out / 20.0)**2 - (d_in / 20.0)**2) * (length / 10.0)) * 0.88)
+        mass_kg = (vol_cm3 * density) / 1000.0
+        wall_thk = (d_out - d_in) / 2.0
+        aspect_ratio = length / max(1.0, d_out)
+
+        def make_bar(val: float, min_val: float, max_val: float, width: int = 14) -> str:
+            ratio = max(0.0, min(1.0, (val - min_val) / max(1.0, max_val - min_val)))
+            pos = int(ratio * width)
+            bar = "━" * pos + "●" + "─" * (width - pos)
+            return f"[{bar}]"
+
+        bar_dout = make_bar(d_out, 20.0, 150.0)
+        bar_din = make_bar(d_in, 5.0, 80.0)
+        bar_len = make_bar(length, 10.0, 200.0)
+        bar_r = make_bar(r, 0.5, 30.0)
+
+        rigidity_status = "✅ 结构刚度充裕" if wall_thk >= 5.0 else "⚠️ 警告：壁厚偏薄，需校核切削变形"
+        aspect_type = "回转短盘类零件" if aspect_ratio < 1.0 else "细长阶梯轴类零件"
+
+        dashboard = f"""### 🎛️ 3D 模型特征参数实时滑块控制台 (Dynamic Parametric Sliders)
+
+| 驱动特征维度 | 滑块刻度视图 | 当前数值 | 允许极值范围 | 灵敏度/步长 |
+| :--- | :---: | :---: | :---: | :---: |
+| 🔵 **外径轮廓 $D_{{max}}$** | `{bar_dout}` | **`{d_out:.1f} mm`** | `20.0 ~ 150.0 mm` | `±1.0 mm` |
+| 🟢 **内孔配合径 $D_{{bore}}$** | `{bar_din}` | **`{d_in:.1f} mm`** | `5.0 ~ 80.0 mm` | `±0.5 mm` |
+| 🟡 **零件总长 $L_T$** | `{bar_len}` | **`{length:.1f} mm`** | `10.0 ~ 200.0 mm` | `±1.0 mm` |
+| 🟣 **过渡圆角 $R$** | `{bar_r}` | **`{r:.1f} mm`** | `0.5 ~ 30.0 mm` | `±0.5 mm` |
+
+> 📊 **即时物理与制造特性评估**：
+> - **安全结构壁厚**: `t = {wall_thk:.2f} mm` ({rigidity_status})
+> - **净重预估 ({mat})**: `≈ {mass_kg:.3f} kg` (有效回转体积: `{vol_cm3:.1f} cm³`)
+> - **几何形态判定**: `{aspect_type}` (长径比: `{aspect_ratio:.2f}`)
+>
+> 💡 *联动提示：您可在 WorkBuddy 中直接输入参数变动愿景（例如“将外径改为60mm，内孔扩大到18mm”），系统将秒级驱动三维特征树联动重生成！*
+"""
+        return dashboard
+
     def synthesize_all_six(self, wish_text: str) -> str:
         """Decompose intent and synthesize engineering deliverables across all 6 software packages."""
         spec = self.parse_wish_intent(wish_text)
@@ -447,6 +500,7 @@ M30
         vericut = self.generate_vericut_config(spec)
         cimco = self.generate_cimco_macro(spec)
         sscnc = self.generate_sscnc_setup_guide(spec)
+        slider_dashboard = self.generate_slider_dashboard(spec)
 
         return f"""# 【许愿式工业制造全流程求解报告】
 
@@ -457,43 +511,55 @@ M30
 - **零件总长/高度**: $L_T = {spec['overall_len']:.2f}\\,\\text{{mm}}$ | 主特征数: {spec['num_features']} | 倒圆角: $R = {spec['fillet_r']:.2f}\\,\\text{{mm}}$
 - **工况判定**: 多轴联动复杂曲面: {spec['is_multiaxis']} | 模具工装结构: {spec['is_die_mold']}
 
+{slider_dashboard}
+
 ---
 
-### 2. SOLIDWORKS 2021 参数化方程式驱动宏
+### 📂 六大工业软件全套工程代码（分级折叠呈现·点击展开）
+
+<details open>
+<summary><b>📐 2. SOLIDWORKS 2021 参数化方程式驱动宏 (.vba) [点击折叠/展开]</b></summary>
+
 ```vb
 {sw}
 ```
+</details>
 
----
+<details>
+<summary><b>⚙️ 3. Siemens NX 12.0 Python Open API 造型脚本 (.py) [点击折叠/展开]</b></summary>
 
-### 3. Siemens NX 12.0 Python Open API 造型脚本
 ```python
 {nx}
 ```
+</details>
 
----
+<details>
+<summary><b>📏 4. AutoCAD 2026 AutoLISP 工程图自动绘制与标注 (.lsp) [点击折叠/展开]</b></summary>
 
-### 4. AutoCAD 2026 AutoLISP 工程图自动绘制与标注
 ```lisp
 {cad}
 ```
+</details>
 
----
+<details>
+<summary><b>🛡️ 5. Vericut 9.6 物理力学切削与五轴运动学仿真配置 (.opt) [点击折叠/展开]</b></summary>
 
-### 5. Vericut 9.6 物理力学切削与五轴运动学仿真配置
 ```plaintext
 {vericut}
 ```
+</details>
 
----
+<details>
+<summary><b>📟 6. CIMCO Edit 2026 FANUC Macro B 参数化数控宏程序 (.nc) [点击折叠/展开]</b></summary>
 
-### 6. CIMCO Edit 2026 FANUC Macro B 参数化数控宏程序
 ```gcode
 {cimco}
 ```
+</details>
 
----
+<details>
+<summary><b>🔧 7. 斯沃数控仿真软件 (SSCNC 7.2) 现场装夹与 G54 对刀规程 [点击折叠/展开]</b></summary>
 
-### 7. 斯沃数控仿真软件 (SSCNC 7.2) 现场装夹与 G54 对刀规程
 {sscnc}
+</details>
 """
