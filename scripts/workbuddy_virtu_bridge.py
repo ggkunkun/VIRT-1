@@ -26,6 +26,12 @@ from virtu_omni.agent import IndustrialAgentTeam
 from virtu_omni.security.auditor import ModelSecurityAuditor
 from virtu_omni.memory import VirtuHindsightMemory, MemoryType
 from virtu_omni.reach import VirtuAgentReach
+from virtu_omni.ai_scratch import VirtuAIScratch
+from virtu_omni.paperclip import VirtuPaperclipAdapter
+from virtu_omni.context_mode import VirtuContextMode
+from virtu_omni.rea import VirtuREA
+from virtu_omni.claude_plugins import VirtuClaudePlugins
+from virtu_omni.computer_use import VirtuComputerUse
 from bridges.six_software_orchestrator import SixSoftwareOrchestrator
 
 MODEL_ID = "virtu-cad-cam-10b"
@@ -38,6 +44,12 @@ agent_team = IndustrialAgentTeam()
 security_auditor = ModelSecurityAuditor()
 hindsight_memory = VirtuHindsightMemory()
 reach_adapter = VirtuAgentReach()
+ai_scratch = VirtuAIScratch.get_instance()
+paperclip_adapter = VirtuPaperclipAdapter.get_instance()
+context_mode = VirtuContextMode.get_instance()
+rea_adapter = VirtuREA.get_instance()
+claude_plugins = VirtuClaudePlugins.get_instance()
+computer_use = VirtuComputerUse.get_instance()
 six_orchestrator = SixSoftwareOrchestrator()
 
 
@@ -46,6 +58,12 @@ class ThreadingServer(ThreadingMixIn, HTTPServer):
 
 
 class OpenAIBaseHandler(BaseHTTPRequestHandler):
+    def handle_one_request(self):
+        try:
+            super().handle_one_request()
+        except (ConnectionResetError, BrokenPipeError, ConnectionAbortedError):
+            self.close_connection = True
+
     def _send_cors_headers(self):
         self.send_header("Access-Control-Allow-Origin", "*")
         self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
@@ -86,6 +104,125 @@ class OpenAIBaseHandler(BaseHTTPRequestHandler):
             self.end_headers()
             channels = reach_adapter.get_channels()
             self.wfile.write(json.dumps({"ok": True, "channels": channels, "count": len(channels)}, ensure_ascii=False).encode("utf-8"))
+            return
+        elif clean_path in ["/v1/ai-scratch/curriculum", "/ai-scratch/curriculum", "/v1/ai-scratch/overview"]:
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self._send_cors_headers()
+            self.end_headers()
+            overview = ai_scratch.get_overview()
+            self.wfile.write(json.dumps(overview, ensure_ascii=False).encode("utf-8"))
+            return
+        elif clean_path in ["/v1/ai-scratch/diagnostic", "/ai-scratch/diagnostic"]:
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self._send_cors_headers()
+            self.end_headers()
+            questions = ai_scratch.tutor.get_diagnostic_questions()
+            self.wfile.write(json.dumps({"ok": True, "questions": questions}, ensure_ascii=False).encode("utf-8"))
+            return
+        elif clean_path in ["/v1/paperclip/dashboard", "/paperclip/dashboard"]:
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self._send_cors_headers()
+            self.end_headers()
+            dashboard = paperclip_adapter.get_dashboard()
+            self.wfile.write(json.dumps({"ok": True, "dashboard": dashboard}, ensure_ascii=False).encode("utf-8"))
+            return
+        elif clean_path in ["/v1/paperclip/tasks", "/paperclip/tasks"]:
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self._send_cors_headers()
+            self.end_headers()
+            tasks = [t.to_dict() for t in paperclip_adapter.control_plane.tasks.values()]
+            self.wfile.write(json.dumps({"ok": True, "tasks": tasks, "count": len(tasks)}, ensure_ascii=False).encode("utf-8"))
+            return
+        elif clean_path in ["/v1/paperclip/org", "/paperclip/org"]:
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self._send_cors_headers()
+            self.end_headers()
+            org = paperclip_adapter.control_plane.get_org_chart()
+            self.wfile.write(json.dumps({"ok": True, "org": org}, ensure_ascii=False).encode("utf-8"))
+            return
+        elif clean_path in ["/v1/context-mode/dashboard", "/context-mode/dashboard"]:
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self._send_cors_headers()
+            self.end_headers()
+            dash = context_mode.get_dashboard()
+            self.wfile.write(json.dumps({"ok": True, "dashboard": dash}, ensure_ascii=False).encode("utf-8"))
+            return
+        elif clean_path in ["/v1/context-mode/doctor", "/context-mode/doctor"]:
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self._send_cors_headers()
+            self.end_headers()
+            doc_res = context_mode.run_doctor()
+            self.wfile.write(json.dumps({"ok": True, "doctor": doc_res}, ensure_ascii=False).encode("utf-8"))
+            return
+        elif clean_path in ["/v1/rea/status", "/rea/status"]:
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self._send_cors_headers()
+            self.end_headers()
+            status_res = rea_adapter.get_status()
+            self.wfile.write(json.dumps(status_res, ensure_ascii=False).encode("utf-8"))
+            return
+        elif clean_path in ["/v1/plugins/status", "/plugins/status"]:
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self._send_cors_headers()
+            self.end_headers()
+            res = claude_plugins.get_status()
+            self.wfile.write(json.dumps(res, ensure_ascii=False).encode("utf-8"))
+            return
+        elif clean_path in ["/v1/plugins/marketplace", "/plugins/marketplace"]:
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self._send_cors_headers()
+            self.end_headers()
+            q = query_params.get("q", [""])[0] or query_params.get("query", [""])[0]
+            tag = query_params.get("tag", [None])[0]
+            limit = int(query_params.get("limit", [20])[0])
+            res = claude_plugins.search_marketplace(query=q, tag=tag, limit=limit)
+            self.wfile.write(json.dumps({"ok": True, "count": len(res), "plugins": res}, ensure_ascii=False).encode("utf-8"))
+            return
+        elif clean_path in ["/v1/plugins/list", "/plugins/list"]:
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self._send_cors_headers()
+            self.end_headers()
+            tag = query_params.get("tag", [None])[0]
+            installed_only = query_params.get("installed", ["false"])[0].lower() in ["true", "1"]
+            limit = int(query_params.get("limit", [50])[0])
+            res = claude_plugins.list_plugins(tag=tag, installed_only=installed_only, limit=limit)
+            self.wfile.write(json.dumps({"ok": True, "count": len(res), "plugins": res}, ensure_ascii=False).encode("utf-8"))
+            return
+        elif clean_path in ["/v1/computer-use/status", "/computer-use/status"]:
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self._send_cors_headers()
+            self.end_headers()
+            status_res = computer_use.get_status()
+            self.wfile.write(json.dumps(status_res, ensure_ascii=False).encode("utf-8"))
+            return
+        elif clean_path in ["/v1/computer-use/summary", "/computer-use/summary"]:
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self._send_cors_headers()
+            self.end_headers()
+            summary_res = computer_use.get_desktop_summary()
+            self.wfile.write(json.dumps({"ok": True, "summary": summary_res}, ensure_ascii=False).encode("utf-8"))
+            return
+        elif clean_path in ["/v1/computer-use/windows", "/computer-use/windows"]:
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self._send_cors_headers()
+            self.end_headers()
+            visible = query_params.get("visible", ["true"])[0].lower() in ["true", "1"]
+            wins_res = computer_use.execute_action("list_windows", visible_only=visible)
+            self.wfile.write(json.dumps(wins_res, ensure_ascii=False).encode("utf-8"))
             return
         elif clean_path in ["/v1/hindsight/status", "/hindsight/status"]:
             self.send_response(200)
@@ -323,6 +460,398 @@ class OpenAIBaseHandler(BaseHTTPRequestHandler):
             quote_res = reach_adapter.get_stock_quote(symbol=symbol)
             self.wfile.write(json.dumps(quote_res, ensure_ascii=False).encode("utf-8"))
             return
+        elif clean_path in ["/v1/ai-scratch/lesson", "/ai-scratch/lesson"]:
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self._send_cors_headers()
+            self.end_headers()
+            content_length = int(self.headers.get("Content-Length", 0))
+            req_data = {}
+            if content_length > 0:
+                try:
+                    req_data = json.loads(self.rfile.read(content_length).decode("utf-8"))
+                except Exception:
+                    req_data = {}
+            phase = req_data.get("phase", "01")
+            lesson = req_data.get("lesson", "05")
+            data = ai_scratch.get_lesson(phase, lesson)
+            self.wfile.write(json.dumps({"ok": data is not None, "lesson": data}, ensure_ascii=False).encode("utf-8"))
+            return
+        elif clean_path in ["/v1/ai-scratch/first-principles/autograd", "/ai-scratch/first-principles/autograd"]:
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self._send_cors_headers()
+            self.end_headers()
+            content_length = int(self.headers.get("Content-Length", 0))
+            req_data = {}
+            if content_length > 0:
+                try:
+                    req_data = json.loads(self.rfile.read(content_length).decode("utf-8"))
+                except Exception:
+                    req_data = {}
+            a_val = float(req_data.get("a", 2.0))
+            b_val = float(req_data.get("b", -3.0))
+            res = ai_scratch.run_autograd_verification(a_val=a_val, b_val=b_val)
+            self.wfile.write(json.dumps({"ok": True, "result": res}, ensure_ascii=False).encode("utf-8"))
+            return
+        elif clean_path in ["/v1/ai-scratch/first-principles/attention", "/ai-scratch/first-principles/attention"]:
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self._send_cors_headers()
+            self.end_headers()
+            content_length = int(self.headers.get("Content-Length", 0))
+            req_data = {}
+            if content_length > 0:
+                try:
+                    req_data = json.loads(self.rfile.read(content_length).decode("utf-8"))
+                except Exception:
+                    req_data = {}
+            seq_len = int(req_data.get("seq_len", 4))
+            d_model = int(req_data.get("d_model", 64))
+            num_heads = int(req_data.get("num_heads", 4))
+            res = ai_scratch.run_attention_forward(seq_len=seq_len, d_model=d_model, num_heads=num_heads)
+            self.wfile.write(json.dumps({"ok": True, "result": res}, ensure_ascii=False).encode("utf-8"))
+            return
+        elif clean_path in ["/v1/ai-scratch/tutor/placement", "/ai-scratch/tutor/placement"]:
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self._send_cors_headers()
+            self.end_headers()
+            content_length = int(self.headers.get("Content-Length", 0))
+            req_data = {}
+            if content_length > 0:
+                try:
+                    req_data = json.loads(self.rfile.read(content_length).decode("utf-8"))
+                except Exception:
+                    req_data = {}
+            answers = req_data.get("answers", {})
+            eval_res = ai_scratch.evaluate_placement(answers=answers)
+            self.wfile.write(json.dumps({"ok": True, "evaluation": eval_res}, ensure_ascii=False).encode("utf-8"))
+            return
+        elif clean_path in ["/v1/paperclip/task/dispatch", "/paperclip/task/dispatch"]:
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self._send_cors_headers()
+            self.end_headers()
+            content_length = int(self.headers.get("Content-Length", 0))
+            req_data = {}
+            if content_length > 0:
+                try:
+                    req_data = json.loads(self.rfile.read(content_length).decode("utf-8"))
+                except Exception:
+                    req_data = {}
+            title = req_data.get("title", "Untitled Task")
+            description = req_data.get("description", "")
+            agent_id = req_data.get("assigned_agent_id") or req_data.get("agent_id")
+            priority = req_data.get("priority", "medium")
+            trigger_hb = bool(req_data.get("trigger_heartbeat", True))
+            res = paperclip_adapter.dispatch_task(
+                title=title,
+                description=description,
+                assigned_agent_id=agent_id,
+                priority=priority,
+                trigger_heartbeat=trigger_hb,
+            )
+            self.wfile.write(json.dumps(res, ensure_ascii=False).encode("utf-8"))
+            return
+        elif clean_path in ["/v1/paperclip/heartbeat/trigger", "/paperclip/heartbeat/trigger"]:
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self._send_cors_headers()
+            self.end_headers()
+            content_length = int(self.headers.get("Content-Length", 0))
+            req_data = {}
+            if content_length > 0:
+                try:
+                    req_data = json.loads(self.rfile.read(content_length).decode("utf-8"))
+                except Exception:
+                    req_data = {}
+            agent_id = req_data.get("agent_id", "virtu-architect")
+            wake_reason = req_data.get("wake_reason", "manual_trigger")
+            task_id = req_data.get("task_id")
+            hb_res = paperclip_adapter.heartbeat_runner.trigger_heartbeat(
+                agent_id=agent_id,
+                wake_reason=wake_reason,
+                task_id=task_id,
+                executor_fn=paperclip_adapter._virtu_agent_executor,
+            )
+            self.wfile.write(json.dumps({"ok": hb_res.ok, "heartbeat": hb_res.to_dict()}, ensure_ascii=False).encode("utf-8"))
+            return
+        elif clean_path in ["/v1/paperclip/approval/decide", "/paperclip/approval/decide"]:
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self._send_cors_headers()
+            self.end_headers()
+            content_length = int(self.headers.get("Content-Length", 0))
+            req_data = {}
+            if content_length > 0:
+                try:
+                    req_data = json.loads(self.rfile.read(content_length).decode("utf-8"))
+                except Exception:
+                    req_data = {}
+            app_id = req_data.get("approval_id", "")
+            approved = bool(req_data.get("approved", True))
+            decided_by = req_data.get("decided_by", "virtu-architect")
+            rationale = req_data.get("rationale", "")
+            dec_res = paperclip_adapter.control_plane.decide_approval(
+                approval_id=app_id,
+                approved=approved,
+                decided_by=decided_by,
+                rationale=rationale,
+            )
+            self.wfile.write(json.dumps(dec_res, ensure_ascii=False).encode("utf-8"))
+            return
+        elif clean_path in ["/v1/context-mode/execute", "/context-mode/execute"]:
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self._send_cors_headers()
+            self.end_headers()
+            content_length = int(self.headers.get("Content-Length", 0))
+            req_data = {}
+            if content_length > 0:
+                try:
+                    req_data = json.loads(self.rfile.read(content_length).decode("utf-8"))
+                except Exception:
+                    req_data = {}
+            cmd = req_data.get("command", "")
+            script = req_data.get("filter_script")
+            timeout = float(req_data.get("timeout_sec", 30.0))
+            record = bool(req_data.get("record_to_session", True))
+            res = context_mode.execute(command=cmd, filter_script=script, timeout_sec=timeout, record_to_session=record)
+            self.wfile.write(json.dumps(res, ensure_ascii=False).encode("utf-8"))
+            return
+        elif clean_path in ["/v1/context-mode/file/filter", "/context-mode/file/filter"]:
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self._send_cors_headers()
+            self.end_headers()
+            content_length = int(self.headers.get("Content-Length", 0))
+            req_data = {}
+            if content_length > 0:
+                try:
+                    req_data = json.loads(self.rfile.read(content_length).decode("utf-8"))
+                except Exception:
+                    req_data = {}
+            fpath = req_data.get("filepath", "")
+            script = req_data.get("filter_script")
+            res = context_mode.execute_file(filepath=fpath, filter_script=script)
+            self.wfile.write(json.dumps(res, ensure_ascii=False).encode("utf-8"))
+            return
+        elif clean_path in ["/v1/context-mode/session/event", "/context-mode/session/event"]:
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self._send_cors_headers()
+            self.end_headers()
+            content_length = int(self.headers.get("Content-Length", 0))
+            req_data = {}
+            if content_length > 0:
+                try:
+                    req_data = json.loads(self.rfile.read(content_length).decode("utf-8"))
+                except Exception:
+                    req_data = {}
+            ev_type = req_data.get("event_type", "milestone")
+            title = req_data.get("title", "")
+            content = req_data.get("content", "")
+            meta = req_data.get("metadata", {})
+            eid = context_mode.record_session_event(event_type=ev_type, title=title, content=content, metadata=meta)
+            self.wfile.write(json.dumps({"ok": True, "event_id": eid}, ensure_ascii=False).encode("utf-8"))
+            return
+        elif clean_path in ["/v1/context-mode/session/search", "/context-mode/session/search"]:
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self._send_cors_headers()
+            self.end_headers()
+            content_length = int(self.headers.get("Content-Length", 0))
+            req_data = {}
+            if content_length > 0:
+                try:
+                    req_data = json.loads(self.rfile.read(content_length).decode("utf-8"))
+                except Exception:
+                    req_data = {}
+            query = req_data.get("query", "")
+            limit = int(req_data.get("limit", 5))
+            hits = context_mode.search_session(query=query, limit=limit)
+            self.wfile.write(json.dumps({"ok": True, "hits": hits, "count": len(hits)}, ensure_ascii=False).encode("utf-8"))
+            return
+        elif clean_path in ["/v1/rea/inspect", "/rea/inspect"]:
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self._send_cors_headers()
+            self.end_headers()
+            content_length = int(self.headers.get("Content-Length", 0))
+            req_data = {}
+            if content_length > 0:
+                try:
+                    req_data = json.loads(self.rfile.read(content_length).decode("utf-8"))
+                except Exception:
+                    req_data = {}
+            target = req_data.get("target") or req_data.get("path") or req_data.get("filepath", "")
+            if not target and "data_hex" in req_data:
+                target = bytes.fromhex(req_data["data_hex"])
+            res = rea_adapter.inspect_binary(target=target)
+            self.wfile.write(json.dumps(res, ensure_ascii=False).encode("utf-8"))
+            return
+        elif clean_path in ["/v1/rea/strings", "/rea/strings"]:
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self._send_cors_headers()
+            self.end_headers()
+            content_length = int(self.headers.get("Content-Length", 0))
+            req_data = {}
+            if content_length > 0:
+                try:
+                    req_data = json.loads(self.rfile.read(content_length).decode("utf-8"))
+                except Exception:
+                    req_data = {}
+            target = req_data.get("target") or req_data.get("path") or req_data.get("filepath", "")
+            if not target and "data_hex" in req_data:
+                target = bytes.fromhex(req_data["data_hex"])
+            min_len = int(req_data.get("min_len", 4))
+            max_strings = int(req_data.get("max_strings", 200))
+            res = rea_adapter.extract_strings(target=target, min_len=min_len, max_strings=max_strings)
+            self.wfile.write(json.dumps(res, ensure_ascii=False).encode("utf-8"))
+            return
+        elif clean_path in ["/v1/rea/decompile", "/rea/decompile"]:
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self._send_cors_headers()
+            self.end_headers()
+            content_length = int(self.headers.get("Content-Length", 0))
+            req_data = {}
+            if content_length > 0:
+                try:
+                    req_data = json.loads(self.rfile.read(content_length).decode("utf-8"))
+                except Exception:
+                    req_data = {}
+            target = req_data.get("target") or req_data.get("path") or req_data.get("filepath", "")
+            if not target and "data_hex" in req_data:
+                target = bytes.fromhex(req_data["data_hex"])
+            offset = int(req_data.get("offset", 0))
+            count = int(req_data.get("count", 40))
+            arch = req_data.get("arch", "x86_64")
+            res = rea_adapter.decompile(target=target, offset=offset, count=count, arch=arch)
+            self.wfile.write(json.dumps(res, ensure_ascii=False).encode("utf-8"))
+            return
+        elif clean_path in ["/v1/rea/entropy", "/rea/entropy"]:
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self._send_cors_headers()
+            self.end_headers()
+            content_length = int(self.headers.get("Content-Length", 0))
+            req_data = {}
+            if content_length > 0:
+                try:
+                    req_data = json.loads(self.rfile.read(content_length).decode("utf-8"))
+                except Exception:
+                    req_data = {}
+            target = req_data.get("target") or req_data.get("path") or req_data.get("filepath", "")
+            if not target and "data_hex" in req_data:
+                target = bytes.fromhex(req_data["data_hex"])
+            entropy = rea_adapter.calculate_entropy(target=target)
+            self.wfile.write(json.dumps({"ok": True, "entropy": entropy}, ensure_ascii=False).encode("utf-8"))
+            return
+        elif clean_path in ["/v1/plugins/inspect", "/plugins/inspect"]:
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self._send_cors_headers()
+            self.end_headers()
+            content_length = int(self.headers.get("Content-Length", 0))
+            req_data = {}
+            if content_length > 0:
+                try:
+                    req_data = json.loads(self.rfile.read(content_length).decode("utf-8"))
+                except Exception:
+                    req_data = {}
+            plugin_name = req_data.get("name") or req_data.get("plugin", "")
+            res = claude_plugins.inspect_plugin(name=plugin_name)
+            self.wfile.write(json.dumps(res, ensure_ascii=False).encode("utf-8"))
+            return
+        elif clean_path in ["/v1/plugins/install", "/plugins/install"]:
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self._send_cors_headers()
+            self.end_headers()
+            content_length = int(self.headers.get("Content-Length", 0))
+            req_data = {}
+            if content_length > 0:
+                try:
+                    req_data = json.loads(self.rfile.read(content_length).decode("utf-8"))
+                except Exception:
+                    req_data = {}
+            plugin_name = req_data.get("name") or req_data.get("plugin", "")
+            res = claude_plugins.install_plugin(name=plugin_name)
+            self.wfile.write(json.dumps(res, ensure_ascii=False).encode("utf-8"))
+            return
+        elif clean_path in ["/v1/plugins/command", "/plugins/command"]:
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self._send_cors_headers()
+            self.end_headers()
+            content_length = int(self.headers.get("Content-Length", 0))
+            req_data = {}
+            if content_length > 0:
+                try:
+                    req_data = json.loads(self.rfile.read(content_length).decode("utf-8"))
+                except Exception:
+                    req_data = {}
+            cmd = req_data.get("command", "")
+            ctx = req_data.get("context", "")
+            args = req_data.get("args", {})
+            res = claude_plugins.execute_command(command=cmd, context=ctx, args=args)
+            self.wfile.write(json.dumps(res, ensure_ascii=False).encode("utf-8"))
+            return
+        elif clean_path in ["/v1/computer-use/screenshot", "/computer-use/screenshot"]:
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self._send_cors_headers()
+            self.end_headers()
+            content_length = int(self.headers.get("Content-Length", 0))
+            req_data = {}
+            if content_length > 0:
+                try:
+                    req_data = json.loads(self.rfile.read(content_length).decode("utf-8"))
+                except Exception:
+                    req_data = {}
+            out_p = req_data.get("output_path")
+            bbox = req_data.get("bbox")
+            res = computer_use.execute_action("screenshot", output_path=out_p, bbox=bbox)
+            self.wfile.write(json.dumps(res, ensure_ascii=False).encode("utf-8"))
+            return
+        elif clean_path in ["/v1/computer-use/action", "/computer-use/action"]:
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self._send_cors_headers()
+            self.end_headers()
+            content_length = int(self.headers.get("Content-Length", 0))
+            req_data = {}
+            if content_length > 0:
+                try:
+                    req_data = json.loads(self.rfile.read(content_length).decode("utf-8"))
+                except Exception:
+                    req_data = {}
+            act_name = req_data.get("action", "")
+            act_params = {k: v for k, v in req_data.items() if k != "action"}
+            res = computer_use.execute_action(act_name, **act_params)
+            self.wfile.write(json.dumps(res, ensure_ascii=False).encode("utf-8"))
+            return
+        elif clean_path in ["/v1/computer-use/loop", "/computer-use/loop"]:
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self._send_cors_headers()
+            self.end_headers()
+            content_length = int(self.headers.get("Content-Length", 0))
+            req_data = {}
+            if content_length > 0:
+                try:
+                    req_data = json.loads(self.rfile.read(content_length).decode("utf-8"))
+                except Exception:
+                    req_data = {}
+            goal = req_data.get("goal", "Execute desktop action sequence")
+            actions = req_data.get("actions", [])
+            cap = bool(req_data.get("capture_screenshots", True))
+            res = computer_use.run_see_think_act_loop(goal=goal, actions=actions, capture_screenshots=cap)
+            self.wfile.write(json.dumps(res, ensure_ascii=False).encode("utf-8"))
+            return
         elif clean_path in ["/v1/cad/parametric-slider", "/cad/parametric-slider"]:
             self.send_response(200)
             self.send_header("Content-Type", "application/json; charset=utf-8")
@@ -399,11 +928,26 @@ class OpenAIBaseHandler(BaseHTTPRequestHandler):
             requested_model = data.get("model", MODEL_ID)
             tools = data.get("tools", [])
 
-            # Check if this is a tool-calling request or continuation
-            has_tool_context = bool(tools) or any(m.get("role") == "tool" for m in messages)
+            # Check if this is a CAD tool-calling request or continuation
+            cad_tool_names = {
+                "cad.decompose_automation_assembly",
+                "cad.one_sentence_parametric_engine",
+                "cad.update_parametric_variation",
+                "cad.query_standard_parts_library",
+                "cad.model_parametric_feature_part",
+                "cad.assemble_automation_system",
+                "software.dispatch_industrial_tool"
+            }
+            has_cad_tools = any(t.get("function", {}).get("name") in cad_tool_names for t in tools)
+            has_tool_role = any(m.get("role") == "tool" for m in messages)
+            has_tool_context = has_cad_tools or has_tool_role
+
             if has_tool_context:
                 tool_resp = self._handle_tool_orchestration(messages, tools)
-                self._send_raw_json(tool_resp)
+                if stream:
+                    self._handle_streaming_tool_response(tool_resp)
+                else:
+                    self._send_raw_json(tool_resp)
                 return
 
             # Robust user prompt extraction (handling str, list of blocks, dicts)
@@ -671,7 +1215,7 @@ class OpenAIBaseHandler(BaseHTTPRequestHandler):
 
         # Stage 0-V: Dynamic Slider Variation & Parametric Rebuild
         is_variation_intent = any(k in user_prompt for k in ["滑块", "修改参数", "调整参数", "增大", "缩小", "调到", "改成", "外径改", "内孔改", "尺寸变更", "变异", "variation", "rebuild", "重生成"])
-        if (last_role == "user" or not last_tool_name) and (is_variation_intent or "cad.update_parametric_variation" in available_tool_names):
+        if (last_role == "user" or not last_tool_name) and (is_variation_intent or "cad.update_parametric_variation" in available_tool_names) and ("cad.update_parametric_variation" in available_tool_names or not tools):
             call_id = f"call_var_{uuid.uuid4().hex[:8]}"
             # Parse requested variation or set intelligent variations
             new_dout = 60.0
@@ -783,7 +1327,7 @@ class OpenAIBaseHandler(BaseHTTPRequestHandler):
         # Stage 0: One-Sentence Unified CAD Engine (Wish-to-Drawing/Modeling/Assembly)
         is_one_sentence_mode = any(k in user_prompt for k in ["一句话", "一个工具", "一键", "盲测", "UG-", "轴承支座", "阶梯轴", "端盖", "活塞", "连杆"])
 
-        if (last_role == "user" or not last_tool_name) and (is_one_sentence_mode or "cad.one_sentence_parametric_engine" in available_tool_names):
+        if (last_role == "user" or not last_tool_name) and (is_one_sentence_mode or "cad.one_sentence_parametric_engine" in available_tool_names) and ("cad.one_sentence_parametric_engine" in available_tool_names or not tools):
             call_id = f"call_engine_{uuid.uuid4().hex[:8]}"
             # Deduce part and parameters from user_prompt
             part_name = "UG-01_轴承支座.SLDPRT"
@@ -901,7 +1445,7 @@ class OpenAIBaseHandler(BaseHTTPRequestHandler):
             }
 
         # Stage 1: Initial User Prompt -> Infer Intent & Decompose Assembly
-        if last_role == "user" or not last_tool_name:
+        if (last_role == "user" or not last_tool_name) and ("cad.decompose_automation_assembly" in available_tool_names or not tools):
             call_id = f"call_decomp_{uuid.uuid4().hex[:8]}"
             args = {
                 "assembly_name": "自动化非标设备总装成套机构.SLDASM",
@@ -934,6 +1478,25 @@ class OpenAIBaseHandler(BaseHTTPRequestHandler):
                     "finish_reason": "tool_calls"
                 }],
                 "usage": {"prompt_tokens": 128, "completion_tokens": 64, "total_tokens": 192}
+            }
+
+        elif last_role == "user" or not last_tool_name:
+            # Fallback for user prompts without specific tool matching
+            synth_resp = self._synthesize_response(user_prompt)
+            return {
+                "id": req_id,
+                "object": "chat.completion",
+                "created": created,
+                "model": MODEL_ID,
+                "choices": [{
+                    "index": 0,
+                    "message": {
+                        "role": "assistant",
+                        "content": synth_resp
+                    },
+                    "finish_reason": "stop"
+                }],
+                "usage": {"prompt_tokens": 128, "completion_tokens": len(synth_resp) // 2, "total_tokens": 128 + len(synth_resp) // 2}
             }
 
         # Stage 2: After Decompose -> Query Standard Parts Library
@@ -1253,6 +1816,105 @@ class OpenAIBaseHandler(BaseHTTPRequestHandler):
             self.wfile.flush()
         except (ConnectionResetError, BrokenPipeError, ConnectionAbortedError) as conn_err:
             print(f"[WorkBuddy-Bridge] Client disconnected during SSE streaming: {conn_err}")
+
+    def _handle_streaming_tool_response(self, tool_resp: dict):
+        self.send_response(200)
+        self.send_header("Content-Type", "text/event-stream; charset=utf-8")
+        self.send_header("Cache-Control", "no-cache")
+        self.send_header("Connection", "keep-alive")
+        self._send_cors_headers()
+        self.end_headers()
+
+        req_id = tool_resp.get("id", f"chatcmpl-{uuid.uuid4().hex[:12]}")
+        created = tool_resp.get("created", int(time.time()))
+        choices = tool_resp.get("choices", [{}])
+        choice = choices[0] if choices else {}
+        msg = choice.get("message", {})
+        finish_reason = choice.get("finish_reason", "stop")
+        tool_calls = msg.get("tool_calls", [])
+        content = msg.get("content", "")
+
+        try:
+            # 1. Initial reasoning chunk
+            r_payload = {
+                "id": req_id,
+                "object": "chat.completion.chunk",
+                "created": created,
+                "model": MODEL_ID,
+                "choices": [{
+                    "index": 0,
+                    "delta": {
+                        "role": "assistant",
+                        "reasoning_content": "正在深度协同 CAD/CAM 工业智能工具与调度网桥..."
+                    },
+                    "finish_reason": None
+                }]
+            }
+            self.wfile.write(f"data: {json.dumps(r_payload, ensure_ascii=False)}\n\n".encode("utf-8"))
+            self.wfile.flush()
+
+            # 2. Content chunks if content exists
+            if content:
+                chunk_size = 40
+                for i in range(0, len(content), chunk_size):
+                    c_payload = {
+                        "id": req_id,
+                        "object": "chat.completion.chunk",
+                        "created": created,
+                        "model": MODEL_ID,
+                        "choices": [{
+                            "index": 0,
+                            "delta": {"content": content[i:i + chunk_size]},
+                            "finish_reason": None
+                        }]
+                    }
+                    self.wfile.write(f"data: {json.dumps(c_payload, ensure_ascii=False)}\n\n".encode("utf-8"))
+                    self.wfile.flush()
+
+            # 3. Tool calls chunks if present
+            if tool_calls:
+                for idx, tc in enumerate(tool_calls):
+                    tc_payload = {
+                        "id": req_id,
+                        "object": "chat.completion.chunk",
+                        "created": created,
+                        "model": MODEL_ID,
+                        "choices": [{
+                            "index": 0,
+                            "delta": {
+                                "tool_calls": [{
+                                    "index": idx,
+                                    "id": tc.get("id"),
+                                    "type": "function",
+                                    "function": {
+                                        "name": tc.get("function", {}).get("name", ""),
+                                        "arguments": tc.get("function", {}).get("arguments", "")
+                                    }
+                                }]
+                            },
+                            "finish_reason": None
+                        }]
+                    }
+                    self.wfile.write(f"data: {json.dumps(tc_payload, ensure_ascii=False)}\n\n".encode("utf-8"))
+                    self.wfile.flush()
+
+            # 4. Final finish chunk
+            end_payload = {
+                "id": req_id,
+                "object": "chat.completion.chunk",
+                "created": created,
+                "model": MODEL_ID,
+                "choices": [{
+                    "index": 0,
+                    "delta": {},
+                    "finish_reason": finish_reason
+                }]
+            }
+            self.wfile.write(f"data: {json.dumps(end_payload, ensure_ascii=False)}\n\n".encode("utf-8"))
+            self.wfile.write(b"data: [DONE]\n\n")
+            self.wfile.flush()
+        except (ConnectionResetError, BrokenPipeError, ConnectionAbortedError) as conn_err:
+            print(f"[WorkBuddy-Bridge] Client disconnected during SSE streaming tool response: {conn_err}")
 
     def log_message(self, format, *args):
         # Concise logging
