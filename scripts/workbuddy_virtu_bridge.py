@@ -25,6 +25,7 @@ from virtu_omni.knowledge.software_plugin_ontology import SOFTWARE_ONTOLOGY
 from virtu_omni.agent import IndustrialAgentTeam
 from virtu_omni.security.auditor import ModelSecurityAuditor
 from virtu_omni.memory import VirtuHindsightMemory, MemoryType
+from virtu_omni.reach import VirtuAgentReach
 from bridges.six_software_orchestrator import SixSoftwareOrchestrator
 
 MODEL_ID = "virtu-cad-cam-10b"
@@ -36,6 +37,7 @@ engine = WishCADCAMEngine()
 agent_team = IndustrialAgentTeam()
 security_auditor = ModelSecurityAuditor()
 hindsight_memory = VirtuHindsightMemory()
+reach_adapter = VirtuAgentReach()
 six_orchestrator = SixSoftwareOrchestrator()
 
 
@@ -77,6 +79,14 @@ class OpenAIBaseHandler(BaseHTTPRequestHandler):
                 ]
             }
             self.wfile.write(json.dumps(resp, ensure_ascii=False).encode("utf-8"))
+        elif clean_path in ["/v1/reach/channels", "/reach/channels"]:
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self._send_cors_headers()
+            self.end_headers()
+            channels = reach_adapter.get_channels()
+            self.wfile.write(json.dumps({"ok": True, "channels": channels, "count": len(channels)}, ensure_ascii=False).encode("utf-8"))
+            return
         elif clean_path in ["/v1/hindsight/status", "/hindsight/status"]:
             self.send_response(200)
             self.send_header("Content-Type", "application/json; charset=utf-8")
@@ -263,6 +273,56 @@ class OpenAIBaseHandler(BaseHTTPRequestHandler):
             )
             self.wfile.write(json.dumps(reflected, ensure_ascii=False).encode("utf-8"))
             return
+        elif clean_path in ["/v1/reach/read", "/reach/read"]:
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self._send_cors_headers()
+            self.end_headers()
+            content_length = int(self.headers.get("Content-Length", 0))
+            req_data = {}
+            if content_length > 0:
+                try:
+                    req_data = json.loads(self.rfile.read(content_length).decode("utf-8"))
+                except Exception:
+                    req_data = {}
+            url = req_data.get("url") or req_data.get("target", "")
+            read_res = reach_adapter.read(url=url, backend=req_data.get("backend"))
+            self.wfile.write(json.dumps(read_res, ensure_ascii=False).encode("utf-8"))
+            return
+        elif clean_path in ["/v1/reach/search", "/reach/search"]:
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self._send_cors_headers()
+            self.end_headers()
+            content_length = int(self.headers.get("Content-Length", 0))
+            req_data = {}
+            if content_length > 0:
+                try:
+                    req_data = json.loads(self.rfile.read(content_length).decode("utf-8"))
+                except Exception:
+                    req_data = {}
+            channel = req_data.get("channel", "github")
+            query = req_data.get("query", "")
+            limit = int(req_data.get("limit", 5))
+            search_res = reach_adapter.search(channel=channel, query=query, limit=limit, backend=req_data.get("backend"))
+            self.wfile.write(json.dumps(search_res, ensure_ascii=False).encode("utf-8"))
+            return
+        elif clean_path in ["/v1/reach/quote", "/reach/quote"]:
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self._send_cors_headers()
+            self.end_headers()
+            content_length = int(self.headers.get("Content-Length", 0))
+            req_data = {}
+            if content_length > 0:
+                try:
+                    req_data = json.loads(self.rfile.read(content_length).decode("utf-8"))
+                except Exception:
+                    req_data = {}
+            symbol = req_data.get("symbol", "SH600519")
+            quote_res = reach_adapter.get_stock_quote(symbol=symbol)
+            self.wfile.write(json.dumps(quote_res, ensure_ascii=False).encode("utf-8"))
+            return
         elif clean_path in ["/v1/cad/parametric-slider", "/cad/parametric-slider"]:
             self.send_response(200)
             self.send_header("Content-Type", "application/json; charset=utf-8")
@@ -363,9 +423,10 @@ class OpenAIBaseHandler(BaseHTTPRequestHandler):
 
             # Generate expert response using WishCADCAMEngine
             response_text = self._synthesize_response(user_prompt)
+            thought = "正在深度解析用户工程制造意图，检索六大工业软件本体库，规划 3D 参数化特征树与 GD&T 公差规范..."
 
             if stream:
-                self._handle_streaming_response(response_text)
+                self._handle_streaming_response(response_text, reasoning_text=thought)
             else:
                 self._handle_json_response(response_text)
         except Exception as err:
@@ -1123,22 +1184,58 @@ class OpenAIBaseHandler(BaseHTTPRequestHandler):
         }
         self.wfile.write(json.dumps(resp, ensure_ascii=False).encode("utf-8"))
 
-    def _handle_streaming_response(self, text: str):
+    def _handle_streaming_response(self, text: str, reasoning_text: str = ""):
         self.send_response(200)
         self.send_header("Content-Type", "text/event-stream; charset=utf-8")
         self.send_header("Cache-Control", "no-cache")
-        self.send_header("Connection", "close")
+        self.send_header("Connection", "keep-alive")
         self._send_cors_headers()
         self.end_headers()
 
         req_id = f"chatcmpl-{uuid.uuid4().hex[:12]}"
         created = int(time.time())
 
-        # Chunk response into small parts
-        chunk_size = 40
-        for i in range(0, len(text), chunk_size):
-            chunk = text[i:i + chunk_size]
-            payload = {
+        try:
+            # Stream reasoning / thinking chunk first if present
+            if reasoning_text:
+                r_payload = {
+                    "id": req_id,
+                    "object": "chat.completion.chunk",
+                    "created": created,
+                    "model": MODEL_ID,
+                    "choices": [
+                        {
+                            "index": 0,
+                            "delta": {"reasoning_content": reasoning_text},
+                            "finish_reason": None
+                        }
+                    ]
+                }
+                self.wfile.write(f"data: {json.dumps(r_payload, ensure_ascii=False)}\n\n".encode("utf-8"))
+                self.wfile.flush()
+
+            # Chunk response into small parts
+            chunk_size = 40
+            for i in range(0, len(text), chunk_size):
+                chunk = text[i:i + chunk_size]
+                payload = {
+                    "id": req_id,
+                    "object": "chat.completion.chunk",
+                    "created": created,
+                    "model": MODEL_ID,
+                    "choices": [
+                        {
+                            "index": 0,
+                            "delta": {"content": chunk},
+                            "finish_reason": None
+                        }
+                    ]
+                }
+                self.wfile.write(f"data: {json.dumps(payload, ensure_ascii=False)}\n\n".encode("utf-8"))
+                self.wfile.flush()
+
+            # End chunk
+            end_payload = {
                 "id": req_id,
                 "object": "chat.completion.chunk",
                 "created": created,
@@ -1146,32 +1243,16 @@ class OpenAIBaseHandler(BaseHTTPRequestHandler):
                 "choices": [
                     {
                         "index": 0,
-                        "delta": {"content": chunk},
-                        "finish_reason": None
+                        "delta": {},
+                        "finish_reason": "stop"
                     }
                 ]
             }
-            self.wfile.write(f"data: {json.dumps(payload, ensure_ascii=False)}\n\n".encode("utf-8"))
+            self.wfile.write(f"data: {json.dumps(end_payload, ensure_ascii=False)}\n\n".encode("utf-8"))
+            self.wfile.write(b"data: [DONE]\n\n")
             self.wfile.flush()
-
-        # End chunk
-        end_payload = {
-            "id": req_id,
-            "object": "chat.completion.chunk",
-            "created": created,
-            "model": MODEL_ID,
-            "choices": [
-                {
-                    "index": 0,
-                    "delta": {},
-                    "finish_reason": "stop"
-                }
-            ]
-        }
-        self.wfile.write(f"data: {json.dumps(end_payload, ensure_ascii=False)}\n\n".encode("utf-8"))
-        self.wfile.write(b"data: [DONE]\n\n")
-        self.wfile.flush()
-        self.close_connection = True
+        except (ConnectionResetError, BrokenPipeError, ConnectionAbortedError) as conn_err:
+            print(f"[WorkBuddy-Bridge] Client disconnected during SSE streaming: {conn_err}")
 
     def log_message(self, format, *args):
         # Concise logging
