@@ -1,0 +1,2 @@
+# 上游技能副本按字节存证：skills/SKILLS_PROVENANCE.json 记录逐文件 sha256，故禁止换行符转换
+skills/** -text
