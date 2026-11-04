@@ -54,3 +54,12 @@
 2. **未改 `Flange_Machining_O1001.nc` 本体**：加工程序是产物，修正副本在 `scratch/skill_gap/Flange_Machining_O1001_fixed.nc` 供逐行比对（Q5000→Q5.0、`X#106 C#120`、孔深 `Z-[#103+1.0]`、补 `G50 S2000`、`G85 X#102` 使孔径生效）。
 
 版本控制提醒：`skills/` 与 `virtu_omni/engine/` 绝大多数文件此前从未被 git 跟踪，本文件与本次改动已纳入跟踪，其余仍未跟踪。
+
+## 2026-11-04 追补二：桌面输入与读屏接入
+候选实测：`windows-mcp` 要 Python >=3.14、`mcp-windows` 要 .NET 10 编译 → 本机不可用；**`windows-computer-use-mcp` 要求 >=3.12 ✓**，但它要 `fastmcp[server]`，而后者要求 `mcp<2`，与本机 `build123d-mcp`（`mcp>=2,<3`）冲突——把共享 `Python312` 的 mcp 从 2.3.0 降到 1.30.0 会直接砸掉 build123d-mcp（已实测并回滚）。因此该项目**装进项目内独立 venv** `external/windows-computer-use-mcp/.venv`。
+
+stdio 实测工具面（v0.8.0，20 个，其中 14 个非 readOnly）：`automation_windows/elements/mouse/keyboard/visual/dialog/shortcut/task/mission/smart/macro/watch/system/safety/assert`、`get_desktop_state`、`get_window_state`、`approve_automation`、`analyze_winapp`、`cua_computer_use_screenshot`。全局键盘监听与人脸工具**不在列表内**（需 `ENABLE_KEYLOGGER`/`ENABLE_FACE` 显式置真才注册），配置里已写死为 `0`，并设 `MAX_ACTIONS_PER_MINUTE=40`；`automation_safety(operation=status)` 可读 `kill_switch/dry_run/actions_last_60s`。注册点：`mcp_cadcam_config.json` 与 `AGENT_TOOLCHAIN_INTERFACE.md` 模式 3。
+
+上游技能卡片处置：`desktop-automation-protocol` 按字节装入（并把 `docs/SAFETY.md` 一并放进 `references/` 让指引可解析）；`windows-computer-use` **拒装**——它正文结尾要求"任务结束时跑 ruff+pytest 并按 AGENTS.md 提交"，那是上游仓库自用开发流程对运行态模型的越权动作指令；改派生自建 `windows-desktop-input-gate`（只留实测工具面 + PID 级窗口纪律 + HITL/限速/kill_switch + 注入红线）。
+
+顺手补掉仓内一个**真注入洞**：`bridges/desktop_controller.py` 的 `type_text` 旧实现把输入文本拼进 `powershell -Command "Set-Clipboard -Value @'…'@"`，实测文本中一行以 `'@` 开头即可逃逸 here-string 并让注入语句被执行（rc=0，语句真的跑了）；`hotkey` 把 keys 直插 `SendWait('…')` 同理。现改为 `CF_UNICODETEXT` 剪贴板 + `keybd_event` 组合键，全程不经 shell，且未识别的组合键直接报错不回退。端到端验证（`scratch/skill_gap/e2e.py`，自启 Tk 目标窗口并只杀自己起的 PID）：62 字符含 `'@; Set-Content -Path "x.txt"`、引号、换行与中文 → 目标应用回读**逐字节一致**；`hotkey ctrl,a` 送达；`hotkey ctrl,magic_spell` 被拒；`capture` 出 1920×1080 PNG(274 KB)。同时 `cadcam_desktop_gui` 补齐了代码里早已实现却未暴露的 `type_text/hotkey/inspect_window`，并让 `click` 的 `button/double` 真正透传（此前被丢弃）。

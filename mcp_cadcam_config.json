@@ -1,0 +1,29 @@
+{
+  "mcpServers": {
+    "industrial-cadcam": {
+      "command": "C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+      "args": [
+        "d:\\Virtu模型\\bridges\\cadcam_mcp_server.py"
+      ],
+      "env": {
+        "PYTHONIOENCODING": "utf-8"
+      }
+    },
+    "windows-computer-use": {
+      "command": "D:\\Virtu模型\\external\\windows-computer-use-mcp\\.venv\\Scripts\\python.exe",
+      "args": [
+        "-m",
+        "windows_computer_use_mcp.main"
+      ],
+      "cwd": "D:\\Virtu模型\\external\\windows-computer-use-mcp",
+      "env": {
+        "PYTHONIOENCODING": "utf-8",
+        "windows_computer_use_mcp_ENABLE_KEYLOGGER": "0",
+        "windows_computer_use_mcp_ENABLE_FACE": "0",
+        "windows_computer_use_mcp_MAX_ACTIONS_PER_MINUTE": "40",
+        "windows_computer_use_mcp_DEPOT_URL": "http://127.0.0.1:10727",
+        "PYWINAUTO_LLM_BASE_URL": "http://127.0.0.1:11434/v1"
+      }
+    }
+  }
+}

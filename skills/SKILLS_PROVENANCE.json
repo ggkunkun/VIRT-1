@@ -511,6 +511,48 @@
      "sha256": "aae61e60500a5d08818d199b69303775049ea848ed1508c6ccf6118e0d114f77"
     }
    ]
+  },
+  "desktop-automation-protocol": {
+   "name": "desktop-automation-protocol",
+   "tier": "T1",
+   "role": "桌面自动化选型/焦点/安全/任务编排协议（上游方法论）",
+   "source_repo": "windows-computer-use-mcp",
+   "upstream_path": "windows-computer-use-mcp/skills/desktop-automation-protocol",
+   "upstream_commit": null,
+   "upstream_license": "MIT License",
+   "install_path": "skills/desktop-automation-protocol",
+   "extra_files": [
+    "references/SAFETY.md 来自上游 docs/SAFETY.md，为让技能里的阅读指引可解析"
+   ],
+   "files": [
+    {
+     "path": "SKILL.md",
+     "bytes": 1889,
+     "sha256": "8572165998754bed3e6f4fa547d36a39d82398741de548b2133d07a5bda32d0f"
+    },
+    {
+     "path": "references/SAFETY.md",
+     "bytes": 11733,
+     "sha256": "6c9b936e0654c9296c03abbbeb89e1dfdc73a9db8360a85afa000023c5398410"
+    }
+   ]
+  },
+  "windows-desktop-input-gate": {
+   "name": "windows-desktop-input-gate",
+   "tier": "T1_derived_local",
+   "role": "鼠标键盘接管与读屏的执行纪律（含注入红线与 HITL/限速/kill_switch）",
+   "source_repo": null,
+   "upstream_path": null,
+   "origin": "派生自建：上游 windows-computer-use 卡片结尾含 'run ruff + pytest, commit per AGENTS.md' 越权动作指令，已剥离后重写",
+   "install_path": "skills/windows-desktop-input-gate",
+   "acceptance_evidence": "scratch/skill_gap/e2e.py：62 字符含 '@; Set-Content 对抗文本逐字节落进目标应用；hotkey ctrl,a 送达；未映射组合键被拒；capture 1920x1080 PNG 274KB；仅杀自启 PID",
+   "files": [
+    {
+     "path": "SKILL.md",
+     "bytes": 4963,
+     "sha256": "c02f2c4f93e9c3ab5b0d35021564d145fc662a2a62f0d44ae1903cd085130820"
+    }
+   ]
   }
  },
  "source_of_record": "GitHub clones under external/; see scratch/skill_gap/skill_matrix.json for verdicts",
@@ -533,5 +575,42 @@
    "fix": "未达标改判 not_healed + healed_to_target=false + 如实判词；钣金族返回 formability_advisory 并禁止按强度自愈",
    "test": "test_sheet_family_is_formability_advisory_not_strength_selfheal, test_sheet_family_never_reports_optimized_without_reaching_target"
   }
- ]
+ ],
+ "desktop_backend_2026-11-04": {
+  "project": "external/windows-computer-use-mcp (v0.8.0, 已 editable 安装进项目内 .venv)",
+  "why_venv": "共享 Python312 不能装 fastmcp[server]：它要 mcp<2，而本机 build123d-mcp 要 mcp>=2（实测降级 mcp 2.3.0->1.30.0 会砸掉后者，已回滚）",
+  "measured_tools": [
+   "automation_assert",
+   "automation_dialog",
+   "automation_elements",
+   "automation_keyboard",
+   "automation_macro",
+   "automation_mission",
+   "automation_mouse",
+   "automation_safety",
+   "automation_shortcut",
+   "automation_smart",
+   "automation_system",
+   "automation_task",
+   "automation_visual",
+   "automation_watch",
+   "automation_windows",
+   "analyze_winapp",
+   "approve_automation",
+   "cua_computer_use_screenshot",
+   "get_desktop_state",
+   "get_window_state"
+  ],
+  "mutating_tools": 14,
+  "opt_in_absent_from_list": [
+   "keylogger",
+   "face_recognition"
+  ],
+  "registered_in": [
+   "mcp_cadcam_config.json",
+   "AGENT_TOOLCHAIN_INTERFACE.md"
+  ],
+  "in_repo_channel": "cadcam_desktop_gui 新增 type_text/hotkey/inspect_window/button/double，且键盘路径不再经 shell",
+  "fixed_injection": "type_text 旧实现经 powershell here-string 拼接，实测 ' 行首的 @ 可逃逸并执行注入语句(rc=0)；改为 CF_UNICODETEXT+keybd_event"
+ }
 }
