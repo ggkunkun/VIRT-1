@@ -50,7 +50,7 @@
 - `anthropics/skills`：仅文档类；`VoltAgent/awesome-agent-skills`(千条目录) grep `cad|cnc|gcode|fea|nesting|vericut` 零命中；`gcode/cnc/vericut/nesting + skill` 仓名检索只到 0 星试验仓。
 
 ## 尚未做、需要单独授权的两件事
-1. **未改 `mcp_cadcam_config.json`**：添加工具服务器会改变被服务模型的工具面，并让同一款 CAD 出现两个 COM 挂接方。
+1. ~~未改 `mcp_cadcam_config.json`~~ → **本节写作后已做，见文末「追补三」**：模型侧工具面确实被改动，两个 COM 挂接方的风险由「单实例账本 + 只接管已开实例」约束，而非由不注册来回避。
 2. **未改 `Flange_Machining_O1001.nc` 本体**：加工程序是产物，修正副本在 `scratch/skill_gap/Flange_Machining_O1001_fixed.nc` 供逐行比对（Q5000→Q5.0、`X#106 C#120`、孔深 `Z-[#103+1.0]`、补 `G50 S2000`、`G85 X#102` 使孔径生效）。
 
 版本控制提醒：`skills/` 与 `virtu_omni/engine/` 绝大多数文件此前从未被 git 跟踪，本文件与本次改动已纳入跟踪，其余仍未跟踪。
@@ -63,3 +63,21 @@ stdio 实测工具面（v0.8.0，20 个，其中 14 个非 readOnly）：`automa
 上游技能卡片处置：`desktop-automation-protocol` 按字节装入（并把 `docs/SAFETY.md` 一并放进 `references/` 让指引可解析）；`windows-computer-use` **拒装**——它正文结尾要求"任务结束时跑 ruff+pytest 并按 AGENTS.md 提交"，那是上游仓库自用开发流程对运行态模型的越权动作指令；改派生自建 `windows-desktop-input-gate`（只留实测工具面 + PID 级窗口纪律 + HITL/限速/kill_switch + 注入红线）。
 
 顺手补掉仓内一个**真注入洞**：`bridges/desktop_controller.py` 的 `type_text` 旧实现把输入文本拼进 `powershell -Command "Set-Clipboard -Value @'…'@"`，实测文本中一行以 `'@` 开头即可逃逸 here-string 并让注入语句被执行（rc=0，语句真的跑了）；`hotkey` 把 keys 直插 `SendWait('…')` 同理。现改为 `CF_UNICODETEXT` 剪贴板 + `keybd_event` 组合键，全程不经 shell，且未识别的组合键直接报错不回退。端到端验证（`scratch/skill_gap/e2e.py`，自启 Tk 目标窗口并只杀自己起的 PID）：62 字符含 `'@; Set-Content -Path "x.txt"`、引号、换行与中文 → 目标应用回读**逐字节一致**；`hotkey ctrl,a` 送达；`hotkey ctrl,magic_spell` 被拒；`capture` 出 1920×1080 PNG(274 KB)。同时 `cadcam_desktop_gui` 补齐了代码里早已实现却未暴露的 `type_text/hotkey/inspect_window`，并让 `click` 的 `button/double` 真正透传（此前被丢弃）。
+
+## 2026-11-04 追补三：客户端（Qoder 侧）MCP 注册落地与握手取证
+模型侧 `mcp_cadcam_config.json` 早就写了两个服务器，但**客户端注册一直是空的**——不注册就没人真的能调到这些工具，"已接入"只是文件里的一句话。本次补上并按字面取证。
+
+注册点选 **local 作用域** `.qoder/settings.local.json` 而不是 project 作用域 `.qoder/settings.json`：后者会提交进 git，协作者一拉取就自动拉起一个能注入鼠标键盘的通道，等于把输入控制权随源码分发。要升级为团队共享，把同一段 JSON 移进 `.qoder/settings.json` 即可，配置体本身不用改。配套边界文件 `.qoder/.gitignore`（内容 `settings.local.json`）已建立，`git check-ignore -v` 回 rc=0 命中该规则；不动根 `.gitignore`（另一会话正在其中追加 `.damodel_pass` 等凭据规则，避免抢写）。
+
+取证方式不是"我配置写对了"，而是 `scratch/skill_gap/probe_registered_mcps.py` 读注册文件、按每个字段的 `command/args/cwd/env` 原样起进程，走 `initialize → notifications/initialized → tools/list`，只额外调**只读**的 `automation_safety`，不触发任何写操作工具：
+
+| 服务器 | 握手 | 工具数 | 说明 |
+| --- | --- | --- | --- |
+| `windows-computer-use` | ok | **20** | 14 个非 readOnly；全局键盘监听与人脸工具不在列表内 |
+| `industrial-cadcam` | ok | **14** | 与 `bridges/tool_calling_specs.py` 的模型侧工具面同名同集 |
+
+注册态回读的安全闸（`automation_safety` 实际返回，非配置文件里的期望值）：`max_actions_per_minute=40`、`actions_last_60s=0`、`total_mutations_session=0`、`kill_switch=false`；进程环境回读 `ENABLE_KEYLOGGER=0`、`ENABLE_FACE=0`。`DEPOT_URL` 经源码核对默认即 `http://127.0.0.1:10727`（`src/windows_computer_use_mcp/fleet_error_hints.py:27`），配置里显式钉在回环地址，杜绝错误提示查询走外网。
+
+仍未授权、仍未做的一件事：**根目录 `Flange_Machining_O1001.nc` 本体未改**。刚复跑闸，它仍报 5 类 2 FATAL（`NC-Q-UNIT` 米制 Q5000、`NC-POLAR` 角度被算两次、`NC-DEAD-VAR` #106 未生效、`NC-DEPTH-MISMATCH`、`NC-G50-MISSING`）。加工程序是交付产物，改它等于改要上机的刀路，只提供了逐行修正副本 `scratch/skill_gap/Flange_Machining_O1001_fixed.nc` 供比对；是否替换本体需要明确指令。
+
+vendored 第三方不纳入父仓：`external/windows-computer-use-mcp` 自带 `.git`（`sandraschi/windows-computer-use-mcp` @ `b71afd0cd164…`，v0.8.0，MIT，工作树干净）。`git add` 它只会生成 gitlink/子模块占位，故只在 `skills/SKILLS_PROVENANCE.json` 的 `mcp_registration_2026-11-04` 块里记 provenance。

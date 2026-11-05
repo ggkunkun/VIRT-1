@@ -612,5 +612,85 @@
   ],
   "in_repo_channel": "cadcam_desktop_gui 新增 type_text/hotkey/inspect_window/button/double，且键盘路径不再经 shell",
   "fixed_injection": "type_text 旧实现经 powershell here-string 拼接，实测 ' 行首的 @ 可逃逸并执行注入语句(rc=0)；改为 CF_UNICODETEXT+keybd_event"
+ },
+ "mcp_registration_2026-11-04": {
+  "config_file": ".qoder/settings.local.json",
+  "scope": "local",
+  "scope_why": "能控制鼠标键盘的服务器不走 project 作用域：project 会把注册提交进 git、协作者一拉取就自动拉起一个输入注入通道。要提升成 project 只需把该 JSON 移进 .qoder/settings.json。",
+  "not_committed_to_git": true,
+  "gitignore_boundary": ".qoder/.gitignore -> settings.local.json",
+  "servers": {
+   "windows-computer-use": {
+    "status": "ok",
+    "tool_count": 20,
+    "tools": [
+     "analyze_winapp",
+     "approve_automation",
+     "automation_assert",
+     "automation_dialog",
+     "automation_elements",
+     "automation_keyboard",
+     "automation_macro",
+     "automation_mission",
+     "automation_mouse",
+     "automation_safety",
+     "automation_shortcut",
+     "automation_smart",
+     "automation_system",
+     "automation_task",
+     "automation_visual",
+     "automation_watch",
+     "automation_windows",
+     "cua_computer_use_screenshot",
+     "get_desktop_state",
+     "get_window_state"
+    ]
+   },
+   "industrial-cadcam": {
+    "status": "ok",
+    "tool_count": 14,
+    "tools": [
+     "cadcam_autocad_draw",
+     "cadcam_cae_stress_analysis",
+     "cadcam_cimco_validate",
+     "cadcam_desktop_gui",
+     "cadcam_extreme_chain",
+     "cadcam_nx_journal",
+     "cadcam_preflight",
+     "cadcam_run_full_chain",
+     "cadcam_sheetmetal_nest",
+     "cadcam_solidworks_model",
+     "cadcam_sscnc_control",
+     "cadcam_universal_geometry",
+     "cadcam_vericut_simulate",
+     "cadcam_visual_inspect"
+    ]
+   }
+  },
+  "handshake_verified": true,
+  "verification_script": "scratch/skill_gap/probe_registered_mcps.py",
+  "verification_mode": "按注册文件里的字面 command/args/cwd/env 逐字段起进程，只做 initialize + tools/list + 只读 automation_safety，不触发任何写操作工具",
+  "safety_snapshot_as_registered": {
+   "actions_last_60s": 0,
+   "max_actions_per_minute": 40,
+   "total_mutations_session": 0,
+   "kill_switch": false,
+   "dry_run": false
+  },
+  "safety_env_as_readback": {
+   "windows_computer_use_mcp_MAX_ACTIONS_PER_MINUTE": "40",
+   "windows_computer_use_mcp_ENABLE_FACE": "0",
+   "windows_computer_use_mcp_ENABLE_KEYLOGGER": "0"
+  },
+  "vendored_upstream": {
+   "path": "external/windows-computer-use-mcp",
+   "origin": "https://github.com/sandraschi/windows-computer-use-mcp.git",
+   "commit": "b71afd0cd164508e36b1bbce482b26630377f54a",
+   "branch": "master",
+   "version": "0.8.0",
+   "license": "MIT (Copyright (c) 2025 Sandra Schilling)",
+   "worktree_clean": true,
+   "not_added_to_parent_git": "该目录自带 .git，纳入父仓会变成 gitlink/子模块，故只在台账记 provenance"
+  }
  }
 }
