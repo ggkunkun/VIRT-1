@@ -401,14 +401,17 @@ class DesktopController:
         if not HAS_WIN32:
             return {"status": "error", "message": "win32 not available"}
         if text is None or text == "":
-            return {"status": "typed", "length": 0, "note": "empty text, no input sent"}
+            return {"status": "no_op", "length": 0, "delivery": "not_attempted",
+                    "note": "empty text, no input sent"}
         err = self._clipboard_set(text)
         if err:
             return {"status": "error", "stage": "clipboard", "message": err}
         _attach_interactive_desktop()
         self._tap_combo([0x11, 0x56])
         return {"status": "typed", "length": len(text), "channel": "CF_UNICODETEXT+CtrlV",
-                "clipboard_staged": True, "note": "落字需由目标应用回读确认"}
+                "clipboard_staged": True, "delivery": "unverified",
+                "verify_with": "cadcam_desktop_gui(action=inspect_window) 或目标应用自己的回读",
+                "note": "typed 只代表 Ctrl+V 已发出；前台切换或剪贴板被占用时会静默落空"}
 
     def hotkey(self, keys: str) -> Dict[str, Any]:
         """组合键：'ctrl,s' / 'alt,f4' / 'f5'。解析不到就不发送，不回退成原始字符串注入。"""
@@ -430,7 +433,9 @@ class DesktopController:
                         "supported": "ctrl/alt/shift/win + 字母/数字/F1-F12/enter/esc/tab/方向键"}
         _attach_interactive_desktop()
         self._tap_combo(vks)
-        return {"status": "hotkey_sent", "keys": keys, "vks": [hex(v) for v in vks]}
+        return {"status": "hotkey_sent", "keys": keys, "vks": [hex(v) for v in vks],
+                "delivery": "unverified",
+                "verify_with": "cadcam_desktop_gui(action=inspect_window) 或目标应用自己的回读"}
 
     def dismiss_all_dialogs(self, timeout_s: float = 12.0) -> Dict[str, Any]:
         """Dismiss common blocking modal dialogs across CAD/CAM applications.

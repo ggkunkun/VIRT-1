@@ -49,3 +49,41 @@ metadata:
 `scratch/skill_gap/e2e.py`：自启 Tk 目标窗口 → `cadcam_desktop_gui(action=type_text)` 投 62 字符含
 `'@; Set-Content -Path "x.txt"`、引号、换行与中文 → 目标应用回读**逐字节一致**；`hotkey ctrl,a` 送达；
 `hotkey ctrl,magic_spell` 被拒；`capture` 出 1920×1080 PNG(274 KB)；仅杀掉自己启动的 PID。
+
+## 闸门口径（2026-11-05 实测，运行时强制，不是建议）
+
+判定长在 `bridges/tool_calling_specs.py::execute_tool_call` 的**最前面**，排在
+`get_orchestrator()` 之前——被拒的调用不会构造六个 bridge（bridge 构造会尝试挂
+SOLIDWORKS/NX/AutoCAD 的 COM），也不会读进程表。REST 桥、MCP 桥、CLI、
+`cadcam_cli.py gui`、`adaptive_router` 的七种接入方式全部经这一个漏斗，
+所以没有第二条到 SendInput 的路。
+
+| 环境变量 | 默认 | 作用 |
+| --- | --- | --- |
+| `VIRTU_DESKTOP_INPUT` | 未设 | 必须 =`1` 才允许任何键鼠写入；不设即拒（`DESKTOP_INPUT_NOT_APPROVED`）|
+| `VIRTU_DESKTOP_KILL` | 未设 | =`1` 时无条件拒，优先于上面那条 |
+| `VIRTU_DESKTOP_MAX_PER_MIN` | 20 | 60 秒滚动窗口内的写入配额 |
+| `VIRTU_DESKTOP_APPROVAL_FILE` | 未设 | 设了就要求该文件在 TTL 内被碰过（人工刚批准过的凭据）|
+| `VIRTU_DESKTOP_APPROVAL_TTL_S` | 600 | 上一条的有效期 |
+| `VIRTU_DESKTOP_ALLOWED_PIDS` | 未设 | 操作者点名的例外 PID，只放宽目标绑定，其余条件一条不减 |
+
+`capture` / `inspect_window` 是只读，不需要批准。其余五个动作
+（`click` `focus` `type_text` `hotkey` `dismiss_dialogs`）除配额外还要求：
+
+- **`click` 必须显式给 x/y**，并落在虚拟桌面矩形内。历史上这里是
+  `args.get("x", 0)`（漏斗）和 `params.get("x", 500)`（路由）两套静默默认值——
+  模型漏一个参数就等于在桌面上盲点一下。
+- **`type_text` / `hotkey` / `click` 必须点名 `software`，且当前前台窗口的 PID
+  属于它**。焦点不属于目标就拒（`DESKTOP_FOREIGN_FOCUS`）——否则文字落进你此刻
+  正在看的窗口。
+- **通用宿主进程不能用来证明归属**：`vericut` 的 `process_names` 含 `javaw.exe`，
+  若照单放行等于对任意 Java 窗口注键；`javaw/python/cmd/powershell/explorer` 等
+  一律从可注键集合剔除。
+- **危险组合键即使命名目标也拒**：`alt+f4`、任何 `win` 组合、`ctrl+alt+del`、
+  `ctrl+shift+esc`。
+- 留痕在 `runs/desktop_gate/decisions.jsonl`，**不记被敲入的原文**，只记长度 +
+  sha256 前 8 位，免得把口令写进日志。
+
+`type_text` / `hotkey` 返回的 `status` 只代表按键已发出。实测出现过 `status=typed`
+而目标回读 0 字符（前台切换或剪贴板被别的程序占用），所以现在一律带
+`delivery: "unverified"`；要确认落字就用 `inspect_window` 或目标应用自己的回读。

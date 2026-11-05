@@ -437,8 +437,17 @@ def execute_tool_call(tool_name: str, arguments: Dict[str, Any]) -> Dict[str, An
     """Execute LLM Tool Call and return JSON serializable result payload.
     Supports both canonical 'cadcam_*' tools and legacy 'vendor.action' tools from training corpora.
     """
-    orch = get_orchestrator()
     args = arguments or {}
+
+    # 桌面输入闸门排在最前：被拒绝的调用不得构造任何 bridge（bridge 构造会尝试
+    # 挂载 SOLIDWORKS/NX/AutoCAD 的 COM），也不得读进程表。零副作用才是拒绝。
+    if tool_name == "cadcam_desktop_gui":
+        from bridges.desktop_gate import gate
+        blocked = gate(tool_name, args)
+        if blocked is not None:
+            return blocked
+
+    orch = get_orchestrator()
 
     # Compatibility layer: Map legacy training corpora tool names and args to canonical tools
     legacy_aliases = {
@@ -574,7 +583,7 @@ def execute_tool_call(tool_name: str, arguments: Dict[str, Any]) -> Dict[str, An
         elif act == "focus":
             return ctl.focus(args.get("software", ""))
         elif act == "click":
-            return ctl.click(args.get("x", 0), args.get("y", 0),
+            return ctl.click(int(args["x"]), int(args["y"]),
                              button=args.get("button", "left"), double=bool(args.get("double", False)))
         elif act == "type_text":
             return ctl.type_text(args.get("text", ""))

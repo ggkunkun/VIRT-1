@@ -81,3 +81,53 @@ stdio 实测工具面（v0.8.0，20 个，其中 14 个非 readOnly）：`automa
 仍未授权、仍未做的一件事：**根目录 `Flange_Machining_O1001.nc` 本体未改**。刚复跑闸，它仍报 5 类 2 FATAL（`NC-Q-UNIT` 米制 Q5000、`NC-POLAR` 角度被算两次、`NC-DEAD-VAR` #106 未生效、`NC-DEPTH-MISMATCH`、`NC-G50-MISSING`）。加工程序是交付产物，改它等于改要上机的刀路，只提供了逐行修正副本 `scratch/skill_gap/Flange_Machining_O1001_fixed.nc` 供比对；是否替换本体需要明确指令。
 
 vendored 第三方不纳入父仓：`external/windows-computer-use-mcp` 自带 `.git`（`sandraschi/windows-computer-use-mcp` @ `b71afd0cd164…`，v0.8.0，MIT，工作树干净）。`git add` 它只会生成 gitlink/子模块占位，故只在 `skills/SKILLS_PROVENANCE.json` 的 `mcp_registration_2026-11-04` 块里记 provenance。
+
+## 2026-11-05 追补四：模型到底能不能操控这台电脑——审计、修复、真机取证
+结论：**能，而且此前有五条路都没闸**。第三方 MCP 服务器的 `approve_automation`/限速/kill_switch
+只保护它自己那条通道；`approve_automation` 这个符号在仓内运行时代码里的引用数是 **0**。
+
+真正接住模型的是仓内通道，而且 `scripts/workbuddy_virtu_bridge.py` 是
+`Auto-executing`——模型吐出 tool call 就直接执行，`_validate_tool_call` 只是工具名白名单，
+`cadcam_desktop_gui` 本身就在白名单里。
+
+### 修掉的四个缺陷
+1. **漏斗没闸**：`execute_tool_call` 的 `cadcam_desktop_gui` 分支直落 `DesktopController`。
+   现把判定排在函数**最前面**、排在 `get_orchestrator()` 之前——原先即便这次调用会被拒，
+   也已经构造了六个 bridge（其中几个尝试挂 SOLIDWORKS/NX/AutoCAD 的 COM）。拒绝必须零副作用。
+2. **CLI 通道整条绕过漏斗**：`cadcam_cli.py::cmd_gui` 自己 new `DesktopController()`，
+   且 `click` 写的是 `args.x or 0` —— 静默点屏幕左上角 (0,0)。现统一走 `execute_tool_call`。
+3. **路由层同样绕过，且默认值不一样**：`adaptive_router._execute_gui` 用
+   `params.get("x", 500)` —— 与漏斗的 (0,0) 是两个不同的盲点坐标。同时
+   `GUI_ACTIONS` 只有 4 个动作，缺 `type_text/hotkey/inspect_window`，即工具面已暴露、
+   路由却永远路由不到；CLI 容灾分支还拿 `dismiss_dialogs` 去撞 argparse 的
+   `dismiss-dialogs`，那个动作在 CLI 接入方式下一直是 rc=2。
+4. **假成功**：`type_text` 会返回 `status=typed`，但实测出现过按键已发、目标回读 0 字符
+   （前台切换/剪贴板被占用）。现补 `delivery:"unverified"` + `verify_with`，
+   确认落字只能靠 `inspect_window` 或目标应用回读。
+
+### 闸门规则（`bridges/desktop_gate.py`，fail-closed）
+默认全部拒绝；`VIRTU_DESKTOP_INPUT=1` 才允许写入，`VIRTU_DESKTOP_KILL=1` 优先于一切；
+60 秒滚动配额默认 20；`click` 必须显式给界内坐标；`type_text/hotkey/click` 必须点名
+`software` 且**当前前台 PID 属于它**；`javaw/python/cmd` 等通用宿主不得用来证明归属
+（`vericut` 的 `process_names` 里就有 `javaw.exe`）；`alt+f4`、任何 `win` 组合、
+`ctrl+alt+del`、`ctrl+shift+esc` 即使目标已绑定也拒。留痕 `runs/desktop_gate/decisions.jsonl`
+不记被敲入原文，只记长度与 sha256 前 8 位。
+
+### 取证
+`tests/test_desktop_gate.py` 14 项、pytest 下 33 项（含既有链式与 CAE 闸）全绿；
+判据不是只看返回值，而是把 `win32api.mouse_event/keybd_event/SetCursorPos` 换成会抛断言的
+spy——被拦下时一个输入 API 都不许碰到。真机 E2E（`scratch/skill_gap/e2e_gate.py`）6/6：
+自起 Tk 目标窗、按 PID 操作、用完即还原前台焦点；5 个拦截场景目标框保持空，
+1 个批准场景 72 字符逐字节命中（含 `'@` here-string 逃逸串、`Ø`、中文）。
+另单独连跑 4 次批准粘贴：3/3 逐字节命中，第 1 次因前台尚未落到目标窗而被闸拦下——
+拦在写入之前，不是写错地方。
+
+E2E 首版还暴露一个方法论坑：测试窗 `-topmost + focus_force` 会**抢走操作者的输入焦点**，
+于是操作者自己的按键落进测试输入框，把"拦截是否零输入"这条判据污染成假失败
+（第一轮里 `h`/`hi` 就是这么来的）。改成动作前清空 + 动作后立刻还原前台后判据才干净。
+
+### 没动、需要单独决策的一件事
+`scripts/generate_omni_autonomous_agent_corpus.py:229,242` 把
+`{"status": "typed", "length": 25}` 这类**未经回读确认的观察**硬编码进训练轨迹。
+运行时现在如实标注 `delivery:"unverified"`，但语料教的仍是"按过＝写成"。
+改语料等于改训练数据，这条留给是否重造语料的决定。

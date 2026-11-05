@@ -692,5 +692,36 @@
    "worktree_clean": true,
    "not_added_to_parent_git": "该目录自带 .git，纳入父仓会变成 gitlink/子模块，故只在台账记 provenance"
   }
+ },
+ "desktop_gate_2026-11-05": {
+  "question": "被服务的模型能否操控本机鼠标键盘",
+  "answer": "能；且修复前仓内通道无任何审批闸（第三方服务器的 approve_automation 在仓内运行时代码引用数为 0）",
+  "enforcement_point": "bridges/tool_calling_specs.py::execute_tool_call 最前，早于 get_orchestrator()",
+  "why_one_point": "REST 桥 / MCP 桥 / CLI / cadcam_cli gui / adaptive_router 七种接入方式共用这一漏斗",
+  "module": "bridges/desktop_gate.py",
+  "defects_fixed": [
+   "漏斗无闸且拒绝前已构造六个 bridge（含 COM 挂载尝试）",
+   "cadcam_cli.cmd_gui 绕过漏斗且 click 用 args.x or 0 盲点 (0,0)",
+   "adaptive_router._execute_gui 绕过漏斗且用另一套默认值 (500,500)",
+   "GUI_ACTIONS 缺 type_text/hotkey/inspect_window，已暴露的工具面路由不到",
+   "CLI 容灾分支拿 dismiss_dialogs 撞 argparse 的 dismiss-dialogs，该动作在 CLI 下恒 rc=2",
+   "type_text/hotkey 假成功：按键已发即 status=typed，实测有回读 0 字符的场合"
+  ],
+  "env_contract": {
+   "VIRTU_DESKTOP_INPUT": "必须=1 才允许写入，默认拒绝",
+   "VIRTU_DESKTOP_KILL": "=1 无条件拒，优先于 opt-in",
+   "VIRTU_DESKTOP_MAX_PER_MIN": "默认 20",
+   "VIRTU_DESKTOP_APPROVAL_FILE": "人工批准凭据新鲜度",
+   "VIRTU_DESKTOP_APPROVAL_TTL_S": "默认 600",
+   "VIRTU_DESKTOP_ALLOWED_PIDS": "操作者点名 PID，只放宽目标绑定"
+  },
+  "audit_log": "runs/desktop_gate/decisions.jsonl（不记原文，记长度+sha256 前 8 位）",
+  "verification": {
+   "unit": "tests/test_desktop_gate.py 14 passed（spy 断言 mouse_event/keybd_event/SetCursorPos 零调用）",
+   "adjacent": "pytest 33 passed 含 test_agent_toolchain_full / test_toolchain_access_modes / test_cae_gate_honesty",
+   "live_e2e": "scratch/skill_gap/e2e_gate.py 6/6：5 拦截场景目标框为空，1 批准场景 72 字符逐字节命中",
+   "repeat_paste": "scratch/skill_gap/probe_paste.py 4 次：3 次逐字节命中，1 次在写入前被拦"
+  },
+  "left_for_decision": "scripts/generate_omni_autonomous_agent_corpus.py:229,242 把未回读确认的 status=typed 硬编码进训练轨迹"
  }
 }
