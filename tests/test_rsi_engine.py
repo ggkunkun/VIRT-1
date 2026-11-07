@@ -20,7 +20,9 @@ class FakeModel:
     def __init__(self, config, budget):
         self.config, self.budget = config, budget
         self.identity = {"kind": "ollama_native", "model_id": config.model_id,
-                         "digest": "declared-fake-test-digest", "base_url": config.base_url}
+                         # Declared fake, but shaped like an auditable artifact: a digest that
+                         # cannot be traced back is rejected before the protocol is exercised.
+                         "digest": "f" * 64, "base_url": config.base_url}
         self.calls = []
         self.proposals = 0
         type(self).instances.append(self)
@@ -67,7 +69,8 @@ def experiment(tmp_path):
                                    {"type": "physics_invariant", "scenario": scenario},
                                    {"type": "world_state_verified", "scenario": scenario, "weight": 3}]})
     (directory / "physics.jsonl").write_text("\n".join(json.dumps(c) for c in cases), encoding="utf-8")
-    config = Config(case_dir="data/cases", synthetic_per_task=2, max_seconds=120)
+    config = Config(case_dir="data/cases", synthetic_per_task=2, max_seconds=120,
+                    noise_sigma=8.84)
     FakeModel.instances = []
     FakeModel.invalid = FakeModel.fail = False
     return tmp_path, config, cases

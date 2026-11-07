@@ -3,14 +3,16 @@
 from __future__ import annotations
 
 import json
+import math
 import re
 from pathlib import Path
 
 from .candidates import build_sft_candidates, development_feedback
 from .contracts import (Budget, BudgetExhausted, Config, RSIError, canonical_json, fingerprint,
-                        inside, load_cases, question_key, read_jsonl, scenario_keys, split_cases)
+                        inside, load_cases, protect_cases, question_key, read_jsonl, scenario_keys,
+                        split_cases)
 from .evaluation import CRITICAL_TYPES, LocalModel, evaluate_cases, summarize
-from .gates import BAD_VERDICTS, validation_gate
+from .gates import BAD_VERDICTS, identity_is_real, validation_gate
 from .storage import FileLock, RunStore, append_jsonl, assert_sources, source_hashes, utc_now
 
 
@@ -51,7 +53,13 @@ def development_improves(before, after, config):
     if len(before) != len(after) or any(r["verdict"] in BAD_VERDICTS for r in after):
         return False
     b, c = summarize(before), summarize(after)
-    if c["mean_score"] < b["mean_score"] + config.min_dev_gain:
+    # Resolution first: min_dev_gain is a floor, not a resolution. With the measured paired
+    # sigma on this box the develop-set mean moves by several points on identical inputs, so
+    # a smaller gain is jitter being relabelled as a recursive improvement.
+    need = config.min_dev_gain
+    if config.noise_sigma > 0 and len(after) >= 2:
+        need = max(need, config.noise_z * config.noise_sigma / math.sqrt(len(after)))
+    if c["mean_score"] < b["mean_score"] + need:
         return False
     if any(c["dimensions"].get(d, -1) + config.max_dimension_regression < score
            for d, score in b["dimensions"].items()):
@@ -107,8 +115,15 @@ def run(root, config, model_factory=LocalModel):
         try:
             sources = source_hashes(root, config.case_dir)
             cases, protected = load_cases(root, config.case_dir, config.dimensions)
+            extra_protection = protect_cases(root, config.protect_dirs) if config.protect_dirs else []
+            protected = protected + extra_protection
+            receipt["protected_dirs"] = list(config.protect_dirs)
+            receipt["protected_extra_cases"] = len(extra_protection)
             model = model_factory(config, budget)
             receipt["model_identity"] = model.identity
+            identity_valid = identity_is_real(model.identity)
+            receipt["identity_valid"] = identity_valid
+            receipt["synthetic_run"] = bool(getattr(config, "synthetic_run", False))
             seen = _seen_validation(base, model.identity)
             fresh = [case for case in cases if _case_tokens(case).isdisjoint(seen)]
             receipt["previously_used_validation_cases_excluded"] = len(cases) - len(fresh)
@@ -193,8 +208,11 @@ def run(root, config, model_factory=LocalModel):
             receipt["data_candidate"] = data_report
             selected = (best, best_records, best_stage) if best else best_attempt
             receipt["development_improved"] = best is not None
+            receipt["development_improved_scope"] = (
+                "prompt_policy text layer only; weights_updated=false" if best else None)
             if selected is None:
                 gate = validation_gate([], [], [c["id"] for c in validation], config, None,
+                                       identity_valid=identity_valid,
                                        data_valid=data_report["valid"])
                 receipt["status"] = "no_improvement"
                 receipt["independent_validation"] = "not_run_no_valid_candidate"
@@ -215,12 +233,20 @@ def run(root, config, model_factory=LocalModel):
                 candidate_val = evaluate_cases(model, validation, config, store, "validation_candidate",
                                                candidate["strategy"])
                 gate = validation_gate(baseline_val, candidate_val, [c["id"] for c in validation],
-                                       config, candidate["candidate_sha256"], data_valid=data_report["valid"])
+                                       config, candidate["candidate_sha256"],
+                                       identity_valid=identity_valid,
+                                       data_valid=data_report["valid"])
                 gate["development_improved"] = best is not None
+                # A prompt_policy gain is a text-layer effect. Recording it under the same
+                # field as a model capability gain is how "+83 points" got mistaken for the
+                # MoE having learned something.
+                gate["development_improved_scope"] = (
+                    "prompt_policy text layer only; weights_updated=false" if best else None)
                 if best is None:
                     gate["eligible"] = False
                     gate["reasons"] = sorted(set(gate["reasons"] + ["development gate did not pass"]))
-                receipt["status"] = "awaiting_approval" if gate["eligible"] else "rejected"
+                    gate["certifiable"] = False
+                receipt["status"] = "awaiting_approval" if gate["certifiable"] else "rejected"
                 receipt["independent_validation"] = "completed_once_after_candidate_frozen"
             model.verify_identity()
             assert_sources(root, sources)

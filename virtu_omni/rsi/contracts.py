@@ -11,7 +11,7 @@ import re
 import time
 import unicodedata
 from collections import defaultdict
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, field
 from pathlib import Path
 from urllib.parse import urlsplit
 
@@ -22,6 +22,23 @@ class RSIError(RuntimeError):
 
 class BudgetExhausted(RSIError):
     """No more model calls are authorized by this run's budget."""
+
+
+def remote_url(value):
+    """Opt-in non-loopback endpoint for cloud runs; no credentials may ride in the URL."""
+    try:
+        p = urlsplit(value)
+        host = p.hostname
+        port = p.port
+    except ValueError as exc:
+        raise RSIError("Malformed remote endpoint") from exc
+    if (p.scheme not in ("http", "https") or not host or p.username or p.password
+            or p.path not in ("", "/", "/v1", "/v1/") or p.query or p.fragment):
+        raise RSIError("Remote endpoint must be a bare http(s) origin, optionally /v1, "
+                       "without credentials")
+    if not port:
+        raise RSIError("Remote endpoint needs an explicit port")
+    return value.rstrip("/")
 
 
 def canonical_json(value):
@@ -94,6 +111,28 @@ class Config:
     proposal_tokens: int = 1024
     max_strategy_chars: int = 2400
     synthetic_per_task: int = 12
+    # Extra case directories whose scenarios/prompts must never be reproduced by the SFT
+    # candidates, even though they are not selectable for dev/validation. Without this the
+    # protection scope silently equals the selection scope: point RSI at a fresh pool and the
+    # published evaluation boards stop being protected at all.
+    protect_dirs: tuple = ()
+    # Full build_arm spec for models whose served profile differs from the RSI default.
+    # The 13.63B MoE has to be measured as served (num_gpu=30 + the tool schema on the
+    # toolcall dimension); without it the loop measures a profile nobody runs.
+    arm_spec: dict = field(default_factory=dict)
+    # Cloud runs drive an OpenAI-compatible endpoint outside loopback. That is never the
+    # default: without this explicit opt-in every run stays pinned to the local box.
+    allow_remote: bool = False
+    # Paired-noise resolution gate. A mean gain must clear noise_z*noise_sigma/sqrt(n) before
+    # it may be called an improvement: measured paired_sigma on this box is 8.84 points
+    # (runs/moe14b_noise_probe.json), while min_dev_gain is 0.1, so without this gate the
+    # loop accepts sampling jitter as self-improvement. 0 keeps the historical behaviour.
+    noise_sigma: float = 0.0
+    noise_z: float = 1.96
+    # Protocol fixtures (a declared fake transport) set this so the loop can be exercised
+    # without a live model on the box. A synthetic run can never be certified or approved:
+    # the gate reports certifiable=false no matter how large the scores it fabricates are.
+    synthetic_run: bool = False
 
     def __post_init__(self):
         for name in ("rounds", "min_validation", "plateau_rounds", "max_calls", "max_seconds",
@@ -121,7 +160,38 @@ class Config:
             raise RSIError("model_id is required")
         if not isinstance(self.dimensions, (tuple, list)) or any(not isinstance(d, str) for d in self.dimensions):
             raise RSIError("dimensions must be a list of strings")
-        local_url(self.base_url)
+        if not isinstance(self.protect_dirs, (tuple, list)) or any(
+                not isinstance(d, str) or not d.strip() for d in self.protect_dirs):
+            raise RSIError("protect_dirs must be a list of directory paths")
+        object.__setattr__(self, "protect_dirs", tuple(self.protect_dirs))
+        if not isinstance(self.arm_spec, dict):
+            raise RSIError("arm_spec must be an object")
+        unknown = set(self.arm_spec) - {"kind", "model_id", "base_url", "num_ctx", "num_gpu",
+                                        "think", "strip_think", "retries", "timeout",
+                                        "tools", "tools_dimensions"}
+        if unknown:
+            raise RSIError(f"arm_spec has unknown keys: {sorted(unknown)}")
+        kind = self.arm_spec.get("kind", "ollama_native")
+        if kind not in ("ollama_native", "http_openai"):
+            raise RSIError(f"RSI does not drive arm kind: {kind}")
+        if type(self.allow_remote) is not bool:
+            raise RSIError("allow_remote must be a boolean")
+        if type(self.synthetic_run) is not bool:
+            raise RSIError("synthetic_run must be a boolean")
+        if kind == "http_openai" and not self.allow_remote:
+            raise RSIError("http_openai requires allow_remote=true; RSI never contacts a "
+                           "non-loopback endpoint by default")
+        for name in ("noise_sigma", "noise_z"):
+            value = getattr(self, name)
+            if (isinstance(value, bool) or not isinstance(value, (int, float))
+                    or not math.isfinite(value) or value < 0):
+                raise RSIError(f"{name} must be a finite nonnegative number")
+        if self.noise_sigma > 0 and not self.noise_z > 1.0:
+            raise RSIError("noise_z must exceed 1 when the noise gate is enabled")
+        if self.arm_spec.get("kind", "ollama_native") == "http_openai":
+            remote_url(self.base_url)
+        else:
+            local_url(self.base_url)
 
     def snapshot(self):
         return asdict(self)
@@ -200,6 +270,36 @@ def load_cases(root, directory, dimensions=()):
     if not selected:
         raise RSIError("No matching evaluation cases")
     return selected, protected
+
+
+def protect_cases(root, dirs):
+    """Cases whose scenarios and prompts the SFT candidates must never reproduce.
+
+    These are *not* selectable for dev/validation -- they only widen the protection scope, so
+    running RSI on a fresh pool cannot silently stop protecting the published boards.
+    Malformed or duplicated rows here are skipped rather than fatal: this is a guard set, not
+    a scored case set, and a guard must not be able to break a run by being noisy.
+    """
+    collected, seen_ids, seen_questions = [], set(), set()
+    for rel in dirs:
+        directory = inside(root, rel)
+        if not directory.is_dir():
+            raise RSIError(f"protect_dir does not exist: {rel}")
+        for path in sorted(directory.glob("*.jsonl")):
+            inside(root, path)
+            for case in read_jsonl(path):
+                if not isinstance(case, dict) or not isinstance(case.get("criteria"), list):
+                    continue
+                key = question_key(case) if case.get("prompt") else None
+                cid = case.get("id")
+                if (isinstance(cid, str) and cid in seen_ids) or (key and key in seen_questions):
+                    continue
+                if isinstance(cid, str):
+                    seen_ids.add(cid)
+                if key:
+                    seen_questions.add(key)
+                collected.append(case)
+    return collected
 
 
 def split_cases(cases, config):
