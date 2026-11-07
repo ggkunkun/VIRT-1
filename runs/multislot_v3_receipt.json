@@ -1,0 +1,198 @@
+{
+  "basis": "measured",
+  "tool": "scripts/moe14b_synth_multislot_cases.py",
+  "arm": "moe14b_hardened",
+  "arm_tools_sha256": "d4bf750c7662a6e0fd00a9905353992343601dab7e693d140e0e8ebbc335af41",
+  "n_tools_in_surface": 16,
+  "seed": 20261106,
+  "weights": {
+    "routing": 3.0,
+    "param": 0.5,
+    "routing_share_min_allowed": 0.5
+  },
+  "out_file": "D:\\Virtu模型\\data/benchmark/virtu_eval_v3_multislot/toolcall.jsonl",
+  "out_sha256": "dbb41f7589cbf100761834ec0b8099dd7b7fb55d42556afdf421af106346d040",
+  "n_cases": 12,
+  "n_rejected": 26,
+  "criteria_per_case": {
+    "6": 4,
+    "7": 3,
+    "10": 5
+  },
+  "min_step_points": {
+    "min": 5.0,
+    "max": 9.09,
+    "mean": 5.87
+  },
+  "routing_error_cost_points": {
+    "min": 54.55,
+    "max": 75.0,
+    "mean": 65.94
+  },
+  "single_parameter_error_scores": {
+    "n": 51,
+    "min": 90.91,
+    "max": 95.0,
+    "distinct": 4
+  },
+  "routing_flip_scores_from_perturbations": {
+    "n": 34,
+    "min": 45.45,
+    "max": 70.0
+  },
+  "misroute_neighbour_scores": {
+    "n": 60,
+    "min": 25.0,
+    "max": 45.45,
+    "band": [
+      20.0,
+      65.0
+    ],
+    "all_within_band": true
+  },
+  "checks": {
+    "S1_schema_from_the_arm_that_serves_it": true,
+    "S2_min_5_slots": true,
+    "S3_every_gold_value_stated_in_prompt": true,
+    "S4_full_gold_not_in_prompt": true,
+    "S5_gold_100_and_perturbations_partial_and_neighbours_midband": true,
+    "S5b_routing_carries_at_least_half_the_weight": true
+  },
+  "rejected": [
+    {
+      "tool": "cadcam_preflight",
+      "action": null,
+      "why": "该 action 的参数面没有标量槽（拆不出参数级判据）"
+    },
+    {
+      "tool": "cadcam_solidworks_model",
+      "action": "model_flange",
+      "why": "只有 4 个槽（含工具名），不足 5"
+    },
+    {
+      "tool": "cadcam_solidworks_model",
+      "action": "annotate_drawing",
+      "why": "只有 4 个槽（含工具名），不足 5"
+    },
+    {
+      "tool": "cadcam_solidworks_model",
+      "action": "create_parametric_part",
+      "why": "只有 4 个槽（含工具名），不足 5"
+    },
+    {
+      "tool": "cadcam_solidworks_model",
+      "action": "execute_vba",
+      "why": "只有 4 个槽（含工具名），不足 5"
+    },
+    {
+      "tool": "cadcam_solidworks_model",
+      "action": "connect",
+      "why": "只有 4 个槽（含工具名），不足 5"
+    },
+    {
+      "tool": "cadcam_nx_journal",
+      "action": "run_journal",
+      "why": "只有 4 个槽（含工具名），不足 5"
+    },
+    {
+      "tool": "cadcam_nx_journal",
+      "action": "create_parametric_model",
+      "why": "只有 4 个槽（含工具名），不足 5"
+    },
+    {
+      "tool": "cadcam_cimco_validate",
+      "action": "validate_macro",
+      "why": "只有 4 个槽（含工具名），不足 5"
+    },
+    {
+      "tool": "cadcam_cimco_validate",
+      "action": "launch",
+      "why": "只有 4 个槽（含工具名），不足 5"
+    },
+    {
+      "tool": "cadcam_vericut_simulate",
+      "action": "run_simulation",
+      "why": "只有 4 个槽（含工具名），不足 5"
+    },
+    {
+      "tool": "cadcam_vericut_simulate",
+      "action": "check_collision",
+      "why": "只有 4 个槽（含工具名），不足 5"
+    },
+    {
+      "tool": "cadcam_sscnc_control",
+      "action": "launch",
+      "why": "该 action 的参数面没有标量槽（拆不出参数级判据）"
+    },
+    {
+      "tool": "cadcam_sscnc_control",
+      "action": "find_window",
+      "why": "该 action 的参数面没有标量槽（拆不出参数级判据）"
+    },
+    {
+      "tool": "cadcam_sscnc_control",
+      "action": "calculate_offsets",
+      "why": "该 action 的参数面没有标量槽（拆不出参数级判据）"
+    },
+    {
+      "tool": "cadcam_run_full_chain",
+      "action": null,
+      "why": "只有 3 个槽（含工具名），不足 5"
+    },
+    {
+      "tool": "cadcam_desktop_gui",
+      "action": "capture",
+      "case_id": "toolcall-d21",
+      "why": "S5 破：单槽扰动 arg:y+1 得分 100.0 不在 (0,100)"
+    },
+    {
+      "tool": "cadcam_desktop_gui",
+      "action": "dismiss_dialogs",
+      "case_id": "toolcall-d27",
+      "why": "S5 破：单槽扰动 arg:x+1 得分 100.0 不在 (0,100)"
+    },
+    {
+      "tool": "cadcam_visual_inspect",
+      "action": null,
+      "why": "只有 3 个槽（含工具名），不足 5"
+    },
+    {
+      "tool": "cadcam_universal_geometry",
+      "action": null,
+      "why": "只有 4 个槽（含工具名），不足 5"
+    },
+    {
+      "tool": "cadcam_cae_stress_analysis",
+      "action": null,
+      "case_id": "toolcall-d30",
+      "why": "S5 破：单槽扰动 arg:force_n+1 得分 100.0 不在 (0,100)"
+    },
+    {
+      "tool": "cadcam_sheetmetal_nest",
+      "action": null,
+      "case_id": "toolcall-d31",
+      "why": "S5 破：单槽扰动 arg:sheet_width+1 得分 100.0 不在 (0,100)"
+    },
+    {
+      "tool": "cadcam_assembly_build",
+      "action": "model",
+      "why": "只有 4 个槽（含工具名），不足 5"
+    },
+    {
+      "tool": "cadcam_assembly_build",
+      "action": "assemble",
+      "why": "只有 4 个槽（含工具名），不足 5"
+    },
+    {
+      "tool": "cadcam_assembly_build",
+      "action": "drawing",
+      "why": "只有 4 个槽（含工具名），不足 5"
+    },
+    {
+      "tool": "cadcam_assembly_build",
+      "action": "full",
+      "why": "只有 4 个槽（含工具名），不足 5"
+    }
+  ],
+  "note": "本文件里的数字全部由真实判分器 virtu_eval.graders.score_case 现算，零推理；σ(Δ) 的实际收益必须等推理腿（提交内存不足时不得假装已验证）"
+}

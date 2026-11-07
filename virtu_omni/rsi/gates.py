@@ -91,6 +91,14 @@ def validation_gate(baseline, candidate, expected_ids, config, candidate_sha256,
         if mean_gain is None or mean_gain <= noise_band:
             reasons.append(f"mean validation gain {mean_gain} inside paired noise band "
                            f"+/-{noise_band}")
+    # One word the downstream reader cannot misquote: a gain smaller than the paired band is
+    # "undecidable", not a small win. Without a measured sigma it is "unmeasurable".
+    if noise_band is None or mean_gain is None or not gains:
+        resolution = "unmeasurable"
+    elif abs(mean_gain) <= noise_band:
+        resolution = "undecidable"
+    else:
+        resolution = "resolved"
     if not improvements:
         reasons.append("no paired improvement")
     if regressions > config.max_regressions:
@@ -107,6 +115,7 @@ def validation_gate(baseline, candidate, expected_ids, config, candidate_sha256,
                    and config.noise_sigma > 0)
     return {"eligible": not reasons, "reasons": sorted(set(reasons)),
             "certifiable": certifiable, "synthetic": synthetic,
+            "resolution": resolution,
             "identity_valid": bool(identity_valid),
             "candidate_sha256": candidate_sha256,
             "baseline": b_summary, "candidate": c_summary,

@@ -107,3 +107,24 @@ def test_mock_identity_never_certifies():
     assert not result["eligible"] and not result["certifiable"]
     assert not identity_is_real(dict(mock, digest="declared-fake-test-digest"))
     assert identity_is_real(dict(mock, digest="a" * 64))
+
+
+def test_resolution_word_is_the_only_readable_verdict():
+    """candidate == baseline must read 'undecidable', never 'small improvement'."""
+    ids = [str(i) for i in range(20)]
+    base = [_record(i, 40 if i < 4 else 100) for i in range(20)]
+
+    same = validation_gate(base, deepcopy(base), ids, Config(noise_sigma=8.84), "sha")
+    assert same["mean_gain"] == 0 and same["resolution"] == "undecidable"
+    assert not same["eligible"]
+
+    inside = validation_gate(base, [_record(i, 42 if i < 4 else 100) for i in range(20)], ids,
+                             Config(noise_sigma=8.84, min_gain=0.1), "sha")
+    assert inside["resolution"] == "undecidable"
+
+    clear = validation_gate(base, [_record(i, 100) for i in range(20)], ids,
+                            Config(noise_sigma=8.84), "sha")
+    assert clear["resolution"] == "resolved" and clear["eligible"]
+
+    no_sigma = validation_gate(base, [_record(i, 100) for i in range(20)], ids, Config(), "sha")
+    assert no_sigma["resolution"] == "unmeasurable" and not no_sigma["eligible"]

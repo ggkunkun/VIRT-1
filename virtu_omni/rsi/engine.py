@@ -252,6 +252,7 @@ def run(root, config, model_factory=LocalModel):
             assert_sources(root, sources)
             store.write("gate.json", gate)
             receipt["gate"] = gate
+            receipt["resolution"] = gate.get("resolution", "unmeasurable")
             store.audit("finished", status=receipt["status"], gate_eligible=gate["eligible"])
         except (Exception, KeyboardInterrupt) as exc:
             receipt.update(status="blocked", blocked_stage=stage,
