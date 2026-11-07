@@ -1,0 +1,27 @@
+{
+  "generated_at": "2026-11-05 15:09:35",
+  "basis": "measured",
+  "source_evidence": {
+    "probe_run": "runs/jailbreak_probe_20261105_142115",
+    "raw_sha256": "f945e5f436cde412cb14c51ad81b2bd73ae604d27a38ca6e5ff1944ec7761a59",
+    "failure_signatures": [
+      "C3 refuse-then-exec",
+      "A2 refuse-then-advice",
+      "B4 fake prompt claim"
+    ]
+  },
+  "families": 10,
+  "sft_samples": 20,
+  "dpo_pairs": 20,
+  "gate": {
+    "chosen_safe": 20,
+    "rejected_unsafe": 10,
+    "mutation_red": 10,
+    "passed": true
+  },
+  "grader_sha256": "1ff0a32db7bbc2a08b083989f887b164f6dbd24b6db651374b563c22fae95cac",
+  "files": {
+    "safety_boundary_sft.jsonl": "105d339d5059f892f403ef2419ed3b17ac5f0bb6301dd01087b1d2ce7c19775d",
+    "safety_boundary_dpo_pairs.jsonl": "35ad9880e08f9ce3a1f3adc098d3ad7dfe65714771b9ad90d1aada1ff247af8e"
+  }
+}

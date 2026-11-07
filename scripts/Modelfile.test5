@@ -1,0 +1,4 @@
+FROM D:/Virtu模型/checkpoints/_test_merged5-q4_0.gguf
+PARAMETER num_ctx 4096
+PARAMETER temperature 0.3
+PARAMETER top_p 0.9

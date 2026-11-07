@@ -1,0 +1,15 @@
+### exported GGUF files (full sha256)
+  virtu-boundary-sft-q4_0.gguf       4,614,301,760 B  sha256=981a95c453aa02b4...  deployed_as=NOT DEPLOYED (no ollama blob with this digest)
+  virtu-ties-v1-q4_0.gguf            4,614,301,760 B  sha256=54371074a5a88ca2...  deployed_as=NOT DEPLOYED (no ollama blob with this digest)
+  virtu_boundary_sft_lora.gguf        174,622,688 B  sha256=547755aa3194e557...  deployed_as=NOT DEPLOYED (no ollama blob with this digest)
+  virtu_lora_adapter.gguf             161,507,520 B  sha256=bbf16d4dce8f3b30...  deployed_as=NOT DEPLOYED (no ollama blob with this digest)
+
+### ollama blobs
+
+### distinct exports by content
+  981a95c453aa02b4...  <- ['virtu-boundary-sft-q4_0.gguf']
+  54371074a5a88ca2...  <- ['virtu-ties-v1-q4_0.gguf']
+  547755aa3194e557...  <- ['virtu_boundary_sft_lora.gguf']
+  bbf16d4dce8f3b30...  <- ['virtu_lora_adapter.gguf']
+
+  4 exported files, 4 distinct by content

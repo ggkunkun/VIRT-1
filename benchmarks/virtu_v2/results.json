@@ -1,0 +1,1752 @@
+{
+  "gates": {
+    "基座_virtu-cad-cam-10b": {
+      "expected_cases": 240,
+      "recorded_cases": 240,
+      "malformed_lines": 0,
+      "transport_errors": 0,
+      "transport_rate": 0.0,
+      "valid": true,
+      "problems": []
+    },
+    "V2_all90": {
+      "expected_cases": 210,
+      "recorded_cases": 210,
+      "malformed_lines": 0,
+      "transport_errors": 0,
+      "transport_rate": 0.0,
+      "valid": true,
+      "problems": []
+    }
+  },
+  "arms": {
+    "基座_virtu-cad-cam-10b": {
+      "dimensions": {
+        "boundary": {
+          "name_zh": "边界处理",
+          "n_valid": 30,
+          "score": 53.45,
+          "median": 55.0,
+          "stdev": 26.53,
+          "pass_rate": 0.1,
+          "zero_rate": 0.1,
+          "n_truncated": 0,
+          "score_untruncated_only": 53.45,
+          "n_untruncated": 30,
+          "tiers": {
+            "easy": {
+              "n": 9,
+              "mean": 43.33
+            },
+            "hard": {
+              "n": 6,
+              "mean": 46.95
+            },
+            "medium": {
+              "n": 15,
+              "mean": 62.11
+            }
+          }
+        },
+        "generalization": {
+          "name_zh": "泛化适配",
+          "n_valid": 30,
+          "score": 67.87,
+          "median": 61.91,
+          "stdev": 30.05,
+          "pass_rate": 0.3667,
+          "zero_rate": 0.0333,
+          "n_truncated": 0,
+          "score_untruncated_only": 67.87,
+          "n_untruncated": 30,
+          "tiers": {
+            "easy": {
+              "n": 9,
+              "mean": 51.39
+            },
+            "hard": {
+              "n": 6,
+              "mean": 80.77
+            },
+            "medium": {
+              "n": 15,
+              "mean": 72.59
+            }
+          }
+        },
+        "generation": {
+          "name_zh": "内容生成",
+          "n_valid": 30,
+          "score": 62.77,
+          "median": 69.05,
+          "stdev": 35.62,
+          "pass_rate": 0.3667,
+          "zero_rate": 0.1333,
+          "n_truncated": 0,
+          "score_untruncated_only": 62.77,
+          "n_untruncated": 30,
+          "tiers": {
+            "easy": {
+              "n": 9,
+              "mean": 67.78
+            },
+            "hard": {
+              "n": 6,
+              "mean": 60.52
+            },
+            "medium": {
+              "n": 15,
+              "mean": 60.67
+            }
+          }
+        },
+        "instruction": {
+          "name_zh": "指令遵循",
+          "n_valid": 30,
+          "score": 86.59,
+          "median": 100.0,
+          "stdev": 20.44,
+          "pass_rate": 0.6667,
+          "zero_rate": 0.0,
+          "n_truncated": 0,
+          "score_untruncated_only": 86.59,
+          "n_untruncated": 30,
+          "tiers": {
+            "easy": {
+              "n": 9,
+              "mean": 96.3
+            },
+            "hard": {
+              "n": 6,
+              "mean": 82.22
+            },
+            "medium": {
+              "n": 15,
+              "mean": 82.51
+            }
+          }
+        },
+        "knowledge": {
+          "name_zh": "知识覆盖",
+          "n_valid": 30,
+          "score": 73.78,
+          "median": 100.0,
+          "stdev": 32.77,
+          "pass_rate": 0.5333,
+          "zero_rate": 0.0667,
+          "n_truncated": 0,
+          "score_untruncated_only": 73.78,
+          "n_untruncated": 30,
+          "tiers": {
+            "easy": {
+              "n": 9,
+              "mean": 89.81
+            },
+            "hard": {
+              "n": 6,
+              "mean": 40.83
+            },
+            "medium": {
+              "n": 15,
+              "mean": 77.33
+            }
+          }
+        },
+        "reasoning": {
+          "name_zh": "推理逻辑",
+          "n_valid": 30,
+          "score": 74.71,
+          "median": 92.85,
+          "stdev": 32.5,
+          "pass_rate": 0.5,
+          "zero_rate": 0.0667,
+          "n_truncated": 0,
+          "score_untruncated_only": 74.71,
+          "n_untruncated": 30,
+          "tiers": {
+            "easy": {
+              "n": 9,
+              "mean": 88.89
+            },
+            "hard": {
+              "n": 6,
+              "mean": 55.09
+            },
+            "medium": {
+              "n": 15,
+              "mean": 74.05
+            }
+          }
+        },
+        "toolcall": {
+          "name_zh": "工具编排",
+          "n_valid": 30,
+          "score": 75.55,
+          "median": 100.0,
+          "stdev": 33.26,
+          "pass_rate": 0.6333,
+          "zero_rate": 0.0333,
+          "n_truncated": 0,
+          "score_untruncated_only": 75.55,
+          "n_untruncated": 30,
+          "tiers": {
+            "easy": {
+              "n": 9,
+              "mean": 100.0
+            },
+            "hard": {
+              "n": 6,
+              "mean": 38.89
+            },
+            "medium": {
+              "n": 15,
+              "mean": 75.55
+            }
+          }
+        }
+      },
+      "overall_weighted": 71.93,
+      "overall_unweighted": 70.67,
+      "ranking": [
+        [
+          "instruction",
+          86.59
+        ],
+        [
+          "toolcall",
+          75.55
+        ],
+        [
+          "reasoning",
+          74.71
+        ],
+        [
+          "knowledge",
+          73.78
+        ],
+        [
+          "generalization",
+          67.87
+        ],
+        [
+          "generation",
+          62.77
+        ],
+        [
+          "boundary",
+          53.45
+        ]
+      ],
+      "verdicts": {
+        "partial": 103,
+        "fail_all_criteria": 16,
+        "pass": 121
+      },
+      "top_failed_criteria": [
+        [
+          "refuse(refusal)",
+          14
+        ],
+        [
+          "要素(literal_all)",
+          10
+        ],
+        [
+          "gcode(gcode_structure)",
+          6
+        ],
+        [
+          "vf_value(numeric_near)",
+          6
+        ],
+        [
+          "动作(enum_field)",
+          5
+        ],
+        [
+          "conflict(literal_any)",
+          4
+        ],
+        [
+          "answer_order(ordered_contains)",
+          4
+        ],
+        [
+          "motion(regex_all)",
+          4
+        ],
+        [
+          "调用数(count_between)",
+          4
+        ],
+        [
+          "task_kept(regex_any)",
+          3
+        ],
+        [
+          "flag(refusal)",
+          3
+        ],
+        [
+          "rpm_value(numeric_near)",
+          3
+        ],
+        [
+          "three_items(count_between)",
+          2
+        ],
+        [
+          "zh_terms(literal_all)",
+          2
+        ],
+        [
+          "reject_verdict(regex_any)",
+          2
+        ],
+        [
+          "op_rows(count_between)",
+          2
+        ],
+        [
+          "facts(literal_all)",
+          2
+        ],
+        [
+          "flow(ordered_contains)",
+          2
+        ],
+        [
+          "structure(ordered_contains)",
+          2
+        ],
+        [
+          "读图(literal_all)",
+          2
+        ]
+      ],
+      "top_failed_dim_criteria": [
+        [
+          "boundary/refuse",
+          14
+        ],
+        [
+          "toolcall/要素",
+          10
+        ],
+        [
+          "generalization/vf_value",
+          5
+        ],
+        [
+          "toolcall/动作",
+          5
+        ],
+        [
+          "boundary/conflict",
+          4
+        ],
+        [
+          "generation/motion",
+          4
+        ],
+        [
+          "generation/gcode",
+          4
+        ],
+        [
+          "toolcall/调用数",
+          4
+        ],
+        [
+          "boundary/task_kept",
+          3
+        ],
+        [
+          "boundary/flag",
+          3
+        ],
+        [
+          "generalization/answer_order",
+          3
+        ],
+        [
+          "boundary/gcode",
+          2
+        ],
+        [
+          "boundary/missing",
+          2
+        ],
+        [
+          "generalization/zh_terms",
+          2
+        ],
+        [
+          "generalization/rpm_value",
+          2
+        ],
+        [
+          "generalization/reject_verdict",
+          2
+        ],
+        [
+          "generation/op_rows",
+          2
+        ],
+        [
+          "generation/facts",
+          2
+        ],
+        [
+          "generation/flow",
+          2
+        ],
+        [
+          "generation/structure",
+          2
+        ],
+        [
+          "multimodal/读图",
+          2
+        ],
+        [
+          "reasoning/allowed_position_tol",
+          2
+        ],
+        [
+          "toolcall/不误调工具",
+          2
+        ],
+        [
+          "boundary/anomaly",
+          1
+        ],
+        [
+          "boundary/no_fake_plan",
+          1
+        ]
+      ],
+      "weakest_tags": [
+        [
+          "mill",
+          16.7,
+          3
+        ],
+        [
+          "api-transfer",
+          28.6,
+          2
+        ],
+        [
+          "mmc",
+          29.2,
+          2
+        ],
+        [
+          "format-trap",
+          30.0,
+          2
+        ],
+        [
+          "lathe",
+          31.7,
+          4
+        ],
+        [
+          "gcode",
+          34.6,
+          8
+        ],
+        [
+          "cutting-parameter",
+          35.7,
+          2
+        ],
+        [
+          "g1-face-mill",
+          37.5,
+          3
+        ],
+        [
+          "g4-terms-zh",
+          40.0,
+          2
+        ],
+        [
+          "en-to-zh",
+          40.0,
+          2
+        ],
+        [
+          "limits-fits",
+          40.0,
+          2
+        ],
+        [
+          "drilling",
+          42.5,
+          2
+        ],
+        [
+          "injection",
+          44.0,
+          5
+        ],
+        [
+          "profile",
+          45.8,
+          2
+        ],
+        [
+          "contradiction",
+          46.4,
+          7
+        ],
+        [
+          "unsafe-request",
+          50.0,
+          6
+        ],
+        [
+          "powermill",
+          50.0,
+          3
+        ],
+        [
+          "cam",
+          50.0,
+          2
+        ],
+        [
+          "mrr",
+          50.0,
+          2
+        ],
+        [
+          "rule-application",
+          52.1,
+          2
+        ]
+      ],
+      "latency_mean_s": 21.53,
+      "latency_p95_s": 69.44,
+      "tok_per_s_mean": 10.1,
+      "truncated_cases": 0,
+      "_manifest": {
+        "git_sha": "3bd431a",
+        "arm": {
+          "kind": "http_openai",
+          "base_url": "http://127.0.0.1:8000/v1",
+          "model_id": "virtu-cad-cam-10b",
+          "retries": 4,
+          "timeout": 120,
+          "note": "部署态。served_model 字段决定这一臂究竟测的是 Virtu 权重还是云端第三方模型，必须核对后再归因",
+          "tools": [
+            {
+              "type": "function",
+              "function": {
+                "name": "cadcam_preflight",
+                "description": "系统预检诊断：全面探测 SOLIDWORKS 2021、斯沃数控仿真 7.2、CIMCO Edit 2026、AutoCAD 2026、VERICUT 9.6 与 NX 12.0 六大工业软件的桌面快捷方式、可执行文件路径、运行进程 PID 与 COM 注册状态。",
+                "parameters": {
+                  "type": "object",
+                  "properties": {},
+                  "required": []
+                }
+              }
+            },
+            {
+              "type": "function",
+              "function": {
+                "name": "cadcam_solidworks_model",
+                "description": "SOLIDWORKS 2021 三维参数化特征建模：通过 COM Automation / VBA 宏驱动特征树、方程式管理器 (EquationMgr) 生成零件，并导出 STEP 实体或工程图。",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "action": {
+                      "type": "string",
+                      "enum": [
+                        "model_flange",
+                        "create_parametric_part",
+                        "execute_vba",
+                        "connect"
+                      ],
+                      "description": "执行动作：model_flange（带颈法兰盘参数化建模）、create_parametric_part（基础参数化建模）或 execute_vba（直接执行VBA代码）"
+                    },
+                    "part_name": {
+                      "type": "string",
+                      "description": "零件名称，如 wheel_mold、bearing_flange"
+                    },
+                    "dimensions": {
+                      "type": "object",
+                      "description": "关键几何尺寸字典，如 {'d_outer': 53.0, 'd_inner': 14.0, 'overall_len': 45.0, 'material': 'Cr12MoV'}"
+                    },
+                    "vba_code": {
+                      "type": "string",
+                      "description": "原生 SolidWorks VBA 宏代码（当 action 为 execute_vba 时必填）"
+                    }
+                  },
+                  "required": [
+                    "action"
+                  ]
+                }
+              }
+            },
+            {
+              "type": "function",
+              "function": {
+                "name": "cadcam_nx_journal",
+                "description": "Siemens NX 12.0 无头日志运行与参数化建模：调用 NXBIN/run_journal.exe 运行 Python NXOpen 脚本，或构建包含表达式集合的 .prt 零件。",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "action": {
+                      "type": "string",
+                      "enum": [
+                        "run_journal",
+                        "create_parametric_model"
+                      ],
+                      "description": "执行动作：run_journal（执行现有脚本）或 create_parametric_model（生成NXOpen参数化脚本）"
+                    },
+                    "script_path": {
+                      "type": "string",
+                      "description": "需执行的 Python NXOpen 脚本绝对路径"
+                    },
+                    "part_name": {
+                      "type": "string",
+                      "description": "NX 零件名称"
+                    },
+                    "expressions": {
+                      "type": "object",
+                      "description": "NX ExpressionCollection 参数表达式字典，如 {'D_OUTER': 53.0, 'LENGTH': 45.0}"
+                    }
+                  },
+                  "required": [
+                    "action"
+                  ]
+                }
+              }
+            },
+            {
+              "type": "function",
+              "function": {
+                "name": "cadcam_autocad_draw",
+                "description": "AutoCAD 2026 二维工程制图与无头 DXF 生成：通过 ActiveX COM 发送 AutoLISP 代码、通过 accoreconsole 执行无头批处理，或利用 ezdxf 生成分层几何/公差图纸。",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "action": {
+                      "type": "string",
+                      "enum": [
+                        "send_lisp",
+                        "create_dxf",
+                        "run_headless_script"
+                      ],
+                      "description": "执行动作：send_lisp（向活跃AutoCAD发LISP命令）、create_dxf（无头生成DXF图纸）、run_headless_script（accoreconsole无头执行）"
+                    },
+                    "code": {
+                      "type": "string",
+                      "description": "AutoLISP 表达式代码"
+                    },
+                    "drawing_name": {
+                      "type": "string",
+                      "description": "图纸名称"
+                    },
+                    "entities": {
+                      "type": "array",
+                      "description": "几何图元列表（line, circle, text, dimension 等）"
+                    },
+                    "script_path": {
+                      "type": "string",
+                      "description": "AutoLISP/SCR 脚本路径（供 accoreconsole 无头执行）"
+                    }
+                  },
+                  "required": [
+                    "action"
+                  ]
+                }
+              }
+            },
+            {
+              "type": "function",
+              "function": {
+                "name": "cadcam_cimco_validate",
+                "description": "CIMCO Edit 2026 数控程序校验与外送准备：解析 FANUC Macro B 变量逻辑（#100、#500、WHILE/DO/END 括号配对）、模态 G 代码一致性，并拉起 CIMCO 视窗。",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "action": {
+                      "type": "string",
+                      "enum": [
+                        "validate_macro",
+                        "launch"
+                      ],
+                      "description": "执行动作：validate_macro（深度静态语法与逻辑校验）或 launch（在CIMCO Edit中打开NC文件）"
+                    },
+                    "code": {
+                      "type": "string",
+                      "description": "G代码 / FANUC Macro B 代码文本"
+                    },
+                    "nc_file_path": {
+                      "type": "string",
+                      "description": "待打开的 NC 文件路径"
+                    }
+                  },
+                  "required": [
+                    "action"
+                  ]
+                }
+              }
+            },
+            {
+              "type": "function",
+              "function": {
+                "name": "cadcam_vericut_simulate",
+                "description": "VERICUT 9.6 机床动力学仿真与防碰撞检验：调用 vericut.bat -b 启动无头批处理仿真，执行 Auto-Diff 过切/欠切检查与干涉报警日志解析。",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "action": {
+                      "type": "string",
+                      "enum": [
+                        "run_simulation",
+                        "check_collision"
+                      ],
+                      "description": "执行动作：run_simulation（无头批处理仿真）或 check_collision（解析仿真碰撞日志）"
+                    },
+                    "project_path": {
+                      "type": "string",
+                      "description": "VERICUT 项目工程文件 (.vcproject) 路径"
+                    },
+                    "log_path": {
+                      "type": "string",
+                      "description": "仿真输出日志路径（用于干涉过切分析）"
+                    }
+                  },
+                  "required": [
+                    "action"
+                  ]
+                }
+              }
+            },
+            {
+              "type": "function",
+              "function": {
+                "name": "cadcam_sscnc_control",
+                "description": "斯沃数控仿真软件 7.2 (SSCNC) 虚拟加工配置：拉起数控系统、设置 G54 工件坐标系、计算刀具几何补偿与刀尖象限 (T1-T9)，触发循环启动加工走刀。",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "action": {
+                      "type": "string",
+                      "enum": [
+                        "launch",
+                        "find_window",
+                        "calculate_offsets"
+                      ],
+                      "description": "执行动作：launch（启动斯沃）、find_window（检测主窗句柄）、calculate_offsets（计算车铣刀偏与象限）"
+                    },
+                    "tools": {
+                      "type": "array",
+                      "description": "刀具规格列表，包含 tool_num, type, x, z, r, quadrant"
+                    }
+                  },
+                  "required": [
+                    "action"
+                  ]
+                }
+              }
+            },
+            {
+              "type": "function",
+              "function": {
+                "name": "cadcam_run_full_chain",
+                "description": "六大软件全流水线串行驱动：将制造意图（愿望）按识图→AutoCAD工程图→SOLIDWORKS三维建模→NX多轴CAM→CIMCO宏程序→VERICUT仿真→斯沃加工的全流程执行并汇总实测取证。",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "wish": {
+                      "type": "string",
+                      "description": "非标零件或模具制造意图描述，包含材质、主要直径、孔径、长度、特殊形状要求"
+                    },
+                    "out_root": {
+                      "type": "string",
+                      "description": "输出工程产物根目录（默认 runs/full_chain）"
+                    },
+                    "skip": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "description": "跳过阶段列表，可选 sw2021, nx12, acad2026, cimco2026, vericut96, sscnc72"
+                    }
+                  },
+                  "required": [
+                    "wish"
+                  ]
+                }
+              }
+            },
+            {
+              "type": "function",
+              "function": {
+                "name": "cadcam_desktop_gui",
+                "description": "桌面视觉感知与窗口控制：截取桌面或指定工业软件窗口、自动点掉遮挡弹窗，或发送键鼠交互指令。",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "action": {
+                      "type": "string",
+                      "enum": [
+                        "capture",
+                        "focus",
+                        "click",
+                        "dismiss_dialogs"
+                      ],
+                      "description": "动作类型"
+                    },
+                    "software": {
+                      "type": "string",
+                      "description": "目标软件名称，如 solidworks, autocad, sscnc, cimco, vericut, nx"
+                    },
+                    "x": {
+                      "type": "integer",
+                      "description": "屏幕或窗口内横坐标"
+                    },
+                    "y": {
+                      "type": "integer",
+                      "description": "屏幕或窗口内纵坐标"
+                    },
+                    "output_path": {
+                      "type": "string",
+                      "description": "截图保存路径"
+                    }
+                  },
+                  "required": [
+                    "action"
+                  ]
+                }
+              }
+            },
+            {
+              "type": "function",
+              "function": {
+                "name": "cadcam_visual_inspect",
+                "description": "工业视觉与图纸智能检测：对 VERICUT 仿真过切/欠切频谱、工程图图纸标题栏/视图区域、CNC 机床面板报警与屏幕进行计算机视觉分析。",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "task": {
+                      "type": "string",
+                      "enum": [
+                        "autodiff_inspection",
+                        "blueprint_analysis",
+                        "cnc_screen_perception"
+                      ],
+                      "description": "视觉分析任务类型：autodiff_inspection（VERICUT色谱过切欠切分析）、blueprint_analysis（工程图纸分块与标题栏识别）、cnc_screen_perception（CNC机床屏幕与报警感知）"
+                    },
+                    "image_path": {
+                      "type": "string",
+                      "description": "待分析的图像或截图绝对路径"
+                    }
+                  },
+                  "required": [
+                    "task",
+                    "image_path"
+                  ]
+                }
+              }
+            }
+          ],
+          "tools_dimensions": [
+            "toolcall"
+          ]
+        },
+        "sampling": {
+          "temperature": 0.0,
+          "seed": 1234,
+          "max_tokens_cap": null,
+          "cap_by_tier": null,
+          "sample_per_tier": null
+        },
+        "started": "2026-11-01 11:59:11",
+        "harness": "virtu_eval v1"
+      }
+    },
+    "V2_all90": {
+      "dimensions": {
+        "boundary": {
+          "name_zh": "边界处理",
+          "n_valid": 30,
+          "score": 62.45,
+          "median": 66.67,
+          "stdev": 28.38,
+          "pass_rate": 0.2667,
+          "zero_rate": 0.0333,
+          "n_truncated": 0,
+          "score_untruncated_only": 62.45,
+          "n_untruncated": 30,
+          "tiers": {
+            "easy": {
+              "n": 9,
+              "mean": 64.63
+            },
+            "hard": {
+              "n": 6,
+              "mean": 63.06
+            },
+            "medium": {
+              "n": 15,
+              "mean": 60.89
+            }
+          }
+        },
+        "generalization": {
+          "name_zh": "泛化适配",
+          "n_valid": 30,
+          "score": 63.13,
+          "median": 64.59,
+          "stdev": 32.54,
+          "pass_rate": 0.3,
+          "zero_rate": 0.0667,
+          "n_truncated": 1,
+          "score_untruncated_only": 65.3,
+          "n_untruncated": 29,
+          "tiers": {
+            "easy": {
+              "n": 9,
+              "mean": 58.8
+            },
+            "hard": {
+              "n": 6,
+              "mean": 58.55
+            },
+            "medium": {
+              "n": 15,
+              "mean": 67.55
+            }
+          }
+        },
+        "generation": {
+          "name_zh": "内容生成",
+          "n_valid": 30,
+          "score": 77.66,
+          "median": 100.0,
+          "stdev": 31.03,
+          "pass_rate": 0.5667,
+          "zero_rate": 0.0667,
+          "n_truncated": 0,
+          "score_untruncated_only": 77.66,
+          "n_untruncated": 30,
+          "tiers": {
+            "easy": {
+              "n": 9,
+              "mean": 81.67
+            },
+            "hard": {
+              "n": 6,
+              "mean": 64.68
+            },
+            "medium": {
+              "n": 15,
+              "mean": 80.44
+            }
+          }
+        },
+        "instruction": {
+          "name_zh": "指令遵循",
+          "n_valid": 30,
+          "score": 81.95,
+          "median": 100.0,
+          "stdev": 26.35,
+          "pass_rate": 0.6333,
+          "zero_rate": 0.0,
+          "n_truncated": 0,
+          "score_untruncated_only": 81.95,
+          "n_untruncated": 30,
+          "tiers": {
+            "easy": {
+              "n": 9,
+              "mean": 86.77
+            },
+            "hard": {
+              "n": 6,
+              "mean": 78.89
+            },
+            "medium": {
+              "n": 15,
+              "mean": 80.29
+            }
+          }
+        },
+        "knowledge": {
+          "name_zh": "知识覆盖",
+          "n_valid": 30,
+          "score": 61.61,
+          "median": 63.34,
+          "stdev": 38.52,
+          "pass_rate": 0.4333,
+          "zero_rate": 0.1667,
+          "n_truncated": 1,
+          "score_untruncated_only": 63.74,
+          "n_untruncated": 29,
+          "tiers": {
+            "easy": {
+              "n": 9,
+              "mean": 79.63
+            },
+            "hard": {
+              "n": 6,
+              "mean": 47.5
+            },
+            "medium": {
+              "n": 15,
+              "mean": 56.44
+            }
+          }
+        },
+        "reasoning": {
+          "name_zh": "推理逻辑",
+          "n_valid": 30,
+          "score": 83.34,
+          "median": 100.0,
+          "stdev": 25.24,
+          "pass_rate": 0.6667,
+          "zero_rate": 0.0,
+          "n_truncated": 0,
+          "score_untruncated_only": 83.34,
+          "n_untruncated": 30,
+          "tiers": {
+            "easy": {
+              "n": 9,
+              "mean": 96.3
+            },
+            "hard": {
+              "n": 6,
+              "mean": 61.24
+            },
+            "medium": {
+              "n": 15,
+              "mean": 84.4
+            }
+          }
+        },
+        "toolcall": {
+          "name_zh": "工具编排",
+          "n_valid": 30,
+          "score": 73.33,
+          "median": 66.67,
+          "stdev": 27.76,
+          "pass_rate": 0.4333,
+          "zero_rate": 0.0333,
+          "n_truncated": 0,
+          "score_untruncated_only": 73.33,
+          "n_untruncated": 30,
+          "tiers": {
+            "easy": {
+              "n": 9,
+              "mean": 88.89
+            },
+            "hard": {
+              "n": 6,
+              "mean": 66.66
+            },
+            "medium": {
+              "n": 15,
+              "mean": 66.67
+            }
+          }
+        }
+      },
+      "overall_weighted": 72.76,
+      "overall_unweighted": 71.92,
+      "ranking": [
+        [
+          "reasoning",
+          83.34
+        ],
+        [
+          "instruction",
+          81.95
+        ],
+        [
+          "generation",
+          77.66
+        ],
+        [
+          "toolcall",
+          73.33
+        ],
+        [
+          "generalization",
+          63.13
+        ],
+        [
+          "boundary",
+          62.45
+        ],
+        [
+          "knowledge",
+          61.61
+        ]
+      ],
+      "verdicts": {
+        "partial": 100,
+        "pass": 99,
+        "fail_all_criteria": 11
+      },
+      "top_failed_criteria": [
+        [
+          "JSON(json_object)",
+          17
+        ],
+        [
+          "refuse(refusal)",
+          9
+        ],
+        [
+          "gcode(gcode_structure)",
+          9
+        ],
+        [
+          "vf_value(numeric_near)",
+          6
+        ],
+        [
+          "rpm_value(numeric_near)",
+          5
+        ],
+        [
+          "conflict(literal_any)",
+          4
+        ],
+        [
+          "flag(refusal)",
+          3
+        ],
+        [
+          "motion(regex_all)",
+          3
+        ],
+        [
+          "op_rows(count_between)",
+          3
+        ],
+        [
+          "调用数(count_between)",
+          3
+        ],
+        [
+          "task_kept(regex_any)",
+          2
+        ],
+        [
+          "three_items(count_between)",
+          2
+        ],
+        [
+          "zh_terms(literal_all)",
+          2
+        ],
+        [
+          "answer_order(ordered_contains)",
+          2
+        ],
+        [
+          "reject_verdict(regex_any)",
+          2
+        ],
+        [
+          "time_value(numeric_near)",
+          2
+        ],
+        [
+          "flow(ordered_contains)",
+          2
+        ],
+        [
+          "vendor(regex_any)",
+          2
+        ],
+        [
+          "allowed_position_tol(numeric_near)",
+          2
+        ],
+        [
+          "动作(enum_field)",
+          2
+        ]
+      ],
+      "top_failed_dim_criteria": [
+        [
+          "toolcall/JSON",
+          17
+        ],
+        [
+          "boundary/refuse",
+          9
+        ],
+        [
+          "generation/gcode",
+          6
+        ],
+        [
+          "generalization/vf_value",
+          5
+        ],
+        [
+          "boundary/conflict",
+          4
+        ],
+        [
+          "generalization/rpm_value",
+          4
+        ],
+        [
+          "boundary/gcode",
+          3
+        ],
+        [
+          "boundary/flag",
+          3
+        ],
+        [
+          "generation/motion",
+          3
+        ],
+        [
+          "generation/op_rows",
+          3
+        ],
+        [
+          "toolcall/调用数",
+          3
+        ],
+        [
+          "boundary/task_kept",
+          2
+        ],
+        [
+          "generalization/zh_terms",
+          2
+        ],
+        [
+          "generalization/answer_order",
+          2
+        ],
+        [
+          "generalization/reject_verdict",
+          2
+        ],
+        [
+          "generalization/time_value",
+          2
+        ],
+        [
+          "generation/flow",
+          2
+        ],
+        [
+          "knowledge/vendor",
+          2
+        ],
+        [
+          "reasoning/allowed_position_tol",
+          2
+        ],
+        [
+          "toolcall/动作",
+          2
+        ],
+        [
+          "toolcall/要素",
+          2
+        ],
+        [
+          "boundary/anomaly",
+          1
+        ],
+        [
+          "boundary/no_fake_conflict",
+          1
+        ],
+        [
+          "boundary/answer",
+          1
+        ],
+        [
+          "boundary/flagged",
+          1
+        ]
+      ],
+      "weakest_tags": [
+        [
+          "limits-fits",
+          0.0,
+          2
+        ],
+        [
+          "rule-application",
+          6.2,
+          2
+        ],
+        [
+          "mill",
+          8.3,
+          3
+        ],
+        [
+          "profile",
+          16.7,
+          2
+        ],
+        [
+          "unseen-material",
+          20.0,
+          2
+        ],
+        [
+          "extraction",
+          32.1,
+          2
+        ],
+        [
+          "drilling",
+          32.5,
+          2
+        ],
+        [
+          "decimals",
+          33.3,
+          2
+        ],
+        [
+          "variant-jargon",
+          35.7,
+          3
+        ],
+        [
+          "cutting-parameter",
+          35.7,
+          2
+        ],
+        [
+          "standard-number",
+          36.0,
+          5
+        ],
+        [
+          "format-trap",
+          36.7,
+          2
+        ],
+        [
+          "gcode",
+          37.3,
+          8
+        ],
+        [
+          "autocad",
+          37.5,
+          2
+        ],
+        [
+          "g4-terms-zh",
+          40.0,
+          2
+        ],
+        [
+          "en-to-zh",
+          40.0,
+          2
+        ],
+        [
+          "api-transfer",
+          42.9,
+          2
+        ],
+        [
+          "variant-english",
+          45.4,
+          3
+        ],
+        [
+          "contradiction",
+          46.4,
+          7
+        ],
+        [
+          "injection",
+          48.0,
+          5
+        ]
+      ],
+      "latency_mean_s": 7.72,
+      "latency_p95_s": 19.12,
+      "tok_per_s_mean": 12.3,
+      "truncated_cases": 0,
+      "_manifest": {
+        "git_sha": "3bd431a",
+        "arm": {
+          "kind": "ollama_native",
+          "base_url": "http://127.0.0.1:11434",
+          "model_id": "virtu-v2-all90",
+          "num_ctx": 4096,
+          "timeout": 600,
+          "retries": 1,
+          "note": "v2 全部90 续训产物：virtu-v2-all90-q4_0.gguf 导入",
+          "expect_identity": {
+            "family": "qwen3"
+          },
+          "tools": [
+            {
+              "type": "function",
+              "function": {
+                "name": "cadcam_preflight",
+                "description": "系统预检诊断：全面探测 SOLIDWORKS 2021、斯沃数控仿真 7.2、CIMCO Edit 2026、AutoCAD 2026、VERICUT 9.6 与 NX 12.0 六大工业软件的桌面快捷方式、可执行文件路径、运行进程 PID 与 COM 注册状态。",
+                "parameters": {
+                  "type": "object",
+                  "properties": {},
+                  "required": []
+                }
+              }
+            },
+            {
+              "type": "function",
+              "function": {
+                "name": "cadcam_solidworks_model",
+                "description": "SOLIDWORKS 2021 三维参数化特征建模：通过 COM Automation / VBA 宏驱动特征树、方程式管理器 (EquationMgr) 生成零件，并导出 STEP 实体或工程图。",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "action": {
+                      "type": "string",
+                      "enum": [
+                        "model_flange",
+                        "create_parametric_part",
+                        "execute_vba",
+                        "connect"
+                      ],
+                      "description": "执行动作：model_flange（带颈法兰盘参数化建模）、create_parametric_part（基础参数化建模）或 execute_vba（直接执行VBA代码）"
+                    },
+                    "part_name": {
+                      "type": "string",
+                      "description": "零件名称，如 wheel_mold、bearing_flange"
+                    },
+                    "dimensions": {
+                      "type": "object",
+                      "description": "关键几何尺寸字典，如 {'d_outer': 53.0, 'd_inner': 14.0, 'overall_len': 45.0, 'material': 'Cr12MoV'}"
+                    },
+                    "vba_code": {
+                      "type": "string",
+                      "description": "原生 SolidWorks VBA 宏代码（当 action 为 execute_vba 时必填）"
+                    }
+                  },
+                  "required": [
+                    "action"
+                  ]
+                }
+              }
+            },
+            {
+              "type": "function",
+              "function": {
+                "name": "cadcam_nx_journal",
+                "description": "Siemens NX 12.0 无头日志运行与参数化建模：调用 NXBIN/run_journal.exe 运行 Python NXOpen 脚本，或构建包含表达式集合的 .prt 零件。",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "action": {
+                      "type": "string",
+                      "enum": [
+                        "run_journal",
+                        "create_parametric_model"
+                      ],
+                      "description": "执行动作：run_journal（执行现有脚本）或 create_parametric_model（生成NXOpen参数化脚本）"
+                    },
+                    "script_path": {
+                      "type": "string",
+                      "description": "需执行的 Python NXOpen 脚本绝对路径"
+                    },
+                    "part_name": {
+                      "type": "string",
+                      "description": "NX 零件名称"
+                    },
+                    "expressions": {
+                      "type": "object",
+                      "description": "NX ExpressionCollection 参数表达式字典，如 {'D_OUTER': 53.0, 'LENGTH': 45.0}"
+                    }
+                  },
+                  "required": [
+                    "action"
+                  ]
+                }
+              }
+            },
+            {
+              "type": "function",
+              "function": {
+                "name": "cadcam_autocad_draw",
+                "description": "AutoCAD 2026 二维工程制图与无头 DXF 生成：通过 ActiveX COM 发送 AutoLISP 代码、通过 accoreconsole 执行无头批处理，或利用 ezdxf 生成分层几何/公差图纸。",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "action": {
+                      "type": "string",
+                      "enum": [
+                        "send_lisp",
+                        "create_dxf",
+                        "run_headless_script"
+                      ],
+                      "description": "执行动作：send_lisp（向活跃AutoCAD发LISP命令）、create_dxf（无头生成DXF图纸）、run_headless_script（accoreconsole无头执行）"
+                    },
+                    "code": {
+                      "type": "string",
+                      "description": "AutoLISP 表达式代码"
+                    },
+                    "drawing_name": {
+                      "type": "string",
+                      "description": "图纸名称"
+                    },
+                    "entities": {
+                      "type": "array",
+                      "description": "几何图元列表（line, circle, text, dimension 等）"
+                    },
+                    "script_path": {
+                      "type": "string",
+                      "description": "AutoLISP/SCR 脚本路径（供 accoreconsole 无头执行）"
+                    }
+                  },
+                  "required": [
+                    "action"
+                  ]
+                }
+              }
+            },
+            {
+              "type": "function",
+              "function": {
+                "name": "cadcam_cimco_validate",
+                "description": "CIMCO Edit 2026 数控程序校验与外送准备：解析 FANUC Macro B 变量逻辑（#100、#500、WHILE/DO/END 括号配对）、模态 G 代码一致性，并拉起 CIMCO 视窗。",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "action": {
+                      "type": "string",
+                      "enum": [
+                        "validate_macro",
+                        "launch"
+                      ],
+                      "description": "执行动作：validate_macro（深度静态语法与逻辑校验）或 launch（在CIMCO Edit中打开NC文件）"
+                    },
+                    "code": {
+                      "type": "string",
+                      "description": "G代码 / FANUC Macro B 代码文本"
+                    },
+                    "nc_file_path": {
+                      "type": "string",
+                      "description": "待打开的 NC 文件路径"
+                    }
+                  },
+                  "required": [
+                    "action"
+                  ]
+                }
+              }
+            },
+            {
+              "type": "function",
+              "function": {
+                "name": "cadcam_vericut_simulate",
+                "description": "VERICUT 9.6 机床动力学仿真与防碰撞检验：调用 vericut.bat -b 启动无头批处理仿真，执行 Auto-Diff 过切/欠切检查与干涉报警日志解析。",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "action": {
+                      "type": "string",
+                      "enum": [
+                        "run_simulation",
+                        "check_collision"
+                      ],
+                      "description": "执行动作：run_simulation（无头批处理仿真）或 check_collision（解析仿真碰撞日志）"
+                    },
+                    "project_path": {
+                      "type": "string",
+                      "description": "VERICUT 项目工程文件 (.vcproject) 路径"
+                    },
+                    "log_path": {
+                      "type": "string",
+                      "description": "仿真输出日志路径（用于干涉过切分析）"
+                    }
+                  },
+                  "required": [
+                    "action"
+                  ]
+                }
+              }
+            },
+            {
+              "type": "function",
+              "function": {
+                "name": "cadcam_sscnc_control",
+                "description": "斯沃数控仿真软件 7.2 (SSCNC) 虚拟加工配置：拉起数控系统、设置 G54 工件坐标系、计算刀具几何补偿与刀尖象限 (T1-T9)，触发循环启动加工走刀。",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "action": {
+                      "type": "string",
+                      "enum": [
+                        "launch",
+                        "find_window",
+                        "calculate_offsets"
+                      ],
+                      "description": "执行动作：launch（启动斯沃）、find_window（检测主窗句柄）、calculate_offsets（计算车铣刀偏与象限）"
+                    },
+                    "tools": {
+                      "type": "array",
+                      "description": "刀具规格列表，包含 tool_num, type, x, z, r, quadrant"
+                    }
+                  },
+                  "required": [
+                    "action"
+                  ]
+                }
+              }
+            },
+            {
+              "type": "function",
+              "function": {
+                "name": "cadcam_run_full_chain",
+                "description": "六大软件全流水线串行驱动：将制造意图（愿望）按识图→AutoCAD工程图→SOLIDWORKS三维建模→NX多轴CAM→CIMCO宏程序→VERICUT仿真→斯沃加工的全流程执行并汇总实测取证。",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "wish": {
+                      "type": "string",
+                      "description": "非标零件或模具制造意图描述，包含材质、主要直径、孔径、长度、特殊形状要求"
+                    },
+                    "out_root": {
+                      "type": "string",
+                      "description": "输出工程产物根目录（默认 runs/full_chain）"
+                    },
+                    "skip": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "description": "跳过阶段列表，可选 sw2021, nx12, acad2026, cimco2026, vericut96, sscnc72"
+                    }
+                  },
+                  "required": [
+                    "wish"
+                  ]
+                }
+              }
+            },
+            {
+              "type": "function",
+              "function": {
+                "name": "cadcam_desktop_gui",
+                "description": "桌面视觉感知与窗口控制：截取桌面或指定工业软件窗口、自动点掉遮挡弹窗，或发送键鼠交互指令。",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "action": {
+                      "type": "string",
+                      "enum": [
+                        "capture",
+                        "focus",
+                        "click",
+                        "dismiss_dialogs"
+                      ],
+                      "description": "动作类型"
+                    },
+                    "software": {
+                      "type": "string",
+                      "description": "目标软件名称，如 solidworks, autocad, sscnc, cimco, vericut, nx"
+                    },
+                    "x": {
+                      "type": "integer",
+                      "description": "屏幕或窗口内横坐标"
+                    },
+                    "y": {
+                      "type": "integer",
+                      "description": "屏幕或窗口内纵坐标"
+                    },
+                    "output_path": {
+                      "type": "string",
+                      "description": "截图保存路径"
+                    }
+                  },
+                  "required": [
+                    "action"
+                  ]
+                }
+              }
+            },
+            {
+              "type": "function",
+              "function": {
+                "name": "cadcam_visual_inspect",
+                "description": "工业视觉与图纸智能检测：对 VERICUT 仿真过切/欠切频谱、工程图图纸标题栏/视图区域、CNC 机床面板报警与屏幕进行计算机视觉分析。",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "task": {
+                      "type": "string",
+                      "enum": [
+                        "autodiff_inspection",
+                        "blueprint_analysis",
+                        "cnc_screen_perception"
+                      ],
+                      "description": "视觉分析任务类型：autodiff_inspection（VERICUT色谱过切欠切分析）、blueprint_analysis（工程图纸分块与标题栏识别）、cnc_screen_perception（CNC机床屏幕与报警感知）"
+                    },
+                    "image_path": {
+                      "type": "string",
+                      "description": "待分析的图像或截图绝对路径"
+                    }
+                  },
+                  "required": [
+                    "task",
+                    "image_path"
+                  ]
+                }
+              }
+            }
+          ],
+          "tools_dimensions": [
+            "toolcall"
+          ]
+        },
+        "sampling": {
+          "temperature": 0.0,
+          "seed": 1234,
+          "max_tokens_cap": null,
+          "cap_by_tier": null,
+          "token_floor": null,
+          "sample_per_tier": null
+        },
+        "started": "2026-11-03 00:11:24",
+        "harness": "virtu_eval v1"
+      }
+    }
+  },
+  "dim_weights": {
+    "toolcall": 0.18,
+    "reasoning": 0.17,
+    "knowledge": 0.15,
+    "instruction": 0.14,
+    "boundary": 0.12,
+    "generation": 0.1,
+    "generalization": 0.08,
+    "multimodal": 0.06
+  },
+  "scoring_contract": {
+    "case_score": "命中权重/总权重 x 100",
+    "dimension": "有效用例得分算术平均",
+    "overall": "维度分 x 维度权重求和",
+    "excluded_verdicts": [
+      "transport_error",
+      "dry_run"
+    ]
+  }
+}

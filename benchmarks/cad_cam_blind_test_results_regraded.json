@@ -1,0 +1,470 @@
+{
+  "source": "D:\\Virtu模型\\benchmarks\\cad_cam_blind_test_results.json",
+  "n_cases": 36,
+  "keyword_pass_count": 34,
+  "keyword_pass_rate_pct": 94.44,
+  "keyword_mean_score": 97.36,
+  "judgeable_dimension_cases": 16,
+  "fidelity_mean": 0.7292,
+  "fidelity_below_1_count": 5,
+  "fabricated_dimension_total": 13,
+  "cases": [
+    {
+      "test_id": "blind_001",
+      "software": "SOLIDWORKS 2021",
+      "keyword_score": 100,
+      "keyword_passed": true,
+      "keyword_errors": [],
+      "required_dims": 3,
+      "fidelity": 0.6667,
+      "missing_ratio": 0.3333,
+      "fabricated_dims": 1,
+      "fabricated_values": [
+        "14.0"
+      ]
+    },
+    {
+      "test_id": "blind_002",
+      "software": "Siemens NX 12.0",
+      "keyword_score": 100,
+      "keyword_passed": true,
+      "keyword_errors": [],
+      "required_dims": 1,
+      "fidelity": 1.0,
+      "missing_ratio": 0.0,
+      "fabricated_dims": 1,
+      "fabricated_values": [
+        "12.9"
+      ]
+    },
+    {
+      "test_id": "blind_003",
+      "software": "AutoCAD 2026",
+      "keyword_score": 100,
+      "keyword_passed": true,
+      "keyword_errors": [],
+      "required_dims": 0,
+      "fidelity": 1.0,
+      "missing_ratio": null,
+      "fabricated_dims": 0,
+      "fabricated_values": []
+    },
+    {
+      "test_id": "blind_004",
+      "software": "Vericut 9.6",
+      "keyword_score": 50,
+      "keyword_passed": false,
+      "keyword_errors": [
+        "Missing Stock definition",
+        "Missing Fixture/Clamping details"
+      ],
+      "required_dims": 0,
+      "fidelity": 1.0,
+      "missing_ratio": null,
+      "fabricated_dims": 0,
+      "fabricated_values": []
+    },
+    {
+      "test_id": "blind_005",
+      "software": "CIMCO Edit 2026",
+      "keyword_score": 100,
+      "keyword_passed": true,
+      "keyword_errors": [],
+      "required_dims": 0,
+      "fidelity": 1.0,
+      "missing_ratio": null,
+      "fabricated_dims": 0,
+      "fabricated_values": []
+    },
+    {
+      "test_id": "blind_006",
+      "software": "斯沃数控仿真软件 (SSCNC)",
+      "keyword_score": 100,
+      "keyword_passed": true,
+      "keyword_errors": [],
+      "required_dims": 0,
+      "fidelity": 1.0,
+      "missing_ratio": null,
+      "fabricated_dims": 0,
+      "fabricated_values": []
+    },
+    {
+      "test_id": "blind_007",
+      "software": "SOLIDWORKS 2021",
+      "keyword_score": 100,
+      "keyword_passed": true,
+      "keyword_errors": [],
+      "required_dims": 1,
+      "fidelity": 1.0,
+      "missing_ratio": 0.0,
+      "fabricated_dims": 0,
+      "fabricated_values": []
+    },
+    {
+      "test_id": "blind_008",
+      "software": "Siemens NX 12.0",
+      "keyword_score": 100,
+      "keyword_passed": true,
+      "keyword_errors": [],
+      "required_dims": 1,
+      "fidelity": 1.0,
+      "missing_ratio": 0.0,
+      "fabricated_dims": 0,
+      "fabricated_values": []
+    },
+    {
+      "test_id": "blind_009",
+      "software": "AutoCAD 2026",
+      "keyword_score": 100,
+      "keyword_passed": true,
+      "keyword_errors": [],
+      "required_dims": 3,
+      "fidelity": 0.0,
+      "missing_ratio": 1.0,
+      "fabricated_dims": 2,
+      "fabricated_values": [
+        "0.18",
+        "0.35"
+      ]
+    },
+    {
+      "test_id": "blind_010",
+      "software": "Vericut 9.6",
+      "keyword_score": 100,
+      "keyword_passed": true,
+      "keyword_errors": [],
+      "required_dims": 0,
+      "fidelity": 1.0,
+      "missing_ratio": null,
+      "fabricated_dims": 0,
+      "fabricated_values": []
+    },
+    {
+      "test_id": "blind_011",
+      "software": "CIMCO Edit 2026",
+      "keyword_score": 80,
+      "keyword_passed": true,
+      "keyword_errors": [
+        "Missing G-code code block"
+      ],
+      "required_dims": 0,
+      "fidelity": 1.0,
+      "missing_ratio": null,
+      "fabricated_dims": 0,
+      "fabricated_values": []
+    },
+    {
+      "test_id": "blind_012",
+      "software": "Unknown",
+      "keyword_score": 100,
+      "keyword_passed": true,
+      "keyword_errors": [],
+      "required_dims": 0,
+      "fidelity": 1.0,
+      "missing_ratio": null,
+      "fabricated_dims": 0,
+      "fabricated_values": []
+    },
+    {
+      "test_id": "blind_013",
+      "software": "SOLIDWORKS 2021",
+      "keyword_score": 100,
+      "keyword_passed": true,
+      "keyword_errors": [],
+      "required_dims": 1,
+      "fidelity": 1.0,
+      "missing_ratio": 0.0,
+      "fabricated_dims": 0,
+      "fabricated_values": []
+    },
+    {
+      "test_id": "blind_014",
+      "software": "Siemens NX 12.0",
+      "keyword_score": 100,
+      "keyword_passed": true,
+      "keyword_errors": [],
+      "required_dims": 1,
+      "fidelity": 1.0,
+      "missing_ratio": 0.0,
+      "fabricated_dims": 0,
+      "fabricated_values": []
+    },
+    {
+      "test_id": "blind_015",
+      "software": "AutoCAD 2026",
+      "keyword_score": 100,
+      "keyword_passed": true,
+      "keyword_errors": [],
+      "required_dims": 3,
+      "fidelity": 0.0,
+      "missing_ratio": 1.0,
+      "fabricated_dims": 0,
+      "fabricated_values": []
+    },
+    {
+      "test_id": "blind_016",
+      "software": "Vericut 9.6",
+      "keyword_score": 100,
+      "keyword_passed": true,
+      "keyword_errors": [],
+      "required_dims": 3,
+      "fidelity": 0.0,
+      "missing_ratio": 1.0,
+      "fabricated_dims": 8,
+      "fabricated_values": [
+        "1.2",
+        "35.0",
+        "15.0",
+        "80.0",
+        "0.010",
+        "0.005",
+        "80.00",
+        "68.00"
+      ]
+    },
+    {
+      "test_id": "blind_017",
+      "software": "CIMCO Edit 2026",
+      "keyword_score": 100,
+      "keyword_passed": true,
+      "keyword_errors": [],
+      "required_dims": 0,
+      "fidelity": 1.0,
+      "missing_ratio": null,
+      "fabricated_dims": 0,
+      "fabricated_values": []
+    },
+    {
+      "test_id": "blind_018",
+      "software": "斯沃数控仿真软件 (SSCNC)",
+      "keyword_score": 100,
+      "keyword_passed": true,
+      "keyword_errors": [],
+      "required_dims": 0,
+      "fidelity": 1.0,
+      "missing_ratio": null,
+      "fabricated_dims": 0,
+      "fabricated_values": []
+    },
+    {
+      "test_id": "blind_019",
+      "software": "SOLIDWORKS 2021",
+      "keyword_score": 100,
+      "keyword_passed": true,
+      "keyword_errors": [],
+      "required_dims": 1,
+      "fidelity": 1.0,
+      "missing_ratio": 0.0,
+      "fabricated_dims": 0,
+      "fabricated_values": []
+    },
+    {
+      "test_id": "blind_020",
+      "software": "Siemens NX 12.0",
+      "keyword_score": 100,
+      "keyword_passed": true,
+      "keyword_errors": [],
+      "required_dims": 1,
+      "fidelity": 1.0,
+      "missing_ratio": 0.0,
+      "fabricated_dims": 0,
+      "fabricated_values": []
+    },
+    {
+      "test_id": "blind_021",
+      "software": "AutoCAD 2026",
+      "keyword_score": 100,
+      "keyword_passed": true,
+      "keyword_errors": [],
+      "required_dims": 0,
+      "fidelity": 1.0,
+      "missing_ratio": null,
+      "fabricated_dims": 0,
+      "fabricated_values": []
+    },
+    {
+      "test_id": "blind_022",
+      "software": "Vericut 9.6",
+      "keyword_score": 100,
+      "keyword_passed": true,
+      "keyword_errors": [],
+      "required_dims": 0,
+      "fidelity": 1.0,
+      "missing_ratio": null,
+      "fabricated_dims": 0,
+      "fabricated_values": []
+    },
+    {
+      "test_id": "blind_023",
+      "software": "CIMCO Edit 2026",
+      "keyword_score": 100,
+      "keyword_passed": true,
+      "keyword_errors": [],
+      "required_dims": 0,
+      "fidelity": 1.0,
+      "missing_ratio": null,
+      "fabricated_dims": 0,
+      "fabricated_values": []
+    },
+    {
+      "test_id": "blind_024",
+      "software": "斯沃数控仿真软件 (SSCNC)",
+      "keyword_score": 100,
+      "keyword_passed": true,
+      "keyword_errors": [],
+      "required_dims": 0,
+      "fidelity": 1.0,
+      "missing_ratio": null,
+      "fabricated_dims": 0,
+      "fabricated_values": []
+    },
+    {
+      "test_id": "blind_025",
+      "software": "SOLIDWORKS 2021",
+      "keyword_score": 100,
+      "keyword_passed": true,
+      "keyword_errors": [],
+      "required_dims": 1,
+      "fidelity": 1.0,
+      "missing_ratio": 0.0,
+      "fabricated_dims": 1,
+      "fabricated_values": [
+        "14.0"
+      ]
+    },
+    {
+      "test_id": "blind_026",
+      "software": "Siemens NX 12.0",
+      "keyword_score": 100,
+      "keyword_passed": true,
+      "keyword_errors": [],
+      "required_dims": 1,
+      "fidelity": 1.0,
+      "missing_ratio": 0.0,
+      "fabricated_dims": 0,
+      "fabricated_values": []
+    },
+    {
+      "test_id": "blind_027",
+      "software": "AutoCAD 2026",
+      "keyword_score": 100,
+      "keyword_passed": true,
+      "keyword_errors": [],
+      "required_dims": 3,
+      "fidelity": 0.0,
+      "missing_ratio": 1.0,
+      "fabricated_dims": 0,
+      "fabricated_values": []
+    },
+    {
+      "test_id": "blind_028",
+      "software": "Vericut 9.6",
+      "keyword_score": 100,
+      "keyword_passed": true,
+      "keyword_errors": [],
+      "required_dims": 0,
+      "fidelity": 1.0,
+      "missing_ratio": null,
+      "fabricated_dims": 0,
+      "fabricated_values": []
+    },
+    {
+      "test_id": "blind_029",
+      "software": "CIMCO Edit 2026",
+      "keyword_score": 100,
+      "keyword_passed": true,
+      "keyword_errors": [],
+      "required_dims": 0,
+      "fidelity": 1.0,
+      "missing_ratio": null,
+      "fabricated_dims": 0,
+      "fabricated_values": []
+    },
+    {
+      "test_id": "blind_030",
+      "software": "Unknown",
+      "keyword_score": 100,
+      "keyword_passed": true,
+      "keyword_errors": [],
+      "required_dims": 0,
+      "fidelity": 1.0,
+      "missing_ratio": null,
+      "fabricated_dims": 0,
+      "fabricated_values": []
+    },
+    {
+      "test_id": "blind_031",
+      "software": "SOLIDWORKS 2021",
+      "keyword_score": 100,
+      "keyword_passed": true,
+      "keyword_errors": [],
+      "required_dims": 2,
+      "fidelity": 1.0,
+      "missing_ratio": 0.0,
+      "fabricated_dims": 0,
+      "fabricated_values": []
+    },
+    {
+      "test_id": "blind_032",
+      "software": "Siemens NX 12.0",
+      "keyword_score": 100,
+      "keyword_passed": true,
+      "keyword_errors": [],
+      "required_dims": 1,
+      "fidelity": 1.0,
+      "missing_ratio": 0.0,
+      "fabricated_dims": 0,
+      "fabricated_values": []
+    },
+    {
+      "test_id": "blind_033",
+      "software": "AutoCAD 2026",
+      "keyword_score": 100,
+      "keyword_passed": true,
+      "keyword_errors": [],
+      "required_dims": 0,
+      "fidelity": 1.0,
+      "missing_ratio": null,
+      "fabricated_dims": 0,
+      "fabricated_values": []
+    },
+    {
+      "test_id": "blind_034",
+      "software": "Vericut 9.6",
+      "keyword_score": 100,
+      "keyword_passed": true,
+      "keyword_errors": [],
+      "required_dims": 0,
+      "fidelity": 1.0,
+      "missing_ratio": null,
+      "fabricated_dims": 0,
+      "fabricated_values": []
+    },
+    {
+      "test_id": "blind_035",
+      "software": "CIMCO Edit 2026",
+      "keyword_score": 75,
+      "keyword_passed": false,
+      "keyword_errors": [
+        "Missing valid turning cycle blocks"
+      ],
+      "required_dims": 0,
+      "fidelity": 1.0,
+      "missing_ratio": null,
+      "fabricated_dims": 0,
+      "fabricated_values": []
+    },
+    {
+      "test_id": "blind_036",
+      "software": "斯沃数控仿真软件 (SSCNC)",
+      "keyword_score": 100,
+      "keyword_passed": true,
+      "keyword_errors": [],
+      "required_dims": 0,
+      "fidelity": 1.0,
+      "missing_ratio": null,
+      "fabricated_dims": 0,
+      "fabricated_values": []
+    }
+  ]
+}

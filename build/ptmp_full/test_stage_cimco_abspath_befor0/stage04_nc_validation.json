@@ -1,0 +1,38 @@
+{
+  "source": "D:\\Virtu模型\\build\\ptmp_full\\test_stage_cimco_abspath_befor0\\04_CIMCO_Edit_2026.nc",
+  "envelope": {
+    "nc_lines": 3,
+    "motion_blocks": 1,
+    "macro_variables": 0,
+    "x_range": [
+      53.0,
+      53.0
+    ],
+    "z_range": [
+      2.0,
+      2.0
+    ],
+    "has_rough_cycle": false,
+    "has_finish_cycle": false,
+    "has_end": true
+  },
+  "editor_state": {
+    "frame_title": "CIMCO Edit 2026.01.02 - [x]",
+    "frame_titles": [],
+    "doc_tabs": [],
+    "ribbon_tabs": [],
+    "doc_count": 0,
+    "hwnd": 1
+  },
+  "titles_seen_while_waiting": [
+    "CIMCO Edit 2026.01.02 - [x]",
+    "CIMCO Edit 2026.01.02 - [x]",
+    "CIMCO Edit 2026.01.02 - [x]",
+    "CIMCO Edit 2026.01.02 - [x]",
+    "CIMCO Edit 2026.01.02 - [x]",
+    "CIMCO Edit 2026.01.02 - [x]",
+    "CIMCO Edit 2026.01.02 - [x]",
+    "CIMCO Edit 2026.01.02 - [x]"
+  ],
+  "loaded_in_editor": false
+}

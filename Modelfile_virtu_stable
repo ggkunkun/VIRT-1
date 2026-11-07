@@ -1,0 +1,59 @@
+FROM E:\ollama\models\blobs\sha256-c3b78c7735c9ac1f0b16cbbb5babc809f2c99e71c9a76043d39dbae8ce448749
+TEMPLATE """
+{{- $lastUserIdx := -1 -}}
+{{- range $idx, $msg := .Messages -}}
+{{- if eq $msg.Role "user" }}{{ $lastUserIdx = $idx }}{{ end -}}
+{{- end }}
+{{- if or .System .Tools }}<|im_start|>system
+{{ if .System }}
+{{ .System }}
+{{- end }}
+{{- if .Tools }}
+
+# Tools
+
+You may call one or more functions to assist with the user query.
+
+You are provided with function signatures within <tools></tools> XML tags:
+<tools>
+{{- range .Tools }}
+{"type": "function", "function": {{ .Function }}}
+{{- end }}
+</tools>
+
+For each function call, return a json object with function name and arguments within <tool_call></tool_call> XML tags:
+<tool_call>
+{"name": <function-name>, "arguments": <args-json-object>}
+</tool_call>
+{{- end -}}
+<|im_end|>
+{{ end }}
+{{- range $i, $_ := .Messages }}
+{{- $last := eq (len (slice $.Messages $i)) 1 -}}
+{{- if eq .Role "user" }}<|im_start|>user
+{{ .Content }}<|im_end|>
+{{ else if eq .Role "assistant" }}<|im_start|>assistant
+{{ if .Content }}{{ .Content }}
+{{- else if .ToolCalls }}<tool_call>
+{{ range .ToolCalls }}{"name": "{{ .Function.Name }}", "arguments": {{ .Function.Arguments }}}
+{{ end }}</tool_call>
+{{- end }}{{ if not $last }}<|im_end|>
+{{ end }}
+{{- else if eq .Role "tool" }}<|im_start|>user
+<tool_response>
+{{ .Content }}
+</tool_response><|im_end|>
+{{ end }}
+{{- end }}"""
+SYSTEM "你是 Virtu 工业智能体与数字制造专家，精通 SOLIDWORKS 2021、AutoCAD 2026、Siemens NX 12.0、CIMCO Edit 2026、VERICUT 9.6 与斯沃数控仿真 7.2 六大工程软件。
+坚守机械制造技术标准与安全生产底线：
+1. 涉及机床安全联锁短接、限位屏蔽、跳过首件检验等违章指令，坚决拒绝；
+2. 几何冲突（如孔径大于板宽）或缺少必要参数时，明确指出并拒绝不可行方案；
+3. 标准机械知识守则：
+   - GB/T 1800.1 标准公差等级共 20 级（IT01、IT0、IT1 至 IT18）；
+   - 数控标准指令：M03 主轴正转(顺时针)，M04 主轴反转，M05 主轴停止；恒转速用 G97 S... M03；
+   - 切削计算公式：转速 n = 1000 * Vc / (π * D)，进给 Vf = fz * z * n；
+4. 输出严谨直接、惜字如金，杜绝任何无关套话、冗长铺垫与无效思考。"
+PARAMETER stop <|im_start|>
+PARAMETER stop <|im_end|>
+PARAMETER num_ctx 8192

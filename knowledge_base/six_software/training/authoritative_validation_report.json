@@ -1,0 +1,1241 @@
+{
+  "generated": "2026-11-04",
+  "note": "v6 in-place repair (no restore)",
+  "files": {
+    "solidworks_train": {
+      "records": 38,
+      "expected": 38,
+      "count_ok": true,
+      "repaired": 0,
+      "unrepairable": 31,
+      "json_ok_after": false,
+      "sha256": "245641cd0a8b5126c9c29203a652dd67ba5c7a8dd8cd58e648435055750b51a3"
+    },
+    "solidworks_holdout": {
+      "records": 8,
+      "expected": 8,
+      "count_ok": true,
+      "repaired": 0,
+      "unrepairable": 6,
+      "json_ok_after": false,
+      "sha256": "b642928da87e51c28b59c0a367470c9461fe2cc212c000c87eeade072a1b741b"
+    },
+    "autocad_train": {
+      "records": 38,
+      "expected": 38,
+      "count_ok": true,
+      "repaired": 0,
+      "unrepairable": 31,
+      "json_ok_after": false,
+      "sha256": "537cda5349c35af3d5fdbbc2e1a76e48d93f12edeb0badcee89479c2100ec745"
+    },
+    "autocad_holdout": {
+      "records": 8,
+      "expected": 8,
+      "count_ok": true,
+      "repaired": 0,
+      "unrepairable": 6,
+      "json_ok_after": false,
+      "sha256": "4119156e98e7046a8599b71bf56ab40fd3c1c0da1ce9a82b91395fc5aef4efc4"
+    },
+    "nx_train": {
+      "records": 37,
+      "expected": 36,
+      "count_ok": false,
+      "repaired": 0,
+      "unrepairable": 37,
+      "json_ok_after": false,
+      "sha256": "b6600a5c034239284771af10b21a896d76e0af79f10a506835736d3f112a19fa"
+    },
+    "nx_holdout": {
+      "records": 9,
+      "expected": 9,
+      "count_ok": true,
+      "repaired": 0,
+      "unrepairable": 9,
+      "json_ok_after": false,
+      "sha256": "6ee9a3e12a48ce80cf4c0f1b207440579ff0feab9b047a27d555f3d892ebe5e0"
+    },
+    "cimco_train": {
+      "records": 36,
+      "expected": 36,
+      "count_ok": true,
+      "repaired": 0,
+      "unrepairable": 36,
+      "json_ok_after": false,
+      "sha256": "d0147e132c3b8a09b102b5bb58fc7302f138286c9d3b8be20a9c77de87782b63"
+    },
+    "cimco_holdout": {
+      "records": 9,
+      "expected": 9,
+      "count_ok": true,
+      "repaired": 0,
+      "unrepairable": 9,
+      "json_ok_after": false,
+      "sha256": "c097ab682a029c6cfffe89e3157277115591df9d5f8bbf53df4e2904ce8b5643"
+    },
+    "vericut_train": {
+      "records": 37,
+      "expected": 37,
+      "count_ok": true,
+      "repaired": 0,
+      "unrepairable": 30,
+      "json_ok_after": false,
+      "sha256": "130625d7841cb41c9dbda4cf9aeef4ab08b8cddd360c4fc6de1ea94c31578366"
+    },
+    "vericut_holdout": {
+      "records": 8,
+      "expected": 8,
+      "count_ok": true,
+      "repaired": 0,
+      "unrepairable": 2,
+      "json_ok_after": false,
+      "sha256": "d6ab9a68006844948139e8a441184dce1d565e681a32d92bdbc72fd8032fa8de"
+    },
+    "sscnc_train": {
+      "records": 36,
+      "expected": 36,
+      "count_ok": true,
+      "repaired": 0,
+      "unrepairable": 27,
+      "json_ok_after": false,
+      "sha256": "75304c8d3b837174524193ce4a9466ae798a09332dc754fff89db4da43017dbc"
+    },
+    "sscnc_holdout": {
+      "records": 8,
+      "expected": 8,
+      "count_ok": true,
+      "repaired": 0,
+      "unrepairable": 1,
+      "json_ok_after": false,
+      "sha256": "5a2cb4d0bd347028663b22dd0950c1f15ab0f0adabc245e6d4c40ff3e1df7edd"
+    }
+  },
+  "unrepairable": [
+    {
+      "file": "solidworks_train",
+      "line": 1,
+      "err": "Expecting ',' delimiter: line 1 column 2137 (char 2136)"
+    },
+    {
+      "file": "solidworks_train",
+      "line": 2,
+      "err": "Expecting ',' delimiter: line 1 column 1488 (char 1487)"
+    },
+    {
+      "file": "solidworks_train",
+      "line": 3,
+      "err": "Expecting ',' delimiter: line 1 column 783 (char 782)"
+    },
+    {
+      "file": "solidworks_train",
+      "line": 4,
+      "err": "Expecting ',' delimiter: line 1 column 222 (char 221)"
+    },
+    {
+      "file": "solidworks_train",
+      "line": 5,
+      "err": "Expecting ',' delimiter: line 1 column 193 (char 192)"
+    },
+    {
+      "file": "solidworks_train",
+      "line": 6,
+      "err": "Expecting ',' delimiter: line 1 column 193 (char 192)"
+    },
+    {
+      "file": "solidworks_train",
+      "line": 7,
+      "err": "Expecting ',' delimiter: line 1 column 209 (char 208)"
+    },
+    {
+      "file": "solidworks_train",
+      "line": 8,
+      "err": "Expecting ',' delimiter: line 1 column 209 (char 208)"
+    },
+    {
+      "file": "solidworks_train",
+      "line": 9,
+      "err": "Expecting ',' delimiter: line 1 column 193 (char 192)"
+    },
+    {
+      "file": "solidworks_train",
+      "line": 10,
+      "err": "Expecting ',' delimiter: line 1 column 206 (char 205)"
+    },
+    {
+      "file": "solidworks_train",
+      "line": 11,
+      "err": "Expecting ',' delimiter: line 1 column 206 (char 205)"
+    },
+    {
+      "file": "solidworks_train",
+      "line": 12,
+      "err": "Expecting ',' delimiter: line 1 column 191 (char 190)"
+    },
+    {
+      "file": "solidworks_train",
+      "line": 13,
+      "err": "Expecting ',' delimiter: line 1 column 185 (char 184)"
+    },
+    {
+      "file": "solidworks_train",
+      "line": 14,
+      "err": "Expecting ',' delimiter: line 1 column 203 (char 202)"
+    },
+    {
+      "file": "solidworks_train",
+      "line": 15,
+      "err": "Expecting ',' delimiter: line 1 column 203 (char 202)"
+    },
+    {
+      "file": "solidworks_train",
+      "line": 16,
+      "err": "Expecting ',' delimiter: line 1 column 213 (char 212)"
+    },
+    {
+      "file": "solidworks_train",
+      "line": 17,
+      "err": "Expecting ',' delimiter: line 1 column 208 (char 207)"
+    },
+    {
+      "file": "solidworks_train",
+      "line": 18,
+      "err": "Expecting ',' delimiter: line 1 column 190 (char 189)"
+    },
+    {
+      "file": "solidworks_train",
+      "line": 19,
+      "err": "Expecting ',' delimiter: line 1 column 188 (char 187)"
+    },
+    {
+      "file": "solidworks_train",
+      "line": 20,
+      "err": "Expecting ',' delimiter: line 1 column 199 (char 198)"
+    },
+    {
+      "file": "solidworks_train",
+      "line": 21,
+      "err": "Expecting ',' delimiter: line 1 column 199 (char 198)"
+    },
+    {
+      "file": "solidworks_train",
+      "line": 22,
+      "err": "Expecting ',' delimiter: line 1 column 205 (char 204)"
+    },
+    {
+      "file": "solidworks_train",
+      "line": 23,
+      "err": "Expecting ',' delimiter: line 1 column 190 (char 189)"
+    },
+    {
+      "file": "solidworks_train",
+      "line": 24,
+      "err": "Expecting ',' delimiter: line 1 column 188 (char 187)"
+    },
+    {
+      "file": "solidworks_train",
+      "line": 25,
+      "err": "Expecting ',' delimiter: line 1 column 194 (char 193)"
+    },
+    {
+      "file": "solidworks_train",
+      "line": 26,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 238 (char 237)"
+    },
+    {
+      "file": "solidworks_train",
+      "line": 27,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 233 (char 232)"
+    },
+    {
+      "file": "solidworks_train",
+      "line": 28,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 233 (char 232)"
+    },
+    {
+      "file": "solidworks_train",
+      "line": 29,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 233 (char 232)"
+    },
+    {
+      "file": "solidworks_train",
+      "line": 30,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 233 (char 232)"
+    },
+    {
+      "file": "solidworks_train",
+      "line": 31,
+      "err": "Expecting ',' delimiter: line 1 column 196 (char 195)"
+    },
+    {
+      "file": "solidworks_holdout",
+      "line": 1,
+      "err": "Expecting ',' delimiter: line 1 column 209 (char 208)"
+    },
+    {
+      "file": "solidworks_holdout",
+      "line": 2,
+      "err": "Expecting ',' delimiter: line 1 column 209 (char 208)"
+    },
+    {
+      "file": "solidworks_holdout",
+      "line": 3,
+      "err": "Expecting ',' delimiter: line 1 column 203 (char 202)"
+    },
+    {
+      "file": "solidworks_holdout",
+      "line": 4,
+      "err": "Expecting ',' delimiter: line 1 column 188 (char 187)"
+    },
+    {
+      "file": "solidworks_holdout",
+      "line": 5,
+      "err": "Expecting ',' delimiter: line 1 column 201 (char 200)"
+    },
+    {
+      "file": "solidworks_holdout",
+      "line": 6,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 233 (char 232)"
+    },
+    {
+      "file": "autocad_train",
+      "line": 1,
+      "err": "Expecting ',' delimiter: line 1 column 190 (char 189)"
+    },
+    {
+      "file": "autocad_train",
+      "line": 2,
+      "err": "Expecting ',' delimiter: line 1 column 185 (char 184)"
+    },
+    {
+      "file": "autocad_train",
+      "line": 3,
+      "err": "Expecting ',' delimiter: line 1 column 185 (char 184)"
+    },
+    {
+      "file": "autocad_train",
+      "line": 4,
+      "err": "Expecting ',' delimiter: line 1 column 184 (char 183)"
+    },
+    {
+      "file": "autocad_train",
+      "line": 5,
+      "err": "Expecting ',' delimiter: line 1 column 186 (char 185)"
+    },
+    {
+      "file": "autocad_train",
+      "line": 6,
+      "err": "Expecting ',' delimiter: line 1 column 180 (char 179)"
+    },
+    {
+      "file": "autocad_train",
+      "line": 7,
+      "err": "Expecting ',' delimiter: line 1 column 185 (char 184)"
+    },
+    {
+      "file": "autocad_train",
+      "line": 8,
+      "err": "Expecting ',' delimiter: line 1 column 178 (char 177)"
+    },
+    {
+      "file": "autocad_train",
+      "line": 9,
+      "err": "Expecting ',' delimiter: line 1 column 190 (char 189)"
+    },
+    {
+      "file": "autocad_train",
+      "line": 10,
+      "err": "Expecting ',' delimiter: line 1 column 185 (char 184)"
+    },
+    {
+      "file": "autocad_train",
+      "line": 11,
+      "err": "Expecting ',' delimiter: line 1 column 184 (char 183)"
+    },
+    {
+      "file": "autocad_train",
+      "line": 12,
+      "err": "Expecting ',' delimiter: line 1 column 186 (char 185)"
+    },
+    {
+      "file": "autocad_train",
+      "line": 13,
+      "err": "Expecting ',' delimiter: line 1 column 186 (char 185)"
+    },
+    {
+      "file": "autocad_train",
+      "line": 14,
+      "err": "Expecting ',' delimiter: line 1 column 187 (char 186)"
+    },
+    {
+      "file": "autocad_train",
+      "line": 15,
+      "err": "Expecting ',' delimiter: line 1 column 196 (char 195)"
+    },
+    {
+      "file": "autocad_train",
+      "line": 16,
+      "err": "Expecting ',' delimiter: line 1 column 196 (char 195)"
+    },
+    {
+      "file": "autocad_train",
+      "line": 17,
+      "err": "Expecting ',' delimiter: line 1 column 189 (char 188)"
+    },
+    {
+      "file": "autocad_train",
+      "line": 18,
+      "err": "Expecting ',' delimiter: line 1 column 189 (char 188)"
+    },
+    {
+      "file": "autocad_train",
+      "line": 19,
+      "err": "Expecting ',' delimiter: line 1 column 183 (char 182)"
+    },
+    {
+      "file": "autocad_train",
+      "line": 20,
+      "err": "Expecting ',' delimiter: line 1 column 195 (char 194)"
+    },
+    {
+      "file": "autocad_train",
+      "line": 21,
+      "err": "Expecting ',' delimiter: line 1 column 195 (char 194)"
+    },
+    {
+      "file": "autocad_train",
+      "line": 22,
+      "err": "Expecting ',' delimiter: line 1 column 190 (char 189)"
+    },
+    {
+      "file": "autocad_train",
+      "line": 23,
+      "err": "Expecting ',' delimiter: line 1 column 182 (char 181)"
+    },
+    {
+      "file": "autocad_train",
+      "line": 24,
+      "err": "Expecting ',' delimiter: line 1 column 175 (char 174)"
+    },
+    {
+      "file": "autocad_train",
+      "line": 25,
+      "err": "Expecting ',' delimiter: line 1 column 181 (char 180)"
+    },
+    {
+      "file": "autocad_train",
+      "line": 26,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 233 (char 232)"
+    },
+    {
+      "file": "autocad_train",
+      "line": 27,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 233 (char 232)"
+    },
+    {
+      "file": "autocad_train",
+      "line": 28,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 233 (char 232)"
+    },
+    {
+      "file": "autocad_train",
+      "line": 29,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 233 (char 232)"
+    },
+    {
+      "file": "autocad_train",
+      "line": 30,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 233 (char 232)"
+    },
+    {
+      "file": "autocad_train",
+      "line": 31,
+      "err": "Expecting ',' delimiter: line 1 column 185 (char 184)"
+    },
+    {
+      "file": "autocad_holdout",
+      "line": 1,
+      "err": "Expecting ',' delimiter: line 1 column 185 (char 184)"
+    },
+    {
+      "file": "autocad_holdout",
+      "line": 2,
+      "err": "Expecting ',' delimiter: line 1 column 184 (char 183)"
+    },
+    {
+      "file": "autocad_holdout",
+      "line": 3,
+      "err": "Expecting ',' delimiter: line 1 column 193 (char 192)"
+    },
+    {
+      "file": "autocad_holdout",
+      "line": 4,
+      "err": "Expecting ',' delimiter: line 1 column 190 (char 189)"
+    },
+    {
+      "file": "autocad_holdout",
+      "line": 5,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 233 (char 232)"
+    },
+    {
+      "file": "autocad_holdout",
+      "line": 8,
+      "err": "Expecting ',' delimiter: line 1 column 186 (char 185)"
+    },
+    {
+      "file": "nx_train",
+      "line": 1,
+      "err": "Expecting ',' delimiter: line 1 column 2818 (char 2817)"
+    },
+    {
+      "file": "nx_train",
+      "line": 2,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 194 (char 193)"
+    },
+    {
+      "file": "nx_train",
+      "line": 3,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "nx_train",
+      "line": 4,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "nx_train",
+      "line": 5,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "nx_train",
+      "line": 6,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "nx_train",
+      "line": 7,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "nx_train",
+      "line": 8,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "nx_train",
+      "line": 9,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "nx_train",
+      "line": 10,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "nx_train",
+      "line": 11,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "nx_train",
+      "line": 12,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "nx_train",
+      "line": 13,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "nx_train",
+      "line": 14,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "nx_train",
+      "line": 15,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "nx_train",
+      "line": 16,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "nx_train",
+      "line": 17,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "nx_train",
+      "line": 18,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "nx_train",
+      "line": 19,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "nx_train",
+      "line": 20,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "nx_train",
+      "line": 21,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "nx_train",
+      "line": 22,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "nx_train",
+      "line": 23,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "nx_train",
+      "line": 24,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "nx_train",
+      "line": 25,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "nx_train",
+      "line": 26,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "nx_train",
+      "line": 27,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "nx_train",
+      "line": 28,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "nx_train",
+      "line": 29,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "nx_train",
+      "line": 30,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "nx_train",
+      "line": 31,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "nx_train",
+      "line": 32,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "nx_train",
+      "line": 33,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "nx_train",
+      "line": 34,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "nx_train",
+      "line": 35,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "nx_train",
+      "line": 36,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "nx_train",
+      "line": 37,
+      "err": "Expecting value: line 1 column 1 (char 0)"
+    },
+    {
+      "file": "nx_holdout",
+      "line": 1,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 194 (char 193)"
+    },
+    {
+      "file": "nx_holdout",
+      "line": 2,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "nx_holdout",
+      "line": 3,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "nx_holdout",
+      "line": 4,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "nx_holdout",
+      "line": 5,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "nx_holdout",
+      "line": 6,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "nx_holdout",
+      "line": 7,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "nx_holdout",
+      "line": 8,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "nx_holdout",
+      "line": 9,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "cimco_train",
+      "line": 1,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "cimco_train",
+      "line": 2,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "cimco_train",
+      "line": 3,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "cimco_train",
+      "line": 4,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "cimco_train",
+      "line": 5,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "cimco_train",
+      "line": 6,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "cimco_train",
+      "line": 7,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "cimco_train",
+      "line": 8,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "cimco_train",
+      "line": 9,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "cimco_train",
+      "line": 10,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "cimco_train",
+      "line": 11,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "cimco_train",
+      "line": 12,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "cimco_train",
+      "line": 13,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "cimco_train",
+      "line": 14,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "cimco_train",
+      "line": 15,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "cimco_train",
+      "line": 16,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "cimco_train",
+      "line": 17,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "cimco_train",
+      "line": 18,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "cimco_train",
+      "line": 19,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "cimco_train",
+      "line": 20,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "cimco_train",
+      "line": 21,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "cimco_train",
+      "line": 22,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "cimco_train",
+      "line": 23,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "cimco_train",
+      "line": 24,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "cimco_train",
+      "line": 25,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "cimco_train",
+      "line": 26,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "cimco_train",
+      "line": 27,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "cimco_train",
+      "line": 28,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "cimco_train",
+      "line": 29,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "cimco_train",
+      "line": 30,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "cimco_train",
+      "line": 31,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "cimco_train",
+      "line": 32,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "cimco_train",
+      "line": 33,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "cimco_train",
+      "line": 34,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "cimco_train",
+      "line": 35,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "cimco_train",
+      "line": 36,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "cimco_holdout",
+      "line": 1,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "cimco_holdout",
+      "line": 2,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "cimco_holdout",
+      "line": 3,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "cimco_holdout",
+      "line": 4,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "cimco_holdout",
+      "line": 5,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "cimco_holdout",
+      "line": 6,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "cimco_holdout",
+      "line": 7,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "cimco_holdout",
+      "line": 8,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "cimco_holdout",
+      "line": 9,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 165 (char 164)"
+    },
+    {
+      "file": "vericut_train",
+      "line": 1,
+      "err": "Expecting ',' delimiter: line 1 column 3286 (char 3285)"
+    },
+    {
+      "file": "vericut_train",
+      "line": 2,
+      "err": "Expecting ',' delimiter: line 1 column 3016 (char 3015)"
+    },
+    {
+      "file": "vericut_train",
+      "line": 3,
+      "err": "Expecting ',' delimiter: line 1 column 3247 (char 3246)"
+    },
+    {
+      "file": "vericut_train",
+      "line": 4,
+      "err": "Expecting ',' delimiter: line 1 column 3016 (char 3015)"
+    },
+    {
+      "file": "vericut_train",
+      "line": 5,
+      "err": "Expecting ',' delimiter: line 1 column 3122 (char 3121)"
+    },
+    {
+      "file": "vericut_train",
+      "line": 6,
+      "err": "Expecting ',' delimiter: line 1 column 3103 (char 3102)"
+    },
+    {
+      "file": "vericut_train",
+      "line": 7,
+      "err": "Expecting ',' delimiter: line 1 column 3088 (char 3087)"
+    },
+    {
+      "file": "vericut_train",
+      "line": 8,
+      "err": "Expecting ',' delimiter: line 1 column 3137 (char 3136)"
+    },
+    {
+      "file": "vericut_train",
+      "line": 9,
+      "err": "Expecting ',' delimiter: line 1 column 3110 (char 3109)"
+    },
+    {
+      "file": "vericut_train",
+      "line": 10,
+      "err": "Expecting ',' delimiter: line 1 column 3041 (char 3040)"
+    },
+    {
+      "file": "vericut_train",
+      "line": 11,
+      "err": "Expecting ',' delimiter: line 1 column 3178 (char 3177)"
+    },
+    {
+      "file": "vericut_train",
+      "line": 12,
+      "err": "Expecting ',' delimiter: line 1 column 3051 (char 3050)"
+    },
+    {
+      "file": "vericut_train",
+      "line": 13,
+      "err": "Expecting ',' delimiter: line 1 column 3129 (char 3128)"
+    },
+    {
+      "file": "vericut_train",
+      "line": 14,
+      "err": "Expecting ',' delimiter: line 1 column 3017 (char 3016)"
+    },
+    {
+      "file": "vericut_train",
+      "line": 16,
+      "err": "Expecting ',' delimiter: line 1 column 3120 (char 3119)"
+    },
+    {
+      "file": "vericut_train",
+      "line": 17,
+      "err": "Expecting ',' delimiter: line 1 column 2967 (char 2966)"
+    },
+    {
+      "file": "vericut_train",
+      "line": 18,
+      "err": "Expecting ',' delimiter: line 1 column 2959 (char 2958)"
+    },
+    {
+      "file": "vericut_train",
+      "line": 19,
+      "err": "Expecting ',' delimiter: line 1 column 2976 (char 2975)"
+    },
+    {
+      "file": "vericut_train",
+      "line": 20,
+      "err": "Expecting ',' delimiter: line 1 column 3048 (char 3047)"
+    },
+    {
+      "file": "vericut_train",
+      "line": 21,
+      "err": "Expecting ',' delimiter: line 1 column 3086 (char 3085)"
+    },
+    {
+      "file": "vericut_train",
+      "line": 22,
+      "err": "Expecting ',' delimiter: line 1 column 3034 (char 3033)"
+    },
+    {
+      "file": "vericut_train",
+      "line": 23,
+      "err": "Expecting ',' delimiter: line 1 column 3035 (char 3034)"
+    },
+    {
+      "file": "vericut_train",
+      "line": 24,
+      "err": "Expecting ',' delimiter: line 1 column 2180 (char 2179)"
+    },
+    {
+      "file": "vericut_train",
+      "line": 25,
+      "err": "Expecting ',' delimiter: line 1 column 3111 (char 3110)"
+    },
+    {
+      "file": "vericut_train",
+      "line": 26,
+      "err": "Expecting ',' delimiter: line 1 column 2180 (char 2179)"
+    },
+    {
+      "file": "vericut_train",
+      "line": 32,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 240 (char 239)"
+    },
+    {
+      "file": "vericut_train",
+      "line": 33,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 240 (char 239)"
+    },
+    {
+      "file": "vericut_train",
+      "line": 34,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 240 (char 239)"
+    },
+    {
+      "file": "vericut_train",
+      "line": 35,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 240 (char 239)"
+    },
+    {
+      "file": "vericut_train",
+      "line": 36,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 240 (char 239)"
+    },
+    {
+      "file": "vericut_holdout",
+      "line": 7,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 240 (char 239)"
+    },
+    {
+      "file": "vericut_holdout",
+      "line": 8,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 240 (char 239)"
+    },
+    {
+      "file": "sscnc_train",
+      "line": 1,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 240 (char 239)"
+    },
+    {
+      "file": "sscnc_train",
+      "line": 2,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 240 (char 239)"
+    },
+    {
+      "file": "sscnc_train",
+      "line": 3,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 240 (char 239)"
+    },
+    {
+      "file": "sscnc_train",
+      "line": 4,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 240 (char 239)"
+    },
+    {
+      "file": "sscnc_train",
+      "line": 5,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 240 (char 239)"
+    },
+    {
+      "file": "sscnc_train",
+      "line": 6,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 240 (char 239)"
+    },
+    {
+      "file": "sscnc_train",
+      "line": 7,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 240 (char 239)"
+    },
+    {
+      "file": "sscnc_train",
+      "line": 8,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 240 (char 239)"
+    },
+    {
+      "file": "sscnc_train",
+      "line": 9,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 240 (char 239)"
+    },
+    {
+      "file": "sscnc_train",
+      "line": 10,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 240 (char 239)"
+    },
+    {
+      "file": "sscnc_train",
+      "line": 11,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 240 (char 239)"
+    },
+    {
+      "file": "sscnc_train",
+      "line": 12,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 240 (char 239)"
+    },
+    {
+      "file": "sscnc_train",
+      "line": 13,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 240 (char 239)"
+    },
+    {
+      "file": "sscnc_train",
+      "line": 14,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 240 (char 239)"
+    },
+    {
+      "file": "sscnc_train",
+      "line": 15,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 240 (char 239)"
+    },
+    {
+      "file": "sscnc_train",
+      "line": 16,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 240 (char 239)"
+    },
+    {
+      "file": "sscnc_train",
+      "line": 17,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 240 (char 239)"
+    },
+    {
+      "file": "sscnc_train",
+      "line": 18,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 240 (char 239)"
+    },
+    {
+      "file": "sscnc_train",
+      "line": 19,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 240 (char 239)"
+    },
+    {
+      "file": "sscnc_train",
+      "line": 20,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 240 (char 239)"
+    },
+    {
+      "file": "sscnc_train",
+      "line": 22,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 240 (char 239)"
+    },
+    {
+      "file": "sscnc_train",
+      "line": 30,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 240 (char 239)"
+    },
+    {
+      "file": "sscnc_train",
+      "line": 31,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 240 (char 239)"
+    },
+    {
+      "file": "sscnc_train",
+      "line": 32,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 240 (char 239)"
+    },
+    {
+      "file": "sscnc_train",
+      "line": 33,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 240 (char 239)"
+    },
+    {
+      "file": "sscnc_train",
+      "line": 34,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 240 (char 239)"
+    },
+    {
+      "file": "sscnc_train",
+      "line": 35,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 240 (char 239)"
+    },
+    {
+      "file": "sscnc_holdout",
+      "line": 7,
+      "err": "Expecting property name enclosed in double quotes: line 1 column 240 (char 239)"
+    }
+  ]
+}

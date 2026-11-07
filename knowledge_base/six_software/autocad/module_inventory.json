@@ -1,0 +1,109 @@
+{
+  "software": "autocad",
+  "display_name": "AutoCAD 2026 - 简体中文",
+  "version": "2026",
+  "generated": "2026-11-03",
+  "source": "reverse-skill offline-sample RE; evidence.md",
+  "category_enum_used": ["part_modeling", "drafting", "data_exchange", "config_admin", "visualization"],
+  "modules": [
+    {
+      "id": "autocad_drawing_2d",
+      "name": "二维绘图 (2D Drawing)",
+      "category": "part_modeling",
+      "menu": ["绘图|直线", "绘图|圆"],
+      "commands": ["AC_CMD_LINE", "AC_CMD_CIRCLE", "AC_CMD_PLINE", "AC_CMD_ARC"],
+      "api": ["AcadModelSpace::AddLine", "AcadModelSpace::AddCircle", "AutoLISP: command", "SendCommand"],
+      "file_formats": ["DWG", "DXF"],
+      "workflow_refs": ["wf_acwf2_headless_dxf"],
+      "notes": "OUTLINE层画轮廓，坐标mm；ezdxf无头add_line/add_circle verified-working(历史实测) [高]"
+    },
+    {
+      "id": "autocad_layer_properties",
+      "name": "图层与特性 (Layer/Properties)",
+      "category": "config_admin",
+      "menu": ["默认选项卡|图层特性"],
+      "commands": ["AC_CMD_LAYER", "AC_CMD_LINETYPE", "AC_CMD_COLOR"],
+      "api": ["AcadLayers::Add"],
+      "file_formats": ["DWG"],
+      "workflow_refs": ["wf_acwf2_headless_dxf"],
+      "notes": "标准层OUTLINE/DIM/HIDDEN/CENTER/HATCH/TITLE_BLOCK；CENTER线型color1 [高]"
+    },
+    {
+      "id": "autocad_dimensions",
+      "name": "标注 (Dimensions)",
+      "category": "drafting",
+      "menu": ["注释|线性", "注释|公差"],
+      "commands": ["AC_CMD_DIMLINEAR", "AC_CMD_DIMBASELINE", "AC_CMD_DIMCONTINUE", "AC_CMD_DIMSTYLE", "AC_CMD_TOLERANCE"],
+      "api": ["AcadModelSpace::AddDimLinear"],
+      "file_formats": ["DWG"],
+      "workflow_refs": ["wf_acwf3_gb_drawing"],
+      "notes": "GD&T形位公差；检查文字-尺寸重叠 [中]"
+    },
+    {
+      "id": "autocad_text",
+      "name": "文字与注释 (Text/Annotate)",
+      "category": "drafting",
+      "menu": ["注释|单行文字", "注释|多行文字"],
+      "commands": ["AC_CMD_TEXT", "AC_CMD_MTEXT", "AC_CMD_STYLE"],
+      "api": ["AcadModelSpace::AddText", "AcadModelSpace::AddMText"],
+      "file_formats": ["DWG"],
+      "workflow_refs": ["wf_acwf3_gb_drawing"],
+      "notes": "DIMENSION层，默认字高3.5mm，国标仿宋 [高]"
+    },
+    {
+      "id": "autocad_block_titleblock",
+      "name": "块与标题栏 (Block/TitleBlock)",
+      "category": "drafting",
+      "menu": ["插入|块", "绘图|块|定义属性"],
+      "commands": ["AC_CMD_BLOCK", "AC_CMD_INSERT", "AC_CMD_ATTDEF", "AC_CMD_DATAEXTRACTION"],
+      "api": ["AcadBlocks::Add"],
+      "file_formats": ["DWG"],
+      "workflow_refs": ["wf_acwf3_gb_drawing"],
+      "notes": "TITLE_BLOCK层；DATAEXTRACTION取坐标/块属性用于逆向 [中]"
+    },
+    {
+      "id": "autocad_hatch",
+      "name": "剖面线填充 (Hatch)",
+      "category": "drafting",
+      "menu": ["绘图|图案填充"],
+      "commands": ["AC_CMD_HATCH"],
+      "api": ["AcadModelSpace::AddHatch"],
+      "file_formats": ["DWG"],
+      "workflow_refs": [],
+      "notes": "HATCH层；documented-not-probed [低]"
+    },
+    {
+      "id": "autocad_layout_plot",
+      "name": "布局与出图 (Layout/Plot)",
+      "category": "data_exchange",
+      "menu": ["输出|打印", "文件|另存为DXF"],
+      "commands": ["AC_CMD_VIEWPORT", "AC_CMD_PLOT", "AC_CMD_DXFOUT", "AC_CMD_LIST"],
+      "api": ["AcadPlot"],
+      "file_formats": ["DWG", "DXF", "PDF"],
+      "workflow_refs": ["wf_acwf3_gb_drawing", "wf_acwf5_downstream"],
+      "notes": "视口边界检查；DXFOUT导出审计 [中]"
+    },
+    {
+      "id": "autocad_automation",
+      "name": "自动化 (Automation)",
+      "category": "config_admin",
+      "menu": ["命令行", "脚本"],
+      "commands": ["AC_CMD_AUTOLISP", "AC_CMD_SCRIPT", "AC_COM_SendCommand", "AC_CMD_ACCORECONSOLE", "AC_CMD_EZDXF"],
+      "api": ["AcadDocument::SendCommand", "accoreconsole.exe /i /s", "ezdxf"],
+      "file_formats": ["LSP", "SCR", "DXF"],
+      "workflow_refs": ["wf_acwf4_headless_batch"],
+      "notes": "COM活GUI+accoreconsole无头+ezdxf文件级三通道 [高]"
+    },
+    {
+      "id": "autocad_visualization",
+      "name": "视图校验 (Visualization)",
+      "category": "visualization",
+      "menu": ["视图"],
+      "commands": ["AC_CMD_ZOOM_EXTENTS"],
+      "api": ["AcadApplication::ZoomExtents"],
+      "file_formats": [],
+      "workflow_refs": ["wf_acwf1_dwg_reproduce"],
+      "notes": "ZOOM E 目视复核实体分布 [中]"
+    }
+  ]
+}

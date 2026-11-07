@@ -16,11 +16,18 @@ dependencies = [
     "pydantic>=2.0.0",
     "pyyaml>=6.0.0",
     "pillow>=10.0.0",
+    "opencv-python-headless>=4.9",
 ]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["virtu_omni*", "virtu_code*", "virtu_eval*", "virtu_edge*", "bridges*"]
+exclude = ["tests*", "data*", "logs*", "runs*", "work*", "models*", "skills*", "scratch*", "external*", "artifacts*", "templates*", "checkpoints*", "gpu_handoff*", "harness2_src*"]
 
 [tool.pytest.ini_options]
 pythonpath = ["."]
 testpaths = ["tests"]
+addopts = "-s --basetemp=.pytest_tmp_fix -o tmp_path_retention_policy=none"
 filterwarnings = [
     "ignore::DeprecationWarning",
     "ignore::UserWarning",

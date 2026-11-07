@@ -1,0 +1,17 @@
+# Virtu-Omni-8B —— Qwen3-8B 基座 + 4 个 r=32 LoRA 烘焙合并产物
+# GGUF Q4_0 由 scripts/hf_to_gguf_numpy.py 纯 numpy 流式转换（零 torch 依赖）。
+# 注意：不要直接用 Ollama 从 safetensors 目录导入 —— 0.35.1 走 MLX 运行时，
+# Windows 上不可用（--force 只跳过创建校验，推理仍报 MLX runtime not available）。
+# 导入命令（Windows 需绕过本机透明代理）：
+#   NO_PROXY=127.0.0.1,localhost no_proxy=127.0.0.1,localhost \
+#   HTTP_PROXY= HTTPS_PROXY= http_proxy= https_proxy= ALL_PROXY= all_proxy= \
+#   ollama create virtu-omni-8b -f scripts/Modelfile.virtu-omni
+FROM D:/Virtu模型/checkpoints/virtu-q4_0.gguf
+
+PARAMETER num_ctx 4096
+# Qwen3 base + 对话 LoRA 在 temperature>=0.7 会语义断裂，实测 0.3 正常
+PARAMETER temperature 0.3
+PARAMETER top_p 0.9
+PARAMETER stop "<|im_end|>"
+PARAMETER stop "<|im_start|>"
+PARAMETER stop "<|endoftext|>"

@@ -1,0 +1,39 @@
+{
+  "run_id": "fe53bb7e1dc1e40e",
+  "captured_at": "2026-11-06T01:08:23",
+  "artifacts": {
+    "virtu-comprehensive:latest": {
+      "model_id": "virtu-comprehensive:latest",
+      "present": true,
+      "manifest_sha256": "aba2c916368bd16bc4fa26facbb05e74c5a9baebc5e3d1c37ba0780f8fd16d4e",
+      "model": "sha256:c3b78c7735c9ac1f0b16cbbb5babc809f2c99e71c9a76043d39dbae8ce448749",
+      "model_bytes": 4614297600,
+      "template": "sha256:bdae0a81055c0aa249dc79b34ddfb6fa526b8a41a5198b08acd8d1272c4e5205",
+      "template_bytes": 1434,
+      "system": "sha256:6f29675499aa0cdc33c6af3825f0fb2b1745f145bc77c9b65687daa018f793c5",
+      "system_bytes": 879,
+      "weights_bytes": 4614297600
+    }
+  },
+  "cases": {
+    "toolrouting.jsonl": "6c4aa5beb5ba207ba95ced419e24ea3ea752342b0f326eb0be4b5ed693828c69"
+  },
+  "ruler": {
+    "virtu_eval/graders.py": "5024fe5cfc85b6ac1792256fdc22b5ecfa66e3bf72698c48feea8399cfd7224c",
+    "virtu_eval/runner.py": "1f2e66a16da88d787390c46f8b9388456c6e132a7f5688659184d475593a5354",
+    "virtu_eval/arms.py": "7851900d4e6df3df879ddc880e50827e11fb8332d5ce4cfb300d30c6042253ef"
+  },
+  "extra": {
+    "arm_a": "no response_format",
+    "arm_b": "ollama format=derived oneOf",
+    "response_format_sha256": "340edeb6369b2a457a7f9cc81147468c0949175e245c8056716cd5155c11c4ae",
+    "response_format_branches": 10,
+    "sampling": {
+      "temperature": 0.0,
+      "top_p": 0.95,
+      "seed": 1234,
+      "num_ctx": 8192,
+      "max_tokens": "per-case (256/448/704)"
+    }
+  }
+}

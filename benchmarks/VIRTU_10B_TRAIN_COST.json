@@ -1,0 +1,301 @@
+{
+  "generated_at": "2026-11-06 00:56:51",
+  "question": "Virtu-10B 阶段 B（L2 能力激活）完整训练成本",
+  "scope": "阶段 A 结构扩展 ¥0（本机 65.6s）；阶段 C 上线 ¥0（本机纯 numpy）。仅阶段 B 产生云算力费用。",
+  "inputs_measured": {
+    "anchor_receipt": "checkpoints/virtu_toolcall_lora/training_receipt.json",
+    "anchor_gpu": "NVIDIA L40S",
+    "anchor_config": "NVIDIA L40S / lora r32 / grad_ckpt=True / sdpa",
+    "anchor_tokens_2ep": 3140926,
+    "anchor_runtime_s": 3514.5878,
+    "anchor_tok_per_s": 893.68,
+    "corpus_full_rows": 23178,
+    "corpus_full_tokens_per_epoch": 60272726,
+    "corpus_full_loss_tokens": 8953929,
+    "model_params_total": 10120199680,
+    "model_params_frozen": 8190735360,
+    "model_params_new": 1929464320,
+    "prices": {
+      "Tesla V100-SXM2-32GB": {
+        "cny_per_h": 1.98,
+        "tflops": 125,
+        "vram_gb": 32,
+        "source": "2026-11-01 用户截图 (memory/2026-11-01.md:188)"
+      },
+      "NVIDIA L40S-48GB": {
+        "cny_per_h": 4.5,
+        "tflops": 181,
+        "vram_gb": 48,
+        "source": "CLOUD_TRAINING_HARDENING_PLAN_2026-11-01.md:22"
+      },
+      "NVIDIA A800-80GB": {
+        "cny_per_h": 7.2,
+        "tflops": 312,
+        "vram_gb": 80,
+        "source": "2026-10-30 用户截图 (memory/2026-10-30.md:202)"
+      }
+    }
+  },
+  "memory_analysis": {
+    "full_adamw_fp32": {
+      "label": "全参训 1.93B + AdamW(fp32)",
+      "mem": {
+        "frozen_weights": 15.26,
+        "trainable_weights": 3.59,
+        "grad": 7.19,
+        "optimizer_state": 14.38,
+        "fp32_master": 7.19,
+        "state_total": 47.6
+      },
+      "trainable": 1929464320
+    },
+    "full_adamw_8bit": {
+      "label": "全参训 1.93B + AdamW(8bit)",
+      "mem": {
+        "frozen_weights": 15.26,
+        "trainable_weights": 3.59,
+        "grad": 3.59,
+        "optimizer_state": 1.8,
+        "fp32_master": 0.0,
+        "state_total": 24.24
+      },
+      "trainable": 1929464320
+    },
+    "lora_r64_new_layers": {
+      "label": "仅新增层 LoRA r=64 (约 0.11B 可训)",
+      "mem": {
+        "frozen_weights": 15.26,
+        "trainable_weights": 0.2,
+        "grad": 0.2,
+        "optimizer_state": 0.2,
+        "fp32_master": 0.0,
+        "state_total": 15.87
+      },
+      "trainable": 110000000
+    }
+  },
+  "memory_verdict": {
+    "full_adamw_fp32": "47.60 GiB 状态 + 激活 => L40S 48GB 装不下，需 A800 80GB 或改 8bit 优化器",
+    "full_adamw_8bit": "24.24 GiB 状态 => L40S 48GB 可行",
+    "lora_r64_new_layers": "15.87 GiB 状态 => V100 32GB 可行，单价最低",
+    "correction_to_plan": "上一版方案写 L40S 48GB 全参训新增层，未注明必须 8bit AdamW，此处修正"
+  },
+  "flops_model": {
+    "anchor_GFLOPs_per_token": 49.14,
+    "ours_GFLOPs_per_token": 31.82,
+    "ratio_ours_over_anchor": 0.647,
+    "note": "冻结层在前 => 反向只需过新增 10 层，每 token 计算量低于 8B 全层 LoRA"
+  },
+  "throughput_projection": {
+    "tok_per_s": {
+      "conservative": 690.2,
+      "baseline": 1104.3,
+      "optimistic": 1656.4
+    },
+    "MFU_assumed": 0.4,
+    "efficiency_factors": {
+      "conservative": 0.5,
+      "baseline": 0.8,
+      "optimistic": 1.2
+    }
+  },
+  "gpu_hours_scale_vs_L40S": {
+    "Tesla V100-SXM2-32GB": 1.931,
+    "NVIDIA L40S-48GB": 1.0,
+    "NVIDIA A800-80GB": 0.58
+  },
+  "gpu_feasibility": {
+    "Tesla V100-SXM2-32GB": "仅 lora_r64_new_layers 可行 (15.87GiB)，全参档仅供价格参照",
+    "NVIDIA L40S-48GB": "full_adamw_8bit 可行；full_adamw_fp32 装不下",
+    "NVIDIA A800-80GB": "三种配置全部可行"
+  },
+  "unit_cost_cny_per_M_tokens": {
+    "Tesla V100-SXM2-32GB": {
+      "conservative": 1.54,
+      "baseline": 0.96,
+      "optimistic": 0.64
+    },
+    "NVIDIA L40S-48GB": {
+      "conservative": 1.81,
+      "baseline": 1.13,
+      "optimistic": 0.75
+    },
+    "NVIDIA A800-80GB": {
+      "conservative": 1.68,
+      "baseline": 1.05,
+      "optimistic": 0.7
+    }
+  },
+  "scenarios": {
+    "A_试点_6.21M": {
+      "Tesla V100-SXM2-32GB": {
+        "hours_from_measured_anchor": 3.016,
+        "cost_from_measured_anchor": 5.97,
+        "hours_from_flops_MFU40": 1.098,
+        "cost_from_flops_MFU40": 2.17
+      },
+      "NVIDIA L40S-48GB": {
+        "hours_from_measured_anchor": 1.562,
+        "cost_from_measured_anchor": 7.03,
+        "hours_from_flops_MFU40": 0.758,
+        "cost_from_flops_MFU40": 3.41
+      },
+      "NVIDIA A800-80GB": {
+        "hours_from_measured_anchor": 0.906,
+        "cost_from_measured_anchor": 6.52,
+        "hours_from_flops_MFU40": 0.44,
+        "cost_from_flops_MFU40": 3.17
+      }
+    },
+    "B_推荐_12.42M": {
+      "Tesla V100-SXM2-32GB": {
+        "hours_from_measured_anchor": 6.032,
+        "cost_from_measured_anchor": 11.94,
+        "hours_from_flops_MFU40": 2.195,
+        "cost_from_flops_MFU40": 4.35
+      },
+      "NVIDIA L40S-48GB": {
+        "hours_from_measured_anchor": 3.124,
+        "cost_from_measured_anchor": 14.06,
+        "hours_from_flops_MFU40": 1.516,
+        "cost_from_flops_MFU40": 6.82
+      },
+      "NVIDIA A800-80GB": {
+        "hours_from_measured_anchor": 1.812,
+        "cost_from_measured_anchor": 13.05,
+        "hours_from_flops_MFU40": 0.88,
+        "cost_from_flops_MFU40": 6.33
+      }
+    },
+    "C_全量_120.55M": {
+      "Tesla V100-SXM2-32GB": {
+        "hours_from_measured_anchor": 58.542,
+        "cost_from_measured_anchor": 115.91,
+        "hours_from_flops_MFU40": 21.308,
+        "cost_from_flops_MFU40": 42.19
+      },
+      "NVIDIA L40S-48GB": {
+        "hours_from_measured_anchor": 30.322,
+        "cost_from_measured_anchor": 136.45,
+        "hours_from_flops_MFU40": 14.715,
+        "cost_from_flops_MFU40": 66.22
+      },
+      "NVIDIA A800-80GB": {
+        "hours_from_measured_anchor": 17.591,
+        "cost_from_measured_anchor": 126.65,
+        "hours_from_flops_MFU40": 8.537,
+        "cost_from_flops_MFU40": 61.47
+      }
+    }
+  },
+  "corpora": {
+    "A_试点_6.21M": {
+      "tokens": 6209854,
+      "basis": "measured(tok) / asserted(epochs)",
+      "source": "virtu_fix_v1 5991 条, 2048 口径"
+    },
+    "B_推荐_12.42M": {
+      "tokens": 12419708,
+      "basis": "asserted (v3 7216 条 + toolcall 通道, 同量级外推)",
+      "source": "data/train/virtu_v3 + toolcall_optimal"
+    },
+    "C_全量_120.55M": {
+      "tokens": 120545452,
+      "basis": "measured(tok) / asserted(epochs); 含 52M tools-schema 噪声",
+      "source": "data/validation/train_cost_analysis.json"
+    }
+  },
+  "full_ledger_recommended": {
+    "config": "档 B 12.42M tok / L40S-48GB / baseline 吞吐 / 8bit AdamW",
+    "stages": [
+      {
+        "stage": "S0 语料构建/去重/三闸",
+        "cny": [
+          0,
+          0
+        ],
+        "basis": "measured",
+        "note": "本地，virtu_v3 / virtu_fix_v1 已生成"
+      },
+      {
+        "stage": "S1 环境准备 + 基座就位",
+        "cny": [
+          0,
+          9.0
+        ],
+        "basis": "asserted",
+        "note": "0~2h 机时；平台已预置 Qwen3-8B 则 0"
+      },
+      {
+        "stage": "S2 preflight + 20 步 smoke",
+        "cny": [
+          0.5,
+          1.0
+        ],
+        "basis": "asserted",
+        "note": "约 10~15 min"
+      },
+      {
+        "stage": "S3 主训练 2 epoch (12.42M tok)",
+        "cny": [
+          9.84,
+          22.49
+        ],
+        "basis": "design (实测锚点外推)",
+        "note": "3.12 h @ ¥4.50/h，区间覆盖吞吐不确定"
+      },
+      {
+        "stage": "S4 条件补强 / 失败重试 (最多 2 轮)",
+        "cny": [
+          0,
+          9.0
+        ],
+        "basis": "asserted",
+        "note": "hardening plan S5: 0.5~1h/轮；不过闸才发生"
+      },
+      {
+        "stage": "S5 产物回传 + 数据盘/存储",
+        "cny": [
+          0,
+          5.0
+        ],
+        "basis": "asserted",
+        "note": "新增层权重 3.86GB(bf16) + 50GB 数据盘按天"
+      },
+      {
+        "stage": "S6 本地合并 / GGUF / Ollama 注册",
+        "cny": [
+          0,
+          0
+        ],
+        "basis": "measured",
+        "note": "纯 numpy，阶段 A 已验证约 1~3 min"
+      },
+      {
+        "stage": "S7 本地 A/B 评测 (300 条 × 2 臂)",
+        "cny": [
+          0,
+          0
+        ],
+        "basis": "measured",
+        "note": "¥0 但耗时：10B 8.41 tok/s × 512 tok ≈ 61 s/条 → 约 10.2 h 本机"
+      }
+    ],
+    "total_cny_low": 10.34,
+    "total_cny_high": 46.49,
+    "total_cny_budget_cap": 60,
+    "wall_clock": {
+      "gpu_hours": 6.6,
+      "local_eval_hours": 10.2,
+      "note": "GPU 机时 + 环境/补强；本地评测并行不占云机时"
+    }
+  },
+  "not_included": [
+    "从头预训练一个真 10B (200B~1T token)：项目 VIRTU_REAL_MODEL_PLAN 估数十万~数百万 ¥，与本方案不是同一件事",
+    "本机 6GB 显存无法完成 1.93B 全参训练，未计入任何本机训练成本",
+    "人工标注/语料扩充：当前语料不足以稳妥激活 1.93B 全参，若需扩 10× 语料，成本按 ¥/M token 线性上浮",
+    "实际云账单：仓库内无任何账单/发票文件，以上全部为预算估算，不是已发生费用"
+  ],
+  "basis_warning": "所有 cny 数值均为 design/asserted 估算；measured 的只有：历史训练耗时/token、语料 token 数、模型参数量、云单价截图。真实成本须以跑完后的云账单为准。",
+  "run_id": "d3d20d38033e2207"
+}

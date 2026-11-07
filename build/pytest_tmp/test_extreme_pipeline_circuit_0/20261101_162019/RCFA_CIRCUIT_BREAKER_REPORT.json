@@ -1,0 +1,13 @@
+{
+  "incident_timestamp": "20261101_162019",
+  "failed_stage": "drafting",
+  "attempts_exhausted": 1,
+  "max_attempts": 1,
+  "stagnation_detected": false,
+  "root_cause_trace": "绘图几何逻辑矛盾：内孔径 (50.0mm) >= 外径 (10.0mm)",
+  "detailed_traceback": "Traceback (most recent call last):\n  File \"D:\\Virtu模型\\virtu_omni\\engine\\extreme_cadcam_pipeline.py\", line 384, in run_full_lifecycle\n    res = stage_fn(spec, attempt)\n          ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"D:\\Virtu模型\\virtu_omni\\engine\\extreme_cadcam_pipeline.py\", line 371, in <lambda>\n    (\"drafting\", lambda s, a: self.execute_drafting_stage(s, out_dir, attempt=a)),\n                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"D:\\Virtu模型\\virtu_omni\\engine\\extreme_cadcam_pipeline.py\", line 70, in execute_drafting_stage\n    raise ValueError(f\"绘图几何逻辑矛盾：内孔径 ({d_inner}mm) >= 外径 ({d_outer}mm)\")\nValueError: 绘图几何逻辑矛盾：内孔径 (50.0mm) >= 外径 (10.0mm)\n",
+  "remedy_recommendations": [
+    "检查图纸尺寸约束：确认基准外径与内孔比例是否合法，确保实体壁厚 > 3mm。"
+  ],
+  "action_taken": "CIRCUIT_BREAKER_TRIGGERED: Rolled back state and aborted pipeline cleanly."
+}

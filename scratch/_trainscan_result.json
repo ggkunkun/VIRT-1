@@ -1,0 +1,1177 @@
+[
+ {
+  "path": "cloud_train_pack/run_13b_evolution_train.sh",
+  "tracked": false,
+  "git": "",
+  "mtime": "2026-11-06",
+  "lines": 85,
+  "nrefs": 0,
+  "refs": []
+ },
+ {
+  "path": "cloud_train_pack/train_safety_cloud.py",
+  "tracked": false,
+  "git": "",
+  "mtime": "2026-11-05",
+  "lines": 298,
+  "nrefs": 0,
+  "refs": []
+ },
+ {
+  "path": "scripts/_launch_bridge_sft.py",
+  "tracked": false,
+  "git": "??",
+  "mtime": "2026-11-02",
+  "lines": 7,
+  "nrefs": 0,
+  "refs": []
+ },
+ {
+  "path": "scripts/convert_lora_safetensors_to_gguf_numpy.py",
+  "tracked": false,
+  "git": "??",
+  "mtime": "2026-11-01",
+  "lines": 231,
+  "nrefs": 0,
+  "refs": []
+ },
+ {
+  "path": "scripts/fetch_master_training_results.py",
+  "tracked": false,
+  "git": "??",
+  "mtime": "2026-10-31",
+  "lines": 93,
+  "nrefs": 0,
+  "refs": []
+ },
+ {
+  "path": "scripts/generate_cad_cam_sft_dataset.py",
+  "tracked": true,
+  "git": "",
+  "mtime": "2026-10-28",
+  "lines": 189,
+  "nrefs": 0,
+  "refs": []
+ },
+ {
+  "path": "scripts/get_training_status.py",
+  "tracked": true,
+  "git": "M",
+  "mtime": "2026-11-01",
+  "lines": 37,
+  "nrefs": 0,
+  "refs": []
+ },
+ {
+  "path": "scripts/inspect_remote_train_script.py",
+  "tracked": false,
+  "git": "??",
+  "mtime": "2026-11-01",
+  "lines": 18,
+  "nrefs": 0,
+  "refs": []
+ },
+ {
+  "path": "scripts/inspect_remote_train_setup.py",
+  "tracked": false,
+  "git": "??",
+  "mtime": "2026-11-01",
+  "lines": 31,
+  "nrefs": 0,
+  "refs": []
+ },
+ {
+  "path": "scripts/monitor_remote_training.py",
+  "tracked": false,
+  "git": "??",
+  "mtime": "2026-10-31",
+  "lines": 46,
+  "nrefs": 0,
+  "refs": []
+ },
+ {
+  "path": "scripts/monitor_ug_training_and_fetch.py",
+  "tracked": false,
+  "git": "??",
+  "mtime": "2026-10-29",
+  "lines": 101,
+  "nrefs": 0,
+  "refs": []
+ },
+ {
+  "path": "scripts/prepare_master_train_data.py",
+  "tracked": false,
+  "git": "??",
+  "mtime": "2026-10-29",
+  "lines": 46,
+  "nrefs": 0,
+  "refs": []
+ },
+ {
+  "path": "scripts/pull_gpu_lora.py",
+  "tracked": false,
+  "git": "??",
+  "mtime": "2026-10-31",
+  "lines": 157,
+  "nrefs": 0,
+  "refs": []
+ },
+ {
+  "path": "scripts/run_code_pretrain.py",
+  "tracked": true,
+  "git": "",
+  "mtime": "2026-10-28",
+  "lines": 60,
+  "nrefs": 0,
+  "refs": []
+ },
+ {
+  "path": "scripts/start_l40s_training.py",
+  "tracked": true,
+  "git": "M",
+  "mtime": "2026-10-29",
+  "lines": 45,
+  "nrefs": 0,
+  "refs": []
+ },
+ {
+  "path": "scripts/sync_and_supervise_wish_training.py",
+  "tracked": true,
+  "git": "M",
+  "mtime": "2026-10-29",
+  "lines": 134,
+  "nrefs": 0,
+  "refs": []
+ },
+ {
+  "path": "scripts/test_trained_model.py",
+  "tracked": true,
+  "git": "",
+  "mtime": "2026-10-28",
+  "lines": 64,
+  "nrefs": 0,
+  "refs": []
+ },
+ {
+  "path": "scripts/train_six_software_cloud.py",
+  "tracked": false,
+  "git": "??",
+  "mtime": "2026-11-04",
+  "lines": 418,
+  "nrefs": 0,
+  "refs": []
+ },
+ {
+  "path": "scripts/train_world_model_final.py",
+  "tracked": false,
+  "git": "??",
+  "mtime": "2026-11-03",
+  "lines": 420,
+  "nrefs": 0,
+  "refs": []
+ },
+ {
+  "path": "_eval_sft_boundary.py",
+  "tracked": false,
+  "git": "??",
+  "mtime": "2026-11-02",
+  "lines": 39,
+  "nrefs": 1,
+  "refs": [
+   "scripts/_sft_finalize.sh"
+  ]
+ },
+ {
+  "path": "cloud_train_pack/run_evolution_train.sh",
+  "tracked": false,
+  "git": "",
+  "mtime": "2026-11-05",
+  "lines": 104,
+  "nrefs": 1,
+  "refs": [
+   "scripts/deploy_to_compshare.py"
+  ]
+ },
+ {
+  "path": "cloud_train_pack/train_cloud_virtu_13b.py",
+  "tracked": false,
+  "git": "",
+  "mtime": "2026-11-06",
+  "lines": 641,
+  "nrefs": 1,
+  "refs": [
+   "cloud_train_pack/run_13b_evolution_train.sh"
+  ]
+ },
+ {
+  "path": "cloud_train_pack/train_sft_local.py",
+  "tracked": false,
+  "git": "",
+  "mtime": "2026-11-05",
+  "lines": 204,
+  "nrefs": 1,
+  "refs": [
+   "VIRTU_MODEL_STRENGTHEN_2026-11-05.md"
+  ]
+ },
+ {
+  "path": "cloud_train_pack/train_virtu_evolution.py",
+  "tracked": false,
+  "git": "",
+  "mtime": "2026-11-04",
+  "lines": 3061,
+  "nrefs": 1,
+  "refs": [
+   "scripts/train_virtu_evolution.py"
+  ]
+ },
+ {
+  "path": "scripts/_post_train_v2.py",
+  "tracked": false,
+  "git": "??",
+  "mtime": "2026-11-03",
+  "lines": 190,
+  "nrefs": 1,
+  "refs": [
+   "tests/test_no_hardcoded_credentials.py"
+  ]
+ },
+ {
+  "path": "scripts/_post_train_v3.py",
+  "tracked": false,
+  "git": "??",
+  "mtime": "2026-11-03",
+  "lines": 190,
+  "nrefs": 1,
+  "refs": [
+   "tests/test_no_hardcoded_credentials.py"
+  ]
+ },
+ {
+  "path": "scripts/_post_train_worldmodel.py",
+  "tracked": false,
+  "git": "??",
+  "mtime": "2026-11-03",
+  "lines": 196,
+  "nrefs": 1,
+  "refs": [
+   "tests/test_no_hardcoded_credentials.py"
+  ]
+ },
+ {
+  "path": "scripts/_train_done_pull_deploy.py",
+  "tracked": false,
+  "git": "??",
+  "mtime": "2026-11-03",
+  "lines": 117,
+  "nrefs": 1,
+  "refs": [
+   "tests/test_no_hardcoded_credentials.py"
+  ]
+ },
+ {
+  "path": "scripts/_verify_train.py",
+  "tracked": false,
+  "git": "??",
+  "mtime": "2026-11-03",
+  "lines": 12,
+  "nrefs": 1,
+  "refs": [
+   "tests/test_no_hardcoded_credentials.py"
+  ]
+ },
+ {
+  "path": "scripts/analyze_train_cost.py",
+  "tracked": false,
+  "git": "??",
+  "mtime": "2026-10-30",
+  "lines": 191,
+  "nrefs": 1,
+  "refs": [
+   "TRAIN_ACCELERATION.md"
+  ]
+ },
+ {
+  "path": "scripts/build_agentic_sft.py",
+  "tracked": false,
+  "git": "??",
+  "mtime": "2026-11-03",
+  "lines": 343,
+  "nrefs": 1,
+  "refs": [
+   "scripts/train_world_model_final.py"
+  ]
+ },
+ {
+  "path": "scripts/check_real_train_log.py",
+  "tracked": false,
+  "git": "??",
+  "mtime": "2026-11-05",
+  "lines": 35,
+  "nrefs": 1,
+  "refs": [
+   "tests/test_no_hardcoded_credentials.py"
+  ]
+ },
+ {
+  "path": "scripts/check_running_train.py",
+  "tracked": false,
+  "git": "??",
+  "mtime": "2026-11-05",
+  "lines": 35,
+  "nrefs": 1,
+  "refs": [
+   "tests/test_no_hardcoded_credentials.py"
+  ]
+ },
+ {
+  "path": "scripts/check_train_fds.py",
+  "tracked": false,
+  "git": "??",
+  "mtime": "2026-11-05",
+  "lines": 35,
+  "nrefs": 1,
+  "refs": [
+   "tests/test_no_hardcoded_credentials.py"
+  ]
+ },
+ {
+  "path": "scripts/check_train_progress.py",
+  "tracked": false,
+  "git": "??",
+  "mtime": "2026-11-05",
+  "lines": 35,
+  "nrefs": 1,
+  "refs": [
+   "tests/test_no_hardcoded_credentials.py"
+  ]
+ },
+ {
+  "path": "scripts/deploy_and_train_remote.py",
+  "tracked": true,
+  "git": "M",
+  "mtime": "2026-10-29",
+  "lines": 77,
+  "nrefs": 1,
+  "refs": [
+   "CLOUD_FINETUNE_PLAN_2026-11-01.md"
+  ]
+ },
+ {
+  "path": "scripts/deploy_comprehensive_training.py",
+  "tracked": true,
+  "git": "M",
+  "mtime": "2026-10-29",
+  "lines": 85,
+  "nrefs": 1,
+  "refs": [
+   "AGENT_TRAINING_PLAN.md"
+  ]
+ },
+ {
+  "path": "scripts/deploy_master_training.py",
+  "tracked": false,
+  "git": "??",
+  "mtime": "2026-10-31",
+  "lines": 106,
+  "nrefs": 1,
+  "refs": [
+   "benchmarks/virtu_capability_v1/AI模型系统性能力测评报告.md"
+  ]
+ },
+ {
+  "path": "scripts/deploy_omni_agent_training.py",
+  "tracked": false,
+  "git": "??",
+  "mtime": "2026-10-31",
+  "lines": 99,
+  "nrefs": 1,
+  "refs": [
+   "benchmarks/virtu_capability_v1/AI模型系统性能力测评报告.md"
+  ]
+ },
+ {
+  "path": "scripts/deploy_ug_training.py",
+  "tracked": false,
+  "git": "??",
+  "mtime": "2026-10-31",
+  "lines": 76,
+  "nrefs": 1,
+  "refs": [
+   "benchmarks/virtu_capability_v1/AI模型系统性能力测评报告.md"
+  ]
+ },
+ {
+  "path": "scripts/do_download_lora.py",
+  "tracked": false,
+  "git": "??",
+  "mtime": "2026-11-05",
+  "lines": 63,
+  "nrefs": 1,
+  "refs": [
+   "tests/test_no_hardcoded_credentials.py"
+  ]
+ },
+ {
+  "path": "scripts/estimate_10b_train_cost.py",
+  "tracked": false,
+  "git": "??",
+  "mtime": "2026-11-06",
+  "lines": 271,
+  "nrefs": 1,
+  "refs": [
+   "VIRTU_10B_UPSCALE_PLAN.md"
+  ]
+ },
+ {
+  "path": "scripts/inspect_v100_train.py",
+  "tracked": false,
+  "git": "??",
+  "mtime": "2026-11-05",
+  "lines": 40,
+  "nrefs": 1,
+  "refs": [
+   "tests/test_no_hardcoded_credentials.py"
+  ]
+ },
+ {
+  "path": "scripts/remote_train_and_download.py",
+  "tracked": false,
+  "git": "??",
+  "mtime": "2026-11-05",
+  "lines": 158,
+  "nrefs": 1,
+  "refs": [
+   "tests/test_no_hardcoded_credentials.py"
+  ]
+ },
+ {
+  "path": "scripts/train_turing_conversational_lora.py",
+  "tracked": false,
+  "git": "??",
+  "mtime": "2026-10-29",
+  "lines": 223,
+  "nrefs": 1,
+  "refs": [
+   "scripts/supervise_cloud_pipeline.py"
+  ]
+ },
+ {
+  "path": "scripts/train_virtu_evolution.py",
+  "tracked": false,
+  "git": "??",
+  "mtime": "2026-11-04",
+  "lines": 3061,
+  "nrefs": 1,
+  "refs": [
+   "cloud_train_pack/train_virtu_evolution.py"
+  ]
+ },
+ {
+  "path": "scripts/train_virtu_v2.sh",
+  "tracked": false,
+  "git": "??",
+  "mtime": "2026-11-02",
+  "lines": 40,
+  "nrefs": 1,
+  "refs": [
+   "scripts/_upload_and_launch_v2.py"
+  ]
+ },
+ {
+  "path": "scripts/train_wish_parametric_model.py",
+  "tracked": true,
+  "git": "",
+  "mtime": "2026-10-29",
+  "lines": 201,
+  "nrefs": 1,
+  "refs": [
+   "scripts/sync_and_supervise_wish_training.py"
+  ]
+ },
+ {
+  "path": "cloud_train_pack/deploy_trained_adapter.py",
+  "tracked": false,
+  "git": "",
+  "mtime": "2026-11-01",
+  "lines": 152,
+  "nrefs": 2,
+  "refs": [
+   "cloud_train_pack/local_one_click.py",
+   "cloud_train_pack/run_dpo.sh"
+  ]
+ },
+ {
+  "path": "cloud_train_pack/launch_cloud_full_train.sh",
+  "tracked": false,
+  "git": "",
+  "mtime": "2026-11-05",
+  "lines": 85,
+  "nrefs": 2,
+  "refs": [
+   "cloud_train_pack/README.md",
+   "launch_cloud_full_train.sh"
+  ]
+ },
+ {
+  "path": "cloud_train_pack/train_cloud_master.py",
+  "tracked": false,
+  "git": "",
+  "mtime": "2026-11-05",
+  "lines": 660,
+  "nrefs": 2,
+  "refs": [
+   "cloud_train_pack/README.md",
+   "scripts/deploy_and_cleanup.py"
+  ]
+ },
+ {
+  "path": "launch_cloud_full_train.sh",
+  "tracked": false,
+  "git": "??",
+  "mtime": "2026-11-04",
+  "lines": 6,
+  "nrefs": 2,
+  "refs": [
+   "cloud_train_pack/README.md",
+   "cloud_train_pack/launch_cloud_full_train.sh"
+  ]
+ },
+ {
+  "path": "scripts/_post_train_v4.py",
+  "tracked": false,
+  "git": "??",
+  "mtime": "2026-11-03",
+  "lines": 190,
+  "nrefs": 2,
+  "refs": [
+   "VIRTU_MODEL_UPLIFT_PLAN_2026-11-06.md",
+   "tests/test_no_hardcoded_credentials.py"
+  ]
+ },
+ {
+  "path": "scripts/deploy_tool_lora_to_ollama.py",
+  "tracked": false,
+  "git": "??",
+  "mtime": "2026-10-30",
+  "lines": 288,
+  "nrefs": 2,
+  "refs": [
+   "TOOLCALL_TRAINING_RUNBOOK.md",
+   "TRAIN_ACCELERATION.md"
+  ]
+ },
+ {
+  "path": "scripts/launch_physics_derivation_train.py",
+  "tracked": false,
+  "git": "??",
+  "mtime": "2026-11-04",
+  "lines": 259,
+  "nrefs": 2,
+  "refs": [
+   "benchmarks/VIRTU_PHYSICS_GRADING_2026-11-04.md",
+   "tests/test_physics_corpus_gates.py"
+  ]
+ },
+ {
+  "path": "scripts/train_ug_teacher_guided_agent.py",
+  "tracked": false,
+  "git": "??",
+  "mtime": "2026-10-29",
+  "lines": 237,
+  "nrefs": 2,
+  "refs": [
+   "scripts/deploy_ug_training.py",
+   "scripts/monitor_ug_training_and_fetch.py"
+  ]
+ },
+ {
+  "path": "scripts/build_train_final.py",
+  "tracked": false,
+  "git": "??",
+  "mtime": "2026-10-31",
+  "lines": 368,
+  "nrefs": 3,
+  "refs": [
+   "TOOLCALL_TRAINING_RUNBOOK.md",
+   "knowledge_base/six_software/training/TRAINING_CONTRACT.md",
+   "virtu_eval/holdout_check.py"
+  ]
+ },
+ {
+  "path": "scripts/train_omni_autonomous_agent.py",
+  "tracked": false,
+  "git": "??",
+  "mtime": "2026-10-29",
+  "lines": 242,
+  "nrefs": 3,
+  "refs": [
+   "scripts/deploy_omni_agent_training.py",
+   "scripts/deploy_ug_training.py",
+   "scripts/supervise_cloud_pipeline.py"
+  ]
+ },
+ {
+  "path": "_eval_sft_bridge.py",
+  "tracked": false,
+  "git": "??",
+  "mtime": "2026-11-02",
+  "lines": 44,
+  "nrefs": 4,
+  "refs": [
+   "apply_virtu_bugfixes.py",
+   "benchmarks/VIRTU_CAPABILITY_REPORT.md",
+   "benchmarks/virtu_capability_v1/AI模型系统性能力测评报告.md",
+   "cloud_bugfix_sync_20261102/_eval_sft_bridge.py"
+  ]
+ },
+ {
+  "path": "cloud_bugfix_sync_20261102/_eval_sft_bridge.py",
+  "tracked": false,
+  "git": "",
+  "mtime": "2026-11-02",
+  "lines": 81,
+  "nrefs": 4,
+  "refs": [
+   "_eval_sft_bridge.py",
+   "apply_virtu_bugfixes.py",
+   "benchmarks/VIRTU_CAPABILITY_REPORT.md",
+   "benchmarks/virtu_capability_v1/AI模型系统性能力测评报告.md"
+  ]
+ },
+ {
+  "path": "cloud_bugfix_sync_20261102/deploy_local_sft.py",
+  "tracked": false,
+  "git": "",
+  "mtime": "2026-11-02",
+  "lines": 96,
+  "nrefs": 4,
+  "refs": [
+   "CLOUD_TRAINING_HARDENING_PLAN_2026-11-01.md",
+   "apply_virtu_bugfixes.py",
+   "scripts/_train_done_pull_deploy.py",
+   "scripts/deploy_local_sft.py"
+  ]
+ },
+ {
+  "path": "cloud_train_pack/train_cloud_virtu_evolution.py",
+  "tracked": false,
+  "git": "",
+  "mtime": "2026-11-05",
+  "lines": 751,
+  "nrefs": 4,
+  "refs": [
+   "cloud_train_pack/launch_cloud_full_train.sh",
+   "cloud_train_pack/run_evolution_train.sh",
+   "cloud_train_pack/run_stage4_export.py",
+   "scripts/deploy_to_compshare.py"
+  ]
+ },
+ {
+  "path": "scripts/convert_lora_to_gguf.py",
+  "tracked": false,
+  "git": "??",
+  "mtime": "2026-11-01",
+  "lines": 549,
+  "nrefs": 4,
+  "refs": [
+   "cloud_bugfix_sync_20261102/deploy_local_sft.py",
+   "scripts/_pkg_README.md",
+   "scripts/deploy_local_sft.py",
+   "scripts/llama_cpp_tools/llama.cpp/conversion/base.py"
+  ]
+ },
+ {
+  "path": "scripts/deploy_local_sft.py",
+  "tracked": false,
+  "git": "??",
+  "mtime": "2026-11-02",
+  "lines": 340,
+  "nrefs": 4,
+  "refs": [
+   "CLOUD_TRAINING_HARDENING_PLAN_2026-11-01.md",
+   "apply_virtu_bugfixes.py",
+   "cloud_bugfix_sync_20261102/deploy_local_sft.py",
+   "scripts/_train_done_pull_deploy.py"
+  ]
+ },
+ {
+  "path": "scripts/train_master_cad_cam_2xl40s.py",
+  "tracked": false,
+  "git": "??",
+  "mtime": "2026-10-29",
+  "lines": 238,
+  "nrefs": 4,
+  "refs": [
+   "CLOUD_FINETUNE_PLAN.md",
+   "scripts/deploy_master_training.py",
+   "scripts/deploy_omni_agent_training.py",
+   "scripts/monitor_remote_training.py"
+  ]
+ },
+ {
+  "path": "cloud_train_pack/train_dpo_cloud.py",
+  "tracked": false,
+  "git": "",
+  "mtime": "2026-11-04",
+  "lines": 286,
+  "nrefs": 5,
+  "refs": [
+   "VIRTU_ANTIHALLUCINATION_EXECUTION_2026-11-04.md",
+   "VIRTU_MODEL_STRENGTHEN_2026-11-05.md",
+   "cloud_train_pack/run_dpo.sh",
+   "cloud_train_pack/run_local_dpo.sh",
+   "cloud_train_pack/train_safety_cloud.py"
+  ]
+ },
+ {
+  "path": "scripts/bootstrap_l40s_train.sh",
+  "tracked": false,
+  "git": "??",
+  "mtime": "2026-11-01",
+  "lines": 309,
+  "nrefs": 5,
+  "refs": [
+   "CLOUD_FINETUNE_PLAN_2026-11-01_v2.md",
+   "README.md",
+   "cloud_handoff/MANIFEST_ROUTE_A.json",
+   "scripts/make_cloud_bundle.py",
+   "tests/test_cloud_bundle.py"
+  ]
+ },
+ {
+  "path": "scripts/train_tool_agent.py",
+  "tracked": false,
+  "git": "??",
+  "mtime": "2026-10-29",
+  "lines": 228,
+  "nrefs": 5,
+  "refs": [
+   "AGENT_TRAINING_PLAN.md",
+   "gpu_handoff/train_virtu_toolcall.py",
+   "scripts/deploy_and_sync_agent.py",
+   "scripts/supervise_cloud_pipeline.py",
+   "scripts/train_virtu_toolcall.py"
+  ]
+ },
+ {
+  "path": "scripts/build_train_v3.py",
+  "tracked": false,
+  "git": "??",
+  "mtime": "2026-11-01",
+  "lines": 550,
+  "nrefs": 6,
+  "refs": [
+   "CLOUD_TRAINING_HARDENING_PLAN_2026-11-01.md",
+   "cloud_handoff/MANIFEST_ROUTE_A.json",
+   "cloud_handoff/MANIFEST_ROUTE_C.json",
+   "scripts/bootstrap_l40s_train.sh",
+   "scripts/bootstrap_v100_train.sh",
+   "scripts/make_cloud_bundle.py"
+  ]
+ },
+ {
+  "path": "scripts/build_worldmodel_sft.py",
+  "tracked": false,
+  "git": "??",
+  "mtime": "2026-11-05",
+  "lines": 368,
+  "nrefs": 6,
+  "refs": [
+   "benchmarks/VIRTU_PHYSICS_GRADING_2026-11-04.md",
+   "scripts/build_physics_acceptance_cases.py",
+   "scripts/build_worldmodel_v2.py",
+   "scripts/distill_local_solver.py",
+   "scripts/eval_worldmodel.py",
+   "scripts/gen_autocad_distill.py"
+  ]
+ },
+ {
+  "path": "scripts/run_train.py",
+  "tracked": true,
+  "git": "",
+  "mtime": "2026-10-28",
+  "lines": 72,
+  "nrefs": 6,
+  "refs": [
+   "AGENT_TRAINING_PLAN.md",
+   "DEPLOYMENT_GUIDE.md",
+   "README.md",
+   "cloud_train_pack/train_safety_cloud.py",
+   "scripts/check_train_progress.py",
+   "scripts/inspect_remote_train_setup.py"
+  ]
+ },
+ {
+  "path": "damodel_cad_cam_tuning/train_cad_cam_l40s.py",
+  "tracked": true,
+  "git": "",
+  "mtime": "2026-10-28",
+  "lines": 183,
+  "nrefs": 7,
+  "refs": [
+   "AGENT_TRAINING_PLAN.md",
+   "VIRTU_TRAINING_RUNBOOK.md",
+   "benchmarks/virtu_capability_v1/云端训练实施全案.md",
+   "scripts/clean_and_restart_l40s.py",
+   "scripts/deploy_and_train_remote.py",
+   "scripts/deploy_comprehensive_training.py",
+   "scripts/start_l40s_training.py"
+  ]
+ },
+ {
+  "path": "engineering_capability_train/train_dpo.py",
+  "tracked": false,
+  "git": "",
+  "mtime": "2026-11-04",
+  "lines": 250,
+  "nrefs": 7,
+  "refs": [
+   "engineering_capability_train/03_merge_local.py",
+   "engineering_capability_train/README.md",
+   "engineering_capability_train/artifacts/VERIFICATION_REPORT.json",
+   "engineering_capability_train/artifacts/bundle_manifest.json",
+   "engineering_capability_train/artifacts/pipeline_receipt.json",
+   "engineering_capability_train/cloud/launch.sh",
+   "engineering_capability_train/run_pipeline.py"
+  ]
+ },
+ {
+  "path": "gpu_handoff/gpu_train_pipeline.py",
+  "tracked": false,
+  "git": "",
+  "mtime": "2026-10-30",
+  "lines": 437,
+  "nrefs": 7,
+  "refs": [
+   "CLOUD_SERVER_TRAINING_PLAN_2026-11-01.md",
+   "TOOLCALL_TRAINING_RUNBOOK.md",
+   "TRAIN_ACCELERATION.md",
+   "gpu_handoff/handoff_manifest.json",
+   "scripts/gpu_bootstrap.py",
+   "scripts/gpu_train_pipeline.py",
+   "scripts/inspect_remote_pipeline.py"
+  ]
+ },
+ {
+  "path": "scripts/gpu_train_pipeline.py",
+  "tracked": false,
+  "git": "??",
+  "mtime": "2026-10-30",
+  "lines": 437,
+  "nrefs": 7,
+  "refs": [
+   "CLOUD_SERVER_TRAINING_PLAN_2026-11-01.md",
+   "TOOLCALL_TRAINING_RUNBOOK.md",
+   "TRAIN_ACCELERATION.md",
+   "gpu_handoff/gpu_train_pipeline.py",
+   "gpu_handoff/handoff_manifest.json",
+   "scripts/gpu_bootstrap.py",
+   "scripts/inspect_remote_pipeline.py"
+  ]
+ },
+ {
+  "path": "engineering_capability_train/train_sft.py",
+  "tracked": false,
+  "git": "",
+  "mtime": "2026-11-04",
+  "lines": 359,
+  "nrefs": 8,
+  "refs": [
+   "engineering_capability_train/README.md",
+   "engineering_capability_train/artifacts/VERIFICATION_REPORT.json",
+   "engineering_capability_train/artifacts/bundle_manifest.json",
+   "engineering_capability_train/artifacts/pipeline_receipt.json",
+   "engineering_capability_train/cloud/launch.sh",
+   "engineering_capability_train/run_pipeline.py",
+   "engineering_capability_train/train_dpo.py",
+   "engineering_capability_train/validate_corpus.py"
+  ]
+ },
+ {
+  "path": "scripts/bootstrap_v100_train.sh",
+  "tracked": false,
+  "git": "??",
+  "mtime": "2026-11-01",
+  "lines": 290,
+  "nrefs": 8,
+  "refs": [
+   "CLOUD_FINETUNE_PLAN_2026-11-01_v2.md",
+   "CLOUD_TRAINING_HARDENING_PLAN_2026-11-01.md",
+   "README.md",
+   "cloud_handoff/MANIFEST_ROUTE_C.json",
+   "scripts/bootstrap_l40s_train.sh",
+   "scripts/launch_physics_derivation_train.py",
+   "scripts/make_cloud_bundle.py",
+   "tests/test_cloud_bundle.py"
+  ]
+ },
+ {
+  "path": "scripts/train_virtu_l40s.py",
+  "tracked": false,
+  "git": "??",
+  "mtime": "2026-11-01",
+  "lines": 451,
+  "nrefs": 8,
+  "refs": [
+   "CLOUD_FINETUNE_PLAN_2026-11-01_v2.md",
+   "CLOUD_SERVER_TRAINING_PLAN_2026-11-01.md",
+   "VIRTU_10B_UPSCALE_PLAN.md",
+   "cloud_handoff/MANIFEST_ROUTE_A.json",
+   "data/train/virtu_fix_v1/virtu_fix_text_sft_v1.manifest.json",
+   "scripts/bootstrap_l40s_train.sh",
+   "scripts/make_cloud_bundle.py",
+   "tests/test_cloud_bundle.py"
+  ]
+ },
+ {
+  "path": "scripts/build_capability_sft.py",
+  "tracked": false,
+  "git": "??",
+  "mtime": "2026-11-01",
+  "lines": 867,
+  "nrefs": 9,
+  "refs": [
+   "CLOUD_TRAINING_HARDENING_PLAN_2026-11-01.md",
+   "benchmarks/virtu_capability_v1/AI模型系统性能力测评报告.md",
+   "cloud_handoff/MANIFEST_ROUTE_A.json",
+   "cloud_handoff/MANIFEST_ROUTE_C.json",
+   "data/train/virtu_v3/manifest.json",
+   "data/train/virtu_v3/virtu_fix_text_sft_v1.manifest.json",
+   "scripts/build_train_v3.py",
+   "scripts/make_cloud_bundle.py",
+   "tests/test_capability_sft.py"
+  ]
+ },
+ {
+  "path": "merge_lora.py",
+  "tracked": false,
+  "git": "??",
+  "mtime": "2026-11-01",
+  "lines": 227,
+  "nrefs": 10,
+  "refs": [
+   "AGENT_TRAINING_PLAN.md",
+   "SINGLE_GPU_TRAINING_PLAN.md",
+   "VIRTU_REAL_MODEL_README.md",
+   "VIRTU_TRAINING_RUNBOOK.md",
+   "benchmarks/VIRTU_CAPABILITY_REPORT.md",
+   "benchmarks/VIRTU_DEPLOY_ARTIFACT_GATE_2026-11-01.md",
+   "scratch/_train_refscan.py",
+   "scripts/gpu_merge_pipeline.py",
+   "tests/test_merge_admission.py",
+   "train_virtu.py"
+  ]
+ },
+ {
+  "path": "gpu_handoff/train_virtu_toolcall.py",
+  "tracked": false,
+  "git": "",
+  "mtime": "2026-10-31",
+  "lines": 365,
+  "nrefs": 14,
+  "refs": [
+   "CLOUD_FINETUNE_PLAN_2026-11-01_v2.md",
+   "GPU_MERGE_RUNBOOK.md",
+   "TOOLCALL_TRAINING_RUNBOOK.md",
+   "TRAIN_ACCELERATION.md",
+   "benchmarks/virtu_capability_v1/云端训练实施全案.md",
+   "gpu_handoff/gpu_train_pipeline.py",
+   "gpu_handoff/handoff_manifest.json",
+   "gpu_handoff/virtu_tokenize.py",
+   "scripts/auto_pull_and_merge.py",
+   "scripts/check_running_train.py",
+   "scripts/gpu_train_pipeline.py",
+   "scripts/inspect_remote_train_script.py",
+   "scripts/train_virtu_toolcall.py",
+   "scripts/virtu_tokenize.py"
+  ]
+ },
+ {
+  "path": "scripts/train_virtu_toolcall.py",
+  "tracked": false,
+  "git": "??",
+  "mtime": "2026-10-31",
+  "lines": 365,
+  "nrefs": 14,
+  "refs": [
+   "CLOUD_FINETUNE_PLAN_2026-11-01_v2.md",
+   "GPU_MERGE_RUNBOOK.md",
+   "TOOLCALL_TRAINING_RUNBOOK.md",
+   "TRAIN_ACCELERATION.md",
+   "benchmarks/virtu_capability_v1/云端训练实施全案.md",
+   "gpu_handoff/gpu_train_pipeline.py",
+   "gpu_handoff/handoff_manifest.json",
+   "gpu_handoff/train_virtu_toolcall.py",
+   "gpu_handoff/virtu_tokenize.py",
+   "scripts/auto_pull_and_merge.py",
+   "scripts/check_running_train.py",
+   "scripts/gpu_train_pipeline.py",
+   "scripts/inspect_remote_train_script.py",
+   "scripts/virtu_tokenize.py"
+  ]
+ },
+ {
+  "path": "cloud_train_pack/train_turnkey.py",
+  "tracked": false,
+  "git": "",
+  "mtime": "2026-11-05",
+  "lines": 416,
+  "nrefs": 17,
+  "refs": [
+   "VIRTU_ANTIHALLUCINATION_EXECUTION_2026-11-04.md",
+   "VIRTU_MODEL_STRENGTHEN_2026-11-05.md",
+   "benchmarks/VIRTU_EVAL_HARNESS_FIXES_2026-11-05.md",
+   "benchmarks/VIRTU_PHYSICS_GRADING_2026-11-04.md",
+   "benchmarks/virtu_capability_v1/云端微调最小成本方案.md",
+   "cloud_train_pack/local_one_click.py",
+   "cloud_train_pack/run.sh",
+   "cloud_train_pack/train_dpo_cloud.py",
+   "cloud_train_pack/train_safety_cloud.py",
+   "scripts/build_physics_derivation_corpus.py",
+   "scripts/deploy_and_launch_v100.py",
+   "scripts/inspect_v100_train.py",
+   "scripts/launch_physics_derivation_train.py",
+   "scripts/monitor_and_fetch_daemon.py",
+   "scripts/relaunch_remote.py",
+   "tests/test_physics_reference_honesty.py",
+   "tests/test_train_data_gate.py"
+  ]
+ },
+ {
+  "path": "scripts/train_virtu_v100.py",
+  "tracked": false,
+  "git": "??",
+  "mtime": "2026-11-01",
+  "lines": 399,
+  "nrefs": 17,
+  "refs": [
+   "CLOUD_FINETUNE_PLAN_2026-11-01_v2.md",
+   "CLOUD_SERVER_TRAINING_PLAN_2026-11-01.md",
+   "CLOUD_TRAINING_HARDENING_PLAN_2026-11-01.md",
+   "README.md",
+   "benchmarks/VIRTU_PHYSICS_GRADING_2026-11-04.md",
+   "cloud_handoff/MANIFEST_ROUTE_C.json",
+   "data/train/virtu_v3/manifest.json",
+   "data/train/virtu_v3/virtu_fix_text_sft_v1.manifest.json",
+   "scripts/_check_real_job.py",
+   "scripts/_train_done_pull_deploy.py",
+   "scripts/bootstrap_v100_train.sh",
+   "scripts/build_train_v3.py",
+   "scripts/launch_physics_derivation_train.py",
+   "scripts/make_cloud_bundle.py",
+   "scripts/train_virtu_l40s.py",
+   "tests/test_cloud_bundle.py",
+   "tests/test_physics_corpus_gates.py"
+  ]
+ },
+ {
+  "path": "train_virtu.py",
+  "tracked": false,
+  "git": "??",
+  "mtime": "2026-10-29",
+  "lines": 274,
+  "nrefs": 23,
+  "refs": [
+   "CLOUD_FINETUNE_PLAN_2026-11-01.md",
+   "CLOUD_FINETUNE_PLAN_2026-11-01_v2.md",
+   "CLOUD_TRAINING_HARDENING_PLAN_2026-11-01.md",
+   "SINGLE_GPU_TRAINING_PLAN.md",
+   "VIRTU_TRAINING_RUNBOOK.md",
+   "cloud_handoff/MANIFEST_ROUTE_A.json",
+   "cloud_handoff/MANIFEST_ROUTE_C.json",
+   "data/train/virtu_fix_v1/virtu_fix_text_sft_v1.manifest.json",
+   "data/train/virtu_v3/manifest.json",
+   "data/train/virtu_v3/virtu_fix_text_sft_v1.manifest.json",
+   "scripts/bootstrap_l40s_train.sh",
+   "scripts/bootstrap_v100_train.sh",
+   "scripts/build_fix_text_corpus.py",
+   "scripts/build_train_v3.py",
+   "scripts/dataprep_20261030/acceptance.py",
+   "scripts/dataprep_20261030/tokenizer_smoke.py",
+   "scripts/dataset_builder/build_unified_master_and_manifest.py",
+   "scripts/make_cloud_bundle.py",
+   "scripts/remote_train_and_download.py",
+   "scripts/train_virtu_l40s.py",
+   "scripts/train_virtu_v100.py",
+   "tests/test_cloud_bundle.py",
+   "work/measure_corpus_length.py"
+  ]
+ },
+ {
+  "path": "cloud_bugfix_sync_20261102/train_qwen3_8b_qlora.py",
+  "tracked": false,
+  "git": "",
+  "mtime": "2026-11-02",
+  "lines": 350,
+  "nrefs": 28,
+  "refs": [
+   "CLOUD_FINETUNE_PLAN.md",
+   "VIRTU_MODEL_UPLIFT_PLAN_2026-11-06.md",
+   "apply_virtu_bugfixes.py",
+   "benchmarks/VIRTU_EVAL_HARNESS_FIXES_2026-11-05.md",
+   "engineering_capability_train/README.md",
+   "engineering_capability_train/configs/pipeline.json",
+   "engineering_capability_train/configs/train.json",
+   "engineering_capability_train/data_builders.py",
+   "engineering_capability_train/train_sft.py",
+   "scripts/_deploy_cloud.py",
+   "scripts/_fix_accel.py",
+   "scripts/_pkg_README.md",
+   "scripts/_upload_and_launch.py",
+   "scripts/_upload_and_launch_v2.py",
+   "scripts/_upload_and_launch_v3.py",
+   "scripts/_upload_and_launch_v4.py",
+   "scripts/_upload_and_launch_wm_v2.py",
+   "scripts/_upload_and_launch_worldmodel.py",
+   "scripts/build_agentic_sft.py",
+   "scripts/build_v3_patch.py",
+   "scripts/build_worldmodel_sft.py",
+   "scripts/build_worldmodel_v2.py",
+   "scripts/cloud_launch.sh",
+   "scripts/train_qwen3_8b_qlora.py",
+   "scripts/train_virtu_v2.sh",
+   "tests/test_physics_reference_honesty.py",
+   "tests/test_train_data_gate.py",
+   "virtu_omni/rsi/candidates.py"
+  ]
+ },
+ {
+  "path": "scripts/train_qwen3_8b_qlora.py",
+  "tracked": false,
+  "git": "??",
+  "mtime": "2026-11-05",
+  "lines": 405,
+  "nrefs": 28,
+  "refs": [
+   "CLOUD_FINETUNE_PLAN.md",
+   "VIRTU_MODEL_UPLIFT_PLAN_2026-11-06.md",
+   "apply_virtu_bugfixes.py",
+   "benchmarks/VIRTU_EVAL_HARNESS_FIXES_2026-11-05.md",
+   "cloud_bugfix_sync_20261102/train_qwen3_8b_qlora.py",
+   "engineering_capability_train/README.md",
+   "engineering_capability_train/configs/pipeline.json",
+   "engineering_capability_train/configs/train.json",
+   "engineering_capability_train/data_builders.py",
+   "engineering_capability_train/train_sft.py",
+   "scripts/_deploy_cloud.py",
+   "scripts/_fix_accel.py",
+   "scripts/_pkg_README.md",
+   "scripts/_upload_and_launch.py",
+   "scripts/_upload_and_launch_v2.py",
+   "scripts/_upload_and_launch_v3.py",
+   "scripts/_upload_and_launch_v4.py",
+   "scripts/_upload_and_launch_wm_v2.py",
+   "scripts/_upload_and_launch_worldmodel.py",
+   "scripts/build_agentic_sft.py",
+   "scripts/build_v3_patch.py",
+   "scripts/build_worldmodel_sft.py",
+   "scripts/build_worldmodel_v2.py",
+   "scripts/cloud_launch.sh",
+   "scripts/train_virtu_v2.sh",
+   "tests/test_physics_reference_honesty.py",
+   "tests/test_train_data_gate.py",
+   "virtu_omni/rsi/candidates.py"
+  ]
+ }
+]

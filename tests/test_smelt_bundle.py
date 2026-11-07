@@ -30,7 +30,7 @@ def bundle():
     return StandardizedSmeltBundle(BUNDLE_DIR)
 
 
-def test_bundle_manifest_and_file_integrity(bundle):
+def test_bundle_manifest_and_file_integrity(bundle, require_weights):
     """Verify package manifest and all file existences."""
     manifest = bundle.load_manifest()
     assert manifest["package_title"] == "Virtu-Omni Standardized Smelted Parameter Bundle"
@@ -66,7 +66,13 @@ def test_triple_verification_approved(bundle):
     assert len(report["consistency_check"]["dtype_mismatches"]) == 0
 
 
-def test_model_strict_loading(bundle):
+
+@pytest.fixture
+def require_weights(bundle):
+    if not bundle.weights_path.exists():
+        pytest.skip(f"Standardized weights file not present on local node: {bundle.weights_path}")
+
+def test_model_strict_loading(bundle, require_weights):
     """Verify model instantiation and strict state_dict loading."""
     model = bundle.load_model(device="cpu", strict=True)
     assert model is not None
@@ -93,7 +99,7 @@ def test_tokenizer_encoding_decoding(bundle):
     assert len(decoded) > 0
 
 
-def test_end_to_end_subsystem_prediction(bundle):
+def test_end_to_end_subsystem_prediction(bundle, require_weights):
     """Verify manufacturing subsystem classification inference."""
     res = bundle.predict_subsystem("G43.4 开启五轴联动刀尖点跟随控制并设置偏置")
     assert "predicted_index" in res
@@ -105,7 +111,7 @@ def test_end_to_end_subsystem_prediction(bundle):
     assert res["latency_ms"] > 0.0
 
 
-def test_end_to_end_machining_task_prediction(bundle):
+def test_end_to_end_machining_task_prediction(bundle, require_weights):
     """Verify joint prediction of subsystem, operation, and material."""
     res = bundle.predict_machining_task("端铣刀快速走刀加工 6061铝合金 平面凹槽")
     assert "subsystem" in res
@@ -116,7 +122,7 @@ def test_end_to_end_machining_task_prediction(bundle):
     assert len(res["material"]["name"]) > 0
 
 
-def test_end_to_end_action_pair_verification(bundle):
+def test_end_to_end_action_pair_verification(bundle, require_weights):
     """Verify JEV pair compatibility verification."""
     context = "主轴高速旋转且冷却液未开启报警"
     action = "M08 开启高压切削液喷淋并降速巡检"
@@ -126,7 +132,7 @@ def test_end_to_end_action_pair_verification(bundle):
     assert res["verdict"] in ("COMPLIANT", "NON_COMPLIANT")
 
 
-def test_end_to_end_joint_embedding(bundle):
+def test_end_to_end_joint_embedding(bundle, require_weights):
     """Verify 512-d normalized JEV embedding extraction."""
     text = "高精度数控机床刀位点补偿"
     emb = bundle.extract_joint_embedding(text)

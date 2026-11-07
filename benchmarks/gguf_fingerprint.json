@@ -1,0 +1,26 @@
+{
+  "exports": {
+    "virtu-boundary-sft-q4_0.gguf": {
+      "bytes": 4614301760,
+      "sha256": "981a95c453aa02b466f0bdd4e3491b1639803e60796b610d70ab34b357510954",
+      "hash_seconds": 12.5
+    },
+    "virtu-ties-v1-q4_0.gguf": {
+      "bytes": 4614301760,
+      "sha256": "54371074a5a88ca216e24f2bf91fb428886d0981a99055633d60c6adc5d38d97",
+      "hash_seconds": 14.3
+    },
+    "virtu_boundary_sft_lora.gguf": {
+      "bytes": 174622688,
+      "sha256": "547755aa3194e5571937cd384d1031a580ec06e7c320fa04432b72af3dacf264",
+      "hash_seconds": 0.7
+    },
+    "virtu_lora_adapter.gguf": {
+      "bytes": 161507520,
+      "sha256": "bbf16d4dce8f3b3002e38b78594e7ca2de4b04e3ef4283b69448d61e9695cd25",
+      "hash_seconds": 0.6
+    }
+  },
+  "deployed": {},
+  "distinct_export_contents": 4
+}

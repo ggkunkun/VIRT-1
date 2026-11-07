@@ -23,12 +23,19 @@ def parser():
     run_p.add_argument("--config", help="project-local JSON config; CLI values override it")
     run_p.add_argument("--case-dir")
     run_p.add_argument("--dims", help="comma-separated dimensions; default physics")
+    run_p.add_argument("--protect-dirs",
+                       help="comma-separated case dirs the SFT candidates must not reproduce "
+                            "(wider protection than the selected case-dir; not selectable)")
     run_p.add_argument("--model-id")
     run_p.add_argument("--base-url")
+    run_p.add_argument("--arm", help="arm name in virtu_eval/arms.json; its model_id, num_ctx, "
+                                     "num_gpu and tool schema become this run's served profile")
+    run_p.add_argument("--arm-spec", help="JSON object overriding the served profile "
+                                          "(num_ctx/num_gpu/think/strip_think/tools/...)")
     for name in ("rounds", "limit", "seed", "min_validation", "max_calls", "max_seconds", "timeout",
                  "max_tokens", "proposal_tokens", "synthetic_per_task", "plateau_rounds"):
         run_p.add_argument("--" + name.replace("_", "-"), type=int)
-    for name in ("validation_fraction", "min_gain"):
+    for name in ("validation_fraction", "min_gain", "noise_sigma", "noise_z"):
         run_p.add_argument("--" + name.replace("_", "-"), type=float)
     inspect_p = sub.add_parser("inspect", help="read-only run evidence and integrity check")
     inspect_p.add_argument("--run", required=True)
@@ -45,6 +52,25 @@ def parser():
     return p
 
 
+def load_arm(root, name):
+    """Take a served profile straight from the measured arm registry.
+
+    Re-typing num_ctx/num_gpu/tools on the command line is how the loop ends up measuring a
+    profile nobody runs, so the arm entry is copied rather than paraphrased.
+    """
+    path = inside(root, "virtu_eval/arms.json")
+    with path.open(encoding="utf-8") as fh:
+        arms = json.load(fh)
+    if name not in arms:
+        raise RSIError(f"Unknown arm: {name}")
+    keep = {"model_id", "num_ctx", "num_gpu", "think", "strip_think", "retries", "timeout",
+            "tools", "tools_dimensions"}
+    spec = {k: v for k, v in dict(arms[name]).items() if k in keep}
+    if not spec.get("model_id"):
+        raise RSIError(f"Arm {name} has no model_id")
+    return spec
+
+
 def config_from(args, root):
     values = {}
     if args.config:
@@ -56,10 +82,21 @@ def config_from(args, root):
         value = getattr(args, field.name, None)
         if value is not None:
             values[field.name] = value
+    if getattr(args, "arm", None) is not None:
+        values["arm_spec"] = load_arm(root, args.arm)
+    if getattr(args, "arm_spec", None) is not None:
+        try:
+            values["arm_spec"] = json.loads(args.arm_spec)
+        except ValueError as exc:
+            raise RSIError("--arm-spec must be a JSON object") from exc
     if args.dims is not None:
         values["dimensions"] = tuple(d.strip() for d in args.dims.split(",") if d.strip())
     if "dimensions" in values:
         values["dimensions"] = tuple(values["dimensions"])
+    if getattr(args, "protect_dirs", None) is not None:
+        values["protect_dirs"] = tuple(d.strip() for d in args.protect_dirs.split(",") if d.strip())
+    if "protect_dirs" in values and values["protect_dirs"] is not None:
+        values["protect_dirs"] = tuple(values["protect_dirs"])
     return Config(**values)
 
 

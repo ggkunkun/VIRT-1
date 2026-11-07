@@ -1,0 +1,45 @@
+{
+  "generated": "2026-10-31 18:58:41",
+  "purpose": "Virtu tool-call LoRA 远程 GPU 训练交接包",
+  "files": {
+    "download_base_modelscope.py": {
+      "bytes": 4018,
+      "sha256": "9498df1c994fde2740fc034ea5972d6c16e506a000f996c54b1a88e45ba14c01"
+    },
+    "gpu_train_pipeline.py": {
+      "bytes": 19187,
+      "sha256": "0703a33bb7d636737eceac08f7bc0d53265b8b2cbd9363255bc87c42ffaa90e9"
+    },
+    "holdout_manifest.json": {
+      "bytes": 2435,
+      "sha256": "65e15a7c9d2e02f422dd1e90105b44870ff391f665cdadfb28845bf51ac228bd"
+    },
+    "train_virtu_toolcall.py": {
+      "bytes": 17703,
+      "sha256": "2fd6d630b6a19ba25b4c40e12ba7de870b75dccb9f0f93a413b92c71a6c3bb3a"
+    },
+    "validate_render_dataset.py": {
+      "bytes": 12589,
+      "sha256": "13f059be36101b7cb6ac0208aba038abb66d41823a0e2a569ae9d50fd31e5cfb"
+    },
+    "virtu_tokenize.py": {
+      "bytes": 5003,
+      "sha256": "4f9de88c6cdf08ea8ad1e31170fe30985a291ae24e81e7772c505a0a92f51dc2"
+    },
+    "virtu_toolcall_holdout.jsonl": {
+      "bytes": 399234,
+      "sha256": "64623e8b363710ec3bcd54e4444534aa0d63f762ee9bc255177878c9acb7e03e"
+    },
+    "virtu_toolcall_train_final.jsonl": {
+      "bytes": 9572258,
+      "sha256": "89dfee6ffab69c86718b51dc896373bf8173e033fcb5c0c990263347c7437e00"
+    }
+  },
+  "train_rows": 2414,
+  "holdout_rows": 94,
+  "commands": [
+    "python scripts/validate_render_dataset.py --data virtu_toolcall_train_final.jsonl --base Qwen3-8B --workers 8 --out render_report_final.json",
+    "python scripts/gpu_train_pipeline.py --work-dir /root/virtu_train --base /root/virtu_train/Qwen3-8B --data /root/virtu_train/virtu_toolcall_train_final.jsonl --epochs 2 --batch 2 --grad-accum 4 --no-grad-ckpt --min-vram-gb 60 --group-by-length --yes"
+  ],
+  "note": "holdout_jsonl 只用于评测，禁止进入训练；训练集已按 (material, 工具链) 组合留出 4 组。"
+}

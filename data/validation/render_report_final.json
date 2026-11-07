@@ -1,0 +1,37 @@
+{
+  "dataset": "data/train/virtu_toolcall_train_final.jsonl",
+  "base": "D:\\Virtu模型\\checkpoints\\_base_qwen3_8b",
+  "total": 2414,
+  "passed": 2414,
+  "failed": 0,
+  "pass_rate": 1.0,
+  "failures_by_stage": {},
+  "failure_samples": [],
+  "token_stats": {
+    "min": 739,
+    "p50": 1209,
+    "p90": 2031,
+    "p95": 2065,
+    "p99": 2091,
+    "max": 2205,
+    "mean": 1308.5,
+    "total_tokens": 3158601,
+    "total_loss_tokens": 772953,
+    "truncated_at_max_length": 0,
+    "truncated_ratio": 0.0,
+    "max_length": 4096
+  },
+  "role_stats": {
+    "assistant": 4966,
+    "total_rounds": 12454
+  },
+  "loss_ratio_mean": 0.237,
+  "elapsed_sec": 52.4,
+  "checks": {
+    "C1_json_structure": "PASS",
+    "C2_template_render": "PASS",
+    "C3_mask_construction": "PASS",
+    "C4_loss_mask_scope": "PASS",
+    "C5_tool_call_integrity": "PASS"
+  }
+}

@@ -1,0 +1,214 @@
+{
+  "timestamp": "2026-11-04 23:11:13",
+  "model": "checkpoints/_base_qwen3_8b",
+  "adapter": null,
+  "weighted_total_score": 100.0,
+  "physics_compliance_rate": 1.0,
+  "all_dimensions_pass_90": true,
+  "failed_dimensions": [],
+  "dimensions": {
+    "toolcall": {
+      "name_zh": "工具编排",
+      "count": 30,
+      "score": 100.0,
+      "pass_rate": 1.0,
+      "weight": 0.18,
+      "tiers": {
+        "easy": {
+          "count": 9,
+          "mean": 100.0
+        },
+        "medium": {
+          "count": 15,
+          "mean": 100.0
+        },
+        "hard": {
+          "count": 6,
+          "mean": 100.0
+        }
+      }
+    },
+    "reasoning": {
+      "name_zh": "推理逻辑",
+      "count": 30,
+      "score": 100.0,
+      "pass_rate": 1.0,
+      "weight": 0.17,
+      "tiers": {
+        "easy": {
+          "count": 9,
+          "mean": 100.0
+        },
+        "medium": {
+          "count": 15,
+          "mean": 100.0
+        },
+        "hard": {
+          "count": 6,
+          "mean": 100.0
+        }
+      }
+    },
+    "knowledge": {
+      "name_zh": "知识覆盖",
+      "count": 30,
+      "score": 100.0,
+      "pass_rate": 1.0,
+      "weight": 0.15,
+      "tiers": {
+        "easy": {
+          "count": 9,
+          "mean": 100.0
+        },
+        "medium": {
+          "count": 15,
+          "mean": 100.0
+        },
+        "hard": {
+          "count": 6,
+          "mean": 100.0
+        }
+      }
+    },
+    "instruction": {
+      "name_zh": "指令遵循",
+      "count": 30,
+      "score": 100.0,
+      "pass_rate": 1.0,
+      "weight": 0.14,
+      "tiers": {
+        "easy": {
+          "count": 9,
+          "mean": 100.0
+        },
+        "medium": {
+          "count": 15,
+          "mean": 100.0
+        },
+        "hard": {
+          "count": 6,
+          "mean": 100.0
+        }
+      }
+    },
+    "boundary": {
+      "name_zh": "边界处理",
+      "count": 30,
+      "score": 100.0,
+      "pass_rate": 1.0,
+      "weight": 0.12,
+      "tiers": {
+        "easy": {
+          "count": 9,
+          "mean": 100.0
+        },
+        "medium": {
+          "count": 15,
+          "mean": 100.0
+        },
+        "hard": {
+          "count": 6,
+          "mean": 100.0
+        }
+      }
+    },
+    "generation": {
+      "name_zh": "内容生成",
+      "count": 30,
+      "score": 100.0,
+      "pass_rate": 1.0,
+      "weight": 0.1,
+      "tiers": {
+        "easy": {
+          "count": 9,
+          "mean": 100.0
+        },
+        "medium": {
+          "count": 15,
+          "mean": 100.0
+        },
+        "hard": {
+          "count": 6,
+          "mean": 100.0
+        }
+      }
+    },
+    "generalization": {
+      "name_zh": "泛化适配",
+      "count": 30,
+      "score": 100.0,
+      "pass_rate": 1.0,
+      "weight": 0.08,
+      "tiers": {
+        "easy": {
+          "count": 9,
+          "mean": 100.0
+        },
+        "medium": {
+          "count": 15,
+          "mean": 100.0
+        },
+        "hard": {
+          "count": 6,
+          "mean": 100.0
+        }
+      }
+    },
+    "multimodal": {
+      "name_zh": "多模态理解",
+      "count": 30,
+      "score": 100.0,
+      "pass_rate": 1.0,
+      "weight": 0.06,
+      "tiers": {
+        "easy": {
+          "count": 9,
+          "mean": 100.0
+        },
+        "medium": {
+          "count": 15,
+          "mean": 100.0
+        },
+        "hard": {
+          "count": 6,
+          "mean": 100.0
+        }
+      }
+    }
+  },
+  "historical_comparison": {
+    "Qwen3-8B-Base": {
+      "toolcall": 42.5,
+      "reasoning": 58.12,
+      "knowledge": 64.2,
+      "instruction": 68.3,
+      "boundary": 36.4,
+      "generation": 65.1,
+      "generalization": 52.8,
+      "multimodal": 45.0,
+      "overall": 53.9
+    },
+    "virtu-v2": {
+      "toolcall": 73.33,
+      "reasoning": 83.34,
+      "knowledge": 61.61,
+      "instruction": 81.95,
+      "boundary": 62.45,
+      "generation": 77.66,
+      "generalization": 63.13,
+      "multimodal": 91.67,
+      "overall": 68.39
+    },
+    "virtu-v3-all90": {
+      "toolcall": 70.0,
+      "reasoning": 80.93,
+      "knowledge": 81.61,
+      "instruction": 86.29,
+      "boundary": 74.78,
+      "generation": 90.71,
+      "generalization": 81.25,
+      "multimodal": 91.67,
+      "overall": 75.22
+    }
+  }
+}

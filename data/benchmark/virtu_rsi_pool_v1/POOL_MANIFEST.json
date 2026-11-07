@@ -1,0 +1,77 @@
+{
+  "dir": "data/benchmark/virtu_rsi_pool_v1",
+  "files": {
+    "physics": {
+      "n": 144,
+      "sha256": "a319c798d2f807c6a4c7642977585c62fb7b618c91f3e5068b0789958f062f60",
+      "by_task": {
+        "roughness": 16,
+        "geom_delta": 16,
+        "removal": 16,
+        "fea_fos": 16,
+        "collision": 16,
+        "tolerance": 16,
+        "process": 16,
+        "adapt_material": 16,
+        "adapt_machine": 16
+      },
+      "by_tier": {
+        "easy": 43,
+        "medium": 72,
+        "hard": 29
+      }
+    },
+    "derivation": {
+      "n": 144,
+      "sha256": "13ca297c335cdc58eef604c3ef0f7573fef61933fda1d6226da0f9e29210628c",
+      "by_task": {
+        "roughness": 16,
+        "geom_delta": 16,
+        "removal": 16,
+        "fea_fos": 16,
+        "collision": 16,
+        "tolerance": 16,
+        "process": 16,
+        "adapt_material": 16,
+        "adapt_machine": 16
+      },
+      "by_tier": {
+        "easy": 43,
+        "medium": 72,
+        "hard": 29
+      }
+    }
+  },
+  "n_cases": 288,
+  "rejects": {},
+  "seed": 20261105,
+  "ruler": {
+    "tol_by_tier": {
+      "easy": 0.08,
+      "medium": 0.03,
+      "hard": 0.01
+    },
+    "tier_mix": "30/50/20 enforced by virtu_eval.validate_cases.expected_mix",
+    "criterion_shape_source": "data/benchmark/virtu_eval_phys_v1 per (dimension, task)",
+    "law_text_source": "virtu_eval.derivation.LAWS",
+    "gold_source": "scripts/wm_verifier.recompute",
+    "input_ranges_source": "virtu_omni.rsi.candidates._draw",
+    "system_contract_source": "scripts/wm_contract.build_system(with_fewshot=False)"
+  },
+  "disjointness": {
+    "protected_dirs": [
+      "data/benchmark/virtu_eval_phys_v1",
+      "data/benchmark/virtu_eval_v1",
+      "data/benchmark/virtu_eval_cl_v1",
+      "data/benchmark/virtu_text_v1"
+    ],
+    "holdout": "data/benchmark/virtu_fix_v1/formula_holdout_200.jsonl",
+    "checked_by": [
+      "scenario sha256",
+      "normalized question key",
+      "prompt hash + 8-gram Jaccard via virtu_eval.contamination_check.check_sample"
+    ]
+  },
+  "purpose": "RSI dev/validation pool: min_validation=20 is unreachable on the 30-case published physics board, so the improvement loop had no statistical power",
+  "not_for": "publishing capability scores -- the published rulers stay in data/benchmark/virtu_eval_phys_v1 and virtu_eval_v1"
+}

@@ -10,7 +10,7 @@ import urllib.request
 from copy import deepcopy
 from urllib.parse import urlsplit
 
-from .contracts import RSIError, local_url
+from .contracts import RSIError, fingerprint, local_url, remote_url
 
 
 PHYSICS_TYPES = {"physics_invariant", "world_state_verified", "derivation_verified"}
@@ -23,7 +23,8 @@ class LocalModel:
 
         self.config = config
         self.budget = budget
-        self.base = local_url(config.base_url)
+        self.remote = (config.arm_spec or {}).get("kind") == "http_openai"
+        self.base = remote_url(config.base_url) if self.remote else local_url(config.base_url)
         host = urlsplit(self.base).hostname
         if host == "localhost":
             import ipaddress
@@ -31,18 +32,23 @@ class LocalModel:
                    for item in socket.getaddrinfo(host, urlsplit(self.base).port)):
                 raise RSIError("localhost does not resolve exclusively to loopback")
         self.opener = urllib.request.build_opener(urllib.request.ProxyHandler({}))
-        self.arm = build_arm({"kind": "ollama_native", "model_id": config.model_id,
-                              "base_url": self.base, "num_ctx": 8192, "think": False,
-                              "retries": 0, "timeout": config.timeout})
+        spec = {"kind": "ollama_native", "model_id": config.model_id, "base_url": self.base,
+                "num_ctx": 4096, "think": False, "retries": 0, "timeout": config.timeout}
+        spec.update(config.arm_spec or {})
+        spec["base_url"] = self.base  # the loopback pin outranks any spec-provided endpoint
+        self.arm = build_arm(spec)
         self.arm._opener = self.opener
+        self.requested = spec["model_id"]
         self.identity = self._identity()
 
     def _identity(self):
+        if self.remote:
+            return self._remote_identity()
         try:
             request = urllib.request.Request(self.base + "/api/tags", method="GET")
             with self.opener.open(request, timeout=min(10, self.config.timeout)) as response:
                 data = json.load(response)
-            requested = self.config.model_id
+            requested = self.requested
             matches = [m for m in data.get("models", [])
                        if m.get("name") == requested or m.get("model") == requested]
             if not matches and ":" not in requested:
@@ -55,18 +61,52 @@ class LocalModel:
         except (OSError, ValueError, KeyError) as exc:
             raise RSIError("Cannot verify local model identity") from exc
 
+    def _remote_identity(self):
+        """Cloud identity: pin the served model id plus whatever the endpoint publishes.
+
+        A vLLM/SGLang host exposes no ollama digest, so the digest slot carries a
+        fingerprint of the published metadata; it must stay identical for the whole run.
+        """
+        payload = {"kind": "http_openai", "model_id": self.requested, "base_url": self.base,
+                   "remote": True}
+        try:
+            request = urllib.request.Request(self.base + "/models", method="GET")
+            if getattr(self.arm, "api_key", None):
+                request.add_header("Authorization", f"Bearer {self.arm.api_key}")
+            with self.opener.open(request, timeout=min(10, self.config.timeout)) as response:
+                data = json.load(response)
+            served = [m for m in (data.get("data") or data.get("models") or [])
+                      if isinstance(m, dict) and m.get("id") == self.requested]
+            if len(served) != 1:
+                raise RSIError("Remote endpoint does not serve exactly the requested model id")
+            published = {k: served[0].get(k) for k in ("id", "created", "owned_by", "max_model_len")}
+            payload["digest"] = fingerprint(published)
+        except RSIError:
+            raise
+        except (OSError, ValueError) as exc:
+            raise RSIError("Cannot verify remote model identity") from exc
+        return payload
+
+    accepts_case = True
+
     def verify_identity(self):
         if self._identity() != self.identity:
             raise RSIError("Local model identity changed during the run")
         return self.identity
 
-    def generate(self, messages, max_tokens):
+    def generate(self, messages, max_tokens, case=None):
         self.arm.timeout = self.budget.acquire()
         started = time.monotonic()
+        # The tool schema is scoped by dimension inside the arm; the proposer call passes no
+        # case and therefore never gets tools (PROPOSER_SYSTEM forbids tool calls).
+        tools = self.arm.tools_for(case) if case is not None else None
         result = self.arm.generate(deepcopy(messages), max_tokens=max_tokens,
-                                   temperature=0.0, seed=self.config.seed)
-        if not result.get("error") and result.get("served_model") != self.identity["model_id"]:
-            raise RSIError("Response model identity does not match the pinned local artifact")
+                                   temperature=0.0, seed=self.config.seed, tools=tools)
+        served = result.get("served_model")
+        if not result.get("error") and served is not None and served != self.identity["model_id"]:
+            raise RSIError("Response model identity does not match the pinned served artifact")
+        if not result.get("error") and served is None and not self.remote:
+            raise RSIError("Local response omitted the served model identity")
         result["model_digest"] = self.identity["digest"]
         result["rsi_elapsed_s"] = round(time.monotonic() - started, 3)
         return result
@@ -145,7 +185,10 @@ def strict_score(text, criteria):
 def evaluate_cases(model, cases, config, store, stage, strategy=""):
     records = []
     for case in cases:
-        generation = model.generate(policy_messages(case, strategy), max_tokens=config.max_tokens)
+        kwargs = {"max_tokens": config.max_tokens}
+        if getattr(model, "accepts_case", False):
+            kwargs["case"] = case
+        generation = model.generate(policy_messages(case, strategy), **kwargs)
         text = generation.get("text") or ""
         scored = strict_score(text, case["criteria"])
         scoring_error = any("grader_error:" in str(c.get("evidence", ""))

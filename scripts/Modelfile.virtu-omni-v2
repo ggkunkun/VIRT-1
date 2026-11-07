@@ -1,0 +1,9 @@
+# Virtu-Omni-8B v2 — Qwen3-8B 基座 + 5 大同构 r=32 LoRA 烘焙合并产物 (含 Tool-Call 工具调用)
+FROM D:/Virtu模型/checkpoints/virtu-omni-v2-q4_0.gguf
+
+PARAMETER num_ctx 4096
+PARAMETER temperature 0.3
+PARAMETER top_p 0.9
+PARAMETER stop "<|im_end|>"
+PARAMETER stop "<|im_start|>"
+PARAMETER stop "<|endoftext|>"

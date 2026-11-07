@@ -1,12 +1,19 @@
-"""Automated Blind-Test Evaluation Suite for 6 CAD/CAM/CNC Industrial Software."""
+"""Automated Blind-Test Evaluation Suite for 6 CAD/CAM/CNC Industrial Software.
 
+Two modes:
+  * default        — load base+LoRA and generate fresh responses (needs torch/peft).
+  * --regrade-json — re-score responses already stored in a results JSON without
+                     loading a model. Adds prompt-dimension fidelity alongside the
+                     original keyword score, because keyword presence alone gave
+                     100/100 to answers that omitted or changed the requested size.
+"""
+
+import argparse
 import json
 import os
+import re
 import sys
 import time
-import torch
-from peft import PeftModel
-from transformers import AutoModelForCausalLM, AutoTokenizer
 
 BASE_MODEL_PATH = os.environ.get("BASE_MODEL_PATH", "/root/public-storage/model/Qwen/Qwen3-8B")
 DEFAULT_ADAPTER = "/root/workspace/Virtu/checkpoints/cad_cam_six_software_lora"
@@ -18,6 +25,32 @@ ADAPTER_PATH = os.environ.get(
 BLIND_TEST_DATA = "/root/workspace/Virtu/damodel_cad_cam_tuning/dataset/wish_parametric_blind_test.jsonl"
 REPORT_OUTPUT_MD = "/root/workspace/Virtu/benchmarks/cad_cam_blind_test_report.md"
 RESULT_JSON = "/root/workspace/Virtu/benchmarks/cad_cam_blind_test_results.json"
+
+# 尺寸保真：中文语境不能用 \w 做左边界（汉字本身是 \w），否则一个都匹配不到。
+AFTER_RE = re.compile(r"(?<![\d.])(\d+(?:\.\d+)?)\s*(?:mm|MM|毫米|MPa|N·m|rpm|RPM|HRC|um|μm|°|度)")
+BEFORE_RE = re.compile(r"(?:Φ|φ|直径|外径|内孔|内径|孔径|长度|宽度|厚度|深度|高度|总长|高|长|宽|深|R|r)\s*[=::]?\s*(?<![\d.])(\d+(?:\.\d+)?)")
+
+
+def dims(text, software):
+    soft = set(re.findall(r"\d+(?:\.\d+)?", software or ""))
+    out = []
+    for rx in (AFTER_RE, BEFORE_RE):
+        for m in rx.finditer(text):
+            v = m.group(1)
+            if v not in soft and float(v) >= 1 and v not in out:
+                out.append(v)
+    return out
+
+
+def fidelity(prompt, software, response):
+    need = dims(prompt, software)
+    if not need:
+        return 1.0, 0, [], 0
+    got = [v for v in need if re.search(r"(?<![\d.])" + re.escape(v) + r"(?![\d.])", response)]
+    pset = set(need) | set(re.findall(r"\d+(?:\.\d+)?", software or ""))
+    fab = sorted({m.group(1) for m in AFTER_RE.finditer(response) if m.group(1) not in pset},
+                 key=len)[:8]
+    return len(got) / len(need), len(fab), fab, len(need)
 
 
 def evaluate_response(software_category, prompt, text):
@@ -109,10 +142,152 @@ def evaluate_response(software_category, prompt, text):
     return {"passed": passed, "score": max(0, score), "errors": errors}
 
 
+def regrade(path):
+    """Re-score stored responses with the keyword grader + dimension fidelity."""
+    import shutil
+
+    root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    data = json.load(open(path, encoding="utf-8"))
+    rows = data.get("results", []) if isinstance(data, dict) else data
+    if not rows:
+        raise SystemExit(f"[FATAL] no results in {path}")
+
+    graded = []
+    judgeable = 0
+    fid_sum = 0.0
+    fid_fail = 0
+    fab_total = 0
+    keyword_pass = 0
+    score_sum = 0.0
+    for r in rows:
+        prompt = r.get("prompt") or ""
+        software = r.get("software") or "Unknown"
+        resp = r.get("response_full") or r.get("response") or r.get("response_preview") or ""
+        if resp.endswith("..."):
+            resp = resp[:-3]
+        ev = evaluate_response(software, prompt, resp)
+        fid, fab_n, fab, need_n = fidelity(prompt, software, resp)
+        if need_n:
+            judgeable += 1
+            fid_sum += fid
+            if fid < 1.0:
+                fid_fail += 1
+        fab_total += fab_n
+        if ev["passed"]:
+            keyword_pass += 1
+        score_sum += ev["score"]
+        graded.append({
+            "test_id": r.get("test_id"),
+            "software": software,
+            "keyword_score": ev["score"],
+            "keyword_passed": ev["passed"],
+            "keyword_errors": ev["errors"],
+            "required_dims": need_n,
+            "fidelity": round(fid, 4),
+            "missing_ratio": round(1.0 - fid, 4) if need_n else None,
+            "fabricated_dims": fab_n,
+            "fabricated_values": fab,
+        })
+
+    n = len(graded)
+    keyword_rate = 100.0 * keyword_pass / n
+    mean_score = score_sum / n
+    fid_mean = fid_sum / judgeable if judgeable else None
+    summary = {
+        "source": os.path.abspath(path),
+        "n_cases": n,
+        "keyword_pass_count": keyword_pass,
+        "keyword_pass_rate_pct": round(keyword_rate, 2),
+        "keyword_mean_score": round(mean_score, 2),
+        "judgeable_dimension_cases": judgeable,
+        "fidelity_mean": round(fid_mean, 4) if fid_mean is not None else None,
+        "fidelity_below_1_count": fid_fail,
+        "fabricated_dimension_total": fab_total,
+        "cases": graded,
+    }
+    out_json = os.path.join(root, "benchmarks", "cad_cam_blind_test_results_regraded.json")
+    json.dump(summary, open(out_json, "w", encoding="utf-8"), ensure_ascii=False, indent=2)
+
+    def cell(v):
+        return "—" if v is None else f"{v:.4f}"
+
+    lines = [
+        "# Virtu CAD/CAM/CNC 盲测——判分口径修正版",
+        f"**重判时间**: {time.strftime('%Y-%m-%d %H:%M:%S')}  ",
+        f"**数据来源**: `{os.path.relpath(path, root)}`（已存响应，未重新生成）  ",
+        f"**原始报告备份**: `benchmarks/cad_cam_blind_test_report.orig_20261029.md`  ",
+        "",
+        "> **结论先行**：原报告的 94.4% 是**关键词/格式合规率**，不是尺寸正确率。",
+        "> 判分器只检查 `EquationMgr`、`NXOpen`、```vb``` 等字符串是否出现，从不核对数字。",
+        "> 本报告在同一批响应上追加了需求尺寸保真率，两个口径并列展示。",
+        "",
+        "## 1. 总览",
+        "",
+        "| 指标 | 值 |",
+        "| :--- | ---: |",
+        f"| 用例数 | {n} |",
+        f"| 关键词通过 | {keyword_pass}/{n} = **{keyword_rate:.2f}%** |",
+        f"| 关键词均分 | **{mean_score:.2f}/100** |",
+        f"| 可从 prompt 提取需求尺寸的题数 | {judgeable}/{n} |",
+        f"| 尺寸保真均值（仅可判题） | **{cell(fid_mean)}** |",
+        f"| 保真 < 1 的题数 | **{fid_fail}** |",
+        f"| 响应中单位数字但不在 prompt 的幻觉尺寸 | {fab_total} |",
+        "",
+        "## 2. 逐题（可判题优先）",
+        "",
+        "| 用例 | 软件 | 关键词分 | 通过 | 需求尺寸数 | 保真率 | 缺失比例 | 幻觉尺寸数 |",
+        "| :--- | :--- | ---: | :---: | ---: | ---: | ---: | ---: |",
+    ]
+    for g in sorted(graded, key=lambda x: (x["required_dims"] == 0, x["fidelity"])):
+        fid_cell = cell(g["fidelity"]) if g["required_dims"] else "—"
+        lines.append(
+            f"| `{g['test_id']}` | {g['software']} | {g['keyword_score']} | "
+            f"{'PASS' if g['keyword_passed'] else 'FAIL'} | {g['required_dims']} | "
+            f"{fid_cell} | {cell(g['missing_ratio'])} | {g['fabricated_dims']} |"
+        )
+    lines += [
+        "",
+        "## 3. 口径说明",
+        "",
+        "1. **关键词分**沿用 `evaluate_response()`，只判代码块/API 名称/软件特征串，和原 94.4% 完全同源。",
+        "2. **保真率**只统计 prompt 中带单位或尺寸前缀（Φ/外径/内孔/长度…）的数值，检查响应是否原样保留。",
+        "3. 保真 < 1 说明模型改写或遗漏了用户给定尺寸；这类回答即使关键词满分，也不能直接用于加工。",
+        "4. 本重判不重新调用模型，因此不引入采样噪声；它只回答“已发布分数测的是什么”。",
+        "",
+        "## 4. 修复动作",
+        "",
+        "- 新生成的盲测报告必须同时输出关键词分与保真率，禁止只报单一通过率。",
+        "- 能力验收以 `virtu_eval/` 的确定性判分与尺寸/数值判据为准；本脚本仅保留作历史对照。",
+        "",
+    ]
+    report = "\n".join(lines)
+
+    report_path = os.path.join(root, "benchmarks", "cad_cam_blind_test_report.md")
+    backup_path = os.path.join(root, "benchmarks", "cad_cam_blind_test_report.orig_20261029.md")
+    if os.path.exists(report_path) and not os.path.exists(backup_path):
+        shutil.copy2(report_path, backup_path)
+    with open(report_path, "w", encoding="utf-8") as f:
+        f.write(report)
+    duplicate = os.path.join(root, "checkpoints", "cad_cam_six_software_lora", "BLIND_TEST_REPORT.md")
+    if os.path.isdir(os.path.dirname(duplicate)):
+        with open(duplicate, "w", encoding="utf-8") as f:
+            f.write(report)
+
+    print(json.dumps({k: v for k, v in summary.items() if k != "cases"},
+                     ensure_ascii=False, indent=2))
+    print(f"[OK] {out_json}")
+    print(f"[OK] {report_path}")
+    return summary
+
+
 def main():
     print("==================================================================")
     print("  Virtu: CAD/CAM/CNC Blind-Test Automated Evaluation Engine")
     print("==================================================================")
+
+    import torch
+    from peft import PeftModel
+    from transformers import AutoModelForCausalLM, AutoTokenizer
 
     device = "cuda" if torch.cuda.is_available() else "cpu"
     print(f"Device: {device} | GPU: {torch.cuda.get_device_name(0) if torch.cuda.is_available() else 'None'}")
@@ -286,4 +461,11 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--regrade-json", default="",
+                        help="Re-score stored responses from this JSON without loading a model")
+    args = parser.parse_args()
+    if args.regrade_json:
+        regrade(args.regrade_json)
+    else:
+        main()

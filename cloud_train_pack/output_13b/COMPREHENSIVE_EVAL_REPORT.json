@@ -1,0 +1,214 @@
+{
+  "timestamp": "2026-11-07 05:54:14",
+  "mode": "live_model",
+  "model": "/model/ModelScope/Qwen/Qwen3-14B",
+  "adapter": "/root/virtu_13b_train/cloud_train_pack/output_13b/adapter_13b_sft",
+  "identity_evidence": {
+    "loaded_from": "/model/ModelScope/Qwen/Qwen3-14B",
+    "served_model": null,
+    "note": "HFLocalArm 直接载权重，无服务侧 served_model 回报；归因只能靠下面两份指纹",
+    "git_sha": "unknown",
+    "case_file_sha256": {
+      "boundary.jsonl": "d0171f2c012609f9ba205c8c070392229a94be40089c5377bb9d980c93a06d7f",
+      "generalization.jsonl": "4f5c114b9b047446b7158e8c7b78586001988a3bd95f9144dc6c09f5fa357f41",
+      "generation.jsonl": "3ac2ff57f2eb52a7ac77d7fc0878135fdd5bb9a9e5b7e12ec7c9e727eadefa5c",
+      "instruction.jsonl": "88aa16f29a2a1b592d8bc7c8c5ee6a2204957d8336d73a02743b81f645505285",
+      "knowledge.jsonl": "3546c40f3ce82a75369e119d61caab2f3373b7fec6613cede70fa5b11d819b5f",
+      "multimodal.jsonl": "baa7fd372ee49868d5bbdc4d67c73a3f77d43200d35db8d501f3b6cf9744b543",
+      "reasoning.jsonl": "3f84a8ca2fb6f5500cd4ce1f31766533d08e13ebf781360b7ee9990d12ff237b",
+      "toolcall.jsonl": "f758f28420f3baed1e3914192ebced6c6a48055ce2d70a1e8748957cd0b52a1a"
+    },
+    "phys_case_file_sha256": {
+      "derivation.jsonl": "b73a1453f9cfe0ef2b642c336914cadfd03f1ecebfc5e068d2a3c5b1a91288ef",
+      "physics.jsonl": "5c96b4d8661a24d7149ee33837fc6382890ac9fce1853107c7b8299bdfd4c776"
+    },
+    "sampling": {
+      "temperature": 0.0,
+      "limit": 5,
+      "device": "cuda"
+    }
+  },
+  "coverage": {
+    "dims_covered": [
+      "boundary"
+    ],
+    "weight_covered": 0.12,
+    "dims_expected": [
+      "boundary",
+      "generalization",
+      "generation",
+      "instruction",
+      "knowledge",
+      "multimodal",
+      "reasoning",
+      "toolcall"
+    ]
+  },
+  "weighted_total_score": 54.67,
+  "physics_gate": {
+    "measured": true,
+    "compliance": 0.3667,
+    "n": 30,
+    "confirmed": 11,
+    "failures": [
+      {
+        "case_id": "physics-e01",
+        "solver": false,
+        "invariant": true
+      },
+      {
+        "case_id": "physics-e02",
+        "solver": false,
+        "invariant": true
+      },
+      {
+        "case_id": "physics-e03",
+        "solver": false,
+        "invariant": true
+      },
+      {
+        "case_id": "physics-m01",
+        "solver": false,
+        "invariant": true
+      },
+      {
+        "case_id": "physics-m02",
+        "solver": false,
+        "invariant": true
+      },
+      {
+        "case_id": "physics-m03",
+        "solver": false,
+        "invariant": true
+      },
+      {
+        "case_id": "physics-m04",
+        "solver": false,
+        "invariant": true
+      },
+      {
+        "case_id": "physics-m05",
+        "solver": false,
+        "invariant": true
+      },
+      {
+        "case_id": "physics-m07",
+        "solver": false,
+        "invariant": true
+      },
+      {
+        "case_id": "physics-m08",
+        "solver": false,
+        "invariant": true
+      },
+      {
+        "case_id": "physics-m09",
+        "solver": false,
+        "invariant": false
+      },
+      {
+        "case_id": "physics-m10",
+        "solver": false,
+        "invariant": false
+      },
+      {
+        "case_id": "physics-m11",
+        "solver": false,
+        "invariant": false
+      },
+      {
+        "case_id": "physics-m12",
+        "solver": false,
+        "invariant": false
+      },
+      {
+        "case_id": "physics-m13",
+        "solver": false,
+        "invariant": true
+      },
+      {
+        "case_id": "physics-h02",
+        "solver": false,
+        "invariant": true
+      },
+      {
+        "case_id": "physics-h03",
+        "solver": false,
+        "invariant": true
+      },
+      {
+        "case_id": "physics-h04",
+        "solver": false,
+        "invariant": false
+      },
+      {
+        "case_id": "physics-h06",
+        "solver": false,
+        "invariant": false
+      }
+    ],
+    "reason": null
+  },
+  "physics_compliance_rate": 0.3667,
+  "all_dimensions_pass_90": false,
+  "failed_dimensions": [
+    "boundary (54.7 < 90.0)",
+    "coverage (1/8 维, 缺 ['generalization', 'generation', 'instruction', 'knowledge', 'multimodal', 'reasoning', 'toolcall'])",
+    "physics_gate (36.7% < 100%, 11/30)"
+  ],
+  "dimensions": {
+    "boundary": {
+      "name_zh": "边界处理",
+      "count": 5,
+      "score": 54.67,
+      "pass_rate": 0.2,
+      "weight": 0.12,
+      "tiers": {
+        "easy": {
+          "count": 5,
+          "mean": 54.67
+        }
+      }
+    }
+  },
+  "historical_comparison": {
+    "Qwen3-8B-Base": {
+      "toolcall": 42.5,
+      "reasoning": 58.12,
+      "knowledge": 64.2,
+      "instruction": 68.3,
+      "boundary": 36.4,
+      "generation": 65.1,
+      "generalization": 52.8,
+      "multimodal": 45.0,
+      "overall": 53.9
+    },
+    "virtu-v2": {
+      "toolcall": 73.33,
+      "reasoning": 83.34,
+      "knowledge": 61.61,
+      "instruction": 81.95,
+      "boundary": 62.45,
+      "generation": 77.66,
+      "generalization": 63.13,
+      "multimodal": 91.67,
+      "overall": 68.39
+    },
+    "virtu-v3-all90": {
+      "toolcall": 70.0,
+      "reasoning": 80.93,
+      "knowledge": 81.61,
+      "instruction": 86.29,
+      "boundary": 74.78,
+      "generation": 90.71,
+      "generalization": 81.25,
+      "multimodal": 91.67,
+      "overall": 75.22
+    }
+  },
+  "historical_comparison_provenance": "源码内手写的常量，仓内无对应 raw.jsonl 证据，不能当作历史实测成绩引用；需要对比请指向带 manifest 指纹的 run 目录。",
+  "evidence_files": [
+    "raw.jsonl",
+    "COMPREHENSIVE_EVAL_REPORT.json"
+  ]
+}

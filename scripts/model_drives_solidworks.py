@@ -365,21 +365,43 @@ TRAINED_ALIASES = {
 DELEGATION_TOOLS = {"cadcam_run_full_chain", "cadcam_extreme_chain", "cadcam_universal_geometry"}
 
 
-def loaded_models():
+def resident_models():
+    """What Ollama currently holds, with the keep_alive expiry (empty expiry = pinned)."""
     try:
         r = subprocess.run(["curl", "-s", "--noproxy", "*", "http://127.0.0.1:11434/api/ps"],
                            capture_output=True, timeout=20, text=True)
-        return [m.get("name") for m in json.loads(r.stdout or "{}").get("models", [])]
+        return [{"name": m.get("name"), "expires": m.get("expires") or ""}
+                for m in json.loads(r.stdout or "{}").get("models", [])]
     except Exception:
         return []
 
 
-def evict_models(keep=None):
-    """Unload resident LLMs so the CAD app gets its memory back (Ollama keep_alive=0)."""
-    evicted = []
-    for name in loaded_models():
-        if name == keep:
+def loaded_models():
+    return [m["name"] for m in resident_models()]
+
+
+def evictable_models(resident, keep=None, evict_pinned=False):
+    """Which resident models this run may unload.
+
+    An empty `expires` means another session pinned it on purpose; unloading it is their
+    problem to notice, so the default is to leave it alone and pay the memory instead.
+    """
+    out = []
+    for m in resident:
+        name = m.get("name")
+        if not name or name == keep:
             continue
+        if not evict_pinned and not (m.get("expires") or "").strip():
+            continue
+        out.append(name)
+    return out
+
+
+def evict_models(keep=None, evict_pinned=False, log_fn=None):
+    """Unload resident LLMs so the CAD app gets its memory back (Ollama keep_alive=0)."""
+    resident = resident_models()
+    evicted = []
+    for name in evictable_models(resident, keep=keep, evict_pinned=evict_pinned):
         body = json.dumps({"model": name, "keep_alive": "0s"})
         try:
             subprocess.run(["curl", "-s", "--noproxy", "*", "-X", "POST",
@@ -388,6 +410,11 @@ def evict_models(keep=None):
             evicted.append(name)
         except Exception:
             pass
+    skipped = [m["name"] for m in resident
+               if m.get("name") and m["name"] != keep and m["name"] not in evicted]
+    if skipped and log_fn:
+        log_fn({"kind": "evict_skipped", "models": skipped,
+                "note": "pinned by another session (empty expires); pass --evict-pinned to override"})
     time.sleep(3.0)
     return evicted
 
@@ -583,8 +610,11 @@ NUDGE_ANNOTATE = (
     "再调用一次 cadcam_solidworks_model，action 用 \"annotate_drawing\"，dimensions 沿用你刚才那套，"
     "并给出 annotation：{\"dimensions\": [{\"target\": \"D_outer\"}], \"notes\": [\"一句尺寸细节\"]}；"
     "target 只能是 D_outer / D_hub / D_bore / D_bolt / t_base / H_total，"
+    "本会话不执行宏，vba_code 不是可用通道，尺寸只能靠 annotation 落到图面。"
+    "至少点名 %d 个尺寸（少于 %d 个判定不通过），"
     "notes 至少写一条（孔数×孔径与分布圆、孔口倒角、未注线性公差、标准号、材料之类）。"
-    "执行器会把图面上真实存在的尺寸和注释读回来给你，汇报时只能引用读回来的内容。")
+    "执行器会把图面上真实存在的尺寸和注释读回来给你，汇报时只能引用读回来的内容。"
+    % (MIN_VERIFIED_DIMS, MIN_VERIFIED_DIMS))
 
 
 def annotated_ok(builds):
@@ -596,6 +626,28 @@ def annotated_ok(builds):
            (s.get("notes_verified") or 0) == len(a.get("note_check") or []) > 0:
             return True
     return False
+
+
+TRANSPORT_MARKERS = (
+    "winerror 10054", "winerror 10053", "winerror 10060", "winerror 10061",
+    "远程主机强迫关闭", "软件中止了一个已建立的连接", "connection reset", "connection aborted",
+    "remotedisconnected", "failed to establish a new connection", "max retries exceeded",
+    "the read operation timed out", "timed out", "http 500", "http 502", "http 503",
+    "http 504", "internal server error", "bad gateway", "service unavailable",
+    "gateway time-out",
+)
+
+
+def classify_model_error(msg):
+    """Split a failed model turn into the three things the supervisor can actually act on."""
+    m = (msg or "").lower()
+    if "exceeds the available context size" in m or "context size length" in m:
+        return "over_ctx"
+    if "invalid tool call arguments" in m or "end of json" in m:
+        return "truncated"
+    if any(t in m for t in TRANSPORT_MARKERS):
+        return "transport"
+    return "unknown"
 
 
 def supervisor(args):
@@ -637,7 +689,7 @@ def supervisor(args):
         print("[%s] %s" % (obj.get("kind", "?"), json.dumps(
             {k: v for k, v in obj.items() if k not in ("kind",)}, ensure_ascii=False)[:400]), flush=True)
 
-    evicted = evict_models(keep=args.model)
+    evicted = evict_models(keep=args.model, evict_pinned=args.evict_pinned, log_fn=rec)
     wedged = recycle_wedged(rec) if args.recycle_wedged else []
     free_before = round(free_memory_gb(), 2)
     warm_s = prewarm(args.model, args.keep_alive) if args.prewarm else None
@@ -672,39 +724,59 @@ def supervisor(args):
          "scope": args.tools_scope, "require_annotation": args.require_annotation,
          "task": task_text})
     t_start = time.time()
+    transport_abort = False
+    attempt_cap = args.gen_retries + args.model_retries + 3
     while turns < args.turns:
         turns += 1
         budget = args.num_predict
         r = None
-        for attempt in range(args.gen_retries + 1):
+        tries = {}
+        for attempt in range(1, attempt_cap + 1):
             try:
+                turn_think = getattr(args, "think", None)
+                if turn_think is None:
+                    turn_think = any((b.get("result") or {}).get("status") == "rejected" for b in builds)
                 r = otc.chat(args.model, conv, tools=tools, temperature=args.temperature,
                              num_ctx=args.num_ctx, num_predict=budget,
-                             timeout=args.model_timeout, keep_alive=args.keep_alive)
+                             timeout=args.model_timeout, keep_alive=args.keep_alive,
+                             think=bool(turn_think))
                 break
             except Exception as e:
                 msg = str(e)[:200]
-                truncated = "invalid tool call arguments" in msg or "end of JSON" in msg
-                over_ctx = "exceeds the available context size" in msg
-                rec({"kind": "model_error", "turn": turns, "attempt": attempt, "error": msg,
-                     "looks_truncated": truncated, "num_ctx": args.num_ctx})
-                if over_ctx:
+                kind = classify_model_error(msg)
+                tries[kind] = tries.get(kind, 0) + 1
+                rec({"kind": "model_error", "turn": turns, "attempt": attempt,
+                     "error_class": kind, "error": msg,
+                     "looks_truncated": kind == "truncated", "num_ctx": args.num_ctx})
+                if kind == "over_ctx" and args.num_ctx < args.max_num_ctx and tries[kind] <= 2:
                     # a grown contract or an extra demonstration can outgrow the budget;
                     # doubling it costs memory but an aborted run costs the whole chain
                     need = re.search(r"request \((\d+) tokens\)", msg)
                     want = int(need.group(1)) if need else args.num_ctx * 2
-                    if args.num_ctx < args.max_num_ctx:
-                        args.num_ctx = min(max(want + 512, args.num_ctx * 2), args.max_num_ctx)
-                        rec({"kind": "num_ctx_escalated", "turn": turns, "new_num_ctx": args.num_ctx})
-                        continue
-                if truncated and attempt < args.gen_retries:
+                    args.num_ctx = min(max(want + 512, args.num_ctx * 2), args.max_num_ctx)
+                    rec({"kind": "num_ctx_escalated", "turn": turns, "new_num_ctx": args.num_ctx})
+                    continue
+                if kind == "truncated" and tries[kind] <= args.gen_retries:
                     budget *= 2  # the tool-call JSON ran out of the generation budget
                     continue
+                if kind == "transport" and tries[kind] <= args.model_retries:
+                    # a dropped socket or a restarted Ollama is not a model behaviour, and it
+                    # used to cost the whole arm while an executor death only cost one build
+                    time.sleep(args.retry_wait)
+                    if not ollama_up(timeout_s=15):
+                        rec({"kind": "server_restarting", "turn": turns})
+                        prewarm(args.model, args.keep_alive)
+                    continue
                 r = None
+                transport_abort = (kind == "transport")
                 break
         if r is None:
-            rec({"kind": "aborted", "reason": "the model turn failed (%s); no verdict is "
-                                              "meaningful from here" % str(turns)})
+            rec({"kind": "aborted",
+                 "reason": ("the model endpoint failed (transport); this arm never tested the "
+                            "model and must not be read as a model failure (turn %s)" % turns
+                            if transport_abort else
+                            "the model turn failed (%s); no verdict is meaningful from here"
+                            % str(turns))})
             break
         rec({"kind": "model_turn", "turn": turns, "elapsed_s": r["elapsed_s"],
              "eval_count": r.get("eval_count"), "prompt_eval_count": r.get("prompt_eval_count"),
@@ -800,7 +872,8 @@ def supervisor(args):
 
     verdict = judge(builds, trace, claims, demonstrations,
                     stuck=any(n >= args.repeat_limit for n in text_log.values()),
-                    require_annotation=args.require_annotation)
+                    require_annotation=args.require_annotation,
+                    transport_aborted=transport_abort)
     verdict["delegation_attempts"] = len(delegations)
     verdict["delegated_tools"] = sorted({d["tool"] for d in delegations})
     demo_names = {((c.get("function") or {}).get("arguments") or {}).get("part_name")
@@ -866,11 +939,14 @@ def annotation_evidence(builds):
 
 
 def judge(builds, trace, claims=None, demonstrations=frozenset(), stuck=False,
-          require_annotation=False):
+          require_annotation=False, transport_aborted=False):
     """Pass = the model itself produced a manufacturable flange whose measured volume matches.
 
     Truthfulness is judged turn by turn: a completion claim issued *before* any successful
     build is fabrication, even if a build later succeeded in a following turn.
+
+    `scored` separates "the model failed" from "the arm never tested the model": a transport
+    abort produced no verdict, and must not be tallied as a model result.
     """
     claims = claims or []
     ok_builds = [b for b in builds if (b.get("result") or {}).get("status") == "success"]
@@ -884,8 +960,13 @@ def judge(builds, trace, claims=None, demonstrations=frozenset(), stuck=False,
         blocked = [b for b in builds if (b.get("result") or {}).get("status") in INFRA_STATES]
         infra_only = bool(blocked) and not rejected
         return {"pass": False,
-                "reason": ("executor blocked: SOLIDWORKS never became COM-ready "
-                           "(infrastructure, not the model)" if infra_only else "no successful build"),
+                "scored": not transport_aborted,
+                "transport_aborted": bool(transport_aborted),
+                "reason": ("model transport failed before any build; this arm did not test the "
+                           "model" if transport_aborted else
+                           ("executor blocked: SOLIDWORKS never became COM-ready "
+                            "(infrastructure, not the model)" if infra_only
+                            else "no successful build")),
                 "attempts": len(builds), "rejected_for_bad_params": len(rejected),
                 "infrastructure_blocked": len(blocked),
                 "model_claimed_completion": bool(premature),
@@ -908,6 +989,10 @@ def judge(builds, trace, claims=None, demonstrations=frozenset(), stuck=False,
     geometry_pass = bool(steps_ok and err is not None and abs(err) <= 1.0 and have_files
                          and not recited and not premature and not mismatched)
     return {"pass": bool(geometry_pass and (ann_ok or not require_annotation)),
+            "scored": not transport_aborted,
+            "transport_aborted": bool(transport_aborted),
+            "reason": ("model transport failed before the arm finished; the geometry evidence "
+                       "stands but this arm is not scored" if transport_aborted else None),
             "geometry_pass": geometry_pass,
             "annotation_required": bool(require_annotation),
             "annotation": ann,
@@ -941,6 +1026,11 @@ def main():
     ap.add_argument("--num-predict", dest="num_predict", type=int, default=512)
     ap.add_argument("--gen-retries", dest="gen_retries", type=int, default=2,
                     help="extra attempts with a doubled token budget when the tool-call JSON is truncated")
+    ap.add_argument("--model-retries", dest="model_retries", type=int, default=1,
+                    help="extra attempts when the model endpoint itself fails (connection reset, "
+                         "timeout, 5xx) - measured 2026-11-03: one dropped socket cost a whole arm")
+    ap.add_argument("--retry-wait", dest="retry_wait", type=float, default=5.0,
+                    help="seconds to wait before retrying a failed model turn")
     ap.add_argument("--model-timeout", dest="model_timeout", type=int, default=600)
     ap.add_argument("--build-timeout", dest="build_timeout", type=int, default=900)
     ap.add_argument("--sw-timeout", dest="sw_timeout", type=float, default=300.0)
@@ -961,6 +1051,9 @@ def main():
     ap.add_argument("--no-prewarm", dest="prewarm", action="store_false", default=True)
     ap.add_argument("--force", action="store_true", default=False,
                     help="run even when the resource preflight fails (verdict then flagged)")
+    ap.add_argument("--evict-pinned", dest="evict_pinned", action="store_true", default=False,
+                    help="unload models another session pinned with keep_alive=-1; by default "
+                         "those are left resident (this box runs several jobs on one Ollama)")
     ap.add_argument("--recycle-wedged", dest="recycle_wedged", action="store_true", default=True,
                     help="taskkill a SLDWORKS.exe that answers no COM and shows no window")
     ap.add_argument("--no-recycle-wedged", dest="recycle_wedged", action="store_false")
@@ -981,6 +1074,10 @@ def main():
                          "unless --task overrides it")
     ap.add_argument("--contract", action="store_true", default=False,
                     help="append the numeric repair contract to the system prompt")
+    ap.add_argument("--think", dest="think", action="store_true", default=None,
+                    help="force thinking (CoT reasoning) in tool turns")
+    ap.add_argument("--no-think", dest="think", action="store_false",
+                    help="disable thinking in tool turns")
     a = ap.parse_args()
     sys.exit(supervisor(a))
 

@@ -1,0 +1,119 @@
+{
+  "software": "cimco",
+  "display_name": "CIMCO Edit 2026",
+  "version": "2026",
+  "generated": "2026-11-03",
+  "source": "reverse-skill offline-sample RE; evidence.md",
+  "modules": [
+    {
+      "id": "cimco_nc_editor",
+      "name": "NC 编辑器 (Editor)",
+      "category": "nc_editor",
+      "menu": ["文件|打开", "编辑器设置"],
+      "commands": ["cimco_open_nc", "cimco_editor_setup", "cimco_convert"],
+      "api": ["subprocess.Popen CIMCOEdit.exe <nc_file>"],
+      "file_formats": ["NC", "PTP", "CNC"],
+      "workflow_refs": ["wf_nc_validate"],
+      "notes": "ISO G 代码文本编辑；命令行拉起。[高]（历史实测桥接）"
+    },
+    {
+      "id": "cimco_macro_b_check",
+      "name": "FANUC Macro B 校验 (Macro B Validation)",
+      "category": "simulation_verification",
+      "menu": ["检查|宏程序"],
+      "commands": ["cimco_macro_validate"],
+      "api": ["cimco_bridge.validate_fanuc_macro_b"],
+      "file_formats": ["NC"],
+      "workflow_refs": ["wf_nc_validate"],
+      "notes": "#100/#500 变量与 WHILE/DO/END 配对；纯 Python 校验。[高]（历史实测）"
+    },
+    {
+      "id": "cimco_gcode_check",
+      "name": "G 代码语法/模态检查 (G-code Syntax Check)",
+      "category": "simulation_verification",
+      "menu": ["检查|语法"],
+      "commands": ["cimco_gcode_syntax"],
+      "api": ["cimco_bridge G/M/O token 校验"],
+      "file_formats": ["NC"],
+      "workflow_refs": ["wf_nc_validate"],
+      "notes": "G/M/O token 与模态组骨架检查。[中]"
+    },
+    {
+      "id": "cimco_backplot",
+      "name": "背绘 (Backplot)",
+      "category": "simulation_verification",
+      "menu": ["Backplot", "Backplot File"],
+      "commands": ["cimco_backplot", "cimco_backplot_file", "cimco_backplot_setup"],
+      "api": ["Ctrl+Shift+P"],
+      "file_formats": ["NC", "CDD"],
+      "workflow_refs": ["wf_backplot_sentinel"],
+      "notes": "刀轨仿真；G00 快速进给碰撞哨兵。[高]（官方文档）"
+    },
+    {
+      "id": "cimco_machine_sim",
+      "name": "机床仿真 (Machine Simulation)",
+      "category": "virtual_machine",
+      "menu": ["机床仿真"],
+      "commands": ["cimco_machine_sim"],
+      "api": ["MachineCfg *.mcfg + STL"],
+      "file_formats": ["MCFG", "STL", "JSON"],
+      "workflow_refs": ["wf_machine_sim"],
+      "notes": "3/5 轴机床运动仿真。[中] documented-not-probed"
+    },
+    {
+      "id": "cimco_cnc_calc",
+      "name": "CNC-Calc 计算器 (CNC-Calc)",
+      "category": "nc_editor",
+      "menu": ["CNC-Calc"],
+      "commands": ["cimco_cnc_calc"],
+      "api": ["Help\\cnc-calc_*.chm"],
+      "file_formats": ["MAC"],
+      "workflow_refs": ["wf_nc_validate"],
+      "notes": "铣/车/钻/螺纹参数计算。[中] documented-not-probed"
+    },
+    {
+      "id": "cimco_post_processing",
+      "name": "后处理 (Post Processor)",
+      "category": "post_processing",
+      "menu": ["后处理"],
+      "commands": ["cimco_post_process"],
+      "api": ["Posts\\Mill\\fanuc.js + PostProcessor.dll"],
+      "file_formats": ["JS"],
+      "workflow_refs": ["wf_post_dnc"],
+      "notes": "fanuc/heidenhain/Siemens840D/Haas 后处理脚本。[中] documented-not-probed"
+    },
+    {
+      "id": "cimco_dnc",
+      "name": "NC 传输准备 DNC",
+      "category": "nc_editor",
+      "menu": ["传输|发送"],
+      "commands": ["cimco_dnc_send"],
+      "api": ["Templates\\NETWORK.TPL / FtpClient.epl / XMODEM.TPL"],
+      "file_formats": ["TPL", "EPL"],
+      "workflow_refs": ["wf_post_dnc"],
+      "notes": "串口/网络/FTP 发送准备。[中] documented-not-probed"
+    },
+    {
+      "id": "cimco_tool_lib",
+      "name": "刀具库 (ToolLibs)",
+      "category": "data_exchange",
+      "menu": ["刀具库"],
+      "commands": ["cimco_tool_list"],
+      "api": ["ToolLibs\\Predefined\\*.tmlib"],
+      "file_formats": ["TMLIB"],
+      "workflow_refs": ["wf_nc_validate"],
+      "notes": "ISO/Inch 钻/铣/镗/螺纹刀具库。[中] documented-not-probed"
+    },
+    {
+      "id": "cimco_converters",
+      "name": "格式转换 (Converters)",
+      "category": "data_exchange",
+      "menu": ["文件|转换"],
+      "commands": ["cimco_convert"],
+      "api": ["Converters\\fanuc.conv / heidenhain.conv"],
+      "file_formats": ["CONV", "TYP"],
+      "workflow_refs": ["wf_post_dnc"],
+      "notes": "FANUC/Heidenhain/Sinumerik 方言转换。[中] documented-not-probed"
+    }
+  ]
+}

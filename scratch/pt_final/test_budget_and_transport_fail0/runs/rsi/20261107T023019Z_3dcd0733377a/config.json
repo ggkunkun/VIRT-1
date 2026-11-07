@@ -1,0 +1,30 @@
+{
+  "case_dir": "data/cases",
+  "dimensions": [
+    "physics"
+  ],
+  "model_id": "virtu-ties-v1:latest",
+  "base_url": "http://127.0.0.1:11434",
+  "rounds": 2,
+  "limit": 0,
+  "seed": 20261104,
+  "validation_fraction": 0.4,
+  "min_validation": 20,
+  "min_gain": 5.0,
+  "max_dimension_regression": 0.0,
+  "max_regressions": 0,
+  "min_dev_gain": 0.1,
+  "plateau_rounds": 2,
+  "max_calls": 2,
+  "max_seconds": 900,
+  "timeout": 90,
+  "max_tokens": 512,
+  "proposal_tokens": 1024,
+  "max_strategy_chars": 2400,
+  "synthetic_per_task": 12,
+  "protect_dirs": [],
+  "arm_spec": {},
+  "allow_remote": false,
+  "noise_sigma": 0.0,
+  "noise_z": 1.96
+}

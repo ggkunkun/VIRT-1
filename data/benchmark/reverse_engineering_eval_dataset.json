@@ -1,0 +1,474 @@
+{
+  "benchmark_name": "Virtu Industrial Reverse Engineering Capability Benchmark (VIRTU-REV-95)",
+  "version": "1.0.0",
+  "total_cases": 10,
+  "passing_threshold": 75.0,
+  "target_score": 95.0,
+  "cases": [
+    {
+      "id": "REV-01",
+      "name": "弯管机三开式轮模总成 (Wheel Mold Assembly)",
+      "family": "ROTATIONAL_MOLD",
+      "source_file": "assets/wheel_mold_P0.step",
+      "task_description": "对给定的微型机轮模总成 STEP 模型进行多体 B-Rep 逆向解析，提取最大外径、回转母线阶梯、3x 均布螺栓孔分度圆 PCD 及三道弯曲型槽 (6R15-6R12-6R10)，并重构参数化特征树。",
+      "ground_truth": {
+        "bounding_box_size": [
+          143.47,
+          60.5,
+          83.3
+        ],
+        "outer_diameter": 53.0,
+        "inner_bore": 5.0,
+        "total_length": 40.0,
+        "solid_count": 6,
+        "pcd_diameter": 38.0,
+        "bolt_hole_dia": 7.0,
+        "bolt_hole_count": 3,
+        "bolt_angles": [
+          -120.0,
+          0.0,
+          120.0
+        ],
+        "grooves": [
+          {
+            "tube_dia": 6.0,
+            "bend_radius": 15.0
+          },
+          {
+            "tube_dia": 6.0,
+            "bend_radius": 12.0
+          },
+          {
+            "tube_dia": 6.0,
+            "bend_radius": 10.0
+          }
+        ],
+        "theoretical_volume_cm3": 241.15,
+        "feature_sequence": [
+          "FeatureRevolve2",
+          "FeatureCut3",
+          "EquationMgr"
+        ]
+      },
+      "evaluation_criteria": {
+        "required_dims": [
+          "outer_diameter",
+          "inner_bore",
+          "pcd_diameter",
+          "bolt_hole_dia",
+          "bolt_hole_count"
+        ],
+        "dim_tolerance_rel": 0.01,
+        "volume_tolerance_rel": 0.02
+      }
+    },
+    {
+      "id": "REV-02",
+      "name": "国标高压带颈对焊法兰 (High-Pressure Welded Neck Flange)",
+      "family": "FLANGE_PLATE",
+      "source_file": "artifacts/cad_demo/precision_flange.step",
+      "task_description": "逆向解析精密管道法兰 STEP 实体，提取法兰外径、中心通孔径、凸缘厚度、密封止口以及 6x 均布螺栓孔 PCD，并重构 SOLIDWORKS 2021 VBA 特征宏与圆周阵列。",
+      "ground_truth": {
+        "bounding_box_size": [
+          160.0,
+          160.0,
+          24.5
+        ],
+        "outer_diameter": 160.0,
+        "inner_bore": 50.0,
+        "total_length": 24.0,
+        "solid_count": 1,
+        "pcd_diameter": 130.0,
+        "bolt_hole_dia": 12.0,
+        "bolt_hole_count": 6,
+        "bolt_angles": [
+          0.0,
+          60.0,
+          120.0,
+          180.0,
+          240.0,
+          300.0
+        ],
+        "grooves": [
+          {
+            "sealing_slot_w": 4.5,
+            "sealing_slot_d": 2.5
+          }
+        ],
+        "theoretical_volume_cm3": 423.74,
+        "feature_sequence": [
+          "FeatureExtrusion3",
+          "FeatureCut3",
+          "FeatureCircularPattern",
+          "EquationMgr"
+        ]
+      },
+      "evaluation_criteria": {
+        "required_dims": [
+          "outer_diameter",
+          "inner_bore",
+          "pcd_diameter",
+          "bolt_hole_dia",
+          "bolt_hole_count"
+        ],
+        "dim_tolerance_rel": 0.01,
+        "volume_tolerance_rel": 0.015
+      }
+    },
+    {
+      "id": "REV-03",
+      "name": "精密四段减速传动阶梯轴 (Stepped Transmission Shaft)",
+      "family": "ROTATIONAL_SHAFT",
+      "source_file": "assets/stepped_shaft.step",
+      "task_description": "对四段精密回转轴进行几何逆向推导，提取各阶梯轴段外径 (25, 32, 40, 28)、轴段长度、平键槽截面尺寸与过渡圆角，建立方程式全局变量驱动模型。",
+      "ground_truth": {
+        "bounding_box_size": [
+          40.0,
+          40.0,
+          120.0
+        ],
+        "outer_diameter": 40.0,
+        "inner_bore": 0.0,
+        "total_length": 120.0,
+        "solid_count": 1,
+        "step_diameters": [
+          25.0,
+          32.0,
+          40.0,
+          28.0
+        ],
+        "step_lengths": [
+          30.0,
+          45.0,
+          20.0,
+          25.0
+        ],
+        "keyway": {
+          "width": 8.0,
+          "depth": 4.0,
+          "length": 28.0
+        },
+        "fillet_r": 1.5,
+        "theoretical_volume_cm3": 90.59,
+        "feature_sequence": [
+          "FeatureRevolve2",
+          "CutExtrude",
+          "Chamfer",
+          "Fillet",
+          "EquationMgr"
+        ]
+      },
+      "evaluation_criteria": {
+        "required_dims": [
+          "outer_diameter",
+          "total_length",
+          "step_diameters",
+          "keyway"
+        ],
+        "dim_tolerance_rel": 0.01,
+        "volume_tolerance_rel": 0.015
+      }
+    },
+    {
+      "id": "REV-04",
+      "name": "自对中双向轴承支架箱体 (Self-Aligning Pillow Block Bracket)",
+      "family": "BEARING_BRACKET",
+      "source_file": "assets/bearing_bracket.step",
+      "task_description": "逆向推导箱体类支架几何特征：安装底板长宽高、轴承安装孔径、中心高、4x 沉头螺栓孔安装中心距，输出带几何公差与全约束草图的设计树。",
+      "ground_truth": {
+        "bounding_box_size": [
+          140.0,
+          70.0,
+          110.0
+        ],
+        "outer_diameter": 70.0,
+        "inner_bore": 47.0,
+        "total_length": 140.0,
+        "center_height": 50.0,
+        "solid_count": 1,
+        "pitch_x": 105.0,
+        "pitch_y": 40.0,
+        "bolt_hole_dia": 10.0,
+        "bolt_hole_count": 4,
+        "theoretical_volume_cm3": 258.23,
+        "feature_sequence": [
+          "BossExtrude",
+          "BossExtrude",
+          "CutExtrude",
+          "HoleWizard",
+          "EquationMgr"
+        ]
+      },
+      "evaluation_criteria": {
+        "required_dims": [
+          "inner_bore",
+          "center_height",
+          "pitch_x",
+          "pitch_y",
+          "bolt_hole_dia"
+        ],
+        "dim_tolerance_rel": 0.01,
+        "volume_tolerance_rel": 0.02
+      }
+    },
+    {
+      "id": "REV-05",
+      "name": "重型液压缸螺纹配合后盖 (Hydraulic Cylinder End Cap)",
+      "family": "FLANGE_PLATE",
+      "source_file": "assets/hydraulic_end_cap.step",
+      "task_description": "从 STEP 中反求液压缸盖的主外径、内导向柱径、螺纹配合退刀槽、Yx 密封圈槽、以及 4x 对称固定通孔，并验证体积守恒率。",
+      "ground_truth": {
+        "bounding_box_size": [
+          95.0,
+          95.0,
+          35.0
+        ],
+        "outer_diameter": 95.0,
+        "inner_bore": 32.0,
+        "total_length": 35.0,
+        "solid_count": 1,
+        "pcd_diameter": 75.0,
+        "bolt_hole_dia": 9.0,
+        "bolt_hole_count": 4,
+        "grooves": [
+          {
+            "seal_slot_w": 5.0,
+            "seal_slot_d": 3.2
+          }
+        ],
+        "theoretical_volume_cm3": 136.67,
+        "feature_sequence": [
+          "FeatureRevolve2",
+          "CutExtrude",
+          "CircularPattern",
+          "EquationMgr"
+        ]
+      },
+      "evaluation_criteria": {
+        "required_dims": [
+          "outer_diameter",
+          "inner_bore",
+          "pcd_diameter",
+          "bolt_hole_dia",
+          "bolt_hole_count"
+        ],
+        "dim_tolerance_rel": 0.01,
+        "volume_tolerance_rel": 0.015
+      }
+    },
+    {
+      "id": "REV-06",
+      "name": "离心式多级水泵叶轮盘体 (Centrifugal Pump Impeller Disc)",
+      "family": "ROTATIONAL_MOLD",
+      "source_file": "assets/impeller_disc.step",
+      "task_description": "从三维模型中逆向回转叶轮盖板阶梯断截面，提取定位止口、动平衡去重槽、轴套键槽孔及中心轴孔径。",
+      "ground_truth": {
+        "bounding_box_size": [
+          180.0,
+          180.0,
+          30.0
+        ],
+        "outer_diameter": 180.0,
+        "inner_bore": 25.0,
+        "total_length": 30.0,
+        "solid_count": 1,
+        "hub_dia": 55.0,
+        "hub_length": 25.0,
+        "keyway": {
+          "width": 8.0,
+          "depth": 3.5
+        },
+        "theoretical_volume_cm3": 240.47,
+        "feature_sequence": [
+          "FeatureRevolve2",
+          "CutExtrude",
+          "EquationMgr"
+        ]
+      },
+      "evaluation_criteria": {
+        "required_dims": [
+          "outer_diameter",
+          "inner_bore",
+          "hub_dia",
+          "total_length"
+        ],
+        "dim_tolerance_rel": 0.01,
+        "volume_tolerance_rel": 0.015
+      }
+    },
+    {
+      "id": "REV-07",
+      "name": "高压柱塞调节阀芯套筒 (High-Pressure Plunger Sleeve)",
+      "family": "ROTATIONAL_SHAFT",
+      "source_file": "assets/valve_sleeve.step",
+      "task_description": "逆向提取套筒双向过流孔、节流减压窗口、环向密封槽、内柱塞密封面配合公差带 H7/h6，生成带全剖视图的工程图定义。",
+      "ground_truth": {
+        "bounding_box_size": [
+          45.0,
+          45.0,
+          85.0
+        ],
+        "outer_diameter": 45.0,
+        "inner_bore": 20.0,
+        "total_length": 85.0,
+        "solid_count": 1,
+        "radial_holes": {
+          "dia": 6.0,
+          "count": 4,
+          "axial_pos": 42.5
+        },
+        "grooves": [
+          {
+            "width": 3.0,
+            "depth": 2.0,
+            "axial_pos": 15.0
+          },
+          {
+            "width": 3.0,
+            "depth": 2.0,
+            "axial_pos": 70.0
+          }
+        ],
+        "theoretical_volume_cm3": 108.04,
+        "feature_sequence": [
+          "FeatureRevolve2",
+          "CutExtrude",
+          "CircularPattern",
+          "EquationMgr"
+        ]
+      },
+      "evaluation_criteria": {
+        "required_dims": [
+          "outer_diameter",
+          "inner_bore",
+          "total_length"
+        ],
+        "dim_tolerance_rel": 0.01,
+        "volume_tolerance_rel": 0.02
+      }
+    },
+    {
+      "id": "REV-08",
+      "name": "精密数控机床主轴拉爪衬套 (Spindle Collet Bushing)",
+      "family": "ROTATIONAL_SHAFT",
+      "source_file": "assets/spindle_bushing.step",
+      "task_description": "反求 BT40 主轴夹紧拉爪衬套的内外锥度面 (7:24 锥度 / 半角 8.297°)、定位槽深与卡爪锁紧沉孔台阶。",
+      "ground_truth": {
+        "bounding_box_size": [
+          52.0,
+          52.0,
+          74.9
+        ],
+        "outer_diameter": 52.0,
+        "inner_bore": 28.0,
+        "total_length": 90.0,
+        "solid_count": 1,
+        "conical_taper": "7:24 (8.297 deg)",
+        "flange_dia": 52.0,
+        "body_dia": 44.0,
+        "theoretical_volume_cm3": 53.16,
+        "feature_sequence": [
+          "FeatureRevolve2",
+          "Chamfer",
+          "EquationMgr"
+        ]
+      },
+      "evaluation_criteria": {
+        "required_dims": [
+          "outer_diameter",
+          "inner_bore",
+          "total_length"
+        ],
+        "dim_tolerance_rel": 0.01,
+        "volume_tolerance_rel": 0.02
+      }
+    },
+    {
+      "id": "REV-09",
+      "name": "机床直线导轨定位滑块基板 (Linear Guide Carriage Base)",
+      "family": "BEARING_BRACKET",
+      "source_file": "assets/guide_carriage_base.step",
+      "task_description": "逆向提取导轨滑块底板下部导轨 V 型/燕尾导槽、侧向基准定位面、顶面 4x M6 螺纹安装孔距与润滑油嘴接口。",
+      "ground_truth": {
+        "bounding_box_size": [
+          90.0,
+          60.0,
+          32.0
+        ],
+        "total_length": 90.0,
+        "width": 60.0,
+        "height": 32.0,
+        "solid_count": 1,
+        "rail_groove_w": 28.0,
+        "rail_groove_d": 12.0,
+        "pitch_x": 60.0,
+        "pitch_y": 40.0,
+        "hole_dia": 6.0,
+        "theoretical_volume_cm3": 138.94,
+        "feature_sequence": [
+          "BossExtrude",
+          "CutExtrude",
+          "HoleWizard",
+          "EquationMgr"
+        ]
+      },
+      "evaluation_criteria": {
+        "required_dims": [
+          "total_length",
+          "width",
+          "height",
+          "pitch_x",
+          "pitch_y"
+        ],
+        "dim_tolerance_rel": 0.01,
+        "volume_tolerance_rel": 0.02
+      }
+    },
+    {
+      "id": "REV-10",
+      "name": "模具成型分模抽芯定位轴 (Mold Core Pulling Mandrel)",
+      "family": "ROTATIONAL_MOLD",
+      "source_file": "assets/mold_core_mandrel.step",
+      "task_description": "反求精密注塑/压铸模具抽芯滑块定位轴的回转芯体、脱模斜度 (1.5°)、顶针复位孔、环形冷却密封槽与安装台阶。",
+      "ground_truth": {
+        "bounding_box_size": [
+          38.0,
+          38.0,
+          110.0
+        ],
+        "outer_diameter": 38.0,
+        "inner_bore": 12.0,
+        "total_length": 110.0,
+        "solid_count": 1,
+        "draft_angle_deg": 1.5,
+        "flange_d": 38.0,
+        "stem_d": 24.0,
+        "tip_d": 18.0,
+        "grooves": [
+          {
+            "width": 2.5,
+            "depth": 1.8,
+            "count": 2
+          }
+        ],
+        "theoretical_volume_cm3": 41.55,
+        "feature_sequence": [
+          "FeatureRevolve2",
+          "CutExtrude",
+          "Draft",
+          "EquationMgr"
+        ]
+      },
+      "evaluation_criteria": {
+        "required_dims": [
+          "outer_diameter",
+          "inner_bore",
+          "total_length",
+          "stem_d"
+        ],
+        "dim_tolerance_rel": 0.01,
+        "volume_tolerance_rel": 0.015
+      }
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "collision_events": 2,
+  "collision_nc_lines": [
+    17,
+    44
+  ],
+  "collision_volumes_mm3": {
+    "max": 103453.3141,
+    "min": 103453.3141,
+    "count": 1
+  },
+  "nc_parse_errors": 1,
+  "sample_collisions": [
+    "错误:在 17 行:G28 U0.0 W0.0,\"Spindle\"和\"Turret\"碰撞.",
+    "错误:在 44 行:G28 U0.0 W0.0,刀\"2\" 与 \"Stock\" 碰撞，碰撞体积 103453.3141"
+  ],
+  "sample_parse_errors": [
+    "错误:字符 \"G90  - Absolute dimensioning mode\" 未定义.  此行其余内容被忽略."
+  ],
+  "ran_past_program_end": false,
+  "stdout_chars": 164,
+  "attributed_events": 0,
+  "attributed_lines": [],
+  "unattributed_events": 0,
+  "unattributed_sample": [],
+  "project": "D:\\Virtu模型\\build\\ptmp_full\\test_vericut_not_fooled_by_own0\\p.vcproject",
+  "rc": 0,
+  "argv": "batch batchp reset_cutcolor",
+  "attempts": [
+    {
+      "attempt": 1,
+      "rc": 0,
+      "raw_events": 2,
+      "attributed_events": 0,
+      "stdout_chars": 164
+    },
+    {
+      "attempt": 2,
+      "rc": 0,
+      "raw_events": 2,
+      "attributed_events": 0,
+      "stdout_chars": 164
+    }
+  ],
+  "elapsed_s": 0.0
+}

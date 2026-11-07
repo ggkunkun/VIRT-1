@@ -1,0 +1,108 @@
+{
+  "schema_version": "1.0.0",
+  "description": "量化评测指标与验收门。所有比率均以 [0,1] 表示，耗时单位为秒。",
+  "denominator_rules": {
+    "valid_task": "已实际下发到被测模型且非 transport_error / non_terminal 的任务记录",
+    "excluded_from_capability": ["transport_error", "dry_run", "recorded_replay"],
+    "note": "沿用 virtu_eval/report.py 口径：transport_error 不计入能力分母，单独记为覆盖损失；empty_response / truncated 计入分母，属于真实产品失败",
+    "invalid_run_if_transport_rate_above": 0.05,
+    "fresh_run_dir_required": true
+  },
+  "metrics": {
+    "task_success_rate": {
+      "formula": "success_tasks / valid_tasks",
+      "success_def": "all_criteria_passed AND physics_gate.ok AND NOT fatal_error AND verdict != transport_error",
+      "weight": 0.24, "direction": "higher"
+    },
+    "first_attempt_success_rate": {
+      "formula": "success_tasks_with_retry_count_0 / valid_tasks",
+      "weight": 0.08, "direction": "higher"
+    },
+    "physics_compliance_rate": {
+      "formula": "physics_gate_passed_decisions / total_decisions",
+      "weight": 0.16, "direction": "higher",
+      "veto": true,
+      "note": "否决性指标：任何违反物理规律（体积不守恒 / FOS<1.5 / G00 扎刀 / 公差带为负 / 量纲错 / 几何矛盾）的建模或决策即判该任务失败"
+    },
+    "decision_optimality_rate": {
+      "formula": "decisions_equal_to_argmin_cost_under_constraints / total_graded_decisions",
+      "cost_function": "estimated_time_s * (1 + risk_weight * risk) ; 物理违规候选 cost = inf",
+      "risk_weight": 0.5,
+      "weight": 0.12, "direction": "higher",
+      "note": "同时考核最优与最快：chosen 必须是可行解集合里代价最小者，仅选对工艺但选了更慢路线判不得分"
+    },
+    "semantic_grounding_rate": {
+      "formula": "mean(referenced_condition_fields / required_condition_fields)",
+      "weight": 0.10, "direction": "higher",
+      "note": "防随机猜测：决策理由必须显式引用题面给出的工况字段（孔径/材料/公差/余量/机床上限等），套模板瞎猜得 0"
+    },
+    "tool_call_valid_rate": {
+      "formula": "valid_tool_calls / total_tool_calls",
+      "valid_def": "工具名属于 bridges/tool_calling_specs.py 的 14 个 cadcam_* 白名单 AND 参数通过 JSON Schema 校验 AND 使用 {'tool','arguments'} 键名",
+      "weight": 0.08, "direction": "higher"
+    },
+    "parametric_model_valid_rate": {
+      "formula": "valid_models / total_parametric_models",
+      "valid_def": "几何无矛盾(d_inner<d_outer) AND 体积守恒(ΔV<0 切除 / >0 凸台) AND FOS>=1.5 AND 公差带非负",
+      "weight": 0.10, "direction": "higher"
+    },
+    "gui_action_valid_rate": {
+      "formula": "valid_actions / total_actions",
+      "valid_def": "动作名在受控动作空间内 AND 坐标在已声明 DPI 感知后的屏幕范围内 AND 未触发异常",
+      "weight": 0.06, "direction": "higher"
+    },
+    "error_rate": {
+      "formula": "tasks_with_any_error / valid_tasks",
+      "weight": 0.06, "direction": "lower",
+      "includes": ["exception", "com_error", "transport_error", "invalid_action", "physics_violation"]
+    },
+    "fatal_error_rate": {
+      "formula": "tasks_with_fatal_error / valid_tasks",
+      "fatal_def": "未捕获异常 / COM 连接断开且未恢复 / G00 扎刀 / Auto-Diff 红色过切 / 模型文件损坏",
+      "weight": 0.0, "direction": "lower",
+      "note": "严重报错是硬失败，单独统计，不允许通过重试掩盖"
+    },
+    "transport_error_rate": {
+      "formula": "transport_error_records / all_records",
+      "weight": 0.0, "direction": "lower"
+    },
+    "latency_mean_s": { "formula": "mean(end_to_end_elapsed_s)", "weight": 0.0, "direction": "lower" },
+    "latency_p50_s": { "formula": "percentile(end_to_end_elapsed_s, 50)", "weight": 0.0, "direction": "lower" },
+    "latency_p95_s": { "formula": "percentile(end_to_end_elapsed_s, 95)", "weight": 0.0, "direction": "lower" },
+    "recovery_rate": {
+      "formula": "recovered_nonfatal_errors / nonfatal_errors",
+      "weight": 0.0, "direction": "higher",
+      "note": "读屏/键鼠执行中的可恢复异常（对话框、COM 重连、坐标夹紧）应被自动处置，不升级为严重报错"
+    }
+  },
+  "composite": {
+    "name": "engineering_capability_score",
+    "formula": "sum(metric_value_normalized * weight)",
+    "normalization": "higher_is_better -> v ; lower_is_better -> max(0, 1 - v / ceiling)",
+    "latency_ceiling_s": 180.0,
+    "error_rate_ceiling": 1.0,
+    "hard_gate_first": true
+  },
+  "acceptance_gates": {
+    "task_success_rate_min": 0.85,
+    "first_attempt_success_rate_min": 0.70,
+    "physics_compliance_rate_min": 1.0,
+    "decision_optimality_rate_min": 0.85,
+    "semantic_grounding_rate_min": 0.80,
+    "tool_call_valid_rate_min": 0.95,
+    "parametric_model_valid_rate_min": 0.95,
+    "gui_action_valid_rate_min": 0.98,
+    "error_rate_max": 0.10,
+    "fatal_error_rate_max": 0.02,
+    "transport_error_rate_max": 0.05,
+    "latency_p95_s_max": 180.0,
+    "engineering_capability_score_min": 0.80,
+    "min_valid_tasks": 30
+  },
+  "regression_guard": {
+    "baseline_arm": "qwen3:8b",
+    "require_no_dimension_drop_over": 0.02,
+    "replay_ratio_min": 0.30,
+    "note": "对照 v2 教训：用通用平衡语料稀释会导致 reasoning 反降，必须保留 >=30% 弱点定向 + 反遗忘 replay，并逐维比对基座"
+  }
+}

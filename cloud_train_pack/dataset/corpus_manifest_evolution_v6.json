@@ -1,0 +1,35 @@
+{
+  "status": "APPROVED",
+  "timestamp": "2026-11-05T18:25:00+08:00",
+  "sft_file": "D:\\Virtu模型\\cloud_train_pack\\dataset\\train_corpus_evolution_v6.jsonl",
+  "sft_sha256": "5b811792b893390195dfe24690acad8de56292fbd9427d08afc6895a11104505",
+  "sft_total_rows": 6099,
+  "dpo_file": "D:\\Virtu模型\\cloud_train_pack\\dataset\\dpo_evolution_pairs_v6.jsonl",
+  "dpo_sha256": "ec5ec1eef72089afe630c8fcadfdec66f0bf08c204fc95cb3a6869a2c2e6d8f6",
+  "dpo_total_pairs": 850,
+  "sources": {
+    "comprehensive_sft": {
+      "rows": 4999,
+      "sha256": "476934b935ccc8a3665aa99cd29fcec1db1364868edb0c4f48f260c8fface977"
+    },
+    "weak_physics_sft": {
+      "rows": 108,
+      "sha256": "b606c07754e22dee4ace692a965d500f29938dcea9fadb66e6717cbd39ba381f"
+    },
+    "code_hardening_sft": {
+      "rows": 112,
+      "sha256": "1b8654419be2b64e81626b07abe3b76b4928f1110953a19293048d2bf5ad024c"
+    },
+    "base_dpo": {
+      "pairs": 800,
+      "sha256": "a51b94a3e629f1b8212a9d9a1f31ee7bfb12f32623f916dafb109eca4991bd40"
+    }
+  },
+  "contamination_check": {
+    "path": "D:\\Virtu模型\\cloud_train_pack\\dataset\\train_corpus_evolution_v6.jsonl",
+    "rows": 6099,
+    "hard_leaks": 0,
+    "numeric_proxy_only": 1736,
+    "examples": []
+  }
+}

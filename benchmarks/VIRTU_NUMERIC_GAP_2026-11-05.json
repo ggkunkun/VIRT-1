@@ -1,0 +1,398 @@
+{
+  "leg": "board7__frozen_comp_v5__v4",
+  "case_dir": "data/benchmark/virtu_eval_v1",
+  "rows": 210,
+  "rows_without_case": 0,
+  "numeric_near_checks": 100,
+  "numeric_near_failures": 54,
+  "cases_with_numeric_failure": 30,
+  "class_counts": {
+    "arithmetic_off_by_small_factor": 29,
+    "radius_vs_diameter": 4,
+    "wrong_by_more_than_half": 19,
+    "pi_dropped_or_kept": 2
+  },
+  "class_by_dimension": {
+    "generalization": {
+      "arithmetic_off_by_small_factor": 12,
+      "radius_vs_diameter": 1,
+      "wrong_by_more_than_half": 8
+    },
+    "generation": {
+      "radius_vs_diameter": 1
+    },
+    "knowledge": {
+      "arithmetic_off_by_small_factor": 1,
+      "wrong_by_more_than_half": 2,
+      "pi_dropped_or_kept": 1
+    },
+    "reasoning": {
+      "wrong_by_more_than_half": 9,
+      "arithmetic_off_by_small_factor": 16,
+      "radius_vs_diameter": 2,
+      "pi_dropped_or_kept": 1
+    }
+  },
+  "reachability": {
+    "deterministic_pass_produces_a_reference": 54
+  },
+  "unreachable_by_field": {},
+  "unreachable_examples": {},
+  "replay": {
+    "cases_changed_by_deterministic_pass": 28,
+    "cases_raised": 28,
+    "cases_lowered": 0,
+    "weighted_raw": 68.44,
+    "weighted_after_deterministic": 76.91,
+    "delta": 8.47
+  },
+  "per_case": [
+    {
+      "case_id": "generalization-e08",
+      "dimension": "generalization",
+      "tier": "easy",
+      "class": "arithmetic_off_by_small_factor",
+      "ratio": 1.002876,
+      "before_score": 12.5,
+      "after_score": 100.0,
+      "guard_problems": [
+        "主轴转速",
+        "进给速度"
+      ],
+      "evidence": "closest=718.26 target=716.2 tol=0.3 all=[80.0, 1000.0, 1000.0, 180.0, 3.1416, 80.0, 718.26, 718.3]"
+    },
+    {
+      "case_id": "generalization-e08",
+      "dimension": "generalization",
+      "tier": "easy",
+      "class": "arithmetic_off_by_small_factor",
+      "ratio": 1.163603,
+      "before_score": 12.5,
+      "after_score": 100.0,
+      "guard_problems": [
+        "主轴转速",
+        "进给速度"
+      ],
+      "evidence": "closest=1000.0 target=859.4 tol=0.2 all=[80.0, 1000.0, 1000.0, 180.0, 3.1416, 80.0, 718.26, 718.3]"
+    },
+    {
+      "case_id": "generalization-e09",
+      "dimension": "generalization",
+      "tier": "easy",
+      "class": "arithmetic_off_by_small_factor",
+      "ratio": 1.396258,
+      "before_score": 12.5,
+      "after_score": 100.0,
+      "guard_problems": [
+        "主轴转速",
+        "进给速度"
+      ],
+      "evidence": "closest=1000.0 target=716.2 tol=0.3 all=[1000.0, 2000.0]"
+    },
+    {
+      "case_id": "generalization-e09",
+      "dimension": "generalization",
+      "tier": "easy",
+      "class": "arithmetic_off_by_small_factor",
+      "ratio": 1.163603,
+      "before_score": 12.5,
+      "after_score": 100.0,
+      "guard_problems": [
+        "主轴转速",
+        "进给速度"
+      ],
+      "evidence": "closest=1000.0 target=859.4 tol=0.2 all=[1000.0, 2000.0]"
+    },
+    {
+      "case_id": "generalization-m03",
+      "dimension": "generalization",
+      "tier": "medium",
+      "class": "arithmetic_off_by_small_factor",
+      "ratio": 1.25,
+      "before_score": 0.0,
+      "after_score": 88.89,
+      "guard_problems": [
+        "切削速度",
+        "主轴转速",
+        "进给速度"
+      ],
+      "evidence": "closest=160.0 target=128.0 tol=0.05 all=[240.0, 2.0, 1.0, 200.0, 0.8, 2.0, 160.0, 160.0]"
+    },
+    {
+      "case_id": "generalization-m03",
+      "dimension": "generalization",
+      "tier": "medium",
+      "class": "arithmetic_off_by_small_factor",
+      "ratio": 1.250618,
+      "before_score": 0.0,
+      "after_score": 88.89,
+      "guard_problems": [
+        "切削速度",
+        "主轴转速",
+        "进给速度"
+      ],
+      "evidence": "closest=3184.7 target=2546.5 tol=1.0 all=[240.0, 2.0, 1.0, 200.0, 0.8, 2.0, 160.0, 160.0]"
+    },
+    {
+      "case_id": "generalization-m03",
+      "dimension": "generalization",
+      "tier": "medium",
+      "class": "arithmetic_off_by_small_factor",
+      "ratio": 0.872676,
+      "before_score": 0.0,
+      "after_score": 88.89,
+      "guard_problems": [
+        "切削速度",
+        "主轴转速",
+        "进给速度"
+      ],
+      "evidence": "closest=1000.0 target=1145.9 tol=1.0 all=[240.0, 2.0, 1.0, 200.0, 0.8, 2.0, 160.0, 160.0]"
+    },
+    {
+      "case_id": "generalization-m05",
+      "dimension": "generalization",
+      "tier": "medium",
+      "class": "arithmetic_off_by_small_factor",
+      "ratio": 0.75,
+      "before_score": 12.5,
+      "after_score": 100.0,
+      "guard_problems": [
+        "第一直径",
+        "第二直径"
+      ],
+      "evidence": "closest=3.0 target=4.0 tol=0.001 all=[1.2, 2.0, 2.5, 3.0]"
+    },
+    {
+      "case_id": "generalization-m05",
+      "dimension": "generalization",
+      "tier": "medium",
+      "class": "radius_vs_diameter",
+      "ratio": 0.5,
+      "before_score": 12.5,
+      "after_score": 100.0,
+      "guard_problems": [
+        "第一直径",
+        "第二直径"
+      ],
+      "evidence": "closest=3.0 target=6.0 tol=0.001 all=[1.2, 2.0, 2.5, 3.0]"
+    },
+    {
+      "case_id": "generalization-m07",
+      "dimension": "generalization",
+      "tier": "medium",
+      "class": "wrong_by_more_than_half",
+      "ratio": 5.882353,
+      "before_score": 62.5,
+      "after_score": 100.0,
+      "guard_problems": [
+        "英尺换算",
+        "深度英尺"
+      ],
+      "evidence": "closest=1.0 target=0.17 tol=0.005 all=[1.0, 10.0, 304.8, 3048.0, 2.0, 2.0, 25.4, 50.8]"
+    },
+    {
+      "case_id": "generalization-h02",
+      "dimension": "generalization",
+      "tier": "hard",
+      "class": "arithmetic_off_by_small_factor",
+      "ratio": 0.833333,
+      "before_score": 87.5,
+      "after_score": 100.0,
+      "guard_problems": [
+        "本表G代码数"
+      ],
+      "evidence": "closest=5.0 target=6.0 tol=0.0 all=[1.0, 91.0, 72.0, 0.0, 1.0, 2.0, 91.0, 3.0]"
+    },
+    {
+      "case_id": "generalization-h03",
+      "dimension": "generalization",
+      "tier": "hard",
+      "class": "arithmetic_off_by_small_factor",
+      "ratio": 1.002127,
+      "before_score": 40.0,
+      "after_score": 100.0,
+      "guard_problems": [
+        "切削速度",
+        "每齿进给",
+        "主轴转速",
+        "进给速度"
+      ],
+      "evidence": "closest=1555.1 target=1551.8 tol=0.6 all=[150.0, 0.65, 97.5, 0.65, 1000.0, 97.5, 20.0, 1555.1]"
+    },
+    {
+      "case_id": "generalization-h03",
+      "dimension": "generalization",
+      "tier": "hard",
+      "class": "arithmetic_off_by_small_factor",
+      "ratio": 1.002148,
+      "before_score": 40.0,
+      "after_score": 100.0,
+      "guard_problems": [
+        "切削速度",
+        "每齿进给",
+        "主轴转速",
+        "进给速度"
+      ],
+      "evidence": "closest=933.1 target=931.1 tol=0.6 all=[150.0, 0.65, 97.5, 0.65, 1000.0, 97.5, 20.0, 1555.1]"
+    },
+    {
+      "case_id": "generalization-h04",
+      "dimension": "generalization",
+      "tier": "hard",
+      "class": "wrong_by_more_than_half",
+      "ratio": 1.570845,
+      "before_score": 0.0,
+      "after_score": 66.67,
+      "guard_problems": [
+        "主轴转速",
+        "进给速度",
+        "材料去除率"
+      ],
+      "evidence": "closest=1000.0 target=636.6 tol=0.3 all=[1000.0, 150.0, 1000.0, 3.0, 2.0, 1200.0, 1.0]"
+    },
+    {
+      "case_id": "generalization-h04",
+      "dimension": "generalization",
+      "tier": "hard",
+      "class": "wrong_by_more_than_half",
+      "ratio": 0.26178,
+      "before_score": 0.0,
+      "after_score": 66.67,
+      "guard_problems": [
+        "主轴转速",
+        "进给速度",
+        "材料去除率"
+      ],
+      "evidence": "closest=150.0 target=573.0 tol=0.2 all=[1000.0, 150.0, 1000.0, 3.0, 2.0, 1200.0, 1.0]"
+    },
+    {
+      "case_id": "generalization-h04",
+      "dimension": "generalization",
+      "tier": "hard",
+      "class": "wrong_by_more_than_half",
+      "ratio": 0.011636,
+      "before_score": 0.0,
+      "after_score": 66.67,
+      "guard_problems": [
+        "主轴转速",
+        "进给速度",
+        "材料去除率"
+      ],
+      "evidence": "closest=1200.0 target=103132.0 tol=20.0 all=[1000.0, 150.0, 1000.0, 3.0, 2.0, 1200.0, 1.0]"
+    },
+    {
+      "case_id": "generalization-h04",
+      "dimension": "generalization",
+      "tier": "hard",
+      "class": "arithmetic_off_by_small_factor",
+      "ratio": 1.098901,
+      "before_score": 0.0,
+      "after_score": 66.67,
+      "guard_problems": [
+        "主轴转速",
+        "进给速度",
+        "材料去除率"
+      ],
+      "evidence": "closest=1.0 target=0.91 tol=0.01 all=[1000.0, 150.0, 1000.0, 3.0, 2.0, 1200.0, 1.0]"
+    },
+    {
+      "case_id": "generalization-h05",
+      "dimension": "generalization",
+      "tier": "hard",
+      "class": "wrong_by_more_than_half",
+      "ratio": 1.570845,
+      "before_score": 0.0,
+      "after_score": 66.67,
+      "guard_problems": [
+        "主轴转速",
+        "进给速度",
+        "材料去除率"
+      ],
+      "evidence": "closest=1000.0 target=636.6 tol=0.3 all=[1000.0, 235.6, 15209.6, 1.63, 1.63]"
+    },
+    {
+      "case_id": "generalization-h05",
+      "dimension": "generalization",
+      "tier": "hard",
+      "class": "wrong_by_more_than_half",
+      "ratio": 0.411169,
+      "before_score": 0.0,
+      "after_score": 66.67,
+      "guard_problems": [
+        "主轴转速",
+        "进给速度",
+        "材料去除率"
+      ],
+      "evidence": "closest=235.6 target=573.0 tol=0.2 all=[1000.0, 235.6, 15209.6, 1.63, 1.63]"
+    },
+    {
+      "case_id": "generalization-h05",
+      "dimension": "generalization",
+      "tier": "hard",
+      "class": "wrong_by_more_than_half",
+      "ratio": 0.147477,
+      "before_score": 0.0,
+      "after_score": 66.67,
+      "guard_problems": [
+        "主轴转速",
+        "进给速度",
+        "材料去除率"
+      ],
+      "evidence": "closest=15209.6 target=103132.0 tol=20.0 all=[1000.0, 235.6, 15209.6, 1.63, 1.63]"
+    },
+    {
+      "case_id": "generalization-h05",
+      "dimension": "generalization",
+      "tier": "hard",
+      "class": "wrong_by_more_than_half",
+      "ratio": 1.791209,
+      "before_score": 0.0,
+      "after_score": 66.67,
+      "guard_problems": [
+        "主轴转速",
+        "进给速度",
+        "材料去除率"
+      ],
+      "evidence": "closest=1.63 target=0.91 tol=0.01 all=[1000.0, 235.6, 15209.6, 1.63, 1.63]"
+    },
+    {
+      "case_id": "generation-h01",
+      "dimension": "generation",
+      "tier": "hard",
+      "class": "radius_vs_diameter",
+      "ratio": 0.502513,
+      "before_score": 42.86,
+      "after_score": 71.43,
+      "guard_problems": [
+        "主轴转速"
+      ],
+      "evidence": "closest=800.0 target=1592.0 tol=2.0 all=[10.0, 35.0, 80.0, 80.0, 1.0, 20.0, 6156.0, 2.0]"
+    },
+    {
+      "case_id": "knowledge-m02",
+      "dimension": "knowledge",
+      "tier": "medium",
+      "class": "arithmetic_off_by_small_factor",
+      "ratio": 0.9,
+      "before_score": 0.0,
+      "after_score": 100.0,
+      "guard_problems": [
+        "标准公差等级数"
+      ],
+      "evidence": "closest=18.0 target=20.0 tol=0.0 all=[18.0]"
+    },
+    {
+      "case_id": "knowledge-h01",
+      "dimension": "knowledge",
+      "tier": "hard",
+      "class": "wrong_by_more_than_half",
+      "ratio": 18.0,
+      "before_score": 0.0,
+      "after_score": 100.0,
+      "guard_problems": [
+        "残留高度"
+      ],
+      "evidence": "closest=3.375 target=0.1875 tol=0.005625 all=[3.375]"
+    }
+  ]
+}

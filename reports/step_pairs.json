@@ -1,0 +1,89 @@
+{
+  "generator": "bridges.step_training_pairs/1.0",
+  "basis": "measured_from_step + deterministic_qa",
+  "generated_at": "2026-11-06T20:20:42",
+  "run_id": "a8d2951b69136b18",
+  "source_file_count": 13,
+  "total_pairs": 109,
+  "by_task": {
+    "step_to_bom": 13,
+    "bom_to_nl": 13,
+    "schema_detect": 13,
+    "qa": 70
+  },
+  "tasks": [
+    "step_to_bom",
+    "bom_to_nl",
+    "qa",
+    "schema_detect"
+  ],
+  "raw_lines": 120,
+  "output": "data/step_bom_sft.jsonl",
+  "per_file": [
+    {
+      "file": "bearing_bracket.step",
+      "pairs": 8,
+      "status": "ok"
+    },
+    {
+      "file": "guide_carriage_base.step",
+      "pairs": 8,
+      "status": "ok"
+    },
+    {
+      "file": "hydraulic_end_cap.step",
+      "pairs": 8,
+      "status": "ok"
+    },
+    {
+      "file": "impeller_disc.step",
+      "pairs": 8,
+      "status": "ok"
+    },
+    {
+      "file": "mold_core_mandrel.step",
+      "pairs": 8,
+      "status": "ok"
+    },
+    {
+      "file": "precision_flange.step",
+      "pairs": 8,
+      "status": "ok"
+    },
+    {
+      "file": "spindle_bushing.step",
+      "pairs": 8,
+      "status": "ok"
+    },
+    {
+      "file": "stepped_shaft.step",
+      "pairs": 8,
+      "status": "ok"
+    },
+    {
+      "file": "valve_sleeve.step",
+      "pairs": 8,
+      "status": "ok"
+    },
+    {
+      "file": "wheel_mold_P0.step",
+      "pairs": 14,
+      "status": "ok"
+    },
+    {
+      "file": "bracket.step",
+      "pairs": 8,
+      "status": "ok"
+    },
+    {
+      "file": "0 1.STEP",
+      "pairs": 7,
+      "status": "ok"
+    },
+    {
+      "file": "72.step",
+      "pairs": 8,
+      "status": "ok"
+    }
+  ]
+}

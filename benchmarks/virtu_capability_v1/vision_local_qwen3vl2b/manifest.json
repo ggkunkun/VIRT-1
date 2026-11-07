@@ -1,0 +1,33 @@
+{
+  "started": "2026-10-31 20:32:36",
+  "git_sha": "3bd431a",
+  "arm": {
+    "kind": "hf_vision",
+    "model_path": "D:/Virtu模型/models/Qwen3-VL-2B-Instruct",
+    "quant": "nf4",
+    "device": "cuda",
+    "double_quant": false,
+    "note": "系统视觉通道（VIRTU_VISION_MODE=auto 时本地优先，图纸不出本机）"
+  },
+  "sampling": {
+    "temperature": 0.0,
+    "seed": 1234,
+    "max_tokens_cap": null,
+    "cap_by_tier": null,
+    "sample_per_tier": null
+  },
+  "case_dir": "D:\\Virtu模型\\data/benchmark/virtu_eval_v1",
+  "case_file_sha256": {
+    "boundary.jsonl": "d0171f2c012609f9ba205c8c070392229a94be40089c5377bb9d980c93a06d7f",
+    "generalization.jsonl": "4f5c114b9b047446b7158e8c7b78586001988a3bd95f9144dc6c09f5fa357f41",
+    "generation.jsonl": "3ac2ff57f2eb52a7ac77d7fc0878135fdd5bb9a9e5b7e12ec7c9e727eadefa5c",
+    "instruction.jsonl": "88aa16f29a2a1b592d8bc7c8c5ee6a2204957d8336d73a02743b81f645505285",
+    "knowledge.jsonl": "3546c40f3ce82a75369e119d61caab2f3373b7fec6613cede70fa5b11d819b5f",
+    "multimodal.jsonl": "baa7fd372ee49868d5bbdc4d67c73a3f77d43200d35db8d501f3b6cf9744b543",
+    "reasoning.jsonl": "3f84a8ca2fb6f5500cd4ce1f31766533d08e13ebf781360b7ee9990d12ff237b",
+    "toolcall.jsonl": "f758f28420f3baed1e3914192ebced6c6a48055ce2d70a1e8748957cd0b52a1a"
+  },
+  "n_cases_selected": 30,
+  "n_already_done": 3,
+  "harness": "virtu_eval v1"
+}

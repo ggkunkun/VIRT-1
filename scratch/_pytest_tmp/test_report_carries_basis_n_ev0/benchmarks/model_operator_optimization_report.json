@@ -1,0 +1,187 @@
+{
+  "run_id": "6e5a12a61e6437fa",
+  "timestamp": 1793897925.9898186,
+  "device_name": "NVIDIA GeForce RTX 4050 Laptop GPU",
+  "pytorch_version": "2.6.0+cu124",
+  "cuda_available": true,
+  "flash_attention_available": true,
+  "summary": {
+    "overall_speedup": 0.8224,
+    "memory_reduction_pct": 7.84,
+    "total_operators_optimized": 4,
+    "benchmarked_sequence_lengths": [
+      64
+    ],
+    "invariants_verified": true,
+    "total_timing_samples": 8,
+    "regression_count": 2,
+    "basis": "measured",
+    "evidence_path": "scratch\\_pytest_tmp\\test_report_carries_basis_n_ev0\\benchmarks\\model_operator_optimization_report.json"
+  },
+  "diagnostics": [
+    {
+      "operator": "VirtuAttention",
+      "bottleneck_type": "Quadratic Memory & Compute Churn (O(N^2))",
+      "diagnosis": "显式 torch.matmul(q, k.T) + softmax 会分配 BxHxSxS 稠密矩阵；原 GQA 路径还用 expand().reshape() 实体复制 KV 两次。",
+      "action": "单次融合 QKV GEMM + SDPA 融合注意力内核；实测本运行时 enable_gqa=True 会退到 math 后端（2.4x 退化），故保留实体展开 KV 的 SDPA 路径。",
+      "basis": "inferred"
+    },
+    {
+      "operator": "UniRoPE",
+      "bottleneck_type": "Redundant Trigonometric Recomputation + Host Sync",
+      "diagnosis": "原实现每次 forward 都按 max_seq_len(8192) 建表，并调用 positions.max().item() 造成设备到主机同步；2D 视觉网格三角表完全未缓存。",
+      "action": "按需几何扩容缓存 + max_pos_hint 消除同步 + 连续位置零拷贝切片替代 gather；2D 网格 cos/sin 表按 (grid, device, dtype) 缓存。",
+      "basis": "inferred"
+    },
+    {
+      "operator": "VirtuSwiGLU",
+      "bottleneck_type": "Two Independent GEMMs per Feed-Forward",
+      "diagnosis": "gate_proj 与 up_proj 是两次独立 GEMM；旧 mul_ 优化只是省掉一个乘积中间张量，未减少 kernel 启动。",
+      "action": "推理态 fuse_projections() 将两路权重拼成单次 GEMM 再 chunk；权重为派生 buffer，参数量/梯度契约不变，训练态自动走原路径。",
+      "basis": "inferred"
+    },
+    {
+      "operator": "VirtuRMSNorm",
+      "bottleneck_type": "Multi-Kernel Dispatched Layer Normalization",
+      "diagnosis": "旧 forward 只是把 _forward_unopt 内联，仍是 pow->mean->rsqrt->mul->cast->mul 六次 kernel 启动。",
+      "action": "CUDA 上调 F.rms_norm 单次融合内核（CPU/混合精度回退原累加顺序）。",
+      "basis": "inferred"
+    }
+  ],
+  "operator_benchmarks": [
+    {
+      "operator": "VirtuAttention (fused QKV + SDPA)",
+      "baseline_ms": 10.0526,
+      "optimized_ms": 5.314,
+      "speedup": 1.8917,
+      "baseline_spread_ms": 0.0,
+      "optimized_spread_ms": 0.0,
+      "baseline_mem_mb": 0.63,
+      "optimized_mem_mb": 0.47,
+      "memory_reduction_pct": 15.62,
+      "memory_basis": "measured",
+      "max_diff": 2.086162567138672e-07,
+      "precision_pass": true,
+      "equivalence_checks": 1,
+      "failure_reason": "",
+      "tolerance": 0.0002,
+      "n": 2,
+      "repeats": 1,
+      "trials_per_repeat": 2,
+      "basis": "measured",
+      "evidence_path": "scratch\\_pytest_tmp\\test_report_carries_basis_n_ev0\\benchmarks\\model_operator_optimization_report.json",
+      "seq_len": 64
+    },
+    {
+      "operator": "UniRoPE (1D cached)",
+      "baseline_ms": 1.438,
+      "optimized_ms": 3.159,
+      "speedup": 0.4552,
+      "baseline_spread_ms": 0.0,
+      "optimized_spread_ms": 0.0,
+      "baseline_mem_mb": 0.22,
+      "optimized_mem_mb": 0.19,
+      "memory_reduction_pct": 2.78,
+      "memory_basis": "measured",
+      "max_diff": 0.0,
+      "precision_pass": true,
+      "equivalence_checks": 2,
+      "failure_reason": "",
+      "tolerance": 1e-05,
+      "n": 2,
+      "repeats": 1,
+      "trials_per_repeat": 2,
+      "basis": "measured",
+      "evidence_path": "scratch\\_pytest_tmp\\test_report_carries_basis_n_ev0\\benchmarks\\model_operator_optimization_report.json",
+      "seq_len": 64
+    },
+    {
+      "operator": "VirtuSwiGLU (fused gate/up GEMM)",
+      "baseline_ms": 4.0926,
+      "optimized_ms": 16.808,
+      "speedup": 0.2435,
+      "baseline_spread_ms": 0.0,
+      "optimized_spread_ms": 0.0,
+      "baseline_mem_mb": 0.56,
+      "optimized_mem_mb": 0.62,
+      "memory_reduction_pct": -6.25,
+      "memory_basis": "measured",
+      "max_diff": 2.384185791015625e-07,
+      "precision_pass": true,
+      "equivalence_checks": 1,
+      "failure_reason": "",
+      "tolerance": 1e-05,
+      "n": 2,
+      "repeats": 1,
+      "trials_per_repeat": 2,
+      "basis": "measured",
+      "evidence_path": "scratch\\_pytest_tmp\\test_report_carries_basis_n_ev0\\benchmarks\\model_operator_optimization_report.json",
+      "seq_len": 64
+    },
+    {
+      "operator": "VirtuRMSNorm (fused kernel)",
+      "baseline_ms": 8.6776,
+      "optimized_ms": 4.2193,
+      "speedup": 2.0566,
+      "baseline_spread_ms": 0.0,
+      "optimized_spread_ms": 0.0,
+      "baseline_mem_mb": 0.12,
+      "optimized_mem_mb": 0.13,
+      "memory_reduction_pct": -0.05,
+      "memory_basis": "measured",
+      "max_diff": 0.0,
+      "precision_pass": true,
+      "equivalence_checks": 1,
+      "failure_reason": "",
+      "tolerance": 1e-05,
+      "n": 2,
+      "repeats": 1,
+      "trials_per_repeat": 2,
+      "basis": "measured",
+      "evidence_path": "scratch\\_pytest_tmp\\test_report_carries_basis_n_ev0\\benchmarks\\model_operator_optimization_report.json",
+      "seq_len": 64
+    }
+  ],
+  "overall_speedup": 0.8224,
+  "memory_reduction_pct": 7.84,
+  "all_invariants_passed": true,
+  "identity": {
+    "run_id": "6e5a12a61e6437fa",
+    "captured_at": "2026-11-06T00:58:45",
+    "artifacts": {},
+    "cases": {},
+    "ruler": {
+      "virtu_omni/models/architecture.py": "fd1c5c48e2315e5432a3aeb43825247dc0fb81f8f7e37e7137b6e49e52e37067",
+      "virtu_omni/models/operator_optimizer.py": "2f154ffbba371fd2d4145dfb5ec404583b4b58bd0bde0cac237d32652d73b2a1",
+      "virtu_omni/config.py": "259bb29f6fd305617e586190253e152be3e9240e63b233192ef9af5d8ecd3b15",
+      "virtu_eval/provenance.py": "a3d7c08d2fd8e272659ebefe3ee2a76f69286b40dd68c8696c1d22ee235fb486"
+    },
+    "extra": {
+      "batch_size": 2,
+      "seq_lens": [
+        64
+      ],
+      "hidden_dim": 128,
+      "num_heads": 4,
+      "num_kv_heads": 2,
+      "head_dim": 32,
+      "num_warmup": 1,
+      "num_trials": 2,
+      "repeats": 1,
+      "device": "NVIDIA GeForce RTX 4050 Laptop GPU",
+      "torch": "2.6.0+cu124"
+    }
+  },
+  "evidence_path": "scratch\\_pytest_tmp\\test_report_carries_basis_n_ev0\\benchmarks\\model_operator_optimization_report.json",
+  "invalidated_legs": [],
+  "regressions": [
+    "UniRoPE (1D cached)@64=0.46x",
+    "VirtuSwiGLU (fused gate/up GEMM)@64=0.24x"
+  ],
+  "measurement_notes": {
+    "basis": "measured",
+    "timing": "perf_counter + CUDA synchronize + no_grad + interleaved AB/BA repeats, median of per-repeat means",
+    "equivalence_gate": "all output tensors, finite check, shape/dtype/count match, max_abs_diff <= tolerance (fail-closed)",
+    "memory": "各算子独立隔离测得的峰值显存之和的降幅（非整模型峰值显存）"
+  }
+}

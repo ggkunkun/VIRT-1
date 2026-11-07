@@ -1,0 +1,123 @@
+{
+  "started": "2026-11-06 21:20:32",
+  "free_gb_before": {
+    "D": 18.545455932617188,
+    "E": 60.47761917114258
+  },
+  "basis": "measured",
+  "t1": [
+    {
+      "file": "virtu-moe-14b-bf16.gguf",
+      "tag": "virtu-moe-14b:bf16",
+      "basis": "measured_earlier+stat",
+      "bytes": 27260863392,
+      "mtime_recorded": "2026-11-06 01:18",
+      "mtime_now": "2026-11-06 01:18",
+      "size_matches": true,
+      "recorded_sha256": "9f5c34f33f05a68af683131297468461544b9736fb90359cb81a624b27135d9a",
+      "manifest_sha256": "9f5c34f33f05a68af683131297468461544b9736fb90359cb81a624b27135d9a",
+      "blob_on_e": true,
+      "verdict": "redundant-safe-to-delete",
+      "staged_hardlink_bytes": 0
+    },
+    {
+      "file": "virtu-moe-14b-q4_k_m.gguf",
+      "tag": "virtu-moe-14b:fast",
+      "basis": "measured_earlier+stat",
+      "bytes": 8320185248,
+      "mtime_recorded": "2026-11-06 01:32",
+      "mtime_now": "2026-11-06 01:32",
+      "size_matches": true,
+      "recorded_sha256": "a2103c68d9e881ac3655ce271902997cdc8eb5c35da3803261f25f5364e52d7a",
+      "manifest_sha256": "a2103c68d9e881ac3655ce271902997cdc8eb5c35da3803261f25f5364e52d7a",
+      "blob_on_e": true,
+      "verdict": "redundant-safe-to-delete",
+      "staged_hardlink_bytes": 0
+    },
+    {
+      "file": "virtu-moe-14b-semantic-q4_k_m.gguf",
+      "tag": "virtu-moe-14b:semantic",
+      "basis": "measured_earlier+stat",
+      "bytes": 8320185248,
+      "mtime_recorded": "2026-11-06 09:20",
+      "mtime_now": "2026-11-06 09:20",
+      "size_matches": true,
+      "recorded_sha256": "0106872590e5b4fbf7a5a7c08452e9109faec91ebfce612af15906b216233ef5",
+      "manifest_sha256": "0106872590e5b4fbf7a5a7c08452e9109faec91ebfce612af15906b216233ef5",
+      "blob_on_e": true,
+      "verdict": "redundant-safe-to-delete",
+      "staged_hardlink_bytes": 0
+    },
+    {
+      "file": "virtu-dense-merged-q4_0.gguf",
+      "tag": "virtu-dense-merged:q4_0",
+      "basis": "measured_earlier+stat",
+      "bytes": 4614297600,
+      "mtime_recorded": "2026-11-06 09:47",
+      "mtime_now": "2026-11-06 09:47",
+      "size_matches": true,
+      "recorded_sha256": "df83b71eeacef0a041f7cc4b4fabe94bce71e9e7141d080f0d2597121977c044",
+      "manifest_sha256": "df83b71eeacef0a041f7cc4b4fabe94bce71e9e7141d080f0d2597121977c044",
+      "blob_on_e": true,
+      "verdict": "redundant-safe-to-delete",
+      "staged_hardlink_bytes": 0
+    },
+    {
+      "file": "virtu-dense-merged-v2-q4_0.gguf",
+      "tag": "virtu-dense-merged-v2:q4_0",
+      "basis": "measured_earlier+stat",
+      "bytes": 4614297600,
+      "mtime_recorded": "2026-11-06 12:41",
+      "mtime_now": "2026-11-06 12:41",
+      "size_matches": true,
+      "recorded_sha256": "97a7eb763837c37d07f89e03ee2a636d38ce8516dec628b3e3e724ceae5d3dd6",
+      "manifest_sha256": "97a7eb763837c37d07f89e03ee2a636d38ce8516dec628b3e3e724ceae5d3dd6",
+      "blob_on_e": true,
+      "verdict": "redundant-safe-to-delete",
+      "staged_hardlink_bytes": 0
+    },
+    {
+      "file": "virtu-dense-ties-q4_0.gguf",
+      "tag": "virtu-dense-ties:q4",
+      "basis": "measured_earlier+stat",
+      "bytes": 4614297600,
+      "mtime_recorded": "2026-11-06 12:50",
+      "mtime_now": "2026-11-06 12:50",
+      "size_matches": true,
+      "recorded_sha256": "36f5d7bd63578bbfb41d8cb0d46c4eda615cb29d0795bbc5f1cd5665c100828a",
+      "manifest_sha256": "36f5d7bd63578bbfb41d8cb0d46c4eda615cb29d0795bbc5f1cd5665c100828a",
+      "blob_on_e": true,
+      "verdict": "redundant-safe-to-delete",
+      "staged_hardlink_bytes": 0
+    },
+    {
+      "file": "virtu-comprehensive-q4_0.gguf",
+      "tag": "virtu-comprehensive:latest",
+      "basis": "measured_earlier+stat",
+      "bytes": 4614297600,
+      "mtime_recorded": "2026-11-05 04:16",
+      "mtime_now": "2026-11-05 04:16",
+      "size_matches": true,
+      "recorded_sha256": "c3b78c7735c9ac1f0b16cbbb5babc809f2c99e71c9a76043d39dbae8ce448749",
+      "manifest_sha256": "c3b78c7735c9ac1f0b16cbbb5babc809f2c99e71c9a76043d39dbae8ce448749",
+      "blob_on_e": true,
+      "verdict": "redundant-safe-to-delete",
+      "staged_hardlink_bytes": 0
+    }
+  ],
+  "t2": [
+    {
+      "dir": "virtu_dense_merged_v2_hf",
+      "refs": [],
+      "staged_hardlink_bytes": 0,
+      "verdict": "zero-live-refs-and-derivative-servable",
+      "successor": "virtu_dense_ties_hf",
+      "derivative_tag": "virtu-dense-merged-v2:q4_0",
+      "derivative_layer_sha256": "97a7eb763837c37d07f89e03ee2a636d38ce8516dec628b3e3e724ceae5d3dd6",
+      "derivative_blob_on_e": true,
+      "arms_note": "arms.json serves this arm as ollama_native, not from the HF dir"
+    }
+  ],
+  "aborted": "idle-lost-during-t1",
+  "evidence_json": "D:\\Virtu模型\\benchmarks\\d_model_space_cleanup\\cleanup_20261106_212035.json"
+}

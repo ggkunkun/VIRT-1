@@ -51,6 +51,44 @@ from bridges.software_registry import SOFTWARE_SPECS, normalize_software_key
 
 _GLOBAL_HDESK = None
 
+# 这些顶层窗是框架/输入法/托管的辅助窗，永远不该被当成目标软件主窗。
+_HELPER_WINDOW_CLASSES = frozenset({
+    "ime", "msctfime ui", "gdi+ hook window class", "oleddewndclass",
+    "chrome_systemmessagewindow", "chrome_widgetwin_0",
+    "base_powermessagewindow", "swthumbnailwnd", "internet explorer_hidden",
+})
+_HELPER_WINDOW_TITLES = frozenset({"splash", "dummy splash parent"})
+
+
+def _window_candidate_score(title: str, cls: str, area: int, titles: List[str]):
+    """候选主窗打分；None 表示明确不是主窗。"""
+    t = (title or "").strip()
+    c = (cls or "").strip().lower()
+    if c in _HELPER_WINDOW_CLASSES or t.lower() in _HELPER_WINDOW_TITLES:
+        return None
+    title_match = any(k and k.lower() in t.lower() for k in titles)
+    if area <= 0 and not title_match:
+        return None
+    score = 0
+    if title_match:
+        score += 1000
+    if " - [" in t or any(t.lower().endswith(ext)
+                          for ext in (".sldprt", ".sldasm", ".slddrw")):
+        score += 200
+    score += min(int(area) // 10000, 100)
+    return score
+
+
+def _pick_main_window(candidates, titles: List[str]):
+    """candidates: [(hwnd, title, cls, area, pid), ...]；返回最高分 hwnd。"""
+    best_hwnd, best_score = None, -1
+    for hwnd, title, cls, area, _pid in candidates:
+        score = _window_candidate_score(title, cls, area, titles)
+        if score is not None and score > best_score:
+            best_hwnd, best_score = hwnd, score
+    return best_hwnd
+
+
 def _attach_interactive_desktop():
     global _GLOBAL_HDESK
     if not HAS_WIN32:
@@ -107,20 +145,27 @@ class DesktopController:
         def _scan():
             pid_hits = []
             title_hits = []
-            seen_pids = set()
 
             def enum_cb(hwnd, _):
                 try:
                     if not win32gui.IsWindowVisible(hwnd):
                         return True
                     _, pid = win32process.GetWindowThreadProcessId(hwnd)  # cheap, no cross-proc msg
-                    if pid in pid_set and pid not in seen_pids:
-                        seen_pids.add(pid)
+                    if pid in pid_set:
                         try:
                             text = win32gui.GetWindowText(hwnd)
                         except Exception:
                             text = ""
-                        pid_hits.append((hwnd, text, pid))
+                        try:
+                            cls = win32gui.GetClassName(hwnd)
+                        except Exception:
+                            cls = ""
+                        try:
+                            l, t, r, b = win32gui.GetWindowRect(hwnd)
+                            area = max(0, r - l) * max(0, b - t)
+                        except Exception:
+                            area = 0
+                        pid_hits.append((hwnd, text, cls, area, pid))
                     else:
                         try:
                             cls = win32gui.GetClassName(hwnd)
@@ -138,9 +183,10 @@ class DesktopController:
                 win32gui.EnumWindows(enum_cb, None)
             except Exception:
                 pass
-            # prefer PID-matched windows; fall back to title/class hits
-            if pid_hits:
-                result["hwnd"] = pid_hits[0][0]
+            # PID-matched candidates are scored; helpers/splash must not win.
+            main = _pick_main_window(pid_hits, titles)
+            if main is not None:
+                result["hwnd"] = main
             elif title_hits:
                 result["hwnd"] = title_hits[0][0]
             else:

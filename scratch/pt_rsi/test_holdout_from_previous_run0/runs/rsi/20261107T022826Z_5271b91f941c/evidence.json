@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "files": {
+    "audit.jsonl": "6bec4beefa0b7950ce1d0bc382f9f94e1ab23ce51bdcba17f430ad79a8223282",
+    "best_candidate.json": "bc5ee0be7501e8b7178a8880fac6a1b3717ac853d9b9426cbfc96ff61eac7b3a",
+    "cases.json": "bb11f266c1a002b901ee66f78af5c15c8563c5f8c1d4f36d5720696523ae5122",
+    "config.json": "789d017c1f36e6f51f9bea8e8e152fecb67a8f3116cfae4b0da22a06e62236c0",
+    "data/sft_candidate.jsonl": "e6d716b6cf2e9b9e3c1602bd82666168874f0d39d61ad01da1f0cff03b5446ee",
+    "data/validation.json": "f442e5e9b7df5e742d95b04cd64a055c5ab3ba734ec644db486529e98ddf1f1e",
+    "development_baseline.jsonl": "36ff4b1d8abb3c510efa437a6777e21d6f268f71cbc61aece44226e913144183",
+    "development_feedback.json": "e967c7304c45652a5b11749282ecaa940c967a8ae6e14abb47841cb01f9de358",
+    "gate.json": "67c1984d97fbe802fe62f60aa53fc87b505c01df3e3373e1fae38488e0ad845c",
+    "manifest.json": "997d1e2c343adb1fdd045afd766c9fc4a729c80daef1c273875b1b39d07aac1c",
+    "receipt.json": "a11deb1e878dce022cdbae27d5fe03940a8b0e19f71b0bc35b881dcfa4310239",
+    "rounds/01/candidate.json": "bc5ee0be7501e8b7178a8880fac6a1b3717ac853d9b9426cbfc96ff61eac7b3a",
+    "rounds/01/development.jsonl": "fb5103228a8a062c416ee48c7ffeded781a46fedd5b3bc58f614905437d36ebe",
+    "rounds/01/proposal_raw.json": "d3ea01695890f3a47d62db318a9c5b0a2ff194e57fc5f1ef2aa787cd6ab49239",
+    "rounds/02/candidate.json": "b16be907362596f91b9f2daf913420d2fc86e48a4ae3fb7872539e3927b2b676",
+    "rounds/02/development.jsonl": "fb5103228a8a062c416ee48c7ffeded781a46fedd5b3bc58f614905437d36ebe",
+    "rounds/02/proposal_raw.json": "57c9e492e8b760e796bd3db926b4a376e5886c88c2034e53bf9ced58dc109ff4",
+    "rounds.json": "93d97b297f22db2e65934ee6d1334882a11c873ae6c253237eb5209bd54cfe9e",
+    "validation_baseline.jsonl": "b5864e636b9871a81b67b1b10d6e1ac07a15fbb8d1401613966bca3db047bd53",
+    "validation_candidate.jsonl": "2c62f519c33c825d0bdbaca90c95608ca15b8402e84fd26e30f101560b2aba04"
+  },
+  "sources": {
+    "data/cases/physics.jsonl": "e2fb44e7861f72fa2041ae102c0a756a095017e17fe5a34ef515f865c3b54534"
+  },
+  "review_sha256": "01abbf453ed1d391473919988fbcaa18aeb1d255724a4279ae0e5c154732da71"
+}

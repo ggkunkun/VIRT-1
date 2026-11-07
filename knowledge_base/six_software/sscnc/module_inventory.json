@@ -1,0 +1,108 @@
+{
+  "software": "sscnc",
+  "display_name": "斯沃数控仿真软件 SSCNC 7.2",
+  "version": "7.2",
+  "generated": "2026-11-04",
+  "source": "reverse-skill offline-sample RE; evidence.md",
+  "modules": [
+    {
+      "id": "sscnc_login_machine_select",
+      "name": "登录与机床选择 (Login & Machine Select)",
+      "category": "config_admin",
+      "menu": ["CNCLogin.exe", "登录器|选控制器|选机床型号"],
+      "commands": ["SS-01", "SS-02"],
+      "api": ["SSCNCBridge.launch", "SSCNCBridge.find_window"],
+      "file_formats": ["exe"],
+      "workflow_refs": ["WF-S1"],
+      "notes": "进程拉起 verified-working [高]；选机床 documented-not-probed"
+    },
+    {
+      "id": "sscnc_panel_modes",
+      "name": "控制面板模式 (Panel Mode Select)",
+      "category": "virtual_machine",
+      "menu": ["auto.bmp", "edit.bmp", "mdi.bmp", "hnd.bmp", "home.bmp", "inc.bmp"],
+      "commands": ["SS-03", "SS-04", "SS-05", "SS-06", "SS-07", "SS-08"],
+      "api": ["面板按键位图"],
+      "file_formats": ["bmp"],
+      "workflow_refs": ["WF-S1"],
+      "notes": "AUTO/EDIT/MDI/JOG/REF/INC 模式位图存在 [高]；按键自动化 documented-not-probed"
+    },
+    {
+      "id": "sscnc_cycle_control",
+      "name": "运行控制 (Cycle & Feed Control)",
+      "category": "virtual_machine",
+      "menu": ["cycstart.bmp", "cycstop.bmp", "dry.bmp", "sbk.bmp", "opt.bmp", "skip.bmp", "zlock.bmp", "hfeed.bmp", "vfeed.bmp", "spup.bmp", "spdown.bmp"],
+      "commands": ["SS-09", "SS-10", "SS-11", "SS-12", "SS-13", "SS-14", "SS-15", "SS-16", "SS-17"],
+      "api": ["面板按键位图"],
+      "file_formats": ["bmp"],
+      "workflow_refs": ["WF-S1"],
+      "notes": "循环启动/单段/空运行/倍率 verified 位图 [高]；触发 documented-not-probed"
+    },
+    {
+      "id": "sscnc_wcs_tool_offset",
+      "name": "对刀与坐标系 (WCS & Tool Offset)",
+      "category": "virtual_machine",
+      "menu": ["OFFSET SETTING|[坐标系]", "[补正]|[形状]", "[补正]|[磨耗]", "tlccw.bmp", "tlcw.bmp"],
+      "commands": ["SS-18", "SS-19", "SS-20", "SS-21", "SS-30"],
+      "api": ["SSCNCBridge.calculate_tool_offsets"],
+      "file_formats": ["offset.dat", "OffSet.dat"],
+      "workflow_refs": ["WF-S1"],
+      "notes": "G54[测量]/刀具[形状]对刀官方步骤 [高]；桥接离线算刀补 verified-working [高]"
+    },
+    {
+      "id": "sscnc_crt_program",
+      "name": "CRT 显示与程序 (CRT & Program)",
+      "category": "visualization",
+      "menu": ["POS|MACHINE|RELATIVE|ABSOLUTE", "EDIT|程序号Oxxxx", "dnc.bmp", "OverTravel.bmp"],
+      "commands": ["SS-22", "SS-23", "SS-24", "SS-25"],
+      "api": ["面板POS软键"],
+      "file_formats": ["cnc", "CNC", "ct", "pj", "wp"],
+      "workflow_refs": ["WF-S1"],
+      "notes": "循环启动前核对 ABSOLUTE==G54（AGENTS §2.F）[高]"
+    },
+    {
+      "id": "sscnc_machine_aux",
+      "name": "机床实体辅助 (Machine Body & Aux)",
+      "category": "virtual_machine",
+      "menu": ["poweron.bmp", "poweroff.bmp", "cool.bmp", "cw.bmp", "ccw.bmp", "mst.bmp", "light.bmp", "oil.bmp"],
+      "commands": ["SS-26", "SS-27", "SS-28", "SS-29"],
+      "api": ["面板按键位图"],
+      "file_formats": ["bmp"],
+      "workflow_refs": ["WF-S1"],
+      "notes": "电源/冷却/主轴/辅助 verified 位图 [高]"
+    },
+    {
+      "id": "sscnc_controller_bank",
+      "name": "多控制器库 (Multi-Controller Bank)",
+      "category": "config_admin",
+      "menu": ["FANUC", "KND", "MITSUBISHI", "Haas", "Mazak", "SINUMERIK", "Heidenhain", "HNC", "MORI SEIKI", "JNC", "NCT"],
+      "commands": ["SS-02"],
+      "api": ["目录结构Glob"],
+      "file_formats": ["spec.ini", "Model.ini", "sysparam.XML"],
+      "workflow_refs": ["WF-S1"],
+      "notes": "11 厂商控制器目录实测存在 [高]"
+    },
+    {
+      "id": "sscnc_server_dnc",
+      "name": "DNC/网络服务 (Server & DNC)",
+      "category": "data_exchange",
+      "menu": ["SERVER\\SSCNCSrv.exe", "SERVER\\ssFtp.exe", "SERVER\\ssHttp.exe"],
+      "commands": ["SS-24"],
+      "api": ["ssFtp/ssHttp"],
+      "file_formats": ["ini", "dll"],
+      "workflow_refs": ["WF-S1"],
+      "notes": "DNC 服务组件存在 documented-not-probed [中]"
+    },
+    {
+      "id": "sscnc_config_store",
+      "name": "配置与程序库存储 (Config & Program Store)",
+      "category": "config_admin",
+      "menu": ["config.ini", "Model\\spec.ini", "PRGLIB.LIB", "PARAMS.LIB", "GRAPH.LIB", "REGISTER.LIB"],
+      "commands": ["SS-23"],
+      "api": ["文件直接读取"],
+      "file_formats": ["ini", "lib", "dat"],
+      "workflow_refs": ["WF-S1"],
+      "notes": "config.ini/spec.ini 结构已读 [高]；*.LIB/offset.dat 取值未解析 [中]"
+    }
+  ]
+}

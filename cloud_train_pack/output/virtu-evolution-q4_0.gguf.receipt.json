@@ -1,0 +1,14 @@
+{
+  "status": "ok",
+  "out": "/root/virtu_evolution_train/cloud_train_pack/output/virtu-evolution-q4_0.gguf",
+  "tensors": 399,
+  "metadata_kv": 29,
+  "tokens": 151936,
+  "merges": 151387,
+  "header_bytes": 5949408,
+  "data_bytes": 4608348160,
+  "file_bytes": 4614297568,
+  "quantization": "Q4_0",
+  "architecture": "qwen3",
+  "unmapped": []
+}

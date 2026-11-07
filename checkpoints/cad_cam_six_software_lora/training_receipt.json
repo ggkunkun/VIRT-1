@@ -1,11 +1,15 @@
 {
   "status": "COMPLETED",
-  "global_step": 308,
-  "train_loss": 0.12020061488940635,
-  "gpu": "NVIDIA L40S",
-  "adapter_dir": "/root/cad_cam_finetune/output_checkpoints/cad_cam_six_software_lora_final",
-  "num_samples": 1226,
-  "software_enhanced": [
+  "task": "Master CAD/CAM/CAE 6-Software Comprehensive Fine-Tuning",
+  "global_step": 408,
+  "train_loss": 0.09568502998673449,
+  "runtime_seconds": 2745.773838043213,
+  "gpus": [
+    "NVIDIA L40S"
+  ],
+  "adapter_dir": "/root/workspace/Virtu/checkpoints/cad_cam_six_software_lora",
+  "num_samples": 1632,
+  "target_software": [
     "SOLIDWORKS 2021",
     "Siemens NX 12.0",
     "AutoCAD 2026",

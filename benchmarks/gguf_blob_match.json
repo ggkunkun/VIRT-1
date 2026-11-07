@@ -1,0 +1,28 @@
+{
+  "exports": {
+    "virtu-omni-v2-q4_0.gguf": {
+      "bytes": 4614304640,
+      "sha256": "c82f47c8e4ef7c88a59fc42f6b18ebe79a2927c5356535e99a287b41b179ac84"
+    },
+    "virtu-production-v3-q4_0.gguf": {
+      "bytes": 4614301760,
+      "sha256": "54371074a5a88ca216e24f2bf91fb428886d0981a99055633d60c6adc5d38d97"
+    },
+    "virtu-q4_0.gguf": {
+      "bytes": 4614304640,
+      "sha256": "dd445388cdebcb885f48d79507709faa9dda42bc962cdc7642147fd7cd1e42fc"
+    },
+    "virtu-toolcall-q4_0.gguf": {
+      "bytes": 4614301760,
+      "sha256": "8ca36b641fa42056fdc864507d90dc947346fe1768dd78d21c6be7bf03f8ff9a"
+    }
+  },
+  "deployed": {},
+  "quarantined_peft_linear": {
+    "file": "checkpoints/_broken/virtu-production-v3-q4_0.peft_linear.gguf",
+    "bytes": 4614304640,
+    "sha256": "831d0f3b52515627c572fcb700f548b65cc805c37329b9592179585073efe4af",
+    "reason": "6-LoRA peft_linear merge; mojibake/dead loops; replaced 2026-11-01"
+  },
+  "note": "2026-11-01: production-v3 GGUF rebuilt from validated virtu_ties_v1 (4-adapter delta); old peft_linear hash preserved under quarantined_peft_linear."
+}

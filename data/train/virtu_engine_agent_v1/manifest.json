@@ -1,0 +1,200 @@
+{
+  "created_at": "2026-11-04T15:02:53+0800",
+  "diversity": {
+    "observe_act_verify": {
+      "distinct_shapes": 18,
+      "dup_rate": 0.4,
+      "generated": 30,
+      "kept": 18,
+      "unique_prompts": 18
+    },
+    "repair_loop": {
+      "distinct_shapes": 8,
+      "dup_rate": 0.0,
+      "generated": 1800,
+      "kept": 900,
+      "unique_prompts": 1800
+    },
+    "six_software_facts": {
+      "distinct_shapes": 18,
+      "dup_rate": 0.0,
+      "generated": 18,
+      "kept": 18,
+      "unique_prompts": 18
+    },
+    "tool_refusal": {
+      "distinct_shapes": 110,
+      "dup_rate": 0.0,
+      "generated": 110,
+      "kept": 110,
+      "unique_prompts": 110
+    },
+    "tool_route": {
+      "distinct_shapes": 232,
+      "dup_rate": 0.1686,
+      "generated": 3600,
+      "kept": 1200,
+      "unique_prompts": 2993
+    }
+  },
+  "eval_isolation": {
+    "cases_loaded": 500,
+    "checked": true,
+    "dirs": [
+      "D:\\Virtu模型\\data\\benchmark\\virtu_eval_v1",
+      "D:\\Virtu模型\\data\\benchmark\\virtu_eval_phys_v1",
+      "D:\\Virtu模型\\data\\benchmark\\virtu_fix_v1"
+    ],
+    "hits": 0
+  },
+  "format": "chatml_messages_with_tool_calls",
+  "known_limits": [
+    "tool_route 的 observation 是确定性解析回读（_stub_evidence），不是 SOLIDWORKS 实测体积；上线前必须由 scripts/model_drives_solidworks.py 那类监考环换成真回读",
+    "只有 SOLIDWORKS 有类型库接地的能力卡；其余五个软件的可执行 API 声明故意不进训",
+    "observe_act_verify 的轨迹来自自建 Tk 探针窗口与桌面巡检，尚未覆盖真实 CAD 对话框"
+  ],
+  "next_gate": "python scripts/train_engine_agent.py --preflight-only",
+  "report": {
+    "by_family": {
+      "observe_act_verify": 18,
+      "repair_loop": 900,
+      "six_software_facts": 18,
+      "tool_refusal": 110,
+      "tool_route": 1200
+    },
+    "by_software": {
+      "autocad": 153,
+      "cimco": 160,
+      "cross": 365,
+      "desktop": 6,
+      "nx": 5,
+      "solidworks": 1258,
+      "sscnc": 145,
+      "vericut": 154
+    },
+    "contamination_cases_loaded": 500,
+    "contamination_checked": true,
+    "contamination_hits": 0,
+    "contract_token_share": 0.1759,
+    "dedup_dropped": 0,
+    "diversity": {
+      "observe_act_verify": {
+        "distinct_shapes": 18,
+        "dup_rate": 0.4,
+        "generated": 30,
+        "kept": 18,
+        "unique_prompts": 18
+      },
+      "repair_loop": {
+        "distinct_shapes": 8,
+        "dup_rate": 0.0,
+        "generated": 1800,
+        "kept": 900,
+        "unique_prompts": 1800
+      },
+      "six_software_facts": {
+        "distinct_shapes": 18,
+        "dup_rate": 0.0,
+        "generated": 18,
+        "kept": 18,
+        "unique_prompts": 18
+      },
+      "tool_refusal": {
+        "distinct_shapes": 110,
+        "dup_rate": 0.0,
+        "generated": 110,
+        "kept": 110,
+        "unique_prompts": 110
+      },
+      "tool_route": {
+        "distinct_shapes": 232,
+        "dup_rate": 0.1686,
+        "generated": 3600,
+        "kept": 1200,
+        "unique_prompts": 2993
+      }
+    },
+    "frames_bad": 0,
+    "frames_checked": 9,
+    "gui_rows": 18,
+    "multi_turn_ratio": 0.943,
+    "rows": 2246,
+    "tokenizer": "real_bpe:tokenizers:D:\\Virtu模型\\checkpoints\\_base_qwen3_8b\\tokenizer.json",
+    "tokens_total": 1134580
+  },
+  "rows_total": 2246,
+  "rows_verified": 2246,
+  "seed": 20261104,
+  "sha256": "8735ded829c1476bf90673af91249623e322938cbf23de5c2a55dbe4232ca512",
+  "sources": {
+    "capability_cards": {
+      "dir": "knowledge_base/six_software/solidworks",
+      "n_cards_loaded": 5
+    },
+    "desktop_traces": {
+      "coordinate_spaces": {
+        "aligned": true,
+        "click_space": [
+          1920,
+          1080
+        ],
+        "dpi": 120,
+        "frame_over_click_ratio": 1.0,
+        "frame_space": [
+          1920,
+          1080
+        ],
+        "virtual_origin": [
+          0,
+          0
+        ],
+        "virtual_space": [
+          3,
+          21
+        ]
+      },
+      "dir": "D:/Virtu模型/data/desktop_traces/2026-11-04",
+      "dpi_awareness": {
+        "aware": true,
+        "dpi": 120,
+        "note": "",
+        "screen": [
+          1920,
+          1080
+        ],
+        "via": "SetProcessDpiAwarenessContext"
+      },
+      "ledger_sha256": "5e6a5cbe2d69bf23fba7548aa46e0e38871b4b268ab7a4f792307e7ca018403c",
+      "n_steps": 30
+    },
+    "live_tool_face": {
+      "module": "bridges/tool_calling_specs.py",
+      "tools": [
+        "cadcam_autocad_draw",
+        "cadcam_cae_stress_analysis",
+        "cadcam_cimco_validate",
+        "cadcam_desktop_gui",
+        "cadcam_extreme_chain",
+        "cadcam_nx_journal",
+        "cadcam_preflight",
+        "cadcam_run_full_chain",
+        "cadcam_sheetmetal_nest",
+        "cadcam_solidworks_model",
+        "cadcam_sscnc_control",
+        "cadcam_universal_geometry",
+        "cadcam_vericut_simulate",
+        "cadcam_visual_inspect"
+      ]
+    },
+    "repair_oracle": {
+      "fns": [
+        "validate",
+        "analytic_dv",
+        "resolve_params"
+      ],
+      "module": "scripts/sw_flange_demo.py"
+    }
+  },
+  "toolcall_strategy": "in_train",
+  "version": "virtu_engine_agent_v1"
+}

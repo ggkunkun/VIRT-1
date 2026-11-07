@@ -1,0 +1,84 @@
+{
+  "files": {
+    "CLOUD_TRAINING_HARDENING_PLAN_2026-11-01.md": {
+      "bytes": 23659,
+      "sha256": "457a94eb14c350f74f0086b2f2cd14d572623c5bfc7b067ee79b580d294a9161"
+    },
+    "cloud_train_pack/prepare_v100_targeted_corpus.py": {
+      "bytes": 27047,
+      "sha256": "893f04db1549f11d054994fef2916ac4e534b071b459ebfbdecd03521c9f2ae8"
+    },
+    "data/benchmark/virtu_fix_v1/formula_holdout_200.jsonl": {
+      "bytes": 49214,
+      "sha256": "1b9b60949005094b6873dd18e05da6f2cac0382c0d0423ed6f27642fad23e4e4"
+    },
+    "data/train/virtu_v3/manifest.json": {
+      "bytes": 3605,
+      "sha256": "18bd4c5090acd3d19860c83ff8bf7df54f5e45bfd3bbfae74d84b426cf687b42"
+    },
+    "data/train/virtu_v3/train/virtu_v3_text_sft.jsonl": {
+      "bytes": 13096106,
+      "sha256": "30ff1a23a2d9e9e49381e2ecc46e6cf8cd8c9aa6c1a0c3bddecb16b0341ca553"
+    },
+    "data/train/virtu_v3/virtu_fix_text_sft_v1.manifest.json": {
+      "bytes": 3605,
+      "sha256": "18bd4c5090acd3d19860c83ff8bf7df54f5e45bfd3bbfae74d84b426cf687b42"
+    },
+    "requirements-l40s.txt": {
+      "bytes": 708,
+      "sha256": "e6da2a64cff0f041d787819bc4dbb8e9bf6cbf3943510e36cf817fb74b7fa3f0"
+    },
+    "scripts/bootstrap_l40s_train.sh": {
+      "bytes": 12643,
+      "sha256": "7f8b2758302c326c9bd60064722122d4f99c962fd86d2311deaca749829aba7e"
+    },
+    "scripts/build_capability_sft.py": {
+      "bytes": 41796,
+      "sha256": "983cf40e2a43b88a287600e4d9a2324e8e793d71799f10f18309f43bf36bbcca"
+    },
+    "scripts/build_fix_text_corpus.py": {
+      "bytes": 16306,
+      "sha256": "41d568e7807949d16ddee519b9e4324eddd0d62379810b74995763e1974ed061"
+    },
+    "scripts/build_formula_holdout.py": {
+      "bytes": 4260,
+      "sha256": "3a069550a61015df1472aa01eb4a63f86b93d730d18b7073c6cec060f768ab5c"
+    },
+    "scripts/build_train_v3.py": {
+      "bytes": 22986,
+      "sha256": "ce6629aed8bc3daecaaac212b03cb0134b10143d35905b1ad1987f00f09b3fd8"
+    },
+    "scripts/knowledge_reasoning_seed.py": {
+      "bytes": 20054,
+      "sha256": "76408070e78ac5c52987d430ea8710dc38429334bbdf5e80305cdfd6cae3605c"
+    },
+    "scripts/train_virtu_l40s.py": {
+      "bytes": 19852,
+      "sha256": "d628e3dd96dfff772240f5585c293543c51873c59783bd8c85deef81d66f7b28"
+    },
+    "train_virtu.py": {
+      "bytes": 11120,
+      "sha256": "c63d5e4efe418ded68d6bd300a02e52b322bcaf6f226f3d308000df736a0a7ea"
+    }
+  },
+  "route": "A - L40S 48GB bf16 LoRA",
+  "hardware": "NVIDIA L40S 48GB (Ada sm_89), bf16 + tf32, unquantized base, max_len 4096",
+  "note": "flash-attn is optional; the trainer falls back to sdpa and never needs it.",
+  "budget_cap_cny": 50,
+  "updated_at": "2026-11-01 19:54:57",
+  "bundle": {
+    "path": "cloud_handoff/virtu_bundle_route_A.tar.gz",
+    "bytes": 2504664,
+    "sha256": "9c95dcda6da9d2155b57acd0becf78c84233c509fcdbdca8ba60a4ba8bcdd26f",
+    "extract_root": "virtu/"
+  },
+  "remote_one_liner": "tar xzf virtu_bundle_route_A.tar.gz -C ~ && bash ~/virtu/scripts/bootstrap_l40s_train.sh",
+  "train_command": "bash scripts/bootstrap_l40s_train.sh   # deps -> base -> preflight -> smoke -> train, resumable",
+  "eval_gates": [
+    "240-case virtu_eval gold=100",
+    "200/200 formula holdout",
+    "toolcall 30>=90 and 210 overall>=72.56",
+    "knowledge/reasoning>=60 if claimed",
+    "receipt status must be COMPLETED, never SMOKE_ONLY"
+  ]
+}

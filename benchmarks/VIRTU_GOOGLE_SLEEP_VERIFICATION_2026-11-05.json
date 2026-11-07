@@ -1,0 +1,79 @@
+{
+  "metadata": {
+    "evaluation_title": "Virtu Foundation Model x Google Sleep Framework Verification",
+    "paper_grounding": "Language Models Need Sleep: Learning to Self-Modify and Consolidate Memories (arXiv:2606.03979)",
+    "timestamp": "2026-11-05T23:25:40.790064",
+    "run_id": "SLEEP_VERIFY_20261105_232109_07320ef6",
+    "model": "virtu-cad-cam-10b / virtu-disciplined:v1",
+    "basis": "measured",
+    "source_code_sha256": "07320ef6764e4d10e9cf818b1efe841bb2d87b1f7fd6504c113802ab98cf850b",
+    "total_duration_seconds": 286.9
+  },
+  "empirical_metrics": {
+    "pre_sleep_anchor_score": {
+      "value": 0.8,
+      "n": 5,
+      "basis": "measured"
+    },
+    "post_sleep_stability_score": {
+      "value": 0.8,
+      "n": 8,
+      "basis": "measured"
+    },
+    "catastrophic_forgetting_rate": {
+      "value": 0.0,
+      "threshold": "<= 0.05",
+      "basis": "measured"
+    },
+    "plasticity_score": {
+      "value": 1.0,
+      "n": 3,
+      "basis": "measured"
+    },
+    "token_compression_ratio": {
+      "value": 0.9289,
+      "threshold": ">= 0.70",
+      "basis": "measured"
+    },
+    "dream_oracle_verification_rate": {
+      "value": 0.5,
+      "n": 6,
+      "basis": "measured"
+    },
+    "rule_4_mutation_probe_passed": {
+      "value": true,
+      "basis": "measured"
+    },
+    "overall_sleep_gate_passed": {
+      "value": true,
+      "basis": "measured"
+    }
+  },
+  "phase_breakdown": {
+    "wake_phase": {
+      "experiences_processed": 3,
+      "domains": [
+        "cae_simulation",
+        "cnc_machining",
+        "cad_modeling"
+      ]
+    },
+    "sleep_phase_1_consolidation": {
+      "units_consolidated": 3,
+      "token_compression_pct": 92.89
+    },
+    "sleep_phase_2_dreaming": {
+      "counterfactual_dreams_generated": 6,
+      "oracle_pass_rate_pct": 50.0
+    },
+    "sleep_phase_3_homeostasis": {
+      "stability_score_pct": 80.0,
+      "plasticity_score_pct": 100.0,
+      "catastrophic_forgetting_rate_pct": 0.0
+    }
+  },
+  "evidence_files": {
+    "sleep_cycle_json": "D:\\Virtu模型\\runs\\sleep_framework\\sleep_cycle_report_SLEEP_VERIFY_20261105_232109_07320ef6.json",
+    "homeostasis_audit_json": "D:\\Virtu模型\\runs\\sleep_framework\\homeostasis_audit_SLEEP_VERIFY_20261105_232109_07320ef6.json"
+  }
+}

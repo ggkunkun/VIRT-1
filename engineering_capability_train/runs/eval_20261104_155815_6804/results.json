@@ -1,0 +1,129 @@
+{
+  "metrics": {
+    "task_success_rate": 1.0,
+    "first_attempt_success_rate": 1.0,
+    "physics_compliance_rate": 1.0,
+    "decision_optimality_rate": 1.0,
+    "semantic_grounding_rate": 1.0,
+    "tool_call_valid_rate": 1.0,
+    "parametric_model_valid_rate": 1.0,
+    "gui_action_valid_rate": null,
+    "error_rate": 0.0,
+    "fatal_error_rate": 0.0,
+    "transport_error_rate": 0.0,
+    "latency_mean_s": null,
+    "latency_p50_s": null,
+    "latency_p95_s": null,
+    "recovery_rate": null,
+    "engineering_capability_score": 1.0
+  },
+  "gate_checks": [
+    {
+      "gate": "task_success_rate_min",
+      "value": 1.0,
+      "threshold": 0.85,
+      "pass": true
+    },
+    {
+      "gate": "first_attempt_success_rate_min",
+      "value": 1.0,
+      "threshold": 0.7,
+      "pass": true
+    },
+    {
+      "gate": "physics_compliance_rate_min",
+      "value": 1.0,
+      "threshold": 1.0,
+      "pass": true
+    },
+    {
+      "gate": "decision_optimality_rate_min",
+      "value": 1.0,
+      "threshold": 0.85,
+      "pass": true
+    },
+    {
+      "gate": "semantic_grounding_rate_min",
+      "value": 1.0,
+      "threshold": 0.8,
+      "pass": true
+    },
+    {
+      "gate": "tool_call_valid_rate_min",
+      "value": 1.0,
+      "threshold": 0.95,
+      "pass": true
+    },
+    {
+      "gate": "parametric_model_valid_rate_min",
+      "value": 1.0,
+      "threshold": 0.95,
+      "pass": true
+    },
+    {
+      "gate": "gui_action_valid_rate_min",
+      "value": null,
+      "threshold": 0.98,
+      "pass": false,
+      "reason": "metric unavailable"
+    },
+    {
+      "gate": "error_rate_max",
+      "value": 0.0,
+      "threshold": 0.1,
+      "pass": true
+    },
+    {
+      "gate": "fatal_error_rate_max",
+      "value": 0.0,
+      "threshold": 0.02,
+      "pass": true
+    },
+    {
+      "gate": "transport_error_rate_max",
+      "value": 0.0,
+      "threshold": 0.05,
+      "pass": true
+    },
+    {
+      "gate": "latency_p95_s_max",
+      "value": null,
+      "threshold": 180.0,
+      "pass": false,
+      "reason": "metric unavailable"
+    },
+    {
+      "gate": "engineering_capability_score_min",
+      "value": 1.0,
+      "threshold": 0.8,
+      "pass": true
+    },
+    {
+      "gate": "min_valid_tasks",
+      "value": 139,
+      "threshold": 30,
+      "pass": true
+    }
+  ],
+  "n_total_records": 149,
+  "n_valid_tasks": 139,
+  "transport_errors": 0,
+  "evaluation_valid": true,
+  "physics_veto_passed": true,
+  "accepted": false,
+  "verdicts": {
+    "pass": 139,
+    "recorded_replay": 10
+  },
+  "capability_breakdown": {
+    "vision_decision": 72,
+    "engineering_semantics": 57,
+    "toolchain": 10
+  },
+  "run_dir": "D:\\Virtu模型\\engineering_capability_train\\runs\\eval_20261104_155815_6804",
+  "config_sha256": {
+    "metrics.json": "5d93f1a8c292e5ca341ce3f7a141f5a91e9d446fe97458617ced1108497fd780",
+    "eval_tasks.jsonl": "b0e0f68220bf74cdf6003349fe3906ef12197d2f6be2c9f4d078ef23c5026b8d"
+  },
+  "evaluated_at": "2026-11-04T15:58:15+08:00"
+}

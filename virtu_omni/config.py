@@ -6,9 +6,12 @@ distributed training, streaming data pipeline, health monitoring, and serving.
 
 from __future__ import annotations
 import os
+import dataclasses
 from dataclasses import dataclass, field, asdict
-from typing import Any, Dict, Optional
+from typing import Any, Dict, Optional, Type
 import yaml
+
+from virtu_omni.errors import ModelError, CFG_INVALID_FIELD, CFG_INVALID_YAML, CFG_UNKNOWN_FIELD
 
 
 @dataclass
@@ -41,6 +44,54 @@ class ModelConfig:
     loop_gating: bool = True
     adaptive_loop: bool = True
     loop_exit_metric: str = "relative_l2"
+
+    def __post_init__(self) -> None:
+        """Fail fast on structurally impossible hyperparameters.
+
+        Previously an illegal config (e.g. 0 layers, odd head_dim, mismatched
+        GQA ratio) only surfaced as a confusing reshape error deep inside the
+        forward pass. Validate at construction time instead.
+        """
+        checks = [
+            (self.num_layers >= 1, "num_layers", self.num_layers, "must be >= 1"),
+            (self.hidden_dim >= 1, "hidden_dim", self.hidden_dim, "must be >= 1"),
+            (self.intermediate_dim >= 1, "intermediate_dim", self.intermediate_dim, "must be >= 1"),
+            (self.num_attention_heads >= 1, "num_attention_heads", self.num_attention_heads, "must be >= 1"),
+            (self.num_kv_heads >= 1, "num_kv_heads", self.num_kv_heads, "must be >= 1"),
+            (self.head_dim >= 2 and self.head_dim % 2 == 0, "head_dim", self.head_dim,
+             "must be >= 2 and even (Uni-RoPE rotates dimension pairs)"),
+            (self.vocab_size >= 2, "vocab_size", self.vocab_size, "must be >= 2"),
+            (self.vision_codebook_size >= 1, "vision_codebook_size", self.vision_codebook_size, "must be >= 1"),
+            (self.patch_size >= 1, "patch_size", self.patch_size, "must be >= 1"),
+            (self.image_resolution >= self.patch_size, "image_resolution", self.image_resolution,
+             "must be >= patch_size"),
+            (self.max_position_embeddings >= 1, "max_position_embeddings", self.max_position_embeddings, "must be >= 1"),
+            (self.max_loop_steps >= 1, "max_loop_steps", self.max_loop_steps, "must be >= 1"),
+            (self.convergence_threshold > 0, "convergence_threshold", self.convergence_threshold, "must be > 0"),
+        ]
+        for ok, name, value, rule in checks:
+            if not ok:
+                raise ModelError(
+                    CFG_INVALID_FIELD,
+                    f"ModelConfig.{name}={value!r} is invalid: {rule}",
+                    hint="Fix the YAML/constructor value before building the model.",
+                    context={"field": name, "value": value, "rule": rule},
+                )
+        if self.num_attention_heads % self.num_kv_heads != 0:
+            raise ModelError(
+                CFG_INVALID_FIELD,
+                f"num_attention_heads ({self.num_attention_heads}) must be divisible by "
+                f"num_kv_heads ({self.num_kv_heads}) for Grouped-Query Attention",
+                hint="Pick a KV head count that divides the query head count (e.g. 32:8).",
+                context={"num_attention_heads": self.num_attention_heads, "num_kv_heads": self.num_kv_heads},
+            )
+        if self.loop_exit_metric not in ("relative_l2", "cosine"):
+            raise ModelError(
+                CFG_INVALID_FIELD,
+                f"loop_exit_metric={self.loop_exit_metric!r} is not supported",
+                hint="Use 'relative_l2' or 'cosine'.",
+                context={"field": "loop_exit_metric", "value": self.loop_exit_metric},
+            )
 
     @property
     def total_estimated_parameters(self) -> int:
@@ -118,6 +169,24 @@ class DataConfig:
     buffer_size: int = 65536
     data_cache_dir: str = "cache/data"
 
+    def __post_init__(self) -> None:
+        """Guard the two knobs the preprocessing pipeline indexes with."""
+        checks = [
+            (self.num_workers >= 1, "num_workers", self.num_workers, "must be >= 1"),
+            (self.max_text_tokens >= 2, "max_text_tokens", self.max_text_tokens,
+             "must be >= 2 to fit BOS/EOS boundary tokens"),
+            (self.image_resolution >= 1, "image_resolution", self.image_resolution, "must be >= 1"),
+            (self.patch_size >= 1, "patch_size", self.patch_size, "must be >= 1"),
+        ]
+        for ok, name, value, rule in checks:
+            if not ok:
+                raise ModelError(
+                    CFG_INVALID_FIELD,
+                    f"DataConfig.{name}={value!r} is invalid: {rule}",
+                    hint="Fix the data pipeline configuration before streaming.",
+                    context={"field": name, "value": value, "rule": rule},
+                )
+
 
 @dataclass
 class MonitorConfig:
@@ -171,15 +240,63 @@ class VirtuOmniConfig:
 
     @classmethod
     def from_yaml(cls, path: str) -> VirtuOmniConfig:
-        """Load configuration from YAML file."""
+        """Load configuration from YAML file.
+
+        Unknown keys and non-mapping sections are reported as structured
+        ``ModelError`` instances (E1002/E1003) instead of leaking a raw
+        ``TypeError`` from the dataclass constructor, which previously made an
+        operator typo look like an architecture crash.
+        """
         with open(path, "r", encoding="utf-8") as f:
             data = yaml.safe_load(f) or {}
 
-        return cls(
-            model=ModelConfig(**data.get("model", {})),
-            parallelism=ParallelismConfig(**data.get("parallelism", {})),
-            training=TrainingConfig(**data.get("training", {})),
-            data=DataConfig(**data.get("data", {})),
-            monitor=MonitorConfig(**data.get("monitor", {})),
-            serving=ServingConfig(**data.get("serving", {})),
-        )
+        if not isinstance(data, dict):
+            raise ModelError(
+                CFG_INVALID_YAML,
+                f"YAML root must be a mapping, got {type(data).__name__}",
+                hint="Wrap the sections under keys: model/parallelism/training/data/monitor/serving.",
+                context={"path": path},
+            )
+
+        sections = {
+            "model": ModelConfig,
+            "parallelism": ParallelismConfig,
+            "training": TrainingConfig,
+            "data": DataConfig,
+            "monitor": MonitorConfig,
+            "serving": ServingConfig,
+        }
+        kwargs: Dict[str, Any] = {}
+        for section, section_cls in sections.items():
+            raw = data.get(section, {})
+            if not isinstance(raw, dict):
+                raise ModelError(
+                    CFG_INVALID_YAML,
+                    f"Section '{section}' must be a mapping, got {type(raw).__name__}",
+                    hint=f"Use 'section:' followed by 'key: value' pairs under '{section}'.",
+                    context={"section": section},
+                )
+            kwargs[section] = cls._build_section(section, section_cls, raw, path)
+        return cls(**kwargs)
+
+    @staticmethod
+    def _build_section(section: str, section_cls: Type, raw: Dict[str, Any], path: str) -> Any:
+        """Instantiate one config section, rejecting unknown keys explicitly."""
+        valid = {f.name for f in dataclasses.fields(section_cls)}
+        unknown = sorted(set(raw) - valid)
+        if unknown:
+            raise ModelError(
+                CFG_UNKNOWN_FIELD,
+                f"Unknown key(s) in section '{section}': {', '.join(unknown)}",
+                hint=f"Allowed keys: {', '.join(sorted(valid))}.",
+                context={"section": section, "unknown_keys": unknown, "path": path},
+            )
+        try:
+            return section_cls(**raw)
+        except TypeError as exc:
+            raise ModelError(
+                CFG_UNKNOWN_FIELD,
+                f"Type error while building section '{section}': {exc}",
+                hint="Check the value types declared under this section.",
+                context={"section": section, "path": path},
+            ) from exc

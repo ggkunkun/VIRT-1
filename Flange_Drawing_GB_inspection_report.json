@@ -1,0 +1,269 @@
+{
+  "total_balloons": 22,
+  "dimensions": [
+    {
+      "balloon_no": 1,
+      "type": "linear",
+      "nominal": 120.0,
+      "tolerance": "-120",
+      "fit": null,
+      "raw_text": "FLG-120-50H7",
+      "position": [
+        305.0,
+        45.0
+      ]
+    },
+    {
+      "balloon_no": 2,
+      "type": "linear",
+      "nominal": 45.0,
+      "tolerance": null,
+      "fit": null,
+      "raw_text": "45 优质碳素钢",
+      "position": [
+        285.0,
+        31.0
+      ]
+    },
+    {
+      "balloon_no": 3,
+      "type": "linear",
+      "nominal": 1.56,
+      "tolerance": null,
+      "fit": null,
+      "raw_text": "1.56 kg",
+      "position": [
+        285.0,
+        17.0
+      ]
+    },
+    {
+      "balloon_no": 4,
+      "type": "linear",
+      "nominal": 1.0,
+      "tolerance": null,
+      "fit": null,
+      "raw_text": "1 : 1",
+      "position": [
+        337.5,
+        31.0
+      ]
+    },
+    {
+      "balloon_no": 5,
+      "type": "linear",
+      "nominal": 16.0,
+      "tolerance": null,
+      "fit": null,
+      "raw_text": "16",
+      "position": [
+        126.0,
+        100.5
+      ]
+    },
+    {
+      "balloon_no": 6,
+      "type": "linear",
+      "nominal": 8.0,
+      "tolerance": null,
+      "fit": null,
+      "raw_text": "8",
+      "position": [
+        138.0,
+        113.0
+      ]
+    },
+    {
+      "balloon_no": 7,
+      "type": "linear",
+      "nominal": 24.0,
+      "tolerance": null,
+      "fit": null,
+      "raw_text": "24",
+      "position": [
+        130.0,
+        78.5
+      ]
+    },
+    {
+      "balloon_no": 8,
+      "type": "chamfer",
+      "nominal": 50.0,
+      "tolerance": null,
+      "fit": null,
+      "raw_text": "%%c50 H7(+0.025/0)",
+      "position": [
+        101.0,
+        180.0
+      ]
+    },
+    {
+      "balloon_no": 9,
+      "type": "chamfer",
+      "nominal": 75.0,
+      "tolerance": null,
+      "fit": null,
+      "raw_text": "%%c75",
+      "position": [
+        159.0,
+        180.0
+      ]
+    },
+    {
+      "balloon_no": 10,
+      "type": "chamfer",
+      "nominal": 120.0,
+      "tolerance": null,
+      "fit": null,
+      "raw_text": "%%c120",
+      "position": [
+        86.0,
+        180.0
+      ]
+    },
+    {
+      "balloon_no": 11,
+      "type": "chamfer",
+      "nominal": 14.0,
+      "tolerance": null,
+      "fit": null,
+      "raw_text": "4x%%c14 均布",
+      "position": [
+        359.5,
+        206.5
+      ]
+    },
+    {
+      "balloon_no": 12,
+      "type": "chamfer",
+      "nominal": 85.0,
+      "tolerance": null,
+      "fit": null,
+      "raw_text": "PCD %%c85",
+      "position": [
+        337.0520382004283,
+        226.55203820042829
+      ]
+    },
+    {
+      "balloon_no": 13,
+      "type": "chamfer",
+      "nominal": 1.5,
+      "tolerance": null,
+      "fit": null,
+      "raw_text": "C1.5",
+      "position": [
+        128.0,
+        249.5
+      ]
+    },
+    {
+      "balloon_no": 14,
+      "type": "linear",
+      "nominal": 0.03,
+      "tolerance": null,
+      "fit": null,
+      "raw_text": "0.03",
+      "position": [
+        162.0,
+        262.0
+      ]
+    },
+    {
+      "balloon_no": 15,
+      "type": "linear",
+      "nominal": 1.6,
+      "tolerance": null,
+      "fit": null,
+      "raw_text": "1.6",
+      "position": [
+        134.0,
+        214.66
+      ]
+    },
+    {
+      "balloon_no": 16,
+      "type": "linear",
+      "nominal": 3.2,
+      "tolerance": null,
+      "fit": null,
+      "raw_text": "3.2",
+      "position": [
+        140.0,
+        234.66
+      ]
+    },
+    {
+      "balloon_no": 17,
+      "type": "linear",
+      "nominal": 6.3,
+      "tolerance": null,
+      "fit": null,
+      "raw_text": "6.3",
+      "position": [
+        376.0,
+        286.66
+      ]
+    },
+    {
+      "balloon_no": 18,
+      "type": "linear",
+      "nominal": 1.0,
+      "tolerance": null,
+      "fit": null,
+      "raw_text": "1. 零件毛坯选用 45 号优质碳素结构钢，调质处理 HB 220~250。",
+      "position": [
+        240.0,
+        107.0
+      ]
+    },
+    {
+      "balloon_no": 19,
+      "type": "linear",
+      "nominal": 2.0,
+      "tolerance": null,
+      "fit": null,
+      "raw_text": "2. 未注线性公差按 GB/T 1804-m 执行。",
+      "position": [
+        240.0,
+        100.5
+      ]
+    },
+    {
+      "balloon_no": 20,
+      "type": "linear",
+      "nominal": 3.0,
+      "tolerance": "±10",
+      "fit": null,
+      "raw_text": "3. 4 个螺栓通孔等分均布，角度累积误差不大于 ±10'。",
+      "position": [
+        240.0,
+        94.0
+      ]
+    },
+    {
+      "balloon_no": 21,
+      "type": "chamfer",
+      "nominal": 1.0,
+      "tolerance": null,
+      "fit": null,
+      "raw_text": "4. 未注倒角均为 C1，锐边倒钝，严禁残留毛刺及飞边。",
+      "position": [
+        240.0,
+        87.5
+      ]
+    },
+    {
+      "balloon_no": 22,
+      "type": "linear",
+      "nominal": 5.0,
+      "tolerance": null,
+      "fit": null,
+      "raw_text": "5. 加工完成经防锈清洗钝化处理，包装入库。",
+      "position": [
+        240.0,
+        81.0
+      ]
+    }
+  ]
+}

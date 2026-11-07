@@ -1,0 +1,426 @@
+{
+ "type": "object",
+ "properties": {
+  "tool": {
+   "type": "string",
+   "enum": [
+    "cadcam_assembly_build",
+    "cadcam_cae_stress_analysis",
+    "cadcam_cimco_validate",
+    "cadcam_extreme_chain",
+    "cadcam_preflight",
+    "cadcam_sheetmetal_nest",
+    "cadcam_solidworks_model",
+    "cadcam_step_reverse",
+    "cadcam_universal_geometry",
+    "cadcam_vericut_simulate"
+   ]
+  },
+  "arguments": {
+   "type": "object"
+  }
+ },
+ "required": [
+  "tool",
+  "arguments"
+ ],
+ "oneOf": [
+  {
+   "type": "object",
+   "properties": {
+    "tool": {
+     "const": "cadcam_assembly_build"
+    },
+    "arguments": {
+     "type": "object",
+     "properties": {
+      "action": {
+       "type": "string",
+       "enum": [
+        "model",
+        "assemble",
+        "drawing",
+        "full"
+       ],
+       "description": "model / assemble / drawing / full（默认 full 一次交付三件）"
+      },
+      "step_path": {
+       "type": "string",
+       "description": "工作区内 STEP 绝对路径；留空则用 assets/wheel_mold_P0.step"
+      },
+      "out_dir": {
+       "type": "string",
+       "description": "产物目录（必须位于工作区内）；留空用 runs/virtu_assembly"
+      }
+     },
+     "required": []
+    }
+   },
+   "required": [
+    "tool",
+    "arguments"
+   ]
+  },
+  {
+   "type": "object",
+   "properties": {
+    "tool": {
+     "const": "cadcam_cae_stress_analysis"
+    },
+    "arguments": {
+     "type": "object",
+     "properties": {
+      "spec": {
+       "type": "object"
+      },
+      "material": {
+       "type": "string",
+       "description": "工程材料名称（如 45号钢, 304不锈钢, Q235, Cr12MoV, 6061铝合金）"
+      },
+      "pressure_mpa": {
+       "type": "number",
+       "description": "承受内压力 (MPa)"
+      },
+      "force_n": {
+       "type": "number",
+       "description": "承受拉伸或剪切载荷力 (N)"
+      },
+      "torque_nm": {
+       "type": "number",
+       "description": "承受扭矩 (N·m)"
+      },
+      "target_fos": {
+       "type": "number",
+       "description": "设计安全系数下限（默认 1.5）"
+      }
+     },
+     "required": [
+      "spec"
+     ]
+    }
+   },
+   "required": [
+    "tool",
+    "arguments"
+   ]
+  },
+  {
+   "type": "object",
+   "properties": {
+    "tool": {
+     "const": "cadcam_cimco_validate"
+    },
+    "arguments": {
+     "type": "object",
+     "properties": {
+      "action": {
+       "type": "string",
+       "enum": [
+        "validate_macro",
+        "launch"
+       ],
+       "description": "执行动作：validate_macro（深度静态语法与逻辑校验）或 launch（在CIMCO Edit中打开NC文件）"
+      },
+      "code": {
+       "type": "string",
+       "description": "G代码 / FANUC Macro B 代码文本"
+      },
+      "nc_file_path": {
+       "type": "string",
+       "description": "待打开的 NC 文件路径"
+      }
+     },
+     "required": [
+      "action"
+     ]
+    }
+   },
+   "required": [
+    "tool",
+    "arguments"
+   ]
+  },
+  {
+   "type": "object",
+   "properties": {
+    "tool": {
+     "const": "cadcam_extreme_chain"
+    },
+    "arguments": {
+     "type": "object",
+     "properties": {
+      "wish": {
+       "type": "string",
+       "description": "非标零件或模具制造意图描述，包含材质、主要直径、孔径、长度、特殊形状要求"
+      },
+      "out_root": {
+       "type": "string",
+       "description": "输出工程产物根目录（默认 runs/extreme_chain）"
+      },
+      "max_attempts": {
+       "type": "integer",
+       "description": "熔断尝试预算上限（默认 3 次）"
+      },
+      "tier2_native": {
+       "type": "boolean",
+       "description": "是否在毫秒级自查通过后连带驱动桌面原生六大软件（默认 False，极速毫秒模式）"
+      }
+     },
+     "required": [
+      "wish"
+     ]
+    }
+   },
+   "required": [
+    "tool",
+    "arguments"
+   ]
+  },
+  {
+   "type": "object",
+   "properties": {
+    "tool": {
+     "const": "cadcam_preflight"
+    },
+    "arguments": {
+     "type": "object",
+     "properties": {},
+     "required": []
+    }
+   },
+   "required": [
+    "tool",
+    "arguments"
+   ]
+  },
+  {
+   "type": "object",
+   "properties": {
+    "tool": {
+     "const": "cadcam_sheetmetal_nest"
+    },
+    "arguments": {
+     "type": "object",
+     "properties": {
+      "parts": {
+       "type": "array",
+       "items": {
+        "type": "object",
+        "properties": {
+         "name": {
+          "type": "string"
+         },
+         "width": {
+          "type": "number"
+         },
+         "height": {
+          "type": "number"
+         },
+         "quantity": {
+          "type": "integer"
+         },
+         "allow_rotation": {
+          "type": "boolean"
+         }
+        },
+        "required": [
+         "name",
+         "width",
+         "height"
+        ]
+       },
+       "description": "下料零件清单"
+      },
+      "sheet_width": {
+       "type": "number",
+       "description": "板材基料宽度 (mm，默认 1000.0)"
+      },
+      "sheet_height": {
+       "type": "number",
+       "description": "板材基料高度 (mm，默认 1000.0)"
+      },
+      "margin": {
+       "type": "number",
+       "description": "零件与板边以及零件间割缝安全间隙 (mm，默认 5.0)"
+      },
+      "output_dxf": {
+       "type": "string",
+       "description": "排样图 DXF 输出路径（可选）"
+      }
+     },
+     "required": [
+      "parts"
+     ]
+    }
+   },
+   "required": [
+    "tool",
+    "arguments"
+   ]
+  },
+  {
+   "type": "object",
+   "properties": {
+    "tool": {
+     "const": "cadcam_solidworks_model"
+    },
+    "arguments": {
+     "type": "object",
+     "properties": {
+      "action": {
+       "type": "string",
+       "enum": [
+        "model_flange",
+        "annotate_drawing",
+        "create_parametric_part",
+        "execute_vba",
+        "connect"
+       ],
+       "description": "执行动作：model_flange（带颈法兰盘参数化建模）、annotate_drawing（在工程图上放视图并标注尺寸与尺寸细节）、create_parametric_part（基础参数化建模）或 execute_vba（直接执行VBA代码）"
+      },
+      "annotation": {
+       "type": "object"
+      },
+      "part_name": {
+       "type": "string",
+       "description": "零件名称：请自己起一个能体现你所选标准的名字（例如把标准号与规格写进名字），不要沿用示例占位名"
+      },
+      "dimensions": {
+       "type": "object"
+      },
+      "vba_code": {
+       "type": "string",
+       "description": "原生 SolidWorks VBA 宏代码（当 action 为 execute_vba 时必填）"
+      }
+     },
+     "required": [
+      "action"
+     ]
+    }
+   },
+   "required": [
+    "tool",
+    "arguments"
+   ]
+  },
+  {
+   "type": "object",
+   "properties": {
+    "tool": {
+     "const": "cadcam_step_reverse"
+    },
+    "arguments": {
+     "type": "object",
+     "properties": {
+      "action": {
+       "type": "string",
+       "enum": [
+        "list",
+        "analyze",
+        "assembly"
+       ],
+       "description": "list=列出工作区 assets 下可用的 STEP 文件；analyze=对 step_path 做几何逆向测量"
+      },
+      "step_path": {
+       "type": "string",
+       "description": "工作区内 .step 文件的绝对路径（action=analyze 时必填）"
+      },
+      "name_contains": {
+       "type": "string",
+       "description": "action=list 时按文件名子串过滤，可选"
+      },
+      "max_bodies": {
+       "type": "integer",
+       "description": "最多返回的实体明细数，默认 6"
+      },
+      "detail": {
+       "type": "boolean",
+       "description": "true=返回逐孔坐标等完整明细（体积较大）；默认 false 精简"
+      }
+     },
+     "required": []
+    }
+   },
+   "required": [
+    "tool",
+    "arguments"
+   ]
+  },
+  {
+   "type": "object",
+   "properties": {
+    "tool": {
+     "const": "cadcam_universal_geometry"
+    },
+    "arguments": {
+     "type": "object",
+     "properties": {
+      "wish": {
+       "type": "string",
+       "description": "自然语言机械零件制造或几何需求描述"
+      },
+      "part_type": {
+       "type": "string",
+       "enum": [
+        "auto",
+        "shaft",
+        "flange",
+        "keyway",
+        "bearing_bracket",
+        "sheet_metal"
+       ],
+       "description": "零件家族类型（默认 auto 自动语义推断）"
+      },
+      "output_dir": {
+       "type": "string",
+       "description": "工程产物输出目录路径（默认 runs/universal_cad）"
+      }
+     },
+     "required": [
+      "wish"
+     ]
+    }
+   },
+   "required": [
+    "tool",
+    "arguments"
+   ]
+  },
+  {
+   "type": "object",
+   "properties": {
+    "tool": {
+     "const": "cadcam_vericut_simulate"
+    },
+    "arguments": {
+     "type": "object",
+     "properties": {
+      "action": {
+       "type": "string",
+       "enum": [
+        "run_simulation",
+        "check_collision"
+       ],
+       "description": "执行动作：run_simulation（无头批处理仿真）或 check_collision（解析仿真碰撞日志）"
+      },
+      "project_path": {
+       "type": "string",
+       "description": "VERICUT 项目工程文件 (.vcproject) 路径"
+      },
+      "log_path": {
+       "type": "string",
+       "description": "仿真输出日志路径（用于干涉过切分析）"
+      }
+     },
+     "required": [
+      "action"
+     ]
+    }
+   },
+   "required": [
+    "tool",
+    "arguments"
+   ]
+  }
+ ]
+}

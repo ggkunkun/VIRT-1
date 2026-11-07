@@ -1,0 +1,8 @@
+# Virtu-Production-V3-8B —— Qwen3-8B + 6大专家LoRA（包含15大工业工程资产新训LoRA）全量合并量化模型
+FROM D:/Virtu模型/checkpoints/virtu-production-v3-q4_0.gguf
+
+PARAMETER num_ctx 4096
+PARAMETER temperature 0.2
+PARAMETER top_p 0.9
+PARAMETER stop "<|im_end|>"
+PARAMETER stop "<|endoftext|>"

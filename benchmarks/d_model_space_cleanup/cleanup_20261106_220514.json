@@ -1,0 +1,91 @@
+{
+  "started": "2026-11-06 21:23:13",
+  "free_gb_before": {
+    "D": 91.89241790771484,
+    "E": 60.4766731262207
+  },
+  "basis": "measured",
+  "idle_gate": {
+    "ok": true,
+    "waited_s": 2473.8,
+    "busy": [],
+    "loaded": []
+  },
+  "t1": [
+    {
+      "file": "virtu-moe-14b-bf16.gguf",
+      "tag": "virtu-moe-14b:bf16",
+      "basis": "measured_earlier+stat",
+      "verdict": "already-absent",
+      "staged_hardlink_bytes": 0
+    },
+    {
+      "file": "virtu-moe-14b-q4_k_m.gguf",
+      "tag": "virtu-moe-14b:fast",
+      "basis": "measured_earlier+stat",
+      "verdict": "already-absent",
+      "staged_hardlink_bytes": 0
+    },
+    {
+      "file": "virtu-moe-14b-semantic-q4_k_m.gguf",
+      "tag": "virtu-moe-14b:semantic",
+      "basis": "measured_earlier+stat",
+      "verdict": "already-absent",
+      "staged_hardlink_bytes": 0
+    },
+    {
+      "file": "virtu-dense-merged-q4_0.gguf",
+      "tag": "virtu-dense-merged:q4_0",
+      "basis": "measured_earlier+stat",
+      "verdict": "already-absent",
+      "staged_hardlink_bytes": 0
+    },
+    {
+      "file": "virtu-dense-merged-v2-q4_0.gguf",
+      "tag": "virtu-dense-merged-v2:q4_0",
+      "basis": "measured_earlier+stat",
+      "verdict": "already-absent",
+      "staged_hardlink_bytes": 0
+    },
+    {
+      "file": "virtu-dense-ties-q4_0.gguf",
+      "tag": "virtu-dense-ties:q4",
+      "basis": "measured_earlier+stat",
+      "verdict": "already-absent",
+      "staged_hardlink_bytes": 0
+    },
+    {
+      "file": "virtu-comprehensive-q4_0.gguf",
+      "tag": "virtu-comprehensive:latest",
+      "basis": "measured_earlier+stat",
+      "verdict": "already-absent",
+      "staged_hardlink_bytes": 0
+    }
+  ],
+  "t2": [
+    {
+      "dir": "virtu_dense_merged_v2_hf",
+      "refs": [],
+      "staged_hardlink_bytes": 0,
+      "verdict": "zero-live-refs-and-derivative-servable",
+      "successor": "virtu_dense_ties_hf",
+      "derivative_tag": "virtu-dense-merged-v2:q4_0",
+      "derivative_layer_sha256": "97a7eb763837c37d07f89e03ee2a636d38ce8516dec628b3e3e724ceae5d3dd6",
+      "derivative_blob_on_e": true,
+      "arms_note": "arms.json serves this arm as ollama_native, not from the HF dir"
+    }
+  ],
+  "tag_gate_missing": [],
+  "t3": [],
+  "aborted": "idle-lost-during-t3",
+  "free_gb_after": {
+    "D": 85.29231262207031,
+    "E": 60.64755630493164
+  },
+  "reclaimed_gb_D": -6.6,
+  "provenance": {
+    "verdict": "already-recorded",
+    "keys_before": 24
+  },
+  "evidence_json": "D:\\Virtu模型\\benchmarks\\d_model_space_cleanup\\cleanup_20261106_220514.json"
+}

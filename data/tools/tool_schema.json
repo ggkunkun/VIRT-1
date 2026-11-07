@@ -1,0 +1,211 @@
+[
+  {
+    "type": "function",
+    "function": {
+      "name": "cad.parse_wish_intent",
+      "description": "将自然语言制造意图解析为结构化参数化 spec；任何代码生成前必须先调用本工具。",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "wish": {
+            "type": "string",
+            "description": "原始制造意图全文"
+          },
+          "material": {
+            "type": "string",
+            "enum": [
+              "Ti-6Al-4V",
+              "AL7075-T6",
+              "Cr12MoV",
+              "Steel45",
+              "SS304",
+              "P20",
+              "Inconel718",
+              "CuC360",
+              "20CrMnTi"
+            ],
+            "description": "工件材料牌号"
+          },
+          "d_outer": {
+            "type": "number",
+            "description": "最大外径 mm"
+          },
+          "d_inner": {
+            "type": "number",
+            "description": "轴心通孔/内孔直径 mm，必须小于 d_outer"
+          },
+          "num_features": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "description": "槽/叶片/阵列特征数量"
+          },
+          "fillet_r": {
+            "type": "number",
+            "description": "槽底圆角 R mm"
+          },
+          "overall_len": {
+            "type": "number",
+            "description": "总长 mm"
+          },
+          "sweep_angle": {
+            "type": "number",
+            "description": "摆角/螺旋角 deg"
+          },
+          "is_multiaxis": {
+            "type": "boolean",
+            "description": "是否需五轴联动"
+          },
+          "is_die_mold": {
+            "type": "boolean",
+            "description": "是否为模具类工件"
+          }
+        },
+        "required": [
+          "wish",
+          "material",
+          "d_outer",
+          "d_inner"
+        ]
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "solidworks.create_parametric_part",
+      "description": "由 spec 生成SOLIDWORKS 2021 VBA 全局变量参数化驱动宏。必须通过工具调用产出，不得在正文凭空输出代码。",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "spec": {
+            "type": "object",
+            "description": "cad.parse_wish_intent 返回的结构化参数（不含 wish 原文）"
+          }
+        },
+        "required": [
+          "spec"
+        ]
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "nx.create_nxopen_script",
+      "description": "由 spec 生成Siemens NX 12.0 NXOpen Python 表达式驱动脚本。必须通过工具调用产出，不得在正文凭空输出代码。",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "spec": {
+            "type": "object",
+            "description": "cad.parse_wish_intent 返回的结构化参数（不含 wish 原文）"
+          }
+        },
+        "required": [
+          "spec"
+        ]
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "autocad.create_autolisp",
+      "description": "由 spec 生成AutoCAD 2026 AutoLISP 参数化工程图绘制程序。必须通过工具调用产出，不得在正文凭空输出代码。",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "spec": {
+            "type": "object",
+            "description": "cad.parse_wish_intent 返回的结构化参数（不含 wish 原文）"
+          }
+        },
+        "required": [
+          "spec"
+        ]
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "vericut.create_project_config",
+      "description": "由 spec 生成Vericut 9.6 .opt 仿真工程与 Force 切削优化配置。必须通过工具调用产出，不得在正文凭空输出代码。",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "spec": {
+            "type": "object",
+            "description": "cad.parse_wish_intent 返回的结构化参数（不含 wish 原文）"
+          }
+        },
+        "required": [
+          "spec"
+        ]
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "cimco.create_macro_b",
+      "description": "由 spec 生成CIMCO Edit 2026 FANUC Macro B 参数化数控宏程序。必须通过工具调用产出，不得在正文凭空输出代码。",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "spec": {
+            "type": "object",
+            "description": "cad.parse_wish_intent 返回的结构化参数（不含 wish 原文）"
+          }
+        },
+        "required": [
+          "spec"
+        ]
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "sscnc.create_setup_guide",
+      "description": "由 spec 生成斯沃数控仿真 FANUC 0i-TF 装夹与 G54 对刀指南。必须通过工具调用产出，不得在正文凭空输出代码。",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "spec": {
+            "type": "object",
+            "description": "cad.parse_wish_intent 返回的结构化参数（不含 wish 原文）"
+          }
+        },
+        "required": [
+          "spec"
+        ]
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "ontology.lookup_plugin",
+      "description": "查询指定工业软件的指定插件/模块的定位、能力、API 接口与工程应用场景。",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "software": {
+            "type": "string",
+            "description": "软件全称，如 SOLIDWORKS 2021"
+          },
+          "plugin": {
+            "type": "string",
+            "description": "插件/模块名称"
+          }
+        },
+        "required": [
+          "software",
+          "plugin"
+        ]
+      }
+    }
+  }
+]

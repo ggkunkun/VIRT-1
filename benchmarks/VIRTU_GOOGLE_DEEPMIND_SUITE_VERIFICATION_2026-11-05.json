@@ -1,0 +1,127 @@
+{
+  "run_id": "VIRTU_GOOGLE_DEEPMIND_20261105_235429_178810e3",
+  "timestamp": "2026-11-05 23:54:28",
+  "basis": "measured",
+  "sample_count_n": 16,
+  "elapsed_seconds": 0.6,
+  "falsifiable_probes": {
+    "all_passed": true,
+    "funsearch_probe": true,
+    "alpha_geometry_probe": true,
+    "saycan_affordance_probe": true,
+    "rest_mcts_probe": true
+  },
+  "funsearch_results": {
+    "base_score": 76.97,
+    "best_evolved_score": 83.99,
+    "delta_improvement": 7.02,
+    "generations_evaluated": 5,
+    "islands_count": 3,
+    "best_metrics": {
+      "placed_count": 20,
+      "total_parts": 20,
+      "max_x_used_mm": 790.0,
+      "raw_utilization_pct": 73.32,
+      "full_sheet_utilization_pct": 28.96,
+      "composite_score": 83.99
+    }
+  },
+  "alpha_geometry_results": {
+    "sketch_id": "FLANGE_BASE_120x80",
+    "status": "WELL_CONSTRAINED",
+    "profile_area_mm2": 9600.0,
+    "volume_mm3": 240000.0,
+    "volume_conservation_passed": true
+  },
+  "saycan_affordance_results": [
+    {
+      "software": "SolidWorks",
+      "action": "EXTRUDE_BOSS",
+      "state": {
+        "has_active_sketch": true,
+        "sketch_is_closed": false
+      },
+      "p_affordance": 0.0,
+      "is_executable": false,
+      "veto": "Active sketch contour is open/unclosed; cannot perform solid boss extrusion",
+      "remediation": "CLOSE_SKETCH_CONTOUR"
+    },
+    {
+      "software": "SolidWorks",
+      "action": "EXTRUDE_BOSS",
+      "state": {
+        "has_active_sketch": true,
+        "sketch_is_closed": true
+      },
+      "p_affordance": 1.0,
+      "is_executable": true,
+      "veto": null,
+      "remediation": null
+    },
+    {
+      "software": "SSCNC 7.2",
+      "action": "CYCLE_START",
+      "state": {
+        "mode": "EDIT",
+        "door_closed": true
+      },
+      "p_affordance": 0.0,
+      "is_executable": false,
+      "veto": "SSCNC panel is in [EDIT] mode; Cycle Start requires [AUTO/MEM] mode",
+      "remediation": "SWITCH_PANEL_MODE_TO_AUTO"
+    },
+    {
+      "software": "SSCNC 7.2",
+      "action": "CYCLE_START",
+      "state": {
+        "mode": "AUTO",
+        "door_closed": true,
+        "alarm_active": false
+      },
+      "p_affordance": 1.0,
+      "is_executable": true,
+      "veto": null,
+      "remediation": null
+    },
+    {
+      "software": "CIMCO Edit",
+      "action": "TRANSMIT_DNC",
+      "state": {
+        "syntax_errors_count": 2
+      },
+      "p_affordance": 0.0,
+      "is_executable": false,
+      "veto": "G-code contains 2 syntax errors; transmission rejected",
+      "remediation": "FIX_NC_SYNTAX_ERRORS"
+    },
+    {
+      "software": "CIMCO Edit",
+      "action": "TRANSMIT_DNC",
+      "state": {
+        "syntax_errors_count": 0,
+        "g00_rapid_collision_risk": false
+      },
+      "p_affordance": 1.0,
+      "is_executable": true,
+      "veto": null,
+      "remediation": null
+    }
+  ],
+  "rest_mcts_results": {
+    "planned_sequence": [
+      "OP20",
+      "OP30",
+      "OP10",
+      "OP50",
+      "OP40"
+    ],
+    "total_prm_reward": 2.3,
+    "metrics": {
+      "total_simulations": 100,
+      "planned_ops_count": 5,
+      "total_target_ops": 5,
+      "average_q_value": 0.482,
+      "total_prm_reward": 2.3
+    }
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "status": "SUCCESS",
+  "drawing_file": "front_view.png",
+  "annotated_image": "front_view_ballooned.png",
+  "total_balloons": 5,
+  "dimensions": [
+    {
+      "balloon_no": 1,
+      "type": "linear",
+      "nominal": 5.0,
+      "tolerance": null,
+      "fit": null,
+      "raw_text": "$5,7",
+      "confidence": 0.8287,
+      "position": [
+        278,
+        23
+      ]
+    },
+    {
+      "balloon_no": 2,
+      "type": "linear",
+      "nominal": 11.0,
+      "tolerance": null,
+      "fit": null,
+      "raw_text": "11,1",
+      "confidence": 0.9703,
+      "position": [
+        310,
+        29
+      ]
+    },
+    {
+      "balloon_no": 3,
+      "type": "linear",
+      "nominal": 4.0,
+      "tolerance": null,
+      "fit": null,
+      "raw_text": "4",
+      "confidence": 0.747,
+      "position": [
+        98,
+        150
+      ]
+    },
+    {
+      "balloon_no": 4,
+      "type": "linear",
+      "nominal": 8.0,
+      "tolerance": null,
+      "fit": null,
+      "raw_text": "8,4",
+      "confidence": 0.9398,
+      "position": [
+        226,
+        233
+      ]
+    },
+    {
+      "balloon_no": 5,
+      "type": "thread",
+      "nominal": 2.0,
+      "tolerance": null,
+      "fit": null,
+      "raw_text": "M2",
+      "confidence": 0.5122,
+      "position": [
+        285,
+        247
+      ]
+    }
+  ]
+}

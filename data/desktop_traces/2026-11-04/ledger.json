@@ -1,0 +1,74 @@
+{
+  "allow_act": true,
+  "artifacts": {
+    "rejects_jsonl": "data/desktop_traces/2026-11-04/rejects.jsonl",
+    "rejects_jsonl_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "sessions_jsonl": "data/desktop_traces/2026-11-04/sessions.jsonl",
+    "sessions_jsonl_sha256": "1279a7f8d1ef91970247d48534caea800ff546acda9434e38ae6ce3bebd8ed35",
+    "traces_jsonl": "data/desktop_traces/2026-11-04/traces.jsonl",
+    "traces_jsonl_sha256": "460cb1ca916c0e68c9b610b9fd8a627efb28c8224eb6cad2a437eae33bf1f95a"
+  },
+  "coordinate_spaces": {
+    "aligned": true,
+    "click_space": [
+      1920,
+      1080
+    ],
+    "dpi": 120,
+    "frame_over_click_ratio": 1.0,
+    "frame_space": [
+      1920,
+      1080
+    ],
+    "virtual_origin": [
+      0,
+      0
+    ],
+    "virtual_space": [
+      3,
+      21
+    ]
+  },
+  "dpi_awareness": {
+    "aware": true,
+    "dpi": 120,
+    "note": "",
+    "screen": [
+      1920,
+      1080
+    ],
+    "via": "SetProcessDpiAwarenessContext"
+  },
+  "environment": {
+    "dpi": null,
+    "gpu": [
+      "Intel(R) UHD Graphics",
+      "NVIDIA GeForce RTX 4050 Laptop GPU"
+    ],
+    "screen_px": [
+      1920,
+      1080
+    ]
+  },
+  "generated": "2026-11-04T15:01:10+0800",
+  "n_accepted": 30,
+  "n_rejected": 0,
+  "n_sessions": 2,
+  "n_steps": 30,
+  "repo_root": "D:/Virtu模型",
+  "self_owned_pids": [
+    25868
+  ],
+  "sessions": [
+    {
+      "n_accepted": 25,
+      "n_steps": 25,
+      "session": "six_software_survey"
+    },
+    {
+      "n_accepted": 5,
+      "n_steps": 5,
+      "session": "self_owned_act_probe"
+    }
+  ]
+}

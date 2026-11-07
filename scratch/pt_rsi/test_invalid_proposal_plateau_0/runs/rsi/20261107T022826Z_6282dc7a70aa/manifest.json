@@ -1,0 +1,72 @@
+{
+  "model_identity": {
+    "kind": "ollama_native",
+    "model_id": "virtu-ties-v1:latest",
+    "digest": "declared-fake-test-digest",
+    "base_url": "http://127.0.0.1:11434"
+  },
+  "sources": {
+    "data/cases/physics.jsonl": "e2fb44e7861f72fa2041ae102c0a756a095017e17fe5a34ef515f865c3b54534"
+  },
+  "sampling": {
+    "temperature": 0.0,
+    "seed": 20261104,
+    "max_tokens": 512,
+    "think": false,
+    "retries": 0
+  },
+  "development_ids": [
+    "test-10",
+    "test-11",
+    "test-13",
+    "test-14",
+    "test-15",
+    "test-16",
+    "test-17",
+    "test-19",
+    "test-2",
+    "test-22",
+    "test-23",
+    "test-24",
+    "test-25",
+    "test-26",
+    "test-28",
+    "test-29",
+    "test-31",
+    "test-32",
+    "test-36",
+    "test-38",
+    "test-39",
+    "test-40",
+    "test-41",
+    "test-43",
+    "test-44",
+    "test-46",
+    "test-49",
+    "test-5",
+    "test-6",
+    "test-9"
+  ],
+  "validation_ids": [
+    "test-0",
+    "test-1",
+    "test-12",
+    "test-18",
+    "test-20",
+    "test-21",
+    "test-27",
+    "test-3",
+    "test-30",
+    "test-33",
+    "test-34",
+    "test-35",
+    "test-37",
+    "test-4",
+    "test-42",
+    "test-45",
+    "test-47",
+    "test-48",
+    "test-7",
+    "test-8"
+  ]
+}

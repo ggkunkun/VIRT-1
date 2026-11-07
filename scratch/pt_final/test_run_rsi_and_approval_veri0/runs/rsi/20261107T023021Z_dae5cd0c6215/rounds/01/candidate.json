@@ -1,0 +1,14 @@
+{
+  "kind": "prompt_policy",
+  "strategy": "POLICY1: read each parameter and verify units.",
+  "hypothesis": "avoid arithmetic mistakes",
+  "parent_sha256": null,
+  "round": 1,
+  "model_identity": {
+    "kind": "ollama_native",
+    "model_id": "virtu-ties-v1:latest",
+    "digest": "declared-fake-test-digest",
+    "base_url": "http://127.0.0.1:11434"
+  },
+  "candidate_sha256": "3420b3eb0d136703c89e72ba654f4a46edc99457d075e229cf4f84e7d3001272"
+}

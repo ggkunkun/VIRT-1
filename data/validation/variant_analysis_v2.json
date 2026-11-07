@@ -1,0 +1,48 @@
+{
+  "total_in_file": 23178,
+  "unique": 18330,
+  "dup_removed": 4848,
+  "schema": {
+    "tokens_full": 1193,
+    "tokens_thin": 916,
+    "saving_pct": 23.2,
+    "desc_chars": 855,
+    "param_total_chars": 1186
+  },
+  "tr2": {
+    "avg_chars": 1664.3,
+    "count": 18304
+  },
+  "variants": {
+    "V0": {
+      "samples": 18330,
+      "tokens_1ep": 47570181,
+      "avg_per_sample": 2595.2,
+      "signal_pct": 11.71
+    },
+    "V2b": {
+      "samples": 18330,
+      "tokens_1ep": 33058388,
+      "avg_per_sample": 1803.5,
+      "signal_pct": 16.96
+    },
+    "V3": {
+      "samples": 18330,
+      "tokens_1ep": 42492771,
+      "avg_per_sample": 2318.2,
+      "signal_pct": 13.11
+    },
+    "V4": {
+      "samples": 18330,
+      "tokens_1ep": 27980978,
+      "avg_per_sample": 1526.5,
+      "signal_pct": 20.04
+    }
+  },
+  "saving_vs_V0": {
+    "V0": 0.0,
+    "V2b": 30.5,
+    "V3": 10.7,
+    "V4": 41.2
+  }
+}

@@ -1,0 +1,576 @@
+{
+  "deployed_tools": [
+    {
+      "name": "cadcam_preflight",
+      "params": [],
+      "actions": null
+    },
+    {
+      "name": "cadcam_solidworks_model",
+      "params": [
+        "action",
+        "dimensions",
+        "part_name",
+        "vba_code"
+      ],
+      "actions": [
+        "model_flange",
+        "create_parametric_part",
+        "execute_vba",
+        "connect"
+      ]
+    },
+    {
+      "name": "cadcam_nx_journal",
+      "params": [
+        "action",
+        "expressions",
+        "part_name",
+        "script_path"
+      ],
+      "actions": [
+        "run_journal",
+        "create_parametric_model"
+      ]
+    },
+    {
+      "name": "cadcam_autocad_draw",
+      "params": [
+        "action",
+        "code",
+        "drawing_name",
+        "entities",
+        "script_path"
+      ],
+      "actions": [
+        "send_lisp",
+        "create_dxf",
+        "run_headless_script"
+      ]
+    },
+    {
+      "name": "cadcam_cimco_validate",
+      "params": [
+        "action",
+        "code",
+        "nc_file_path"
+      ],
+      "actions": [
+        "validate_macro",
+        "launch"
+      ]
+    },
+    {
+      "name": "cadcam_vericut_simulate",
+      "params": [
+        "action",
+        "log_path",
+        "project_path"
+      ],
+      "actions": [
+        "run_simulation",
+        "check_collision"
+      ]
+    },
+    {
+      "name": "cadcam_sscnc_control",
+      "params": [
+        "action",
+        "tools"
+      ],
+      "actions": [
+        "launch",
+        "find_window",
+        "calculate_offsets"
+      ]
+    },
+    {
+      "name": "cadcam_run_full_chain",
+      "params": [
+        "out_root",
+        "skip",
+        "wish"
+      ],
+      "actions": null
+    },
+    {
+      "name": "cadcam_desktop_gui",
+      "params": [
+        "action",
+        "output_path",
+        "software",
+        "x",
+        "y"
+      ],
+      "actions": [
+        "capture",
+        "focus",
+        "click",
+        "dismiss_dialogs"
+      ]
+    },
+    {
+      "name": "cadcam_visual_inspect",
+      "params": [
+        "image_path",
+        "task"
+      ],
+      "actions": null
+    }
+  ],
+  "corpora": {
+    "data/train/virtu_toolcall_train_aligned.jsonl": {
+      "records": 2000,
+      "tool_names": {
+        "cadcam_preflight": 2000,
+        "cadcam_solidworks_model": 2000,
+        "cadcam_nx_journal": 2000,
+        "cadcam_autocad_draw": 2000,
+        "cadcam_cimco_validate": 2000,
+        "cadcam_vericut_simulate": 2000,
+        "cadcam_sscnc_control": 2000,
+        "cadcam_run_full_chain": 2000,
+        "cadcam_desktop_gui": 2000,
+        "cadcam_visual_inspect": 2000
+      },
+      "assistant_turn_shape": {
+        "tool_calls": 3974,
+        "plain_text": 289
+      },
+      "arguments_type": {
+        "str": 5474
+      },
+      "params_by_tool": {
+        "cadcam_preflight": [],
+        "cadcam_solidworks_model": [
+          "action",
+          "dimensions",
+          "part_name",
+          "vba_code"
+        ],
+        "cadcam_nx_journal": [
+          "action",
+          "expressions",
+          "part_name",
+          "script_path"
+        ],
+        "cadcam_autocad_draw": [
+          "action",
+          "code",
+          "drawing_name",
+          "entities",
+          "script_path"
+        ],
+        "cadcam_cimco_validate": [
+          "action",
+          "code",
+          "nc_file_path"
+        ],
+        "cadcam_vericut_simulate": [
+          "action",
+          "log_path",
+          "project_path"
+        ],
+        "cadcam_sscnc_control": [
+          "action",
+          "tools"
+        ],
+        "cadcam_run_full_chain": [
+          "out_root",
+          "skip",
+          "wish"
+        ],
+        "cadcam_desktop_gui": [
+          "action",
+          "output_path",
+          "software",
+          "x",
+          "y"
+        ],
+        "cadcam_visual_inspect": [
+          "image_path",
+          "task"
+        ]
+      }
+    },
+    "data/toolcall_optimal.jsonl": {
+      "records": 2316,
+      "tool_names": {
+        "cad.parse_wish_intent": 2316,
+        "solidworks.create_parametric_part": 2316,
+        "nx.create_nxopen_script": 2316,
+        "autocad.create_autolisp": 2316,
+        "vericut.create_project_config": 2316,
+        "cimco.create_macro_b": 2316,
+        "sscnc.create_setup_guide": 2316,
+        "ontology.lookup_plugin": 2316
+      },
+      "assistant_turn_shape": {
+        "tool_calls": 4606,
+        "plain_text": 368
+      },
+      "arguments_type": {
+        "str": 5256
+      },
+      "params_by_tool": {
+        "cad.parse_wish_intent": [
+          "d_inner",
+          "d_outer",
+          "fillet_r",
+          "is_die_mold",
+          "is_multiaxis",
+          "material",
+          "num_features",
+          "overall_len",
+          "sweep_angle",
+          "wish"
+        ],
+        "solidworks.create_parametric_part": [
+          "spec"
+        ],
+        "nx.create_nxopen_script": [
+          "spec"
+        ],
+        "autocad.create_autolisp": [
+          "spec"
+        ],
+        "vericut.create_project_config": [
+          "spec"
+        ],
+        "cimco.create_macro_b": [
+          "spec"
+        ],
+        "sscnc.create_setup_guide": [
+          "spec"
+        ],
+        "ontology.lookup_plugin": [
+          "plugin",
+          "software"
+        ]
+      }
+    },
+    "data/toolcall_slim.jsonl": {
+      "records": 18330,
+      "tool_names": {
+        "cad.parse_wish_intent": 18330,
+        "solidworks.create_parametric_part": 18330,
+        "nx.create_nxopen_script": 18330,
+        "autocad.create_autolisp": 18330,
+        "vericut.create_project_config": 18330,
+        "cimco.create_macro_b": 18330,
+        "sscnc.create_setup_guide": 18330,
+        "ontology.lookup_plugin": 18330
+      },
+      "assistant_turn_shape": {
+        "tool_calls": 36634,
+        "plain_text": 2777
+      },
+      "arguments_type": {
+        "str": 38134
+      },
+      "params_by_tool": {
+        "cad.parse_wish_intent": [
+          "d_inner",
+          "d_outer",
+          "fillet_r",
+          "is_die_mold",
+          "is_multiaxis",
+          "material",
+          "num_features",
+          "overall_len",
+          "sweep_angle",
+          "wish"
+        ],
+        "solidworks.create_parametric_part": [
+          "spec"
+        ],
+        "nx.create_nxopen_script": [
+          "spec"
+        ],
+        "autocad.create_autolisp": [
+          "spec"
+        ],
+        "vericut.create_project_config": [
+          "spec"
+        ],
+        "cimco.create_macro_b": [
+          "spec"
+        ],
+        "sscnc.create_setup_guide": [
+          "spec"
+        ],
+        "ontology.lookup_plugin": [
+          "plugin",
+          "software"
+        ]
+      }
+    },
+    "data/toolcall_pilot_2000.jsonl": {
+      "records": 2000,
+      "tool_names": {
+        "cad.parse_wish_intent": 2000,
+        "solidworks.create_parametric_part": 2000,
+        "nx.create_nxopen_script": 2000,
+        "autocad.create_autolisp": 2000,
+        "vericut.create_project_config": 2000,
+        "cimco.create_macro_b": 2000,
+        "sscnc.create_setup_guide": 2000,
+        "ontology.lookup_plugin": 2000
+      },
+      "assistant_turn_shape": {
+        "tool_calls": 3974,
+        "plain_text": 289
+      },
+      "arguments_type": {
+        "str": 5474
+      },
+      "params_by_tool": {
+        "cad.parse_wish_intent": [
+          "d_inner",
+          "d_outer",
+          "fillet_r",
+          "is_die_mold",
+          "is_multiaxis",
+          "material",
+          "num_features",
+          "overall_len",
+          "sweep_angle",
+          "wish"
+        ],
+        "solidworks.create_parametric_part": [
+          "spec"
+        ],
+        "nx.create_nxopen_script": [
+          "spec"
+        ],
+        "autocad.create_autolisp": [
+          "spec"
+        ],
+        "vericut.create_project_config": [
+          "spec"
+        ],
+        "cimco.create_macro_b": [
+          "spec"
+        ],
+        "sscnc.create_setup_guide": [
+          "spec"
+        ],
+        "ontology.lookup_plugin": [
+          "plugin",
+          "software"
+        ]
+      }
+    },
+    "data/train/virtu_toolcall_train_final.jsonl": {
+      "records": 2414,
+      "tool_names": {
+        "cad.parse_wish_intent": 2414,
+        "solidworks.create_parametric_part": 2414,
+        "nx.create_nxopen_script": 2414,
+        "autocad.create_autolisp": 2414,
+        "vericut.create_project_config": 2414,
+        "cimco.create_macro_b": 2414,
+        "sscnc.create_setup_guide": 2414,
+        "ontology.lookup_plugin": 2414
+      },
+      "assistant_turn_shape": {
+        "tool_calls": 4418,
+        "plain_text": 548
+      },
+      "arguments_type": {
+        "str": 4973
+      },
+      "params_by_tool": {
+        "cad.parse_wish_intent": [
+          "d_inner",
+          "d_outer",
+          "fillet_r",
+          "is_die_mold",
+          "is_multiaxis",
+          "material",
+          "num_features",
+          "overall_len",
+          "sweep_angle",
+          "wish"
+        ],
+        "solidworks.create_parametric_part": [
+          "spec"
+        ],
+        "nx.create_nxopen_script": [
+          "spec"
+        ],
+        "autocad.create_autolisp": [
+          "spec"
+        ],
+        "vericut.create_project_config": [
+          "spec"
+        ],
+        "cimco.create_macro_b": [
+          "spec"
+        ],
+        "sscnc.create_setup_guide": [
+          "spec"
+        ],
+        "ontology.lookup_plugin": [
+          "plugin",
+          "software"
+        ]
+      }
+    },
+    "data/virtu_drawing_to_machining_chain_train.jsonl": {
+      "records": 2213,
+      "tool_names": {
+        "cad.parse_wish_intent": 2000,
+        "solidworks.create_parametric_part": 2000,
+        "nx.create_nxopen_script": 2000,
+        "autocad.create_autolisp": 2000,
+        "vericut.create_project_config": 2000,
+        "cimco.create_macro_b": 2000,
+        "sscnc.create_setup_guide": 2000,
+        "ontology.lookup_plugin": 2000
+      },
+      "assistant_turn_shape": {
+        "plain_text": 502,
+        "tool_calls": 3974
+      },
+      "arguments_type": {
+        "str": 5474
+      },
+      "params_by_tool": {
+        "cad.parse_wish_intent": [
+          "d_inner",
+          "d_outer",
+          "fillet_r",
+          "is_die_mold",
+          "is_multiaxis",
+          "material",
+          "num_features",
+          "overall_len",
+          "sweep_angle",
+          "wish"
+        ],
+        "solidworks.create_parametric_part": [
+          "spec"
+        ],
+        "nx.create_nxopen_script": [
+          "spec"
+        ],
+        "autocad.create_autolisp": [
+          "spec"
+        ],
+        "vericut.create_project_config": [
+          "spec"
+        ],
+        "cimco.create_macro_b": [
+          "spec"
+        ],
+        "sscnc.create_setup_guide": [
+          "spec"
+        ],
+        "ontology.lookup_plugin": [
+          "plugin",
+          "software"
+        ]
+      }
+    }
+  },
+  "overlap": {
+    "data/train/virtu_toolcall_train_aligned.jsonl": {
+      "literal": [
+        "cadcam_autocad_draw",
+        "cadcam_cimco_validate",
+        "cadcam_desktop_gui",
+        "cadcam_nx_journal",
+        "cadcam_preflight",
+        "cadcam_run_full_chain",
+        "cadcam_solidworks_model",
+        "cadcam_sscnc_control",
+        "cadcam_vericut_simulate",
+        "cadcam_visual_inspect"
+      ],
+      "capability_mapped": [
+        "cadcam_autocad_draw",
+        "cadcam_cimco_validate",
+        "cadcam_desktop_gui",
+        "cadcam_nx_journal",
+        "cadcam_preflight",
+        "cadcam_run_full_chain",
+        "cadcam_solidworks_model",
+        "cadcam_sscnc_control",
+        "cadcam_vericut_simulate",
+        "cadcam_visual_inspect"
+      ],
+      "taught_only": []
+    },
+    "data/toolcall_optimal.jsonl": {
+      "literal": [],
+      "capability_mapped": [],
+      "taught_only": [
+        "autocad.create_autolisp",
+        "cad.parse_wish_intent",
+        "cimco.create_macro_b",
+        "nx.create_nxopen_script",
+        "ontology.lookup_plugin",
+        "solidworks.create_parametric_part",
+        "sscnc.create_setup_guide",
+        "vericut.create_project_config"
+      ]
+    },
+    "data/toolcall_slim.jsonl": {
+      "literal": [],
+      "capability_mapped": [],
+      "taught_only": [
+        "autocad.create_autolisp",
+        "cad.parse_wish_intent",
+        "cimco.create_macro_b",
+        "nx.create_nxopen_script",
+        "ontology.lookup_plugin",
+        "solidworks.create_parametric_part",
+        "sscnc.create_setup_guide",
+        "vericut.create_project_config"
+      ]
+    },
+    "data/toolcall_pilot_2000.jsonl": {
+      "literal": [],
+      "capability_mapped": [],
+      "taught_only": [
+        "autocad.create_autolisp",
+        "cad.parse_wish_intent",
+        "cimco.create_macro_b",
+        "nx.create_nxopen_script",
+        "ontology.lookup_plugin",
+        "solidworks.create_parametric_part",
+        "sscnc.create_setup_guide",
+        "vericut.create_project_config"
+      ]
+    },
+    "data/train/virtu_toolcall_train_final.jsonl": {
+      "literal": [],
+      "capability_mapped": [],
+      "taught_only": [
+        "autocad.create_autolisp",
+        "cad.parse_wish_intent",
+        "cimco.create_macro_b",
+        "nx.create_nxopen_script",
+        "ontology.lookup_plugin",
+        "solidworks.create_parametric_part",
+        "sscnc.create_setup_guide",
+        "vericut.create_project_config"
+      ]
+    },
+    "data/virtu_drawing_to_machining_chain_train.jsonl": {
+      "literal": [],
+      "capability_mapped": [],
+      "taught_only": [
+        "autocad.create_autolisp",
+        "cad.parse_wish_intent",
+        "cimco.create_macro_b",
+        "nx.create_nxopen_script",
+        "ontology.lookup_plugin",
+        "solidworks.create_parametric_part",
+        "sscnc.create_setup_guide",
+        "vericut.create_project_config"
+      ]
+    }
+  }
+}

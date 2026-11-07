@@ -1,0 +1,83 @@
+{
+  "weak_tasks": {
+    "roughness": 30
+  },
+  "failed_criteria": {
+    "world_state_verified": 30
+  },
+  "development_examples": [
+    {
+      "dimension": "physics",
+      "tier": "easy",
+      "task_prompt": "UNIQUE_CASE_10: f=0.1027, r_eps=0.8; compute roughness.",
+      "response": "{\"world_state\": {\"surface_roughness_ra_um\": 1.15360984375}}",
+      "failures": [
+        {
+          "type": "world_state_verified",
+          "evidence": "mismatch=[{\"field\": \"surface_roughness_ra_um\", \"pred\": 1.15360984375, \"ref\": 1.6480140625, \"rel_err\": 0.3}] tol_rel=0.08 solver_ref={\"surface_roughness_ra_um\": 1.648}"
+        }
+      ]
+    },
+    {
+      "dimension": "physics",
+      "tier": "easy",
+      "task_prompt": "UNIQUE_CASE_11: f=0.10587, r_eps=0.8; compute roughness.",
+      "response": "{\"world_state\": {\"surface_roughness_ra_um\": 1.2259249734375002}}",
+      "failures": [
+        {
+          "type": "world_state_verified",
+          "evidence": "mismatch=[{\"field\": \"surface_roughness_ra_um\", \"pred\": 1.2259249734375002, \"ref\": 1.7513213906250003, \"rel_err\": 0.3}] tol_rel=0.08 solver_ref={\"surface_roughness_ra_um\": 1.7513}"
+        }
+      ]
+    },
+    {
+      "dimension": "physics",
+      "tier": "easy",
+      "task_prompt": "UNIQUE_CASE_13: f=0.11221, r_eps=0.8; compute roughness.",
+      "response": "{\"world_state\": {\"surface_roughness_ra_um\": 1.3771498234375}}",
+      "failures": [
+        {
+          "type": "world_state_verified",
+          "evidence": "mismatch=[{\"field\": \"surface_roughness_ra_um\", \"pred\": 1.3771498234375, \"ref\": 1.967356890625, \"rel_err\": 0.3}] tol_rel=0.08 solver_ref={\"surface_roughness_ra_um\": 1.9674}"
+        }
+      ]
+    },
+    {
+      "dimension": "physics",
+      "tier": "easy",
+      "task_prompt": "UNIQUE_CASE_14: f=0.11538, r_eps=0.8; compute roughness.",
+      "response": "{\"world_state\": {\"surface_roughness_ra_um\": 1.4560595437499997}}",
+      "failures": [
+        {
+          "type": "world_state_verified",
+          "evidence": "mismatch=[{\"field\": \"surface_roughness_ra_um\", \"pred\": 1.4560595437499997, \"ref\": 2.0800850625, \"rel_err\": 0.3}] tol_rel=0.08 solver_ref={\"surface_roughness_ra_um\": 2.0801}"
+        }
+      ]
+    },
+    {
+      "dimension": "physics",
+      "tier": "easy",
+      "task_prompt": "UNIQUE_CASE_15: f=0.11855, r_eps=0.8; compute roughness.",
+      "response": "{\"world_state\": {\"surface_roughness_ra_um\": 1.5371674609375}}",
+      "failures": [
+        {
+          "type": "world_state_verified",
+          "evidence": "mismatch=[{\"field\": \"surface_roughness_ra_um\", \"pred\": 1.5371674609375, \"ref\": 2.195953515625, \"rel_err\": 0.3}] tol_rel=0.08 solver_ref={\"surface_roughness_ra_um\": 2.196}"
+        }
+      ]
+    },
+    {
+      "dimension": "physics",
+      "tier": "easy",
+      "task_prompt": "UNIQUE_CASE_16: f=0.12172, r_eps=0.8; compute roughness.",
+      "response": "{\"world_state\": {\"surface_roughness_ra_um\": 1.6204735749999997}}",
+      "failures": [
+        {
+          "type": "world_state_verified",
+          "evidence": "mismatch=[{\"field\": \"surface_roughness_ra_um\", \"pred\": 1.6204735749999997, \"ref\": 2.3149622499999998, \"rel_err\": 0.3}] tol_rel=0.08 solver_ref={\"surface_roughness_ra_um\": 2.315}"
+        }
+      ]
+    }
+  ],
+  "scope": "development-only; validation cases and feedback withheld"
+}

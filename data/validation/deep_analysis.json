@@ -1,0 +1,82 @@
+{
+  "samples": 23178,
+  "arguments_type_dist": {
+    "str": 23178
+  },
+  "call2_param_dependency": {
+    "tool1": 141147,
+    "tool2": 7618,
+    "nowhere": 59603,
+    "total": 208368
+  },
+  "call1_param_dependency": {
+    "user": 137459,
+    "nowhere": 94113,
+    "total": 231572
+  },
+  "assistant_tokens": {
+    "tool_call_spans": 7016342,
+    "final_summary_spans": 1937587,
+    "tool_call_pct": 78.36
+  },
+  "tool_response_chars": {
+    "tr1": 4196663,
+    "tr2": 37896926,
+    "tr3": 33300,
+    "tr4": 33000,
+    "tr5": 32100,
+    "tr6": 11100,
+    "tr7": 21000
+  },
+  "tool_response_tokens": {
+    "tr1": 1976668,
+    "tr2": 16293628,
+    "tr3": 8100,
+    "tr4": 7800,
+    "tr5": 7500,
+    "tr6": 7500,
+    "tr7": 14400
+  },
+  "tool_call_freq": {
+    "cad.parse_wish_intent": 23152,
+    "sscnc.create_setup_guide": 4108,
+    "vericut.create_project_config": 4109,
+    "solidworks.create_parametric_part": 4109,
+    "nx.create_nxopen_script": 4109,
+    "autocad.create_autolisp": 4109,
+    "cimco.create_macro_b": 4108,
+    "ontology.lookup_plugin": 26
+  },
+  "s3_probe": [
+    {
+      "orig": 2773,
+      "s3": 2686,
+      "orig_tail": "证\n- 调入宏程序 `O2026.NC`，闭合防护门，切入【自动加工 (AUTO)】模式，单段试切无过切后按下【循环启动 (CYCLE START)】。\n\n</tool_response><|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n已通过工具链完成 斯沃数控仿真 SSCNC 参数化求解：材质 Cr12MoV，外径 48.0mm、内孔 14.0mm、总长 160.0mm，3 道 R3.0 特征。可执行代码已由工具产出，详见上方工具回执。<|im_end|>\n",
+      "s3_tail": "），切削完成后 **保持 X 轴绝对不动**。\n   - 沿 Z 轴正方向退出刀具，停止主轴。\n   - 使用游标卡尺测量试切外圆实际直径 $D_{meas}$。\n   - 进入 `G54` 的 `X` 坐标列，输入 `X[实际测量值]`，按下【测量 (MEASUR)】软键完成标定。\n\n## 4. 仿真运行验证\n- 调入宏程序 `O2026.NC`，闭合防护门，切入【自动加工 (AUTO)】模式，单段试切无过切后按下【循环启动 (CYCLE START)】。\n\n</tool_response><|im_end|>\n"
+    },
+    {
+      "orig": 2393,
+      "s3": 2307,
+      "orig_tail": ": GREEN (+/-0.02mm)\nCOLOR_EXCESS: BLUE (>+0.02mm)\nCOLOR_GOUGE: RED (<-0.005mm)\n\n</tool_response><|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n已通过工具链完成 Vericut 9.6 参数化求解：材质 SS304，外径 110.0mm、内孔 14.0mm、总长 160.0mm，3 道 R3.0 特征。可执行代码已由工具产出，详见上方工具回执。<|im_end|>\n",
+      "s3_tail": "2 mm\nCORNER_DECELERATION: 40%\nVIBRATION_THRESHOLD_RMS: 1.25\n\n[AUTO_DIFF]\nCOMPARE_TO_CAD: TRUE\nCAD_MODEL: Workpiece_Design_Nominal.step\nCOLOR_IN_TOLERANCE: GREEN (+/-0.02mm)\nCOLOR_EXCESS: BLUE (>+0.02mm)\nCOLOR_GOUGE: RED (<-0.005mm)\n\n</tool_response><|im_end|>\n"
+    },
+    {
+      "orig": 2382,
+      "s3": 2297,
+      "orig_tail": ": GREEN (+/-0.02mm)\nCOLOR_EXCESS: BLUE (>+0.02mm)\nCOLOR_GOUGE: RED (<-0.005mm)\n\n</tool_response><|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n已通过工具链完成 Vericut 9.6 参数化求解：材质 Cr12MoV，外径 65.0mm、内孔 14.0mm、总长 30.0mm，3 道 R3.0 特征。可执行代码已由工具产出，详见上方工具回执。<|im_end|>\n",
+      "s3_tail": "2 mm\nCORNER_DECELERATION: 40%\nVIBRATION_THRESHOLD_RMS: 1.25\n\n[AUTO_DIFF]\nCOMPARE_TO_CAD: TRUE\nCAD_MODEL: Workpiece_Design_Nominal.step\nCOLOR_IN_TOLERANCE: GREEN (+/-0.02mm)\nCOLOR_EXCESS: BLUE (>+0.02mm)\nCOLOR_GOUGE: RED (<-0.005mm)\n\n</tool_response><|im_end|>\n"
+    },
+    {
+      "orig": 2805,
+      "s3": 2711,
+      "orig_tail": "生成（1185 字符）。首行：# 斯沃数控仿真软件 (SSCNC FANUC 0i-TF) 实操对刀手册\n</tool_response><|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n已完成六大工业软件全流程求解：材质 20CrMnTi，外径 112.1mm、内孔 34.6mm、总长 62.6mm。SOLIDWORKS/NX 脚本、AutoCAD 出图、Vericut 仿真、CIMCO 宏程序与 SSCNC 对刀方案均已由对应工具产出。<|im_end|>\n",
+      "s3_tail": "=========================================================\n</tool_response>\n<tool_response>\n[CIMCO Edit 2026] 代码已生成（1191 字符）。首行：%\n</tool_response>\n<tool_response>\n[斯沃数控仿真 SSCNC] 代码已生成（1185 字符）。首行：# 斯沃数控仿真软件 (SSCNC FANUC 0i-TF) 实操对刀手册\n</tool_response><|im_end|>\n"
+    },
+    {
+      "orig": 2806,
+      "s3": 2713,
+      "orig_tail": "生成（1185 字符）。首行：# 斯沃数控仿真软件 (SSCNC FANUC 0i-TF) 实操对刀手册\n</tool_response><|im_end|>\n<|im_start|>assistant\n<think>\n\n</think>\n\n已完成六大工业软件全流程求解：材质 Ti-6Al-4V，外径 46.5mm、内孔 12.3mm、总长 34.1mm。SOLIDWORKS/NX 脚本、AutoCAD 出图、Vericut 仿真、CIMCO 宏程序与 SSCNC 对刀方案均已由对应工具产出。<|im_end|>\n",
+      "s3_tail": "=========================================================\n</tool_response>\n<tool_response>\n[CIMCO Edit 2026] 代码已生成（1190 字符）。首行：%\n</tool_response>\n<tool_response>\n[斯沃数控仿真 SSCNC] 代码已生成（1185 字符）。首行：# 斯沃数控仿真软件 (SSCNC FANUC 0i-TF) 实操对刀手册\n</tool_response><|im_end|>\n"
+    }
+  ]
+}

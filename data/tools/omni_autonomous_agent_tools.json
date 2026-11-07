@@ -1,0 +1,326 @@
+[
+  {
+    "type": "function",
+    "function": {
+      "name": "desktop.capture_screen",
+      "description": "捕获当前桌面屏幕图像或指定CAD软件窗口区域，返回屏幕截图路径及分辨率。",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "window_title": {
+            "type": "string",
+            "description": "目标窗口标题关键词（如：SOLIDWORKS, AutoCAD, SSCNC），为空则截取全屏"
+          },
+          "region": {
+            "type": "string",
+            "description": "局部裁剪矩形 'x1,y1,x2,y2'"
+          }
+        }
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "desktop.click_element",
+      "description": "在屏幕指定坐标执行鼠标点击、双击或右击，操控CAD界面控件或数控面板按钮。",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "x": {
+            "type": "integer",
+            "description": "屏幕水平坐标 X"
+          },
+          "y": {
+            "type": "integer",
+            "description": "屏幕垂直坐标 Y"
+          },
+          "button": {
+            "type": "string",
+            "enum": [
+              "left",
+              "right",
+              "middle"
+            ],
+            "default": "left"
+          },
+          "clicks": {
+            "type": "integer",
+            "default": 1
+          }
+        },
+        "required": [
+          "x",
+          "y"
+        ]
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "desktop.type_text",
+      "description": "向当前聚焦的文本框或CAD命令行键入文字或参数路径。",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string",
+            "description": "待键入的文本内容"
+          }
+        },
+        "required": [
+          "text"
+        ]
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "desktop.press_hotkey",
+      "description": "按下指定组合快捷键，触发CAD常用指令（如：Ctrl+S另存、Ctrl+N新建、Alt+F4、F缩放到全屏）。",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "keys": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "按键组合，如 ['ctrl', 's'], ['f'], ['ctrl', 'n']"
+          }
+        },
+        "required": [
+          "keys"
+        ]
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "desktop.focus_software",
+      "description": "将目标工业软件（SOLIDWORKS, AutoCAD, NX, Vericut, CIMCO, SSCNC）置于桌面最前端。",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "software_name": {
+            "type": "string",
+            "description": "软件名称关键字"
+          }
+        },
+        "required": [
+          "software_name"
+        ]
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "cad.infer_blueprint_feature_tree",
+      "description": "对未知或模糊图纸执行逆向工程推导，解析基元几何特征、尺寸方程式与完整FeatureTree树结构。",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "drawing_name": {
+            "type": "string",
+            "description": "图纸图号或名称"
+          },
+          "dimensions": {
+            "type": "object",
+            "description": "识别到的关键尺寸（外径、内孔、长宽厚、孔距等）"
+          },
+          "geometry_type": {
+            "type": "string",
+            "enum": [
+              "revolving_shaft_sleeve",
+              "prismatic_plate_bracket",
+              "housing_box",
+              "gear_flange"
+            ]
+          }
+        },
+        "required": [
+          "drawing_name",
+          "dimensions",
+          "geometry_type"
+        ]
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "cad.assemble_components_with_mates",
+      "description": "在总装配体中建立零部件间的几何装配约束配合（同心、重合、距离、平行）。",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "assembly_name": {
+            "type": "string"
+          },
+          "mates": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "mate_type": {
+                  "type": "string",
+                  "enum": [
+                    "Coincident",
+                    "Concentric",
+                    "Distance",
+                    "Parallel"
+                  ]
+                },
+                "component_1": {
+                  "type": "string"
+                },
+                "component_2": {
+                  "type": "string"
+                },
+                "value": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "mate_type",
+                "component_1",
+                "component_2"
+              ]
+            }
+          }
+        },
+        "required": [
+          "assembly_name",
+          "mates"
+        ]
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "agent.verify_and_self_optimize",
+      "description": "对工业脚本/宏代码执行静态语法检查、合规性审计、切削碰撞仿真与自迭代优化。",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "待审计与自优化的源代码"
+          },
+          "language": {
+            "type": "string",
+            "enum": [
+              "solidworks_vba",
+              "nxopen_python",
+              "autolisp",
+              "cimco_macro_b",
+              "sscnc_fanuc"
+            ]
+          }
+        },
+        "required": [
+          "code",
+          "language"
+        ]
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "skill.synthesize_agent_skill",
+      "description": "自主将已成功解决的全新工艺模式或自动化工作流沉淀为标准 Antigravity SKILL 技能包（包含 SKILL.md 与脚本）。",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "skill_name": {
+            "type": "string",
+            "description": "技能名称，如：sw-sheetmetal-auto-unfold, fanuc-macro-thread-turning"
+          },
+          "description": {
+            "type": "string",
+            "description": "技能职责与触发场景描述"
+          },
+          "instructions_markdown": {
+            "type": "string",
+            "description": "详细的指导规范与最佳实践 Markdown 文档"
+          },
+          "bundled_scripts": {
+            "type": "object",
+            "description": "技能附带的自动化 Python/脚本字典 {'script_name': 'code'}"
+          }
+        },
+        "required": [
+          "skill_name",
+          "description",
+          "instructions_markdown"
+        ]
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "memory.commit_long_term_experience",
+      "description": "将本次任务执行的关键工程规则、避坑经验、代码模板与特征解法固化到长期记忆知识图谱中。",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "task_signature": {
+            "type": "string",
+            "description": "任务唯一特征标识"
+          },
+          "problem_summary": {
+            "type": "string",
+            "description": "遇到的工况与问题摘要"
+          },
+          "solution_strategy": {
+            "type": "string",
+            "description": "最终验证通过的解题策略"
+          },
+          "key_rules_learned": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "萃取的工程核心规则清单"
+          },
+          "verified_code_template": {
+            "type": "string",
+            "description": "经过自优化验证的标准代码片段"
+          }
+        },
+        "required": [
+          "task_signature",
+          "problem_summary",
+          "solution_strategy",
+          "key_rules_learned"
+        ]
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "web.search_technical_knowledge",
+      "description": "当遇到未知的API方法、陌生的机床系统指令或未见过的公差标准时，联网爬取技术文档与规范示例。",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "技术检索关键词，如：'NXOpen Python create datum plane', 'FANUC Macro B G65 variable mapping'"
+          }
+        },
+        "required": [
+          "query"
+        ]
+      }
+    }
+  }
+]

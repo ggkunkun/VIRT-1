@@ -1,6 +1,8 @@
 # Python & Virtualenv
 .venv/
 venv/
+build/
+dist/
 __pycache__/
 *.py[cod]
 *$py.class
@@ -15,7 +17,80 @@ htmlcov/
 *.bin
 *.safetensors
 checkpoints/*.pt
+/models/
 
 # OS
 .DS_Store
 Thumbs.db
+.pytest_temp/
+
+
+# Cloud host credentials: never commit (scripts/damodel_env.py reads these)
+.damodel_pass
+scripts/.damodel_pw*
+cloud_artifacts/.damodel_pw*
+.env
+*.pem
+id_rsa*
+.damodel_pass.json
+
+# ---------------------------------------------------------------------------
+# Run artefacts.
+# runs/ holds ~850 MB of per-run evidence produced on this machine. Only the retraction
+# ledger is versioned: it is the record that a previously "approved" run must never be
+# honoured again, so losing it would silently resurrect dead approvals.
+runs/*
+!runs/rsi
+runs/rsi/*
+!runs/rsi/RETRACTIONS.jsonl
+
+# 158 GB of adapters / GGUFs / archive tarballs live under checkpoints.
+# Only the provenance manifest is worth versioning.
+checkpoints/*
+!checkpoints/PROVENANCE.json
+*.gguf
+
+# Runtime logs stay local.
+logs/
+
+# Lock files & temporary Office/CAD files
+~$*
+
+# Archives & Large packages (exceeding GitHub limit)
+*.zip
+*.tar.gz
+*.tar
+*.7z
+
+# Temporary debug images & screenshots
+_cu_*.png
+_ui_*.png
+_flange_*.png
+_fzchk_*.png
+
+# Temporary test / ide directories
+.pytest_tmp_fix/
+.pytest_temp/
+.workbuddy/
+scratch/
+cloud_artifacts/
+damodel_cad_cam_tuning/
+
+
+# Windows special device names & shortcuts
+nul
+*.lnk
+
+# Runtime logs & indices
+*.log
+.rag_index.json
+
+# Root scratch / debug files
+/_*
+
+
+# Local experiment directories
+work/
+works/
+
+

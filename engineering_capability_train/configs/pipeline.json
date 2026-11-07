@@ -1,0 +1,79 @@
+{
+  "schema_version": "1.0.0",
+  "project": "virtu-engineering-capability",
+  "description": "工程能力全面提升：六大软件工具链 / GUI 参数化建模 / 视觉语义决策 / 机械配合与公差语义",
+  "seed": 20261104,
+  "base_model": "Qwen/Qwen3-8B",
+  "base_model_env": "VIRTU_BASE",
+  "repo_root_env": "VIRTU_REPO_ROOT",
+  "paths": {
+    "package_dir": "engineering_capability_train",
+    "data_dir": "engineering_capability_train/data",
+    "artifacts_dir": "engineering_capability_train/artifacts",
+    "runs_dir": "engineering_capability_train/runs",
+    "corpus_out": "engineering_capability_train/data/train_corpus.jsonl",
+    "dpo_out": "engineering_capability_train/data/dpo_pairs.jsonl",
+    "manifest_out": "engineering_capability_train/data/corpus_manifest.json",
+    "adapter_out": "engineering_capability_train/artifacts/ect_sft_adapter",
+    "dpo_adapter_out": "engineering_capability_train/artifacts/ect_dpo_adapter"
+  },
+  "reuse_assets": {
+    "tool_specs": "bridges/tool_calling_specs.py",
+    "tokenizer_helper": "scripts/virtu_tokenize.py",
+    "physics_verifier": "scripts/wm_verifier.py",
+    "eval_report": "virtu_eval/report.py",
+    "legacy_qlora": "scripts/train_qwen3_8b_qlora.py",
+    "desktop_controller": "bridges/desktop_controller.py",
+    "eval_case_dir": "data/benchmark/virtu_eval_v1",
+    "physics_case_dir": "data/benchmark/virtu_eval_phys_v1",
+    "eval_image_dir": "data/benchmark/virtu_eval_v1/images",
+    "hard_holdout": "data/benchmark/virtu_fix_v1/formula_holdout_200.jsonl"
+  },
+  "existing_corpora_for_replay": [
+    "data/sft/virtu_v2_curated.jsonl",
+    "data/sft/virtu_capability_sft_v6.jsonl",
+    "data/sft/virtu_worldmodel_v2.jsonl",
+    "damodel_cad_cam_tuning/dataset/six_software_parametric_sft.jsonl"
+  ],
+  "data_mix": {
+    "toolchain": 0.30,
+    "gui_trajectory": 0.25,
+    "vision_decision": 0.20,
+    "engineering_semantics": 0.15,
+    "replay": 0.10
+  },
+  "target_train_samples": 6000,
+  "target_dpo_pairs": 900,
+  "max_eval_tasks": 800,
+  "max_seq_len": 2560,
+  "stages": {
+    "prepare": true,
+    "validate": true,
+    "sft": true,
+    "dpo": true,
+    "evaluate": true,
+    "report": true
+  },
+  "reproducibility": {
+    "deterministic_algorithms": true,
+    "cudnn_deterministic": true,
+    "pin_data_sha256": true,
+    "require_single_corpus_jsonl": true,
+    "fresh_eval_run_dir": true,
+    "reject_smoke_only_receipts": true,
+    "hash_algorithms": ["sha256"]
+  },
+  "physics": {
+    "min_safety_factor": 1.5,
+    "max_physical_density_g_cm3": 60.0,
+    "require_volume_conservation": true,
+    "forbid_g00_plunge": true,
+    "autodiff_red_is_fatal": true,
+    "reject_on_violation": true
+  },
+  "notes": [
+    "r=32/alpha=64 是硬约束：必须与工作区现有 7 个同源 LoRA 保持 rank 一致才能做 delta/TIES 合并",
+    "Qwen2.5-7B 的 LoRA 与 Qwen3-8B 键空间不兼容，禁止混用",
+    "hard_holdout 只允许用于训练后验收，绝不进入任何训练/偏好对"
+  ]
+}

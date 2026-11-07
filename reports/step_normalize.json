@@ -1,0 +1,133 @@
+{
+  "tool": "bridges.step_normalize",
+  "basis": "measured",
+  "mode": "utf8",
+  "dry_run": false,
+  "out_dir": "data/step_utf8",
+  "sample_size_n": 10,
+  "need_conversion": 1,
+  "ok_count": 10,
+  "error_count": 0,
+  "records": [
+    {
+      "path": "assets/bearing_bracket.step",
+      "file": "bearing_bracket.step",
+      "src_bytes": 112052,
+      "src_sha256": "cbedc6d4a90b3e53",
+      "src_encoding": "utf-8",
+      "needed": false,
+      "out_bytes": 112052,
+      "out_sha256": "cbedc6d4a90b3e53",
+      "output_path": "data/step_utf8/bearing_bracket.step",
+      "status": "ok"
+    },
+    {
+      "path": "assets/guide_carriage_base.step",
+      "file": "guide_carriage_base.step",
+      "src_bytes": 44125,
+      "src_sha256": "2ad2a898c6cb5f87",
+      "src_encoding": "utf-8",
+      "needed": false,
+      "out_bytes": 44125,
+      "out_sha256": "2ad2a898c6cb5f87",
+      "output_path": "data/step_utf8/guide_carriage_base.step",
+      "status": "ok"
+    },
+    {
+      "path": "assets/hydraulic_end_cap.step",
+      "file": "hydraulic_end_cap.step",
+      "src_bytes": 40172,
+      "src_sha256": "bb82e6a1bc5275b8",
+      "src_encoding": "utf-8",
+      "needed": false,
+      "out_bytes": 40172,
+      "out_sha256": "bb82e6a1bc5275b8",
+      "output_path": "data/step_utf8/hydraulic_end_cap.step",
+      "status": "ok"
+    },
+    {
+      "path": "assets/impeller_disc.step",
+      "file": "impeller_disc.step",
+      "src_bytes": 24091,
+      "src_sha256": "f4caef9528f421f8",
+      "src_encoding": "utf-8",
+      "needed": false,
+      "out_bytes": 24091,
+      "out_sha256": "f4caef9528f421f8",
+      "output_path": "data/step_utf8/impeller_disc.step",
+      "status": "ok"
+    },
+    {
+      "path": "assets/mold_core_mandrel.step",
+      "file": "mold_core_mandrel.step",
+      "src_bytes": 40803,
+      "src_sha256": "5a65ad177c86ae0e",
+      "src_encoding": "utf-8",
+      "needed": false,
+      "out_bytes": 40803,
+      "out_sha256": "5a65ad177c86ae0e",
+      "output_path": "data/step_utf8/mold_core_mandrel.step",
+      "status": "ok"
+    },
+    {
+      "path": "assets/precision_flange.step",
+      "file": "precision_flange.step",
+      "src_bytes": 39921,
+      "src_sha256": "8e4a2f1eda5458c1",
+      "src_encoding": "utf-8",
+      "needed": false,
+      "out_bytes": 39921,
+      "out_sha256": "8e4a2f1eda5458c1",
+      "output_path": "data/step_utf8/precision_flange.step",
+      "status": "ok"
+    },
+    {
+      "path": "assets/spindle_bushing.step",
+      "file": "spindle_bushing.step",
+      "src_bytes": 11793,
+      "src_sha256": "e138fdf3993ceedd",
+      "src_encoding": "utf-8",
+      "needed": false,
+      "out_bytes": 11793,
+      "out_sha256": "e138fdf3993ceedd",
+      "output_path": "data/step_utf8/spindle_bushing.step",
+      "status": "ok"
+    },
+    {
+      "path": "assets/stepped_shaft.step",
+      "file": "stepped_shaft.step",
+      "src_bytes": 32201,
+      "src_sha256": "8bdaf55deff0d105",
+      "src_encoding": "utf-8",
+      "needed": false,
+      "out_bytes": 32201,
+      "out_sha256": "8bdaf55deff0d105",
+      "output_path": "data/step_utf8/stepped_shaft.step",
+      "status": "ok"
+    },
+    {
+      "path": "assets/valve_sleeve.step",
+      "file": "valve_sleeve.step",
+      "src_bytes": 127910,
+      "src_sha256": "6bf874fd3e3375ab",
+      "src_encoding": "utf-8",
+      "needed": false,
+      "out_bytes": 127910,
+      "out_sha256": "6bf874fd3e3375ab",
+      "output_path": "data/step_utf8/valve_sleeve.step",
+      "status": "ok"
+    },
+    {
+      "path": "assets/wheel_mold_P0.step",
+      "file": "wheel_mold_P0.step",
+      "src_bytes": 587686,
+      "src_sha256": "712e8ac66f6456f4",
+      "src_encoding": "gbk",
+      "needed": true,
+      "out_bytes": 587884,
+      "out_sha256": "55066dc9222b6c54",
+      "output_path": "data/step_utf8/wheel_mold_P0.step",
+      "status": "ok"
+    }
+  ]
+}

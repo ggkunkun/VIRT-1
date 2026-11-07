@@ -6,8 +6,12 @@ import json
 import os
 from typing import List, Dict, Any, Tuple, Optional
 import numpy as np
-import torch
-import torch.nn.functional as F
+try:
+    import torch
+    import torch.nn.functional as F
+except ImportError:
+    torch = None
+    F = None
 
 
 class LightweightEmbedder:

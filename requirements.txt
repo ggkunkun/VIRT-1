@@ -10,3 +10,15 @@ flake8>=7.0.0
 numpy>=1.26.0
 rich>=13.7.0
 requests>=2.31.0
+
+# virtu_omni.engine 的 __init__ 直接 import cv2（visual_grounding_engine /
+# closed_loop_sentinel），缺它桥在启动阶段就 ModuleNotFoundError ——
+# 见 logs/bridge_service.log。不用于 GUI，headless 足够。
+opencv-python-headless>=4.9
+
+# 本地视觉通道（Qwen3-VL-2B，可选；不装则图片自动走云端视觉）
+transformers>=4.57.0
+accelerate>=0.30.0
+bitsandbytes>=0.43.0
+safetensors>=0.4.0
+av>=12.0.0          # 视频抽帧（PyAV），仅本地视频通道需要

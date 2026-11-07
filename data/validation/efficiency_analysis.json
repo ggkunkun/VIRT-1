@@ -1,0 +1,61 @@
+{
+  "samples": 18330,
+  "role_token_breakdown_slim": {
+    "system": 3801642,
+    "user": 1016924,
+    "assistant": 1168957
+  },
+  "role_pct": {
+    "system": 63.49,
+    "user": 16.98,
+    "assistant": 19.52
+  },
+  "schema_tokens_per_variant": {
+    "current_slim": 916,
+    "ultra_thin": 582,
+    "name_only": 308
+  },
+  "variants": {
+    "cur": 30229305,
+    "ultra": 24107085,
+    "noname": 19084665,
+    "notools": 12045945
+  },
+  "saving_vs_current": {
+    "cur": 0.0,
+    "ultra": 20.3,
+    "noname": 36.9,
+    "notools": 60.2
+  },
+  "unique_tool_key_combos": 7,
+  "combo_top10": [
+    {
+      "combo": "(('cad.parse_wish_intent', ('d_inner', 'd_outer', 'fillet_r', 'is_die_mold', 'is_multiaxis', 'material', 'num_",
+      "count": 4109
+    },
+    {
+      "combo": "(('cad.parse_wish_intent', ('d_inner', 'd_outer', 'fillet_r', 'is_die_mold', 'is_multiaxis', 'material', 'num_",
+      "count": 3809
+    },
+    {
+      "combo": "(('cad.parse_wish_intent', ('d_inner', 'd_outer', 'fillet_r', 'is_die_mold', 'is_multiaxis', 'material', 'num_",
+      "count": 3803
+    },
+    {
+      "combo": "(('cad.parse_wish_intent', ('d_inner', 'd_outer', 'fillet_r', 'is_die_mold', 'is_multiaxis', 'material', 'num_",
+      "count": 2277
+    },
+    {
+      "combo": "(('cad.parse_wish_intent', ('d_inner', 'd_outer', 'fillet_r', 'is_die_mold', 'is_multiaxis', 'material', 'num_",
+      "count": 2277
+    },
+    {
+      "combo": "(('cad.parse_wish_intent', ('d_inner', 'd_outer', 'fillet_r', 'is_die_mold', 'is_multiaxis', 'material', 'num_",
+      "count": 2029
+    },
+    {
+      "combo": "(('ontology.lookup_plugin', ('plugin', 'software')),)",
+      "count": 26
+    }
+  ]
+}

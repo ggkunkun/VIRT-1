@@ -17,6 +17,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 from virtu_omni.config import ModelConfig
+from virtu_omni.errors import ModelError, INFER_LOOP_METRIC
 
 
 class LoopRMSNorm(nn.Module):
@@ -75,6 +76,10 @@ class LoopStepController:
     during both training and inference without graph recompilation.
     """
 
+    # Telemetry is written once per layer per step (48 x N entries per forward).
+    # Without a bound, a long-lived controller accumulates history forever.
+    MAX_HISTORY_ENTRIES = 4096
+
     def __init__(self, config: ModelConfig) -> None:
         self.config = config
         self._max_loop_steps: int = config.max_loop_steps
@@ -102,7 +107,16 @@ class LoopStepController:
         converged: bool,
         layer_idx: Optional[int] = None,
     ) -> None:
-        """Record telemetry of an executed loop iteration."""
+        """Record telemetry of an executed loop iteration.
+
+        The history list is capped at ``MAX_HISTORY_ENTRIES`` (oldest entries are
+        dropped) so that a controller reused across thousands of forward passes
+        cannot grow without bound and leak memory.
+        """
+        if len(self.step_history) >= self.MAX_HISTORY_ENTRIES:
+            # Trim in chunks rather than one-by-one to avoid O(n) shift per step.
+            drop = max(1, self.MAX_HISTORY_ENTRIES // 4)
+            del self.step_history[:drop]
         self.step_history.append({
             "step_idx": step_idx,
             "layer_idx": layer_idx,
@@ -144,6 +158,23 @@ class LoopConvergenceCriterion:
         metric: str = "relative_l2",
         eps: float = 1e-8,
     ) -> None:
+        # Previously an unknown metric silently fell back to relative_l2, so a
+        # typo in the YAML ("cosin") produced a different exit policy than the
+        # operator requested. Reject it at construction time instead.
+        if metric not in ("relative_l2", "cosine"):
+            raise ModelError(
+                INFER_LOOP_METRIC,
+                f"Unsupported loop convergence metric: {metric!r}",
+                hint="Use 'relative_l2' or 'cosine'.",
+                context={"metric": metric},
+            )
+        if threshold <= 0:
+            raise ModelError(
+                INFER_LOOP_METRIC,
+                f"Convergence threshold must be > 0, got {threshold!r}",
+                hint="Use a positive threshold such as 1e-4.",
+                context={"threshold": threshold},
+            )
         self.threshold = threshold
         self.metric = metric
         self.eps = eps
@@ -186,16 +217,34 @@ class LoopStateCache:
     2. Reusable Key-Value attention states to reduce redundant projections.
     """
 
-    def __init__(self, enabled: bool = True) -> None:
+    def __init__(self, enabled: bool = True, max_entries: int = 512) -> None:
         self.enabled = enabled
+        # Hard bound: 48 layers x N loop steps can otherwise retain every
+        # activation tensor after the forward pass returns (see forward cleanup).
+        self.max_entries = max(1, max_entries)
         self._state_store: Dict[str, torch.Tensor] = {}
         self._kv_store: Dict[str, Tuple[torch.Tensor, torch.Tensor]] = {}
 
+    def _evict_if_needed(self) -> None:
+        """Drop the oldest entries once the cache exceeds its configured bound."""
+        while len(self._state_store) + len(self._kv_store) > self.max_entries:
+            if self._kv_store:
+                self._kv_store.pop(next(iter(self._kv_store)))
+            elif self._state_store:
+                self._state_store.pop(next(iter(self._state_store)))
+            else:
+                break
+
     def set_state(self, key: str, tensor: torch.Tensor) -> None:
-        """Store intermediate tensor for given identifier."""
+        """Store intermediate tensor for given identifier.
+
+        Tensors are detached before caching: the cache is telemetry-only and
+        must never keep an autograd graph alive across iterations.
+        """
         if not self.enabled:
             return
-        self._state_store[key] = tensor
+        self._state_store[key] = tensor.detach()
+        self._evict_if_needed()
 
     def get_state(self, key: str) -> Optional[torch.Tensor]:
         """Retrieve stored intermediate tensor."""
@@ -210,7 +259,8 @@ class LoopStateCache:
         if not self.enabled:
             return
         cache_key = f"L{layer_idx}_S{step_idx}"
-        self._kv_store[cache_key] = (k, v)
+        self._kv_store[cache_key] = (k.detach(), v.detach())
+        self._evict_if_needed()
 
     def get_kv(
         self, layer_idx: int, step_idx: int
@@ -224,6 +274,15 @@ class LoopStateCache:
     def clear(self) -> None:
         """Clear all stored state and KV buffers."""
         self._state_store.clear()
+        self._kv_store.clear()
+
+    def clear_kv(self) -> None:
+        """Drop cached K/V pairs only.
+
+        K/V entries are bound to one forward pass: after the pass returns they are
+        stale for every subsequent request, so releasing them keeps the cache
+        footprint at one pass instead of retaining per-request activations.
+        """
         self._kv_store.clear()
 
     def __len__(self) -> int:

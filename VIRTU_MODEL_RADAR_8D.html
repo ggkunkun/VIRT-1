@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Virtu 模型族 · 八维雷达图</title>
+<style>
+ * { box-sizing: border-box; }
+ body { margin:0; font-family: -apple-system, "Segoe UI", "Microsoft YaHei", sans-serif;
+        background:#fafbfc; color:#1a1a1a; padding:24px; }
+ h1 { font-size:20px; margin:0 0 4px; }
+ .sub { color:#666; font-size:13px; margin-bottom:18px; }
+ .wrap { display:flex; flex-wrap:wrap; gap:24px; align-items:flex-start; }
+ .chart { background:#fff; border:1px solid #e4e7eb; border-radius:12px; padding:8px; }
+ .legend { flex:1; min-width:280px; }
+ .lg-item { display:flex; align-items:center; gap:8px; padding:6px 8px; border-radius:6px;
+            font-size:13px; margin-bottom:4px; }
+ .lg-item:hover { background:#f0f2f5; }
+ .lg-item.off { opacity:0.35; }
+ .sw { width:16px; height:12px; border-radius:3px; display:inline-block; flex:none; }
+ .note { font-size:11.5px; color:#555; margin-top:2px; }
+ .grid { margin-top:22px; }
+ table { border-collapse:collapse; width:100%; font-size:12.5px; background:#fff;
+         border:1px solid #e4e7eb; border-radius:10px; overflow:hidden; }
+ th,td { padding:7px 9px; text-align:center; border-bottom:1px solid #eef1f4; }
+ th { background:#f3f5f8; font-weight:600; }
+ td:first-child { text-align:left; font-weight:600; }
+ .scale { font-size:11px; color:#888; margin-top:6px; }
+ .rules { font-size:12px; color:#444; background:#fff; border:1px solid #e4e7eb;
+           border-radius:10px; padding:12px 16px; margin-top:16px; line-height:1.7; }
+ .rules b { color:#1a1a1a; }
+ @media (prefers-color-scheme: dark) {
+   body { background:#16181d; color:#e6e6e6; }
+   .sub,.note,.scale { color:#9aa0a8; }
+   .chart,.legend,.grid table,.rules { background:#1e2127; border-color:#333842; }
+   th { background:#262a31; }
+   td { border-color:#2a2e36; }
+   .lg-item:hover { background:#262a31; }
+   .rules b { color:#fff; }
+ }
+</style></head>
+<body>
+<h1>Virtu 模型族 · 八维能力雷达图</h1>
+<div class="sub">数据来源：本机 Ollama <code>/api/show</code> + 磁盘 <code>checkpoints/*.gguf</code> GGUF 头实测（6 个真实模型实体，2026-11-06 01:57 实时拉取）</div>
+<div class="wrap">
+  <div class="chart">
+    <svg width="760" height="720" viewBox="0 0 760 720" xmlns="http://www.w3.org/2000/svg">
+      <polygon points="380.0,310.0 415.4,324.6 430.0,360.0 415.4,395.4 380.0,410.0 344.6,395.4 330.0,360.0 344.6,324.6" fill="none" stroke="#bbb" stroke-width="0.8" opacity="0.6"/><polygon points="380.0,260.0 450.7,289.3 480.0,360.0 450.7,430.7 380.0,460.0 309.3,430.7 280.0,360.0 309.3,289.3" fill="none" stroke="#bbb" stroke-width="0.8" opacity="0.6"/><polygon points="380.0,210.0 486.1,253.9 530.0,360.0 486.1,466.1 380.0,510.0 273.9,466.1 230.0,360.0 273.9,253.9" fill="none" stroke="#bbb" stroke-width="0.8" opacity="0.6"/><polygon points="380.0,160.0 521.4,218.6 580.0,360.0 521.4,501.4 380.0,560.0 238.6,501.4 180.0,360.0 238.6,218.6" fill="none" stroke="#bbb" stroke-width="0.8" opacity="0.6"/><polygon points="380.0,110.0 556.8,183.2 630.0,360.0 556.8,536.8 380.0,610.0 203.2,536.8 130.0,360.0 203.2,183.2" fill="none" stroke="#bbb" stroke-width="0.8" opacity="0.6"/><circle cx="380" cy="360" r="250" fill="none" stroke="#999" stroke-width="1"/>
+      <line x1="380" y1="360" x2="380.0" y2="110.0" stroke="#bbb" stroke-width="0.8"/><text x="380.0" y="72.0" text-anchor="middle" font-size="13" font-weight="600" fill="#222">总参数量</text><text x="380.0" y="86.0" text-anchor="middle" font-size="9" fill="#888">Total Parameters</text><line x1="380" y1="360" x2="556.8" y2="183.2" stroke="#bbb" stroke-width="0.8"/><text x="580.8" y="155.2" text-anchor="start" font-size="13" font-weight="600" fill="#222">激活参数量</text><text x="580.8" y="169.2" text-anchor="start" font-size="9" fill="#888">Active / Dense Compute</text><line x1="380" y1="360" x2="630.0" y2="360.0" stroke="#bbb" stroke-width="0.8"/><text x="664.0" y="356.0" text-anchor="start" font-size="13" font-weight="600" fill="#222">网络深度</text><text x="664.0" y="370.0" text-anchor="start" font-size="9" fill="#888">Layers (Blocks)</text><line x1="380" y1="360" x2="556.8" y2="536.8" stroke="#bbb" stroke-width="0.8"/><text x="580.8" y="556.8" text-anchor="start" font-size="13" font-weight="600" fill="#222">上下文窗口</text><text x="580.8" y="570.8" text-anchor="start" font-size="9" fill="#888">Context Window</text><line x1="380" y1="360" x2="380.0" y2="610.0" stroke="#bbb" stroke-width="0.8"/><text x="380.0" y="640.0" text-anchor="middle" font-size="13" font-weight="600" fill="#222">量化保真度</text><text x="380.0" y="654.0" text-anchor="middle" font-size="9" fill="#888">Quantization Fidelity</text><line x1="380" y1="360" x2="203.2" y2="536.8" stroke="#bbb" stroke-width="0.8"/><text x="179.2" y="556.8" text-anchor="end" font-size="13" font-weight="600" fill="#222">能力维度</text><text x="179.2" y="570.8" text-anchor="end" font-size="9" fill="#888">Capabilities (compl/tools/think)</text><line x1="380" y1="360" x2="130.0" y2="360.0" stroke="#bbb" stroke-width="0.8"/><text x="96.0" y="356.0" text-anchor="end" font-size="13" font-weight="600" fill="#222">注册可用性</text><text x="96.0" y="370.0" text-anchor="end" font-size="9" fill="#888">Registered & Usable</text><line x1="380" y1="360" x2="203.2" y2="183.2" stroke="#bbb" stroke-width="0.8"/><text x="179.2" y="155.2" text-anchor="end" font-size="13" font-weight="600" fill="#222">可归因性</text><text x="179.2" y="169.2" text-anchor="end" font-size="9" fill="#888">Provenance / Receipt</text>
+      <polygon id="poly_comprehensive" points="380.0,209.8 523.0,217.0 575.8,360.0 556.8,536.8 380.0,497.5 262.1,477.9 130.0,360.0 238.6,218.6" fill="#4e79a7" fill-opacity="0.13" stroke="#4e79a7" stroke-width="2.2"/>
+<circle id="dot_comprehensive_0" cx="380.0" cy="209.8" r="2.6" fill="#4e79a7"/>
+<circle id="dot_comprehensive_1" cx="523.0" cy="217.0" r="2.6" fill="#4e79a7"/>
+<circle id="dot_comprehensive_2" cx="575.8" cy="360.0" r="2.6" fill="#4e79a7"/>
+<circle id="dot_comprehensive_3" cx="556.8" cy="536.8" r="2.6" fill="#4e79a7"/>
+<circle id="dot_comprehensive_4" cx="380.0" cy="497.5" r="2.6" fill="#4e79a7"/>
+<circle id="dot_comprehensive_5" cx="262.1" cy="477.9" r="2.6" fill="#4e79a7"/>
+<circle id="dot_comprehensive_6" cx="130.0" cy="360.0" r="2.6" fill="#4e79a7"/>
+<circle id="dot_comprehensive_7" cx="238.6" cy="218.6" r="2.6" fill="#4e79a7"/>
+<polygon id="poly_v10b" points="380.0,174.2 556.8,183.2 630.0,360.0 556.8,536.8 380.0,497.5 321.1,418.9 130.0,360.0 203.2,183.2" fill="#59a14f" fill-opacity="0.13" stroke="#59a14f" stroke-width="2.2"/>
+<circle id="dot_v10b_0" cx="380.0" cy="174.2" r="2.6" fill="#59a14f"/>
+<circle id="dot_v10b_1" cx="556.8" cy="183.2" r="2.6" fill="#59a14f"/>
+<circle id="dot_v10b_2" cx="630.0" cy="360.0" r="2.6" fill="#59a14f"/>
+<circle id="dot_v10b_3" cx="556.8" cy="536.8" r="2.6" fill="#59a14f"/>
+<circle id="dot_v10b_4" cx="380.0" cy="497.5" r="2.6" fill="#59a14f"/>
+<circle id="dot_v10b_5" cx="321.1" cy="418.9" r="2.6" fill="#59a14f"/>
+<circle id="dot_v10b_6" cx="130.0" cy="360.0" r="2.6" fill="#59a14f"/>
+<circle id="dot_v10b_7" cx="203.2" cy="183.2" r="2.6" fill="#59a14f"/>
+<polygon id="poly_moe14b" points="380.0,110.0 499.0,241.0 575.8,360.0 556.8,536.8 380.0,510.0 203.2,536.8 130.0,360.0 327.0,307.0" fill="#e15759" fill-opacity="0.13" stroke="#e15759" stroke-width="2.2"/>
+<circle id="dot_moe14b_0" cx="380.0" cy="110.0" r="2.6" fill="#e15759"/>
+<circle id="dot_moe14b_1" cx="499.0" cy="241.0" r="2.6" fill="#e15759"/>
+<circle id="dot_moe14b_2" cx="575.8" cy="360.0" r="2.6" fill="#e15759"/>
+<circle id="dot_moe14b_3" cx="556.8" cy="536.8" r="2.6" fill="#e15759"/>
+<circle id="dot_moe14b_4" cx="380.0" cy="510.0" r="2.6" fill="#e15759"/>
+<circle id="dot_moe14b_5" cx="203.2" cy="536.8" r="2.6" fill="#e15759"/>
+<circle id="dot_moe14b_6" cx="130.0" cy="360.0" r="2.6" fill="#e15759"/>
+<circle id="dot_moe14b_7" cx="327.0" cy="307.0" r="2.6" fill="#e15759"/>
+<polygon id="poly_moe14b_bf16" points="380.0,110.0 499.0,241.0 575.8,360.0 556.8,536.8 380.0,597.5 203.2,536.8 280.0,360.0 380.0,360.0" fill="#b07aa1" fill-opacity="0.13" stroke="#b07aa1" stroke-width="2.2" stroke-dasharray="6 4"/>
+<circle id="dot_moe14b_bf16_0" cx="380.0" cy="110.0" r="2.6" fill="#b07aa1"/>
+<circle id="dot_moe14b_bf16_1" cx="499.0" cy="241.0" r="2.6" fill="#b07aa1"/>
+<circle id="dot_moe14b_bf16_2" cx="575.8" cy="360.0" r="2.6" fill="#b07aa1"/>
+<circle id="dot_moe14b_bf16_3" cx="556.8" cy="536.8" r="2.6" fill="#b07aa1"/>
+<circle id="dot_moe14b_bf16_4" cx="380.0" cy="597.5" r="2.6" fill="#b07aa1"/>
+<circle id="dot_moe14b_bf16_5" cx="203.2" cy="536.8" r="2.6" fill="#b07aa1"/>
+<circle id="dot_moe14b_bf16_6" cx="280.0" cy="360.0" r="2.6" fill="#b07aa1"/>
+<circle id="dot_moe14b_bf16_7" cx="380.0" cy="360.0" r="2.6" fill="#b07aa1"/>
+<polygon id="poly_extreme" points="380.0,331.8 407.0,333.0 532.2,360.0 521.4,501.4 380.0,510.0 262.1,477.9 130.0,360.0 327.0,307.0" fill="#f28e2b" fill-opacity="0.13" stroke="#f28e2b" stroke-width="2.2"/>
+<circle id="dot_extreme_0" cx="380.0" cy="331.8" r="2.6" fill="#f28e2b"/>
+<circle id="dot_extreme_1" cx="407.0" cy="333.0" r="2.6" fill="#f28e2b"/>
+<circle id="dot_extreme_2" cx="532.2" cy="360.0" r="2.6" fill="#f28e2b"/>
+<circle id="dot_extreme_3" cx="521.4" cy="501.4" r="2.6" fill="#f28e2b"/>
+<circle id="dot_extreme_4" cx="380.0" cy="510.0" r="2.6" fill="#f28e2b"/>
+<circle id="dot_extreme_5" cx="262.1" cy="477.9" r="2.6" fill="#f28e2b"/>
+<circle id="dot_extreme_6" cx="130.0" cy="360.0" r="2.6" fill="#f28e2b"/>
+<circle id="dot_extreme_7" cx="327.0" cy="307.0" r="2.6" fill="#f28e2b"/>
+<polygon id="poly_longctx" points="380.0,303.5 433.9,306.1 575.8,360.0 521.4,501.4 380.0,510.0 262.1,477.9 130.0,360.0 327.0,307.0" fill="#76b7b2" fill-opacity="0.13" stroke="#76b7b2" stroke-width="2.2"/>
+<circle id="dot_longctx_0" cx="380.0" cy="303.5" r="2.6" fill="#76b7b2"/>
+<circle id="dot_longctx_1" cx="433.9" cy="306.1" r="2.6" fill="#76b7b2"/>
+<circle id="dot_longctx_2" cx="575.8" cy="360.0" r="2.6" fill="#76b7b2"/>
+<circle id="dot_longctx_3" cx="521.4" cy="501.4" r="2.6" fill="#76b7b2"/>
+<circle id="dot_longctx_4" cx="380.0" cy="510.0" r="2.6" fill="#76b7b2"/>
+<circle id="dot_longctx_5" cx="262.1" cy="477.9" r="2.6" fill="#76b7b2"/>
+<circle id="dot_longctx_6" cx="130.0" cy="360.0" r="2.6" fill="#76b7b2"/>
+<circle id="dot_longctx_7" cx="327.0" cy="307.0" r="2.6" fill="#76b7b2"/>
+
+    </svg>
+  </div>
+  <div class="legend">
+    <h3 style="margin:4px 0 8px;font-size:14px">图例（点击开关）</h3>
+    <div class="lg-item" data-key="comprehensive" style="cursor:pointer"><span class="sw" style="background:#4e79a7;"></span>virtu-comprehensive:latest (8.2B)</div>
+<div class="lg-item" data-key="v10b" style="cursor:pointer"><span class="sw" style="background:#59a14f;"></span>virtu-10b:a45b3427 (10.1B)</div>
+<div class="lg-item" data-key="moe14b" style="cursor:pointer"><span class="sw" style="background:#e15759;"></span>virtu-moe-14b:latest (13.6B MoE)</div>
+<div class="lg-item" data-key="moe14b_bf16" style="cursor:pointer"><span class="sw" style="background:#b07aa1;border:2px dashed #b07aa1"></span>virtu-moe-14b-bf16.gguf (磁盘)</div>
+<div class="lg-item" data-key="extreme" style="cursor:pointer"><span class="sw" style="background:#f28e2b;"></span>virtu-extreme-256k:latest (1.5B)</div>
+<div class="lg-item" data-key="longctx" style="cursor:pointer"><span class="sw" style="background:#76b7b2;"></span>virtu-longctx:latest (3.1B)</div>
+
+    <div class="scale">五个同心环 = 20 / 40 / 60 / 80 / 100 分（各维度相对族内最大值归一）</div>
+  </div>
+</div>
+
+<div class="grid">
+  <h3 style="font-size:15px">原始测量值与八维归一化分数（总/激活/层/上下文/量化/能力/注册/归因）</h3>
+  <table>
+    <thead><tr><th>模型实体</th><th>总参</th><th>激活参</th><th>层</th><th>上下文</th>
+      <th>量化</th><th>能力</th><th>注册</th><th>receipt</th><th>八维分数</th></tr></thead>
+    <tbody>
+      <tr><td style="border-left:4px solid #4e79a7">virtu-comprehensive:latest (8.2B)</td><td>8.19B</td><td>8.19B</td><td>36</td><td>40,960</td><td>Q4_0</td><td>comp/tool</td><td>是</td><td>无</td><td>60.1/80.9/78.3/100.0/55/66.7/100/80</td></tr>
+<tr><td style="border-left:4px solid #59a14f">virtu-10b:a45b3427 (10.1B)</td><td>10.12B</td><td>10.12B</td><td>46</td><td>40,960</td><td>Q4_0</td><td>comp</td><td>是</td><td>有</td><td>74.3/100.0/100.0/100.0/55/33.3/100/100</td></tr>
+<tr><td style="border-left:4px solid #e15759">virtu-moe-14b:latest (13.6B MoE)</td><td>13.63B</td><td>6.81B</td><td>36</td><td>40,960</td><td>Q4_K_M</td><td>tool/thin/comp</td><td>是</td><td>无</td><td>100.0/67.3/78.3/100.0/60/100.0/100/30</td></tr>
+<tr><td style="border-left:4px solid #b07aa1">virtu-moe-14b-bf16.gguf (磁盘)</td><td>13.63B</td><td>6.81B</td><td>36</td><td>40,960</td><td>BF16</td><td>tool/thin/comp</td><td>否(磁盘)</td><td>无</td><td>100.0/67.3/78.3/100.0/95/100.0/40/0</td></tr>
+<tr><td style="border-left:4px solid #f28e2b">virtu-extreme-256k:latest (1.5B)</td><td>1.54B</td><td>1.54B</td><td>28</td><td>32,768</td><td>Q4_K_M</td><td>comp/tool</td><td>是</td><td>无</td><td>11.3/15.3/60.9/80.0/60/66.7/100/30</td></tr>
+<tr><td style="border-left:4px solid #76b7b2">virtu-longctx:latest (3.1B)</td><td>3.09B</td><td>3.09B</td><td>36</td><td>32,768</td><td>Q4_K_M</td><td>comp/tool</td><td>是</td><td>无</td><td>22.6/30.5/78.3/80.0/60/66.7/100/30</td></tr>
+
+    </tbody>
+  </table>
+</div>
+
+<div class="rules">
+  <b>八维定义与归一化规则（可归因）</b><br>
+  1. <b>总参数量</b>：GGUF <code>general.parameter_count</code>；归一化到族内最大 13.63B=100。<br>
+  2. <b>激活参数量</b>：Dense 模型=总参；MoE=总参×used/expert（moe 13.6B×1/2≈6.81B）；归一化到最大 10.12B=100。<br>
+  3. <b>网络深度</b>：<code>block_count</code>；归一化到最大 46 层=100。<br>
+  4. <b>上下文窗口</b>：<code>context_length</code>；线性归一化到最大 40960=100（32768→80）。<br>
+  5. <b>量化保真度</b>：F32=100 / BF16=95 / Q8=85 / Q6=78 / Q5=70 / Q4_K_M=60 / Q4_0=55（按位宽近似）。<br>
+  6. <b>能力维度</b>：{completion,tools,thinking} 命中数 /3×100。<br>
+  7. <b>注册可用性</b>：Ollama <code>/api/show</code> 可用=100；仅磁盘存在未注册=40。<br>
+  8. <b>可归因性</b>：有 receipt.json=100；在役且有文档/Modelfile=80；在役孤儿标签=30；磁盘无 receipt=0。<br>
+  <span class="note">注：virtu-moe-14b-bf16.gguf 为磁盘文件、未在 Ollama 注册，其上下文/能力维度按同架构兄弟标签（virtu-moe-14b:latest）推断，非直接测量。</span>
+</div>
+
+<script>
+// 点击图例切换对应多边形与顶点显隐
+const hidden = new Set();
+document.querySelectorAll('.lg-item').forEach(el=>{
+  el.addEventListener('click', ()=>{
+    const key = el.getAttribute('data-key');
+    const poly = document.getElementById('poly_'+key);
+    if(!poly) return;
+    if(hidden.has(key)){ hidden.delete(key); poly.style.display=''; 
+      for(let i=0;i<8;i++){const d=document.getElementById('dot_'+key+'_'+i); if(d)d.style.display='';}
+      el.classList.remove('off');
+    } else { hidden.add(key); poly.style.display='none';
+      for(let i=0;i<8;i++){const d=document.getElementById('dot_'+key+'_'+i); if(d)d.style.display='none';}
+      el.classList.add('off');
+    }
+  });
+});
+</script>
+</body></html>

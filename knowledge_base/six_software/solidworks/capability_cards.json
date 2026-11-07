@@ -1,0 +1,163 @@
+{
+  "software": "solidworks",
+  "generated": "2026-11-04",
+  "supersedes": "knowledge_base/six_software/solidworks/module_inventory.json (descriptive transcription)",
+  "surface_grounding": {
+    "method": "AST-enumeration of the makepy-generated type library (methods with arity from FunctionDef, properties from _prop_map_get_), never transcription",
+    "tlb_guid": "{83A33D31-27C5-11CE-BFD4-00400513BB57}",
+    "tlb_version": [29, 0],
+    "surface_source_glob": "%TEMP%/gen_py/*/83A33D31-*.py",
+    "rule": "every api entry must be IFace::method and resolve to a method of that interface with the declared arity, else the card is invalid"
+  },
+  "readiness_enum": ["verified-working", "confirmed-negative", "documented-not-probed"],
+  "injection_policy": "only cards whose readiness is verified-working may enter model context",
+  "unit_discipline": {
+    "why": "实测：同一段里混写两层单位时，模型会把 mm/inch 的错按 x1000 去修，把可修的小错改成不可修的大错",
+    "user_parameters": {
+      "layer": "用户请求的尺寸字段",
+      "unit": "mm",
+      "rule": "字段值就是毫米；怀疑量纲错时用 x25.4 还原并核对是否为整数量程，绝不在这层用 x1000"
+    },
+    "com_arguments": {
+      "layer": "调用 SOLIDWORKS API 的实参",
+      "unit": "m",
+      "rule": "只有跨到 COM 实参这一层才乘 0.001；这一层与用户参数层不可互相套用"
+    }
+  },
+  "engineering_invariants": [
+    "D_bore < D_hub < D_outer",
+    "H_total > t_base",
+    "PCD/2 - D_bolt/2 - D_hub/2 >= 1 mm (孔到凸台的间隙)",
+    "D_outer/2 - (PCD/2 + D_bolt/2) >= 2 mm (孔到外缘的轮缘)",
+    "chamfer < min((D_hub - D_bore)/2, t_base, H_total - t_base)"
+  ],
+  "analytic_expectations": {
+    "note": "每个特征的期望体积增量 mm^3，用于和回读 dv_mm3 逐条对照，不要凭印象判断体积是否合理",
+    "base_disk": "pi * (D_outer/2)^2 * t_base",
+    "hub_boss": "pi * (D_hub/2)^2 * (H_total - t_base)",
+    "bore_cut": "-pi * (D_bore/2)^2 * H_total",
+    "bolt_holes": "-n_bolts * pi * (D_bolt/2)^2 * t_base",
+    "bore_chamfer": "-2*pi*((D_bore/2)*chamfer^2/2 + chamfer^3/6)"
+  },
+  "cards": [
+    {
+      "id": "sw_sketch_circle_on_front",
+      "name": "在前视基准面画圆草图 (sketch circle on Front Plane)",
+      "capability": "sketch",
+      "readiness": "verified-working",
+      "coordinate_axiom": "Front Plane normal is +Z; world Y is UP; sketch linear args are METRES",
+      "preflight": [
+        {"probe": "com_attach", "expect": "GetActiveObject or ROT answers within startup timeout", "on_fail": "abort"},
+        {"probe": "reference_planes_present", "expect": "feature tree contains 前视基准面 or Front Plane", "on_fail": "abort"}
+      ],
+      "action": [
+        {"api": "IModelDocExtension::SelectByID2", "args": 9},
+        {"api": "ISketchManager::InsertSketch", "args": 1},
+        {"api": "ISketchManager::CreateCircleByRadius", "args": 4},
+        {"api": "ISketchManager::InsertSketch", "args": 1}
+      ],
+      "postconditions": [
+        {"probe": "sketch_count_delta", "expression": "count(ProfileFeature) after - before == 1", "tolerance": 0},
+        {"probe": "sketch_name_advanced", "expression": "count(intersection(sketch_names_after, previously_used_names)) == 0", "tolerance": 0}
+      ],
+      "silent_failures": [
+        "COM 实参层填 mm 而非 m -> 几何放大 1000 倍，草图照样闭合、sketch 探针照样绿（这条只适用于跨到 API 的那一层，用户参数字段本身是 mm）",
+        "sketch closed with an open profile extrudes nothing and returns a feature object anyway",
+        "SelectByID2 on the Chinese plane name fails silently on an English install (and vice versa)"
+      ],
+      "evidence": ["scripts/sw_flange_demo.py:179 open_sketch", "scripts/sw_flange_demo.py:187 close_sketch", "scripts/sw_flange_demo.py:507 CreateCircleByRadius call site"]
+    },
+    {
+      "id": "sw_boss_extrude_blind",
+      "name": "盲拉伸凸台 (blind boss extrusion)",
+      "capability": "boss",
+      "readiness": "verified-working",
+      "preflight": [
+        {"probe": "sketch_selected", "expect": "SelectByID2(SKETCH) returns True", "on_fail": "retry_then_abort"}
+      ],
+      "action": [
+        {"api": "IModelDoc2::FeatureManager", "kind": "property"},
+        {"api": "IFeatureManager::FeatureExtrusion3", "args": 23},
+        {"api": "IModelDoc2::ForceRebuild3", "args": 1}
+      ],
+      "postconditions": [
+        {"probe": "dv_positive", "expression": "measured dv_mm3 > 0", "tolerance": 0},
+        {"probe": "dv_matches_analytic", "expression": "abs(dv_mm3 - expected_dv_mm3[tag]) / abs(expected_dv_mm3[tag]) <= 0.01", "tolerance": 0.01},
+        {"probe": "stack_grows_plus_z", "expression": "mass property com_z >= 0 after base feature", "tolerance": 0}
+      ],
+      "silent_failures": [
+        "FeatureExtrusion3 returns a feature even when nothing was added; only the volume delta proves it",
+        "wrong Dir flag grows the boss toward -Z, which the code corrects with EditUndo2 and a mirrored retry",
+        "EditRebuild3 written without parentheses is a no-op attribute read, not a rebuild"
+      ],
+      "evidence": ["scripts/sw_flange_demo.py:208 boss", "scripts/sw_flange_demo.py:511-522 direction mirror recovery"]
+    },
+    {
+      "id": "sw_through_cut",
+      "name": "贯穿切除 (through cut)",
+      "capability": "cut",
+      "readiness": "verified-working",
+      "preflight": [
+        {"probe": "material_exists", "expect": "measured volume_mm3 > 0 before the cut", "on_fail": "abort"}
+      ],
+      "action": [
+        {"api": "IModelDoc2::FeatureManager", "kind": "property"},
+        {"api": "IFeatureManager::FeatureCut3", "args": 26},
+        {"api": "IModelDoc2::ForceRebuild3", "args": 1}
+      ],
+      "postconditions": [
+        {"probe": "dv_negative", "expression": "measured dv_mm3 < -1.0", "tolerance": 1.0},
+        {"probe": "dv_matches_analytic", "expression": "abs(dv_mm3 - expected_dv_mm3[tag]) / abs(expected_dv_mm3[tag]) <= 0.01", "tolerance": 0.01}
+      ],
+      "silent_failures": [
+        "IModelDoc2::FeatureCut3 also exists with 16 args (deprecated short form); calling it with 26 arguments fails at bind time while the IFeatureManager form is the one the executor measured working",
+        "an unscoped cut with no body selected returns Nothing on this box; NormalCut=False and UseFeatScope=True is the measured working flag set",
+        "a cut that fails the volume-reduction test is undone with EditUndo2, so a green status can hide three failed attempts",
+        "bolt-hole cut of a profile that broke out of the rim removes less material than analytic, and the 1% gate catches it"
+      ],
+      "evidence": ["scripts/sw_flange_demo.py:215 through_cut", "scripts/sw_flange_demo.py:565-579 cut retry ladder"]
+    },
+    {
+      "id": "sw_volume_readback",
+      "name": "体积与质心回读 (mass property readback)",
+      "capability": "probe",
+      "readiness": "verified-working",
+      "preflight": [
+        {"probe": "solid_bodies_present", "expect": "GetBodies2(0) non-empty", "on_fail": "report_zero_not_absent"}
+      ],
+      "action": [
+        {"api": "IModelDoc2::Extension", "kind": "property"},
+        {"api": "IModelDocExtension::CreateMassProperty", "args": 0}
+      ],
+      "postconditions": [
+        {"probe": "volume_units", "expression": "volume_mm3 == mp.Volume * 1e9 within 1e-6", "tolerance": 1e-06},
+        {"probe": "total_matches_analytic", "expression": "abs(sum(steps.dv_mm3) - sum(expected_dv_mm3)) / sum(expected_dv_mm3) <= 0.01", "tolerance": 0.01}
+      ],
+      "silent_failures": [
+        "a part with no solid body yields Volume 0.0, which reads as a legitimate tiny flange unless n_bodies is checked",
+        "mp.CenterOfMass returns metres; forgetting *1000 makes the com_z sign test lie about stack direction"
+      ],
+      "evidence": ["scripts/sw_flange_demo.py:144 measure", "bridges/solidworks_bridge.py:297 mass_properties"]
+    },
+    {
+      "id": "sw_drawing_annotate_gbt",
+      "name": "工程图国标标注 (drawing annotation to GB/T)",
+      "capability": "drafting",
+      "readiness": "documented-not-probed",
+      "preflight": [
+        {"probe": "drawing_doc_open", "expect": "IDrawingDoc reachable", "on_fail": "escalate"}
+      ],
+      "action": [
+        {"api": "IModelDoc2::Extension", "kind": "property"}
+      ],
+      "postconditions": [
+        {"probe": "dimension_count", "expression": "count(Dimension features after) - count(Dimension features before) == requested_dimension_count", "tolerance": 0}
+      ],
+      "silent_failures": [
+        "center-mark counters read back 0 while the marks are visibly drawn, so a counter-only gate reports a false failure",
+        "residual block definitions produce phantom dimensions in the readback"
+      ],
+      "evidence": ["knowledge_base/six_software/solidworks/automation_api.md", "memory: 工程图标注走 Extension/IDrawingDoc"]
+    }
+  ]
+}

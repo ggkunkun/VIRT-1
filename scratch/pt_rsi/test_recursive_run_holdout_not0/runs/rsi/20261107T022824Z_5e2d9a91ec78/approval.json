@@ -1,0 +1,12 @@
+{
+  "time": "2026-11-07T02:28:25.211884+00:00",
+  "reviewer": "explicit-test-reviewer",
+  "decision": "approve",
+  "approved": true,
+  "candidate_sha256": "3420b3eb0d136703c89e72ba654f4a46edc99457d075e229cf4f84e7d3001272",
+  "review_sha256": "ded5b0694914ba674e940069d8cb27fc9f3ba47cd62876890ae032a1f902532d",
+  "scope": "explicit use of this prompt policy only; no training or deployment authorized",
+  "weights_updated": false,
+  "production_changed": false,
+  "approval_sha256": "45e622f4cb255f92f1c9fc29981b07e60e8e546ced9a77e0c2c5a784b809ed72"
+}

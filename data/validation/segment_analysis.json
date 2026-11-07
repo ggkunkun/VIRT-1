@@ -1,0 +1,55 @@
+{
+  "samples": 23178,
+  "dup_samples": 4848,
+  "dup_ratio": 0.2092,
+  "baseline_tokens": 60272726,
+  "role_token": {
+    "system": 30455892,
+    "user": 20399475,
+    "assistant": 8930777
+  },
+  "role_token_pct": {
+    "system": 50.53,
+    "user": 33.85,
+    "assistant": 14.82
+  },
+  "role_count": {
+    "system": 30455892,
+    "user": 20399475,
+    "assistant": 8930777
+  },
+  "strategies": {
+    "S0_baseline": {
+      "tokens": 60272726,
+      "samples": 23178
+    },
+    "S1_dedup": {
+      "tokens": 47665850,
+      "samples": 18330
+    },
+    "S3_drop_final": {
+      "tokens": 62256108,
+      "samples": 23178
+    },
+    "S4_dedup_dropfinal_trunc600": {
+      "tokens": 52753128,
+      "samples": 23178
+    },
+    "S5_first_call_only": {
+      "tokens": 40283364,
+      "samples": 23178
+    }
+  },
+  "propagation": {
+    "samples_checked": 23152,
+    "scalar_values_total": 24652,
+    "found_in_prev_tool_response": 0,
+    "ratio": 0.0
+  },
+  "tool_response_1_len_chars": {
+    "p50": 181,
+    "p90": 183,
+    "p99": 185,
+    "max": 186
+  }
+}

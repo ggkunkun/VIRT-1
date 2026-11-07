@@ -1,0 +1,84 @@
+{
+  "generator_version": "1.0.0",
+  "seed": 20261104,
+  "target_samples": 6000,
+  "toolchain_generated": 4504,
+  "gui_generated": 3750,
+  "infeasible_refusals": 126,
+  "vision_generated": 3000,
+  "vision_eval_tasks": 2874,
+  "semantic_generated": 2250,
+  "semantic_eval_tasks": 2250,
+  "replay_tool_invalid_dropped": 202,
+  "replay_pool": 7234,
+  "quota_toolchain": {
+    "requested": 1800,
+    "available": 4500,
+    "used": 1800,
+    "dedup_dropped": 0,
+    "shortfall": 0
+  },
+  "quota_gui_trajectory": {
+    "requested": 1500,
+    "available": 3750,
+    "used": 1500,
+    "dedup_dropped": 0,
+    "shortfall": 0
+  },
+  "quota_vision_decision": {
+    "requested": 1200,
+    "available": 3000,
+    "used": 1200,
+    "dedup_dropped": 2,
+    "shortfall": 0
+  },
+  "quota_engineering_semantics": {
+    "requested": 900,
+    "available": 2250,
+    "used": 900,
+    "dedup_dropped": 0,
+    "shortfall": 0
+  },
+  "quota_replay": {
+    "requested": 600,
+    "available": 1500,
+    "used": 600,
+    "dedup_dropped": 131,
+    "shortfall": 0
+  },
+  "deduplicated": 133,
+  "physics_rejected_corpus": 0,
+  "final_train_samples": 6000,
+  "capability_distribution": {
+    "vision_decision": 1200,
+    "replay": 600,
+    "toolchain": 1800,
+    "engineering_semantics": 900,
+    "gui_trajectory": 1500
+  },
+  "dpo_pairs": 900,
+  "dpo_categories": {
+    "physics_violation": 410,
+    "suboptimal_slow": 190,
+    "ungrounded_guess": 300
+  },
+  "eval_tasks_unsampled": 5284,
+  "eval_tasks_sampling": {
+    "method": "stratified_round_robin",
+    "seed": 20268881,
+    "cap": 800,
+    "from": 5284
+  },
+  "eval_tasks": 800,
+  "eval_capability_distribution": {
+    "engineering_semantics": 320,
+    "gui_trajectory": 100,
+    "toolchain": 60,
+    "vision_decision": 320
+  },
+  "train_eval_prompt_overlap": 0,
+  "hard_holdout_overlap": 0,
+  "manifest": "D:\\Virtu模型\\engineering_capability_train\\data\\corpus_manifest.json",
+  "corpus_sha256": "b36a24e12b97519e6f57158cce86f14f0e5c4306e6c87b2b599f03f26f927015",
+  "bundle": "D:\\Virtu模型\\engineering_capability_train\\artifacts\\ect_cloud_bundle.tar.gz"
+}

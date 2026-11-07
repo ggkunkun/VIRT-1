@@ -1,0 +1,234 @@
+{
+  "report": "Virtu Engineering Capability Training - Verification Report",
+  "version": "3.0.0",
+  "generated_at": "2026-11-04T17:06:10+08:00",
+  "scope": "第二轮按建议执行：本机实际跑通数据/自检/评测链路；训练与真实 GUI 因环境硬限制熔断",
+  "environment": {
+    "gpu": "NVIDIA GeForce RTX 4050 Laptop, 6141 MiB total / 5866 MiB free",
+    "training_deps": {
+      "torch": "MISSING",
+      "peft": "MISSING",
+      "bitsandbytes": "MISSING",
+      "datasets": "MISSING",
+      "accelerate": "MISSING",
+      "transformers": "OK",
+      "tokenizers": "OK",
+      "PIL": "OK",
+      "win32gui": "OK"
+    },
+    "base_tokenizer": "checkpoints/_base_qwen3_8b (tokenizer.json + config 均存在)",
+    "ollama_openai_v1": "http://127.0.0.1:11434/v1 可用，19 个模型",
+    "bridge_8000": "UNREACHABLE",
+    "six_software_processes": "六个全部 not_running",
+    "desktop_capture": "可用，1920x1080（与 DPI 感知配置一致）",
+    "ocr_vision_bridge": "MISSING（特征树回读如实标 unverified）"
+  },
+  "executed": {
+    "full_data_prepare": {
+      "target": 6000,
+      "produced": 6000,
+      "distribution": {
+        "vision_decision": 1200,
+        "replay": 600,
+        "toolchain": 1800,
+        "engineering_semantics": 900,
+        "gui_trajectory": 1500
+      },
+      "deduplicated": 133,
+      "shortfalls": {
+        "quota_toolchain": 0,
+        "quota_gui_trajectory": 0,
+        "quota_vision_decision": 0,
+        "quota_engineering_semantics": 0,
+        "quota_replay": 0
+      },
+      "eval_tasks_unsampled": 5284,
+      "eval_tasks_final": 800,
+      "eval_sampling": {
+        "method": "stratified_round_robin",
+        "seed": 20268881,
+        "cap": 800,
+        "from": 5284
+      },
+      "dpo_pairs": 900,
+      "dpo_categories": {
+        "physics_violation": 410,
+        "suboptimal_slow": 190,
+        "ungrounded_guess": 300
+      },
+      "physics_rejected": 0,
+      "train_eval_overlap": 0,
+      "hard_holdout_overlap": 0
+    },
+    "corpus_gate": {
+      "ok": true,
+      "errors": [],
+      "warnings": [],
+      "train_rows": 6000,
+      "eval_tasks": 800,
+      "dpo_pairs": 900,
+      "physics_violations": 0,
+      "tool_call_bad": 0,
+      "schema_bad": 0
+    },
+    "cloud_bundle": {
+      "path": "artifacts/ect_cloud_bundle.tar.gz",
+      "bytes": "826326e3ff22962e188c9c8806cf3e7495d3ce83160e49cecc89d3327b8ab44e",
+      "files": 27,
+      "sha256_verified": true
+    },
+    "full_tokenizer_selftest": {
+      "selftest": "PASS",
+      "base": "D:/Virtu模型/checkpoints/_base_qwen3_8b",
+      "corpus": "D:\\Virtu模型\\engineering_capability_train\\data\\train_corpus.jsonl",
+      "corpus_sha256": "b36a24e12b97519e6f57158cce86f14f0e5c4306e6c87b2b599f03f26f927015",
+      "max_len": 2560,
+      "checked_rows": 6000,
+      "usable": 6000,
+      "bad": [],
+      "truncated": 0,
+      "truncated_rate": 0.0,
+      "loss_ratio_mean": 0.3148,
+      "loss_ratio_min": 0.0424,
+      "tokens_max": 2453,
+      "tokens_p99": 1219,
+      "mask_helper": "scripts/virtu_tokenize.py::build_example",
+      "requires_gpu": false,
+      "warnings": []
+    },
+    "cloud_launch_selftest_only": {
+      "command": "ECT_PYTHON=python VIRTU_BASE=... bash cloud/launch.sh --selftest-only",
+      "returncode": 0,
+      "steps": [
+        "GPU 体检",
+        "依赖跳过",
+        "manifest + 语料门禁",
+        "分词自检 1000 条 PASS"
+      ]
+    },
+    "online_baseline_evaluation": {
+      "model": "qwen3:8b（训练前基座对照臂，非 ECT 训练产物）",
+      "endpoint": "http://127.0.0.1:11434/v1",
+      "limit": 12,
+      "reasoning_effort": "none",
+      "n_total_records": 12,
+      "n_valid_tasks": 9,
+      "verdicts": {
+        "partial_truncated": 5,
+        "recorded_replay": 3,
+        "partial": 4
+      },
+      "metrics": {
+        "task_success_rate": 0.3333333333333333,
+        "first_attempt_success_rate": 0.3333333333333333,
+        "physics_compliance_rate": 1.0,
+        "decision_optimality_rate": 0.0,
+        "semantic_grounding_rate": 0.1984126984126984,
+        "tool_call_valid_rate": 1.0,
+        "parametric_model_valid_rate": 1.0,
+        "gui_action_valid_rate": null,
+        "error_rate": 0.3333333333333333,
+        "fatal_error_rate": 0.0,
+        "transport_error_rate": 0.0,
+        "latency_mean_s": 62.561211111111106,
+        "latency_p50_s": 91.83,
+        "latency_p95_s": 99.6742,
+        "recovery_rate": null,
+        "engineering_capability_score": 0.5388
+      },
+      "accepted": false,
+      "failed_gates": [
+        "task_success_rate_min",
+        "first_attempt_success_rate_min",
+        "decision_optimality_rate_min",
+        "semantic_grounding_rate_min",
+        "gui_action_valid_rate_min",
+        "error_rate_max",
+        "engineering_capability_score_min",
+        "min_valid_tasks"
+      ],
+      "note": "未训练基座在 1024 max_tokens 下 5 条 partial_truncated，属真实失败并计入分母；仅作训练前基线"
+    },
+    "ideal_prediction_smoke": {
+      "n_valid_tasks": 139,
+      "accepted": false,
+      "task_success_rate": 1.0,
+      "physics_compliance_rate": 1.0,
+      "decision_optimality_rate": 1.0,
+      "note": "文本类指标全 1.0，但缺真实 GUI 与耗时数据，门控正确拒绝验收"
+    },
+    "unit_tests": "21/21 OK",
+    "physics_selftest": "19/19 PASS",
+    "metrics_selftest": "PASS",
+    "cli_help": "7/7 OK",
+    "shell_syntax": "2/2 OK"
+  },
+  "circuit_breaker": {
+    "training": {
+      "status": "FUSED_NOT_ATTEMPTED",
+      "evidence": [
+        "train_sft.py rc=1: No module named torch",
+        "train_dpo.py rc=1: 缺少阶段1 SFT adapter（连锁）"
+      ],
+      "rcfa": "直接原因=缺 torch/peft/bitsandbytes/datasets/accelerate；根本原因=6GB 显存不足 8B QLoRA（4bit 基座约 5.5GB + 激活/optimizer/LoRA ≥10GB）。即使装齐依赖仍会 OOM，故不盲目安装。",
+      "resolution": "在 ≥24GB 显存的云端 GPU 执行 cloud/launch.sh（bundle 已打包并 sha256 校验）"
+    },
+    "real_gui": {
+      "status": "FUSED_NOT_ATTEMPTED",
+      "evidence": [
+        "六大软件进程全部 not_running",
+        "OCR 视觉桥缺失"
+      ],
+      "rcfa": "真实参数化建模需先启动 SOLIDWORKS 等工业软件；擅自启动会长时间占用桌面并可能弹许可对话框，需用户主动启动。读屏通道本身可用（1920x1080）。",
+      "resolution": "用户启动软件后执行 gui_task_runner.py --backend real --predictions <模型输出>"
+    }
+  },
+  "regression_fixes_this_round": [
+    "train_sft.py --selftest 改为仅依赖 tokenizer，本机无 GPU 也能做与云端同构的分词/掩码/截断率预检",
+    "launch.sh 增加 ECT_PYTHON 覆盖，使本机可用同一条命令跑 --selftest-only",
+    "evaluate.py 增加 reasoning_effort=none：实测 Ollama /v1 上 think:false 无效(18s 空输出)，reasoning_effort: none 有效(1.09s 正常 JSON)",
+    "evaluate.py stdout 输出完整结果快照（n_total_records / eval_config / verdicts / failed_gates）",
+    "生成器增加连续直径与装配工况维度，配比改为按能力先去重再取配额：6000 样本精确对齐 30/25/20/15/10，零短缺",
+    "pipeline.json 增加 max_eval_tasks=800，按能力 round-robin 分层采样（原 5284 题不可行）",
+    "bundle() 补齐 cloud/*.sh、Dockerfile、README.md（原包只有 .py+配置，云端拿到后没有开训入口）；重打包后 25 文件且语料 sha256 与前次完全一致，可复现性验证通过"
+  ],
+  "overall_conclusion": "数据链路、分词掩码、云端一键自检、在线评测链路均已在真实环境跑通；6000 条语料与 800 题评测集已可上云。训练与真实 GUI 评测因环境硬限制熔断，未执行部分绝不宣称通过。下一步：把 ect_cloud_bundle.tar.gz 放到 ≥24GB GPU 机开训，回传 adapter 后本机合并并用同一评测集做训练前后 A/B。",
+  "cloud_readiness_hardening": {
+    "purpose": "让云端脚本一上传即可零配置开训，消除\"上云后跑不起来\"的缺口",
+    "changes": [
+      "cloud/launch.sh 重写：6 步全链路（GPU体检→依赖→基座→门禁→SFT→DPO→回传），失败也打包日志",
+      "profile 选择改用 nvidia-smi 直接读卡名（V100/A100+H100/H800→对应 profile），不再依赖 torch 是否已装",
+      "依赖缺失自动安装（默认开），--no-install-deps 可关；pip 索引默认清华镜像，PIP_INDEX 可覆盖",
+      "基座自动获取 cloud/download_base.sh：VIRTU_BASE 是本地目录即用；是 HF id 或缺失则自动下载 Qwen/Qwen3-8B（HF_ENDPOINT 默认国内镜像，可覆盖）",
+      "离线集群：--no-download + 预置 VIRTU_BASE（含 config.json 的目录）",
+      "新增 03_merge_local.py：两步 delta 合并（base+SFT→M1，M1+DPO→M2），因 DPO adapter 叠在 SFT 之上，一次性合并会错位；自动校验 receipt COMPLETED/非 SMOKE_ONLY/lora_r 一致/同基座",
+      "README §3/§7 重写成零配置开训与正确合并流程"
+    ],
+    "verified_locally": {
+      "bash_syntax": "launch.sh + download_base.sh 均 bash -n 通过",
+      "download_base_local_branch": "用临时含 config.json 目录 source，正确复用不下载",
+      "download_base_fail_path": "未设 VIRTU_BASE 时正确走到下载环节（本机已中止，未真下 16GB）",
+      "merge_guard_tests": "3 项新增单测（SMOKE_ONLY 拒绝 / 缺 DPO 拒绝 / lora_r 不一致拒绝）",
+      "merge_compile": "03_merge_local.py py_compile 通过、--help 正常",
+      "unit_tests": "24/24 OK（原 21 + 新增 3）"
+    },
+    "bundle_v2": {
+      "files": 27,
+      "bytes": "826326e3ff22962e188c9c8806cf3e7495d3ce83160e49cecc89d3327b8ab44e",
+      "includes_new": [
+        "03_merge_local.py",
+        "cloud/download_base.sh",
+        "cloud/launch.sh",
+        "Dockerfile",
+        "README.md",
+        "data/train_corpus.jsonl"
+      ],
+      "sha_ok": true
+    },
+    "not_yet_executed_on_cloud": [
+      "实际开训（需在 ≥24GB 云端 GPU 执行 launch.sh；本机 6GB 显存 + 缺 torch 无法实跑）",
+      "实际合并（需 ≥16GB RAM 加载 8B 全精度；本机 6GB 显存不足，逻辑与门禁已测）"
+    ],
+    "note": "这些脚本的语法/逻辑/门禁已在本机验证；真正的 SFT/DPO 开训与合并仍需在满足条件的机器执行，未执行部分不宣称通过"
+  }
+}

@@ -1,0 +1,179 @@
+{
+  "meta": {
+    "name": "virtu_domain_ab",
+    "created": "2026-11-06",
+    "basis": "measured",
+    "scoring": "每个用例给出若干必答点（any-of 组），命中组数/组总数 = 该题得分；violations 里出现的扣 1 组（不低于 0）。全程同一判分器。",
+    "note": "关键词判分是粗粒度代理指标，不能替代人工/Grader 模型评审；用于同尺 A/B 的相对比较。"
+  },
+  "cases": [
+    {
+      "id": "g71_ur",
+      "cat": "gcode",
+      "q": "FANUC 车削 G71 复合粗车循环中，第一行 G71 U_ R_ 里的 U 和 R 分别表示什么？F 又表示什么？",
+      "must": [["背吃刀", "切削深度", "径向切深", "每次切深"], ["退刀", "退让"], ["进给"]],
+      "violations": [["U 是精车余量", "U表示精车余量"]]
+    },
+    {
+      "id": "g83_q",
+      "cat": "gcode",
+      "q": "FANUC 钻孔循环 G83 中 Q 和 R 的含义是什么？与 G81 的核心区别？",
+      "must": [["每次", "啄", "分层"], ["R 平面", "R点", "参考平面", "退刀平面"], ["断屑", "排屑", "啄钻"]],
+      "violations": [["G81 有啄钻", "G81 分层"]]
+    },
+    {
+      "id": "g84_tap",
+      "cat": "gcode",
+      "q": "刚性攻丝 G84 在 FANUC 上的进给 F 应如何计算？与主轴转速什么关系？",
+      "must": [["螺距", "导程"], ["转速", "S"], ["F = S", "F=S", "乘积", "乘以"]],
+      "violations": []
+    },
+    {
+      "id": "spindle_formula",
+      "cat": "formula",
+      "q": "车削中已知切削速度 Vc=120 m/min、工件直径 D=16 mm，求主轴转速 n。写出公式并给出数值。",
+      "must": [["1000", "1000*Vc", "1000×Vc"], ["π", "3.14"], ["2387", "2388", "2390", "2.39e3"]],
+      "violations": []
+    },
+    {
+      "id": "feed_formula",
+      "cat": "formula",
+      "q": "铣削中每齿进给 fz=0.1 mm/z、齿数 z=4、主轴转速 n=3000 r/min，求进给速度 Vf（mm/min）。",
+      "must": [["1200"], ["fz", "每齿"], ["n", "转速"]],
+      "violations": []
+    },
+    {
+      "id": "lame",
+      "cat": "mechanics",
+      "q": "厚壁圆筒受内压 p，内径 a、外径 b。写出 Lamé 解的径向应力与环向应力公式，并说明最大应力位置。",
+      "must": [["b²", "b^2"], ["r²", "r^2"], ["内壁", "r=a", "r = a"]],
+      "violations": [["外壁应力最大", "外表面最大"]]
+    },
+    {
+      "id": "fos",
+      "cat": "mechanics",
+      "q": "某零件 von Mises 等效应力 180 MPa，材料屈服强度 300 MPa，安全系数是多少？按 FOS≥1.5 判据是否合格？",
+      "must": [["1.6", "1.67", "1.7"], ["合格", "通过", "满足"]],
+      "violations": []
+    },
+    {
+      "id": "h7g6",
+      "cat": "tolerance",
+      "q": "配合标注 Φ40 H7/g6 中，H7 和 g6 分别属于什么配合制？是间隙配合还是过盈配合？",
+      "must": [["基孔制", "基孔"], ["间隙"], ["g6", "轴"]],
+      "violations": [["过盈配合", "基轴制"]]
+    },
+    {
+      "id": "sw_extrude_api",
+      "cat": "cad",
+      "q": "SolidWorks API 中创建拉伸凸台特征的方法名是什么？它属于哪个对象？",
+      "must": [["FeatureExtrusion", "FeatureExtrusion2", "FeatureExtrusion3"], ["FeatureManager"]],
+      "violations": []
+    },
+    {
+      "id": "sw_sketch",
+      "cat": "cad",
+      "q": "SolidWorks API 中在选中面上插入草图并进入编辑，通常要调用哪两个方法？",
+      "must": [["InsertSketch", "SketchManager"], ["SelectByID", "SelectByID2", "选中面"]],
+      "violations": []
+    },
+    {
+      "id": "nx_journal",
+      "cat": "cad",
+      "q": "Siemens NX Open 中创建一个圆柱体，用 Python 应调用哪个模块/类？给出关键 API 名。",
+      "must": [["NXOpen", "UF_MODL", "UFModl"], ["CreateCylinder", "CreateCyl", "Block", "圆柱"]],
+      "violations": []
+    },
+    {
+      "id": "autocad_layer",
+      "cat": "cad",
+      "q": "AutoCAD 制图中，轮廓线、尺寸标注、中心线、剖面线通常分别放在哪些标准图层？",
+      "must": [["OUTLINE", "轮廓"], ["DIM", "标注"], ["CENTER", "中心"], ["HATCH", "剖面", "填充"]],
+      "violations": []
+    },
+    {
+      "id": "vericut_colors",
+      "cat": "cam",
+      "q": "VERICUT Auto-Diff 色差图中，红色和蓝色分别代表什么？哪个是致命问题？",
+      "must": [["过切", "切多"], ["残料", "未切到", "余料"], ["红", "红色"]],
+      "violations": [["蓝色致命", "蓝色是致命"]]
+    },
+    {
+      "id": "g00_safety",
+      "cat": "cam",
+      "q": "数控程序中 G00 快速定位的主要碰撞风险是什么？编程时应如何规避？",
+      "must": [["撞", "干涉", "过切"], ["安全高度", "抬刀", "Z 向", "Z向"], ["G01", "进给", "先下刀"]],
+      "violations": []
+    },
+    {
+      "id": "gcode_modal",
+      "cat": "gcode",
+      "q": "FANUC 中 G90 与 G91 的区别？它们属于哪一类代码（模态/非模态）？",
+      "must": [["绝对", "绝对坐标"], ["增量", "相对"], ["模态"]],
+      "violations": []
+    },
+    {
+      "id": "tool_choice",
+      "cat": "process",
+      "q": "加工 45 钢的深型腔（深宽比 4:1），立铣刀伸出过长会有什么问题？应如何改善？",
+      "must": [["让刀", "变形", "振动", "颤振"], ["缩短", "悬伸", "刚性"], ["分层", "小切深", "高速"]],
+      "violations": []
+    },
+    {
+      "id": "surface_rough",
+      "cat": "process",
+      "q": "车削表面粗糙度 Ra 与进给量 f 和刀尖圆弧半径 r 的近似关系式是什么？",
+      "must": [["f²", "f^2"], ["8", "8r"], ["r", "圆弧半径"]],
+      "violations": []
+    },
+    {
+      "id": "thread_depth",
+      "cat": "process",
+      "q": "公制普通螺纹 M10×1.5 的车削牙深（单边）大约是多少？如何估算？",
+      "must": [["0.6495", "0.65", "0.54"], ["螺距", "P"], ["1.5"]],
+      "violations": []
+    },
+    {
+      "id": "gcode_g28",
+      "cat": "gcode",
+      "q": "G28 指令的作用是什么？执行时有什么必须注意的安全事项？",
+      "must": [["参考点", "回零", "原点"], ["中间点", "中间位置"], ["撞", "干涉", "安全"]],
+      "violations": []
+    },
+    {
+      "id": "macro_b",
+      "cat": "gcode",
+      "q": "FANUC Macro B 中 #100 与 #500 变量在断电后是否保留？循环语句怎么写？",
+      "must": [["#100", "局部", "不保留", "清零"], ["#500", "保持", "保留"], ["WHILE", "DO", "END"]],
+      "violations": []
+    },
+    {
+      "id": "gd_t_flat",
+      "cat": "tolerance",
+      "q": "平面度公差 0.02 与平行度公差 0.02 的区别是什么？哪个更严格？",
+      "must": [["形状", "自身"], ["方向", "基准"], ["平行度", "更严"]],
+      "violations": []
+    },
+    {
+      "id": "heat_treat",
+      "cat": "material",
+      "q": "45 钢调质处理的目的和典型硬度范围是什么？",
+      "must": [["综合力学", "强韧", "强度和韧性"], ["淬火", "高温回火"], ["220", "250", "HRC 2", "HB"]],
+      "violations": []
+    },
+    {
+      "id": "chatter",
+      "cat": "process",
+      "q": "铣削中出现颤振，从刀具、工件、参数三方面各给一条抑制措施。",
+      "must": [["刀具", "齿数", "悬伸"], ["工件", "夹紧", "支撑"], ["转速", "切深", "进给"]],
+      "violations": []
+    },
+    {
+      "id": "gcode_units",
+      "cat": "gcode",
+      "q": "G21 与 G20 分别代表什么单位制？切换单位时程序里哪些值需要重新核对？",
+      "must": [["毫米", "mm"], ["英寸", "inch"], ["进给", "坐标", "F"]],
+      "violations": []
+    }
+  ]
+}

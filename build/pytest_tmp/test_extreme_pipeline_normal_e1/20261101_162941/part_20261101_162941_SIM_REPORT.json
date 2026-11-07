@@ -1,0 +1,10 @@
+{
+  "part_name": "part_20261101_162941",
+  "material": "Cr12MoV",
+  "yield_strength_mpa": 850.0,
+  "von_mises_stress_mpa": 74.54,
+  "factor_of_safety": 11.4,
+  "fos_threshold": 1.5,
+  "g00_rapid_collisions_found": 0,
+  "status": "passed"
+}

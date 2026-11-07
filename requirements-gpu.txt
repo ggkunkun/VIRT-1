@@ -1,0 +1,20 @@
+# GPU 训练机依赖（与平台 Ollama 镜像对齐：PyTorch 2.5.0 / CUDA 12.4 / Python 3.11）
+# 说明：本机 requirements.txt 只用于推理服务；训练必须在 GPU 实例上另装以下依赖。
+# 版本约束理由：
+#   transformers >= 4.51    Qwen3 模型类从该版本起才被支持
+#   torch 2.5.0+cu124       与镜像自带一致，flash-attn 预编译 wheel 严格绑定 torch/CUDA/py ABI
+#   flash-attn 2.7.4.post1  有 cu12/torch2.5/py3.11 的 manylinux 预编译 wheel
+torch==2.5.0
+transformers>=4.51.0
+datasets>=3.0.0
+accelerate>=1.0.0
+peft>=0.14.0
+bitsandbytes>=0.45.0
+# flash-attn 必须单独装（需要 --no-build-isolation，且要匹配上面的 torch 版本）
+# pip install flash-attn==2.7.4.post1 --no-build-isolation
+flash-attn==2.7.4.post1
+sentencepiece
+protobuf
+safetensors
+huggingface-hub
+modelscope

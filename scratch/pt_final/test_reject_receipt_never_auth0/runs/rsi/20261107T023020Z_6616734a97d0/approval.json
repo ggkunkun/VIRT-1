@@ -1,0 +1,12 @@
+{
+  "time": "2026-11-07T02:30:21.271368+00:00",
+  "reviewer": "tester",
+  "decision": "reject",
+  "approved": false,
+  "candidate_sha256": "3420b3eb0d136703c89e72ba654f4a46edc99457d075e229cf4f84e7d3001272",
+  "review_sha256": "fd5be6dec8cc7f6a1223d633bc6529d78300a44f10a174510200c15cecd6ab6d",
+  "scope": "explicit use of this prompt policy only; no training or deployment authorized",
+  "weights_updated": false,
+  "production_changed": false,
+  "approval_sha256": "7e8129a29729e6b12da6912fb1a54cb027a1ba4ea8631c1c8ba6843ac5b2be41"
+}

@@ -19,6 +19,8 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
+from virtu_omni.errors import ModelError, FEAT_TOKENIZER_ARG
+
 # Ensure VIRTU source root in path for Virtu neural architecture definition
 CANDIDATE_PATHS = [
     Path(r"D:\ent_build\Virtu"),
@@ -84,15 +86,34 @@ class StandardizedSmeltTokenizer:
 
     def encode(self, text: str, max_length: int = 60, add_special_tokens: bool = True) -> Tuple[torch.Tensor, torch.Tensor]:
         """Encode text to padded token tensor and boolean attention mask."""
+        if not isinstance(text, str):
+            raise ModelError(
+                FEAT_TOKENIZER_ARG,
+                f"Expected str input, got {type(text).__name__}",
+                hint="Coerce the prompt to text before tokenising.",
+                context={"type": type(text).__name__},
+            )
+        if max_length < 1:
+            raise ModelError(
+                FEAT_TOKENIZER_ARG,
+                f"max_length must be >= 1, got {max_length}",
+                hint="Use a positive sequence budget.",
+                context={"max_length": max_length},
+            )
+
         tokens = []
         if add_special_tokens:
             tokens.append(BOS_ID)
 
-        # Tokenize by char/subword
-        for ch in text:
-            tokens.append(self.stoi.get(ch, UNK_ID))
-
-        if add_special_tokens and len(tokens) < max_length:
+        # Tokenize by char/subword. Reserve room for the EOS id so that a
+        # truncated sequence still ends with an explicit boundary token instead
+        # of silently dropping it (the model then never learns to stop).
+        body_budget = max_length - (2 if add_special_tokens else 0)
+        if body_budget < 0:
+            body_budget = 0
+        body = [self.stoi.get(ch, UNK_ID) for ch in text][:body_budget]
+        tokens.extend(body)
+        if add_special_tokens:
             tokens.append(EOS_ID)
 
         # Truncate or pad to max_length
@@ -108,12 +129,14 @@ class StandardizedSmeltTokenizer:
     def decode(self, token_ids: Union[List[int], torch.Tensor]) -> str:
         """Decode token sequence back to text string."""
         if isinstance(token_ids, torch.Tensor):
-            token_ids = token_ids.squeeze().tolist()
+            # Flattening (rather than squeeze) keeps single-token batches list-like:
+            # squeeze() collapsed [1, 1] to a 0-d scalar and raised TypeError on iter.
+            token_ids = token_ids.reshape(-1).tolist()
         words = []
         for tid in token_ids:
             if tid in (PAD_ID, BOS_ID, EOS_ID):
                 continue
-            words.append(self.itos.get(tid, "<unk>"))
+            words.append(self.itos.get(int(tid), "<unk>"))
         return "".join(words)
 
 

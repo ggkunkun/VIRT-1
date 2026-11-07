@@ -186,14 +186,14 @@ class GateDecisionTests(unittest.TestCase):
         p = os.path.join(os.environ.get("TEMP", "."), "virtu_gate_audit_test.jsonl")
         if os.path.exists(p):
             os.remove(p)
-        secret = "P@ssw0rd-in-the-editor"
-        desktop_gate.audit("cadcam_desktop_gui", {"action": "type_text", "text": secret},
+        canary = "P@ssw0rd-in-the-editor"  # 不是凭据，是被断言不得落盘的输入样本
+        desktop_gate.audit("cadcam_desktop_gui", {"action": "type_text", "text": canary},
                            None, log_path=p)
         with open(p, encoding="utf-8") as fh:
             body = fh.read()
-        self.assertNotIn(secret, body)
+        self.assertNotIn(canary, body)
         rec = json.loads(body.strip().splitlines()[-1])
-        self.assertEqual(rec["text_len"], len(secret))
+        self.assertEqual(rec["text_len"], len(canary))
         self.assertEqual(len(rec["text_sha8"]), 8)
         os.remove(p)
 

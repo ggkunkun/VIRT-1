@@ -1,0 +1,122 @@
+{
+  "timestamp": "2026-11-07 12:59:38",
+  "basis": "measured",
+  "models": {
+    "baseline": "virtu-moe-14b:latest",
+    "semantic": "virtu-moe-14b:semantic"
+  },
+  "cases": [
+    {
+      "case_id": "CASE_1_G71_SEMANTICS",
+      "category": "CNC机加工与工艺语义",
+      "prompt": "简述数控车削循环指令 G71 中 U、R 和 F 参数的具体含义与作用，请直接列出各参数说明。",
+      "baseline": {
+        "response_preview": "<think>\n\n</think>\n\n{\n    \"G71\": {\n        \"U\": {\n            \"名称\": \"切削深度\",\n            \"单位\": \"mm\"\n        },\n        \"R\": {\n            \"名称\": \"退刀距离\",\n            \"单位\": \"mm\"\n        },\n        \"F\": {\n ",
+        "evaluation": {
+          "eval_count": 86,
+          "tok_per_sec": 6.39,
+          "wall_clock_sec": 14.47,
+          "has_cosplay": false,
+          "has_empty_think": false,
+          "content_pass": true,
+          "score": 100.0,
+          "details": [
+            "U=True, R=True, F=True"
+          ]
+        }
+      },
+      "semantic": {
+        "response_preview": "- **G71 U(Δd)**: 设定每次循环切削的单边背吃刀量（即切削深度），以半径形式表示（如 Δd=2 表示总切削深度为 4 mm）。该参数决定了每一轮粗车时材料被移除的厚度。\n- **G71 R(e)**: 设置退刀距离 e，在完成一次切削循环后，主轴会沿 Z 轴方向移动 e 的距离进行空走退刀，避免在工件表面留下划痕或损伤。\n- **G70 F(f)**: 在 G71 循环中指定的第二行",
+        "evaluation": {
+          "eval_count": 182,
+          "tok_per_sec": 6.64,
+          "wall_clock_sec": 62.2,
+          "has_cosplay": false,
+          "has_empty_think": false,
+          "content_pass": true,
+          "score": 100.0,
+          "details": [
+            "U=True, R=True, F=True"
+          ]
+        }
+      }
+    },
+    {
+      "case_id": "CASE_2_CUTTING_PHYSICS",
+      "category": "物理公式推导与确定性数值",
+      "prompt": "车削直径 D=25 mm 的 45 钢轴，推荐切削线速度 Vc=120 m/min。请写出主轴转速 n 的标准计算公式并算出转速值（保留整数，单位 r/min）。",
+      "baseline": {
+        "response_preview": "<think>\n\n</think>\n\n```json\n{\n    \"standard_formula\": \"n = (V_c * 1000) / (π * D)\",\n    \"calculated_value\": {\n        \"unit\": \"r/min\",\n        \"value\": 1528\n    }\n}\n```\n\n**G 代码示例（FANUC 控制器）：**\n```gcode",
+        "evaluation": {
+          "eval_count": 194,
+          "tok_per_sec": 5.22,
+          "wall_clock_sec": 61.93,
+          "has_cosplay": false,
+          "has_empty_think": false,
+          "content_pass": true,
+          "score": 100.0,
+          "details": [
+            "Formula=True, ExactNum=True ([1000, 1528]), Unit=True"
+          ]
+        }
+      },
+      "semantic": {
+        "response_preview": "根据主轴转速公式 $ n = \\frac{1000 \\times V_c}{\\pi \\times D} $：\n\n- 切削线速度 $ V_c = 120 \\, \\text{m/min} $\n- 工件外径 $ D = 25 \\, \\text{mm} $\n\n代入数值得：\n$$\nn = \\frac{1000 \\times 120}{3.141592653589793 \\times 25} \\approx ",
+        "evaluation": {
+          "eval_count": 176,
+          "tok_per_sec": 5.91,
+          "wall_clock_sec": 57.6,
+          "has_cosplay": false,
+          "has_empty_think": false,
+          "content_pass": true,
+          "score": 100.0,
+          "details": [
+            "Formula=True, ExactNum=True ([1000, 1000, 1528, 1529]), Unit=True"
+          ]
+        }
+      }
+    },
+    {
+      "case_id": "CASE_3_CAD_TOOLCALL",
+      "category": "CAD 建模意图与结构化工具调用",
+      "prompt": "需要通过 SolidWorks 创建一块长 120mm、宽 80mm、厚度 15mm 的基础底板零件。请直接输出标准工具调用 JSON 或操作方案。",
+      "baseline": {
+        "response_preview": "<think>\n\n</think>\n\n```json\n{\n    \"tool\": \"SolidWorks\",\n    \"operation\": {\n        \"type\": \"FeatureManagerDesign\",\n        \"parameters\": {\n            \"BaseFeatureType\": \"Extrusion\",\n            \"Sketc",
+        "evaluation": {
+          "eval_count": 196,
+          "tok_per_sec": 5.59,
+          "wall_clock_sec": 67.85,
+          "has_cosplay": false,
+          "has_empty_think": false,
+          "content_pass": true,
+          "score": 100.0,
+          "details": [
+            "DimsMatch=3/3, FeatMatch=True"
+          ]
+        }
+      },
+      "semantic": {
+        "response_preview": "收到设计需求：创建尺寸为 120x80x15mm 的矩形实体零件。\n工具选择：SOLIDWORKS 2021 新建零件 > 空白草图 > 完全定义约束。\n操作步骤已封装至 tool_call，请确认是否执行。\n```json\n{\n    \"tool\": \"solidworks_2021\",\n    \"action\": \"create_part\",\n    \"parameters\": {\n     ",
+        "evaluation": {
+          "eval_count": 145,
+          "tok_per_sec": 5.46,
+          "wall_clock_sec": 68.91,
+          "has_cosplay": false,
+          "has_empty_think": false,
+          "content_pass": true,
+          "score": 100.0,
+          "details": [
+            "DimsMatch=3/3, FeatMatch=True"
+          ]
+        }
+      }
+    }
+  ],
+  "summary": {
+    "baseline_mean_score": 100.0,
+    "semantic_mean_score": 100.0,
+    "delta_score": 0.0,
+    "baseline_mean_speed": 5.73,
+    "semantic_mean_speed": 6.0
+  }
+}

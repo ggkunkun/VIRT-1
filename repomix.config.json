@@ -1,0 +1,58 @@
+{
+  "output": {
+    "filePath": "scratch/repomix-output.xml",
+    "style": "xml",
+    "parsableStyle": true,
+    "compress": true,
+    "fileSummary": true,
+    "directoryStructure": true,
+    "removeComments": false,
+    "removeEmptyLines": true,
+    "topFilesLength": 10,
+    "showLineNumbers": true
+  },
+  "include": [
+    "bridges/**/*.py",
+    "virtu_code/**/*.py",
+    "virtu_eval/**/*.py",
+    "virtu_omni/**/*.py",
+    "scripts/**/*.py",
+    "tests/**/*.py",
+    "*.py",
+    "*.md",
+    "*.json"
+  ],
+  "ignore": {
+    "useGitignore": true,
+    "useDefaultPatterns": true,
+    "customPatterns": [
+      ".venv/**",
+      "models/**",
+      "checkpoints/**",
+      "runs/**",
+      "scratch/**",
+      "damodel_cad_cam_tuning/**",
+      "gpu_handoff/**",
+      "data/**",
+      "*.pt",
+      "*.pth",
+      "*.bin",
+      "*.safetensors",
+      "*.SLDPRT",
+      "*.SLDASM",
+      "*.SLDDRW",
+      "*.dwg",
+      "*.dxf",
+      "*.png",
+      "*.jpg",
+      "*.zip",
+      "*.tar.gz"
+    ]
+  },
+  "security": {
+    "enableSecurityCheck": true
+  },
+  "tokenCount": {
+    "encoding": "o200k_base"
+  }
+}

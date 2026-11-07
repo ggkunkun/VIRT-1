@@ -1,0 +1,376 @@
+{
+  "run_id": "bc33a1479c48f789",
+  "generated_at": "2026-11-06T20:13:50",
+  "basis": "measured",
+  "evidence": "本报告由 bridges/batch_scan.py 实跑 StepBOM 生成；每个文件带 sha256 内容指纹，可复现",
+  "tool": "bridges.step_bom.StepBOM",
+  "scanned_dirs": [
+    "assets",
+    "artifacts/cad_demo",
+    "external/AgentCADCAM/fixtures/cad/bracket/source",
+    "external/Pythonocc-vericut/examples/assets/models",
+    "external/Pythonocc-vericut/python3.7/Library/lib/share/netgen"
+  ],
+  "sample_size_n": 16,
+  "ok_count": 16,
+  "error_count": 0,
+  "ok_no_solids_count": 1,
+  "pass_rate": 1.0,
+  "ap_distribution": {
+    "AP214": 14,
+    "AP203": 2
+  },
+  "encoding_distribution": {
+    "utf-8": 14,
+    "gbk": 2
+  },
+  "assembly_vs_single": {
+    "assembly": 1,
+    "single_part": 15
+  },
+  "total_entities": 294682,
+  "total_solids": 81,
+  "total_faces": 2857,
+  "total_source_bytes": 21228236,
+  "total_bom_bytes": 3591,
+  "compression_ratio_overall": 5911.5,
+  "records": [
+    {
+      "path": "artifacts/cad_demo/precision_flange.step",
+      "file": "precision_flange.step",
+      "bytes": 39921,
+      "sha256": "8e4a2f1eda5458c1d90ed3b622a636069e865d73a2357e999a020b542200f1e2",
+      "status": "ok",
+      "ap_version": "AP214",
+      "encoding": "utf-8",
+      "is_assembly": false,
+      "entity_count": 892,
+      "product_count": 1,
+      "component_count": 0,
+      "root_names": [
+        "COMPOUND"
+      ],
+      "total_solids": 1,
+      "total_faces": 15,
+      "bom_bytes": 170,
+      "compression_ratio": 234.8,
+      "elapsed_ms": 113.3
+    },
+    {
+      "path": "assets/bearing_bracket.step",
+      "file": "bearing_bracket.step",
+      "bytes": 112052,
+      "sha256": "cbedc6d4a90b3e53b575aa7b997ed153f4517150af701019df8163ba1d37f2ba",
+      "status": "ok",
+      "ap_version": "AP214",
+      "encoding": "utf-8",
+      "is_assembly": false,
+      "entity_count": 2268,
+      "product_count": 1,
+      "component_count": 0,
+      "root_names": [
+        "COMPOUND"
+      ],
+      "total_solids": 1,
+      "total_faces": 29,
+      "bom_bytes": 163,
+      "compression_ratio": 687.4,
+      "elapsed_ms": 192.63
+    },
+    {
+      "path": "assets/guide_carriage_base.step",
+      "file": "guide_carriage_base.step",
+      "bytes": 44125,
+      "sha256": "2ad2a898c6cb5f8798191ca019db171fca429c130d5d906a3d830ab7c3a53817",
+      "status": "ok",
+      "ap_version": "AP214",
+      "encoding": "utf-8",
+      "is_assembly": false,
+      "entity_count": 986,
+      "product_count": 1,
+      "component_count": 0,
+      "root_names": [
+        "COMPOUND"
+      ],
+      "total_solids": 1,
+      "total_faces": 14,
+      "bom_bytes": 167,
+      "compression_ratio": 264.2,
+      "elapsed_ms": 38.93
+    },
+    {
+      "path": "assets/hydraulic_end_cap.step",
+      "file": "hydraulic_end_cap.step",
+      "bytes": 40172,
+      "sha256": "bb82e6a1bc5275b8e8d750e9b41e386e8db11359aecf96b0db66cd4b34715356",
+      "status": "ok",
+      "ap_version": "AP214",
+      "encoding": "utf-8",
+      "is_assembly": false,
+      "entity_count": 904,
+      "product_count": 1,
+      "component_count": 0,
+      "root_names": [
+        "COMPOUND"
+      ],
+      "total_solids": 1,
+      "total_faces": 17,
+      "bom_bytes": 165,
+      "compression_ratio": 243.5,
+      "elapsed_ms": 20.38
+    },
+    {
+      "path": "assets/impeller_disc.step",
+      "file": "impeller_disc.step",
+      "bytes": 24091,
+      "sha256": "f4caef9528f421f87b1a26802b5110a96fad9481adc5491c0dd069a769adad41",
+      "status": "ok",
+      "ap_version": "AP214",
+      "encoding": "utf-8",
+      "is_assembly": false,
+      "entity_count": 516,
+      "product_count": 1,
+      "component_count": 0,
+      "root_names": [
+        "COMPOUND"
+      ],
+      "total_solids": 1,
+      "total_faces": 9,
+      "bom_bytes": 157,
+      "compression_ratio": 153.4,
+      "elapsed_ms": 18.89
+    },
+    {
+      "path": "assets/mold_core_mandrel.step",
+      "file": "mold_core_mandrel.step",
+      "bytes": 40803,
+      "sha256": "5a65ad177c86ae0ee0362d04a8613fb9e955d4175af3bc28cfb42f7f20bc8aa8",
+      "status": "ok",
+      "ap_version": "AP214",
+      "encoding": "utf-8",
+      "is_assembly": false,
+      "entity_count": 936,
+      "product_count": 1,
+      "component_count": 0,
+      "root_names": [
+        "COMPOUND"
+      ],
+      "total_solids": 1,
+      "total_faces": 19,
+      "bom_bytes": 161,
+      "compression_ratio": 253.4,
+      "elapsed_ms": 34.7
+    },
+    {
+      "path": "assets/precision_flange.step",
+      "file": "precision_flange.step",
+      "bytes": 39921,
+      "sha256": "8e4a2f1eda5458c1d90ed3b622a636069e865d73a2357e999a020b542200f1e2",
+      "status": "ok",
+      "ap_version": "AP214",
+      "encoding": "utf-8",
+      "is_assembly": false,
+      "entity_count": 892,
+      "product_count": 1,
+      "component_count": 0,
+      "root_names": [
+        "COMPOUND"
+      ],
+      "total_solids": 1,
+      "total_faces": 15,
+      "bom_bytes": 170,
+      "compression_ratio": 234.8,
+      "elapsed_ms": 38.35
+    },
+    {
+      "path": "assets/spindle_bushing.step",
+      "file": "spindle_bushing.step",
+      "bytes": 11793,
+      "sha256": "e138fdf3993ceedd4514205a1caf0d129f5531db05772e29e6fae0f6296f5d5b",
+      "status": "ok",
+      "ap_version": "AP214",
+      "encoding": "utf-8",
+      "is_assembly": false,
+      "entity_count": 257,
+      "product_count": 1,
+      "component_count": 0,
+      "root_names": [
+        "COMPOUND"
+      ],
+      "total_solids": 1,
+      "total_faces": 5,
+      "bom_bytes": 159,
+      "compression_ratio": 74.2,
+      "elapsed_ms": 11.22
+    },
+    {
+      "path": "assets/stepped_shaft.step",
+      "file": "stepped_shaft.step",
+      "bytes": 32201,
+      "sha256": "8bdaf55deff0d1055a32734e399360b66d55e5dbcdd7fc01703593ca109c77c2",
+      "status": "ok",
+      "ap_version": "AP214",
+      "encoding": "utf-8",
+      "is_assembly": false,
+      "entity_count": 712,
+      "product_count": 1,
+      "component_count": 0,
+      "root_names": [
+        "COMPOUND"
+      ],
+      "total_solids": 1,
+      "total_faces": 14,
+      "bom_bytes": 162,
+      "compression_ratio": 198.8,
+      "elapsed_ms": 25.62
+    },
+    {
+      "path": "assets/valve_sleeve.step",
+      "file": "valve_sleeve.step",
+      "bytes": 127910,
+      "sha256": "6bf874fd3e3375ab58ab4ef3ed183bbd2c28770dfef3a194e6a05fabd1eaac4f",
+      "status": "ok",
+      "ap_version": "AP214",
+      "encoding": "utf-8",
+      "is_assembly": false,
+      "entity_count": 1933,
+      "product_count": 1,
+      "component_count": 0,
+      "root_names": [
+        "COMPOUND"
+      ],
+      "total_solids": 1,
+      "total_faces": 20,
+      "bom_bytes": 164,
+      "compression_ratio": 779.9,
+      "elapsed_ms": 158.64
+    },
+    {
+      "path": "assets/wheel_mold_P0.step",
+      "file": "wheel_mold_P0.step",
+      "bytes": 587686,
+      "sha256": "712e8ac66f6456f4dc74ab26294af042701a82d1c1f04e45b085b61e36bc9f7c",
+      "status": "ok",
+      "ap_version": "AP203",
+      "encoding": "gbk",
+      "is_assembly": true,
+      "entity_count": 7690,
+      "product_count": 5,
+      "component_count": 4,
+      "root_names": [
+        "微型机轮模总成(P0) 6R15-6R12-6R10"
+      ],
+      "total_solids": 6,
+      "total_faces": 226,
+      "bom_bytes": 759,
+      "compression_ratio": 774.3,
+      "elapsed_ms": 878.15
+    },
+    {
+      "path": "external/AgentCADCAM/fixtures/cad/bracket/source/bracket.step",
+      "file": "bracket.step",
+      "bytes": 36571,
+      "sha256": "fdd8e0913447b127b4734b9f090235051c3fc63ec841be05b9ac496f63dd6acd",
+      "status": "ok",
+      "ap_version": "AP214",
+      "encoding": "utf-8",
+      "is_assembly": false,
+      "entity_count": 840,
+      "product_count": 1,
+      "component_count": 0,
+      "root_names": [
+        "Open CASCADE STEP translator 7.9 1"
+      ],
+      "total_solids": 1,
+      "total_faces": 12,
+      "bom_bytes": 179,
+      "compression_ratio": 204.3,
+      "elapsed_ms": 23.71
+    },
+    {
+      "path": "external/Pythonocc-vericut/examples/assets/models/0 1.STEP",
+      "file": "0 1.STEP",
+      "bytes": 2188,
+      "sha256": "9037fdb3139ece27fbfcbaf3f558b6fcd6f67cc097e3ebd5434b9f421cbdfe26",
+      "status": "ok_no_solids",
+      "ap_version": "AP214",
+      "encoding": "gbk",
+      "is_assembly": false,
+      "entity_count": 26,
+      "product_count": 2,
+      "component_count": 0,
+      "root_names": [
+        "0 1",
+        "0 1"
+      ],
+      "total_solids": 0,
+      "total_faces": 0,
+      "bom_bytes": 147,
+      "compression_ratio": 14.9,
+      "elapsed_ms": 2.84
+    },
+    {
+      "path": "external/Pythonocc-vericut/examples/assets/models/72.step",
+      "file": "72.step",
+      "bytes": 19502964,
+      "sha256": "0569b375b312546d3f9c0e235c8aaa2528affcc88ce11ead53bc6a41da822009",
+      "status": "ok",
+      "ap_version": "AP214",
+      "encoding": "utf-8",
+      "is_assembly": false,
+      "entity_count": 262989,
+      "product_count": 1,
+      "component_count": 0,
+      "root_names": [
+        "Admi2860BBABl3f5"
+      ],
+      "total_solids": 62,
+      "total_faces": 2077,
+      "bom_bytes": 529,
+      "compression_ratio": 36867.6,
+      "elapsed_ms": 19098.04
+    },
+    {
+      "path": "external/Pythonocc-vericut/python3.7/Library/lib/share/netgen/frame.step",
+      "file": "frame.step",
+      "bytes": 495592,
+      "sha256": "9b227cbdc5b922aaedba6e2c2a482a8f0799bdf8e55b0e82fefc35350ad12d45",
+      "status": "ok",
+      "ap_version": "AP203",
+      "encoding": "utf-8",
+      "is_assembly": false,
+      "entity_count": 11602,
+      "product_count": 1,
+      "component_count": 0,
+      "root_names": [
+        "PROESOURCE"
+      ],
+      "total_solids": 1,
+      "total_faces": 375,
+      "bom_bytes": 160,
+      "compression_ratio": 3097.4,
+      "elapsed_ms": 4093.68
+    },
+    {
+      "path": "external/Pythonocc-vericut/python3.7/Library/lib/share/netgen/screw.step",
+      "file": "screw.step",
+      "bytes": 90246,
+      "sha256": "c48cf7bf04b9d5389a2b9459514f9f913a78fb251a4d8cfcc2f03c84ca978869",
+      "status": "ok",
+      "ap_version": "AP214",
+      "encoding": "utf-8",
+      "is_assembly": false,
+      "entity_count": 1239,
+      "product_count": 1,
+      "component_count": 0,
+      "root_names": [
+        "the product name"
+      ],
+      "total_solids": 1,
+      "total_faces": 10,
+      "bom_bytes": 179,
+      "compression_ratio": 504.2,
+      "elapsed_ms": 46.9
+    }
+  ]
+}

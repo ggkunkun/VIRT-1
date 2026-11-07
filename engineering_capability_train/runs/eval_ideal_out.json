@@ -1,0 +1,112 @@
+{
+  "run_dir": "D:\\Virtu模型\\engineering_capability_train\\runs\\eval_20261104_155815_6804",
+  "accepted": false,
+  "evaluation_valid": true,
+  "n_valid_tasks": 139,
+  "metrics": {
+    "task_success_rate": 1.0,
+    "first_attempt_success_rate": 1.0,
+    "physics_compliance_rate": 1.0,
+    "decision_optimality_rate": 1.0,
+    "semantic_grounding_rate": 1.0,
+    "tool_call_valid_rate": 1.0,
+    "parametric_model_valid_rate": 1.0,
+    "gui_action_valid_rate": null,
+    "error_rate": 0.0,
+    "fatal_error_rate": 0.0,
+    "transport_error_rate": 0.0,
+    "latency_mean_s": null,
+    "latency_p50_s": null,
+    "latency_p95_s": null,
+    "recovery_rate": null,
+    "engineering_capability_score": 1.0
+  },
+  "gate_checks": [
+    {
+      "gate": "task_success_rate_min",
+      "value": 1.0,
+      "threshold": 0.85,
+      "pass": true
+    },
+    {
+      "gate": "first_attempt_success_rate_min",
+      "value": 1.0,
+      "threshold": 0.7,
+      "pass": true
+    },
+    {
+      "gate": "physics_compliance_rate_min",
+      "value": 1.0,
+      "threshold": 1.0,
+      "pass": true
+    },
+    {
+      "gate": "decision_optimality_rate_min",
+      "value": 1.0,
+      "threshold": 0.85,
+      "pass": true
+    },
+    {
+      "gate": "semantic_grounding_rate_min",
+      "value": 1.0,
+      "threshold": 0.8,
+      "pass": true
+    },
+    {
+      "gate": "tool_call_valid_rate_min",
+      "value": 1.0,
+      "threshold": 0.95,
+      "pass": true
+    },
+    {
+      "gate": "parametric_model_valid_rate_min",
+      "value": 1.0,
+      "threshold": 0.95,
+      "pass": true
+    },
+    {
+      "gate": "gui_action_valid_rate_min",
+      "value": null,
+      "threshold": 0.98,
+      "pass": false,
+      "reason": "metric unavailable"
+    },
+    {
+      "gate": "error_rate_max",
+      "value": 0.0,
+      "threshold": 0.1,
+      "pass": true
+    },
+    {
+      "gate": "fatal_error_rate_max",
+      "value": 0.0,
+      "threshold": 0.02,
+      "pass": true
+    },
+    {
+      "gate": "transport_error_rate_max",
+      "value": 0.0,
+      "threshold": 0.05,
+      "pass": true
+    },
+    {
+      "gate": "latency_p95_s_max",
+      "value": null,
+      "threshold": 180.0,
+      "pass": false,
+      "reason": "metric unavailable"
+    },
+    {
+      "gate": "engineering_capability_score_min",
+      "value": 1.0,
+      "threshold": 0.8,
+      "pass": true
+    },
+    {
+      "gate": "min_valid_tasks",
+      "value": 139,
+      "threshold": 30,
+      "pass": true
+    }
+  ]
+}

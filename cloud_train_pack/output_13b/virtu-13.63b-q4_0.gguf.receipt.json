@@ -1,0 +1,14 @@
+{
+  "status": "ok",
+  "out": "/root/virtu_13b_train/cloud_train_pack/output_13b/virtu-13.63b-q4_0.gguf",
+  "tensors": 443,
+  "metadata_kv": 29,
+  "tokens": 151936,
+  "merges": 151387,
+  "header_bytes": 5956128,
+  "data_bytes": 8308633600,
+  "file_bytes": 8314589728,
+  "quantization": "Q4_0",
+  "architecture": "qwen3",
+  "unmapped": []
+}

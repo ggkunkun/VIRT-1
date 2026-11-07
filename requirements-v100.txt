@@ -1,0 +1,16 @@
+# V100-SXM2-32GB training environment (Linux, CUDA 12.4 wheels)
+# V100 constraints: no bf16, no FlashAttention-2. Do NOT install flash-attn.
+# Install torch from a CUDA 12.4 wheel index, not the CPU-only PyPI default:
+#   pip install torch==2.5.0 --index-url https://download.pytorch.org/whl/cu124
+#   # China mirror: https://mirrors.aliyun.com/pytorch-wheels/cu124/
+torch==2.5.0
+transformers==4.51.0
+peft==0.14.0
+bitsandbytes>=0.45.0,<0.46
+datasets>=3.0.0
+accelerate>=1.0.0
+sentencepiece
+protobuf
+safetensors
+huggingface-hub
+modelscope

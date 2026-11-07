@@ -1,0 +1,181 @@
+{
+  "version": "virtu_fix_text_sft_v1",
+  "created_at": "2026-11-01 17:13:28",
+  "seed": 1234,
+  "format": "ShareGPT messages; train_virtu.py compatible",
+  "toolcall_strategy": "excluded; keep the existing virtu-toolcall specialist",
+  "max_len": 2048,
+  "total": 5991,
+  "sources": {
+    "master_six": {
+      "file": "damodel_cad_cam_tuning/dataset/master_cad_cam_six_software_train.jsonl",
+      "read": 1338,
+      "kept": 1200,
+      "missing": 0,
+      "duplicate": 138,
+      "fake_claim": 0,
+      "format": 0,
+      "cap": 1200
+    },
+    "wish_parametric": {
+      "file": "damodel_cad_cam_tuning/dataset/wish_parametric_train.jsonl",
+      "read": 838,
+      "kept": 800,
+      "missing": 0,
+      "duplicate": 38,
+      "fake_claim": 0,
+      "format": 0,
+      "cap": 800
+    },
+    "comprehensive": {
+      "file": "damodel_cad_cam_tuning/dataset/comprehensive_wish_cad_cam_sft_1200.jsonl",
+      "read": 1226,
+      "kept": 0,
+      "missing": 0,
+      "duplicate": 1226,
+      "fake_claim": 0,
+      "format": 0,
+      "cap": 500
+    },
+    "drawing_chain": {
+      "file": "data/virtu_drawing_to_machining_chain_train.jsonl",
+      "read": 2213,
+      "kept": 360,
+      "missing": 1711,
+      "duplicate": 142,
+      "fake_claim": 0,
+      "format": 0,
+      "cap": 700
+    },
+    "turing_chat": {
+      "file": "data/processed/turing_conversational_master_train.jsonl",
+      "read": 111,
+      "kept": 73,
+      "missing": 0,
+      "duplicate": 38,
+      "fake_claim": 0,
+      "format": 0,
+      "cap": 111
+    },
+    "formula": {
+      "n": 600,
+      "vf": 600,
+      "mrr": 600,
+      "t": 600,
+      "refusal": 300
+    },
+    "knowledge_reasoning": {
+      "knowledge": 102,
+      "reasoning_multi_step": 230,
+      "reasoning_tolerance": 160,
+      "reasoning_taylor": 160,
+      "reasoning_cycle_time": 120,
+      "reasoning_roughness": 86
+    }
+  },
+  "tokens": {
+    "full_total": 3957698,
+    "capped_total": 3104927,
+    "prompt_total": 701266,
+    "answer_total": 3250441,
+    "p50": 184,
+    "p90": 1223,
+    "p99": 4915,
+    "max": 5012,
+    "truncated": 301
+  },
+  "sha256": "c725e77358778d9950f82f0f285fdc01879b5fdc40444c3d94cb02dc43a996c4",
+  "eval_overlap": "run virtu_eval/contamination_check.py; see the .clean file",
+  "training_file": "data/train/virtu_fix_v1/train/virtu_fix_text_sft_v1.jsonl",
+  "reports": {
+    "semantic_clean": "data/train/virtu_fix_v1/reports/virtu_fix_text_sft_v1.semantic_clean.jsonl",
+    "strict_clean": "data/train/virtu_fix_v1/reports/virtu_fix_text_sft_v1.strict_clean.jsonl"
+  },
+  "contamination": {
+    "eval_cases": 240,
+    "semantic_gate": {
+      "contaminated": 0,
+      "clean": 5991,
+      "criterion": "prompt hash + 8-gram Jaccard >= 0.6"
+    },
+    "strict_numeric_gate": {
+      "contaminated": 2219,
+      "clean": 3772,
+      "criterion": "also flags 4+ digit gold-number collisions",
+      "note": "all hits are gold_num-only; years/G-code/random formula values, not prompt/answer copies"
+    }
+  },
+  "holdout": {
+    "file": "data/benchmark/virtu_fix_v1/formula_holdout_200.jsonl",
+    "manifest": "data/benchmark/virtu_fix_v1/formula_holdout_200.manifest.json",
+    "total": 200,
+    "kinds": {
+      "n": 50,
+      "vf": 50,
+      "mrr": 50,
+      "t": 50
+    },
+    "sha256": "1b9b60949005094b6873dd18e05da6f2cac0382c0d0423ed6f27642fad23e4e4",
+    "usage": "post-training gate; do not train on this file"
+  },
+  "notes": {
+    "comprehensive": "1,226/1,226 duplicate of master_six; kept 0",
+    "drawing_chain": "1,711/2,213 records have no text assistant content (tool-call/empty); kept 360",
+    "truncation": "301 samples exceed 2048 tokens (p99 4,915, max 5,012); use max_len 4096 on L40S if long CAD code matters",
+    "toolcall": "excluded from text SFT; keep the existing virtu-toolcall specialist",
+    "knowledge_reasoning": "858 rows: 102 hand-curated facts + 756 deterministic reasoning scenarios (multi-step, tolerance, Taylor, cycle time, roughness)"
+  },
+  "recommended_training": {
+    "mode": "qlora (RTX 4090 24GB) or lora bf16 (L40S 48GB)",
+    "r": 32,
+    "alpha": 64,
+    "epochs": 2,
+    "batch": 2,
+    "grad_accum": 16,
+    "lr": 0.0001,
+    "max_len": 2048,
+    "effective_tokens_2_epochs": 6209854,
+    "command": "python train_virtu.py --base /root/models/Qwen3-8B --data data/train/virtu_fix_v1/train --mode qlora --epochs 2 --batch 2 --grad-accum 16 --lr 1e-4 --max-len 2048"
+  },
+  "length_audit": {
+    "measured_at": "2026-11-01",
+    "tokenizer": "Qwen2Tokenizer",
+    "base": "checkpoints/_base_qwen3_8b",
+    "rows_usable": 5991,
+    "rows_skipped": 0,
+    "prompt_tokens_mean": 117.1,
+    "full_tokens": {
+      "p50": 184,
+      "p90": 1223,
+      "p99": 4915,
+      "p999": 4980,
+      "max": 5012,
+      "sum": 3957698
+    },
+    "buckets": {
+      "1024-2047": 1058,
+      "2048-4095": 1,
+      "512-1023": 674,
+      "<512": 3958,
+      ">=4096": 300
+    },
+    "truncated_rows_by_max_len": {
+      "1024": 1358,
+      "1536": 312,
+      "2048": 301,
+      "3072": 300,
+      "4096": 300,
+      "5120": 0
+    },
+    "kept_tokens_per_epoch_by_max_len": {
+      "1024": 2649474,
+      "1536": 2948192,
+      "2048": 3104927,
+      "3072": 3412509,
+      "4096": 3719709,
+      "5120": 3957698
+    },
+    "reproduce": "python work/measure_corpus_length.py  (or scripts/train_virtu_l40s.py --audit-lengths on the GPU host)",
+    "conclusion": "the long tail is bimodal: 2048-4095 holds 1 row, >=4096 holds 300. 48GB route uses max_len 5120 (zero truncation); 2048 loses 21.5% of tokens."
+  }
+}

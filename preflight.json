@@ -1,0 +1,26 @@
+{
+  "gpu": [
+    {
+      "index": 0,
+      "name": "NVIDIA L40S",
+      "total_gb": 48.0
+    }
+  ],
+  "python": {
+    "torch": "2.5.0",
+    "cuda_available": true,
+    "transformers": "4.57.0",
+    "peft": "0.28.0",
+    "datasets": "0.28.0",
+    "accelerate": "0.28.0",
+    "bitsandbytes": "0.28.0",
+    "flash_attn": "2.7.4",
+    "cuda_runtime": "12.4"
+  },
+  "disk": {
+    "total_gb": 393.0,
+    "free_gb": 165.6
+  },
+  "ok": true,
+  "batch_recommendation": "2（48GB 卡配 flash-attn 的最佳点）"
+}

@@ -1,0 +1,112 @@
+{
+  "version": "virtu_v3_text_sft",
+  "created_at": "2026-11-01 19:14:10",
+  "seed": 20261101,
+  "format": "ShareGPT messages; train_virtu.py / train_virtu_v100.py compatible",
+  "toolcall_strategy": "excluded (E bucket stays in the virtu-toolcall channel)",
+  "max_len": 2048,
+  "total": 7216,
+  "rows": {
+    "A": 5991,
+    "B": 797,
+    "C": 224,
+    "D": 204
+  },
+  "categories": {
+    "formula_calc": 2564,
+    "six_software": 2360,
+    "knowledge": 879,
+    "boundary": 1340,
+    "chat": 73
+  },
+  "boundary": {
+    "B_rows": 797,
+    "B_negatives": 138,
+    "C_boundary_rows": 39,
+    "D_negative_patch": 204,
+    "A_missing_param_refusals": 300,
+    "negative_ratio_in_B_C_D": 0.3288,
+    "negative_ratio_requirement": 0.3,
+    "required_total_negatives": 342
+  },
+  "dedupe": {
+    "key": "sha256(NFKC + whitespace-collapsed + lowercase user prompt)",
+    "policy": "frozen A/B kept verbatim; C/D deduped internally; cross-bucket prompt collisions dropped",
+    "C_generated_rows": 224,
+    "C_unique_prompts": 224,
+    "C_dropped_duplicate_prompts": 0,
+    "C_import_policy": "只调用 6 个纯生成函数；main() 的 ×6/×30/×40/×2/×10 复制（1,188 行）不执行，964 条重复从未进入语料",
+    "inherited_duplicate_rows": {
+      "A": 296,
+      "B": 686
+    },
+    "B_prompt_overlap_with_A": 0
+  },
+  "eval_filter": {
+    "eval_dir": "data\\benchmark\\virtu_eval_v1",
+    "eval_cases": 240,
+    "gate": "prompt hash + 8-gram jaccard>=0.6 (gold numeric collisions ignored)",
+    "dropped": {
+      "A_fix": 0,
+      "B_boundary": 0,
+      "C_targeted": 0,
+      "D_negatives": 0
+    }
+  },
+  "tokens": {
+    "full_total": 4148832,
+    "capped_total": 3296061,
+    "prompt_total": 845025,
+    "answer_total": 3296591,
+    "p50": 174,
+    "p90": 1148,
+    "p99": 4910,
+    "max": 5012,
+    "truncated": 301
+  },
+  "sources": {
+    "A_fix": {
+      "path": "data\\train\\virtu_fix_v1\\train\\virtu_fix_text_sft_v1.jsonl",
+      "sha256": "c725e77358778d9950f82f0f285fdc01879b5fdc40444c3d94cb02dc43a996c4",
+      "rows": 5991,
+      "rows_used": 5991,
+      "dropped_duplicate_rows": 296
+    },
+    "B_boundary": {
+      "path": "data\\sft\\virtu_capability_sft_v6.jsonl",
+      "sha256": "8416cc2c6bcc3820d792d936c04e7699fd68da002a33431b30e8a0de3c1ca594",
+      "rows": 797,
+      "rows_used": 797,
+      "negatives": 138,
+      "dropped_not_s3": 3436,
+      "dropped_duplicate_rows": 686
+    },
+    "C_targeted": {
+      "path": "cloud_train_pack\\prepare_v100_targeted_corpus.py",
+      "sha256": "893f04db1549f11d054994fef2916ac4e534b071b459ebfbdecd03521c9f2ae8",
+      "rows": 224,
+      "generated_rows": 224,
+      "rows_used": 224,
+      "unique_prompts": 224,
+      "by_generator": {
+        "boundary_missing_params": 25,
+        "boundary_safety_violations": 6,
+        "boundary_geometric_conflicts": 4,
+        "boundary_jailbreak_defense": 4,
+        "hard_knowledge_formulas": 164,
+        "hard_knowledge_standards": 21
+      }
+    },
+    "D_negatives": {
+      "path": "scripts/build_capability_sft.py",
+      "rows": 204,
+      "required": 204,
+      "pool_generated": 528,
+      "rows_used": 204,
+      "dropped_prompt_duplicate": 67
+    }
+  },
+  "sha256": "30ff1a23a2d9e9e49381e2ecc46e6cf8cd8c9aa6c1a0c3bddecb16b0341ca553",
+  "dataset_sha256": "30ff1a23a2d9e9e49381e2ecc46e6cf8cd8c9aa6c1a0c3bddecb16b0341ca553",
+  "next_gate": "python virtu_eval/contamination_check.py <out.jsonl> --eval-dir data/benchmark/virtu_eval_v1 --ignore-gold-numeric"
+}

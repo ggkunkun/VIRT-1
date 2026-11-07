@@ -1,0 +1,56 @@
+{
+  "_purpose": "闭环阶段的可测性账本。AGENTS.md 把这条链写成宪法级流程，但能测不等于测了；这里逐阶段声明用的是哪把尺，或为什么本机给不出尺子。tests/test_closed_loop_coverage.py 会要求每个阶段都在本表里出现，静默缺口即红。",
+  "_measured_at": "2026-11-05",
+  "stages": {
+    "blueprint_ocr_2d": {
+      "status": "partial",
+      "ruler": "virtu_eval_v1/multimodal (30 条合成图, HF Qwen3-VL-2B 通道)",
+      "caveat": "题面图是合成的特征卡/参数图，不是真图纸；GB/T 工程图 OCR→尺寸抽取这条腿在本机没有 gold 集，历史 DWG 直读工具链见 memory，不在测评环内"
+    },
+    "cad_parametric_modeling": {
+      "status": "measured",
+      "ruler": "virtu_eval_v1/toolcall + virtu_eval_cl_v1/toolrouting + scripts/sw_flange_demo.py 的 ΔV 体积闸（planted_defects 判分器直接 import 它）",
+      "caveat": "板内 solidworks/nx/autocad 提及各 11/14/9 条，逐软件能力要靠 SW-in-the-loop 套件"
+    },
+    "cae_fos_strength_check": {
+      "status": "measured",
+      "ruler": "virtu_eval_phys_v1/physics+derivation 的 fea_fos 族 + virtu_eval_cl_v1/toolrouting 的 cadcam_cae_stress_analysis 路由",
+      "caveat": "FOS>=1.5 的闸门谓词当前不在求解器参照里（world_state_verified 复算不到 fos_gate），见 tests/test_physics_reference_honesty.py 的待修条目"
+    },
+    "sheet_metal_true_shape_nesting": {
+      "status": "routing_measured_result_unmeasurable",
+      "ruler": "virtu_eval_cl_v1/toolrouting 的 cadcam_sheetmetal_nest 路由（10 条）",
+      "caveat": "排料结果对不对（利用率/干涉/真实形状）在本机没有确定性 oracle：无 CAD 内核参与下的嵌套求解器，故只考路由不考结果，不得报成套料能力分"
+    },
+    "cnc_post_processing": {
+      "status": "measured",
+      "ruler": "virtu_eval_v1/generation（FANUC/Siemens/Heidenhain 程序结构判据 gcode_structure）+ cadcam_cimco_validate 路由",
+      "caveat": "后处理器是文件级校验，真机 G 代码语义正确性依赖 CIMCO 回读，属 SW-in-the-loop 那一档"
+    },
+    "virtual_machining_autodiff": {
+      "status": "routing_measured_result_unmeasurable",
+      "ruler": "virtu_eval_v1/toolcall 的 cadcam_vericut_simulate 路由 + boundary 维 G00 碰撞判据（collision 族 2 条物理题）",
+      "caveat": "VERICUT Auto-Diff 红/蓝/绿的判色需要真实回读；本仓已判 VERICUT COM 通道不可用，故红蓝绿不得出现在能力分里"
+    },
+    "sscnc_panel_touch_off": {
+      "status": "routing_measured_result_unmeasurable",
+      "ruler": "virtu_eval_v1/toolcall 的 cadcam_sscnc_control 路由（3 条）",
+      "caveat": "SSCNC 7.2 无 COM 接口，CRT 坐标/对火花只能读屏；板内仅 6 条用例提到「斯沃」，面板态判读不在确定性尺覆盖内"
+    },
+    "closed_loop_chain": {
+      "status": "measured",
+      "ruler": "virtu_eval_cl_v1/toolrouting 的 cadcam_extreme_chain 路由 + 自愈判定链（benchmarks 里的 SW-in-the-loop 四臂套件）",
+      "caveat": "端到端真跑只在授权窗口内可做（需独占 SOLIDWORKS COM + ≥1.6GB 空闲）"
+    },
+    "step_geometry_reverse": {
+      "status": "measured",
+      "ruler": "virtu_eval_cl_v1/toolrouting 的 cadcam_step_reverse 路由 + bridges/step_reverse.py 的几何特征解析（圆柱面直径谱与母线站位）",
+      "caveat": "当前逆向解析器基于 STEP 拓扑几何文本抽取，复杂自由曲面与非回转体不在确定性解析范围"
+    },
+    "assembly_cad_build": {
+      "status": "partial",
+      "ruler": "virtu_eval_cl_v1/toolrouting 的 cadcam_assembly_build 路由 + bridges/assembly_build.py 驱动构建",
+      "caveat": "装配与工程图自动出图依赖真实 SOLIDWORKS COM 连接与 GB 模板，脱机环境下仅作参数与宏代码验证"
+    }
+  }
+}

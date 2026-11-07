@@ -1,0 +1,49 @@
+{
+  "total_samples_in_file": 23178,
+  "unique_samples": 18330,
+  "dup_removed": 4848,
+  "variants": {
+    "V0": {
+      "samples": 18330,
+      "tokens_full_estimate": 47570295,
+      "avg_tokens_per_sample": 2595.2,
+      "signal_tokens": 5581785,
+      "signal_pct": 11.73
+    },
+    "V2": {
+      "samples": 18330,
+      "tokens_full_estimate": 45965070,
+      "avg_tokens_per_sample": 2507.6,
+      "signal_tokens": 5581785,
+      "signal_pct": 12.14
+    },
+    "V4": {
+      "samples": 18330,
+      "tokens_full_estimate": 30783725,
+      "avg_tokens_per_sample": 1679.4,
+      "signal_tokens": 3402580,
+      "signal_pct": 11.05
+    },
+    "V5": {
+      "samples": 18330,
+      "tokens_full_estimate": 45964345,
+      "avg_tokens_per_sample": 2507.6,
+      "signal_tokens": 5581785,
+      "signal_pct": 12.14
+    },
+    "V6": {
+      "samples": 18330,
+      "tokens_full_estimate": 45963900,
+      "avg_tokens_per_sample": 2507.6,
+      "signal_tokens": 5581785,
+      "signal_pct": 12.14
+    }
+  },
+  "saving_vs_V0": {
+    "V0": 0.0,
+    "V2": 3.4,
+    "V4": 35.3,
+    "V5": 3.4,
+    "V6": 3.4
+  }
+}

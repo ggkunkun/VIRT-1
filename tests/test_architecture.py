@@ -113,3 +113,45 @@ def test_virtu_omni_full_forward(test_config):
     out_vis = model(images=images, mode="image_gen")
     assert "image_logits" in out_vis
     assert out_vis["image_logits"].shape == (2, 16, test_config.vision_codebook_size)
+
+
+def test_virtu_omni_autoregressive_generate(test_config):
+    """Verify autoregressive generation produces correct token dimensions with and without KV cache."""
+    model = VirtuOmni10B(test_config)
+    input_ids = torch.randint(0, test_config.vocab_size, (1, 6))
+
+    # Test greedy decoding with KV cache enabled
+    torch.manual_seed(42)
+    gen_cached = model.generate(
+        input_ids=input_ids,
+        max_new_tokens=8,
+        temperature=0.0,
+        use_cache=True,
+    )
+    assert gen_cached.shape == (1, 14)
+    assert torch.equal(gen_cached[:, :6], input_ids)
+
+    # Test greedy decoding without KV cache (must produce bitwise identical tokens)
+    torch.manual_seed(42)
+    gen_uncached = model.generate(
+        input_ids=input_ids,
+        max_new_tokens=8,
+        temperature=0.0,
+        use_cache=False,
+    )
+    assert torch.equal(gen_cached, gen_uncached), "KV cached generation must match uncached output exactly."
+
+
+def test_virtu_omni_generate_stream(test_config):
+    """Verify streaming generator yields valid tokens in real time."""
+    model = VirtuOmni10B(test_config)
+    input_ids = torch.randint(0, test_config.vocab_size, (1, 4))
+
+    stream_tokens = list(model.generate_stream(
+        input_ids=input_ids,
+        max_new_tokens=5,
+        temperature=0.0,
+        use_cache=True,
+    ))
+    assert len(stream_tokens) <= 5
+    assert all(isinstance(t, int) and 0 <= t < test_config.vocab_size for t in stream_tokens)

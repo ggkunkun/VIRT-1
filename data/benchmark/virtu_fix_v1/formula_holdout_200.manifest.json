@@ -1,0 +1,13 @@
+{
+  "version": "formula_holdout_200_v1",
+  "seed": 999,
+  "total": 200,
+  "kinds": {
+    "n": 50,
+    "vf": 50,
+    "mrr": 50,
+    "t": 50
+  },
+  "sha256": "1b9b60949005094b6873dd18e05da6f2cac0382c0d0423ed6f27642fad23e4e4",
+  "usage": "post-training gate: each answer must match gold_value/gold_unit; do not train on this file"
+}

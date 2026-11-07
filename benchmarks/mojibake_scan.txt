@@ -1,0 +1,132 @@
+
+=== .coverage  [file is not valid UTF-8]
+
+=== cloud_train_pack.tar.gz  [file is not valid UTF-8]
+
+=== .pytest_temp\test_acad_gate_counts_only_ent0\stage03_drawing.lsp  [file is not valid UTF-8]
+
+=== .pytest_temp\test_stage_acad_hands_cad_only0\stage03_drawing.lsp  [file is not valid UTF-8]
+
+=== .pytest_temp\test_sw_verdict_needs_volume_w0\stage01_build.swb  [file is not valid UTF-8]
+
+=== .pytest_temp\test_sw_verdict_needs_volume_w0\stage01_sw_metrics.txt  [file is not valid UTF-8]
+
+=== .pytest_temp\test_vericut_sidecar_must_be_f0\p.log  [file is not valid UTF-8]
+
+=== .pytest_temp\test_vericut_sidecar_must_be_f0\q.log  [file is not valid UTF-8]
+
+=== .pytest_temp\test_vericut_sidecar_of_somebo0\p.log  [file is not valid UTF-8]
+
+=== .ruff_cache\0.17.3\3161148193122788783  [file is not valid UTF-8]
+
+=== harness2_src\assets\harness2-video.mp4  [file is not valid UTF-8]
+
+=== scripts\fix_arms_config.py  [mojibake]
+    marker 'Virtu妯″瀷' -> 仓库根目录名 'Virtu模型' 被按 GBK 解码
+    marker '妯″瀷' -> '模型' 的 GBK 误解码
+    6: ``D:/Virtu模型/`` became ``D:/Virtu妯″瀷/`` and every arm pointed at a
+
+=== scripts\scan_mojibake.py  [mojibake]
+    marker 'Virtu妯″瀷' -> 仓库根目录名 'Virtu模型' 被按 GBK 解码
+    marker '锟斤拷' -> U+FFFD 反复转码留下的典型乱码
+    marker '烫烫烫' -> GBK 误解码的填充
+    marker '鏂囨湰' -> '文件' 的 GBK 误解码
+    marker '宸ヤ綔' -> '工作' 的 GBK 误解码
+    marker '妯″瀷' -> '模型' 的 GBK 误解码
+    marker '瀹夎」' -> '项目' 的 GBK 误解码
+    marker '鍙浠' -> '可以' 的 GBK 误解码
+    marker '绀惧悊' -> '管理' 的 GBK 误解码
+    marker '鍒嗙暟' -> '参数' 的 GBK 误解码
+    marker '璁剧疆' -> '设置' 的 GBK 误解码
+    marker '鍚勪涓' -> '各个' 的 GBK 误解码
+    marker '鏍囧紡' -> '格式' 的 GBK 误解码
+    marker '鎵€鍦' -> '所在' 的 GBK 误解码
+    marker '瀹㈡埛' -> '客户' 的 GBK 误解码
+    marker '杞ㄩ程式' -> '软体' 的 GBK 误解码
+    marker '纭勬垗' -> '确定' 的 GBK 误解码
+    marker '鎻愮ず' -> '提示' 的 GBK 误解码
+    marker '锛塦' -> '，' 的 GBK 误解码
+    marker '銆' -> '。' 的 GBK 误解码
+    marker '鈥' -> '“' 的 GBK 误解码
+    marker '闂' -> '间' 的 GBK 误解码
+    4: character *on disk* is a bug: a path like ``D:\\Virtu妯″瀷\\scratch`` does not
+    28: ("Virtu妯″瀷", "仓库根目录名 'Virtu模型' 被按 GBK 解码"),
+    29: ("锟斤拷", "U+FFFD 反复转码留下的典型乱码"),
+    30: ("烫烫烫", "GBK 误解码的填充"),
+    31: ("鏂囨湰", "'文件' 的 GBK 误解码"),
+    32: ("宸ヤ綔", "'工作' 的 GBK 误解码"),
+    33: ("妯″瀷", "'模型' 的 GBK 误解码"),
+    34: ("瀹夎」", "'项目' 的 GBK 误解码"),
+    35: ("鍙浠", "'可以' 的 GBK 误解码"),
+    36: ("绀惧悊", "'管理' 的 GBK 误解码"),
+    37: ("鍒嗙暟", "'参数' 的 GBK 误解码"),
+    38: ("璁剧疆", "'设置' 的 GBK 误解码"),
+    39: ("鍚勪涓", "'各个' 的 GBK 误解码"),
+    40: ("鏍囧紡", "'格式' 的 GBK 误解码"),
+    41: ("鎵€鍦", "'所在' 的 GBK 误解码"),
+    42: ("瀹㈡埛", "'客户' 的 GBK 误解码"),
+    43: ("杞ㄩ程式", "'软体' 的 GBK 误解码"),
+    44: ("纭勬垗", "'确定' 的 GBK 误解码"),
+    45: ("鎻愮ず", "'提示' 的 GBK 误解码"),
+    46: ("锛塦", "'，' 的 GBK 误解码"),
+
+=== scripts\verify_paths_and_encoding.py  [mojibake]
+    marker '锟斤拷' -> U+FFFD 反复转码留下的典型乱码
+    marker '烫烫烫' -> GBK 误解码的填充
+    marker '鏂囨湰' -> '文件' 的 GBK 误解码
+    marker '宸ヤ綔' -> '工作' 的 GBK 误解码
+    marker '妯″瀷' -> '模型' 的 GBK 误解码
+    marker '瀹夎」' -> '项目' 的 GBK 误解码
+    marker '鍙浠' -> '可以' 的 GBK 误解码
+    marker '璁剧疆' -> '设置' 的 GBK 误解码
+    15: MARKERS = ["妯″瀷", "锟斤拷", "烫烫烫", "鏂囨湰", "宸ヤ綔", "鍙浠",
+    16: "鏍煎紡", "璁剧疆", "瀹夎」", "鍒嗛暟", "�"]
+
+=== virtu_eval\audit_encoding.py  [mojibake]
+    marker '锟斤拷' -> U+FFFD 反复转码留下的典型乱码
+    marker '烫烫烫' -> GBK 误解码的填充
+    marker '宸ヤ綔' -> '工作' 的 GBK 误解码
+    marker '鍙浠' -> '可以' 的 GBK 误解码
+    marker '銆' -> '。' 的 GBK 误解码
+    marker '鈥' -> '“' 的 GBK 误解码
+    marker '闂' -> '间' 的 GBK 误解码
+    26: "锟斤拷", "烫烫烫", "屯屯屯",          # classic GBK<->UTF-8 round trip damage
+    28: "宸ヤ綔", "宸ュ", "鍨嬬",            # 工作 / 模型 / 型
+    29: "鍙浠", "缁", "鏄", "涓", "鐨",      # 可 / 给 / 是 / 中 / 的
+    30: "锛", "銆", "鈥", "闂", "鍙",       # ， 。 “ ” 、
+
+=== _cu_test\acad_newwiz.bmp  [file is not valid UTF-8]
+
+=== _cu_test\acad_ready.bmp  [file is not valid UTF-8]
+
+=== _cu_test\acad_ready2.bmp  [file is not valid UTF-8]
+
+=== _cu_test\after_acad.bmp  [file is not valid UTF-8]
+
+=== _cu_test\after_cimco.bmp  [file is not valid UTF-8]
+
+=== _cu_test\after_sw.bmp  [file is not valid UTF-8]
+
+=== _cu_test\cimco_front.bmp  [file is not valid UTF-8]
+
+=== _cu_test\cimco_gcode.bmp  [file is not valid UTF-8]
+
+=== _cu_test\cimco_gcode2.bmp  [file is not valid UTF-8]
+
+=== _cu_test\cimco_play.bmp  [file is not valid UTF-8]
+
+=== _cu_test\cimco_sim.bmp  [file is not valid UTF-8]
+
+=== _cu_test\cimco_sim2.bmp  [file is not valid UTF-8]
+
+=== _cu_test\cimco_win.bmp  [file is not valid UTF-8]
+
+=== _cu_test\cimco_win2.bmp  [file is not valid UTF-8]
+
+=== _cu_test\desk_04.bmp  [file is not valid UTF-8]
+
+=== _cu_test\mdi.bmp  [file is not valid UTF-8]
+
+=== _cu_test\now.bmp  [file is not valid UTF-8]
+
+=== _cu_test\sw_front.bmp  [file is not valid UTF-8]

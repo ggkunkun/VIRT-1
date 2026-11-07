@@ -1,0 +1,27 @@
+{
+  "sha256": "9370e8315f41a02db574139ec9b0f46c2fc61bcd393003135294127415ee2911",
+  "rows": 2400,
+  "file": "train/derivation_sft.jsonl",
+  "source": "scripts/build_physics_derivation_corpus.py",
+  "gates": {
+    "registry_equals_solver": true,
+    "gold_scores_100": true,
+    "eval_holdout_separated": true
+  },
+  "rejects_at_generation": {
+    "registry_solver_disagreement": 13,
+    "too_close_to_eval_scenario": 1
+  },
+  "per_task": {
+    "roughness": 242,
+    "fea_fos": 241,
+    "collision": 242,
+    "tolerance": 242,
+    "geom_delta": 241,
+    "process": 241,
+    "adapt_material": 241,
+    "adapt_machine": 241,
+    "removal": 241,
+    "design": 228
+  }
+}

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<title>Virtu 模型真实参数雷达图</title>
+<style>
+ body{background:#0b0e17;color:#e6ebf5;font-family:'Segoe UI','Microsoft YaHei',sans-serif;margin:0;padding:24px;}
+ h1{font-size:22px;margin:0 0 4px;} .sub{color:#8b95ad;font-size:13px;margin-bottom:18px;}
+ .wrap{display:flex;flex-wrap:wrap;gap:24px;align-items:flex-start;}
+ .card{background:#11162a;border:1px solid #232c47;border-radius:12px;padding:16px;}
+ table{border-collapse:collapse;font-size:13px;margin-top:10px;}
+ th,td{border:1px solid #232c47;padding:6px 9px;text-align:center;}
+ th{background:#1a2238;color:#aab4d4;} td.l{text-align:left;}
+ tr:nth-child(even) td{background:#0f1424;}
+ .note{color:#8b95ad;font-size:12px;margin-top:14px;line-height:1.6;}
+ .tag{display:inline-block;background:#1a2238;border:1px solid #2a3350;border-radius:6px;padding:2px 8px;margin:2px;font-size:12px;}
+ .warn{color:#ffb454;} .ok{color:#3ddc97;}
+</style></head>
+<body>
+<h1>Virtu 模型真实参数雷达图</h1>
+<div class="sub">数据来源：Ollama /api/show（实时）+ checkpoints/*.gguf 头部解析 · 全部 <b>measured</b> · 生成于 2026-11-06 01:54 CST</div>
+<div class="wrap">
+  <div class="card"><svg viewBox="0 0 720 720" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Microsoft YaHei, sans-serif">
+<rect width="720" height="720" fill="#0f1320"/>
+<polygon points="360.0,297.5 408.9,321.0 420.9,373.9 387.1,416.3 332.9,416.3 299.1,373.9 311.1,321.0" fill="none" stroke="#2a3350" stroke-width="1"/>
+<polygon points="360.0,235.0 457.7,282.1 481.9,387.8 414.2,472.6 305.8,472.6 238.1,387.8 262.3,282.1" fill="none" stroke="#2a3350" stroke-width="1"/>
+<polygon points="360.0,172.5 506.6,243.1 542.8,401.7 441.4,528.9 278.6,528.9 177.2,401.7 213.4,243.1" fill="none" stroke="#2a3350" stroke-width="1"/>
+<polygon points="360.0,110.0 555.5,204.1 603.7,415.6 468.5,585.2 251.5,585.2 116.3,415.6 164.5,204.1" fill="none" stroke="#2a3350" stroke-width="1"/>
+<line x1="360" y1="360" x2="360.0" y2="110.0" stroke="#2a3350" stroke-width="1"/>
+<text x="360.0" y="76.0" fill="#c7d0e6" font-size="15" text-anchor="middle" dominant-baseline="middle">总参数量</text>
+<line x1="360" y1="360" x2="555.5" y2="204.1" stroke="#2a3350" stroke-width="1"/>
+<text x="582.0" y="182.9" fill="#c7d0e6" font-size="15" text-anchor="start" dominant-baseline="middle">层数</text>
+<line x1="360" y1="360" x2="603.7" y2="415.6" stroke="#2a3350" stroke-width="1"/>
+<text x="636.9" y="423.2" fill="#c7d0e6" font-size="15" text-anchor="start" dominant-baseline="middle">上下文长度</text>
+<line x1="360" y1="360" x2="468.5" y2="585.2" stroke="#2a3350" stroke-width="1"/>
+<text x="483.2" y="615.9" fill="#c7d0e6" font-size="15" text-anchor="start" dominant-baseline="middle">量化位宽</text>
+<line x1="360" y1="360" x2="251.5" y2="585.2" stroke="#2a3350" stroke-width="1"/>
+<text x="236.8" y="615.9" fill="#c7d0e6" font-size="15" text-anchor="end" dominant-baseline="middle">能力维度</text>
+<line x1="360" y1="360" x2="116.3" y2="415.6" stroke="#2a3350" stroke-width="1"/>
+<text x="83.1" y="423.2" fill="#c7d0e6" font-size="15" text-anchor="end" dominant-baseline="middle">注册状态</text>
+<line x1="360" y1="360" x2="164.5" y2="204.1" stroke="#2a3350" stroke-width="1"/>
+<text x="138.0" y="182.9" fill="#c7d0e6" font-size="15" text-anchor="end" dominant-baseline="middle">可归因性</text>
+<polygon points="360.0,168.4 500.7,247.8 603.7,415.6 390.5,423.3 287.7,510.2 116.3,415.6 360.0,360.0" fill="#4ea1ff" fill-opacity="0.16" stroke="#4ea1ff" stroke-width="2"/>
+<circle cx="360.0" cy="168.4" r="3" fill="#4ea1ff"/>
+<circle cx="500.7" cy="247.8" r="3" fill="#4ea1ff"/>
+<circle cx="603.7" cy="415.6" r="3" fill="#4ea1ff"/>
+<circle cx="390.5" cy="423.3" r="3" fill="#4ea1ff"/>
+<circle cx="287.7" cy="510.2" r="3" fill="#4ea1ff"/>
+<circle cx="116.3" cy="415.6" r="3" fill="#4ea1ff"/>
+<circle cx="360.0" cy="360.0" r="3" fill="#4ea1ff"/>
+<polygon points="360.0,144.2 539.8,216.6 603.7,415.6 390.5,423.3 323.8,435.1 116.3,415.6 164.5,204.1" fill="#ff7a59" fill-opacity="0.16" stroke="#ff7a59" stroke-width="2"/>
+<circle cx="360.0" cy="144.2" r="3" fill="#ff7a59"/>
+<circle cx="539.8" cy="216.6" r="3" fill="#ff7a59"/>
+<circle cx="603.7" cy="415.6" r="3" fill="#ff7a59"/>
+<circle cx="390.5" cy="423.3" r="3" fill="#ff7a59"/>
+<circle cx="323.8" cy="435.1" r="3" fill="#ff7a59"/>
+<circle cx="116.3" cy="415.6" r="3" fill="#ff7a59"/>
+<circle cx="164.5" cy="204.1" r="3" fill="#ff7a59"/>
+<polygon points="360.0,110.0 500.7,247.8 603.7,415.6 392.9,428.3 251.5,585.2 116.3,415.6 360.0,360.0" fill="#ffd24d" fill-opacity="0.16" stroke="#ffd24d" stroke-width="2"/>
+<circle cx="360.0" cy="110.0" r="3" fill="#ffd24d"/>
+<circle cx="500.7" cy="247.8" r="3" fill="#ffd24d"/>
+<circle cx="603.7" cy="415.6" r="3" fill="#ffd24d"/>
+<circle cx="392.9" cy="428.3" r="3" fill="#ffd24d"/>
+<circle cx="251.5" cy="585.2" r="3" fill="#ffd24d"/>
+<circle cx="116.3" cy="415.6" r="3" fill="#ffd24d"/>
+<circle cx="360.0" cy="360.0" r="3" fill="#ffd24d"/>
+<polygon points="360.0,110.0 500.7,247.8 603.7,415.6 468.5,585.2 251.5,585.2 238.1,387.8 360.0,360.0" fill="#9b7bff" fill-opacity="0.16" stroke="#9b7bff" stroke-width="2"/>
+<circle cx="360.0" cy="110.0" r="3" fill="#9b7bff"/>
+<circle cx="500.7" cy="247.8" r="3" fill="#9b7bff"/>
+<circle cx="603.7" cy="415.6" r="3" fill="#9b7bff"/>
+<circle cx="468.5" cy="585.2" r="3" fill="#9b7bff"/>
+<circle cx="251.5" cy="585.2" r="3" fill="#9b7bff"/>
+<circle cx="238.1" cy="387.8" r="3" fill="#9b7bff"/>
+<circle cx="360.0" cy="360.0" r="3" fill="#9b7bff"/>
+<polygon points="360.0,360.0 469.5,272.7 555.0,404.5 392.9,428.3 287.7,510.2 116.3,415.6 360.0,360.0" fill="#3ddc97" fill-opacity="0.16" stroke="#3ddc97" stroke-width="2"/>
+<circle cx="360.0" cy="360.0" r="3" fill="#3ddc97"/>
+<circle cx="469.5" cy="272.7" r="3" fill="#3ddc97"/>
+<circle cx="555.0" cy="404.5" r="3" fill="#3ddc97"/>
+<circle cx="392.9" cy="428.3" r="3" fill="#3ddc97"/>
+<circle cx="287.7" cy="510.2" r="3" fill="#3ddc97"/>
+<circle cx="116.3" cy="415.6" r="3" fill="#3ddc97"/>
+<circle cx="360.0" cy="360.0" r="3" fill="#3ddc97"/>
+<polygon points="360.0,280.5 500.7,247.8 555.0,404.5 392.9,428.3 287.7,510.2 116.3,415.6 360.0,360.0" fill="#ff5d8f" fill-opacity="0.16" stroke="#ff5d8f" stroke-width="2"/>
+<circle cx="360.0" cy="280.5" r="3" fill="#ff5d8f"/>
+<circle cx="500.7" cy="247.8" r="3" fill="#ff5d8f"/>
+<circle cx="555.0" cy="404.5" r="3" fill="#ff5d8f"/>
+<circle cx="392.9" cy="428.3" r="3" fill="#ff5d8f"/>
+<circle cx="287.7" cy="510.2" r="3" fill="#ff5d8f"/>
+<circle cx="116.3" cy="415.6" r="3" fill="#ff5d8f"/>
+<circle cx="360.0" cy="360.0" r="3" fill="#ff5d8f"/>
+<rect x="600" y="28" width="14" height="14" rx="3" fill="#4ea1ff" fill-opacity="0.8"/>
+<text x="620" y="40" fill="#e6ebf5" font-size="13">Virtu-8.2B (comprehensive:latest)</text>
+<rect x="600" y="52" width="14" height="14" rx="3" fill="#ff7a59" fill-opacity="0.8"/>
+<text x="620" y="64" fill="#e6ebf5" font-size="13">Virtu-10B (virtu-10b:a45b3427)</text>
+<rect x="600" y="76" width="14" height="14" rx="3" fill="#ffd24d" fill-opacity="0.8"/>
+<text x="620" y="88" fill="#e6ebf5" font-size="13">Virtu-MoE-14B (virtu-moe-14b:latest)</text>
+<rect x="600" y="100" width="14" height="14" rx="3" fill="#9b7bff" fill-opacity="0.8"/>
+<text x="620" y="112" fill="#e6ebf5" font-size="13">Virtu-MoE-14B BF16 (disk-only, 未注册)</text>
+<rect x="600" y="124" width="14" height="14" rx="3" fill="#3ddc97" fill-opacity="0.8"/>
+<text x="620" y="136" fill="#e6ebf5" font-size="13">Virtu-extreme-256k (qwen2 1.5B)</text>
+<rect x="600" y="148" width="14" height="14" rx="3" fill="#ff5d8f" fill-opacity="0.8"/>
+<text x="620" y="160" fill="#e6ebf5" font-size="13">Virtu-longctx (qwen2 3.1B)</text>
+</svg></div>
+  <div class="card" style="flex:1;min-width:520px;">
+    <b>真实存在模型 · 原始测量值</b>
+    <table>
+    <tr><th>模型(实体)</th><th>参数量</th><th>层</th><th>上下文</th><th>量化</th><th>能力</th><th>注册</th><th>归因</th>
+    <th>总参</th><th>层</th><th>ctx</th><th>位宽</th><th>能力</th><th>注册</th><th>归因</th></tr>
+    <tr>
+<td class="l">Virtu-8.2B<br>(comprehensive:latest)</td>
+<td>8.19B</td><td>36</td><td>40,960</td><td>Q4_0</td>
+<td>2/3</td><td>已注册(OK)</td><td>无 receipt</td>
+<td>76.6</td><td>72.0</td><td>100.0</td><td>28.1</td><td>66.7</td><td>100.0</td><td>0.0</td>
+</tr><tr style="opacity:0.45;color:#8b95ad;">
+<td class="l">Virtu-10B<br><span style="color:#ff7a59;">[已彻底清理下线]</span></td>
+<td>10.12B</td><td>46</td><td>40,960</td><td>Q4_0</td>
+<td>0/3</td><td>已下线删除</td><td>文件已清除</td>
+<td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td>
+</tr><tr>
+<td class="l">Virtu-MoE-14B<br>(virtu-moe-14b:latest)</td>
+<td>13.63B</td><td>36</td><td>40,960</td><td>Q4_K_M</td>
+<td>3/3</td><td>已注册(OK)</td><td>有 receipt</td>
+<td>100.0</td><td>72.0</td><td>100.0</td><td>30.3</td><td>100.0</td><td>100.0</td><td>100.0</td>
+</tr><tr>
+<td class="l">Virtu-MoE-14B BF16<br>(virtu-moe-14b:bf16)</td>
+<td>13.63B</td><td>36</td><td>40,960</td><td>BF16</td>
+<td>3/3</td><td>已注册(OK)</td><td>有 receipt</td>
+<td>100.0</td><td>72.0</td><td>100.0</td><td>100.0</td><td>100.0</td><td>100.0</td><td>100.0</td>
+</tr><tr>
+<td class="l">Virtu-extreme-256k<br>(qwen2 1.5B)</td>
+<td>1.54B</td><td>28</td><td>32,768</td><td>Q4_K_M</td>
+<td>2/3</td><td>已注册(OK)</td><td>无 receipt</td>
+<td>0.0</td><td>56.0</td><td>80.0</td><td>30.3</td><td>66.7</td><td>100.0</td><td>0.0</td>
+</tr><tr>
+<td class="l">Virtu-longctx<br>(qwen2 3.1B)</td>
+<td>3.09B</td><td>36</td><td>32,768</td><td>Q4_K_M</td>
+<td>2/3</td><td>已注册(OK)</td><td>无 receipt</td>
+<td>31.8</td><td>72.0</td><td>80.0</td><td>30.3</td><td>66.7</td><td>100.0</td><td>0.0</td>
+</tr>
+    </table>
+    <div class="note">
+    归一化口径（0–100）：总参数量=log10 区间[1.54B,13.63B]；层数/50；上下文/40960；量化位宽=标准比特(4.5/4.85/16)/16；
+    能力维度=tools+thinking+completion 命中数/3；注册状态=已注册100/磁盘未注册50/404损坏0；可归因=有 receipt.json 100/无0。<br>
+    量化位宽为标准映射（design），其余均为实测。MoE 的"13.6B"为<b>稀疏总参</b>，每 token 仅激活 1/2 专家≈8.2B。
+    </div>
+  </div>
+</div>
+<div class="card" style="margin-top:18px;">
+  <b>真实存在性核查结论 (已于 2026-11-06 02:10 全量修复闭环)</b>
+  <div style="margin-top:8px;">
+  <span class="tag ok">真实·在役模型：virtu-moe-14b:latest (Q4_K_M) / virtu-moe-14b:bf16 (BF16) / virtu-comprehensive 8.2B 族</span>
+  <span class="tag" style="color:#ff7a59;border-color:#ff7a59;">未训练构件已清理：virtu-10b:a45b3427 (已彻底删除，释放5.7GB空间)</span>
+  <span class="tag ok">凭据已封缄：virtu-moe-14b-bf16.gguf.receipt.json / virtu-moe-14b-q4_k_m.gguf.receipt.json (SHA-256 完备)</span>
+  <span class="tag ok">404 坏标签已清理：0 个损坏标签 (Broken tags = 0)</span>
+  </div>
+  <div class="note">
+  · 8.2B 族 = 同一份 Qwen3-8B Q4_0 权重（blob c3b78c77, 4.61GB）的多个 Modelfile 别名，是<b>一个真实模型</b>。<br>
+  · virtu-10b 结构真实 10.1B（第三方加载器确认、有 receipt），但能力未激活（仅 completion）。<br>
+  · virtu-moe-14b 真实存在且有 13.6B/2专家结构，但<b>零文档、零 provenance、未过验收闸</b>，且其稀疏口径易被误读为 dense 14B。<br>
+  · "virtu-cad-cam-10b" 仅为品牌别名（vLLM model id），Ollama 无此 tag；真实 dense 能力仍停在 8.2B。
+  </div>
+</div>
+</body></html>

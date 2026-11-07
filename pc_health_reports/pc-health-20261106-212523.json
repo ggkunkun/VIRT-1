@@ -1,0 +1,502 @@
+{
+  "generated_at": "2026-11-06T21:25:23+08:00",
+  "tool": "pc-safe-optimizer/health_check.py",
+  "read_only": true,
+  "json_filename": "pc-health-20261106-212523.json",
+  "scope_note": "系统信息、磁盘、进程、启动项、关键服务、缓存目录体积、PATH、hosts、电源计划、网络链路（不含用户私人目录内容）",
+  "system": {
+    "ok": true,
+    "data": {
+      "hostname": "PC-202510251900",
+      "os": "Windows 11 (build 10.0.26200)",
+      "python": "3.12.10",
+      "cpu_count_logical": 12,
+      "uptime_hours": 1.5,
+      "mem_total": 16886784000,
+      "mem_avail": 3408441344,
+      "mem_load_pct": 79,
+      "pagefile_total": 28986236928,
+      "pagefile_avail": 1544867840
+    },
+    "elapsed_s": 0.14
+  },
+  "disks": {
+    "ok": true,
+    "data": [
+      {
+        "drive": "C:\\",
+        "total": 213764796416,
+        "used": 182627864576,
+        "free": 31136931840,
+        "free_pct": 14.6
+      },
+      {
+        "drive": "D:\\",
+        "total": 392991600640,
+        "used": 294322892800,
+        "free": 98668707840,
+        "free_pct": 25.1
+      },
+      {
+        "drive": "E:\\",
+        "total": 392129351680,
+        "used": 327193415680,
+        "free": 64935936000,
+        "free_pct": 16.6
+      },
+      {
+        "drive": "F:\\",
+        "total": 134213402624,
+        "used": 26247168000,
+        "free": 107966234624,
+        "free_pct": 80.4
+      }
+    ],
+    "elapsed_s": 0.0
+  },
+  "processes": {
+    "ok": true,
+    "data": {
+      "count": 306,
+      "top": [
+        {
+          "pid": 22484,
+          "name": "llama-server.exe",
+          "threads": 31,
+          "parent_pid": 7844,
+          "working_set": 3703431168
+        },
+        {
+          "pid": 20264,
+          "name": "WorkBuddy.exe",
+          "threads": 23,
+          "parent_pid": 6636,
+          "working_set": 1205104640
+        },
+        {
+          "pid": 12124,
+          "name": "Qoder CN.exe",
+          "threads": 58,
+          "parent_pid": 3692,
+          "working_set": 1189384192
+        },
+        {
+          "pid": 20416,
+          "name": "Qoder CN.exe",
+          "threads": 23,
+          "parent_pid": 12124,
+          "working_set": 442286080
+        },
+        {
+          "pid": 22964,
+          "name": "WorkBuddy.exe",
+          "threads": 15,
+          "parent_pid": 20364,
+          "working_set": 197898240
+        },
+        {
+          "pid": 20364,
+          "name": "WorkBuddy.exe",
+          "threads": 29,
+          "parent_pid": 6636,
+          "working_set": 179167232
+        },
+        {
+          "pid": 4424,
+          "name": "explorer.exe",
+          "threads": 85,
+          "parent_pid": 21648,
+          "working_set": 158433280
+        },
+        {
+          "pid": 6636,
+          "name": "WorkBuddy.exe",
+          "threads": 55,
+          "parent_pid": 12024,
+          "working_set": 126668800
+        },
+        {
+          "pid": 17580,
+          "name": "msedgewebview2.exe",
+          "threads": 24,
+          "parent_pid": 14968,
+          "working_set": 109379584
+        },
+        {
+          "pid": 20188,
+          "name": "pwsh.exe",
+          "threads": 22,
+          "parent_pid": 22444,
+          "working_set": 88453120
+        }
+      ],
+      "note": "仅报告，不结束任何进程"
+    },
+    "elapsed_s": 0.02
+  },
+  "startup": {
+    "ok": true,
+    "data": {
+      "items": [
+        {
+          "source": "HKCU\\Run",
+          "name": "WPT2Guard_SmartMfgAgent",
+          "command": "\"D:\\智能制造Agent\\run_wpt2_guard.bat\""
+        },
+        {
+          "source": "HKCU\\Run",
+          "name": "ProxyFailOpenWatchdog",
+          "command": "\"C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python312\\pythonw.exe\" \"C:\\Users\\Administrator\\.workbuddy\\bin\\proxy_failopen_watchdog.py\""
+        },
+        {
+          "source": "HKCU\\Run",
+          "name": "com.minimax.agent.cn",
+          "command": "\"D:\\AIApps\\MiniMax Code\\MiniMax Code.exe\""
+        },
+        {
+          "source": "HKCU\\Run",
+          "name": "Gemini",
+          "command": "\"C:\\Users\\Administrator\\AppData\\Local\\Google\\Gemini\\GeminiAppLauncher.exe\""
+        },
+        {
+          "source": "HKCU\\Run",
+          "name": "GoogleDriveFS",
+          "command": "\"C:\\Program Files\\Google\\Drive File Stream\\133.0.2.0\\GoogleDriveFS.exe\" --startup_mode"
+        },
+        {
+          "source": "HKLM\\Run",
+          "name": "SecurityHealth",
+          "command": "%windir%\\system32\\SecurityHealthSystray.exe"
+        },
+        {
+          "source": "HKLM\\Run",
+          "name": "RTHDVCPL",
+          "command": "\"C:\\Program Files\\Realtek\\Audio\\HDA\\RAVCpl64.exe\" -s"
+        },
+        {
+          "source": "HKLM\\Run",
+          "name": "Conisio Login Manager",
+          "command": "\"D:\\SO0695~1\\EDMSER~1.EXE\" /runatlogin"
+        },
+        {
+          "source": "启动文件夹",
+          "name": "Clash Verge.lnk",
+          "command": "C:\\Users\\Administrator\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\Clash Verge.lnk"
+        },
+        {
+          "source": "启动文件夹",
+          "name": "desktop.ini",
+          "command": "C:\\Users\\Administrator\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\desktop.ini"
+        },
+        {
+          "source": "启动文件夹",
+          "name": "Ollama.lnk",
+          "command": "C:\\Users\\Administrator\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\Ollama.lnk"
+        },
+        {
+          "source": "启动文件夹",
+          "name": "start_chat_service.bat",
+          "command": "C:\\Users\\Administrator\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\start_chat_service.bat"
+        },
+        {
+          "source": "启动文件夹",
+          "name": "start_clash.bat",
+          "command": "C:\\Users\\Administrator\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\start_clash.bat"
+        },
+        {
+          "source": "启动文件夹",
+          "name": "desktop.ini",
+          "command": "C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\StartUp\\desktop.ini"
+        },
+        {
+          "source": "启动文件夹",
+          "name": "Tailscale.lnk",
+          "command": "C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\StartUp\\Tailscale.lnk"
+        }
+      ],
+      "note": "沙箱内 HKCU Run 枚举可能不完整，建议独立进程复核；本次未做任何修改"
+    },
+    "elapsed_s": 0.0
+  },
+  "services": {
+    "ok": true,
+    "data": {
+      "total_services": 889,
+      "key_services": [
+        {
+          "name": "WinDefend",
+          "status": "自动"
+        },
+        {
+          "name": "wuauserv",
+          "status": "手动"
+        },
+        {
+          "name": "BITS",
+          "status": "自动",
+          "delayed": true
+        },
+        {
+          "name": "SysMain",
+          "status": "自动"
+        },
+        {
+          "name": "DiagTrack",
+          "status": "自动"
+        },
+        {
+          "name": "WSearch",
+          "status": "自动",
+          "delayed": true
+        },
+        {
+          "name": "EventLog",
+          "status": "自动"
+        },
+        {
+          "name": "MpsSvc",
+          "status": "自动"
+        },
+        {
+          "name": "CryptSvc",
+          "status": "自动"
+        },
+        {
+          "name": "Dhcp",
+          "status": "自动"
+        },
+        {
+          "name": "Dnscache",
+          "status": "自动"
+        }
+      ],
+      "key_auto_count": 10,
+      "note": "只读，未修改任何服务"
+    },
+    "elapsed_s": 0.0
+  },
+  "caches": {
+    "ok": true,
+    "data": {
+      "targets": [
+        {
+          "path": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp",
+          "exists": true,
+          "files": 42428,
+          "bytes": 7652143325,
+          "oldest_mtime": "2020-10-20T14:12:38",
+          "newest_mtime": "2026-11-06T21:25:19",
+          "truncated": false,
+          "skipped": 591,
+          "label": "用户临时目录 %TEMP%",
+          "counted": true
+        },
+        {
+          "path": "C:\\Users\\Administrator\\AppData\\Local\\Temp",
+          "exists": true,
+          "files": 42428,
+          "bytes": 7652143325,
+          "oldest_mtime": "2020-10-20T14:12:38",
+          "newest_mtime": "2026-11-06T21:25:19",
+          "truncated": false,
+          "skipped": 591,
+          "label": "LocalAppData\\Temp",
+          "duplicate_of": "用户临时目录 %TEMP%",
+          "counted": false
+        },
+        {
+          "path": "C:\\WINDOWS\\Temp",
+          "exists": true,
+          "files": 0,
+          "bytes": 0,
+          "oldest_mtime": null,
+          "newest_mtime": null,
+          "truncated": false,
+          "skipped": 1,
+          "label": "Windows\\Temp",
+          "counted": true
+        },
+        {
+          "path": "C:\\Users\\Administrator\\AppData\\Local\\Microsoft\\Windows\\INetCache",
+          "exists": true,
+          "files": 1,
+          "bytes": 0,
+          "oldest_mtime": "2026-07-11T00:43:24",
+          "newest_mtime": "2026-07-11T00:43:24",
+          "truncated": false,
+          "skipped": 2,
+          "label": "INetCache",
+          "counted": true
+        },
+        {
+          "path": "C:\\Users\\Administrator\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\Cache",
+          "exists": true,
+          "files": 1377,
+          "bytes": 339928864,
+          "oldest_mtime": "2026-11-05T20:48:32",
+          "newest_mtime": "2026-11-06T19:50:24",
+          "truncated": false,
+          "skipped": 0,
+          "label": "Chrome 默认缓存",
+          "counted": true
+        },
+        {
+          "path": "C:\\Users\\Administrator\\AppData\\Local\\Microsoft\\Edge\\User Data\\Default\\Cache",
+          "exists": true,
+          "files": 204,
+          "bytes": 23870457,
+          "oldest_mtime": "2026-10-27T19:07:58",
+          "newest_mtime": "2026-11-06T19:56:44",
+          "truncated": false,
+          "skipped": 0,
+          "label": "Edge 默认缓存",
+          "counted": true
+        },
+        {
+          "path": "C:\\Users\\Administrator\\AppData\\Local\\CrashDumps",
+          "exists": true,
+          "files": 0,
+          "bytes": 0,
+          "oldest_mtime": null,
+          "newest_mtime": null,
+          "truncated": false,
+          "skipped": 0,
+          "label": "崩溃转储 CrashDumps",
+          "counted": true
+        },
+        {
+          "path": "C:\\Users\\Administrator\\AppData\\Local\\Microsoft\\Windows\\WER",
+          "exists": false,
+          "files": 0,
+          "bytes": 0,
+          "oldest_mtime": null,
+          "newest_mtime": null,
+          "truncated": false,
+          "skipped": 0,
+          "label": "WER 错误报告",
+          "counted": false
+        },
+        {
+          "path": "C:\\WINDOWS\\SoftwareDistribution\\Download",
+          "exists": true,
+          "files": 0,
+          "bytes": 0,
+          "oldest_mtime": null,
+          "newest_mtime": null,
+          "truncated": false,
+          "skipped": 0,
+          "label": "Windows 更新下载缓存",
+          "counted": true
+        },
+        {
+          "path": "C:\\$Recycle.Bin",
+          "exists": true,
+          "files": 93,
+          "bytes": 5661135,
+          "oldest_mtime": "2026-11-02T19:07:05",
+          "newest_mtime": "2026-11-06T20:44:14",
+          "truncated": false,
+          "skipped": 4,
+          "label": "回收站（仅统计）",
+          "counted": false,
+          "excluded_reason": "禁止项，不计入候选合计"
+        },
+        {
+          "label": "缩略图缓存 thumbcache_*.db",
+          "path": "C:\\Users\\Administrator\\AppData\\Local\\Microsoft\\Windows\\Explorer",
+          "exists": true,
+          "files": 15,
+          "bytes": 18991056,
+          "oldest_mtime": null,
+          "newest_mtime": null,
+          "truncated": false,
+          "skipped": 0,
+          "counted": true
+        },
+        {
+          "label": "Windows.old（L3 禁止项，仅提示存在）",
+          "path": "C:\\Windows.old",
+          "exists": false,
+          "files": 0,
+          "bytes": 0,
+          "oldest_mtime": null,
+          "newest_mtime": null,
+          "truncated": false,
+          "skipped": 0,
+          "counted": false,
+          "excluded_reason": "L3 禁止项，不计入候选合计"
+        }
+      ],
+      "total_bytes": 8034933702,
+      "duplicate_count": 1,
+      "excluded_count": 2,
+      "note": "仅统计体积，未删除任何文件；合计已对同一物理目录去重并排除禁止项，实际可清理量仍需用户逐项确认"
+    },
+    "elapsed_s": 4.32
+  },
+  "path": {
+    "ok": true,
+    "data": {
+      "entries": 57,
+      "duplicates": [
+        "C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\",
+        "C:\\WINDOWS\\System32\\OpenSSH\\"
+      ],
+      "duplicate_count": 2,
+      "missing": [
+        "C:\\nvm4w\\nvm\\nodejs"
+      ],
+      "missing_count": 1
+    },
+    "elapsed_s": 0.0
+  },
+  "hosts": {
+    "ok": true,
+    "data": {
+      "exists": true,
+      "encoding": "UTF-8 BOM",
+      "size_bytes": 953,
+      "active_lines": 2,
+      "local_redirects": 0,
+      "note": "只读统计；本次实测本地重定向 0 条；无论条数多少均禁止批量改动，历史条数不作为当前结论"
+    },
+    "elapsed_s": 0.0
+  },
+  "power": {
+    "ok": true,
+    "data": {
+      "raw": "电源方案 GUID: 8c5e7fda-e8bf-4a96-9a85-a6e23a8c635c  (高性能)",
+      "returncode": 0
+    },
+    "elapsed_s": 0.04
+  },
+  "protection": {
+    "ok": true,
+    "data": {
+      "system_restore": 1,
+      "defender": 0,
+      "defender_realtime": "不可读/默认值"
+    },
+    "elapsed_s": 0.0
+  },
+  "network": {
+    "ok": true,
+    "data": {
+      "enabled": true,
+      "udp53": "可达（DNS 响应正常）",
+      "tcp443": "可达",
+      "proxy_env": {
+        "HTTPS_PROXY": "http://127.0.0.1:7897",
+        "HTTP_PROXY": "http://127.0.0.1:7897",
+        "NO_PROXY": "127.0.0.1,localhost,::1,10.*,192.168.*,172.16.*,*.tsinghua.edu.cn,*.tuna.tsinghua.edu.cn,*.aliyuncs.com,*.aliyun.com,*.myqcloud.com,*.huaweicloud.com,*.modelscope.cn,*.ustc.edu.cn,*.npmmirror.com,*.gitee.com,.workbuddy.cn,workbuddy.cn,.tencentbuddy.com,tencentbuddy.com,.copilot.tencent.com,copilot.tencent.com,.qoder.com.cn,qoder.com.cn"
+      },
+      "note": "只读探测，未修改 DNS / hosts / 代理配置"
+    },
+    "elapsed_s": 0.03
+  },
+  "user_files": {
+    "ok": true,
+    "skipped": true,
+    "reason": "默认不扫描用户私人目录；可用 --include-user-files 开启只读列举"
+  }
+}

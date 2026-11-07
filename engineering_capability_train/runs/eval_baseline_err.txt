@@ -1,0 +1,1 @@
+[16:34:00][evaluate] run_dir=D:\Virtu模型\engineering_capability_train\runs\eval_20261104_162436_14528 valid=9 accepted=False

@@ -1,0 +1,8 @@
+{
+  "file": "D:\\Virtu模型\\data\\train\\incident_v1\\train\\incident_sft_v1.jsonl",
+  "total": 265,
+  "incident": 40,
+  "route": 225,
+  "dedup_removed": 0,
+  "sha1": "b75549641ef2f75b23400ee8c690218cd86330b2"
+}

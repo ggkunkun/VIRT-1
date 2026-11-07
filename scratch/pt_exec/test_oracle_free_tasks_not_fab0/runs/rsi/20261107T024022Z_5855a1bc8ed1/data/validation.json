@@ -1,0 +1,21 @@
+{
+  "valid": true,
+  "n_rows": 0,
+  "tasks": {},
+  "skipped": {
+    "no_trusted_oracle:mass_props": 1
+  },
+  "seed": 20262015,
+  "protection": {
+    "eval_cases": 0,
+    "hard_holdout": 0,
+    "normalized_prompt_and_ngram": true,
+    "exact_scenario": true,
+    "formula_parameter_pairs": true,
+    "gold_numeric_substring_not_a_leak_test": true
+  },
+  "status": "candidate_only_not_trained",
+  "target_trainer": "scripts/train_qwen3_8b_qlora.py",
+  "requires_manual_training_approval": true,
+  "warning": "Analytic solver examples are not evidence of real CAD/GUI/simulation capability."
+}

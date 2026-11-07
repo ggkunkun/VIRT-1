@@ -315,3 +315,110 @@ def test_annotation_gate_and_task_brief_share_one_number(tmp_path):
                                     notes_verified=n, notes_requested=n)}]
     assert M.judge(enough, [], claims, frozenset(), require_annotation=True)["pass"] is True
 
+
+def test_annotation_nudge_also_states_the_dimension_count():
+    assert str(M.MIN_VERIFIED_DIMS) in M.NUDGE_ANNOTATE, M.NUDGE_ANNOTATE
+
+
+def test_model_errors_are_classified_not_all_fatal():
+    """Measured 2026-11-03: WinError 10054 (the peer closed the connection) killed a whole
+    annotation arm and the report then read like a model failure."""
+    assert M.classify_model_error("[WinError 10054] 远程主机强迫关闭了一个现有的连接。") == "transport"
+    assert M.classify_model_error("[WinError 10053] 你的主机中的软件中止了一个已建立的连接。") == "transport"
+    assert M.classify_model_error("HTTP 500 llama-server crashed") == "transport"
+    assert M.classify_model_error("The read operation timed out") == "transport"
+    assert M.classify_model_error("number of tokens in prompt (9000) exceeds the available "
+                                  "context size length of: 8192") == "over_ctx"
+    assert M.classify_model_error("invalid tool call arguments: end of JSON") == "truncated"
+    assert M.classify_model_error("RuntimeError: something new") == "unknown"
+
+
+def test_transport_abort_is_not_scored_as_a_model_result():
+    builds = [{"tool": "cadcam_solidworks_model", "result": build_result()}]
+    scored = M.judge(builds, [], [], frozenset())
+    unscored = M.judge(builds, [], [], frozenset(), transport_aborted=True)
+    assert scored["scored"] is True
+    assert unscored["scored"] is False
+    assert unscored["transport_aborted"] is True
+    assert "transport" in unscored["reason"]
+    empty = M.judge([], [], [], frozenset(), transport_aborted=True)
+    assert empty["scored"] is False and "transport" in empty["reason"]
+    assert M.judge([], [], [], frozenset())["scored"] is True
+
+
+def test_evict_never_unloads_a_model_another_session_pinned():
+    resident = [{"name": "virtu-ties-v1:latest", "expires": ""},
+                {"name": "qwen3:8b", "expires": "4m6s ago"},
+                {"name": "virtu-toolcall:latest", "expires": ""}]
+    got = M.evictable_models(resident, keep="virtu-toolcall:latest")
+    assert got == ["qwen3:8b"], got
+    assert M.evictable_models(resident, keep="virtu-toolcall:latest",
+                              evict_pinned=True) == ["virtu-ties-v1:latest", "qwen3:8b"]
+    assert M.evictable_models([], keep=None) == []
+
+
+def sw_args(**over):
+    base = dict(model="virtu-toolcall:latest", turns=3, nudges=1, temperature=0.2, num_ctx=8192,
+                max_num_ctx=12288, num_predict=512, gen_retries=2, model_retries=1, retry_wait=0.0,
+                model_timeout=30, build_timeout=60, sw_timeout=10.0, step_delay=0.0, entity_delay=0.0,
+                keep_alive="10m", tools_scope="cad", drawing=False, min_free_gb=1.6, build_retries=1,
+                repeat_limit=3, prewarm=True, force=False, recycle_wedged=False, screenshots=False,
+                sanitize_schema=True, fewshot=0, corpus="", tag="selftest", task=None,
+                require_annotation=False, contract=False, evict_pinned=False)
+    base.update(over)
+    return types.SimpleNamespace(**base)
+
+
+@pytest.fixture
+def stub_env(monkeypatch, tmp_path):
+    """Keep the supervisor off the real Ollama/SOLIDWORKS/RAM gates."""
+    monkeypatch.setattr(M, "RUN_DIR", str(tmp_path))
+    monkeypatch.setattr(M, "evict_models", lambda **kw: [])
+    monkeypatch.setattr(M, "prewarm", lambda *a, **kw: 0.1)
+    monkeypatch.setattr(M, "free_memory_gb", lambda: 8.0)
+    monkeypatch.setattr(M, "top_memory_holders", lambda n=5: [])
+    return tmp_path
+
+
+def test_transport_failure_retries_instead_of_killing_the_arm(stub_env, monkeypatch):
+    """One dropped socket used to abort the whole arm and leave a verdict that read like a
+    model failure (measured 2026-11-03 on lora_ann)."""
+    calls = {"n": 0}
+
+    def flaky_chat(*a, **kw):
+        calls["n"] += 1
+        if calls["n"] == 1:
+            raise OSError("[WinError 10054] 远程主机强迫关闭了一个现有的连接。")
+        return {"elapsed_s": 0.1, "eval_count": 5, "prompt_eval_count": 100,
+                "content": u"我先看看现状。", "tool_calls": None}
+
+    monkeypatch.setattr(M.otc, "chat", flaky_chat)
+    rc = M.supervisor(sw_args(turns=2))
+    # turn 1 = failed attempt + successful retry, turn 2 = the nudge response
+    assert calls["n"] == 3, "the transport error was not retried"
+    assert rc == 1  # the model then declined to build: that much IS a scored model result
+    rep = json.load(open(str(stub_env / "supervision_report_selftest.json"), encoding="utf-8"))
+    assert rep["verdict"]["scored"] is True
+    assert rep["verdict"]["transport_aborted"] is False
+    records = [json.loads(l) for l in open(str(stub_env / "supervision_selftest.jsonl"),
+                                           encoding="utf-8")]
+    errs = [o for o in records if o.get("kind") == "model_error"]
+    assert errs and errs[0]["error_class"] == "transport"
+
+
+def test_persistent_transport_failure_is_flagged_unscored(stub_env, monkeypatch):
+    calls = {"n": 0}
+
+    def dead_chat(*a, **kw):
+        calls["n"] += 1
+        raise OSError("[WinError 10054] 远程主机强迫关闭了一个现有的连接。")
+
+    monkeypatch.setattr(M.otc, "chat", dead_chat)
+    rc = M.supervisor(sw_args(turns=2, model_retries=1))
+    assert calls["n"] == 2, "expected the first attempt plus one retry, then abort"
+    assert rc == 1
+    rep = json.load(open(str(stub_env / "supervision_report_selftest.json"), encoding="utf-8"))
+    assert rep["verdict"]["scored"] is False
+    assert rep["verdict"]["transport_aborted"] is True
+    assert "transport" in rep["verdict"]["reason"]
+

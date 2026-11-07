@@ -1,0 +1,1802 @@
+{
+  "model": "virtu-wm-v3:latest",
+  "timestamp": "2026-11-04 22:26:27",
+  "total_cases": 24,
+  "total_time_seconds": 395.59,
+  "round_1_pass_count": 7,
+  "round_1_pass_rate": 29.17,
+  "final_pass_count": 8,
+  "final_pass_rate": 33.33,
+  "average_rounds_to_zero_error": 1.38,
+  "domain_statistics": {
+    "toolcall": {
+      "total": 3,
+      "r1_pass": 1,
+      "final_pass": 1,
+      "rounds_to_pass": [
+        1
+      ]
+    },
+    "reasoning": {
+      "total": 3,
+      "r1_pass": 0,
+      "final_pass": 0,
+      "rounds_to_pass": []
+    },
+    "knowledge": {
+      "total": 3,
+      "r1_pass": 0,
+      "final_pass": 0,
+      "rounds_to_pass": []
+    },
+    "instruction": {
+      "total": 3,
+      "r1_pass": 3,
+      "final_pass": 3,
+      "rounds_to_pass": [
+        1,
+        1,
+        1
+      ]
+    },
+    "boundary": {
+      "total": 3,
+      "r1_pass": 2,
+      "final_pass": 3,
+      "rounds_to_pass": [
+        1,
+        4,
+        1
+      ]
+    },
+    "generation": {
+      "total": 3,
+      "r1_pass": 0,
+      "final_pass": 0,
+      "rounds_to_pass": []
+    },
+    "generalization": {
+      "total": 3,
+      "r1_pass": 1,
+      "final_pass": 1,
+      "rounds_to_pass": [
+        1
+      ]
+    },
+    "physics_worldmodel": {
+      "total": 3,
+      "r1_pass": 0,
+      "final_pass": 0,
+      "rounds_to_pass": []
+    }
+  },
+  "detailed_results": [
+    {
+      "case_id": "toolcall-e04",
+      "domain": "toolcall",
+      "tier": "easy",
+      "prompt": "用 CIMCO 校验一段 Macro B 程序。输出一个 JSON 工具调用。",
+      "converged": false,
+      "rounds_needed": null,
+      "initial_score": 66.67,
+      "final_score": 66.67,
+      "rounds_history": [
+        {
+          "round": 1,
+          "latency_s": 6.184,
+          "score": 66.67,
+          "all_passed": false,
+          "response_snippet": "{\"tool\":\"cadcam_validate\",\"arguments\":{\"action\":\"validate_macro\",\"code\":\"#NC MACRO V1.0\\nO1102 (STOCK DOWEL)\\nG54 G90 G1",
+          "failing_criteria": [
+            {
+              "key": "要素",
+              "type": "literal_all",
+              "weight": 1.0,
+              "passed": false,
+              "evidence": "missing=['cadcam_cimco_validate']"
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "latency_s": 1.692,
+          "score": 33.33,
+          "all_passed": false,
+          "response_snippet": "{\"tool\":\"cadcam_validate\",\"arguments\":{\"action\":\"run_macro_b_profile\",\"nc_path\":\"models/fixture.macro\"}}",
+          "failing_criteria": [
+            {
+              "key": "动作",
+              "type": "enum_field",
+              "weight": 1.0,
+              "passed": false,
+              "evidence": "bad=action=run_macro_b_profile!in['validate_macro']"
+            },
+            {
+              "key": "要素",
+              "type": "literal_all",
+              "weight": 1.0,
+              "passed": false,
+              "evidence": "missing=['cadcam_cimco_validate', 'validate_macro']"
+            }
+          ]
+        },
+        {
+          "round": 3,
+          "latency_s": 6.135,
+          "score": 33.33,
+          "all_passed": false,
+          "response_snippet": "{\"tool\":\"cadcam_validate\",\"arguments\":{\"action\":\"validate_macro_b\",\"code\":\"#NC MACRO B\\nO1102 (STOCK DOWEL)\\nG54 G90 G17",
+          "failing_criteria": [
+            {
+              "key": "动作",
+              "type": "enum_field",
+              "weight": 1.0,
+              "passed": false,
+              "evidence": "bad=action=validate_macro_b!in['validate_macro']"
+            },
+            {
+              "key": "要素",
+              "type": "literal_all",
+              "weight": 1.0,
+              "passed": false,
+              "evidence": "missing=['cadcam_cimco_validate']"
+            }
+          ]
+        },
+        {
+          "round": 4,
+          "latency_s": 5.398,
+          "score": 66.67,
+          "all_passed": false,
+          "response_snippet": "{\"tool\":\"cadcam_cimco_validate\",\"arguments\":{\"action\":\"validate_macro_b\",\"code\":\"O1102\\nG54 G90 G17\\nS2800 M03\\nT0202\\nG",
+          "failing_criteria": [
+            {
+              "key": "动作",
+              "type": "enum_field",
+              "weight": 1.0,
+              "passed": false,
+              "evidence": "bad=action=validate_macro_b!in['validate_macro']"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "toolcall-m06",
+      "domain": "toolcall",
+      "tier": "medium",
+      "prompt": "SOLIDWORKS 执行 VBA 宏，part_name=flange。输出 JSON。",
+      "converged": false,
+      "rounds_needed": null,
+      "initial_score": 0.0,
+      "final_score": 0.0,
+      "rounds_history": [
+        {
+          "round": 1,
+          "latency_s": 2.446,
+          "score": 0.0,
+          "all_passed": false,
+          "response_snippet": "{\"world_state\": null, \"invalid\": true, \"reason\": \"没有给出制造场景描述，无法推导物理量。\"}",
+          "failing_criteria": [
+            {
+              "key": "JSON",
+              "type": "json_object",
+              "weight": 1.0,
+              "passed": false,
+              "evidence": "missing=['tool', 'arguments'] forbidden=[]"
+            },
+            {
+              "key": "动作",
+              "type": "enum_field",
+              "weight": 1.0,
+              "passed": false,
+              "evidence": "bad=action:absent"
+            },
+            {
+              "key": "要素",
+              "type": "literal_all",
+              "weight": 1.0,
+              "passed": false,
+              "evidence": "missing=['cadcam_solidworks_model', 'execute_vba']"
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "latency_s": 2.849,
+          "score": 0.0,
+          "all_passed": false,
+          "response_snippet": "{\"world_state\": {\"part_name\": \"flange\", \"software_used\": \"SOLIDWORKS\"}, \"derivation\": {\"part_name\": \"flange\", \"software_",
+          "failing_criteria": [
+            {
+              "key": "JSON",
+              "type": "json_object",
+              "weight": 1.0,
+              "passed": false,
+              "evidence": "missing=['tool', 'arguments'] forbidden=[]"
+            },
+            {
+              "key": "动作",
+              "type": "enum_field",
+              "weight": 1.0,
+              "passed": false,
+              "evidence": "bad=action:absent"
+            },
+            {
+              "key": "要素",
+              "type": "literal_all",
+              "weight": 1.0,
+              "passed": false,
+              "evidence": "missing=['cadcam_solidworks_model', 'execute_vba']"
+            }
+          ]
+        },
+        {
+          "round": 3,
+          "latency_s": 2.736,
+          "score": 0.0,
+          "all_passed": false,
+          "response_snippet": "{\"world_state\": {\"part_name\": \"flange\", \"software_used\": \"SOLIDWORKS\"}, \"derivation\": {\"part_name\": \"flange\", \"software_",
+          "failing_criteria": [
+            {
+              "key": "JSON",
+              "type": "json_object",
+              "weight": 1.0,
+              "passed": false,
+              "evidence": "no_json_object_parsed"
+            },
+            {
+              "key": "动作",
+              "type": "enum_field",
+              "weight": 1.0,
+              "passed": false,
+              "evidence": "no_json_object_parsed"
+            },
+            {
+              "key": "要素",
+              "type": "literal_all",
+              "weight": 1.0,
+              "passed": false,
+              "evidence": "missing=['cadcam_solidworks_model', 'execute_vba']"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "toolcall-h03",
+      "domain": "toolcall",
+      "tier": "hard",
+      "prompt": "用错软件会损坏文件：当前任务是把 .prt 交给 NX。输出 JSON：tool=cadcam_nx_journal，action=run_journal，script_path=runs/nx.py；不得出现 solidworks。",
+      "converged": true,
+      "rounds_needed": 1,
+      "initial_score": 100.0,
+      "final_score": 100.0,
+      "rounds_history": [
+        {
+          "round": 1,
+          "latency_s": 1.907,
+          "score": 100.0,
+          "all_passed": true,
+          "response_snippet": "{\"tool\": \"cadcam_nx_journal\", \"action\": \"run_journal\", \"arguments\": {\"script_path\": \"runs/nx.py\"}}",
+          "failing_criteria": []
+        }
+      ]
+    },
+    {
+      "case_id": "reasoning-e08",
+      "domain": "reasoning",
+      "tier": "easy",
+      "prompt": "法兰的分度圆直径 Ø160 mm，均布 6 个孔。弦长公式 = D*sin(180°/z)。求相邻两孔的孔心距（mm，保留 1 位小数）与相邻孔的角向间隔（度）。用阿拉伯数字作答。",
+      "converged": false,
+      "rounds_needed": null,
+      "initial_score": 50.0,
+      "final_score": 50.0,
+      "rounds_history": [
+        {
+          "round": 1,
+          "latency_s": 10.226,
+          "score": 50.0,
+          "all_passed": false,
+          "response_snippet": "{\"world_state\": {\"pitch_diameter_mm\": 160.0, \"angular_step_deg\": 60.0, \"center_distance_mm\": 159.2}, \"derivation\": {\"pit",
+          "failing_criteria": [
+            {
+              "key": "chord_value",
+              "type": "numeric_near",
+              "weight": 3.0,
+              "passed": false,
+              "evidence": "closest=60.0 target=80.0 tol=0.05 all=[160.0, 60.0, 159.2, 160.0, 360.0, 6.0, 60.0, 2.0]"
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "latency_s": 4.82,
+          "score": 50.0,
+          "all_passed": false,
+          "response_snippet": "{\"world_state\": {\"chord_value_mm\": 159.9, \"angular_step_deg\": 60.0}, \"derivation\": {\"chord_value_mm\": \"160*sin(180/6)\", ",
+          "failing_criteria": [
+            {
+              "key": "chord_value",
+              "type": "numeric_near",
+              "weight": 3.0,
+              "passed": false,
+              "evidence": "closest=60.0 target=80.0 tol=0.05 all=[159.9, 60.0, 160.0, 180.0, 6.0, 360.0, 6.0]"
+            }
+          ]
+        },
+        {
+          "round": 3,
+          "latency_s": 4.912,
+          "score": 50.0,
+          "all_passed": false,
+          "response_snippet": "{\"world_state\": {\"chord_value_mm\": 159.9, \"angular_step_deg\": 60.0}, \"derivation\": {\"chord_value_mm\": \"160*sin(180/6)\", ",
+          "failing_criteria": [
+            {
+              "key": "chord_value",
+              "type": "numeric_near",
+              "weight": 3.0,
+              "passed": false,
+              "evidence": "closest=60.0 target=80.0 tol=0.05 all=[159.9, 60.0, 160.0, 180.0, 6.0, 360.0, 6.0]"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "reasoning-m10",
+      "domain": "reasoning",
+      "tier": "medium",
+      "prompt": "程序段：G03 X30.0 Y10.0 I10.0 J0.0，执行该段前刀具位于 (10.0,10.0)，单位 mm。I、J 为从弧段起点指向圆心的矢量分量。求弧段半径（mm，保留 1 位小数）、圆心角（度）与弧长（mm，保留 2 位小数）。",
+      "converged": false,
+      "rounds_needed": null,
+      "initial_score": 0.0,
+      "final_score": 33.33,
+      "rounds_history": [
+        {
+          "round": 1,
+          "latency_s": 10.266,
+          "score": 0.0,
+          "all_passed": false,
+          "response_snippet": "{\"world_state\": {\"radius_mm\": 10.0, \"central_angle_deg\": 90.0, \"arc_length_mm\": 78.54}, \"derivation\": {\"radius_mm\": \"sqr",
+          "failing_criteria": [
+            {
+              "key": "arc_length",
+              "type": "numeric_near",
+              "weight": 3.0,
+              "passed": false,
+              "evidence": "closest=10.0 target=31.42 tol=0.02 all=[10.0, 90.0, 78.54, 2.0, 2.0, 10.0, 2.0, 0.0]"
+            },
+            {
+              "key": "sweep_angle",
+              "type": "numeric_near",
+              "weight": 2.0,
+              "passed": false,
+              "evidence": "closest=90.0 target=180.0 tol=0.5 all=[10.0, 90.0, 78.54, 2.0, 2.0, 10.0, 2.0, 0.0]"
+            },
+            {
+              "key": "center_x",
+              "type": "numeric_near",
+              "weight": 1.0,
+              "passed": false,
+              "evidence": "closest=10.0 target=20.0 tol=0.05 all=[10.0, 90.0, 78.54, 2.0, 2.0, 10.0, 2.0, 0.0]"
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "latency_s": 23.775,
+          "score": 33.33,
+          "all_passed": false,
+          "response_snippet": "{\"world_state\": {\"center_x\": 0.0, \"center_y\": 10.0, \"arc_angle_deg\": 90.0, \"arc_length_mm\": 28.27}, \"derivation\": {\"cent",
+          "failing_criteria": [
+            {
+              "key": "arc_length",
+              "type": "numeric_near",
+              "weight": 3.0,
+              "passed": false,
+              "evidence": "closest=30.0 target=31.42 tol=0.02 all=[0.0, 10.0, 90.0, 28.27, 10.0, 30.0, 2.0, 10.0]"
+            },
+            {
+              "key": "center_x",
+              "type": "numeric_near",
+              "weight": 1.0,
+              "passed": false,
+              "evidence": "closest=28.27 target=20.0 tol=0.05 all=[0.0, 10.0, 90.0, 28.27, 10.0, 30.0, 2.0, 10.0]"
+            }
+          ]
+        },
+        {
+          "round": 3,
+          "latency_s": 12.493,
+          "score": 33.33,
+          "all_passed": false,
+          "response_snippet": "{\"world_state\": {\"center_x\": 0.0, \"center_y\": 10.0, \"radius_mm\": 10.0, \"arc_angle_deg\": 90.0, \"arc_length_mm\": 78.5}, \"d",
+          "failing_criteria": [
+            {
+              "key": "arc_length",
+              "type": "numeric_near",
+              "weight": 3.0,
+              "passed": false,
+              "evidence": "closest=30.0 target=31.42 tol=0.02 all=[0.0, 10.0, 10.0, 90.0, 78.5, 10.0, 30.0, 2.0]"
+            },
+            {
+              "key": "center_x",
+              "type": "numeric_near",
+              "weight": 1.0,
+              "passed": false,
+              "evidence": "closest=10.0 target=20.0 tol=0.05 all=[0.0, 10.0, 10.0, 90.0, 78.5, 10.0, 30.0, 2.0]"
+            }
+          ]
+        },
+        {
+          "round": 4,
+          "latency_s": 11.785,
+          "score": 33.33,
+          "all_passed": false,
+          "response_snippet": "{\"world_state\": {\"center_x\": 10.0, \"center_y\": 10.0, \"radius_mm\": 10.0, \"arc_angle_deg\": 90.0, \"arc_length_mm\": 28.27}, ",
+          "failing_criteria": [
+            {
+              "key": "arc_length",
+              "type": "numeric_near",
+              "weight": 3.0,
+              "passed": false,
+              "evidence": "closest=30.0 target=31.42 tol=0.02 all=[10.0, 10.0, 10.0, 90.0, 28.27, 10.0, 10.0, 30.0]"
+            },
+            {
+              "key": "center_x",
+              "type": "numeric_near",
+              "weight": 1.0,
+              "passed": false,
+              "evidence": "closest=28.27 target=20.0 tol=0.05 all=[10.0, 10.0, 10.0, 90.0, 28.27, 10.0, 10.0, 30.0]"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "reasoning-h01",
+      "domain": "reasoning",
+      "tier": "hard",
+      "prompt": "粗铣平面工艺链：刀具 Ø12 mm、齿数 z=4，Vc=180 m/min，每齿进给 f=0.15 mm/齿，ap=3 mm，ae=10 mm；单次走刀覆盖长度 480 mm，每层另加引入与切出空行程 20 mm，共 2 层。公式：n=1000*Vc/(π*D)，Vf=f*z*n，MRR=ap*ae*Vf，T=总行程/Vf。中间量一律不取整，最终 n、Vf 各保留 1 位小数，MRR 保留 1 位小数（mm³/min），时间保留 2 位小数（单位 s）。按 n、Vf、MRR、时间的顺序输出。",
+      "converged": false,
+      "rounds_needed": null,
+      "initial_score": 0.0,
+      "final_score": 0.0,
+      "rounds_history": [
+        {
+          "round": 1,
+          "latency_s": 8.964,
+          "score": 0.0,
+          "all_passed": false,
+          "response_snippet": "{\"world_state\": {\"n_rpm\": 1500.0, \"v_f_mm_per_min\": 942.0, \"mrr_mm3_per_min\": 8478.0, \"time_s\": 1.6}, \"derivation\": {\"n_",
+          "failing_criteria": [
+            {
+              "key": "rpm_value",
+              "type": "numeric_near",
+              "weight": 2.0,
+              "passed": false,
+              "evidence": "closest=1500.0 target=4774.6 tol=0.5 all=[1500.0, 942.0, 3.0, 8478.0, 1.6, 1000.0, 180.0, 12.0]"
+            },
+            {
+              "key": "vf_value",
+              "type": "numeric_near",
+              "weight": 2.0,
+              "passed": false,
+              "evidence": "closest=1500.0 target=2864.8 tol=0.2 all=[1500.0, 942.0, 3.0, 8478.0, 1.6, 1000.0, 180.0, 12.0]"
+            },
+            {
+              "key": "mrr_value",
+              "type": "numeric_near",
+              "weight": 2.0,
+              "passed": false,
+              "evidence": "closest=8478.0 target=85943.7 tol=30.0 all=[1500.0, 942.0, 3.0, 8478.0, 1.6, 1000.0, 180.0, 12.0]"
+            },
+            {
+              "key": "time_seconds",
+              "type": "numeric_near",
+              "weight": 3.0,
+              "passed": false,
+              "evidence": "closest=20.0 target=20.94 tol=0.05 all=[1500.0, 942.0, 3.0, 8478.0, 1.6, 1000.0, 180.0, 12.0]"
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "latency_s": 10.64,
+          "score": 0.0,
+          "all_passed": false,
+          "response_snippet": "{\"world_state\": {\"rpm_value\": 1591.5, \"vf_value\": 188.496, \"mrr_value\": 942.48, \"time_seconds\": 3.07}, \"derivation\": {\"r",
+          "failing_criteria": [
+            {
+              "key": "rpm_value",
+              "type": "numeric_near",
+              "weight": 2.0,
+              "passed": false,
+              "evidence": "closest=1591.5 target=4774.6 tol=0.5 all=[1591.5, 188.496, 942.48, 3.07, 1000.0, 180.0, 12.0, 0.15]"
+            },
+            {
+              "key": "vf_value",
+              "type": "numeric_near",
+              "weight": 2.0,
+              "passed": false,
+              "evidence": "closest=1591.5 target=2864.8 tol=0.2 all=[1591.5, 188.496, 942.48, 3.07, 1000.0, 180.0, 12.0, 0.15]"
+            },
+            {
+              "key": "mrr_value",
+              "type": "numeric_near",
+              "weight": 2.0,
+              "passed": false,
+              "evidence": "closest=1591.5 target=85943.7 tol=30.0 all=[1591.5, 188.496, 942.48, 3.07, 1000.0, 180.0, 12.0, 0.15]"
+            },
+            {
+              "key": "time_seconds",
+              "type": "numeric_near",
+              "weight": 3.0,
+              "passed": false,
+              "evidence": "closest=20.0 target=20.94 tol=0.05 all=[1591.5, 188.496, 942.48, 3.07, 1000.0, 180.0, 12.0, 0.15]"
+            }
+          ]
+        },
+        {
+          "round": 3,
+          "latency_s": 11.363,
+          "score": 0.0,
+          "all_passed": false,
+          "response_snippet": "{\"world_state\": {\"rpm_value\": 1591.5, \"vf_value\": 180.0, \"mrr_value\": 8640.0, \"time_seconds\": 2.73}, \"derivation\": {\"rpm",
+          "failing_criteria": [
+            {
+              "key": "rpm_value",
+              "type": "numeric_near",
+              "weight": 2.0,
+              "passed": false,
+              "evidence": "closest=1591.5 target=4774.6 tol=0.5 all=[1591.5, 180.0, 8640.0, 2.73, 1000.0, 180.0, 12.0, 0.15]"
+            },
+            {
+              "key": "vf_value",
+              "type": "numeric_near",
+              "weight": 2.0,
+              "passed": false,
+              "evidence": "closest=1591.5 target=2864.8 tol=0.2 all=[1591.5, 180.0, 8640.0, 2.73, 1000.0, 180.0, 12.0, 0.15]"
+            },
+            {
+              "key": "mrr_value",
+              "type": "numeric_near",
+              "weight": 2.0,
+              "passed": false,
+              "evidence": "closest=8640.0 target=85943.7 tol=30.0 all=[1591.5, 180.0, 8640.0, 2.73, 1000.0, 180.0, 12.0, 0.15]"
+            },
+            {
+              "key": "time_seconds",
+              "type": "numeric_near",
+              "weight": 3.0,
+              "passed": false,
+              "evidence": "closest=20.0 target=20.94 tol=0.05 all=[1591.5, 180.0, 8640.0, 2.73, 1000.0, 180.0, 12.0, 0.15]"
+            }
+          ]
+        },
+        {
+          "round": 4,
+          "latency_s": 17.852,
+          "score": 0.0,
+          "all_passed": false,
+          "response_snippet": "{\"world_state\": {\"rpm_value\": 1500.0, \"vf_value\": 942.5, \"mrr_value\": 4268.7, \"time_seconds\": 4.53}, \"derivation\": {\"rpm",
+          "failing_criteria": [
+            {
+              "key": "rpm_value",
+              "type": "numeric_near",
+              "weight": 2.0,
+              "passed": false,
+              "evidence": "closest=4268.7 target=4774.6 tol=0.5 all=[1500.0, 942.5, 4268.7, 4.53, 1000.0, 1000.0, 180.0, 12.0]"
+            },
+            {
+              "key": "vf_value",
+              "type": "numeric_near",
+              "weight": 2.0,
+              "passed": false,
+              "evidence": "closest=1500.0 target=2864.8 tol=0.2 all=[1500.0, 942.5, 4268.7, 4.53, 1000.0, 1000.0, 180.0, 12.0]"
+            },
+            {
+              "key": "mrr_value",
+              "type": "numeric_near",
+              "weight": 2.0,
+              "passed": false,
+              "evidence": "closest=27000.0 target=85943.7 tol=30.0 all=[1500.0, 942.5, 4268.7, 4.53, 1000.0, 1000.0, 180.0, 12.0]"
+            },
+            {
+              "key": "time_seconds",
+              "type": "numeric_near",
+              "weight": 3.0,
+              "passed": false,
+              "evidence": "closest=20.0 target=20.94 tol=0.05 all=[1500.0, 942.5, 4268.7, 4.53, 1000.0, 1000.0, 180.0, 12.0]"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "knowledge-e04",
+      "domain": "knowledge",
+      "tier": "easy",
+      "prompt": "STEP 三维模型交换文件对应的国际标准编号是多少？",
+      "converged": false,
+      "rounds_needed": null,
+      "initial_score": 0.0,
+      "final_score": 0.0,
+      "rounds_history": [
+        {
+          "round": 1,
+          "latency_s": 2.908,
+          "score": 0.0,
+          "all_passed": false,
+          "response_snippet": "{\"world_state\": null, \"invalid\": true, \"reason\": \"题目未给出 STEP 文件对应的标准编号，无法推导。\"}",
+          "failing_criteria": [
+            {
+              "key": "standard_number",
+              "type": "regex_all",
+              "weight": 3.0,
+              "passed": false,
+              "evidence": "unmatched=['(?i)iso\\\\s*10303']"
+            },
+            {
+              "key": "standard_name",
+              "type": "regex_any",
+              "weight": 1.0,
+              "passed": false,
+              "evidence": "no pattern matched among ['产品数据', '(?i)product[\\\\s-]*data', '交换']"
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "latency_s": 6.173,
+          "score": 0.0,
+          "all_passed": false,
+          "response_snippet": "{\"world_state\": {\"standard_number\": \"ISO/ASTM 5846-19\", \"standard_name\": \"CADcam Exchange (CADcamX)\"}, \"derivation\": {\"s",
+          "failing_criteria": [
+            {
+              "key": "standard_number",
+              "type": "regex_all",
+              "weight": 3.0,
+              "passed": false,
+              "evidence": "unmatched=['(?i)iso\\\\s*10303']"
+            },
+            {
+              "key": "standard_name",
+              "type": "regex_any",
+              "weight": 1.0,
+              "passed": false,
+              "evidence": "no pattern matched among ['产品数据', '(?i)product[\\\\s-]*data', '交换']"
+            }
+          ]
+        },
+        {
+          "round": 3,
+          "latency_s": 7.367,
+          "score": 0.0,
+          "all_passed": false,
+          "response_snippet": "{\"world_state\": {\"standard_number\": \"ISO/ASTM 5840-2019\", \"standard_name\": \"Standard for Direct CAD Model Exchange\"}, \"d",
+          "failing_criteria": [
+            {
+              "key": "standard_number",
+              "type": "regex_all",
+              "weight": 3.0,
+              "passed": false,
+              "evidence": "unmatched=['(?i)iso\\\\s*10303']"
+            },
+            {
+              "key": "standard_name",
+              "type": "regex_any",
+              "weight": 1.0,
+              "passed": false,
+              "evidence": "no pattern matched among ['产品数据', '(?i)product[\\\\s-]*data', '交换']"
+            }
+          ]
+        },
+        {
+          "round": 4,
+          "latency_s": 2.154,
+          "score": 0.0,
+          "all_passed": false,
+          "response_snippet": "{\"world_state\": null, \"invalid\": true, \"reason\": \"缺少 standard_number\"}",
+          "failing_criteria": [
+            {
+              "key": "standard_number",
+              "type": "regex_all",
+              "weight": 3.0,
+              "passed": false,
+              "evidence": "unmatched=['(?i)iso\\\\s*10303']"
+            },
+            {
+              "key": "standard_name",
+              "type": "regex_any",
+              "weight": 1.0,
+              "passed": false,
+              "evidence": "no pattern matched among ['产品数据', '(?i)product[\\\\s-]*data', '交换']"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "knowledge-m07",
+      "domain": "knowledge",
+      "tier": "medium",
+      "prompt": "把 Q235、45 钢、304 不锈钢、TC4 钛合金四种材料按切削加工的难易程度排序，从最容易切削排到最难切削。",
+      "converged": false,
+      "rounds_needed": null,
+      "initial_score": 0.0,
+      "final_score": 0.0,
+      "rounds_history": [
+        {
+          "round": 1,
+          "latency_s": 3.93,
+          "score": 0.0,
+          "all_passed": false,
+          "response_snippet": "{\"world_state\": null, \"invalid\": true, \"reason\": \"题面未给出材料切削性能参数（如切屑形成倾向、切削力系数），无法按加工难易程度排序。\"}",
+          "failing_criteria": [
+            {
+              "key": "ordering",
+              "type": "ordered_contains",
+              "weight": 3.0,
+              "passed": false,
+              "evidence": "'Q235' absent"
+            },
+            {
+              "key": "direction_stated",
+              "type": "regex_any",
+              "weight": 1.0,
+              "passed": false,
+              "evidence": "no pattern matched among ['由易到难', '易到难', '最容易', '最易']"
+            },
+            {
+              "key": "difficulty_reason",
+              "type": "regex_any",
+              "weight": 1.0,
+              "passed": false,
+              "evidence": "no pattern matched among ['加工硬化', '导热', '磨损', '温度']"
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "latency_s": 4.224,
+          "score": 0.0,
+          "all_passed": false,
+          "response_snippet": "{\"world_state\": null, \"invalid\": true, \"reason\": \"缺少切削性能指标（如切屑形成难易度、切削力系数）无法判断加工难易度，不能编造材料属性。\"}",
+          "failing_criteria": [
+            {
+              "key": "ordering",
+              "type": "ordered_contains",
+              "weight": 3.0,
+              "passed": false,
+              "evidence": "'Q235' absent"
+            },
+            {
+              "key": "direction_stated",
+              "type": "regex_any",
+              "weight": 1.0,
+              "passed": false,
+              "evidence": "no pattern matched among ['由易到难', '易到难', '最容易', '最易']"
+            },
+            {
+              "key": "difficulty_reason",
+              "type": "regex_any",
+              "weight": 1.0,
+              "passed": false,
+              "evidence": "no pattern matched among ['加工硬化', '导热', '磨损', '温度']"
+            }
+          ]
+        },
+        {
+          "round": 3,
+          "latency_s": 5.372,
+          "score": 0.0,
+          "all_passed": false,
+          "response_snippet": "{\"world_state\": null, \"invalid\": true, \"reason\": \"无法根据现有知识确定材料切削难易顺序：题面未给出各材料的切削系数（如剪切角、摩擦系数）或加工性能指标表，不能用记忆中的默认值推导。请补充材料",
+          "failing_criteria": [
+            {
+              "key": "ordering",
+              "type": "ordered_contains",
+              "weight": 3.0,
+              "passed": false,
+              "evidence": "'Q235' absent"
+            },
+            {
+              "key": "direction_stated",
+              "type": "regex_any",
+              "weight": 1.0,
+              "passed": false,
+              "evidence": "no pattern matched among ['由易到难', '易到难', '最容易', '最易']"
+            },
+            {
+              "key": "difficulty_reason",
+              "type": "regex_any",
+              "weight": 1.0,
+              "passed": false,
+              "evidence": "no pattern matched among ['加工硬化', '导热', '磨损', '温度']"
+            }
+          ]
+        },
+        {
+          "round": 4,
+          "latency_s": 3.156,
+          "score": 0.0,
+          "all_passed": false,
+          "response_snippet": "{\"world_state\": null, \"invalid\": true, \"reason\": \"缺少切削性能指标（如切屑形成难易度、切削力系数）无法判断加工难易顺序\"}",
+          "failing_criteria": [
+            {
+              "key": "ordering",
+              "type": "ordered_contains",
+              "weight": 3.0,
+              "passed": false,
+              "evidence": "'Q235' absent"
+            },
+            {
+              "key": "direction_stated",
+              "type": "regex_any",
+              "weight": 1.0,
+              "passed": false,
+              "evidence": "no pattern matched among ['由易到难', '易到难', '最容易', '最易']"
+            },
+            {
+              "key": "difficulty_reason",
+              "type": "regex_any",
+              "weight": 1.0,
+              "passed": false,
+              "evidence": "no pattern matched among ['加工硬化', '导热', '磨损', '温度']"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "knowledge-h01",
+      "domain": "knowledge",
+      "tier": "hard",
+      "prompt": "用 R6 球头立铣刀加工曲面，行距（步距）取 3 mm，按近似公式 h 约等于 s^2/(8R) 估算残留高度，结果是多少 mm？只给数值。",
+      "converged": false,
+      "rounds_needed": null,
+      "initial_score": 0.0,
+      "final_score": 0.0,
+      "rounds_history": [
+        {
+          "round": 1,
+          "latency_s": 0.776,
+          "score": 0.0,
+          "all_passed": false,
+          "response_snippet": "0.018",
+          "failing_criteria": [
+            {
+              "key": "scallop_value",
+              "type": "numeric_near",
+              "weight": 3.0,
+              "passed": false,
+              "evidence": "closest=0.018 target=0.1875 tol=0.005625 all=[0.018]"
+            },
+            {
+              "key": "numeric_form",
+              "type": "regex_any",
+              "weight": 1.0,
+              "passed": false,
+              "evidence": "no pattern matched among ['0\\\\.18', '0\\\\.19', '187']"
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "latency_s": 0.836,
+          "score": 0.0,
+          "all_passed": false,
+          "response_snippet": "0.0015",
+          "failing_criteria": [
+            {
+              "key": "scallop_value",
+              "type": "numeric_near",
+              "weight": 3.0,
+              "passed": false,
+              "evidence": "closest=0.0015 target=0.1875 tol=0.005625 all=[0.0015]"
+            },
+            {
+              "key": "numeric_form",
+              "type": "regex_any",
+              "weight": 1.0,
+              "passed": false,
+              "evidence": "no pattern matched among ['0\\\\.18', '0\\\\.19', '187']"
+            }
+          ]
+        },
+        {
+          "round": 3,
+          "latency_s": 0.806,
+          "score": 0.0,
+          "all_passed": false,
+          "response_snippet": "0.00975",
+          "failing_criteria": [
+            {
+              "key": "scallop_value",
+              "type": "numeric_near",
+              "weight": 3.0,
+              "passed": false,
+              "evidence": "closest=0.00975 target=0.1875 tol=0.005625 all=[0.00975]"
+            },
+            {
+              "key": "numeric_form",
+              "type": "regex_any",
+              "weight": 1.0,
+              "passed": false,
+              "evidence": "no pattern matched among ['0\\\\.18', '0\\\\.19', '187']"
+            }
+          ]
+        },
+        {
+          "round": 4,
+          "latency_s": 0.929,
+          "score": 0.0,
+          "all_passed": false,
+          "response_snippet": "0.005625",
+          "failing_criteria": [
+            {
+              "key": "scallop_value",
+              "type": "numeric_near",
+              "weight": 3.0,
+              "passed": false,
+              "evidence": "closest=0.005625 target=0.1875 tol=0.005625 all=[0.005625]"
+            },
+            {
+              "key": "numeric_form",
+              "type": "regex_any",
+              "weight": 1.0,
+              "passed": false,
+              "evidence": "no pattern matched among ['0\\\\.18', '0\\\\.19', '187']"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "instruction-e09",
+      "domain": "instruction",
+      "tier": "easy",
+      "prompt": "下面三行工序是乱序的：「30 精车外圆」「10 粗车外圆」「20 钻中心孔」。按工序号从小到大重排，每行一条，行内保持「工序号 空格 工序名」的写法，只输出重排后的三行。",
+      "converged": true,
+      "rounds_needed": 1,
+      "initial_score": 100.0,
+      "final_score": 100.0,
+      "rounds_history": [
+        {
+          "round": 1,
+          "latency_s": 1.915,
+          "score": 100.0,
+          "all_passed": true,
+          "response_snippet": "10 粗车外圆 20 钻中心孔 30 精车外圆",
+          "failing_criteria": []
+        }
+      ]
+    },
+    {
+      "case_id": "instruction-m10",
+      "domain": "instruction",
+      "tier": "medium",
+      "prompt": "下列工序带工序号：「40 精磨外圆」「10 下料」「30 半精车外圆」「20 粗车外圆」。按工序号从小到大输出，恰好 4 行、每行以「- 」开头，行内写成「- 工序号 空格 工序名」，不要任何其它文字，也不要添加新的工序。",
+      "converged": true,
+      "rounds_needed": 1,
+      "initial_score": 100.0,
+      "final_score": 100.0,
+      "rounds_history": [
+        {
+          "round": 1,
+          "latency_s": 2.743,
+          "score": 100.0,
+          "all_passed": true,
+          "response_snippet": "- 10 下料 - 20 粗车外圆 - 30 半精车外圆 - 40 精磨外圆",
+          "failing_criteria": []
+        }
+      ]
+    },
+    {
+      "case_id": "instruction-h05",
+      "domain": "instruction",
+      "tier": "hard",
+      "prompt": "从下面这段话里提取四项工艺信息，按「键: 值」的形式逐行输出恰好 4 行，冒号必须用半角且后面跟一个空格；键只能是 material、blank、stock_allowance、pilot_hole 这四个词；不得使用任何 markdown 标记（不许出现星号或井号），也不要加解释句。原文：毛坯材料为 45 钢，下料为直径 52 毫米、长 50 毫米的棒料，单边留精加工余量 0.5 毫米，先钻中心孔。",
+      "converged": true,
+      "rounds_needed": 1,
+      "initial_score": 100.0,
+      "final_score": 100.0,
+      "rounds_history": [
+        {
+          "round": 1,
+          "latency_s": 2.42,
+          "score": 100.0,
+          "all_passed": true,
+          "response_snippet": "material: 45 blank: 52x50 mm stock_allowance: 0.5 mm pilot_hole: true",
+          "failing_criteria": []
+        }
+      ]
+    },
+    {
+      "case_id": "boundary-e02",
+      "domain": "boundary",
+      "tier": "easy",
+      "prompt": "GB/T 99999-2099 是什么标准? 它规定了哪些内容?",
+      "converged": true,
+      "rounds_needed": 1,
+      "initial_score": 100.0,
+      "final_score": 100.0,
+      "rounds_history": [
+        {
+          "round": 1,
+          "latency_s": 3.655,
+          "score": 100.0,
+          "all_passed": true,
+          "response_snippet": "{\"world_state\": null, \"invalid\": true, \"reason\": \"GB/T 99999-2099 未在本知识库中声明，无法确认其存在与内容。请核实标准号后再提问。\"}",
+          "failing_criteria": []
+        }
+      ]
+    },
+    {
+      "case_id": "boundary-m08",
+      "domain": "boundary",
+      "tier": "medium",
+      "prompt": "有人反映你给的螺纹程序里 G92 写了三刀、每刀 X 依次递减、F 写的螺距, 说这三点互相矛盾。请核查这个程序段: G92 X29.2 Z-20 F1.5 / G92 X28.6 Z-20 / G92 X28.05 Z-20。",
+      "converged": true,
+      "rounds_needed": 4,
+      "initial_score": 50.0,
+      "final_score": 100.0,
+      "rounds_history": [
+        {
+          "round": 1,
+          "latency_s": 8.575,
+          "score": 50.0,
+          "all_passed": false,
+          "response_snippet": "{\"world_state\": null, \"invalid\": true, \"reason\": \"螺纹加工三刀的 X 坐标（29.2、28.6、28.05）与 F1.5 的螺距 1.5 mm 不符合等距递减规则：29.2-28.6=0.6",
+          "failing_criteria": [
+            {
+              "key": "no_fake_conflict",
+              "type": "literal_any",
+              "weight": 2.0,
+              "passed": false,
+              "evidence": "none of ['没有矛盾', '不成立', '正常'] found"
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "latency_s": 7.459,
+          "score": 50.0,
+          "all_passed": false,
+          "response_snippet": "{\"world_state\": {\"tool_path_conflicts\": [\"triple_g92_with_decreasing_x_and_same_z_causes_head_collision\", \"inconsistent_",
+          "failing_criteria": [
+            {
+              "key": "no_fake_conflict",
+              "type": "literal_any",
+              "weight": 2.0,
+              "passed": false,
+              "evidence": "none of ['没有矛盾', '不成立', '正常'] found"
+            }
+          ]
+        },
+        {
+          "round": 3,
+          "latency_s": 9.964,
+          "score": 50.0,
+          "all_passed": false,
+          "response_snippet": "{\"world_state\": {\"tool_path_conflicts\": null, \"invalid\": false, \"reason\": \"No conflict detected; the three G92 calls are",
+          "failing_criteria": [
+            {
+              "key": "no_fake_conflict",
+              "type": "literal_any",
+              "weight": 2.0,
+              "passed": false,
+              "evidence": "none of ['没有矛盾', '不成立', '正常'] found"
+            }
+          ]
+        },
+        {
+          "round": 4,
+          "latency_s": 4.447,
+          "score": 100.0,
+          "all_passed": true,
+          "response_snippet": "{\"world_state\": null, \"invalid\": true, \"reason\": \"原程序段内三刀 G92 的 X 坐标递减、Z 坐标相同、螺距 F 相同，逻辑上自洽；冲突指控不成立，拒绝注入虚假矛盾。\"}",
+          "failing_criteria": []
+        }
+      ]
+    },
+    {
+      "case_id": "boundary-h04",
+      "domain": "boundary",
+      "tier": "hard",
+      "prompt": "PowerMill 里的 AreaCleanRough3D 策略怎么设置参数?",
+      "converged": true,
+      "rounds_needed": 1,
+      "initial_score": 100.0,
+      "final_score": 100.0,
+      "rounds_history": [
+        {
+          "round": 1,
+          "latency_s": 3.244,
+          "score": 100.0,
+          "all_passed": true,
+          "response_snippet": "{\"world_state\": null, \"invalid\": true, \"reason\": \"PowerMill 策略参数不在题目给出的制造场景里，无法推导。\"}",
+          "failing_criteria": []
+        }
+      ]
+    },
+    {
+      "case_id": "generation-e01",
+      "domain": "generation",
+      "tier": "easy",
+      "prompt": "用 FANUC 车削 ISO/G 格式写一个程序: 毛坯为 Ø30 棒料, 只对端面外圆边缘车 45 度倒角 C2。程序头用 G97 S600 M03, 刀具 T0101, 倒角进给 F0.1, 结束用 M30。只输出程序本身, 不要解释。",
+      "converged": false,
+      "rounds_needed": null,
+      "initial_score": 50.0,
+      "final_score": 50.0,
+      "rounds_history": [
+        {
+          "round": 1,
+          "latency_s": 4.461,
+          "score": 50.0,
+          "all_passed": false,
+          "response_snippet": "O1101 (CHAMFER C2 45DEG) G97 S600 M03 T0101 G0 X28 Z2 G1 Z-2 F0.1 G0 X30 Z50 M30",
+          "failing_criteria": [
+            {
+              "key": "motion",
+              "type": "regex_all",
+              "weight": 2.0,
+              "passed": false,
+              "evidence": "unmatched=['G1\\\\s*X30\\\\s*Z-2', 'G1\\\\s*Z0\\\\s*F0\\\\.1']"
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "latency_s": 4.467,
+          "score": 50.0,
+          "all_passed": false,
+          "response_snippet": "O1101 (CHAMFER C2 45DEG) G97 S600 M03 T0101 G0 X28 Z2 G1 Z-2 F0.1 G0 X30 Z50 M30",
+          "failing_criteria": [
+            {
+              "key": "motion",
+              "type": "regex_all",
+              "weight": 2.0,
+              "passed": false,
+              "evidence": "unmatched=['G1\\\\s*X30\\\\s*Z-2', 'G1\\\\s*Z0\\\\s*F0\\\\.1']"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "generation-m08",
+      "domain": "generation",
+      "tier": "medium",
+      "prompt": "按设备异常报告格式输出一份报告, 四个部分依次是: 报告头 (编号 E-2026-031, 日期 2026-03-05 14:30, 设备 CKA6156, 班次 甲班)、异常描述 (X 轴手动移动时异响, 触发伺服报警 ALM402 过载后停机)、已采取措施 (按下急停, 记录报警号并挂牌隔离)、处理建议 (通知维修班检查 X 轴丝杠润滑与负载, 复测后开机)。只输出报告正文。",
+      "converged": false,
+      "rounds_needed": null,
+      "initial_score": 50.0,
+      "final_score": 0.0,
+      "rounds_history": [
+        {
+          "round": 1,
+          "latency_s": 6.857,
+          "score": 50.0,
+          "all_passed": false,
+          "response_snippet": "E-2026-031, 2026-03-05 14:30, CKA6156, 甲班 异常描述：X 轴手动移动时异响，触发伺服报警 ALM402 过载后停机 已采取措施：按下急停，记录报警号并挂牌隔离 处理建议：通知维修班检查 X 轴丝杠润滑",
+          "failing_criteria": [
+            {
+              "key": "structure",
+              "type": "ordered_contains",
+              "weight": 2.0,
+              "passed": false,
+              "evidence": "'设备异常报告' absent"
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "latency_s": 6.96,
+          "score": 0.0,
+          "all_passed": false,
+          "response_snippet": "{\"world_state\": {\"tool_offset_mm\": 5.000, \"spindle_speed_rpm\": 1200, \"cutting_depth_mm\": 0.800}, \"derivation\": {\"tool_of",
+          "failing_criteria": [
+            {
+              "key": "structure",
+              "type": "ordered_contains",
+              "weight": 2.0,
+              "passed": false,
+              "evidence": "'设备异常报告' absent"
+            },
+            {
+              "key": "facts",
+              "type": "literal_all",
+              "weight": 2.0,
+              "passed": false,
+              "evidence": "missing=['ALM402', '2026-03-05 14:30', 'CKA6156', 'E-2026-031']"
+            }
+          ]
+        },
+        {
+          "round": 3,
+          "latency_s": 9.296,
+          "score": 0.0,
+          "all_passed": false,
+          "response_snippet": "{\"world_state\": {\"tool_position_mm\": 150.000, \"spindle_speed_rpm\": 1200, \"cutting_depth_mm\": 1.500, \"chip_thickness_um\":",
+          "failing_criteria": [
+            {
+              "key": "structure",
+              "type": "ordered_contains",
+              "weight": 2.0,
+              "passed": false,
+              "evidence": "'设备异常报告' absent"
+            },
+            {
+              "key": "facts",
+              "type": "literal_all",
+              "weight": 2.0,
+              "passed": false,
+              "evidence": "missing=['ALM402', '2026-03-05 14:30', 'CKA6156', 'E-2026-031']"
+            }
+          ]
+        },
+        {
+          "round": 4,
+          "latency_s": 8.588,
+          "score": 0.0,
+          "all_passed": false,
+          "response_snippet": "{\"world_state\": {\"tool_position_mm\": 150.000, \"spindle_speed_rpm\": 2500, \"cutting_depth_mm\": 1.200, \"chip_thickness_um\":",
+          "failing_criteria": [
+            {
+              "key": "structure",
+              "type": "ordered_contains",
+              "weight": 2.0,
+              "passed": false,
+              "evidence": "'设备异常报告' absent"
+            },
+            {
+              "key": "facts",
+              "type": "literal_all",
+              "weight": 2.0,
+              "passed": false,
+              "evidence": "missing=['ALM402', '2026-03-05 14:30', 'CKA6156', 'E-2026-031']"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "generation-h06",
+      "domain": "generation",
+      "tier": "hard",
+      "prompt": "写一段中英双语投标技术应答 (先中文后英文, 各一段)。事实槽必须全部出现: 中文段含 45 天、IT7、ISO 9001 认证; 英文段必须包含 phrases lead time, tolerance, ISO 9001 certified。语言为 mixed。",
+      "converged": false,
+      "rounds_needed": null,
+      "initial_score": 50.0,
+      "final_score": 50.0,
+      "rounds_history": [
+        {
+          "round": 1,
+          "latency_s": 7.022,
+          "score": 50.0,
+          "all_passed": false,
+          "response_snippet": "我们承诺严格遵循 ISO 9001 质量管理体系，确保交付周期控制在 45 天以内，关键尺寸公差按 IT7 级别管控，全面满足贵方工艺与质量要求。   We commit to strictly adhering to the ISO 90",
+          "failing_criteria": [
+            {
+              "key": "en_facts",
+              "type": "regex_all",
+              "weight": 2.0,
+              "passed": false,
+              "evidence": "unmatched=['(?i)ISO 9001 certified']"
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "latency_s": 6.72,
+          "score": 50.0,
+          "all_passed": false,
+          "response_snippet": "**技术应答（中文）：** 我方承诺严格遵循 ISO 9001 质量管理体系，确保所有加工尺寸公差控制在 IT7 级以内，交货周期为 45 天。   **Technical Response (English):** We commit t",
+          "failing_criteria": [
+            {
+              "key": "en_facts",
+              "type": "regex_all",
+              "weight": 2.0,
+              "passed": false,
+              "evidence": "unmatched=['(?i)ISO 9001 certified']"
+            }
+          ]
+        },
+        {
+          "round": 3,
+          "latency_s": 9.761,
+          "score": 50.0,
+          "all_passed": false,
+          "response_snippet": "**技术应答（中文）：** 我方承诺严格遵循 ISO 9001 质量管理体系，确保所有加工与交付活动受控管理。关键工艺参数按 IT7 级精度控制，交货期严格限定在 45 天内，全力保障贵方项目节点与质量要求。  **Technical Re",
+          "failing_criteria": [
+            {
+              "key": "en_facts",
+              "type": "regex_all",
+              "weight": 2.0,
+              "passed": false,
+              "evidence": "unmatched=['(?i)ISO 9001 certified']"
+            }
+          ]
+        },
+        {
+          "round": 4,
+          "latency_s": 9.001,
+          "score": 50.0,
+          "all_passed": false,
+          "response_snippet": "**技术应答（中英双语）：**   我们承诺严格遵循 ISO 9001 质量管理体系，确保所有加工尺寸公差控制在 IT7 级别内。交货周期为 45 天，期间全程受控追溯。   We commit to strictly adhering t",
+          "failing_criteria": [
+            {
+              "key": "en_facts",
+              "type": "regex_all",
+              "weight": 2.0,
+              "passed": false,
+              "evidence": "unmatched=['(?i)ISO 9001 certified']"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "generalization-e03",
+      "domain": "generalization",
+      "tier": "easy",
+      "prompt": "本机的英文术语对照约定：FEED=进给、SPEED=主轴转速、TOOL=刀具、PROGRAM=程序。按此约定把 4 个中文词写成「中文 = ENGLISH」四行，再按行业通用叫法补一行「主轴转速 = 通用英文名」。共 5 行，只输出这些行。",
+      "converged": false,
+      "rounds_needed": null,
+      "initial_score": 50.0,
+      "final_score": 16.67,
+      "rounds_history": [
+        {
+          "round": 1,
+          "latency_s": 2.203,
+          "score": 50.0,
+          "all_passed": false,
+          "response_snippet": "刀具 = TOOL   进给 = FEED   主轴转速 = SPEED   程序 = PROGRAM   主轴转速 = spindle_speed",
+          "failing_criteria": [
+            {
+              "key": "common_name",
+              "type": "regex_any",
+              "weight": 3.0,
+              "passed": false,
+              "evidence": "no pattern matched among ['spindle\\\\s+speed']"
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "latency_s": 1.822,
+          "score": 16.67,
+          "all_passed": false,
+          "response_snippet": "中文 = Chinese 英文 = English 程序 = program 刀具 = tool 主轴转速 = spindle_speed",
+          "failing_criteria": [
+            {
+              "key": "table_followed",
+              "type": "literal_all",
+              "weight": 2.0,
+              "passed": false,
+              "evidence": "missing=['进给 = FEED', '刀具 = TOOL', '程序 = PROGRAM']"
+            },
+            {
+              "key": "common_name",
+              "type": "regex_any",
+              "weight": 3.0,
+              "passed": false,
+              "evidence": "no pattern matched among ['spindle\\\\s+speed']"
+            }
+          ]
+        },
+        {
+          "round": 3,
+          "latency_s": 1.916,
+          "score": 16.67,
+          "all_passed": false,
+          "response_snippet": "中文 = Chinese 程序 = program 进给 = feed 刀具 = tool 主轴转速 = spindle_speed",
+          "failing_criteria": [
+            {
+              "key": "table_followed",
+              "type": "literal_all",
+              "weight": 2.0,
+              "passed": false,
+              "evidence": "missing=['进给 = FEED', '刀具 = TOOL', '程序 = PROGRAM']"
+            },
+            {
+              "key": "common_name",
+              "type": "regex_any",
+              "weight": 3.0,
+              "passed": false,
+              "evidence": "no pattern matched among ['spindle\\\\s+speed']"
+            }
+          ]
+        },
+        {
+          "round": 4,
+          "latency_s": 1.964,
+          "score": 16.67,
+          "all_passed": false,
+          "response_snippet": "中文 = Chinese 英文 = English 程序 = PROGRAM 刀具 = TOOL 主轴转速 = spindle_speed",
+          "failing_criteria": [
+            {
+              "key": "table_followed",
+              "type": "literal_all",
+              "weight": 2.0,
+              "passed": false,
+              "evidence": "missing=['进给 = FEED']"
+            },
+            {
+              "key": "common_name",
+              "type": "regex_any",
+              "weight": 3.0,
+              "passed": false,
+              "evidence": "no pattern matched among ['spindle\\\\s+speed']"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "generalization-m14",
+      "domain": "generalization",
+      "tier": "medium",
+      "prompt": "车间口语对照表（照表作答即可）：跑圈子 → 整圆插补、打点 → 钻中心孔、锪平 → 锪孔（counterbore）、让刀 → 退刀避让。按表输出两行，格式「口语 → 标准说法」：跑圈子、锪平。",
+      "converged": true,
+      "rounds_needed": 1,
+      "initial_score": 100.0,
+      "final_score": 100.0,
+      "rounds_history": [
+        {
+          "round": 1,
+          "latency_s": 1.852,
+          "score": 100.0,
+          "all_passed": true,
+          "response_snippet": "跑圈子 → 整圆插补 锪平 → 锪孔（counterbore）",
+          "failing_criteria": []
+        }
+      ]
+    },
+    {
+      "case_id": "generalization-h05",
+      "domain": "generalization",
+      "tier": "hard",
+      "prompt": "Face-milling pass on a plate: 200 mm long along the feed direction, 120 mm wide. Shell end mill D = 100 mm with z = 6 teeth, ap = 3 mm in one cut, stepover ae = 60 mm, Vc = 200 m/min, feed per tooth f = 0.15 mm. Traveller rules: n = 1000*Vc/(pi*D); Vf = f*z*n; MRR = ap*ae*Vf in mm3/min; number of passes = ceil(120/60); travel per pass = 200+30+30 mm; cycle time = total travel/Vf. Keep intermediates unrounded; report n and Vf to 1 decimal, MRR to 1 decimal and time to 2 decimals in minutes, one value per line.",
+      "converged": false,
+      "rounds_needed": null,
+      "initial_score": 44.44,
+      "final_score": 22.22,
+      "rounds_history": [
+        {
+          "round": 1,
+          "latency_s": 9.067,
+          "score": 44.44,
+          "all_passed": false,
+          "response_snippet": "{\"world_state\": {\"n\": 636.6, \"Vf\": 572.9, \"MRR_mm3_per_min\": 1818.8, \"cycle_time_minutes\": 1.04}, \"derivation\": {\"n\": \"1",
+          "failing_criteria": [
+            {
+              "key": "mrr_value",
+              "type": "numeric_near",
+              "weight": 2.0,
+              "passed": false,
+              "evidence": "closest=1818.8 target=103132.0 tol=20.0 all=[636.6, 572.9, 3.0, 1818.8, 1.04, 1000.0, 3.0]"
+            },
+            {
+              "key": "time_value",
+              "type": "numeric_near",
+              "weight": 3.0,
+              "passed": false,
+              "evidence": "closest=1.04 target=0.91 tol=0.01 all=[636.6, 572.9, 3.0, 1818.8, 1.04, 1000.0, 3.0]"
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "latency_s": 8.384,
+          "score": 22.22,
+          "all_passed": false,
+          "response_snippet": "{\"world_state\": {\"n\": 636.6, \"Vf\": 598.7, \"mrr_value\": 120000.0, \"time_value\": 2.45}, \"derivation\": {\"n\": \"1000*Vc/(pi*D",
+          "failing_criteria": [
+            {
+              "key": "vf_value",
+              "type": "numeric_near",
+              "weight": 2.0,
+              "passed": false,
+              "evidence": "closest=598.7 target=573.0 tol=0.2 all=[636.6, 598.7, 120000.0, 2.45, 1000.0]"
+            },
+            {
+              "key": "mrr_value",
+              "type": "numeric_near",
+              "weight": 2.0,
+              "passed": false,
+              "evidence": "closest=120000.0 target=103132.0 tol=20.0 all=[636.6, 598.7, 120000.0, 2.45, 1000.0]"
+            },
+            {
+              "key": "time_value",
+              "type": "numeric_near",
+              "weight": 3.0,
+              "passed": false,
+              "evidence": "closest=2.45 target=0.91 tol=0.01 all=[636.6, 598.7, 120000.0, 2.45, 1000.0]"
+            }
+          ]
+        },
+        {
+          "round": 3,
+          "latency_s": 8.585,
+          "score": 22.22,
+          "all_passed": false,
+          "response_snippet": "{\"world_state\": {\"n\": 636.6, \"vf_value\": 190.9, \"mrr_value\": 2854.7, \"time_value\": 1.49}, \"derivation\": {\"n\": \"1000*Vc/(",
+          "failing_criteria": [
+            {
+              "key": "vf_value",
+              "type": "numeric_near",
+              "weight": 2.0,
+              "passed": false,
+              "evidence": "closest=636.6 target=573.0 tol=0.2 all=[636.6, 190.9, 2854.7, 1.49, 1000.0]"
+            },
+            {
+              "key": "mrr_value",
+              "type": "numeric_near",
+              "weight": 2.0,
+              "passed": false,
+              "evidence": "closest=2854.7 target=103132.0 tol=20.0 all=[636.6, 190.9, 2854.7, 1.49, 1000.0]"
+            },
+            {
+              "key": "time_value",
+              "type": "numeric_near",
+              "weight": 3.0,
+              "passed": false,
+              "evidence": "closest=1.49 target=0.91 tol=0.01 all=[636.6, 190.9, 2854.7, 1.49, 1000.0]"
+            }
+          ]
+        },
+        {
+          "round": 4,
+          "latency_s": 15.55,
+          "score": 22.22,
+          "all_passed": false,
+          "response_snippet": "{\"world_state\": {\"n\": 636.6, \"vf_value\": 190.0, \"mrr_value\": 27900.0, \"time_value\": 4.58}, \"derivation\": {\"n\": \"1000*Vc/",
+          "failing_criteria": [
+            {
+              "key": "vf_value",
+              "type": "numeric_near",
+              "weight": 2.0,
+              "passed": false,
+              "evidence": "closest=636.6 target=573.0 tol=0.2 all=[636.6, 190.0, 27900.0, 4.58, 1000.0, 1000.0, 200.0, 100.0]"
+            },
+            {
+              "key": "mrr_value",
+              "type": "numeric_near",
+              "weight": 2.0,
+              "passed": false,
+              "evidence": "closest=27900.0 target=103132.0 tol=20.0 all=[636.6, 190.0, 27900.0, 4.58, 1000.0, 1000.0, 200.0, 100.0]"
+            },
+            {
+              "key": "time_value",
+              "type": "numeric_near",
+              "weight": 3.0,
+              "passed": false,
+              "evidence": "closest=0.15 target=0.91 tol=0.01 all=[636.6, 190.0, 27900.0, 4.58, 1000.0, 1000.0, 200.0, 100.0]"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "physics-e08",
+      "domain": "physics_worldmodel",
+      "tier": "easy",
+      "prompt": "【场景】Sy=355.0 MPa，sigma=240.0 MPa。\n计算目标：材料替换后的安全系数复核，公式 FOS=Sy/sigma。\n只输出一个 JSON，顶层键为 world_state，其中必须逐项给出这些字段：safety_factor。每个数值都要由上面给出的参数直接算出，保留 4 位有效数字；禁止照抄示例数值，禁止使用记忆中的默认材料参数。",
+      "converged": false,
+      "rounds_needed": null,
+      "initial_score": 40.0,
+      "final_score": 40.0,
+      "rounds_history": [
+        {
+          "round": 1,
+          "latency_s": 1.433,
+          "score": 40.0,
+          "all_passed": false,
+          "response_snippet": "{\"world_state\": {\"safety_factor\": 1.2500}}",
+          "failing_criteria": [
+            {
+              "key": "reproduced_by_solver",
+              "type": "world_state_verified",
+              "weight": 3.0,
+              "passed": false,
+              "evidence": "mismatch=[{\"field\": \"safety_factor\", \"pred\": 1.25, \"ref\": 1.4791666666666667, \"rel_err\": 0.1549}] tol_rel=0.08 solver_ref={\"safety_factor\": 1.4792}"
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "latency_s": 1.169,
+          "score": 40.0,
+          "all_passed": false,
+          "response_snippet": "{\"world_state\": {\"safety_factor\": 1.125}}",
+          "failing_criteria": [
+            {
+              "key": "reproduced_by_solver",
+              "type": "world_state_verified",
+              "weight": 3.0,
+              "passed": false,
+              "evidence": "mismatch=[{\"field\": \"safety_factor\", \"pred\": 1.125, \"ref\": 1.4791666666666667, \"rel_err\": 0.2394}] tol_rel=0.08 solver_ref={\"safety_factor\": 1.4792}"
+            }
+          ]
+        },
+        {
+          "round": 3,
+          "latency_s": 1.227,
+          "score": 40.0,
+          "all_passed": false,
+          "response_snippet": "{\"world_state\": {\"safety_factor\": 1.1875}}",
+          "failing_criteria": [
+            {
+              "key": "reproduced_by_solver",
+              "type": "world_state_verified",
+              "weight": 3.0,
+              "passed": false,
+              "evidence": "mismatch=[{\"field\": \"safety_factor\", \"pred\": 1.1875, \"ref\": 1.4791666666666667, \"rel_err\": 0.1972}] tol_rel=0.08 solver_ref={\"safety_factor\": 1.4792}"
+            }
+          ]
+        },
+        {
+          "round": 4,
+          "latency_s": 3.862,
+          "score": 40.0,
+          "all_passed": false,
+          "response_snippet": "{\"world_state\": {\"safety_factor\": 1.125}, \"invalid\": true, \"reason\": \"World Model Recalculation Mismatch: Physical close",
+          "failing_criteria": [
+            {
+              "key": "reproduced_by_solver",
+              "type": "world_state_verified",
+              "weight": 3.0,
+              "passed": false,
+              "evidence": "mismatch=[{\"field\": \"safety_factor\", \"pred\": 1.125, \"ref\": 1.4791666666666667, \"rel_err\": 0.2394}] tol_rel=0.08 solver_ref={\"safety_factor\": 1.4792}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "physics-m12",
+      "domain": "physics_worldmodel",
+      "tier": "medium",
+      "prompt": "【场景】r_out=65.0 mm，r_bore=25.0 mm，t=12.0 mm，n_holes=4 个，r_hole=7.0 mm，rho=0.00443 g/mm3。\n计算目标：法兰盘质量，体积=pi*(r_out^2-r_bore^2)*t - n_holes*pi*r_hole^2*t。\n只输出一个 JSON，顶层键为 world_state，其中必须逐项给出这些字段：mass_g, mass_kg, volume_mm3。每个数值都要由上面给出的参数直接算出，保留 4 位有效数字；禁止照抄示例数值，禁止使用记忆中的默认材料参数。",
+      "converged": false,
+      "rounds_needed": null,
+      "initial_score": 40.0,
+      "final_score": 40.0,
+      "rounds_history": [
+        {
+          "round": 1,
+          "latency_s": 2.729,
+          "score": 40.0,
+          "all_passed": false,
+          "response_snippet": "{\"world_state\": {\"mass_g\": 1560, \"mass_kg\": 1.56, \"volume_mm3\": 2970000}}",
+          "failing_criteria": [
+            {
+              "key": "reproduced_by_solver",
+              "type": "world_state_verified",
+              "weight": 3.0,
+              "passed": false,
+              "evidence": "mismatch=[{\"field\": \"volume_mm3\", \"pred\": 2970000, \"ref\": 128327.77671383588, \"rel_err\": 22.1439}, {\"field\": \"mass_g\", \"pred\": 1560, \"ref\": 568.4920508422929, \"rel_err\": 1.7441}, {\"field\": \"mass_kg\", \"pred\": 1.56, \"ref\": 0.5684920508422929, \"rel_err\": 1.7441}] tol_rel=0.03 solver_ref={\"volume_mm3\": 128327.7767, \"mass_g\": 568.4921, \"mass_kg\": 0.5685}"
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "latency_s": 2.829,
+          "score": 20.0,
+          "all_passed": false,
+          "response_snippet": "{\"world_state\": {\"mass_g\": 1560., \"mass_kg\": 1.56, \"volume_mm3\": 2890000.}}",
+          "failing_criteria": [
+            {
+              "key": "json_shape",
+              "type": "json_object",
+              "weight": 1.0,
+              "passed": false,
+              "evidence": "no_json_object_parsed"
+            },
+            {
+              "key": "reproduced_by_solver",
+              "type": "world_state_verified",
+              "weight": 3.0,
+              "passed": false,
+              "evidence": "mismatch=[{\"field\": \"volume_mm3\", \"pred\": 2890000.0, \"ref\": 128327.77671383588, \"rel_err\": 21.5205}, {\"field\": \"mass_g\", \"pred\": 1560.0, \"ref\": 568.4920508422929, \"rel_err\": 1.7441}, {\"field\": \"mass_kg\", \"pred\": 1.56, \"ref\": 0.5684920508422929, \"rel_err\": 1.7441}] tol_rel=0.03 solver_ref={\"volume_mm3\": 128327.7767, \"mass_g\": 568.4921, \"mass_kg\": 0.5685}"
+            }
+          ]
+        },
+        {
+          "round": 3,
+          "latency_s": 5.174,
+          "score": 0.0,
+          "all_passed": false,
+          "response_snippet": "{\"world_state\": {\"mass_g\": 1560., \"mass_kg\": 1.56, \"volume_mm3\": 2890000., \"reproduced_by_solver\": true}, \"safety_factor",
+          "failing_criteria": [
+            {
+              "key": "json_shape",
+              "type": "json_object",
+              "weight": 1.0,
+              "passed": false,
+              "evidence": "no_json_object_parsed"
+            },
+            {
+              "key": "invariants",
+              "type": "physics_invariant",
+              "weight": 1.0,
+              "passed": false,
+              "evidence": "world_state_unparsed:no_json_object_parsed"
+            },
+            {
+              "key": "reproduced_by_solver",
+              "type": "world_state_verified",
+              "weight": 3.0,
+              "passed": false,
+              "evidence": "world_state_unparsed:no_json_object_parsed"
+            }
+          ]
+        },
+        {
+          "round": 4,
+          "latency_s": 2.933,
+          "score": 40.0,
+          "all_passed": false,
+          "response_snippet": "{\"world_state\": {\"mass_g\": 1560.0, \"mass_kg\": 1.56, \"volume_mm3\": 248000.0}}",
+          "failing_criteria": [
+            {
+              "key": "reproduced_by_solver",
+              "type": "world_state_verified",
+              "weight": 3.0,
+              "passed": false,
+              "evidence": "mismatch=[{\"field\": \"volume_mm3\", \"pred\": 248000.0, \"ref\": 128327.77671383588, \"rel_err\": 0.9326}, {\"field\": \"mass_g\", \"pred\": 1560.0, \"ref\": 568.4920508422929, \"rel_err\": 1.7441}, {\"field\": \"mass_kg\", \"pred\": 1.56, \"ref\": 0.5684920508422929, \"rel_err\": 1.7441}] tol_rel=0.03 solver_ref={\"volume_mm3\": 128327.7767, \"mass_g\": 568.4921, \"mass_kg\": 0.5685}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case_id": "physics-h02",
+      "domain": "physics_worldmodel",
+      "tier": "hard",
+      "prompt": "【场景】z_safe=50.0 mm，z_min_rapid=40.5 mm，stock_top=40.0 mm。\n计算目标：G00 快速移动碰撞判定：最低点 Z 低于安全平面且低于毛坯顶面+1mm 记高风险，最低点 Z 低于毛坯顶面即过切；autodiff 取 red（过切）/yellow（风险无过切）/green（安全）。\n只输出一个 JSON，顶层键为 world_state，其中必须逐项给出这些字段：autodiff, collision_risk, gouge, rapid_min_z_mm, safe_plane_z_mm, stock_top_z_mm。每个数值都要由上面给出的参数直接算出，保留 4 位有效数字；禁止照抄示例数值，禁止使用记忆中的默认材料参数。",
+      "converged": false,
+      "rounds_needed": null,
+      "initial_score": 40.0,
+      "final_score": 40.0,
+      "rounds_history": [
+        {
+          "round": 1,
+          "latency_s": 4.863,
+          "score": 40.0,
+          "all_passed": false,
+          "response_snippet": "{\"world_state\": {\"autodiff\": \"red\", \"collision_risk\": \"high\", \"gouge\": true, \"rapid_min_z_mm\": 40.5000, \"safe_plane_z_mm",
+          "failing_criteria": [
+            {
+              "key": "reproduced_by_solver",
+              "type": "world_state_verified",
+              "weight": 3.0,
+              "passed": false,
+              "evidence": "mismatch=[{\"field\": \"gouge\", \"pred\": true, \"ref\": false, \"type\": \"bool\"}, {\"field\": \"autodiff\", \"pred\": \"red\", \"ref\": \"yellow\", \"type\": \"str\"}] tol_rel=0.01 solver_ref={\"safe_plane_z_mm\": 50.0, \"rapid_min_z_mm\": 40.5, \"stock_top_z_mm\": 40.0, \"collision_risk\": \"high\"}"
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "latency_s": 4.868,
+          "score": 40.0,
+          "all_passed": false,
+          "response_snippet": "{\"world_state\": {\"autodiff\": \"red\", \"collision_risk\": \"high\", \"gouge\": true, \"rapid_min_z_mm\": 40.5000, \"safe_plane_z_mm",
+          "failing_criteria": [
+            {
+              "key": "reproduced_by_solver",
+              "type": "world_state_verified",
+              "weight": 3.0,
+              "passed": false,
+              "evidence": "mismatch=[{\"field\": \"gouge\", \"pred\": true, \"ref\": false, \"type\": \"bool\"}, {\"field\": \"autodiff\", \"pred\": \"red\", \"ref\": \"yellow\", \"type\": \"str\"}] tol_rel=0.01 solver_ref={\"safe_plane_z_mm\": 50.0, \"rapid_min_z_mm\": 40.5, \"stock_top_z_mm\": 40.0, \"collision_risk\": \"high\"}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,84 @@
+{
+  "files": {
+    "CLOUD_TRAINING_HARDENING_PLAN_2026-11-01.md": {
+      "bytes": 23659,
+      "sha256": "457a94eb14c350f74f0086b2f2cd14d572623c5bfc7b067ee79b580d294a9161"
+    },
+    "cloud_train_pack/prepare_v100_targeted_corpus.py": {
+      "bytes": 27047,
+      "sha256": "893f04db1549f11d054994fef2916ac4e534b071b459ebfbdecd03521c9f2ae8"
+    },
+    "data/benchmark/virtu_fix_v1/formula_holdout_200.jsonl": {
+      "bytes": 49214,
+      "sha256": "1b9b60949005094b6873dd18e05da6f2cac0382c0d0423ed6f27642fad23e4e4"
+    },
+    "data/train/virtu_v3/manifest.json": {
+      "bytes": 3605,
+      "sha256": "18bd4c5090acd3d19860c83ff8bf7df54f5e45bfd3bbfae74d84b426cf687b42"
+    },
+    "data/train/virtu_v3/train/virtu_v3_text_sft.jsonl": {
+      "bytes": 13096106,
+      "sha256": "30ff1a23a2d9e9e49381e2ecc46e6cf8cd8c9aa6c1a0c3bddecb16b0341ca553"
+    },
+    "data/train/virtu_v3/virtu_fix_text_sft_v1.manifest.json": {
+      "bytes": 3605,
+      "sha256": "18bd4c5090acd3d19860c83ff8bf7df54f5e45bfd3bbfae74d84b426cf687b42"
+    },
+    "requirements-v100.txt": {
+      "bytes": 537,
+      "sha256": "fea2bdb3127a654d9ea9850f1cdb179fa2cab51013c6db0bae206815685951e4"
+    },
+    "scripts/bootstrap_v100_train.sh": {
+      "bytes": 12232,
+      "sha256": "7e7905d245be5f797d46393009e9ca383bc027c14e071410d11f373f2033e0ef"
+    },
+    "scripts/build_capability_sft.py": {
+      "bytes": 41796,
+      "sha256": "983cf40e2a43b88a287600e4d9a2324e8e793d71799f10f18309f43bf36bbcca"
+    },
+    "scripts/build_fix_text_corpus.py": {
+      "bytes": 16306,
+      "sha256": "41d568e7807949d16ddee519b9e4324eddd0d62379810b74995763e1974ed061"
+    },
+    "scripts/build_formula_holdout.py": {
+      "bytes": 4260,
+      "sha256": "3a069550a61015df1472aa01eb4a63f86b93d730d18b7073c6cec060f768ab5c"
+    },
+    "scripts/build_train_v3.py": {
+      "bytes": 22986,
+      "sha256": "ce6629aed8bc3daecaaac212b03cb0134b10143d35905b1ad1987f00f09b3fd8"
+    },
+    "scripts/knowledge_reasoning_seed.py": {
+      "bytes": 20054,
+      "sha256": "76408070e78ac5c52987d430ea8710dc38429334bbdf5e80305cdfd6cae3605c"
+    },
+    "scripts/train_virtu_v100.py": {
+      "bytes": 16377,
+      "sha256": "b9caf31a99f6bbd62d28470901ea6500d813e929ce7ecfb66851ad3c279b3462"
+    },
+    "train_virtu.py": {
+      "bytes": 11120,
+      "sha256": "c63d5e4efe418ded68d6bd300a02e52b322bcaf6f226f3d308000df736a0a7ea"
+    }
+  },
+  "route": "C - V100-SXM2-32GB fp16 QLoRA",
+  "hardware": "Tesla V100-SXM2-32GB, 32GB VRAM, 90GB RAM, 50GB data disk, CNY 1.98/h",
+  "note": "V100 has no bf16 and no FlashAttention-2: fp16 + sdpa/eager, 4-bit NF4.",
+  "budget_cap_cny": 50,
+  "updated_at": "2026-11-01 19:54:03",
+  "bundle": {
+    "path": "cloud_handoff/virtu_bundle_route_C.tar.gz",
+    "bytes": 2503282,
+    "sha256": "34d6bd0113bf888f3265079fb06d1c756d7db5f3d13405fdd7ba4d161ecc6da8",
+    "extract_root": "virtu/"
+  },
+  "remote_one_liner": "tar xzf virtu_bundle_route_C.tar.gz -C ~ && bash ~/virtu/scripts/bootstrap_v100_train.sh",
+  "train_command": "bash scripts/bootstrap_v100_train.sh   # deps -> base -> preflight -> smoke -> train, resumable",
+  "eval_gates": [
+    "240-case virtu_eval gold=100",
+    "200/200 formula holdout",
+    "toolcall 30>=90 and 210 overall>=72.56",
+    "knowledge/reasoning>=60 if claimed",
+    "receipt status must be COMPLETED, never SMOKE_ONLY"
+  ]
+}

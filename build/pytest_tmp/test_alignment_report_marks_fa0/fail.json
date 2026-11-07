@@ -1,0 +1,12 @@
+{
+  "summary": {
+    "overall_verdict": "REJECTED",
+    "alignment_pass_rate": 0.0,
+    "average_cosine_similarity": 0.1,
+    "average_wasserstein_distance": 0.5,
+    "average_semantic_score": 0.1,
+    "passed_tensors": 0,
+    "total_tensors_evaluated": 1
+  },
+  "layer_records": []
+}

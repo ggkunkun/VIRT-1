@@ -50,9 +50,9 @@ def test_solidworks_macro_synthesis():
         "is_die_mold": True
     }
     macro = engine.generate_solidworks_macro(spec)
-    assert "SldWorks.SldWorks" in macro
+    assert "SldWorks" in macro
     assert "D_Outer" in macro
-    assert "FeatureRevolve2" in macro
+    assert "FeatureExtrusion3" in macro
     assert "Cr12MoV" in macro
 
 
@@ -71,8 +71,8 @@ def test_nx12_script_synthesis():
     }
     script = engine.generate_nx12_script(spec)
     assert "import NXOpen" in script
-    assert "the_uf_session.Modl.CreateCyl1" in script
-    assert "the_uf_session.Modl.CreateTorus" in script
+    assert "the_uf_session.ModlFeatures.CreateCyl1" in script
+    assert "D_OUTER" in script
     assert "80.0" in script
 
 

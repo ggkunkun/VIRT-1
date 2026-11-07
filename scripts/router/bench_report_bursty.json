@@ -1,0 +1,49 @@
+{
+  "levels": [
+    1,
+    2
+  ],
+  "per": 12,
+  "max_tokens": 40,
+  "expert_ratio": 30,
+  "pattern": "bursty",
+  "rows": [
+    {
+      "conc": 1,
+      "per": 12,
+      "wall_s": 299.94,
+      "throughput_rps": 0.04,
+      "ok": 12,
+      "fail": 0,
+      "empty": 0,
+      "lat_p50": 20.6,
+      "lat_p95": 33.895,
+      "lat_max": 42.413,
+      "route_acc": 1.0,
+      "fast_tps_avg": 36.7,
+      "fast_n": 8,
+      "hard_tps_avg": 10.5,
+      "hard_n": 4,
+      "avg_tps_all": 1.6
+    },
+    {
+      "conc": 2,
+      "per": 12,
+      "wall_s": 277.63,
+      "throughput_rps": 0.04,
+      "ok": 12,
+      "fail": 0,
+      "empty": 0,
+      "lat_p50": 42.311,
+      "lat_p95": 84.359,
+      "lat_max": 86.035,
+      "route_acc": 1.0,
+      "fast_tps_avg": 36.7,
+      "fast_n": 8,
+      "hard_tps_avg": 9.5,
+      "hard_n": 4,
+      "avg_tps_all": 0.9
+    }
+  ],
+  "generated_at": "2026-11-06T18:51:55"
+}

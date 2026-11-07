@@ -1,0 +1,7 @@
+### deployed ollama models -> which exported file they are
+
+### exported files
+  virtu-omni-v2-q4_0.gguf            4,614,304,640 B sha256=c82f47c8e4ef7c88... -> deployed as NOT FOUND among ollama models
+  virtu-production-v3-q4_0.gguf      4,614,304,640 B sha256=831d0f3b52515627... -> deployed as NOT FOUND among ollama models
+  virtu-q4_0.gguf                    4,614,304,640 B sha256=dd445388cdebcb88... -> deployed as NOT FOUND among ollama models
+  virtu-toolcall-q4_0.gguf           4,614,301,760 B sha256=8ca36b641fa42056... -> deployed as NOT FOUND among ollama models

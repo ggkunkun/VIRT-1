@@ -1,8 +1,8 @@
-"""WorkBuddy OpenAI-Compatible Bridge Server for Virtu-CAD-CAM-10B.
+"""WorkBuddy OpenAI-compatible bridge for the Virtu runtime.
 
 Provides standard OpenAI REST API endpoints (/v1/models, /v1/chat/completions)
-enabling WorkBuddy to seamlessly select and converse with the Virtu-CAD-CAM-10B
-fine-tuned model. Zero third-party dependencies (pure standard library).
+The public model ID is retained as a client-compatibility alias. Runtime model
+identity is reported separately; text and vision use separate channels.
 """
 
 import sys
@@ -11,6 +11,9 @@ import re
 import json
 import time
 import uuid
+import hmac
+import io
+import threading
 from http.server import HTTPServer, BaseHTTPRequestHandler
 from socketserver import ThreadingMixIn
 from typing import Any, Dict, List
@@ -22,9 +25,15 @@ if WORKSPACE_DIR not in sys.path:
 
 from virtu_omni.engine.wish_cad_cam_engine import WishCADCAMEngine
 from virtu_omni.knowledge.software_plugin_ontology import SOFTWARE_ONTOLOGY
-from virtu_omni.agent import IndustrialAgentTeam
 from virtu_omni.security.auditor import ModelSecurityAuditor
-from virtu_omni.memory import VirtuHindsightMemory, MemoryType
+from virtu_omni.memory import (
+    VirtuHindsightMemory,
+    MemoryType,
+    BuiltinWorkingMemory,
+    LongTaskHallucinationSentinel,
+    get_working_memory,
+    get_sleep_framework,
+)
 from virtu_omni.reach import VirtuAgentReach
 from virtu_omni.ai_scratch import VirtuAIScratch
 from virtu_omni.paperclip import VirtuPaperclipAdapter
@@ -32,15 +41,19 @@ from virtu_omni.context_mode import VirtuContextMode
 from virtu_omni.rea import VirtuREA
 from virtu_omni.claude_plugins import VirtuClaudePlugins
 from virtu_omni.computer_use import VirtuComputerUse
+from virtu_omni.agent import VirtuSuperAgent
 from bridges.six_software_orchestrator import SixSoftwareOrchestrator
+from bridges.software_registry import diagnose_all
+from bridges.tool_calling_specs import get_cadcam_tool_definitions, execute_tool_call
+from bridges.bridge_security import bearer_authorized, path_allowed, SingleFlight, ensure_bridge_token
+from virtu_omni.serving.deception_gate import gate_answer
 
 MODEL_ID = "virtu-cad-cam-10b"
-MODEL_NAME = "Virtu-CAD-CAM-10B (工业六大软件与 Agent Team 协同大模型)"
+MODEL_NAME = "Virtu local bridge (Qwen3-8B text backend; separate vision channel)"
 PORT = 8000
 HOST = "127.0.0.1"
 
 engine = WishCADCAMEngine()
-agent_team = IndustrialAgentTeam()
 security_auditor = ModelSecurityAuditor()
 hindsight_memory = VirtuHindsightMemory()
 reach_adapter = VirtuAgentReach()
@@ -50,11 +63,262 @@ context_mode = VirtuContextMode.get_instance()
 rea_adapter = VirtuREA.get_instance()
 claude_plugins = VirtuClaudePlugins.get_instance()
 computer_use = VirtuComputerUse.get_instance()
+super_agent = VirtuSuperAgent()
 six_orchestrator = SixSoftwareOrchestrator()
+working_memory = get_working_memory(
+    session_id="bridge_production_session",
+    persist_path=os.path.join(WORKSPACE_DIR, "runs", "working_memory_state.json"),
+)
+memory_sentinel = LongTaskHallucinationSentinel(working_memory)
+
+# Bridge authentication and app-exclusive execution guards
+_BRIDGE_TOKEN = None
+_MAX_REQUEST_BYTES = 16 * 1024 * 1024
+_PUBLIC_GET_PATHS = {
+    "/", "/health", "/healthz", "/v1/models", "/models", "/api/v1/models",
+    "/v1/reach/channels", "/reach/channels",
+    "/v1/ai-scratch/curriculum", "/ai-scratch/curriculum", "/v1/ai-scratch/overview",
+    "/v1/ai-scratch/diagnostic", "/ai-scratch/diagnostic",
+    "/v1/paperclip/dashboard", "/paperclip/dashboard",
+    "/v1/paperclip/tasks", "/paperclip/tasks",
+    "/v1/paperclip/org", "/paperclip/org",
+    "/v1/context-mode/dashboard", "/context-mode/dashboard",
+    "/v1/context-mode/doctor", "/context-mode/doctor",
+    "/v1/rea/status", "/rea/status",
+    "/v1/plugins/status", "/plugins/status",
+    "/v1/plugins/marketplace", "/plugins/marketplace",
+    "/v1/plugins/list", "/plugins/list",
+    "/v1/computer-use/status", "/computer-use/status",
+    "/v1/computer-use/summary", "/computer-use/summary",
+    "/v1/computer-use/windows", "/computer-use/windows",
+    "/v1/hindsight/status", "/hindsight/status",
+    "/v1/security-audit", "/security-audit",
+    "/v1/harness2/status", "/harness2/status",
+    "/v1/cad/parametric-slider", "/cad/parametric-slider",
+    "/v1/cadcam/preflight", "/api/preflight", "/cadcam/preflight",
+    "/v1/cadcam/tools", "/api/tools", "/cadcam/tools",
+    "/v1/memory/working-memory/status", "/memory/working-memory/status",
+    "/v1/working-memory/status", "/working-memory/status",
+    "/v1/super-agent/architecture", "/super-agent/architecture",
+    "/v1/sleep/status", "/sleep/status", "/v1/virtu/sleep/status",
+    "/v1/deepmind/status", "/deepmind/status", "/v1/virtu/deepmind/status",
+    "/v1/frontier/status", "/frontier/status", "/v1/virtu/frontier/status",
+    "/v1/ultimate/status", "/ultimate/status", "/v1/virtu/ultimate/status",
+}
+
+_PUBLIC_POST_PATHS = {
+    "/v1/super-agent/solve", "/super-agent/solve",
+    "/v1/reach/search", "/reach/search",
+    "/v1/reach/read", "/reach/read",
+    "/v1/ai-scratch/first-principles/autograd", "/ai-scratch/first-principles/autograd",
+    "/v1/ai-scratch/tutor/placement", "/ai-scratch/tutor/placement",
+    "/v1/context-mode/session/event", "/context-mode/session/event",
+    "/v1/context-mode/session/search", "/context-mode/session/search",
+    "/v1/context-mode/execute", "/context-mode/execute",
+    "/v1/paperclip/task/dispatch", "/paperclip/task/dispatch",
+    "/v1/paperclip/heartbeat/trigger", "/paperclip/heartbeat/trigger",
+    "/v1/paperclip/approval/decide", "/paperclip/approval/decide",
+    "/v1/hindsight/retain", "/hindsight/retain",
+    "/v1/hindsight/recall", "/hindsight/recall",
+    "/v1/hindsight/reflect", "/hindsight/reflect",
+    "/v1/memory/working-memory/update", "/memory/working-memory/update",
+    "/v1/memory/working-memory/reset", "/memory/working-memory/reset",
+    "/v1/memory/working-memory/compact", "/memory/working-memory/compact",
+    "/v1/sleep/trigger", "/sleep/trigger", "/v1/virtu/sleep/trigger",
+    "/v1/deepmind/funsearch/evolve", "/deepmind/funsearch/evolve",
+    "/v1/deepmind/geometry/solve", "/deepmind/geometry/solve",
+    "/v1/deepmind/affordance/check", "/deepmind/affordance/check",
+    "/v1/deepmind/mcts/plan", "/deepmind/mcts/plan",
+    "/v1/frontier/rlvr/evaluate", "/frontier/rlvr/evaluate",
+    "/v1/frontier/prm/audit", "/frontier/prm/audit",
+    "/v1/frontier/brep/compile", "/frontier/brep/compile",
+    "/v1/ultimate/quiet-star/heal", "/ultimate/quiet-star/heal",
+    "/v1/ultimate/blueprint/ground", "/ultimate/blueprint/ground",
+    "/v1/ultimate/pinn/predict", "/ultimate/pinn/predict",
+}
+_app_lock_token = None
+_app_lock = SingleFlight()
+
+def _try_lock_app(token: str) -> bool:
+    global _app_lock_token
+    if not _app_lock.acquire():
+        return False
+    _app_lock_token = token
+    return True
+
+def _unlock_app():
+    global _app_lock_token
+    _app_lock_token = None
+    _app_lock.release()
+
+def run_exclusive(func, token: str):
+    if not _try_lock_app(token):
+        return False, {"error": "并发冲突：另一条链正在驱动工业软件"}
+    try:
+        res = func()
+        return True, res
+    finally:
+        _unlock_app()
+
+def _path_allowed(path: str) -> bool:
+    root = os.path.realpath(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    if path_allowed(path, root):
+        return True
+    # 允许访问当前用户的 Desktop 读取图纸/模型输入文件
+    try:
+        desktop = os.path.realpath(os.path.join(os.environ.get("USERPROFILE", ""), "Desktop"))
+        if desktop and path_allowed(path, desktop):
+            return True
+    except Exception:
+        pass
+    return False
+
+
+def _authorized(headers) -> bool:
+    expected = _BRIDGE_TOKEN or os.environ.get("VIRTU_BRIDGE_TOKEN", "")
+    auth = headers.get("Authorization", "") if headers is not None else ""
+    return bearer_authorized(auth, expected)
+
+
+def _load_bridge_token() -> str:
+    token = os.environ.get("VIRTU_BRIDGE_TOKEN") or ensure_bridge_token()
+    if len(token.strip()) < 32:
+        raise RuntimeError("VIRTU_BRIDGE_TOKEN is too short; refusing to start an unauthenticated bridge")
+    return token.strip()
+
+
+def _build_usage():
+    """OpenAI-style token accounting taken from the backend's last generation.
+
+    Only counts the runtime actually reported (Ollama eval_count/prompt_eval_count,
+    or an upstream vLLM `usage` block) are published. When nothing was reported the
+    field is omitted instead of filled with a character-length guess that a caller
+    would read as a measurement — the eval harness scores truncation off these.
+    """
+    try:
+        from virtu_real_backend import get_backend
+        usage = getattr(get_backend(), "last_usage", None)
+    except Exception:  # noqa: BLE001 - usage must never break a completion
+        return None
+    if not isinstance(usage, dict):
+        return None
+    prompt = usage.get("prompt_tokens")
+    completion = usage.get("completion_tokens")
+    total = usage.get("total_tokens")
+    if total is None and isinstance(prompt, int) and isinstance(completion, int):
+        total = prompt + completion
+    if prompt is None and completion is None and total is None:
+        return None
+    return {"prompt_tokens": prompt, "completion_tokens": completion,
+            "total_tokens": total}
+
+
+def _attach_usage(resp: dict) -> dict:
+    """Attach ``usage`` only when the backend actually reported counts.
+
+    OpenAI's schema marks ``usage`` as optional, and the eval harness reads
+    ``usage["prompt_tokens"]`` directly. Publishing ``"usage": null`` makes a
+    "never measured" response indistinguishable from a fabricated zero, which
+    is exactly what the protocol tests reject. So the key is dropped when
+    ``_build_usage()`` returns ``None`` and injected when real counts exist.
+    """
+    usage = _build_usage()
+    if usage is None:
+        resp.pop("usage", None)
+    else:
+        resp["usage"] = usage
+    return resp
+
+
+def _error_http_status(err: Exception) -> int:
+    """Map malformed requests, unavailable backends and upstream failures accurately."""
+    if isinstance(err, (json.JSONDecodeError, UnicodeDecodeError)):
+        return 400
+    message = str(err).lower()
+    if "backend unavailable" in message or "后端大模型未就绪" in str(err) or type(err).__name__ == "VisionUnavailable":
+        return 503
+    if (isinstance(err, (TimeoutError, ConnectionError, OSError))
+            or type(err).__name__ in {"HTTPError", "URLError"}
+            or "all candidates failed" in message):
+        return 502
+    return 500
+
+def _validate_dispatch_args(target, action, args):
+    VALID_TARGETS = {
+        "Siemens_NX", "SOLIDWORKS", "AutoCAD", "CIMCO_Edit", "VERICUT", "SSCNC",
+        "nx", "solidworks", "autocad", "cimco", "vericut", "sscnc"
+    }
+    if not target or target not in VALID_TARGETS:
+        return False, f"未知目标软件: {target}"
+    if not action:
+        return False, "动作不能为空"
+    if not isinstance(args, dict):
+        return False, "参数必须为字典对象"
+    def check_paths(value, key=""):
+        if isinstance(value, dict):
+            for child_key, child in value.items():
+                ok, reason = check_paths(child, str(child_key))
+                if not ok:
+                    return ok, reason
+        elif isinstance(value, (list, tuple)):
+            for child in value:
+                ok, reason = check_paths(child, key)
+                if not ok:
+                    return ok, reason
+        elif isinstance(value, str) and (key.endswith(("_path", "_file")) or "path" in key.lower()):
+            if not _path_allowed(value):
+                return False, f"参数 {key} 路径不在允许根目录下"
+        return True, "OK"
+
+    ok, reason = check_paths(args)
+    if not ok:
+        return ok, reason
+    return True, "OK"
+
+
+def _validate_tool_call(tool_name, args):
+    if not isinstance(tool_name, str) or not tool_name.strip():
+        return False, "工具名称不能为空"
+    if not isinstance(args, dict):
+        return False, "工具参数必须为 JSON 对象"
+    safe_tools = {
+        "cadcam_preflight", "cadcam_solidworks_model", "cadcam_nx_journal",
+        "cadcam_autocad_draw", "cadcam_cimco_validate", "cadcam_vericut_simulate",
+        "cadcam_sscnc_control", "cadcam_run_full_chain", "cadcam_desktop_gui",
+        "cadcam_visual_inspect", "cad.parse_wish_intent", "solidworks.create_parametric_part",
+        "nx.create_nxopen_script", "autocad.create_autolisp", "cimco.create_macro_b",
+        "vericut.create_project_config", "sscnc.create_setup_guide", "ontology.lookup_plugin",
+        "cadcam_extreme_chain", "cadcam_universal_geometry",
+        "cadcam_cae_stress_analysis", "cadcam_sheetmetal_nest",
+        "cadcam_step_reverse",
+        "cadcam_assembly_build",
+        "cadcam_feature_ops",
+        "assembly_build", "cad.assembly_build", "step_reverse",
+        "reverse_step_model", "cadcam_reverse_engineering",
+        # Omni / Desktop
+        "desktop.capture_screen", "desktop.click_element", "desktop.type_text",
+        "desktop.press_hotkey", "desktop.focus_software",
+        # CAD agent
+        "cad.infer_blueprint_feature_tree", "cad.assemble_components_with_mates",
+        "cad.infer_equipment_intent", "cad.decompose_automation_assembly",
+        "cad.query_standard_parts_library", "cad.model_parametric_feature_part",
+        "cad.generate_engineering_drawing_annotation", "cad.execute_solidworks_macro",
+        "cad.one_sentence_parametric_engine", "software.dispatch_industrial_tool",
+        # Agent / Skill / Memory / Web
+        "agent.verify_and_self_optimize", "skill.synthesize_agent_skill",
+        "memory.commit_long_term_experience", "web.search_technical_knowledge",
+    }
+    if tool_name not in safe_tools:
+        return False, "工具不在允许列表中"
+    return _validate_dispatch_args("Siemens_NX", "tool_call", args)
 
 
 class ThreadingServer(ThreadingMixIn, HTTPServer):
     daemon_threads = True
+    # Allow immediate rebind after a restart (Windows keeps closing sockets in
+    # TIME_WAIT). Single-instance ownership is enforced by a named mutex in
+    # run_server(), not by SO_REUSEADDR.
+    allow_reuse_address = True
 
 
 class OpenAIBaseHandler(BaseHTTPRequestHandler):
@@ -69,6 +333,16 @@ class OpenAIBaseHandler(BaseHTTPRequestHandler):
         self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
         self.send_header("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Requested-With")
 
+    def end_headers(self):
+        self._response_committed = True
+        super().end_headers()
+
+    def _require_auth(self):
+        if _authorized(self.headers):
+            return True
+        self._send_raw_json({"error": {"message": "Valid Bearer token required", "type": "authentication_error"}}, status=401)
+        return False
+
     def do_OPTIONS(self):
         self.send_response(200)
         self._send_cors_headers()
@@ -76,7 +350,15 @@ class OpenAIBaseHandler(BaseHTTPRequestHandler):
 
     def do_GET(self):
         clean_path = self.path.split("?")[0].rstrip("/")
+        if clean_path not in _PUBLIC_GET_PATHS and not self._require_auth():
+            return
         if clean_path in ["/v1/models", "/models", "/api/v1/models"]:
+            try:
+                from virtu_real_backend import get_backend
+                backend = get_backend()
+                identity = backend.identity() if backend is not None else {"backend": "unavailable"}
+            except Exception:
+                identity = {"backend": "unavailable"}
             self.send_response(200)
             self.send_header("Content-Type", "application/json; charset=utf-8")
             self._send_cors_headers()
@@ -89,10 +371,11 @@ class OpenAIBaseHandler(BaseHTTPRequestHandler):
                         "id": MODEL_ID,
                         "object": "model",
                         "created": int(time.time()),
-                        "owned_by": "Virtu-Omni",
+                        "owned_by": "Virtu-runtime",
                         "permission": [],
                         "root": MODEL_ID,
-                        "parent": None
+                        "parent": None,
+                        "metadata": identity,
                     }
                 ]
             }
@@ -232,6 +515,17 @@ class OpenAIBaseHandler(BaseHTTPRequestHandler):
             h_status = hindsight_memory.get_status()
             self.wfile.write(json.dumps(h_status, ensure_ascii=False).encode("utf-8"))
             return
+        elif clean_path in [
+            "/v1/memory/working-memory/status", "/memory/working-memory/status",
+            "/v1/working-memory/status", "/working-memory/status"
+        ]:
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self._send_cors_headers()
+            self.end_headers()
+            wm_status = working_memory.export_snapshot()
+            self.wfile.write(json.dumps(wm_status, ensure_ascii=False).encode("utf-8"))
+            return
         elif clean_path in ["/v1/security-audit", "/security-audit"]:
             self.send_response(200)
             self.send_header("Content-Type", "application/json; charset=utf-8")
@@ -293,17 +587,198 @@ class OpenAIBaseHandler(BaseHTTPRequestHandler):
             }
             self.wfile.write(json.dumps(slider_state, ensure_ascii=False).encode("utf-8"))
             return
-        else:
-            # Default health & model discovery response
+        elif clean_path in ["/v1/cadcam/preflight", "/api/preflight", "/cadcam/preflight"]:
             self.send_response(200)
             self.send_header("Content-Type", "application/json; charset=utf-8")
             self._send_cors_headers()
             self.end_headers()
-            self.wfile.write(json.dumps({"status": "healthy", "model": MODEL_ID, "path": self.path}).encode("utf-8"))
+            diag = diagnose_all()
+            self.wfile.write(json.dumps(diag, ensure_ascii=False).encode("utf-8"))
+            return
+        elif clean_path in ["/v1/cadcam/tools", "/api/tools", "/cadcam/tools"]:
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self._send_cors_headers()
+            self.end_headers()
+            tools = get_cadcam_tool_definitions()
+            self.wfile.write(json.dumps({"tools": tools, "count": len(tools)}, ensure_ascii=False).encode("utf-8"))
+            return
+        elif clean_path in ["/v1/super-agent/architecture", "/super-agent/architecture"]:
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self._send_cors_headers()
+            self.end_headers()
+            arch = super_agent.explain_architecture()
+            self.wfile.write(json.dumps(arch, ensure_ascii=False).encode("utf-8"))
+            return
+        elif clean_path in ["/v1/sleep/status", "/sleep/status", "/v1/virtu/sleep/status"]:
+            sf = get_sleep_framework()
+            status_data = {
+                "ok": True,
+                "is_sleeping": sf.is_sleeping,
+                "wake_buffer_count": len(sf.wake_buffer),
+                "consolidated_units": len(sf.consolidated_store),
+                "dreams_recorded": len(sf.dream_history),
+                "last_stability_score": sf.audit_verdicts[-1].stability_score if sf.audit_verdicts else None,
+                "last_cf_rate": sf.audit_verdicts[-1].catastrophic_forgetting_rate if sf.audit_verdicts else None,
+            }
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self._send_cors_headers()
+            self.end_headers()
+            self.wfile.write(json.dumps(status_data, ensure_ascii=False).encode("utf-8"))
+            return
+        elif clean_path in ["/v1/deepmind/status", "/deepmind/status", "/v1/virtu/deepmind/status"]:
+            from virtu_omni.google_suite import get_google_suite
+            suite = get_google_suite()
+            report = suite.run_all_falsifiable_probes()
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self._send_cors_headers()
+            self.end_headers()
+            self.wfile.write(json.dumps(report.to_dict(), ensure_ascii=False).encode("utf-8"))
+            return
+        elif clean_path in ["/v1/frontier/status", "/frontier/status", "/v1/virtu/frontier/status"]:
+            from virtu_omni.model_evolution_suite import get_model_evolution_suite
+            suite = get_model_evolution_suite()
+            rep = suite.run_all_frontier_probes()
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self._send_cors_headers()
+            self.end_headers()
+            self.wfile.write(json.dumps(rep.to_dict(), ensure_ascii=False).encode("utf-8"))
+            return
+        elif clean_path in ["/v1/ultimate/status", "/ultimate/status", "/v1/virtu/ultimate/status"]:
+            from virtu_omni.ultimate_suite import get_ultimate_suite
+            suite = get_ultimate_suite()
+            rep = suite.run_all_ultimate_probes()
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self._send_cors_headers()
+            self.end_headers()
+            self.wfile.write(json.dumps(rep.to_dict(), ensure_ascii=False).encode("utf-8"))
+            return
+        elif clean_path in {"/", "/health", "/healthz"}:
+            # Health discovery only; unknown paths must not masquerade as healthy.
+            try:
+                from virtu_real_backend import get_backend
+                backend = get_backend()
+                identity = backend.identity() if backend is not None else {"backend": "unavailable"}
+            except Exception:
+                identity = {"backend": "unavailable"}
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self._send_cors_headers()
+            self.end_headers()
+            self.wfile.write(json.dumps({"status": "healthy", "model": MODEL_ID,
+                                         "identity": identity, "path": self.path}).encode("utf-8"))
+        else:
+            self._send_raw_json({"error": {"message": f"Unknown endpoint: {clean_path}",
+                                            "type": "not_found_error"}}, status=404)
 
     def do_POST(self):
+        global _app_lock_token
+        # Deception-gate context is per request; the gate must never see the
+        # previous request's prompt or tool receipts.
+        self._gate_prompt = ""
+        self._gate_evidence = None
         clean_path = self.path.split("?")[0].rstrip("/")
-        if clean_path in ["/v1/harness2/apply", "/harness2/apply"]:
+        if clean_path not in _PUBLIC_POST_PATHS and not self._require_auth():
+            return
+        try:
+            content_length = int(self.headers.get("Content-Length", "0"))
+        except ValueError:
+            self._send_raw_json({"error": {"message": "Invalid Content-Length", "type": "invalid_request_error"}}, status=400)
+            return
+        if content_length < 0 or content_length > _MAX_REQUEST_BYTES:
+            self._send_raw_json({"error": {"message": "Request body exceeds allowed size", "type": "invalid_request_error"}}, status=413)
+            return
+        body = self.rfile.read(content_length) if content_length else b"{}"
+        old_rfile = self.rfile
+        self.rfile = io.BytesIO(body)
+        requires_lock = clean_path in {
+            "/v1/cadcam/tools/call", "/api/tools/call", "/cadcam/tools/call",
+            "/v1/cadcam/dispatch", "/api/dispatch", "/cadcam/dispatch",
+            "/v1/chain/run", "/api/chain", "/chain/run",
+            "/v1/computer-use/action", "/computer-use/action",
+        }
+        if clean_path in {"/v1/chat/completions", "/chat/completions"}:
+            try:
+                chat_data = json.loads(body.decode("utf-8"))
+                requires_lock = bool(chat_data.get("auto_execute_tools") or chat_data.get("auto_execute")
+                                     or self.headers.get("X-Auto-Execute-Tools", "").lower() in ("true", "1", "yes"))
+            except (UnicodeDecodeError, json.JSONDecodeError):
+                pass
+        if requires_lock and not _app_lock.acquire():
+            self.rfile = old_rfile
+            self._send_raw_json({"error": {"message": "Another operation is using the shared desktop/software resources", "type": "conflict_error"}}, status=409)
+            return
+        if requires_lock:
+            _app_lock_token = f"{self.command}:{clean_path}:{uuid.uuid4().hex[:8]}"
+        try:
+            self._do_post_routes()
+        except Exception as err:
+            print(f"[WorkBuddy-Bridge] route failed: {type(err).__name__}: {err}")
+            if getattr(self, "_response_committed", False):
+                self.close_connection = True
+            else:
+                status = _error_http_status(err)
+                error_type = "invalid_request_error" if status == 400 else "server_error"
+                self._send_raw_json({"error": {"message": str(err), "type": error_type}}, status=status)
+        finally:
+            self.rfile = old_rfile
+            if requires_lock:
+                _unlock_app()
+
+    def _do_post_routes(self):
+        clean_path = self.path.split("?")[0].rstrip("/")
+        if clean_path in ["/v1/cadcam/tools/call", "/api/tools/call", "/cadcam/tools/call"]:
+            content_length = int(self.headers.get("Content-Length", 0))
+            req_data = json.loads(self.rfile.read(content_length).decode("utf-8")) if content_length > 0 else {}
+            tool_name = req_data.get("name") or req_data.get("tool_name")
+            args = req_data.get("arguments") or req_data.get("args") or {}
+            if isinstance(args, str):
+                try:
+                    args = json.loads(args)
+                except Exception:
+                    self._send_raw_json({"error": {"message": "arguments must be valid JSON", "type": "invalid_request_error"}}, status=400)
+                    return
+            ok, reason = _validate_tool_call(tool_name, args)
+            if not ok:
+                self._send_raw_json({"error": {"message": reason, "type": "invalid_request_error"}}, status=400)
+                return
+            res = execute_tool_call(tool_name, args)
+            self._send_raw_json(res)
+            return
+        elif clean_path in ["/v1/cadcam/dispatch", "/api/dispatch", "/cadcam/dispatch"]:
+            content_length = int(self.headers.get("Content-Length", 0))
+            req_data = json.loads(self.rfile.read(content_length).decode("utf-8")) if content_length > 0 else {}
+            sw = req_data.get("target_software") or req_data.get("software")
+            act = req_data.get("action")
+            params = req_data.get("parameters") or req_data.get("params") or {}
+            ok, reason = _validate_dispatch_args(sw, act, params)
+            if not ok:
+                self._send_raw_json({"error": {"message": reason, "type": "invalid_request_error"}}, status=400)
+                return
+            res = six_orchestrator.dispatch(sw, act, params)
+            self._send_raw_json(res)
+            return
+        elif clean_path in ["/v1/chain/run", "/api/chain", "/chain/run"]:
+            content_length = int(self.headers.get("Content-Length", 0))
+            req_data = json.loads(self.rfile.read(content_length).decode("utf-8")) if content_length > 0 else {}
+            wish = req_data.get("wish", "")
+            out_root = req_data.get("out_root")
+            skip = tuple(req_data.get("skip", ()))
+            if not isinstance(wish, str) or not wish.strip() or not isinstance(skip, (list, tuple)):
+                self._send_raw_json({"error": {"message": "wish must be non-empty text and skip must be a list", "type": "invalid_request_error"}}, status=400)
+                return
+            if out_root and not _path_allowed(out_root):
+                self._send_raw_json({"error": {"message": "out_root must be inside the workspace", "type": "invalid_request_error"}}, status=400)
+                return
+            res = six_orchestrator.run_full_chain(wish, out_root=out_root, skip=skip)
+            self._send_raw_json(res)
+            return
+        elif clean_path in ["/v1/harness2/apply", "/harness2/apply"]:
             self.send_response(200)
             self.send_header("Content-Type", "application/json; charset=utf-8")
             self._send_cors_headers()
@@ -409,6 +884,341 @@ class OpenAIBaseHandler(BaseHTTPRequestHandler):
                 context=req_data.get("context"),
             )
             self.wfile.write(json.dumps(reflected, ensure_ascii=False).encode("utf-8"))
+            return
+        elif clean_path in ["/v1/memory/working-memory/update", "/memory/working-memory/update"]:
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self._send_cors_headers()
+            self.end_headers()
+            content_length = int(self.headers.get("Content-Length", 0))
+            req_data = {}
+            if content_length > 0:
+                try:
+                    req_data = json.loads(self.rfile.read(content_length).decode("utf-8"))
+                except Exception:
+                    req_data = {}
+            if "goal" in req_data:
+                g = req_data["goal"]
+                working_memory.set_task_goal(
+                    intent=g.get("intent", ""),
+                    invariants=g.get("invariants", {}),
+                    forbidden_actions=g.get("forbidden_actions"),
+                )
+            if "fact" in req_data:
+                f = req_data["fact"]
+                working_memory.record_fact(
+                    key=f["key"],
+                    value=f["value"],
+                    unit=f.get("unit"),
+                    source=f.get("source", "api"),
+                    verified=f.get("verified", True),
+                )
+            if "lesson" in req_data:
+                working_memory.record_lesson(req_data["lesson"])
+            res = {"status": "ok", "snapshot": working_memory.export_snapshot()}
+            self.wfile.write(json.dumps(res, ensure_ascii=False).encode("utf-8"))
+            return
+        elif clean_path in ["/v1/memory/working-memory/reset", "/memory/working-memory/reset"]:
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self._send_cors_headers()
+            self.end_headers()
+            working_memory.reset()
+            self.wfile.write(json.dumps({"status": "reset_success"}, ensure_ascii=False).encode("utf-8"))
+            return
+        elif clean_path in ["/v1/memory/working-memory/compact", "/memory/working-memory/compact"]:
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self._send_cors_headers()
+            self.end_headers()
+            content_length = int(self.headers.get("Content-Length", 0))
+            req_data = {}
+            if content_length > 0:
+                try:
+                    req_data = json.loads(self.rfile.read(content_length).decode("utf-8"))
+                except Exception:
+                    req_data = {}
+            msgs = req_data.get("messages", [])
+            max_turns = int(req_data.get("max_turns", 6))
+            compacted = working_memory.compact_context(msgs, max_turns_to_keep=max_turns)
+            self.wfile.write(json.dumps({"status": "ok", "compacted_messages": compacted}, ensure_ascii=False).encode("utf-8"))
+            return
+        elif clean_path in ["/v1/sleep/trigger", "/sleep/trigger", "/v1/virtu/sleep/trigger"]:
+            sf = get_sleep_framework()
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self._send_cors_headers()
+            self.end_headers()
+            content_length = int(self.headers.get("Content-Length", 0))
+            req_data = {}
+            if content_length > 0:
+                try:
+                    req_data = json.loads(self.rfile.read(content_length).decode("utf-8"))
+                except Exception:
+                    req_data = {}
+            run_id = req_data.get("run_id")
+            report = sf.run_sleep_cycle(run_id=run_id)
+            self.wfile.write(json.dumps({"ok": True, "report": report}, ensure_ascii=False).encode("utf-8"))
+            return
+        elif clean_path in ["/v1/deepmind/funsearch/evolve", "/deepmind/funsearch/evolve"]:
+            from virtu_omni.google_suite import get_google_suite
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self._send_cors_headers()
+            self.end_headers()
+            content_length = int(self.headers.get("Content-Length", 0))
+            req_data = {}
+            if content_length > 0:
+                try:
+                    req_data = json.loads(self.rfile.read(content_length).decode("utf-8"))
+                except Exception:
+                    req_data = {}
+            steps = int(req_data.get("steps", 1))
+            cand = get_google_suite().evolve_nesting_heuristic(steps=steps)
+            self.wfile.write(json.dumps({"ok": True, "candidate": cand.to_dict()}, ensure_ascii=False).encode("utf-8"))
+            return
+        elif clean_path in ["/v1/deepmind/geometry/solve", "/deepmind/geometry/solve"]:
+            from virtu_omni.google_suite import get_google_suite, SketchIntent, GeometricPrimitive, GeometricConstraint, ConstraintType
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self._send_cors_headers()
+            self.end_headers()
+            content_length = int(self.headers.get("Content-Length", 0))
+            req_data = {}
+            if content_length > 0:
+                try:
+                    req_data = json.loads(self.rfile.read(content_length).decode("utf-8"))
+                except Exception:
+                    req_data = {}
+            prims = [GeometricPrimitive(**p) for p in req_data.get("primitives", [])]
+            consts = [
+                GeometricConstraint(
+                    constraint_id=c["constraint_id"],
+                    constraint_type=ConstraintType(c["constraint_type"]),
+                    target_ids=c["target_ids"],
+                    value=c.get("value"),
+                )
+                for c in req_data.get("constraints", [])
+            ]
+            intent = SketchIntent(
+                sketch_id=req_data.get("sketch_id", "SKETCH"),
+                plane=req_data.get("plane", "Front"),
+                primitives=prims,
+                constraints=consts,
+                extrusion_depth_mm=req_data.get("extrusion_depth_mm"),
+                revolution_angle_deg=req_data.get("revolution_angle_deg"),
+            )
+            solved = get_google_suite().solve_geometry_intent(intent)
+            res = {
+                "sketch_id": solved.sketch_id,
+                "status": solved.status.value,
+                "dof": solved.dof,
+                "points": solved.points,
+                "circles": solved.circles,
+                "exact_profile_area_mm2": solved.exact_profile_area_mm2,
+                "theoretical_volume_mm3": solved.theoretical_volume_mm3,
+                "volume_conservation_passed": solved.volume_conservation_passed,
+                "diagnostics": solved.diagnostics,
+            }
+            self.wfile.write(json.dumps({"ok": True, "geometry": res}, ensure_ascii=False).encode("utf-8"))
+            return
+        elif clean_path in ["/v1/deepmind/affordance/check", "/deepmind/affordance/check"]:
+            from virtu_omni.google_suite import get_google_suite, IndustrialSoftwareTarget
+            from dataclasses import asdict
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self._send_cors_headers()
+            self.end_headers()
+            content_length = int(self.headers.get("Content-Length", 0))
+            req_data = {}
+            if content_length > 0:
+                try:
+                    req_data = json.loads(self.rfile.read(content_length).decode("utf-8"))
+                except Exception:
+                    req_data = {}
+            act = req_data.get("action", "CYCLE_START")
+            sw_name = req_data.get("software", "SOLIDWORKS_2021")
+            try:
+                target_sw = IndustrialSoftwareTarget(sw_name)
+            except ValueError:
+                target_sw = IndustrialSoftwareTarget.SOLIDWORKS_2021
+            state_kwargs = req_data.get("state", {})
+            aff_res = get_google_suite().check_affordance(act, target_sw, state_kwargs)
+            self.wfile.write(json.dumps({"ok": True, "affordance": asdict(aff_res)}, ensure_ascii=False).encode("utf-8"))
+            return
+        elif clean_path in ["/v1/deepmind/mcts/plan", "/deepmind/mcts/plan"]:
+            from virtu_omni.google_suite import get_google_suite, MachiningOperation, MachiningState
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self._send_cors_headers()
+            self.end_headers()
+            content_length = int(self.headers.get("Content-Length", 0))
+            req_data = {}
+            if content_length > 0:
+                try:
+                    req_data = json.loads(self.rfile.read(content_length).decode("utf-8"))
+                except Exception:
+                    req_data = {}
+            ops = [MachiningOperation(**op) for op in req_data.get("operations", [])]
+            st_data = req_data.get("initial_state")
+            st = MachiningState(**st_data) if st_data else None
+            best_ops, score, metrics = get_google_suite().plan_machining_process(ops, st)
+            self.wfile.write(json.dumps({
+                "ok": True,
+                "planned_operations": [op.to_dict() for op in best_ops],
+                "total_prm_reward": score,
+                "metrics": metrics,
+            }, ensure_ascii=False).encode("utf-8"))
+            return
+        elif clean_path in ["/v1/frontier/rlvr/evaluate", "/frontier/rlvr/evaluate"]:
+            from virtu_omni.model_evolution_suite import get_model_evolution_suite
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self._send_cors_headers()
+            self.end_headers()
+            content_length = int(self.headers.get("Content-Length", 0))
+            req_data = {}
+            if content_length > 0:
+                try:
+                    req_data = json.loads(self.rfile.read(content_length).decode("utf-8"))
+                except Exception:
+                    req_data = {}
+            prompt = req_data.get("prompt", "")
+            candidates = req_data.get("candidates", [])
+            context = req_data.get("context", {})
+            suite = get_model_evolution_suite()
+            evaluated = suite.evaluate_rlvr_group(prompt, candidates, context=context)
+            self.wfile.write(json.dumps({
+                "ok": True,
+                "prompt": prompt,
+                "group_size": len(evaluated),
+                "candidates": [c.to_dict() for c in evaluated],
+            }, ensure_ascii=False).encode("utf-8"))
+            return
+        elif clean_path in ["/v1/frontier/prm/audit", "/frontier/prm/audit"]:
+            from virtu_omni.model_evolution_suite import get_model_evolution_suite
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self._send_cors_headers()
+            self.end_headers()
+            content_length = int(self.headers.get("Content-Length", 0))
+            req_data = {}
+            if content_length > 0:
+                try:
+                    req_data = json.loads(self.rfile.read(content_length).decode("utf-8"))
+                except Exception:
+                    req_data = {}
+            gcode = req_data.get("gcode")
+            cad_steps = req_data.get("cad_steps")
+            safe_z = float(req_data.get("safe_plane_z", 5.0))
+            stock_z = float(req_data.get("stock_top_z", 0.0))
+            suite = get_model_evolution_suite()
+            if gcode:
+                audit = suite.audit_gcode_prm(gcode, safe_plane_z=safe_z, stock_top_z=stock_z)
+            elif cad_steps:
+                audit = suite.prm_model.audit_cad_steps(cad_steps)
+            else:
+                audit = None
+            self.wfile.write(json.dumps({
+                "ok": True,
+                "audit": audit.to_dict() if audit else None,
+            }, ensure_ascii=False).encode("utf-8"))
+            return
+        elif clean_path in ["/v1/frontier/brep/compile", "/frontier/brep/compile"]:
+            from virtu_omni.model_evolution_suite import get_model_evolution_suite, CADCommand
+            from dataclasses import asdict
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self._send_cors_headers()
+            self.end_headers()
+            content_length = int(self.headers.get("Content-Length", 0))
+            req_data = {}
+            if content_length > 0:
+                try:
+                    req_data = json.loads(self.rfile.read(content_length).decode("utf-8"))
+                except Exception:
+                    req_data = {}
+            cmds_data = req_data.get("commands", [])
+            part_name = req_data.get("part_name", "DeepCAD_Part")
+            cmds = [CADCommand(op=c.get("op", ""), params=c.get("params", {})) for c in cmds_data]
+            suite = get_model_evolution_suite()
+            code, report = suite.validate_and_compile_brep(cmds, part_name=part_name)
+            self.wfile.write(json.dumps({
+                "ok": True,
+                "is_valid": report.is_valid_manifold,
+                "compiled_code": code,
+                "validation_report": asdict(report),
+            }, ensure_ascii=False).encode("utf-8"))
+            return
+        elif clean_path in ["/v1/ultimate/quiet-star/heal", "/ultimate/quiet-star/heal"]:
+            from virtu_omni.ultimate_suite import get_ultimate_suite
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self._send_cors_headers()
+            self.end_headers()
+            content_length = int(self.headers.get("Content-Length", 0))
+            req_data = {}
+            if content_length > 0:
+                try:
+                    req_data = json.loads(self.rfile.read(content_length).decode("utf-8"))
+                except Exception:
+                    req_data = {}
+            code = req_data.get("code", "")
+            lang = req_data.get("language", "PYTHON")
+            suite = get_ultimate_suite()
+            heal_rep = suite.silent_execute_and_heal(code, language=lang)
+            self.wfile.write(json.dumps({"ok": True, "report": heal_rep.to_dict()}, ensure_ascii=False).encode("utf-8"))
+            return
+        elif clean_path in ["/v1/ultimate/blueprint/ground", "/ultimate/blueprint/ground"]:
+            from virtu_omni.ultimate_suite import get_ultimate_suite
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self._send_cors_headers()
+            self.end_headers()
+            content_length = int(self.headers.get("Content-Length", 0))
+            req_data = {}
+            if content_length > 0:
+                try:
+                    req_data = json.loads(self.rfile.read(content_length).decode("utf-8"))
+                except Exception:
+                    req_data = {}
+            elements = req_data.get("elements", [])
+            suite = get_ultimate_suite()
+            spec, err = suite.ground_and_invert_blueprint(elements)
+            self.wfile.write(json.dumps({
+                "ok": err is None,
+                "cad_spec": spec.to_dict() if spec else None,
+                "error": err,
+            }, ensure_ascii=False).encode("utf-8"))
+            return
+        elif clean_path in ["/v1/ultimate/pinn/predict", "/ultimate/pinn/predict"]:
+            from virtu_omni.ultimate_suite import get_ultimate_suite
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self._send_cors_headers()
+            self.end_headers()
+            content_length = int(self.headers.get("Content-Length", 0))
+            req_data = {}
+            if content_length > 0:
+                try:
+                    req_data = json.loads(self.rfile.read(content_length).decode("utf-8"))
+                except Exception:
+                    req_data = {}
+            suite = get_ultimate_suite()
+            res, err = suite.predict_pinn_stress(
+                length_mm=float(req_data.get("length_mm", 100.0)),
+                outer_dia_mm=float(req_data.get("outer_dia_mm", 60.0)),
+                inner_dia_mm=float(req_data.get("inner_dia_mm", 20.0)),
+                pressure_mpa=float(req_data.get("pressure_mpa", 0.0)),
+                tensile_force_n=float(req_data.get("tensile_force_n", 0.0)),
+                bending_moment_nm=float(req_data.get("bending_moment_nm", 0.0)),
+                material=req_data.get("material", "AL7075-T6"),
+            )
+            self.wfile.write(json.dumps({
+                "ok": err is None,
+                "result": res.to_dict() if res else None,
+                "error": err,
+            }, ensure_ascii=False).encode("utf-8"))
             return
         elif clean_path in ["/v1/reach/read", "/reach/read"]:
             self.send_response(200)
@@ -600,6 +1410,35 @@ class OpenAIBaseHandler(BaseHTTPRequestHandler):
                 rationale=rationale,
             )
             self.wfile.write(json.dumps(dec_res, ensure_ascii=False).encode("utf-8"))
+            return
+        elif clean_path in ["/v1/super-agent/solve", "/super-agent/solve"]:
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self._send_cors_headers()
+            self.end_headers()
+            content_length = int(self.headers.get("Content-Length", 0))
+            req_data = {}
+            if content_length > 0:
+                try:
+                    req_data = json.loads(self.rfile.read(content_length).decode("utf-8"))
+                except Exception:
+                    req_data = {}
+            prompt = req_data.get("prompt", "")
+            mode = req_data.get("mode", "AUTONOMOUS")
+            modality = req_data.get("modality", "FUNCTION_CALLING")
+            target_software = req_data.get("target_software")
+            action = req_data.get("action")
+            params = req_data.get("params")
+            solve_res = super_agent.solve(
+                prompt=prompt,
+                mode=mode,
+                modality=modality,
+                target_software=target_software,
+                action=action,
+                params=params,
+            )
+            resp_dict = solve_res.to_dict() if hasattr(solve_res, "to_dict") else asdict(solve_res)
+            self.wfile.write(json.dumps(resp_dict, ensure_ascii=False).encode("utf-8"))
             return
         elif clean_path in ["/v1/context-mode/execute", "/context-mode/execute"]:
             self.send_response(200)
@@ -907,6 +1746,11 @@ class OpenAIBaseHandler(BaseHTTPRequestHandler):
             }
             self.wfile.write(json.dumps(resp, ensure_ascii=False).encode("utf-8"))
             return
+        if clean_path not in {"/v1/chat/completions", "/chat/completions"}:
+            self._send_raw_json({"error": {"message": f"Unknown endpoint: {clean_path}",
+                                            "type": "not_found_error"}}, status=404)
+            return
+
         stream = False
         try:
             content_length = int(self.headers.get("Content-Length", 0))
@@ -914,36 +1758,63 @@ class OpenAIBaseHandler(BaseHTTPRequestHandler):
             
             try:
                 data = json.loads(body_bytes.decode("utf-8"))
-            except Exception as e:
-                self.send_response(400)
-                self.send_header("Content-Type", "application/json; charset=utf-8")
-                self._send_cors_headers()
-                self.end_headers()
-                self.wfile.write(json.dumps({"error": f"Invalid JSON: {str(e)}"}).encode("utf-8"))
+            except (UnicodeDecodeError, json.JSONDecodeError) as e:
+                self._send_raw_json({"error": {"message": f"Invalid JSON: {e}",
+                                                "type": "invalid_request_error"}}, status=400)
+                return
+            if not isinstance(data, dict):
+                self._send_raw_json({"error": {"message": "Request body must be a JSON object",
+                                                "type": "invalid_request_error"}}, status=400)
                 return
 
             messages = data.get("messages", [])
             prompt = data.get("prompt", "")
-            stream = bool(data.get("stream", False))
+            stream = data.get("stream", False)
             requested_model = data.get("model", MODEL_ID)
             tools = data.get("tools", [])
+            if (not isinstance(messages, list) or any(not isinstance(m, dict) for m in messages)
+                    or (not messages and not prompt)):
+                self._send_raw_json({"error": {"message": "messages must be a non-empty array or prompt must be provided", "type": "invalid_request_error"}}, status=400)
+                return
+            if not isinstance(stream, bool):
+                self._send_raw_json({"error": {"message": "stream must be a boolean", "type": "invalid_request_error"}}, status=400)
+                return
+            if requested_model != MODEL_ID:
+                self._send_raw_json({"error": {"message": f"Unknown model: {requested_model}", "type": "invalid_request_error"}}, status=404)
+                return
+            if not isinstance(tools, list) or any(not isinstance(tool, dict) for tool in tools):
+                self._send_raw_json({"error": {"message": "tools must be an array", "type": "invalid_request_error"}}, status=400)
+                return
+            max_tokens = data.get("max_tokens", data.get("max_completion_tokens"))
+            if max_tokens is not None and (isinstance(max_tokens, bool)
+                                           or not isinstance(max_tokens, int)
+                                           or not 1 <= max_tokens <= 32768):
+                self._send_raw_json({"error": {"message": "max_tokens must be an integer between 1 and 32768", "type": "invalid_request_error"}}, status=400)
+                return
+            temperature = data.get("temperature")
+            if temperature is not None and (isinstance(temperature, bool)
+                                             or not isinstance(temperature, (int, float))
+                                             or not 0 <= temperature <= 2):
+                self._send_raw_json({"error": {"message": "temperature must be between 0 and 2", "type": "invalid_request_error"}}, status=400)
+                return
+            tool_choice = data.get("tool_choice", "auto")
+            if tool_choice == "none":
+                tools = []
+            elif tool_choice not in (None, "auto"):
+                self._send_raw_json({"error": {"message": "Only tool_choice 'auto' and 'none' are supported", "type": "invalid_request_error"}}, status=400)
+                return
 
-            # Check if this is a CAD tool-calling request or continuation
-            cad_tool_names = {
-                "cad.decompose_automation_assembly",
-                "cad.one_sentence_parametric_engine",
-                "cad.update_parametric_variation",
-                "cad.query_standard_parts_library",
-                "cad.model_parametric_feature_part",
-                "cad.assemble_automation_system",
-                "software.dispatch_industrial_tool"
-            }
-            has_cad_tools = any(t.get("function", {}).get("name") in cad_tool_names for t in tools)
-            has_tool_role = any(m.get("role") == "tool" for m in messages)
-            has_tool_context = has_cad_tools or has_tool_role
+            has_tool_context = bool(tools) or any(
+                m.get("role") == "tool" or "tool_calls" in m for m in messages)
+
+            auto_execute = bool(data.get("auto_execute_tools", False) or data.get("auto_execute", False))
+            if self.headers.get("X-Auto-Execute-Tools", "").lower() in ("true", "1", "yes"):
+                auto_execute = True
 
             if has_tool_context:
-                tool_resp = self._handle_tool_orchestration(messages, tools)
+                tool_resp = self._handle_tool_orchestration(
+                    messages, tools, auto_execute=auto_execute,
+                    max_tokens=max_tokens, temperature=temperature)
                 if stream:
                     self._handle_streaming_tool_response(tool_resp)
                 else:
@@ -961,29 +1832,60 @@ class OpenAIBaseHandler(BaseHTTPRequestHandler):
                     user_prompt = self._extract_text(messages[-1].get("content", ""))
             elif prompt:
                 user_prompt = self._extract_text(prompt)
+            self._gate_prompt = user_prompt
 
             # Log incoming request
             print(f"[WorkBuddy-Bridge] POST {self.path} | Prompt: {user_prompt[:60]}... | Stream: {stream}")
 
-            # Generate expert response using WishCADCAMEngine
-            response_text = self._synthesize_response(user_prompt)
-            thought = "正在深度解析用户工程制造意图，检索六大工业软件本体库，规划 3D 参数化特征树与 GD&T 公差规范..."
+            from virtu_real_backend import get_backend
+            backend = get_backend()
+            if backend is None or not backend.available:
+                raise RuntimeError(f"后端大模型未就绪: {getattr(backend, 'error', '无法连接模型服务')}")
+            self._served_model = backend.identity()
+            conv = []
+            for m in messages:
+                role = m.get("role")
+                if role in ("system", "user", "assistant"):
+                    conv.append({"role": role, "content": self._extract_content(m.get("content", ""))})
+            if not conv or conv[-1]["role"] != "user":
+                conv.append({"role": "user", "content": user_prompt})
+
+            # Auto-sync working memory and inject working memory zone for long tasks
+            working_memory.auto_sync_from_messages(conv)
+            if len(conv) >= 3 or working_memory.facts or (working_memory.goal and working_memory.goal.invariants):
+                conv = working_memory.compact_context(conv, max_turns_to_keep=6)
+
+            think_param = data.get("think")
+            if think_param is None:
+                think_param = data.get("enable_thinking")
+            if think_param is None and isinstance(data.get("thinking"), dict):
+                think_param = data.get("thinking", {}).get("type") in ("enabled", "auto")
 
             if stream:
-                self._handle_streaming_response(response_text, reasoning_text=thought)
+                self._handle_live_streaming_response(
+                    backend, conv, max_tokens=max_tokens, temperature=temperature, think=think_param
+                )
             else:
-                self._handle_json_response(response_text)
-        except Exception as err:
-            import traceback
-            traceback.print_exc()
-            err_msg = f"【系统提示】处理请求时遇到异常：{str(err)}。请尝试直接提出您的CAD/CAM制造意图。"
-            try:
-                if stream:
-                    self._handle_streaming_response(err_msg)
+                if think_param is not None:
+                    response_text = backend.generate(conv, max_tokens=max_tokens, temperature=temperature, think=think_param)
                 else:
-                    self._handle_json_response(err_msg)
-            except Exception as write_err:
-                print(f"[WorkBuddy-Bridge] Error sending fallback response: {write_err}")
+                    response_text = backend.generate(conv, max_tokens=max_tokens, temperature=temperature)
+                if not response_text:
+                    raise RuntimeError("模型输出为空")
+                self._served_model = backend.identity()
+                thought = getattr(backend, "last_thought", "") or ""
+                self._handle_json_response(response_text, reasoning_text=thought)
+        except Exception as err:
+            print(f"[WorkBuddy-Bridge] completion failed: {type(err).__name__}: {err}")
+            status = _error_http_status(err)
+            if getattr(self, "_response_committed", False):
+                self.close_connection = True
+                return
+            try:
+                error_type = "invalid_request_error" if status == 400 else "server_error"
+                self._send_raw_json({"error": {"message": str(err), "type": error_type}}, status=status)
+            except (BrokenPipeError, ConnectionResetError, ConnectionAbortedError):
+                self.close_connection = True
 
     def _extract_text(self, content: Any) -> str:
         """Safely extract plain text from diverse OpenAI / WorkBuddy content formats."""
@@ -1005,233 +1907,98 @@ class OpenAIBaseHandler(BaseHTTPRequestHandler):
                 return str(content["text"]).strip()
         return str(content).strip()
 
-    def _synthesize_response(self, prompt: str) -> str:
-        """Process intent and return full CAD/CAM engineering report."""
-        if not prompt:
-            return "您好！我是 **Virtu-CAD-CAM-10B** 工业智能制造大模型。请提供您的制造愿景或六大软件工程需求。"
-        
-        prompt_clean = prompt.strip()
-        p_norm = (
-            prompt_clean.lower()
-            .replace("！", "")
-            .replace("!", "")
-            .replace("？", "")
-            .replace("?", "")
-            .replace("。", "")
-            .replace("，", "")
-            .replace(",", "")
-            .replace(" ", "")
-        )
+    def _extract_content(self, content: Any):
+        if isinstance(content, str):
+            return content
+        if not isinstance(content, list):
+            return str(content)
+        blocks = []
+        has_media = False
+        for item in content:
+            if not isinstance(item, dict):
+                blocks.append({"type": "text", "text": str(item)})
+                continue
+            t = item.get("type", "")
+            if t in ("image_url", "input_image", "image", "video_url", "input_video", "video"):
+                has_media = True
+                blocks.append(item)
+            elif t == "text" or "text" in item:
+                text = item.get("text", "")
+                if text:
+                    blocks.append({"type": "text", "text": str(text)})
+        if has_media:
+            return blocks
+        return " ".join(b["text"] for b in blocks).strip()
 
-        # Handle greetings & identity questions
-        greetings = [
-            "你好", "您好", "hi", "hello", "在吗", "你是谁", "介绍一下你自己",
-            "help", "帮助", "测试", "你好呀", "你好啊", "哈喽", "嗨", "在么"
-        ]
-        if any(p_norm == g or (p_norm.startswith(g) and len(p_norm) <= len(g) + 3) for g in greetings):
-            return (
-                "您好！我是 **Virtu-CAD-CAM-10B** 工业智能制造大模型，深度精通工业六大软件体系：\n\n"
-                "1. **SOLIDWORKS 2021**：全局变量方程式管理器（EquationMgr）、3D特征驱动与模流分析；\n"
-                "2. **Siemens NX 12.0**：Python Open API 表达式关联、Mold Wizard 抽芯与斜顶设计；\n"
-                "3. **AutoCAD 2026**：AutoLISP 工程图自动绘制、规范图层管理与关键尺寸标注；\n"
-                "4. **Vericut 9.6**：五轴机床运动学仿真、Force 物理切削载荷峰值优化与 Auto-Diff 防过切校验；\n"
-                "5. **CIMCO Edit 2026**：FANUC/SIEMENS Macro B 参数化数控宏程序与 G71/G70 轮廓加工；\n"
-                "6. **斯沃数控仿真 7.2**：车铣复合对刀仪校准、刀尖方位号代码（T1~T9）与 G54 试切对刀手册。\n\n"
-                "您可以直接向我“许愿”任何零件，例如：\n"
-                "> *“我想做一款外径53mm、轴孔14mm、宽度45mm、三道圆弧槽R15/R12/R10的微型机冷成型轮模”*\n"
-                "> *“制造一款航空高压压气机级12叶片闭式整体叶轮（材质Ti-6Al-4V）”*\n\n"
-                "我将为您一键输出六大软件的全套工程代码与实训手册！"
-            )
-
-        # Check if user asks for specific ontology info
-        if any(w in prompt for w in ["功能", "插件", "菜单", "体系", "支持哪些软件"]):
-            summary = ["### Virtu-CAD-CAM-10B 六大工业软件全功能知识库\n"]
-            for s_name, s_info in SOFTWARE_ONTOLOGY.items():
-                summary.append(f"#### {s_name} ({s_info.get('vendor', '')})")
-                summary.append(f"- **API/宏支持**: {', '.join(s_info.get('api_types', []))}")
-                plugins = list(s_info.get('plugins_and_addins', {}).keys())
-                summary.append(f"- **官方插件支持**: {', '.join(plugins) if plugins else '内建系统模块'}")
-                summary.append("")
-            summary.append("支持对任意零件（如整体叶轮、精密齿轮、注塑模具、微型机轮模）进行“许愿式”全流程参数化建模与代码合成。")
-            return "\n".join(summary)
-
-        # Non-CAD short chatter fallback
-        cad_keywords = [
-            "cad", "cam", "cae", "solidworks", "nx", "ug", "autocad", "vericut",
-            "cimco", "斯沃", "数控", "宏程序", "外径", "内径", "直径", "孔", "槽",
-            "模具", "轮模", "叶轮", "齿轮", "刀具", "对刀", "仿真", "建模", "尺寸",
-            "材料", "五轴", "车削", "铣削", "加工", "g代码", "gcode", "lisp", "vba",
-            "g54", "g71", "g70", "fanuc", "siemens", "西门子", "发那科", "设计",
-            "参数", "生成", "制作", "做一款", "制造"
-        ]
-        has_cad_intent = any(k in prompt_clean.lower() for k in cad_keywords)
-        if not has_cad_intent and len(prompt_clean) < 10:
-            return (
-                f"收到您的消息：“{prompt_clean}”。我是 **Virtu-CAD-CAM-10B** 工业 Agent Team 协同大模型。\n\n"
-                "请随时向我提供您要建模或加工的零件需求（如零件尺寸、外径、内孔、槽形、材料），多智能体团队将为您协同生成参数化特征树、工程图公差与数控宏代码！"
-            )
-
-        # 1. Run Industrial Multi-Agent Team to solve end-to-end
-        try:
-            team_res = agent_team.solve(prompt)
-            team_logs = "\n".join([f"- **[{item['stage']}]** (`{item['agent']}`): {item['action']}" for item in team_res.get("team_collaboration_log", [])])
-            team_header = (
-                f"## 🤖 Virtu Industrial Agent Team 协同攻坚战报\n\n"
-                f"> **多智能体总耗时**: {team_res.get('runtime_seconds', 0.05)}s | **长期经验固化**: `{team_res.get('memory_evolution', {}).get('memory_id', 'EXP_OK')}` (Dense Vector Indexed) | **沙箱仿真校验**: 100% PASS\n\n"
-                f"### 📐 3D 参数化特征树与全局变量 (Parametric Modeler)\n"
-                f"- **基元分类**: `{team_res['parametric_model']['category']}`\n"
-                f"- **全局方程式绑定**: `{json.dumps(team_res['parametric_model']['equations'], ensure_ascii=False)}`\n\n"
-                f"<details>\n"
-                f"<summary><b>📋 查看多智能体流转轨迹、GD&T 公差与沙箱自省审计日志 [点击展开]</b></summary>\n\n"
-                f"#### 多智能体工单流转与协同全景\n{team_logs}\n\n"
-                f"#### 工程图基准与 GD&T 公差规范 (Standards & GD&T Engineer)\n"
-                f"- **配合公差**: `{json.dumps(team_res['standards_gdt']['drawing_spec']['fit_tolerances'], ensure_ascii=False)}`\n"
-                f"- **形位公差**: `{json.dumps(team_res['standards_gdt']['drawing_spec']['geometric_tolerances_gdt'], ensure_ascii=False)}`\n"
-                f"- **表面粗糙度**: `{json.dumps(team_res['standards_gdt']['drawing_spec']['surface_roughness'], ensure_ascii=False)}`\n\n"
-                f"#### 无头沙箱仿真与自省审计结论 (Auditor & Sandbox)\n"
-                f"```\n{team_res['sandbox_audit']['summary']}\n```\n"
-                f"</details>\n\n"
-                f"---\n\n"
-            )
-        except Exception as e:
-            team_header = f"> [Agent Team Warning] Multi-agent team evaluation fallback: {str(e)}\n\n"
-
-        # 2. Decompose intent and synthesize engineering outputs across all 6 packages
-        six_software_body = engine.synthesize_all_six(prompt)
-        return team_header + six_software_body
-
-    def _send_raw_json(self, payload: dict):
-        self.send_response(200)
+    def _send_raw_json(self, payload: dict, status: int = 200):
+        self.send_response(status)
         self.send_header("Content-Type", "application/json; charset=utf-8")
         self._send_cors_headers()
         self.end_headers()
         self.wfile.write(json.dumps(payload, ensure_ascii=False).encode("utf-8"))
 
-    def _handle_tool_orchestration(self, messages: list, tools: list) -> dict:
-        """Stateful tool-calling orchestrator for WorkBuddy Agent."""
+    def _handle_tool_orchestration(self, messages: list, tools: list, auto_execute: bool = False,
+                                   max_tokens=None, temperature=None) -> dict:
         created = int(time.time())
         req_id = f"chatcmpl-{uuid.uuid4().hex[:12]}"
-        last_msg = messages[-1] if messages else {}
-        last_role = last_msg.get("role", "")
+        conv = []
+        for m in messages:
+            role = m.get("role")
+            if role in ("system", "user", "assistant", "tool"):
+                entry = {"role": role, "content": self._extract_content(m.get("content", ""))}
+                if "tool_calls" in m:
+                    sanitized_calls = []
+                    for c in m["tool_calls"]:
+                        fn = c.get("function", {}) if isinstance(c, dict) else {}
+                        fn_name = fn.get("name") or (c.get("name") if isinstance(c, dict) else "")
+                        a = fn.get("arguments") if fn else (c.get("arguments", {}) if isinstance(c, dict) else {})
+                        if isinstance(a, str):
+                            try:
+                                a = json.loads(a)
+                            except Exception:
+                                pass
+                        sanitized_calls.append({
+                            "id": c.get("id", ""),
+                            "type": "function",
+                            "function": {"name": fn_name, "arguments": a}
+                        })
+                    entry["tool_calls"] = sanitized_calls
+                if "tool_call_id" in m:
+                    entry["tool_call_id"] = m["tool_call_id"]
+                if "name" in m:
+                    entry["name"] = m["name"]
+                conv.append(entry)
 
-        # Find the original user prompt
+        # Check dynamic variation intents and tools
+        available_tool_names = [
+            t.get("function", {}).get("name") if "function" in t else t.get("name")
+            for t in (tools or [])
+        ]
         user_prompt = ""
         for m in reversed(messages):
             if m.get("role") == "user":
-                user_prompt = self._extract_text(m.get("content", ""))
+                user_prompt = self._extract_content(m.get("content", ""))
                 break
+        self._gate_prompt = user_prompt
+        last_m = messages[-1] if messages else {}
+        last_tool_name = last_m.get("name") if last_m.get("role") == "tool" else None
 
-        # Check what was the last tool called
-        last_tool_name = ""
-        if last_role == "tool":
-            last_tool_name = last_msg.get("name", "")
-            if not last_tool_name:
-                # Find corresponding assistant tool_call
-                call_id = last_msg.get("tool_call_id")
-                for m in reversed(messages[:-1]):
-                    if m.get("role") == "assistant" and "tool_calls" in m:
-                        for tc in m["tool_calls"]:
-                            if tc.get("id") == call_id:
-                                last_tool_name = tc.get("function", {}).get("name", "")
-                                break
-
-        available_tool_names = [t.get("function", {}).get("name") for t in tools] if tools else []
-
-        # Stage -1: Six Industrial Software Direct Tool Dispatch
-        is_software_dispatch = any(sw in user_prompt.lower() for sw in ["solidworks", "sldworks", "nx12", "siemens", "ug", "autocad", "acad", "vericut", "cimco", "斯沃", "sscnc"])
-        if (last_role == "user" or not last_tool_name) and is_software_dispatch and "software.dispatch_industrial_tool" in available_tool_names:
-            target_sw = "SOLIDWORKS"
-            action = "create_parametric_part"
-            u_low = user_prompt.lower()
-            if "nx" in u_low or "ug" in u_low:
-                target_sw = "Siemens_NX"
-                action = "create_parametric_model"
-            elif "autocad" in u_low or "cad" in u_low or "dxf" in u_low:
-                target_sw = "AutoCAD"
-                action = "create_dxf"
-            elif "vericut" in u_low:
-                target_sw = "VERICUT"
-                action = "run_simulation"
-            elif "cimco" in u_low:
-                target_sw = "CIMCO_Edit"
-                action = "validate_macro"
-            elif "斯沃" in u_low or "sscnc" in u_low:
-                target_sw = "SSCNC"
-                action = "calculate_offsets"
-
-            call_id = f"call_sw_{uuid.uuid4().hex[:8]}"
-            args = {
-                "target_software": target_sw,
-                "action": action,
-                "parameters": {"user_request": user_prompt}
-            }
-            content_text = f"识别到针对本地工业软件【{target_sw}】的控制需求。正在调用【software.dispatch_industrial_tool】网桥执行原生操作："
-            return {
-                "id": req_id,
-                "object": "chat.completion",
-                "created": created,
-                "model": MODEL_ID,
-                "choices": [{
-                    "index": 0,
-                    "message": {
-                        "role": "assistant",
-                        "content": content_text,
-                        "tool_calls": [{
-                            "id": call_id,
-                            "type": "function",
-                            "function": {
-                                "name": "software.dispatch_industrial_tool",
-                                "arguments": json.dumps(args, ensure_ascii=False)
-                            }
-                        }]
-                    },
-                    "finish_reason": "tool_calls"
-                }],
-                "usage": {"prompt_tokens": 128, "completion_tokens": 96, "total_tokens": 224}
-            }
-
-        elif last_tool_name == "software.dispatch_industrial_tool":
-            summary = (
-                "### 【本地工业软件网桥与技能执行完成】\n\n"
-                "1. **软件指令分发**：成功连接本地安装的工业软件内核并下发指令；\n"
-                "2. **执行与安全校验**：脚本语法通过无头沙箱校验，几何参数与宏变量已完全绑定；\n"
-                "3. **状态同步**：操作结果已实时同步至工作区，支持在客户端界面实时观察 CAD/CAM/CNC 动作！"
-            )
-            return {
-                "id": req_id,
-                "object": "chat.completion",
-                "created": created,
-                "model": MODEL_ID,
-                "choices": [{
-                    "index": 0,
-                    "message": {
-                        "role": "assistant",
-                        "content": summary
-                    },
-                    "finish_reason": "stop"
-                }],
-                "usage": {"prompt_tokens": 256, "completion_tokens": 160, "total_tokens": 416}
-            }
-
-        # Stage 0-V: Dynamic Slider Variation & Parametric Rebuild
-        is_variation_intent = any(k in user_prompt for k in ["滑块", "修改参数", "调整参数", "增大", "缩小", "调到", "改成", "外径改", "内孔改", "尺寸变更", "变异", "variation", "rebuild", "重生成"])
-        if (last_role == "user" or not last_tool_name) and (is_variation_intent or "cad.update_parametric_variation" in available_tool_names) and ("cad.update_parametric_variation" in available_tool_names or not tools):
+        if "cad.update_parametric_variation" in available_tool_names and last_m.get("role") == "user":
             call_id = f"call_var_{uuid.uuid4().hex[:8]}"
-            # Parse requested variation or set intelligent variations
             new_dout = 60.0
             new_din = 16.0
             new_len = 50.0
             new_r = 12.0
             if "外径" in user_prompt:
-                m_out = re.search(r"外径.*?(\d+(?:\.\d+)?)", user_prompt)
+                m_out = re.search(r"外径.*?(\\d+(?:\\.\\d+)?)", user_prompt)
                 if m_out:
                     new_dout = float(m_out.group(1))
             if "孔" in user_prompt:
-                m_in = re.search(r"(?:轴孔|孔径|内孔|孔).*?(\d+(?:\.\d+)?)", user_prompt)
+                m_in = re.search(r"(?:轴孔|孔径|内孔|孔).*?(\\d+(?:\\.\\d+)?)", user_prompt)
                 if m_in:
                     new_din = float(m_in.group(1))
             if "长" in user_prompt or "高" in user_prompt or "宽" in user_prompt:
-                m_l = re.search(r"(?:长度|总长|高度|宽度).*?(\d+(?:\.\d+)?)", user_prompt)
+                m_l = re.search(r"(?:长度|总长|高度|宽度).*?(\\d+(?:\\.\\d+)?)", user_prompt)
                 if m_l:
                     new_len = float(m_l.group(1))
 
@@ -1251,6 +2018,7 @@ class OpenAIBaseHandler(BaseHTTPRequestHandler):
                 "object": "chat.completion",
                 "created": created,
                 "model": MODEL_ID,
+                "served_model": getattr(self, "_served_model", None),
                 "choices": [{
                     "index": 0,
                     "message": {
@@ -1267,10 +2035,9 @@ class OpenAIBaseHandler(BaseHTTPRequestHandler):
                     },
                     "finish_reason": "tool_calls"
                 }],
-                "usage": {"prompt_tokens": 128, "completion_tokens": 128, "total_tokens": 256}
             }
 
-        elif last_tool_name == "cad.update_parametric_variation":
+        if last_tool_name == "cad.update_parametric_variation":
             spec_var = {
                 "wish": "参数滑块动态重生成",
                 "material": "HT200",
@@ -1313,6 +2080,7 @@ class OpenAIBaseHandler(BaseHTTPRequestHandler):
                 "object": "chat.completion",
                 "created": created,
                 "model": MODEL_ID,
+                "served_model": getattr(self, "_served_model", None),
                 "choices": [{
                     "index": 0,
                     "message": {
@@ -1321,430 +2089,195 @@ class OpenAIBaseHandler(BaseHTTPRequestHandler):
                     },
                     "finish_reason": "stop"
                 }],
-                "usage": {"prompt_tokens": 256, "completion_tokens": 280, "total_tokens": 536}
             }
 
-        # Stage 0: One-Sentence Unified CAD Engine (Wish-to-Drawing/Modeling/Assembly)
-        is_one_sentence_mode = any(k in user_prompt for k in ["一句话", "一个工具", "一键", "盲测", "UG-", "轴承支座", "阶梯轴", "端盖", "活塞", "连杆"])
+        from virtu_real_backend import get_backend
+        backend = get_backend()
+        if backend is None or not backend.available:
+            raise RuntimeError(f"后端大模型未就绪: {getattr(backend, 'error', '无法连接模型服务')}")
+        self._served_model = backend.identity()
 
-        if (last_role == "user" or not last_tool_name) and (is_one_sentence_mode or "cad.one_sentence_parametric_engine" in available_tool_names) and ("cad.one_sentence_parametric_engine" in available_tool_names or not tools):
-            call_id = f"call_engine_{uuid.uuid4().hex[:8]}"
-            # Deduce part and parameters from user_prompt
-            part_name = "UG-01_轴承支座.SLDPRT"
-            material = "HT200"
-            if "支座" in user_prompt or "轴承座" in user_prompt or "UG-01" in user_prompt:
-                part_name = "UG-01_轴承支座.SLDPRT"
-                material = "HT200"
-            elif "阶梯轴" in user_prompt or "传动轴" in user_prompt or "UG-02" in user_prompt:
-                part_name = "UG-02_阶梯轴.SLDPRT"
-                material = "Steel45"
-            elif "端盖" in user_prompt or "法兰" in user_prompt or "UG-03" in user_prompt:
-                part_name = "UG-03_法兰端盖.SLDPRT"
-                material = "AL6061-T6"
-            elif "活塞" in user_prompt or "连杆" in user_prompt or "曲柄" in user_prompt:
-                part_name = "活塞连杆曲轴运动总成.SLDPRT"
-                material = "AL7075-T6"
-
-            args = {
-                "user_wish": user_prompt,
-                "part_name": part_name,
-                "material": material,
-                "parametric_dimensions": {
-                    "p1_base_len": 100.0, "p2_base_width": 50.0, "p3_base_thk": 16.0,
-                    "p4_center_height": 36.0, "p5_boss_od": 40.0, "p6_bore_id": 22.0,
-                    "p7_pitch_x": 78.0, "p8_pitch_y": 32.0, "p9_hole_dia": 8.0, "p12_fillet_r": 10.0
-                },
-                "feature_tree": [
-                    {"feature_type": "SketchOnPlane", "feature_name": "草图1_底板轮廓", "plane_ref": "Top Plane", "parameters": {"len": 100.0, "width": 50.0, "status": "FullyDefined"}},
-                    {"feature_type": "BossExtrude", "feature_name": "基体-拉伸1", "plane_ref": "草图1_底板轮廓", "parameters": {"depth": 16.0}},
-                    {"feature_type": "SketchOnPlane", "feature_name": "草图2_圆筒立壁", "plane_ref": "Front Plane", "parameters": {"center_h": 36.0, "od": 40.0}},
-                    {"feature_type": "BossExtrude", "feature_name": "凸台-拉伸2_轴承筒体", "plane_ref": "草图2_圆筒立壁", "parameters": {"depth": 50.0, "direction": "MidPlane"}},
-                    {"feature_type": "HoleWizard", "feature_name": "异型孔向导1_轴承孔22H7", "plane_ref": "FaceID_CylinderEnd", "parameters": {"type": "ReamedHole", "dia": 22.0, "tol": "H7 (+0.021/0)"}},
-                    {"feature_type": "HoleWizard", "feature_name": "异型孔向导2_4x沉头孔M8", "plane_ref": "FaceID_TopBase", "parameters": {"type": "Counterbore_M8", "dia": 8.0, "cbore_dia": 14.0, "cbore_depth": 8.0, "count": 4}},
-                    {"feature_type": "Fillet", "feature_name": "圆角1_底板外周R10", "plane_ref": "Corners_Base", "parameters": {"radius": 10.0}},
-                    {"feature_type": "EquationMgr", "feature_name": "参数方程式驱动", "plane_ref": "GlobalVariables", "parameters": {"equations": ["\"L\" = 100.0", "\"W\" = 50.0", "\"H\" = 36.0", "\"Bore\" = 22.0"]}}
-                ],
-                "drawing_annotations": {
-                    "projection_views": ["主视图(1:1)", "俯视图(1:1)", "左视图(1:1)", "轴测图"],
-                    "fit_tolerances": [{"target": "配合孔轴径", "size": 22.0, "class": "H7 (+0.021/0)"}],
-                    "gdt_tolerances": [{"symbol": "parallelism", "val": 0.02, "datum": "A (基准底面)"}],
-                    "surface_roughness": "配合面 Ra 1.6，底面 A Ra 3.2，其余加工面 Ra 6.3",
-                    "technical_notes": ["1. 锐边倒钝去毛刺；", "2. 保证形位公差与基孔制配合；", "3. 表面防锈处理。"]
-                },
-                "assembly_mates": {
-                    "target_assembly": "机械部件功能总成.SLDASM",
-                    "base_component": "工作台安装基板.SLDPRT",
-                    "mates": [
-                        {"type": "Coincident", "part_1": "底配合基面", "part_2": "基板安装面", "val": 0.0},
-                        {"type": "Concentric", "part_1": "中心销轴/孔", "part_2": "配合轴颈", "val": 0.0}
-                    ]
-                }
-            }
-            content_text = f"收到您的单句设计愿景：“{user_prompt}”。正在调用【cad.one_sentence_parametric_engine】统一工具，一键执行参数提取、原生特征树草图建模、工程图GD&T智能标注与总装配合约束："
-            return {
-                "id": req_id,
-                "object": "chat.completion",
-                "created": created,
-                "model": MODEL_ID,
-                "choices": [{
-                    "index": 0,
-                    "message": {
-                        "role": "assistant",
-                        "content": content_text,
-                        "tool_calls": [{
-                            "id": call_id,
-                            "type": "function",
-                            "function": {
-                                "name": "cad.one_sentence_parametric_engine",
-                                "arguments": json.dumps(args, ensure_ascii=False)
-                            }
-                        }]
-                    },
-                    "finish_reason": "tool_calls"
-                }],
-                "usage": {"prompt_tokens": 128, "completion_tokens": 128, "total_tokens": 256}
-            }
-
-        # Stage 0-B: After One-Sentence Engine completes
-        elif last_tool_name == "cad.one_sentence_parametric_engine":
-            spec_base = {
-                "wish": "一句话单工具参数化全流程",
-                "material": "HT200",
-                "d_outer": 53.0,
-                "d_inner": 14.0,
-                "overall_len": 45.0,
-                "fillet_r": 10.0,
-                "num_features": 3,
-                "is_multiaxis": False,
-                "is_die_mold": True
-            }
-            slider_ui = engine.generate_slider_dashboard(spec_base)
-            summary = (
-                "### 【一句话单工具参数化绘图·标注·建模与总装】执行圆满完成！\n\n"
-                f"{slider_ui}\n\n"
-                "1. **单句意图与尺寸抽取**：成功从用户输入中提取完全定义的结构化几何参数与材料牌号；\n"
-                "2. **SolidWorks 原生特征树**：包含草图基准面 -> 完全约束几何关系草图 -> 基础拉伸/旋转 -> 减料切槽 -> 异型孔向导 -> 倒角圆角 -> 全局方程式绑定（**0 呆料实体，100% 可参数化重生成**）；\n"
-                "3. **二维工程图与公差标注**：生成正交三视图，标注基孔制 H7 配合公差、平行度/垂直度 GD&T 以及表面粗糙度与技术要求；\n"
-                "4. **装配体配合树**：以安装底板为静止参考基准，建立同轴心与共面配合，自由度完全约束，干涉检查通过；\n"
-                "5. **宏命令自动化**：无缝对接青沐清晨宏命令，已完成一键导出 DWG/PDF 与 BOM 清单！"
-            )
-            return {
-                "id": req_id,
-                "object": "chat.completion",
-                "created": created,
-                "model": MODEL_ID,
-                "choices": [{
-                    "index": 0,
-                    "message": {
-                        "role": "assistant",
-                        "content": summary
-                    },
-                    "finish_reason": "stop"
-                }],
-                "usage": {"prompt_tokens": 256, "completion_tokens": 200, "total_tokens": 456}
-            }
-
-        # Stage 1: Initial User Prompt -> Infer Intent & Decompose Assembly
-        if (last_role == "user" or not last_tool_name) and ("cad.decompose_automation_assembly" in available_tool_names or not tools):
-            call_id = f"call_decomp_{uuid.uuid4().hex[:8]}"
-            args = {
-                "assembly_name": "自动化非标设备总装成套机构.SLDASM",
-                "sub_modules": [
-                    {"module_name": "机架支撑与防护模组", "module_type": "frame_structure", "custom_parts": ["安装底板", "立柱连接板"], "cots_components": ["GB 4040铝型材", "避震地脚"]},
-                    {"module_name": "精密供料与移载机构", "module_type": "feeding_mechanism", "custom_parts": ["定位治具底板", "推料气爪滑块"], "cots_components": ["HIWIN MGN12H导轨", "SMC CDM2B25气缸"]},
-                    {"module_name": "末端执行与锁附作业模组", "module_type": "actuator_tooling", "custom_parts": ["执行安装转接座", "导向夹具"], "cots_components": ["伺服电批", "气动手指HFZ16"]}
-                ]
-            }
-            content_text = "收到您的自动化设备工程需求。我已揣测并分析整机工艺指标，现调用设备拆解工具，规划系统级功能模块与BOM架构树："
-            return {
-                "id": req_id,
-                "object": "chat.completion",
-                "created": created,
-                "model": MODEL_ID,
-                "choices": [{
-                    "index": 0,
-                    "message": {
-                        "role": "assistant",
-                        "content": content_text,
-                        "tool_calls": [{
-                            "id": call_id,
-                            "type": "function",
-                            "function": {
-                                "name": "cad.decompose_automation_assembly",
-                                "arguments": json.dumps(args, ensure_ascii=False)
-                            }
-                        }]
-                    },
-                    "finish_reason": "tool_calls"
-                }],
-                "usage": {"prompt_tokens": 128, "completion_tokens": 64, "total_tokens": 192}
-            }
-
-        elif last_role == "user" or not last_tool_name:
-            # Fallback for user prompts without specific tool matching
-            synth_resp = self._synthesize_response(user_prompt)
-            return {
-                "id": req_id,
-                "object": "chat.completion",
-                "created": created,
-                "model": MODEL_ID,
-                "choices": [{
-                    "index": 0,
-                    "message": {
-                        "role": "assistant",
-                        "content": synth_resp
-                    },
-                    "finish_reason": "stop"
-                }],
-                "usage": {"prompt_tokens": 128, "completion_tokens": len(synth_resp) // 2, "total_tokens": 128 + len(synth_resp) // 2}
-            }
-
-        # Stage 2: After Decompose -> Query Standard Parts Library
-        elif last_tool_name == "cad.decompose_automation_assembly":
-            call_id = f"call_std_{uuid.uuid4().hex[:8]}"
-            args = {
-                "category": "gb_profile",
-                "standard_code": "GB 4040铝合金型材",
-                "specification": {"section": "40x40mm", "material": "AL6063-T5"}
-            }
-            content_text = "总成已拆解为3大子模组。正在调用标准件库检索GB型材与气动执行元件："
-            return {
-                "id": req_id,
-                "object": "chat.completion",
-                "created": created,
-                "model": MODEL_ID,
-                "choices": [{
-                    "index": 0,
-                    "message": {
-                        "role": "assistant",
-                        "content": content_text,
-                        "tool_calls": [{
-                            "id": call_id,
-                            "type": "function",
-                            "function": {
-                                "name": "cad.query_standard_parts_library",
-                                "arguments": json.dumps(args, ensure_ascii=False)
-                            }
-                        }]
-                    },
-                    "finish_reason": "tool_calls"
-                }],
-                "usage": {"prompt_tokens": 160, "completion_tokens": 64, "total_tokens": 224}
-            }
-
-        # Stage 3: After Standard Parts -> Model Parametric Feature Part (WITH FEATURE TREE)
-        elif last_tool_name == "cad.query_standard_parts_library":
-            call_id = f"call_ft_{uuid.uuid4().hex[:8]}"
-            args = {
-                "part_name": "核心承载滑块底板.SLDPRT",
-                "material": "AL6061-T6",
-                "surface_treatment": "本色阳极氧化 膜厚12um",
-                "feature_tree": [
-                    {"feature_type": "SketchOnPlane", "feature_name": "草图1_基准矩形轮廓", "plane_ref": "Top Plane", "parameters": {"length": 280.0, "width": 180.0, "status": "FullyDefined"}},
-                    {"feature_type": "BossExtrude", "feature_name": "基体-拉伸1", "plane_ref": "草图1_基准矩形轮廓", "parameters": {"depth": 20.0, "direction": "Blind"}},
-                    {"feature_type": "CutExtrude", "feature_name": "切除-拉伸1_导轨导向沉槽", "plane_ref": "FaceID_Top", "parameters": {"slot_width": 28.0, "depth": 5.0}},
-                    {"feature_type": "HoleWizard", "feature_name": "异型孔向导1_沉头安装孔M5", "plane_ref": "FaceID_Top", "parameters": {"type": "Counterbore_M5", "count": 6, "pitch": 60.0}},
-                    {"feature_type": "HoleWizard", "feature_name": "异型孔向导2_H7基孔制销孔", "plane_ref": "FaceID_Top", "parameters": {"type": "Dowel_H7", "diameter": 6.0, "tolerance": "+0.012/0"}},
-                    {"feature_type": "Fillet", "feature_name": "圆角1_外周棱边倒圆", "plane_ref": "Edges_Outer", "parameters": {"radius": 2.0}},
-                    {"feature_type": "EquationMgr", "feature_name": "方程式驱动", "plane_ref": "Global", "parameters": {"equations": ["\"Length\" = 280.0", "\"Width\" = 180.0"]}}
-                ]
-            }
-            content_text = "标准件已调用完毕。现在调用参数化特征建模工具，生成带有完整 SolidWorks FeatureManager 设计树的核心零件模型："
-            return {
-                "id": req_id,
-                "object": "chat.completion",
-                "created": created,
-                "model": MODEL_ID,
-                "choices": [{
-                    "index": 0,
-                    "message": {
-                        "role": "assistant",
-                        "content": content_text,
-                        "tool_calls": [{
-                            "id": call_id,
-                            "type": "function",
-                            "function": {
-                                "name": "cad.model_parametric_feature_part",
-                                "arguments": json.dumps(args, ensure_ascii=False)
-                            }
-                        }]
-                    },
-                    "finish_reason": "tool_calls"
-                }],
-                "usage": {"prompt_tokens": 192, "completion_tokens": 96, "total_tokens": 288}
-            }
-
-        # Stage 4: After Modeling -> Generate Drawing & Annotation
-        elif last_tool_name == "cad.model_parametric_feature_part":
-            call_id = f"call_draw_{uuid.uuid4().hex[:8]}"
-            args = {
-                "drawing_name": "核心承载滑块底板.SLDDRW",
-                "sheet_size": "A3_Landscape",
-                "projection_views": ["主视图", "俯视图", "左视图", "局部剖视图A-A", "等轴测图"],
-                "fit_tolerances": [
-                    {"dimension_target": "导轨对中槽宽", "nominal_size": 28.0, "tolerance_class": "H7 (+0.021/0)"},
-                    {"dimension_target": "定位销孔直径", "nominal_size": 6.0, "tolerance_class": "H7 (+0.012/0)"}
-                ],
-                "geometric_tolerances_gdt": [
-                    {"gdt_symbol": "parallelism", "tolerance_val": 0.015, "datum_refs": "A"},
-                    {"gdt_symbol": "perpendicularity", "tolerance_val": 0.02, "datum_refs": "A"}
-                ],
-                "surface_roughness_ra": "基准面 Ra 1.6，其余 Ra 3.2",
-                "technical_notes": ["1. 锐边倒钝去毛刺；", "2. 本色阳极氧化处理；", "3. 配合孔禁止手工铰削。"]
-            }
-            content_text = "零件特征树生成完成（0错误）。现调用工程图标注工具，生成标准投影三视图、H7配合公差及形位公差标注："
-            return {
-                "id": req_id,
-                "object": "chat.completion",
-                "created": created,
-                "model": MODEL_ID,
-                "choices": [{
-                    "index": 0,
-                    "message": {
-                        "role": "assistant",
-                        "content": content_text,
-                        "tool_calls": [{
-                            "id": call_id,
-                            "type": "function",
-                            "function": {
-                                "name": "cad.generate_engineering_drawing_annotation",
-                                "arguments": json.dumps(args, ensure_ascii=False)
-                            }
-                        }]
-                    },
-                    "finish_reason": "tool_calls"
-                }],
-                "usage": {"prompt_tokens": 224, "completion_tokens": 96, "total_tokens": 320}
-            }
-
-        # Stage 5: After Drawing -> Assemble Components with Mates
-        elif last_tool_name == "cad.generate_engineering_drawing_annotation":
-            call_id = f"call_asm_{uuid.uuid4().hex[:8]}"
-            args = {
-                "assembly_name": "自动化非标设备总装成套机构.SLDASM",
-                "base_component": "安装底板.SLDPRT",
-                "mates_sequence": [
-                    {"mate_type": "Coincident", "component_1": "核心承载滑块底板.SLDPRT (底基准面)", "component_2": "导轨滑块顶面", "mate_value": 0.0, "is_flipped": False},
-                    {"mate_type": "Concentric", "component_1": "定位销孔", "component_2": "定位销轴", "mate_value": 0.0, "is_flipped": False},
-                    {"mate_type": "Distance", "component_1": "端面限位挡板", "component_2": "滑块侧基准", "mate_value": 35.0, "is_flipped": False}
-                ]
-            }
-            content_text = "工程图标注完毕。现调用装配体约束配合工具，将所有零部件按装配树配合组装为整机总成："
-            return {
-                "id": req_id,
-                "object": "chat.completion",
-                "created": created,
-                "model": MODEL_ID,
-                "choices": [{
-                    "index": 0,
-                    "message": {
-                        "role": "assistant",
-                        "content": content_text,
-                        "tool_calls": [{
-                            "id": call_id,
-                            "type": "function",
-                            "function": {
-                                "name": "cad.assemble_components_with_mates",
-                                "arguments": json.dumps(args, ensure_ascii=False)
-                            }
-                        }]
-                    },
-                    "finish_reason": "tool_calls"
-                }],
-                "usage": {"prompt_tokens": 256, "completion_tokens": 96, "total_tokens": 352}
-            }
-
-        # Stage 6: After Assemble -> Execute SolidWorks Macro
-        elif last_tool_name == "cad.assemble_components_with_mates":
-            call_id = f"call_macro_{uuid.uuid4().hex[:8]}"
-            args = {
-                "macro_action": "sw_export_dwg_oneclick",
-                "target_files": ["核心承载滑块底板.SLDDRW", "自动化非标设备总装成套机构.SLDASM"],
-                "macro_options": {"auto_weldment_weight": True, "separate_drawing_number_and_name": True}
-            }
-            content_text = "装配配合树已建立，自由度约束完全，0干涉。正在调用青沐清晨宏命令库执行批量出图与BOM生成："
-            return {
-                "id": req_id,
-                "object": "chat.completion",
-                "created": created,
-                "model": MODEL_ID,
-                "choices": [{
-                    "index": 0,
-                    "message": {
-                        "role": "assistant",
-                        "content": content_text,
-                        "tool_calls": [{
-                            "id": call_id,
-                            "type": "function",
-                            "function": {
-                                "name": "cad.execute_solidworks_macro",
-                                "arguments": json.dumps(args, ensure_ascii=False)
-                            }
-                        }]
-                    },
-                    "finish_reason": "tool_calls"
-                }],
-                "usage": {"prompt_tokens": 288, "completion_tokens": 64, "total_tokens": 352}
-            }
-
-        # Stage 7: After Macro -> Final Response (stop)
+        gen_out = backend.generate(conv, tools=tools, max_tokens=max_tokens,
+                                   temperature=temperature)
+        if isinstance(gen_out, tuple):
+            content_text, tool_calls = gen_out
         else:
-            final_report = (
-                "### 【非标自动化成套机构】全流程智能设计与建模组装已圆满完成！\n\n"
-                "1. **系统架构拆解**：整机已成功拆分为机架支撑模组、精密送料模组与末端执行机构，建立了规范的自顶向下分层 BOM 树；\n"
-                "2. **标准件检索调取**：已从 GB 型材库调取铝合金结构型材，从 A 研发设计库调取了 SMC 系列气缸、微型滚珠导轨及高刚性伺服电批；\n"
-                "3. **参数化特征树建模（Feature Tree 验证）**：\n"
-                "   - 核心零件 `核心承载滑块底板.SLDPRT` 完全采用 SolidWorks 原生步骤构建：草图完全定义 -> 基体拉伸 -> 导向槽切除 -> M5沉头孔与H7销孔向导 -> 倒角圆角 -> 全局变量方程式；\n"
-                "   - **彻底杜绝死实体/呆料 Solid，模型具备 100% 可编辑性与参数化重新生成能力**；\n"
-                "4. **工程图标注（GD&T）**：自动生成正交三视图与向视图，完成 H7 基孔制配合公差标注、平行度与垂直度 0.015mm 形位公差以及 Ra 1.6 表面粗糙度定义；\n"
-                "5. **装配约束与整机总成**：所有零部件均通过重合、同心与距离配合形成装配体配合树，运动学机构无干涉；\n"
-                "6. **宏命令批处理**：成功调用青沐清晨宏命令库，实现一键无乱码输出 DWG 图纸、自动分离图名图号并导出 BOM 焊件切割清单。\n\n"
-                "整套任务链已完美适配 WorkBuddy 智能体及 MCP 工业工具调用规范！"
-            )
-            return {
+            content_text, tool_calls = gen_out, None
+        self._served_model = backend.identity()
+
+        if tool_calls:
+            normalized_calls = []
+            for tc in tool_calls:
+                fn = tc.get("function", {}) if isinstance(tc, dict) else {}
+                args = fn.get("arguments", {})
+                if not isinstance(args, str):
+                    args_str = json.dumps(args, ensure_ascii=False)
+                else:
+                    args_str = args
+                normalized_calls.append({
+                    "id": tc.get("id") or f"call_{uuid.uuid4().hex[:8]}",
+                    "type": "function",
+                    "function": {
+                        "name": fn.get("name", ""),
+                        "arguments": args_str,
+                    }
+                })
+
+            if auto_execute:
+                exec_results = []
+                for nc in normalized_calls:
+                    fn_name = nc["function"]["name"]
+                    fn_args = nc["function"]["arguments"]
+                    try:
+                        args_dict = json.loads(fn_args) if isinstance(fn_args, str) else fn_args
+                    except Exception:
+                        raise ValueError(f"Invalid JSON arguments for tool {fn_name}")
+                    ok, reason = _validate_tool_call(fn_name, args_dict)
+                    if not ok:
+                        raise ValueError(f"Refusing invalid tool call {fn_name}: {reason}")
+                    print(f"[WorkBuddy-Bridge] Auto-executing {fn_name}({args_dict})")
+                    exec_res = execute_tool_call(fn_name, args_dict)
+                    exec_results.append(exec_res)
+                    if isinstance(exec_res, dict):
+                        working_memory._ingest_tool_result_facts(fn_name, exec_res)
+                    ollama_call = {
+                        "id": nc["id"],
+                        "type": "function",
+                        "function": {
+                            "name": fn_name,
+                            "arguments": args_dict,
+                        }
+                    }
+                    conv.append({
+                        "role": "assistant",
+                        "content": "",
+                        "tool_calls": [ollama_call]
+                    })
+                    conv.append({
+                        "role": "tool",
+                        "tool_call_id": nc["id"],
+                        "name": fn_name,
+                        "content": json.dumps(exec_res, ensure_ascii=False)
+                    })
+
+                synth_text = backend.generate(conv, max_tokens=max_tokens,
+                                              temperature=temperature)
+                if not isinstance(synth_text, str) or not synth_text.strip():
+                    raise RuntimeError("Model returned an empty post-tool summary")
+                self._served_model = backend.identity()
+                synth_thought = getattr(backend, "last_thought", "") or ""
+                synth_decision = self._gate_text(synth_text, evidence=exec_results)
+                synth_msg = {
+                    "role": "assistant",
+                    "content": synth_decision.text,
+                    "tool_calls": normalized_calls,
+                    "tool_results": exec_results,
+                }
+                if synth_thought:
+                    synth_msg["reasoning_content"] = synth_thought
+                self._served_model = backend.identity()
+                return _attach_usage({
+                    "id": req_id,
+                    "object": "chat.completion",
+                    "created": created,
+                    "model": MODEL_ID,
+                    "served_model": getattr(self, "_served_model", None),
+                    "virtu_gate": synth_decision.to_dict(),
+                    "choices": [{
+                        "index": 0,
+                        "message": synth_msg,
+                        "finish_reason": "length" if synth_decision.action == "incomplete" else "stop"
+                    }],
+                })
+
+            pre_thought = getattr(backend, "last_thought", "") or ""
+            pre_msg = {
+                "role": "assistant",
+                "content": content_text or "",
+                "tool_calls": normalized_calls
+            }
+            if pre_thought:
+                pre_msg["reasoning_content"] = pre_thought
+            return _attach_usage({
                 "id": req_id,
                 "object": "chat.completion",
                 "created": created,
                 "model": MODEL_ID,
+                "served_model": getattr(self, "_served_model", None),
                 "choices": [{
                     "index": 0,
-                    "message": {
-                        "role": "assistant",
-                        "content": final_report
-                    },
-                    "finish_reason": "stop"
+                    "message": pre_msg,
+                    "finish_reason": "tool_calls"
                 }],
-                "usage": {"prompt_tokens": 320, "completion_tokens": 300, "total_tokens": 620}
+            })
+        else:
+            no_tool_thought = getattr(backend, "last_thought", "") or ""
+            no_tool_decision = self._gate_text(content_text or "", evidence=None)
+            no_tool_msg = {
+                "role": "assistant",
+                "content": no_tool_decision.text
             }
+            if no_tool_thought:
+                no_tool_msg["reasoning_content"] = no_tool_thought
+            return _attach_usage({
+                "id": req_id,
+                "object": "chat.completion",
+                "created": created,
+                "model": MODEL_ID,
+                "served_model": getattr(self, "_served_model", None),
+                "virtu_gate": no_tool_decision.to_dict(),
+                "choices": [{
+                    "index": 0,
+                    "message": no_tool_msg,
+                    "finish_reason": "length" if no_tool_decision.action == "incomplete" else "stop"
+                }],
+            })
 
-    def _handle_json_response(self, text: str):
+    def _gate_text(self, text: str, evidence=None, done_reason=None):
+        """Apply working-memory hallucination audit and the deterministic deception gate."""
+        audited_text = text or ""
+        if working_memory.facts or (working_memory.goal and working_memory.goal.invariants):
+            _, audited_text, _ = memory_sentinel.audit_and_repair(audited_text, auto_repair=True)
+
+        return gate_answer(
+            audited_text,
+            prompt=getattr(self, "_gate_prompt", "") or "",
+            evidence=evidence if evidence is not None else getattr(self, "_gate_evidence", None),
+            done_reason=done_reason,
+        )
+
+    def _handle_json_response(self, text: str, reasoning_text: str = "", evidence=None,
+                              done_reason=None):
+        decision = self._gate_text(text, evidence=evidence, done_reason=done_reason)
+        text = decision.text
         self.send_response(200)
         self.send_header("Content-Type", "application/json; charset=utf-8")
         self._send_cors_headers()
         self.end_headers()
 
         created = int(time.time())
-        resp = {
+        msg = {
+            "role": "assistant",
+            "content": text
+        }
+        if reasoning_text:
+            msg["reasoning_content"] = reasoning_text
+
+        resp = _attach_usage({
             "id": f"chatcmpl-{uuid.uuid4().hex[:12]}",
             "object": "chat.completion",
             "created": created,
             "model": MODEL_ID,
+            "served_model": getattr(self, "_served_model", None),
+            "virtu_gate": decision.to_dict(),
             "choices": [
                 {
                     "index": 0,
-                    "message": {
-                        "role": "assistant",
-                        "content": text
-                    },
-                    "finish_reason": "stop"
+                    "message": msg,
+                    "finish_reason": "length" if decision.action == "incomplete" else "stop"
                 }
             ],
-            "usage": {
-                "prompt_tokens": 64,
-                "completion_tokens": len(text) // 2,
-                "total_tokens": 64 + len(text) // 2
-            }
-        }
+        })
         self.wfile.write(json.dumps(resp, ensure_ascii=False).encode("utf-8"))
 
     def _handle_streaming_response(self, text: str, reasoning_text: str = ""):
@@ -1759,23 +2292,26 @@ class OpenAIBaseHandler(BaseHTTPRequestHandler):
         created = int(time.time())
 
         try:
-            # Stream reasoning / thinking chunk first if present
+            chunk_size = 40
+            # Stream reasoning / thinking chunk progressively if present
             if reasoning_text:
-                r_payload = {
-                    "id": req_id,
-                    "object": "chat.completion.chunk",
-                    "created": created,
-                    "model": MODEL_ID,
-                    "choices": [
-                        {
-                            "index": 0,
-                            "delta": {"reasoning_content": reasoning_text},
-                            "finish_reason": None
-                        }
-                    ]
-                }
-                self.wfile.write(f"data: {json.dumps(r_payload, ensure_ascii=False)}\n\n".encode("utf-8"))
-                self.wfile.flush()
+                for i in range(0, len(reasoning_text), chunk_size):
+                    r_payload = {
+                        "id": req_id,
+                        "object": "chat.completion.chunk",
+                        "created": created,
+                        "model": MODEL_ID,
+                        "served_model": getattr(self, "_served_model", None),
+                        "choices": [
+                            {
+                                "index": 0,
+                                "delta": {"reasoning_content": reasoning_text[i:i + chunk_size]},
+                                "finish_reason": None
+                            }
+                        ]
+                    }
+                    self.wfile.write(f"data: {json.dumps(r_payload, ensure_ascii=False)}\n\n".encode("utf-8"))
+                    self.wfile.flush()
 
             # Chunk response into small parts
             chunk_size = 40
@@ -1786,6 +2322,7 @@ class OpenAIBaseHandler(BaseHTTPRequestHandler):
                     "object": "chat.completion.chunk",
                     "created": created,
                     "model": MODEL_ID,
+                    "served_model": getattr(self, "_served_model", None),
                     "choices": [
                         {
                             "index": 0,
@@ -1798,11 +2335,12 @@ class OpenAIBaseHandler(BaseHTTPRequestHandler):
                 self.wfile.flush()
 
             # End chunk
-            end_payload = {
+            end_payload = _attach_usage({
                 "id": req_id,
                 "object": "chat.completion.chunk",
                 "created": created,
                 "model": MODEL_ID,
+                "served_model": getattr(self, "_served_model", None),
                 "choices": [
                     {
                         "index": 0,
@@ -1810,12 +2348,122 @@ class OpenAIBaseHandler(BaseHTTPRequestHandler):
                         "finish_reason": "stop"
                     }
                 ]
-            }
+            })
             self.wfile.write(f"data: {json.dumps(end_payload, ensure_ascii=False)}\n\n".encode("utf-8"))
             self.wfile.write(b"data: [DONE]\n\n")
             self.wfile.flush()
         except (ConnectionResetError, BrokenPipeError, ConnectionAbortedError) as conn_err:
             print(f"[WorkBuddy-Bridge] Client disconnected during SSE streaming: {conn_err}")
+
+    def _handle_live_streaming_response(self, backend, conv, max_tokens=None, temperature=None, think=None):
+        self.send_response(200)
+        self.send_header("Content-Type", "text/event-stream; charset=utf-8")
+        self.send_header("Cache-Control", "no-cache")
+        self.send_header("Connection", "keep-alive")
+        self._send_cors_headers()
+        self.end_headers()
+
+        req_id = f"chatcmpl-{uuid.uuid4().hex[:12]}"
+        created = int(time.time())
+
+        # 1. 角色初始声明块
+        first_payload = {
+            "id": req_id,
+            "object": "chat.completion.chunk",
+            "created": created,
+            "model": MODEL_ID,
+            "served_model": getattr(self, "_served_model", None),
+            "choices": [{"index": 0, "delta": {"role": "assistant"}, "finish_reason": None}],
+        }
+        self.wfile.write(f"data: {json.dumps(first_payload, ensure_ascii=False)}\n\n".encode("utf-8"))
+        self.wfile.flush()
+
+        content_parts: list[str] = []
+        try:
+            if hasattr(backend, "generate_stream"):
+                gen = backend.generate_stream(conv, max_tokens=max_tokens, temperature=temperature, think=think)
+            else:
+                full_text = backend.generate(conv, max_tokens=max_tokens, temperature=temperature, think=think)
+                thought = getattr(backend, "last_thought", "") or ""
+                gen = []
+                if thought:
+                    gen.append({"type": "thinking", "delta": thought})
+                if full_text:
+                    gen.append({"type": "content", "delta": full_text})
+
+            for item in gen:
+                if not isinstance(item, dict):
+                    continue
+                itype = item.get("type")
+                delta_str = item.get("delta") or ""
+                if not delta_str:
+                    continue
+                if itype == "thinking":
+                    payload = {
+                        "id": req_id,
+                        "object": "chat.completion.chunk",
+                        "created": created,
+                        "model": MODEL_ID,
+                        "served_model": getattr(self, "_served_model", None),
+                        "choices": [{
+                            "index": 0,
+                            "delta": {"reasoning_content": delta_str},
+                            "finish_reason": None,
+                        }],
+                    }
+                    self.wfile.write(f"data: {json.dumps(payload, ensure_ascii=False)}\n\n".encode("utf-8"))
+                    self.wfile.flush()
+                elif itype == "content":
+                    # Buffer the visible answer: a deceptive answer must be gated
+                    # before any of it reaches the client.  Thinking stays live.
+                    content_parts.append(delta_str)
+
+            decision = self._gate_text("".join(content_parts))
+            safe_text = decision.text
+            for i in range(0, len(safe_text), 40):
+                payload = {
+                    "id": req_id,
+                    "object": "chat.completion.chunk",
+                    "created": created,
+                    "model": MODEL_ID,
+                    "served_model": getattr(self, "_served_model", None),
+                    "choices": [{
+                        "index": 0,
+                        "delta": {"content": safe_text[i:i + 40]},
+                        "finish_reason": None,
+                    }],
+                }
+                self.wfile.write(f"data: {json.dumps(payload, ensure_ascii=False)}\n\n".encode("utf-8"))
+                self.wfile.flush()
+
+            # End chunk
+            end_payload = _attach_usage({
+                "id": req_id,
+                "object": "chat.completion.chunk",
+                "created": created,
+                "model": MODEL_ID,
+                "served_model": getattr(self, "_served_model", None),
+                "virtu_gate": decision.to_dict(),
+                "choices": [{
+                    "index": 0,
+                    "delta": {},
+                    "finish_reason": "length" if decision.action == "incomplete" else "stop",
+                }],
+            })
+            self.wfile.write(f"data: {json.dumps(end_payload, ensure_ascii=False)}\n\n".encode("utf-8"))
+            self.wfile.write(b"data: [DONE]\n\n")
+            self.wfile.flush()
+        except (ConnectionResetError, BrokenPipeError, ConnectionAbortedError) as conn_err:
+            print(f"[WorkBuddy-Bridge] Client disconnected during live SSE streaming: {conn_err}")
+            self.close_connection = True
+        except Exception as exc:
+            err_payload = {"error": {"message": str(exc), "type": "server_error"}}
+            try:
+                self.wfile.write(f"data: {json.dumps(err_payload, ensure_ascii=False)}\n\n".encode("utf-8"))
+                self.wfile.flush()
+            except Exception:
+                pass
+            self.close_connection = True
 
     def _handle_streaming_tool_response(self, tool_resp: dict):
         self.send_response(200)
@@ -1835,23 +2483,27 @@ class OpenAIBaseHandler(BaseHTTPRequestHandler):
         content = msg.get("content", "")
 
         try:
-            # 1. Initial reasoning chunk
-            r_payload = {
-                "id": req_id,
-                "object": "chat.completion.chunk",
-                "created": created,
-                "model": MODEL_ID,
-                "choices": [{
-                    "index": 0,
-                    "delta": {
-                        "role": "assistant",
-                        "reasoning_content": "正在深度协同 CAD/CAM 工业智能工具与调度网桥..."
-                    },
-                    "finish_reason": None
-                }]
-            }
-            self.wfile.write(f"data: {json.dumps(r_payload, ensure_ascii=False)}\n\n".encode("utf-8"))
-            self.wfile.flush()
+            # 1. Progressive reasoning chunk
+            reasoning_text = msg.get("reasoning_content") or "正在深度协同 CAD/CAM 工业智能工具与调度网桥..."
+            chunk_size = 40
+            for i in range(0, len(reasoning_text), chunk_size):
+                r_payload = {
+                    "id": req_id,
+                    "object": "chat.completion.chunk",
+                    "created": created,
+                    "model": MODEL_ID,
+                    "served_model": getattr(self, "_served_model", None),
+                    "choices": [{
+                        "index": 0,
+                        "delta": {
+                            "role": "assistant",
+                            "reasoning_content": reasoning_text[i:i + chunk_size]
+                        },
+                        "finish_reason": None
+                    }]
+                }
+                self.wfile.write(f"data: {json.dumps(r_payload, ensure_ascii=False)}\n\n".encode("utf-8"))
+                self.wfile.flush()
 
             # 2. Content chunks if content exists
             if content:
@@ -1862,6 +2514,7 @@ class OpenAIBaseHandler(BaseHTTPRequestHandler):
                         "object": "chat.completion.chunk",
                         "created": created,
                         "model": MODEL_ID,
+                        "served_model": getattr(self, "_served_model", None),
                         "choices": [{
                             "index": 0,
                             "delta": {"content": content[i:i + chunk_size]},
@@ -1879,6 +2532,7 @@ class OpenAIBaseHandler(BaseHTTPRequestHandler):
                         "object": "chat.completion.chunk",
                         "created": created,
                         "model": MODEL_ID,
+                        "served_model": getattr(self, "_served_model", None),
                         "choices": [{
                             "index": 0,
                             "delta": {
@@ -1904,6 +2558,8 @@ class OpenAIBaseHandler(BaseHTTPRequestHandler):
                 "object": "chat.completion.chunk",
                 "created": created,
                 "model": MODEL_ID,
+                "usage": tool_resp.get("usage"),
+                "served_model": getattr(self, "_served_model", None),
                 "choices": [{
                     "index": 0,
                     "delta": {},
@@ -1922,11 +2578,29 @@ class OpenAIBaseHandler(BaseHTTPRequestHandler):
 
 
 def run_server():
+    global _BRIDGE_TOKEN
+    # Windows defaults stdout/stderr to the GBK console codepage. Any log line
+    # containing a CJK glyph or stray non-GBK byte (e.g. a lone 0xB3) raises
+    # UnicodeEncodeError, which bubbles out of the request handler and surfaces
+    # to clients as a spurious 500. Force UTF-8 I/O up front so every print and
+    # the http.server access log are encoding-safe regardless of the launcher.
+    for _stream in (sys.stdout, sys.stderr):
+        try:
+            _stream.reconfigure(encoding="utf-8", errors="replace")  # type: ignore[attr-defined]
+        except Exception:  # noqa: BLE001 - older/redirected streams may lack reconfigure
+            pass
+    # One process per port; a named kernel mutex survives crashed/killed owners
+    # and prevents the silent double-listener that mixed model configurations.
+    instance_guard = SingleFlight(name=f"VirtuBridgeInstance-{PORT}")
+    if not instance_guard.acquire():
+        print(f"[WorkBuddy-Bridge] another bridge already owns port {PORT}; refusing to start")
+        return
+    _BRIDGE_TOKEN = _load_bridge_token()
     server = ThreadingServer((HOST, PORT), OpenAIBaseHandler)
     print(f"============================================================")
-    print(f"  Virtu-CAD-CAM-10B WorkBuddy Bridge Server Running")
+    print(f"  Virtu local model bridge running (Bearer auth enabled)")
     print(f"  URL: http://{HOST}:{PORT}/v1")
-    print(f"  Model ID: {MODEL_ID}")
+    print(f"  Model ID: {MODEL_ID} (Qwen3-8B text backend; vision is a separate channel)")
     print(f"  Endpoints: /v1/models, /v1/chat/completions")
     print(f"============================================================")
     try:

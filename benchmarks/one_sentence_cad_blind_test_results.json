@@ -1,0 +1,68 @@
+{
+  "summary": {
+    "total": 4,
+    "passed": 4,
+    "pass_rate": 100.0,
+    "mean_score": 100.0,
+    "runtime_seconds": 0.0005106925964355469,
+    "timestamp": "2026-10-29 16:41:41"
+  },
+  "cases": [
+    {
+      "test_id": "BT-UG01",
+      "name": "UG-01_轴承支座",
+      "wish": "给我做一个HT200材质的UG-01轴承支座，底板长100宽50厚16，中心高36孔径22H7，带4个直径8沉孔和R10底板圆角，标出平行度0.02与Ra1.6并组装到导轨基座上！",
+      "passed": true,
+      "score": 100,
+      "details": {
+        "dim_score": 25,
+        "tree_score": 25,
+        "draw_score": 25,
+        "asm_score": 25
+      },
+      "errors": []
+    },
+    {
+      "test_id": "BT-UG02",
+      "name": "UG-02_阶梯轴",
+      "wish": "设计一根45号钢调质处理的UG-02阶梯轴，各段轴径分别为25、32h6、40和28，带8x4键槽和中心孔，标出径向跳动0.015和Ra0.8表面，组装进减速器轴承端盖！",
+      "passed": true,
+      "score": 100,
+      "details": {
+        "dim_score": 25,
+        "tree_score": 25,
+        "draw_score": 25,
+        "asm_score": 25
+      },
+      "errors": []
+    },
+    {
+      "test_id": "BT-UG03",
+      "name": "UG-03_法兰端盖",
+      "wish": "一键绘制AL6061材质UG-03法兰端盖，外径150止口110h7内孔50法兰厚度14，分度圆130均布6个9通孔并车密封槽，标注垂直度0.02并装配到阀体法兰口！",
+      "passed": true,
+      "score": 100,
+      "details": {
+        "dim_score": 25,
+        "tree_score": 25,
+        "draw_score": 25,
+        "asm_score": 25
+      },
+      "errors": []
+    },
+    {
+      "test_id": "BT-ENG01",
+      "name": "MIT_Engine_Assembly_活塞连杆曲柄总成",
+      "wish": "帮我一句话生成内燃机活塞连杆机构，活塞外径60销孔16H7顶厚8，连杆中心距135小头16H7大头36H7，标出圆柱度0.01和配合公差，完成活塞连杆与曲轴的完全运动学装配！",
+      "passed": true,
+      "score": 100,
+      "details": {
+        "dim_score": 25,
+        "tree_score": 25,
+        "draw_score": 25,
+        "asm_score": 25
+      },
+      "errors": []
+    }
+  ]
+}

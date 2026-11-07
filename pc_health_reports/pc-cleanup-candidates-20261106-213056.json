@@ -1,0 +1,72 @@
+{
+  "generated_at": "2026-11-06T21:30:56+08:00",
+  "read_only": true,
+  "stage": "C — 待用户逐项书面确认（本清单不可直接执行）",
+  "criteria": {
+    "max_age_days_unmodified": 30,
+    "min_size_bytes": 1048576,
+    "exclude_in_use": true,
+    "exclude_reparse_points": true,
+    "scope": "仅 safe_cleanup.py allow_prefixes() 白名单内的具体文件；不含 Windows 更新缓存/回收站/用户私人目录",
+    "top_n": 30
+  },
+  "confirmed_by_user": false,
+  "items": [
+    {
+      "path": "c:\\users\\administrator\\appdata\\local\\temp\\is-YZ62R1RCQ0-uninstall.tmp\\_unins.tmp",
+      "action": "recycle",
+      "approved": false,
+      "reason": "白名单缓存/临时文件；最后修改超过 30 天；单文件 >= 1.0 MB；未被独占占用",
+      "size_bytes": 3781376,
+      "mtime": "2026-10-04T12:41:25+08:00",
+      "atime": "2026-11-06T14:40:31+08:00",
+      "group": "is-YZ62R1RCQ0-uninstall.tmp",
+      "root": "c:\\users\\administrator\\appdata\\local\\temp",
+      "in_use": false,
+      "caution": "",
+      "risk": "少数程序把临时文件当会话状态；移除后该程序可能需重启重建缓存。已排除正被占用/近期修改/重解析点文件。"
+    },
+    {
+      "path": "c:\\users\\administrator\\appdata\\local\\temp\\iu-14D2O.tmp\\_unins.tmp",
+      "action": "recycle",
+      "approved": false,
+      "reason": "白名单缓存/临时文件；最后修改超过 30 天；单文件 >= 1.0 MB；未被独占占用",
+      "size_bytes": 3603240,
+      "mtime": "2026-10-01T08:24:58+08:00",
+      "atime": "2026-10-27T18:53:58+08:00",
+      "group": "iu-14D2O.tmp",
+      "root": "c:\\users\\administrator\\appdata\\local\\temp",
+      "in_use": false,
+      "caution": "",
+      "risk": "少数程序把临时文件当会话状态；移除后该程序可能需重启重建缓存。已排除正被占用/近期修改/重解析点文件。"
+    },
+    {
+      "path": "c:\\users\\administrator\\appdata\\local\\temp\\15FCE767F24F74D1\\Roaming\\Support\\ToolPalette\\AcTpCatalog.atc",
+      "action": "recycle",
+      "approved": false,
+      "reason": "白名单缓存/临时文件；最后修改超过 30 天；单文件 >= 1.0 MB；未被独占占用",
+      "size_bytes": 1981090,
+      "mtime": "2025-02-28T16:22:24+08:00",
+      "atime": "2026-11-06T09:38:54+08:00",
+      "group": "15FCE767F24F74D1",
+      "root": "c:\\users\\administrator\\appdata\\local\\temp",
+      "in_use": false,
+      "caution": "名称含 log，可能是模型权重/安装包/备份/日志，需人工重点复核",
+      "risk": "少数程序把临时文件当会话状态；移除后该程序可能需重启重建缓存。已排除正被占用/近期修改/重解析点文件。"
+    }
+  ],
+  "summary": {
+    "qualifying_total": 3,
+    "qualifying_total_bytes": 9365706,
+    "selected": 3,
+    "selected_bytes": 9365706,
+    "selected_batches_of_10": 1,
+    "scanned_files": 44190,
+    "skipped_recent": 40411,
+    "skipped_small": 3631,
+    "skipped_reparse": 145,
+    "skipped_in_use": 0,
+    "unreadable": 0
+  },
+  "execution_note": "仅在用户逐项确认并把 confirmed_by_user 与每项 approved 置为 true 后，才可进入 D/E/F；执行必须先 dry-run。"
+}

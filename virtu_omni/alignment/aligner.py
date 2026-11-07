@@ -10,6 +10,7 @@ from __future__ import annotations
 import os
 import json
 import math
+import datetime
 from typing import Dict, Any, List, Optional
 import torch
 import torch.nn.functional as F
@@ -184,11 +185,24 @@ class AlignmentValidator:
 
         verdict_str = "APPROVED" if summary["overall_verdict"] == "APPROVED" else "REJECTED"
         pass_rate_str = f"{summary['alignment_pass_rate']}%"
+
+        # The previous template hard-coded "达标 (PASS)" for every metric and a
+        # fixed approval conclusion, so a failing run still produced a certificate
+        # that claimed success. Derive each cell from the measured value instead.
+        def _cell(ok: bool) -> str:
+            return "达标 (PASS)" if ok else "未达标 (FAIL)"
+
+        cosine_ok = summary["average_cosine_similarity"] >= self.cosine_threshold
+        wasserstein_ok = summary["average_wasserstein_distance"] <= self.distribution_threshold
+        semantic_ok = summary["average_semantic_score"] >= self.semantic_threshold
+        overall_ok = summary["overall_verdict"] == "APPROVED"
+        report_date = datetime.date.today().isoformat()
+
         md_lines = [
             "# Virtu-Omni-10B 参数对齐与一致性校验报告",
             f"**校验状态**: {verdict_str}",
             f"**基座对齐通过率**: **{pass_rate_str}** (工业级准入标准 >= 99.5%)",
-            "**评估时间**: 2026-10-28",
+            f"**评估时间**: {report_date}",
             "**归档版本**: v1.0.0-PROD",
             "",
             "---",
@@ -196,12 +210,13 @@ class AlignmentValidator:
             "## 1. 核心评估摘要",
             "| 评估维度 | 指标实测均值 | 准入阈值要求 | 判定结论 |",
             "| :--- | :--- | :--- | :--- |",
-            f"| **参数方向余弦相似度** | `{summary['average_cosine_similarity']}` | >= 0.995 | **达标 (PASS)** |",
-            f"| **奇异谱 Wasserstein-1 距离** | `{summary['average_wasserstein_distance']}` | <= 0.010 | **达标 (PASS)** |",
-            f"| **语义重构匹配度** | `{summary['average_semantic_score']}` | >= 0.995 | **达标 (PASS)** |",
+            f"| **参数方向余弦相似度** | `{summary['average_cosine_similarity']}` | >= {self.cosine_threshold} | **{_cell(cosine_ok)}** |",
+            f"| **奇异谱 Wasserstein-1 距离** | `{summary['average_wasserstein_distance']}` | <= {self.distribution_threshold} | **{_cell(wasserstein_ok)}** |",
+            f"| **语义重构匹配度** | `{summary['average_semantic_score']}` | >= {self.semantic_threshold} | **{_cell(semantic_ok)}** |",
             (
                 f"| **全层对齐总通过率** | **{pass_rate_str}** "
-                f"({summary['passed_tensors']}/{summary['total_tensors_evaluated']}) | >= 99.5% | **准予进入预训练** |"
+                f"({summary['passed_tensors']}/{summary['total_tensors_evaluated']}) | >= 99.5% | "
+                f"**{'准予进入预训练' if overall_ok else '驳回：需重新扩展'}** |"
             ),
             "",
             "---",
@@ -226,12 +241,16 @@ class AlignmentValidator:
             "",
             "---",
             "## 3. 工业级对齐结论",
-            "通过 Net2Net 正交子空间保持算法与深度渐进重叠采样，新增参数与原有本地权重在向量方向、"
-            "本征谱分布和表征激活上均维持了严格的几何同构，完全消除参数断层与冷启动崩溃隐患，"
-            "**正式准入进入下一阶段分布式训练**。",
+            (
+                "通过 Net2Net 正交子空间保持算法与深度渐进重叠采样，新增参数与原有本地权重在向量方向、"
+                "本征谱分布和表征激活上均维持了严格的几何同构，完全消除参数断层与冷启动崩溃隐患，"
+                "**正式准入进入下一阶段分布式训练**。"
+                if overall_ok
+                else "实测指标未达到工业级准入阈值，**本次扩展结果不予归档，需回退并重新执行参数扩展**。"
+            ),
             "",
             "**审核人**: 核心大模型算法对齐组",
-            "**报告证书编号**: `ALIGN-VIRTU-10B-20261028`",
+            f"**报告证书编号**: `ALIGN-VIRTU-10B-{report_date.replace('-', '')}`",
             "",
         ])
         md_content = "\n".join(md_lines)

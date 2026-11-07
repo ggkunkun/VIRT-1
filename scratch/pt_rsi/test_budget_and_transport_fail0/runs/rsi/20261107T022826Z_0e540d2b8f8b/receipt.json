@@ -1,0 +1,34 @@
+{
+  "status": "blocked",
+  "run": "runs/rsi/20261107T022826Z_0e540d2b8f8b",
+  "started": "2026-11-07T02:28:26.452041+00:00",
+  "weights_updated": false,
+  "training_started": false,
+  "production_changed": false,
+  "approved": false,
+  "protected_dirs": [],
+  "protected_extra_cases": 0,
+  "model_identity": {
+    "kind": "ollama_native",
+    "model_id": "virtu-ties-v1:latest",
+    "digest": "declared-fake-test-digest",
+    "base_url": "http://127.0.0.1:11434"
+  },
+  "previously_used_validation_cases_excluded": 0,
+  "blocked_stage": "development_baseline",
+  "error_type": "RSIError",
+  "error": "Development baseline is incomplete or contains infrastructure/product failures",
+  "gate": {
+    "eligible": false,
+    "reasons": [
+      "Run interrupted or failed; approval forbidden"
+    ]
+  },
+  "finished": "2026-11-07T02:28:26.561026+00:00",
+  "budget": {
+    "calls": 30,
+    "max_calls": 160,
+    "elapsed_s": 0.109,
+    "max_seconds": 120
+  }
+}

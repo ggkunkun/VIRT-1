@@ -1,0 +1,82 @@
+{
+  "file": "微型机轮模总成(P0) 6R15-6R12-6R10.step",
+  "encoding_note": "文件为 GBK 编码; 已按 GBK 正确解码中文名",
+  "schema": "AP203 CONFIG_CONTROL_DESIGN",
+  "entity_count": 7690,
+  "product_count": 5,
+  "assembly_links": 4,
+  "tree": [
+    {
+      "pd_id": 7485,
+      "name": "微型机轮模总成(P0) 6R15-6R12-6R10",
+      "solids": 0,
+      "faces": 0,
+      "bodies": [],
+      "placement": null,
+      "children": [
+        {
+          "pd_id": 4540,
+          "name": "微型机轮模(P0) 6R15-6R12-6R10",
+          "solids": 1,
+          "faces": 76,
+          "bodies": [
+            "倒角1"
+          ],
+          "placement": [
+            0.0,
+            48.0,
+            0.0
+          ],
+          "children": []
+        },
+        {
+          "pd_id": 6624,
+          "name": "微型机夹模(P0) 6R15-6R12-6R10",
+          "solids": 1,
+          "faces": 41,
+          "bodies": [
+            "圆角1"
+          ],
+          "placement": [
+            0.0,
+            73.0,
+            -65.3
+          ],
+          "children": []
+        },
+        {
+          "pd_id": 6959,
+          "name": "微型机导模(P0) 6R15-6R12-6R10",
+          "solids": 1,
+          "faces": 45,
+          "bodies": [
+            "圆角1"
+          ],
+          "placement": [
+            -1.0,
+            73.0,
+            -65.3
+          ],
+          "children": []
+        },
+        {
+          "pd_id": 7529,
+          "name": "微型机夹料模(P0) D6",
+          "solids": 3,
+          "faces": 64,
+          "bodies": [
+            "切除-拉伸1[1]",
+            "切除-拉伸1[2]",
+            "切除-拉伸1[3]"
+          ],
+          "placement": [
+            -113.4736,
+            77.0,
+            -12.0
+          ],
+          "children": []
+        }
+      ]
+    }
+  ]
+}

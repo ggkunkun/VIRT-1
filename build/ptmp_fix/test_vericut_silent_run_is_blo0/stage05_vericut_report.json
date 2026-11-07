@@ -1,0 +1,38 @@
+{
+  "collision_events": 0,
+  "collision_nc_lines": [],
+  "collision_volumes_mm3": {
+    "max": null,
+    "min": null,
+    "count": 0
+  },
+  "nc_parse_errors": 0,
+  "sample_collisions": [],
+  "sample_parse_errors": [],
+  "ran_past_program_end": false,
+  "stdout_chars": 55,
+  "attributed_events": 0,
+  "attributed_lines": [],
+  "unattributed_events": 0,
+  "unattributed_sample": [],
+  "project": "D:\\Virtu模型\\build\\ptmp_fix\\test_vericut_silent_run_is_blo0\\p.vcproject",
+  "rc": 0,
+  "argv": "batch batchp reset_cutcolor",
+  "attempts": [
+    {
+      "attempt": 1,
+      "rc": 0,
+      "raw_events": 0,
+      "attributed_events": 0,
+      "stdout_chars": 55
+    },
+    {
+      "attempt": 2,
+      "rc": 0,
+      "raw_events": 0,
+      "attributed_events": 0,
+      "stdout_chars": 55
+    }
+  ],
+  "elapsed_s": 0.0
+}

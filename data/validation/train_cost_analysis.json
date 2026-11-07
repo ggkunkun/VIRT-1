@@ -1,0 +1,42 @@
+{
+  "samples": 23178,
+  "tokens_total": 60272726,
+  "loss_tokens_total": 8953929,
+  "loss_ratio": 0.1486,
+  "len_min": 1585,
+  "len_p50": 2642,
+  "len_p90": 2715,
+  "len_p95": 2769,
+  "len_max": 2837,
+  "len_mean": 2600.4,
+  "token_segment_estimate": {
+    "tools": 63456,
+    "assistant": 7569856,
+    "other": 52088836
+  },
+  "unique_full_dialog": 18330,
+  "unique_user_query": 18330,
+  "unique_assistant_toolcalls": 18330,
+  "unique_tools_schema": 1,
+  "dup_ratio_full": 0.2092,
+  "dup_ratio_user": 0.2092,
+  "dup_ratio_assistant": 0.2092,
+  "assistant_span_dist": {
+    "2": 26,
+    "3": 23152
+  },
+  "padding_waste_random": {
+    "batch2": 0.0269,
+    "batch4": 0.0403,
+    "batch8": 0.0487,
+    "batch16": 0.0601,
+    "batch32": 0.0663
+  },
+  "padding_waste_sorted": {
+    "batch2": 0.0003,
+    "batch4": 0.0008,
+    "batch8": 0.0006,
+    "batch16": 0.0009,
+    "batch32": 0.0014
+  }
+}

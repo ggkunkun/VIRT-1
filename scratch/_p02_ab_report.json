@@ -1,0 +1,50 @@
+{
+  "run_id": "fe53bb7e1dc1e40e",
+  "response_format_sha256": "340edeb6369b2a457a7f9cc81147468c0949175e245c8056716cd5155c11c4ae",
+  "sampling": {
+    "temperature": 0.0,
+    "top_p": 0.95,
+    "seed": 1234,
+    "num_ctx": 8192,
+    "max_tokens": "per-case (256/448/704)"
+  },
+  "arm_a": {
+    "n": 30,
+    "mean": 79.53,
+    "all_passed": 14,
+    "shape_passed": 29,
+    "name_key_violations": 0,
+    "empty_think": 0,
+    "median_tokens": 48,
+    "median_elapsed_s": 2.92
+  },
+  "arm_a_rerun": {
+    "n": 30,
+    "mean": 79.53,
+    "all_passed": 14,
+    "shape_passed": 29,
+    "name_key_violations": 0,
+    "empty_think": 0,
+    "median_tokens": 48,
+    "median_elapsed_s": 2.93
+  },
+  "arm_b": {
+    "n": 30,
+    "mean": 79.9,
+    "all_passed": 15,
+    "shape_passed": 30,
+    "name_key_violations": 0,
+    "empty_think": 0,
+    "median_tokens": 45,
+    "median_elapsed_s": 2.78
+  },
+  "noise_floor": {
+    "n": 30,
+    "byte_identical_responses": 30,
+    "cases_whose_score_moved": 0,
+    "mean_delta_same_arm": 0.0
+  },
+  "delta_mean": 0.37,
+  "verdict": "确定性差值，非噪声；但由 3 例增 2 例减构成，机制是改变输出分布而非单调改善能力",
+  "basis": "measured (single deterministic rollout per arm, fixed case set)"
+}

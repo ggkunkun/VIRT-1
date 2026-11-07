@@ -1,0 +1,9 @@
+{
+  "stage": "sft_13b",
+  "base_model": "/model/ModelScope/Qwen/Qwen3-14B",
+  "n_samples": 3608,
+  "epochs": 1.5,
+  "final_loss": 2.1995,
+  "elapsed_seconds": 257.7,
+  "timestamp": "2026-11-07 05:26:20"
+}

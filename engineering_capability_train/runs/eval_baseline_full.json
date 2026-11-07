@@ -1,0 +1,186 @@
+{
+  "run_dir": "D:\\Virtu模型\\engineering_capability_train\\runs\\eval_20261104_164406_9760",
+  "accepted": false,
+  "evaluation_valid": true,
+  "physics_veto_passed": true,
+  "n_total_records": 60,
+  "n_valid_tasks": 44,
+  "transport_errors": 1,
+  "verdicts": {
+    "transport_error": 1,
+    "recorded_replay": 15,
+    "partial": 22,
+    "partial_truncated": 22
+  },
+  "capability_breakdown": {
+    "toolchain": 15,
+    "vision_decision": 15,
+    "engineering_semantics": 14
+  },
+  "eval_config": {
+    "endpoint": "http://127.0.0.1:11434/v1",
+    "model": "qwen3:8b",
+    "predictions": null,
+    "gui_results": null,
+    "reasoning_effort": "none",
+    "max_tokens": 1024,
+    "limit": 60,
+    "timeout": 120
+  },
+  "metrics": {
+    "task_success_rate": 0.18181818181818182,
+    "first_attempt_success_rate": 0.18181818181818182,
+    "physics_compliance_rate": 1.0,
+    "decision_optimality_rate": 0.0,
+    "semantic_grounding_rate": 0.2483766233766234,
+    "tool_call_valid_rate": 1.0,
+    "parametric_model_valid_rate": 0.5714285714285714,
+    "gui_action_valid_rate": null,
+    "error_rate": 0.4772727272727273,
+    "fatal_error_rate": 0.0,
+    "transport_error_rate": 0.016666666666666666,
+    "latency_mean_s": 54.29487954545455,
+    "latency_p50_s": 75.2857,
+    "latency_p95_s": 94.936,
+    "recovery_rate": null,
+    "engineering_capability_score": 0.4378
+  },
+  "gate_checks": [
+    {
+      "gate": "task_success_rate_min",
+      "value": 0.1818,
+      "threshold": 0.85,
+      "pass": false
+    },
+    {
+      "gate": "first_attempt_success_rate_min",
+      "value": 0.1818,
+      "threshold": 0.7,
+      "pass": false
+    },
+    {
+      "gate": "physics_compliance_rate_min",
+      "value": 1.0,
+      "threshold": 1.0,
+      "pass": true
+    },
+    {
+      "gate": "decision_optimality_rate_min",
+      "value": 0.0,
+      "threshold": 0.85,
+      "pass": false
+    },
+    {
+      "gate": "semantic_grounding_rate_min",
+      "value": 0.2484,
+      "threshold": 0.8,
+      "pass": false
+    },
+    {
+      "gate": "tool_call_valid_rate_min",
+      "value": 1.0,
+      "threshold": 0.95,
+      "pass": true
+    },
+    {
+      "gate": "parametric_model_valid_rate_min",
+      "value": 0.5714,
+      "threshold": 0.95,
+      "pass": false
+    },
+    {
+      "gate": "gui_action_valid_rate_min",
+      "value": null,
+      "threshold": 0.98,
+      "pass": false,
+      "reason": "metric unavailable"
+    },
+    {
+      "gate": "error_rate_max",
+      "value": 0.4773,
+      "threshold": 0.1,
+      "pass": false
+    },
+    {
+      "gate": "fatal_error_rate_max",
+      "value": 0.0,
+      "threshold": 0.02,
+      "pass": true
+    },
+    {
+      "gate": "transport_error_rate_max",
+      "value": 0.0167,
+      "threshold": 0.05,
+      "pass": true
+    },
+    {
+      "gate": "latency_p95_s_max",
+      "value": 94.936,
+      "threshold": 180.0,
+      "pass": true
+    },
+    {
+      "gate": "engineering_capability_score_min",
+      "value": 0.4378,
+      "threshold": 0.8,
+      "pass": false
+    },
+    {
+      "gate": "min_valid_tasks",
+      "value": 44,
+      "threshold": 30,
+      "pass": true
+    }
+  ],
+  "failed_gates": [
+    {
+      "gate": "task_success_rate_min",
+      "value": 0.1818,
+      "threshold": 0.85,
+      "pass": false
+    },
+    {
+      "gate": "first_attempt_success_rate_min",
+      "value": 0.1818,
+      "threshold": 0.7,
+      "pass": false
+    },
+    {
+      "gate": "decision_optimality_rate_min",
+      "value": 0.0,
+      "threshold": 0.85,
+      "pass": false
+    },
+    {
+      "gate": "semantic_grounding_rate_min",
+      "value": 0.2484,
+      "threshold": 0.8,
+      "pass": false
+    },
+    {
+      "gate": "parametric_model_valid_rate_min",
+      "value": 0.5714,
+      "threshold": 0.95,
+      "pass": false
+    },
+    {
+      "gate": "gui_action_valid_rate_min",
+      "value": null,
+      "threshold": 0.98,
+      "pass": false,
+      "reason": "metric unavailable"
+    },
+    {
+      "gate": "error_rate_max",
+      "value": 0.4773,
+      "threshold": 0.1,
+      "pass": false
+    },
+    {
+      "gate": "engineering_capability_score_min",
+      "value": 0.4378,
+      "threshold": 0.8,
+      "pass": false
+    }
+  ]
+}

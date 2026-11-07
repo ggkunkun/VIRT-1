@@ -47,6 +47,7 @@ class Distributed3DTrainer:
                 self.device = torch.device("cuda")
         else:
             self.device = torch.device("cpu")
+        self._configure_runtime_optimizations()
         self.model.to(self.device)
 
         # Optimizer and Scheduler
@@ -61,6 +62,24 @@ class Distributed3DTrainer:
         # Auto-resume if checkpoint provided
         if self.config.training.resume_from_checkpoint:
             self.load_checkpoint(self.config.training.resume_from_checkpoint)
+
+    def _configure_runtime_optimizations(self) -> None:
+        """Enable the most useful CUDA throughput optimizations without changing semantics."""
+        if torch.cuda.is_available():
+            torch.backends.cuda.matmul.allow_tf32 = True
+            if hasattr(torch.backends, "cudnn"):
+                torch.backends.cudnn.allow_tf32 = True
+            torch.set_float32_matmul_precision("high")
+
+    def _move_batch_to_device(self, batch: Dict[str, torch.Tensor]) -> Dict[str, torch.Tensor]:
+        """Move tensor values to the active accelerator with non-blocking copies when available."""
+        moved: Dict[str, torch.Tensor] = {}
+        for key, value in batch.items():
+            if isinstance(value, torch.Tensor):
+                moved[key] = value.to(self.device, non_blocking=torch.cuda.is_available())
+            else:
+                moved[key] = value
+        return moved
 
     def _build_optimizer(self) -> AdamW:
         """Construct AdamW optimizer with decoupled weight decay."""
@@ -104,26 +123,26 @@ class Distributed3DTrainer:
     def train_step(self, batch: Dict[str, torch.Tensor]) -> Dict[str, Any]:
         """Execute a single micro-batch forward-backward pass."""
         self.model.train()
+        batch = self._move_batch_to_device(batch)
         images = batch.get("images")
         input_ids = batch.get("input_ids")
         labels = batch.get("labels")
 
-        if images is not None:
-            images = images.to(self.device)
-        if input_ids is not None:
-            input_ids = input_ids.to(self.device)
-        if labels is not None:
-            labels = labels.to(self.device)
-
+        use_amp = torch.cuda.is_available() and self.config.parallelism.mixed_precision in {"bf16", "fp16"}
         amp_dtype = torch.bfloat16 if self.config.parallelism.mixed_precision == "bf16" else torch.float16
-        with torch.amp.autocast("cuda", enabled=torch.cuda.is_available(), dtype=amp_dtype):
+        with torch.autocast(device_type="cuda" if torch.cuda.is_available() else "cpu", enabled=use_amp, dtype=amp_dtype):
             outputs = self.model(
                 input_ids=input_ids,
                 images=images,
                 labels=labels,
                 mode="text_gen",
             )
-            loss = outputs.get("loss", torch.tensor(0.0, device=self.device))
+            loss = outputs.get("loss")
+            if loss is None or not isinstance(loss, torch.Tensor):
+                raise RuntimeError(
+                    "训练致命异常：模型前向传播未返回有效的 loss 张量！"
+                    "请检查输入样本是否包含有效 labels 以及模型 loss 计算是否被激活，严禁静默 0.0 空转。"
+                )
 
         # Backward pass with scaler or native
         if self.scaler.is_enabled():
@@ -146,11 +165,14 @@ class Distributed3DTrainer:
         print(f"[Trainer] Starting training loop for {num_steps} steps on {self.device}...")
         start_time = time.time()
         accum_steps = self.config.parallelism.gradient_accumulation_steps
+        if isinstance(accum_steps, bool) or not isinstance(accum_steps, int) or accum_steps < 1:
+            raise ValueError("gradient_accumulation_steps must be a positive integer")
 
         for step in range(1, num_steps + 1):
             step_start = time.perf_counter()
-            self.optimizer.zero_grad()
+            self.optimizer.zero_grad(set_to_none=True)
             accum_loss = 0.0
+            micro_steps = 0
 
             # Gradient accumulation loop
             for micro_step in range(accum_steps):
@@ -160,7 +182,21 @@ class Distributed3DTrainer:
                     break
 
                 step_metrics = self.train_step(batch)
-                accum_loss += step_metrics["loss"] / accum_steps
+                micro_steps += 1
+                accum_loss += step_metrics["loss"]
+
+            if micro_steps == 0:
+                self.optimizer.zero_grad()
+                print("[Trainer] Data iterator exhausted; stopping without an empty optimizer update.")
+                break
+
+            # Match the logged mean loss to the accumulated gradient. A short final
+            # accumulation window is averaged by its actual micro-batch count.
+            grad_scale = 1.0 / micro_steps
+            for parameter in self.model.parameters():
+                if parameter.grad is not None:
+                    parameter.grad.mul_(grad_scale)
+            accum_loss /= micro_steps
 
             # Update learning rate
             curr_lr = self.get_learning_rate(self.global_step)
@@ -199,7 +235,7 @@ class Distributed3DTrainer:
             # Calculate Tokens/sec
             batch_tokens = (
                 self.config.parallelism.micro_batch_size
-                * accum_steps
+                * micro_steps
                 * self.config.data.max_text_tokens
             )
             throughput = batch_tokens / max(1e-5, step_duration)

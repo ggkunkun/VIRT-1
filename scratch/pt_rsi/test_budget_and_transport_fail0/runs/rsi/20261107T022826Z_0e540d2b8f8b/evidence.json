@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "files": {
+    "audit.jsonl": "7e4383e0a1fed3b5f15b28425166c227062eb8a496d294efaa5c7bea8a59980e",
+    "cases.json": "bb11f266c1a002b901ee66f78af5c15c8563c5f8c1d4f36d5720696523ae5122",
+    "config.json": "789d017c1f36e6f51f9bea8e8e152fecb67a8f3116cfae4b0da22a06e62236c0",
+    "development_baseline.jsonl": "1f9edca3db0e37792a0a4f36b3770cbfc3469ad61fbf6fa4ded8fd56e87dc374",
+    "gate.json": "ada7190916575fd5830ea2c434ae148e570918bb43ea40e09f353c698ce8c99a",
+    "manifest.json": "997d1e2c343adb1fdd045afd766c9fc4a729c80daef1c273875b1b39d07aac1c",
+    "receipt.json": "a2160dce3286832412f2c76df9563ba4bac66530d0a8ac5d2de476414d321aff"
+  },
+  "sources": {
+    "data/cases/physics.jsonl": "e2fb44e7861f72fa2041ae102c0a756a095017e17fe5a34ef515f865c3b54534"
+  },
+  "review_sha256": "b30a0163db863ac4345cdf5a9f12c789706ecb9c74b877937777be798a7caded"
+}

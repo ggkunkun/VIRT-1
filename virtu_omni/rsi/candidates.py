@@ -33,6 +33,12 @@ def development_feedback(cases, records, max_examples=6):
                 failed_types[check["type"]] += 1
         tasks = {c["scenario"]["task"] for c in case["criteria"]
                  if isinstance(c.get("scenario"), dict) and c["scenario"].get("task")}
+        if not tasks:
+            for tag in case.get("tags", []):
+                if tag in SUPPORTED:
+                    tasks.add(tag)
+            if not tasks and case.get("dimension"):
+                tasks.add(case["dimension"])
         weak_tasks.update(tasks)
         if len(examples) < max_examples:
             examples.append({"dimension": case["dimension"], "tier": case.get("tier"),

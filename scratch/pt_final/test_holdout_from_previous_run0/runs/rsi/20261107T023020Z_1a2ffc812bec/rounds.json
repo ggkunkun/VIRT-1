@@ -1,0 +1,32 @@
+[
+  {
+    "round": 1,
+    "candidate_sha256": "3420b3eb0d136703c89e72ba654f4a46edc99457d075e229cf4f84e7d3001272",
+    "parent_sha256": null,
+    "accepted_on_dev": true,
+    "development": {
+      "n": 18,
+      "mean_score": 100.0,
+      "dimensions": {
+        "physics": 100.0
+      },
+      "passed": 18,
+      "errors": 0
+    }
+  },
+  {
+    "round": 2,
+    "candidate_sha256": "a6bd5103c6ff2e673d84597d7536d676b42cfb5fade4381f116a09083ac4a062",
+    "parent_sha256": "3420b3eb0d136703c89e72ba654f4a46edc99457d075e229cf4f84e7d3001272",
+    "accepted_on_dev": false,
+    "development": {
+      "n": 18,
+      "mean_score": 100.0,
+      "dimensions": {
+        "physics": 100.0
+      },
+      "passed": 18,
+      "errors": 0
+    }
+  }
+]

@@ -1,0 +1,130 @@
+{
+  "software": "nx",
+  "display_name": "Siemens NX 12.0 (中文版)",
+  "version": "12.0.2.9",
+  "generated": "2026-11-03",
+  "source": "reverse-skill offline-sample RE; evidence.md",
+  "modules": [
+    {
+      "id": "nx_gateway_basics",
+      "name": "Gateway 启动与环境 (Gateway)",
+      "category": "config_admin",
+      "menu": ["文件|新建", "文件|打开", "首选项|用户界面"],
+      "commands": ["nx_new_part", "nx_open_part", "nx_save_part", "nx_run_journal"],
+      "api": ["NXOpen.Session.GetSession", "NXOpen.Parts.NewBase"],
+      "file_formats": ["PRT"],
+      "workflow_refs": ["wf_blueprint_to_cad"],
+      "notes": "NX 启动与部件管理；单位 mm。[高]（历史实测）"
+    },
+    {
+      "id": "nx_part_modeling",
+      "name": "建模 (Modeling)",
+      "category": "part_modeling",
+      "menu": ["插入|设计特征", "插入|细节特征"],
+      "commands": ["nx_block", "nx_cylinder", "nx_extrude", "nx_revolve", "nx_blend", "nx_chamfer", "nx_text", "nx_massprop", "nx_check_part"],
+      "api": ["NXOpen.Features.CreateBlockFeatureBuilder", "NXOpen.Features.CreateExtrudeBuilder", "NXOpen.UF.UFModl.CreateBlend", "NXOpen.UF.UFModl.CreateChamfer"],
+      "file_formats": ["PRT"],
+      "workflow_refs": ["wf_blueprint_to_cad"],
+      "notes": "参数化特征建模；体积守恒 ΔV≠0；圆角先大后小。[高]（历史实测）"
+    },
+    {
+      "id": "nx_sketcher",
+      "name": "草图 (Sketcher)",
+      "category": "part_modeling",
+      "menu": ["插入|草图"],
+      "commands": ["nx_sketch", "nx_create_line", "nx_section_build"],
+      "api": ["NXOpen.Part.Sketcher.CreateSketchOnPlane", "NXOpen.Part.Curves.CreateLine", "NXOpen.Part.Sections.CreateSection"],
+      "file_formats": ["PRT"],
+      "workflow_refs": ["wf_blueprint_to_cad"],
+      "notes": "草图任务环境；拉伸截面构造 Section。[高]（历史实测）"
+    },
+    {
+      "id": "nx_expressions",
+      "name": "表达式 (Expressions)",
+      "category": "part_modeling",
+      "menu": ["工具|表达式"],
+      "commands": ["nx_expression", "nx_new_part"],
+      "api": ["NXOpen.Part.Expressions.CreateWithUnits"],
+      "file_formats": ["PRT"],
+      "workflow_refs": ["wf_blueprint_to_cad"],
+      "notes": "参数化尺寸驱动，单位 MilliMeter。[高]（历史实测）"
+    },
+    {
+      "id": "nx_assembly",
+      "name": "装配 (Assemblies)",
+      "category": "assembly",
+      "menu": ["装配|组件|添加组件", "装配|组件|配对约束"],
+      "commands": ["nx_assembly_add_component", "nx_assembly_constraint", "nx_assy_build", "nx_clearance"],
+      "api": ["NXOpen.Assemblies.Component"],
+      "file_formats": ["PRT"],
+      "workflow_refs": ["wf_blueprint_to_cad"],
+      "notes": "装配建模与间隙检查（ug_assy_build/ug_clearance.exe）。[中] documented-not-probed"
+    },
+    {
+      "id": "nx_drafting",
+      "name": "工程图 (Drafting)",
+      "category": "drafting",
+      "menu": ["插入|视图", "插入|尺寸"],
+      "commands": ["nx_drafting_view", "nx_drafting_dimension"],
+      "api": ["NXOpen.Drafting"],
+      "file_formats": ["PRT"],
+      "workflow_refs": ["wf_blueprint_to_cad"],
+      "notes": "二维工程图视图与尺寸/GD&T（ug_drafting_standards.dpx）。[中] documented-not-probed"
+    },
+    {
+      "id": "nx_fea_simulation",
+      "name": "仿真 (Simcenter/FEA)",
+      "category": "fea_simulation",
+      "menu": ["开始|高级仿真"],
+      "commands": ["nx_fea_mesh", "nx_fea_solve", "nx_massprop"],
+      "api": ["NXOpen.CAE"],
+      "file_formats": ["PRT"],
+      "workflow_refs": ["wf_cad_to_fea"],
+      "notes": "FEA 网格/求解；FOS≥1.5 校核。[中] documented-not-probed"
+    },
+    {
+      "id": "nx_cam_toolpath",
+      "name": "CAM 加工 (Manufacturing)",
+      "category": "cam_toolpath",
+      "menu": ["开始|加工", "加工|创建操作"],
+      "commands": ["nx_cam_create_operation", "nx_cam_generate", "nx_cam_operation_check"],
+      "api": ["NXOpen.CAM.NCGroup", "NXOpen.CAM.Operation"],
+      "file_formats": ["CLS", "NC"],
+      "workflow_refs": ["wf_cam_to_post"],
+      "notes": "操作导航器刀轨；导出前必须查 CAM 树感叹号(!)警告。[中] documented-not-probed"
+    },
+    {
+      "id": "nx_post_processing",
+      "name": "后处理 (Post Processing)",
+      "category": "post_processing",
+      "menu": ["加工|输出|后处理"],
+      "commands": ["nx_cam_postprocess", "nx_cls_output", "nx_jt_postprocessor"],
+      "api": ["NXOpen.CAM.Postprocess"],
+      "file_formats": ["CLS", "NC", "JT"],
+      "workflow_refs": ["wf_cam_to_post"],
+      "notes": "CLS→NC 后处理；jtpostprocessor.exe。[中] documented-not-probed"
+    },
+    {
+      "id": "nx_data_exchange",
+      "name": "数据交换 (Data Exchange)",
+      "category": "data_exchange",
+      "menu": ["文件|导出|STEP", "文件|导出|IGES", "文件|导出|JT"],
+      "commands": ["nx_step_export", "nx_iges_export", "nx_jt_export", "nx_step214_batch"],
+      "api": ["NXOpen.DexManager.CreateStepCreator"],
+      "file_formats": ["STP", "IGS", "JT"],
+      "workflow_refs": ["wf_step_exchange"],
+      "notes": "STEP AP203/214/242 + IGES + JT；DexManager。[高]（历史实测 STEP 导出）"
+    },
+    {
+      "id": "nx_automation_journal",
+      "name": "自动化日志 (NXOpen Journal)",
+      "category": "collaboration",
+      "menu": ["文件|执行|NXOpen"],
+      "commands": ["nx_run_journal", "nx_new_part", "nx_expression", "nx_step_export"],
+      "api": ["NXOpen.Session.GetSession", "NXOpen.UF.UFSession.GetUFSession"],
+      "file_formats": ["PY"],
+      "workflow_refs": ["wf_blueprint_to_cad", "wf_cam_to_post"],
+      "notes": "NXOpen Python (Python 3.6) 经 run_journal.exe/ugraf -journal 无头执行。[高]（历史实测）"
+    }
+  ]
+}

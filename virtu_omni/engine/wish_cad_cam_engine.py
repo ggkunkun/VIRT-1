@@ -64,7 +64,10 @@ class WishCADCAMEngine:
         d_outer = safe_float(outer_d[0], 53.0) if outer_d else (safe_float(generic_d[0], 53.0) if generic_d else 53.0)
         d_inner = safe_float(inner_d[0], 14.0) if inner_d else (safe_float(generic_d[1], 14.0) if len(generic_d) > 1 else (14.0 if d_outer > 30 else 8.0))
 
-        radii = re.findall(r"(?:半径|倒角|圆角|[R|r][\s=:约为]+)([0-9]+(?:\.[0-9]+)?)", wish_text)
+        # 半径：`R15` 这种紧贴数字的写法必须认（旧正则要求 R 后面先有空格/等号，结果 R15 R12 R10 一个都没抓到，静默退回默认 3.0）；
+        # 负向后顾排除 Cr12MoV 这类材料牌号里的 r12。
+        radii = re.findall(r"(?:半径|倒角|圆角)([0-9]+(?:\.[0-9]+)?)|(?<![A-Za-z])[Rr]\s*[=:约为]*\s*([0-9]+(?:\.[0-9]+)?)", wish_text)
+        radii = [a or b for a, b in radii]
         lengths = re.findall(r"(?:总长|长度|高度|总高|宽|厚|[L|l|H|h][\s=:约为]+)([0-9]+(?:\.[0-9]+)?)", wish_text)
         angles = re.findall(r"(?:角|度|deg|angle)[\s=:约为]*([0-9]+(?:\.[0-9]+)?)", wish_text)
         counts = re.findall(r"([0-9]+)\s*(?:个|道|叶片|齿|槽)", wish_text)
@@ -74,7 +77,38 @@ class WishCADCAMEngine:
         except (ValueError, TypeError):
             num_features = 3
 
-        fillet_r = safe_float(radii[0], 3.0) if radii else 3.0
+        groove_radii = []
+        for x in radii:
+            val = safe_float(x, 0.0)
+            if 0.5 <= val <= 200.0 and val not in groove_radii:
+                groove_radii.append(val)
+        fillet_r = groove_radii[0] if groove_radii else 3.0
+        parse_warnings = []
+        if len(groove_radii) > 1:
+            parse_warnings.append(
+                "识别到 %d 个圆弧半径 %s：按多槽处理（单选字段 fillet_r 只取第一个）"
+                % (len(groove_radii), "/".join("%g" % v for v in groove_radii)))
+        try:
+            if counts and len(groove_radii) > 1 and int(counts[0]) != len(groove_radii):
+                parse_warnings.append("槽数(%s)与半径个数(%d)不一致，按半径个数执行"
+                                      % (counts[0], len(groove_radii)))
+                num_features = len(groove_radii)
+        except (ValueError, TypeError):
+            pass
+        if not counts and len(groove_radii):
+            num_features = len(groove_radii)
+        geometry_warnings = []
+        overall_len = safe_float(lengths[0], 45.0) if lengths else 45.0
+        for _i, _rr in enumerate(groove_radii, 1):
+            _pitch = overall_len / (len(groove_radii) + 1.0)
+            _cz = _pitch * _i
+            if _cz - _rr < 0 or _cz + _rr > overall_len:
+                geometry_warnings.append(
+                    "R%g 槽在 z=%.2f 处超出件长 %.0f（半圆需要 [%.2f, %.2f]）：该槽不可行，图上不画"
+                    % (_rr, _cz, overall_len, _cz - _rr, _cz + _rr))
+            if _rr > (d_outer - d_inner) / 2.0:
+                geometry_warnings.append(
+                    "R%g 槽深超过肉厚 %.2f：该槽不可行" % (_rr, (d_outer - d_inner) / 2.0))
         overall_len = safe_float(lengths[0], 45.0) if lengths else 45.0
         sweep_angle = safe_float(angles[0], 30.0) if angles else 30.0
 
@@ -89,11 +123,76 @@ class WishCADCAMEngine:
             "d_inner": d_inner,
             "num_features": num_features,
             "fillet_r": fillet_r,
+            "groove_radii": groove_radii,
+            "num_grooves": len(groove_radii),
+            "parse_warnings": parse_warnings,
+            "geometry_warnings": geometry_warnings,
             "overall_len": overall_len,
             "sweep_angle": sweep_angle,
             "is_multiaxis": is_multiaxis,
             "is_die_mold": is_die_mold,
         }
+
+    def generate_blueprint_annotation(self, spec: Dict[str, Any]) -> str:
+        """从用户意图或图纸提取标题栏、基准、尺寸链与 GD&T 形位公差标注规范。"""
+        d_out = spec["d_outer"]
+        d_in = spec["d_inner"]
+        length = spec["overall_len"]
+        r = spec["fillet_r"]
+        n_feat = spec["num_features"]
+        mat = spec["material"]
+
+        content = f"""# Virtu 工业图纸识读与 GD&T 尺寸公差标注清单
+
+> 依据国家制图标准 GB/T 1804-m、GB/T 1184-K、GB/T 4458.1-2002 自动生成。
+> 本标注清单作为下游【AutoCAD 2026 二维工程图】与【SOLIDWORKS / NX 三维特征树】的唯一真实尺寸基准。
+
+---
+
+## 1. 标题栏与基础物料信息
+- **零件名称**：精密成型轮模 / 回转体轴类零件
+- **图纸图号**：VT-MOLD-{int(d_out):03d}-{int(d_in):03d}
+- **材料牌号**：{mat}（热处理：淬火回火 HRC 58~62）
+- **投影体系**：第一视角（标准三视图 + 局部轴向全剖视图）
+- **绘图比例**：1:1（公制单位：mm）
+
+---
+
+## 2. 基准坐标系定义（Datum Setup）
+- **基准面 A (Datum A)**：工件右端大端面（作为轴向定位基准与加工碰数原点 Z0）
+- **基准轴 B (Datum B)**：Ø{d_in:.1f} 轴心通孔中心线（作为全零件径向回转主基准线）
+
+---
+
+## 3. 尺寸与公差标注清单（按特征类型拆解）
+
+| 序号 | 特征名称 | 名义尺寸 | 标注公差 | 配合代号 / 等级 | 表面粗糙度 | 关联基准 |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| 1 | 最大外圆径 | Ø{d_out:.2f} mm | ±0.03 mm | h7 级外圆精磨 | Ra 0.8 μm | 轴心线 B |
+| 2 | 轴心安装通孔 | Ø{d_in:.2f} mm | +0.018 / 0 mm | H7 级精铰配合 | Ra 1.6 μm | 基准 A |
+| 3 | 轮模总宽度 | {length:.2f} mm | ±0.05 mm | js7 自由装配 | Ra 3.2 μm | 基准 A |
+| 4 | 径向成型圆弧槽 | R{r:.2f} mm ({n_feat} 道) | ±0.02 mm | 轮廓度 0.03 | Ra 0.8 μm | 基准 A, B |
+| 5 | 两端工艺倒角 | C0.5 × 45° | ±0.1 mm | 去毛刺钝化 | Ra 3.2 μm | — |
+
+---
+
+## 4. 形位公差要求（GD&T）
+1. **径向圆跳动**：外圆表面对基准轴心 B 的径向圆跳动公差不得大于 **0.02 mm**；
+2. **端面垂直度**：基准面 A 对基准轴心 B 的垂直度公差不得大于 **0.015 mm**；
+3. **同轴度**：内孔 Ø{d_in:.1f} 与外圆 Ø{d_out:.1f} 的同轴度公差不得大于 **0.025 mm**。
+
+---
+
+## 5. 技术要求与制造说明（Technical Notes）
+1. 未注线性公差按 **GB/T 1804-m** 执行，未注角度公差按 ±30' 执行；
+2. 毛坯选用优质冷作模具钢锻件，调质后探伤无白点夹渣；
+3. 加工工序路径规划：
+   - 步骤一：【AutoCAD 2026】按上述图层规范（01_CENTERLINE, 02_PROFILE, 03_DIMENSION）生成 2D 标注工程图；
+   - 步骤二：【SOLIDWORKS 2021】以基准面 A 为草图原点，拉伸外圆并切除内孔，生成 STEP 实体；
+   - 步骤三：【CIMCO Edit 2026】编制 G71 粗车循环与 G70 精车 Macro B 程序；
+   - 步骤四：【Vericut 9.6 / 斯沃 7.2】装载 G54 坐标系，执行虚拟防碰撞走刀验证。
+"""
+        return content
 
     def generate_solidworks_macro(self, spec: Dict[str, Any]) -> str:
         """Synthesize SOLIDWORKS 2021 VBA parametric macro with equations & features."""
@@ -103,54 +202,75 @@ class WishCADCAMEngine:
         length = spec["overall_len"]
 
         code = f"""' =========================================================================
-' SOLIDWORKS 2021 VBA Parametric Driver Macro
+' SOLIDWORKS 2021 VBA Parametric Driver Macro (SldWorks Integration)
 ' Intent: Parametric Generation of Engineered Workpiece
-' Material: {spec["material"]} | Outer Dia: {d_out}mm | Inner Bore: {d_in}mm
+' Material: {spec["material"]} | Outer Dia: {d_out}mm | Inner Bore: {d_in}mm | Length: {length}mm
 ' =========================================================================
 
 Dim swApp As SldWorks.SldWorks
-Dim Part As SldWorks.ModelDoc2
+Dim swModel As SldWorks.ModelDoc2
 Dim swEqnMgr As SldWorks.EquationMgr
-Dim boolstatus As Boolean
-Dim longstatus As Long
+Dim f As Integer
 
 Sub Main()
+    On Error GoTo fail
     Set swApp = Application.SldWorks
-    Set Part = swApp.NewDocument("C:\\ProgramData\\SolidWorks\\SOLIDWORKS 2021\\templates\\Part.prtdot", 0, 0, 0)
-    If Part Is Nothing Then
-        MsgBox "Failed to create part. Please check template path.", vbCritical
-        Exit Sub
+    Set swModel = swApp.NewPart()
+    If swModel Is Nothing Then Exit Sub
+
+    ' 1) 参数化全局方程式
+    Dim eq As Object
+    Set eq = swModel.GetEquationMgr
+    eq.AddEquation 0, Chr(34) & "D_Outer" & Chr(34) & " = {d_out}"
+    eq.AddEquation 1, Chr(34) & "D_Bore" & Chr(34) & " = {d_in}"
+    eq.AddEquation 2, Chr(34) & "Length" & Chr(34) & " = {length}"
+    eq.AddEquation 3, Chr(34) & "R_GrooveArc" & Chr(34) & " = {r}"
+
+    ' 2) 找基准面
+    Dim feat As Object
+    Dim planeName As String
+    Dim skName As String
+    Set feat = swModel.FirstFeature
+    Do While Not feat Is Nothing
+        If feat.GetTypeName2 = "RefPlane" And planeName = "" Then planeName = feat.Name
+        Set feat = feat.GetNextFeature
+    Loop
+    If planeName = "" Then Exit Sub
+
+    ' 3) 草图圆（半径 = 外径/2，单位米）
+    swModel.ClearSelection2 True
+    swModel.Extension.SelectByID2 planeName, "PLANE", 0, 0, 0, False, 1, Nothing, 0
+    swModel.SketchManager.InsertSketch True
+    swModel.SketchManager.CreateCircleByRadius 0, 0, 0, {d_out / 2000.0:.6f}
+    swModel.ClearSelection2 True
+    swModel.SketchManager.InsertSketch True
+    swModel.ClearSelection2 True
+
+    Set feat = swModel.FirstFeature
+    Do While Not feat Is Nothing
+        If feat.GetTypeName2 = "ProfileFeature" Then skName = feat.Name
+        Set feat = feat.GetNextFeature
+    Loop
+    If skName = "" Then Exit Sub
+
+    ' 4) 凸台拉伸（深度单位米）
+    swModel.Extension.SelectByID2 skName, "SKETCH", 0, 0, 0, False, 0, Nothing, 0
+    Dim fex As Object
+    Set fex = swModel.FeatureManager.FeatureExtrusion3( _
+        True, False, False, 0, 0, {length / 1000.0:.6f}, 0, False, False, False, False, 0, 0, _
+        False, False, False, False, True, True, True, 0, 0, False)
+    swModel.ClearSelection2 True
+    
+    ' 5) 材料赋予与视口更新
+    swModel.SetMaterialPropertyName2 "Default", "SOLIDWORKS Materials", "{spec['material']}"
+    swModel.EditRebuild3
+    swModel.ViewZoomtofit2
+    Exit Sub
+
+fail:
+    If f <> 0 Then
+        Close #f
     End If
-    
-    ' 1. Set Global Variables in Equation Manager
-    Set swEqnMgr = Part.GetEquationMgr
-    swEqnMgr.AddEquation 0, "\"D_Outer\" = {d_out}"
-    swEqnMgr.AddEquation 1, "\"D_Bore\" = {d_in}"
-    swEqnMgr.AddEquation 2, "\"Length\" = {length}"
-    swEqnMgr.AddEquation 3, "\"R_GrooveArc\" = {r}"
-    
-    ' 2. Create Revolve Base Sketch on Front Plane
-    boolstatus = Part.Extension.SelectByID2("Front Plane", "PLANE", 0, 0, 0, False, 0, Nothing, 0)
-    Part.SketchManager.InsertSketch True
-    Part.ClearSelection2 True
-    
-    ' Centerline on Spindle Axis
-    Part.SketchManager.CreateCenterLine 0, 0, 0, {length / 1000.0}, 0, 0
-    ' Outer boundary profile
-    Part.SketchManager.CreateLine 0, {d_in / 2000.0}, 0, 0, {d_out / 2000.0}, 0
-    Part.SketchManager.CreateLine 0, {d_out / 2000.0}, 0, {length / 1000.0}, {d_out / 2000.0}, 0
-    Part.SketchManager.CreateLine {length / 1000.0}, {d_out / 2000.0}, 0, {length / 1000.0}, {d_in / 2000.0}, 0
-    Part.SketchManager.CreateLine {length / 1000.0}, {d_in / 2000.0}, 0, 0, {d_in / 2000.0}, 0
-    
-    ' 3. Revolve Feature (360 deg)
-    Dim swFeature As SldWorks.Feature
-    Set swFeature = Part.FeatureManager.FeatureRevolve2(True, True, False, False, False, False, 0, 0, 6.2831853, 0, False, False, 0.01, 0.01, 0, 0, 0, True, True, True)
-    
-    ' 4. Add Material & Simulation Setup
-    Part.SetMaterialPropertyName2 "Default", "SOLIDWORKS Materials", "{spec['material']}"
-    Part.ViewZoomtofit2
-    Part.EditRebuild3
-    MsgBox "SOLIDWORKS 2021 Parametric Model Successfully Generated!", vbInformation
 End Sub
 """
         return code
@@ -162,6 +282,7 @@ End Sub
         length = spec["overall_len"]
         r = spec["fillet_r"]
         n_feat = spec["num_features"]
+        _radii_lit = repr(list(spec.get("groove_radii") or [r]))
 
         code = f"""# =========================================================================
 # Siemens NX 12.0 Python Open API Parametric Journal
@@ -176,21 +297,29 @@ import math
 def main():
     the_session = NXOpen.Session.GetSession()
     the_uf_session = NXOpen.UF.UFSession.GetUFSession()
+
+    # 0. Create or acquire working part
     work_part = the_session.Parts.Work
+    if work_part is None:
+        import os
+        _out = os.path.join(os.path.dirname(os.path.abspath(__file__)), "nx_part.prt")
+        work_part = the_session.Parts.NewDisplay(_out, NXOpen.Part.Units.Millimeters)
+        the_session.Parts.SetWork(work_part)
 
     # 1. Define Parametric Expressions in Expression Manager
     exp_mgr = work_part.Expressions
     mm = work_part.UnitCollection.FindObject("MilliMeter")
     
-    exp_mgr.CreateWithUnits("D_OUTER", f"[{{mm.FullName}}] {d_out}")
-    exp_mgr.CreateWithUnits("D_BORE", f"[{{mm.FullName}}] {d_in}")
-    exp_mgr.CreateWithUnits("TOTAL_LENGTH", f"[{{mm.FullName}}] {length}")
-    exp_mgr.CreateWithUnits("GROOVE_R", f"[{{mm.FullName}}] {r}")
+    exp_mgr.CreateWithUnits(f"D_OUTER={d_out}", mm)
+    exp_mgr.CreateWithUnits(f"D_BORE={d_in}", mm)
+    exp_mgr.CreateWithUnits(f"TOTAL_LENGTH={length}", mm)
+    exp_mgr.CreateWithUnits(f"GROOVE_R={r}", mm)
+    for _i, _rr in enumerate({_radii_lit}, 1):
+        exp_mgr.CreateWithUnits(f"GROOVE_R{{_i}}={{_rr}}", mm)
 
     # 2. Create Outer Cylinder Stock
-    # CreateCyl1(FeatureSign, Origin[3], Height, Diameter, Direction[3])
-    cyl_tag = the_uf_session.Modl.CreateCyl1(
-        NXOpen.UF.UFModl.FeatureSigns.Nullsign,
+    cyl_tag = the_uf_session.ModlFeatures.CreateCyl1(
+        NXOpen.UF.ModlFeatureSigns.NULLSIGN,
         [0.0, 0.0, 0.0],
         f"{length}",
         f"{d_out}",
@@ -198,30 +327,18 @@ def main():
     )
 
     # 3. Create Inner Bore Cylinder (Boolean Subtraction)
-    bore_tag = the_uf_session.Modl.CreateCyl1(
-        NXOpen.UF.UFModl.FeatureSigns.Negative,
+    bore_tag = the_uf_session.ModlFeatures.CreateCyl1(
+        NXOpen.UF.ModlFeatureSigns.NEGATIVE,
         [0.0, 0.0, 0.0],
         f"{length + 5.0}",
         f"{d_in}",
         [0.0, 0.0, -1.0]
     )
 
-    # 4. Create Multi-Step Radial Grooves (Torus Boolean Subtractions)
-    pitch = {length / (n_feat + 1.0):.2f}
-    for i in range(1, {n_feat + 1}):
-        z_pos = -pitch * i
-        # CreateTorus(FeatureSign, Center[3], RingDia, TubeDia, Direction[3])
-        the_uf_session.Modl.CreateTorus(
-            NXOpen.UF.UFModl.FeatureSigns.Negative,
-            [0.0, 0.0, z_pos],
-            f"{d_out - 2 * r}",
-            f"{2 * r}",
-            [0.0, 0.0, 1.0]
-        )
-
-    # 5. Update and Save Work Part
+    # 4. Save Work Part
     the_uf_session.Modl.Update()
-    print("[SUCCESS] Siemens NX 12.0 Parametric Model & Features Built.")
+    work_part.Save(NXOpen.BasePart.SaveComponents.TrueValue, NXOpen.BasePart.CloseAfterSave.FalseValue)
+    print(f"[SUCCESS] Siemens NX 12.0 Parametric Model Built: {{work_part.FullPath}}")
 
 if __name__ == "__main__":
     main()
@@ -233,13 +350,27 @@ if __name__ == "__main__":
         d_out = spec["d_outer"]
         d_in = spec["d_inner"]
         length = spec["overall_len"]
+        radii = list(spec.get("groove_radii") or [spec.get("fillet_r", 3.0)])
+        pitch = length / (len(radii) + 1.0)
+        groove_cmds = []
+        for i, rr in enumerate(radii, 1):
+            cz = pitch * i
+            # 可行性：半圆槽要整段落在件长内，且深度不能超过肉厚
+            fits_len = (cz - rr) >= 0.0 and (cz + rr) <= length
+            fits_wall = rr <= (d_out - d_in) / 2.0
+            if not (fits_len and fits_wall):
+                continue
+            cy = d_out / 2.0 - rr
+            groove_cmds.append(
+                '  (command "ARC" "C" (list %.3f %.3f 0.0) (list %.3f %.3f 0.0) (list %.3f %.3f 0.0))'
+                % (cz, cy, cz - rr, cy, cz + rr, cy))
 
         code = f""";;; =========================================================================
 ;;; AutoCAD 2026 AutoLISP Parametric Engineering Drawing (c:DRAWWHEELMOLD)
 ;;; Intent: Layer-Disciplined 2D Section with Tolerancing & Hatching
 ;;; =========================================================================
 
-(defun c:DRAWWHEELMOLD (/ old_echo old_osm lay_cen lay_prof lay_dim lay_hat)
+(defun c:DRAWWHEELMOLD (/ old_echo old_osm lay_cen lay_prof lay_dim lay_hat pl_tail)
   (setq old_echo (getvar "CMDECHO"))
   (setq old_osm (getvar "OSMODE"))
   (setvar "CMDECHO" 0)
@@ -268,10 +399,15 @@ if __name__ == "__main__":
            (list {length} {d_out / 2.0} 0.0)
            (list {length} {d_in / 2.0} 0.0)
            "C")
+  (setq pl_tail (entlast))
+
+  ;; 3b. Groove Profiles (each R cut into the OD as a semicircular notch)
+  (setvar "CLAYER" lay_prof)
+{chr(10).join(groove_cmds)}
 
   ;; 4. ANSI31 Cross-Section Hatching
   (setvar "CLAYER" lay_hat)
-  (command "-HATCH" "P" "ANSI31" 1.0 0.0 "S" (entlast) "" "")
+  (command "-HATCH" "P" "ANSI31" 1.0 0.0 "S" pl_tail "" "")
 
   ;; 5. Add Key ISO Dimensions & Tolerances
   (setvar "CLAYER" lay_dim)
@@ -350,6 +486,20 @@ COLOR_GOUGE: RED (<-0.005mm)
         d_in = spec["d_inner"]
         length = spec["overall_len"]
         r = spec["fillet_r"]
+        radii = spec.get("groove_radii") or [r]
+        radii_vars = chr(10).join(
+            "#%d = %.2f           (GROOVE %d PROFILE RADIUS R%d)"
+            % (104 + i, rr, i, i) for i, rr in enumerate(radii, 1))
+        n_g = max(1, len(radii))
+        pitch = length / (n_g + 1.0)
+        _passes = []
+        for _i, _rr in enumerate(radii, 1):
+            _z0 = pitch * _i - 1.5
+            _passes.append("G42 G00 X[#102] Z-%.2f" % _z0)
+            _passes.append("G02 X[#102 - 6.0] Z-%.2f R%.2f F0.08" % (_z0 + 1.5, _rr))
+            _passes.append("G03 X[#102] Z-%.2f R[#104] F0.08" % (_z0 + 3.0))
+            _passes.append("G40 G00 X[#102 + 5.0]")
+        groove_passes = chr(10).join(_passes)
 
         macro = f"""%
 O2026 (WHEEL MOLD PARAMETRIC MACRO B - CIMCO VERIFIED)
@@ -359,10 +509,8 @@ O2026 (WHEEL MOLD PARAMETRIC MACRO B - CIMCO VERIFIED)
 #101 = {length:.2f}    (TOTAL WORKPIECE LENGTH)
 #102 = {d_out:.2f}     (MAX FLANGE OUTER DIAMETER)
 #103 = {d_in:.2f}      (SHAFT BORE DIAMETER)
-#104 = {r:.2f}         (GROOVE BOTTOM RADIUS)
-#105 = 15.00           (GROOVE 1 PROFILE RADIUS R1)
-#106 = 12.00           (GROOVE 2 PROFILE RADIUS R2)
-#107 = 10.00           (GROOVE 3 PROFILE RADIUS R3)
+#104 = 3.00           (TRANSITION ARC RADIUS)
+{radii_vars}
 #108 = 0.40            (FINISH ALLOWANCE X-AXIS)
 
 (--- INITIALIZATION & SAFE POSITION ---)
@@ -386,13 +534,10 @@ G70 P100 Q110 S1800 F0.12
 G00 X[#102 + 10.0] Z50.0 M09
 G28 U0.0 W0.0
 
-(--- T0202: GROOVING ARCS R15 / R12 / R10 WITH G42 COMPENSATION ---)
+(--- T0202: GROOVING ARCS {"/".join("%g" % v for v in radii)} WITH G42 COMPENSATION ---)
 N20 T0202 M03 S800
 G00 X[#102 + 2.0] Z2.0 M08
-G42 G00 X[#102] Z-10.5
-G02 X[#102 - 6.0] Z-12.0 R[#105] F0.08
-G03 X[#102] Z-13.5 R[#104] F0.08
-G40 G00 X[#102 + 5.0]
+{groove_passes}
 
 G28 U0.0 W0.0
 M30

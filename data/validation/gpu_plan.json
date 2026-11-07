@@ -1,0 +1,142 @@
+{
+  "原语料|A800-80G": {
+    "batch": 1,
+    "ckpt": false,
+    "vram_gb": 66.68,
+    "mfu": 0.32,
+    "hours_2ep": 10.732
+  },
+  "原语料|L40S-48G": {
+    "batch": 6,
+    "ckpt": true,
+    "vram_gb": 37.88,
+    "mfu": 0.4,
+    "hours_2ep": 22.2
+  },
+  "原语料|4090-24G": {
+    "batch": 1,
+    "ckpt": true,
+    "vram_gb": 19.71,
+    "mfu": 0.32,
+    "hours_2ep": 30.441
+  },
+  "原语料|A6000-48G": {
+    "batch": 6,
+    "ckpt": true,
+    "vram_gb": 37.88,
+    "mfu": 0.4,
+    "hours_2ep": 25.924
+  },
+  "slim|A800-80G": {
+    "batch": 2,
+    "ckpt": false,
+    "vram_gb": 63.3,
+    "mfu": 0.4,
+    "hours_2ep": 4.297
+  },
+  "slim|L40S-48G": {
+    "batch": 1,
+    "ckpt": false,
+    "vram_gb": 39.69,
+    "mfu": 0.32,
+    "hours_2ep": 9.258
+  },
+  "slim|4090-24G": {
+    "batch": 2,
+    "ckpt": true,
+    "vram_gb": 20.67,
+    "mfu": 0.4,
+    "hours_2ep": 12.187
+  },
+  "slim|A6000-48G": {
+    "batch": 1,
+    "ckpt": false,
+    "vram_gb": 39.69,
+    "mfu": 0.32,
+    "hours_2ep": 10.811
+  },
+  "opt1000/ultra|A800-80G": {
+    "batch": 2,
+    "ckpt": false,
+    "vram_gb": 50.0,
+    "mfu": 0.4,
+    "hours_2ep": 0.974
+  },
+  "opt1000/ultra|L40S-48G": {
+    "batch": 1,
+    "ckpt": false,
+    "vram_gb": 33.04,
+    "mfu": 0.32,
+    "hours_2ep": 2.099
+  },
+  "opt1000/ultra|4090-24G": {
+    "batch": 2,
+    "ckpt": true,
+    "vram_gb": 19.81,
+    "mfu": 0.4,
+    "hours_2ep": 2.764
+  },
+  "opt1000/ultra|A6000-48G": {
+    "batch": 1,
+    "ckpt": false,
+    "vram_gb": 33.04,
+    "mfu": 0.32,
+    "hours_2ep": 2.452
+  },
+  "opt300/ultra|A800-80G": {
+    "batch": 2,
+    "ckpt": false,
+    "vram_gb": 50.76,
+    "mfu": 0.4,
+    "hours_2ep": 0.447
+  },
+  "opt300/ultra|L40S-48G": {
+    "batch": 1,
+    "ckpt": false,
+    "vram_gb": 33.42,
+    "mfu": 0.32,
+    "hours_2ep": 0.964
+  },
+  "opt300/ultra|4090-24G": {
+    "batch": 2,
+    "ckpt": true,
+    "vram_gb": 19.86,
+    "mfu": 0.4,
+    "hours_2ep": 1.269
+  },
+  "opt300/ultra|A6000-48G": {
+    "batch": 1,
+    "ckpt": false,
+    "vram_gb": 33.42,
+    "mfu": 0.32,
+    "hours_2ep": 1.126
+  },
+  "opt300/none|A800-80G": {
+    "batch": 8,
+    "ckpt": false,
+    "vram_gb": 67.79,
+    "mfu": 0.4,
+    "hours_2ep": 0.23
+  },
+  "opt300/none|L40S-48G": {
+    "batch": 4,
+    "ckpt": false,
+    "vram_gb": 41.93,
+    "mfu": 0.4,
+    "hours_2ep": 0.397
+  },
+  "opt300/none|4090-24G": {
+    "batch": 4,
+    "ckpt": true,
+    "vram_gb": 19.97,
+    "mfu": 0.4,
+    "hours_2ep": 0.653
+  },
+  "opt300/none|A6000-48G": {
+    "batch": 4,
+    "ckpt": false,
+    "vram_gb": 41.93,
+    "mfu": 0.4,
+    "hours_2ep": 0.464
+  }
+}

@@ -1,0 +1,259 @@
+{
+  "tool": "bridges.ap_detect",
+  "basis": "measured",
+  "sample_size_n": 11,
+  "ap_distribution": {
+    "AP214": 10,
+    "AP203": 1
+  },
+  "encoding_distribution": {
+    "utf-8": 10,
+    "gbk": 1
+  },
+  "needs_utf8_migration": 1,
+  "recommend_ap242": 11,
+  "records": [
+    {
+      "file": "bearing_bracket.step",
+      "path": "assets/bearing_bracket.step",
+      "bytes": 112052,
+      "sha256": "cbedc6d4a90b3e53",
+      "ap_version": "AP214",
+      "encoding": "utf-8",
+      "has_assembly_structure": false,
+      "brep_kinds": {
+        "MANIFOLD_SOLID_BREP": 1,
+        "BREP_WITH_VOIDS": 0,
+        "ADVANCED_BREP_SHAPE_REPRESENTATION": 1
+      },
+      "advice": {
+        "needs_utf8_migration": false,
+        "recommend_ap242": true,
+        "notes": [
+          "AP214 结构表达较老，建议升级 AP242 获得完整产品结构与 PMI",
+          "单零件文件（无 NAUO/PDU 装配关系）"
+        ]
+      }
+    },
+    {
+      "file": "guide_carriage_base.step",
+      "path": "assets/guide_carriage_base.step",
+      "bytes": 44125,
+      "sha256": "2ad2a898c6cb5f87",
+      "ap_version": "AP214",
+      "encoding": "utf-8",
+      "has_assembly_structure": false,
+      "brep_kinds": {
+        "MANIFOLD_SOLID_BREP": 1,
+        "BREP_WITH_VOIDS": 0,
+        "ADVANCED_BREP_SHAPE_REPRESENTATION": 1
+      },
+      "advice": {
+        "needs_utf8_migration": false,
+        "recommend_ap242": true,
+        "notes": [
+          "AP214 结构表达较老，建议升级 AP242 获得完整产品结构与 PMI",
+          "单零件文件（无 NAUO/PDU 装配关系）"
+        ]
+      }
+    },
+    {
+      "file": "hydraulic_end_cap.step",
+      "path": "assets/hydraulic_end_cap.step",
+      "bytes": 40172,
+      "sha256": "bb82e6a1bc5275b8",
+      "ap_version": "AP214",
+      "encoding": "utf-8",
+      "has_assembly_structure": false,
+      "brep_kinds": {
+        "MANIFOLD_SOLID_BREP": 1,
+        "BREP_WITH_VOIDS": 0,
+        "ADVANCED_BREP_SHAPE_REPRESENTATION": 1
+      },
+      "advice": {
+        "needs_utf8_migration": false,
+        "recommend_ap242": true,
+        "notes": [
+          "AP214 结构表达较老，建议升级 AP242 获得完整产品结构与 PMI",
+          "单零件文件（无 NAUO/PDU 装配关系）"
+        ]
+      }
+    },
+    {
+      "file": "impeller_disc.step",
+      "path": "assets/impeller_disc.step",
+      "bytes": 24091,
+      "sha256": "f4caef9528f421f8",
+      "ap_version": "AP214",
+      "encoding": "utf-8",
+      "has_assembly_structure": false,
+      "brep_kinds": {
+        "MANIFOLD_SOLID_BREP": 1,
+        "BREP_WITH_VOIDS": 0,
+        "ADVANCED_BREP_SHAPE_REPRESENTATION": 1
+      },
+      "advice": {
+        "needs_utf8_migration": false,
+        "recommend_ap242": true,
+        "notes": [
+          "AP214 结构表达较老，建议升级 AP242 获得完整产品结构与 PMI",
+          "单零件文件（无 NAUO/PDU 装配关系）"
+        ]
+      }
+    },
+    {
+      "file": "mold_core_mandrel.step",
+      "path": "assets/mold_core_mandrel.step",
+      "bytes": 40803,
+      "sha256": "5a65ad177c86ae0e",
+      "ap_version": "AP214",
+      "encoding": "utf-8",
+      "has_assembly_structure": false,
+      "brep_kinds": {
+        "MANIFOLD_SOLID_BREP": 0,
+        "BREP_WITH_VOIDS": 1,
+        "ADVANCED_BREP_SHAPE_REPRESENTATION": 1
+      },
+      "advice": {
+        "needs_utf8_migration": false,
+        "recommend_ap242": true,
+        "notes": [
+          "AP214 结构表达较老，建议升级 AP242 获得完整产品结构与 PMI",
+          "单零件文件（无 NAUO/PDU 装配关系）"
+        ]
+      }
+    },
+    {
+      "file": "precision_flange.step",
+      "path": "assets/precision_flange.step",
+      "bytes": 39921,
+      "sha256": "8e4a2f1eda5458c1",
+      "ap_version": "AP214",
+      "encoding": "utf-8",
+      "has_assembly_structure": false,
+      "brep_kinds": {
+        "MANIFOLD_SOLID_BREP": 1,
+        "BREP_WITH_VOIDS": 0,
+        "ADVANCED_BREP_SHAPE_REPRESENTATION": 1
+      },
+      "advice": {
+        "needs_utf8_migration": false,
+        "recommend_ap242": true,
+        "notes": [
+          "AP214 结构表达较老，建议升级 AP242 获得完整产品结构与 PMI",
+          "单零件文件（无 NAUO/PDU 装配关系）"
+        ]
+      }
+    },
+    {
+      "file": "spindle_bushing.step",
+      "path": "assets/spindle_bushing.step",
+      "bytes": 11793,
+      "sha256": "e138fdf3993ceedd",
+      "ap_version": "AP214",
+      "encoding": "utf-8",
+      "has_assembly_structure": false,
+      "brep_kinds": {
+        "MANIFOLD_SOLID_BREP": 1,
+        "BREP_WITH_VOIDS": 0,
+        "ADVANCED_BREP_SHAPE_REPRESENTATION": 1
+      },
+      "advice": {
+        "needs_utf8_migration": false,
+        "recommend_ap242": true,
+        "notes": [
+          "AP214 结构表达较老，建议升级 AP242 获得完整产品结构与 PMI",
+          "单零件文件（无 NAUO/PDU 装配关系）"
+        ]
+      }
+    },
+    {
+      "file": "stepped_shaft.step",
+      "path": "assets/stepped_shaft.step",
+      "bytes": 32201,
+      "sha256": "8bdaf55deff0d105",
+      "ap_version": "AP214",
+      "encoding": "utf-8",
+      "has_assembly_structure": false,
+      "brep_kinds": {
+        "MANIFOLD_SOLID_BREP": 1,
+        "BREP_WITH_VOIDS": 0,
+        "ADVANCED_BREP_SHAPE_REPRESENTATION": 1
+      },
+      "advice": {
+        "needs_utf8_migration": false,
+        "recommend_ap242": true,
+        "notes": [
+          "AP214 结构表达较老，建议升级 AP242 获得完整产品结构与 PMI",
+          "单零件文件（无 NAUO/PDU 装配关系）"
+        ]
+      }
+    },
+    {
+      "file": "valve_sleeve.step",
+      "path": "assets/valve_sleeve.step",
+      "bytes": 127910,
+      "sha256": "6bf874fd3e3375ab",
+      "ap_version": "AP214",
+      "encoding": "utf-8",
+      "has_assembly_structure": false,
+      "brep_kinds": {
+        "MANIFOLD_SOLID_BREP": 1,
+        "BREP_WITH_VOIDS": 0,
+        "ADVANCED_BREP_SHAPE_REPRESENTATION": 1
+      },
+      "advice": {
+        "needs_utf8_migration": false,
+        "recommend_ap242": true,
+        "notes": [
+          "AP214 结构表达较老，建议升级 AP242 获得完整产品结构与 PMI",
+          "单零件文件（无 NAUO/PDU 装配关系）"
+        ]
+      }
+    },
+    {
+      "file": "wheel_mold_P0.step",
+      "path": "assets/wheel_mold_P0.step",
+      "bytes": 587686,
+      "sha256": "712e8ac66f6456f4",
+      "ap_version": "AP203",
+      "encoding": "gbk",
+      "has_assembly_structure": true,
+      "brep_kinds": {
+        "MANIFOLD_SOLID_BREP": 6,
+        "BREP_WITH_VOIDS": 0,
+        "ADVANCED_BREP_SHAPE_REPRESENTATION": 4
+      },
+      "advice": {
+        "needs_utf8_migration": true,
+        "recommend_ap242": true,
+        "notes": [
+          "非 UTF-8 编码：中文零件名在 LLM 分词下会乱码，建议用 bridges/step_normalize.py 归一化或改导出 AP242",
+          "AP203 产品结构稀疏、不支持 PMI；且 SolidWorks 中文版常写 GBK 字节"
+        ]
+      }
+    },
+    {
+      "file": "bracket.step",
+      "path": "external/AgentCADCAM/fixtures/cad/bracket/source/bracket.step",
+      "bytes": 36571,
+      "sha256": "fdd8e0913447b127",
+      "ap_version": "AP214",
+      "encoding": "utf-8",
+      "has_assembly_structure": false,
+      "brep_kinds": {
+        "MANIFOLD_SOLID_BREP": 1,
+        "BREP_WITH_VOIDS": 0,
+        "ADVANCED_BREP_SHAPE_REPRESENTATION": 1
+      },
+      "advice": {
+        "needs_utf8_migration": false,
+        "recommend_ap242": true,
+        "notes": [
+          "AP214 结构表达较老，建议升级 AP242 获得完整产品结构与 PMI",
+          "单零件文件（无 NAUO/PDU 装配关系）"
+        ]
+      }
+    }
+  ]
+}

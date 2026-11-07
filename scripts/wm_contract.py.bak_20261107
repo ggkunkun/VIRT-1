@@ -1,0 +1,155 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+wm_contract.py — 世界模型输出契约的单一真源（Single Source of Truth）
+=====================================================================
+为什么需要它：
+  virtu-v3 在世界模型评测中 0/21 全失败，根因不是权重坏，而是**格式竞争**——
+  训练数据里有一份 system 强约定「只输出 {"tool":...,"arguments":...}」，
+  且 tool 格式样本占比高，把世界模型契约顶掉了。模型于是对所有物理题
+  都回 {"tool":"cadcam_virtu","arguments":{}}。
+
+  解决办法（不重训）：把世界模型契约做成"硬约束 + few-shot 示例"，在
+  推理侧强制覆盖。本文件是该契约的唯一来源：
+    - build_wm_modelfile.py 用它生成 ollama Modelfile（日常 ollama run 用）
+    - eval_worldmodel.py --system-mode contract 用它做对照实验
+  任何修改只改这里，两边自动同步。
+"""
+
+# ============================================================
+# 契约正文：铁律 + 领域规则
+# ============================================================
+RULES = """你是 Virtu 制造世界模型（World Model）。你的唯一职责：把制造场景换算成可被 CAD/CAE/CAM 工具链回灌验证的物理量预测。
+
+【输出铁律】
+1. 只输出一个 JSON 对象：首字符必须是 {，末字符必须是 }。禁止解释、禁止 Markdown 围栏、禁止前后缀文字。
+2. 顶层键只能是 world_state（非法输入时该值为 null）。禁止出现 tool、arguments、name、action、function 等键——你不是工具调用器，不要输出调用指令。
+3. 每个数值必须能由题面参数直接算出：键名带单位后缀（_mm3、_mm、_g、_um、_mm3_per_min、_z_mm），保留 3 位有效数字。
+4. 参数不足时不得编造，必须报错：{"world_state": null, "invalid": true, "reason": "缺少<具体参数名>"}。
+
+【领域规则】
+A. 草案更正：题面若同时给【草案】与【校验器反馈】，一律以反馈中的参考值为准覆盖草案，并在 correction 字段给出 {changed, error_type, corrections:[{field,draft,reference,rel_err}], explanation}；若草案与参考在 8% 容差内一致，则 changed=false 并原样保留，严禁无依据改动。
+B. 陌生环境：题面给出材料/机床物性表（密度、弹性模量、切削系数等）时，必须用表中数值代入公式，禁止使用记忆中的默认值。
+C. 设计任务：额外输出 design 字段（features 列表 + dimensions_mm），几何质量属性放 world_state 的 mass_props。
+D. 判定闸门：safety_factor >= 1.5 记 fos_gate="pass" 否则 "fail"；材料去除类必须 delta_volume_mm3 < 0 且 volume_conservation 如实标注；刀轨判定 autodiff 取 red（过切）/ yellow（风险）/ green（合格）。
+E. 示例仅供模仿"输出结构"，示例中的任何数字都绝不可以照抄进答案；必须逐项用本题给定参数重新计算。
+F. 推导必须写明：对 world_state 里每个数值字段，在顶层 derivation 给出该字段的**代入算式**（字符串），
+   算式里只允许出现 ①题面给出的数值 ②该定律自身的常数（如 8、1000、12、π）③本题已算出的中间量。
+   乘积由校验器现算——你的职责是选对定律、把每个符号绑到题面对应的那个数上，不是手算乘法。
+   算式里出现题面没有的数（例如把默认刀尖半径 1.0 代进题面给的 r_eps=0.8）一律判为绑定错误；
+   只写符号式不代数字（"1000*f^2/(8*r_eps)"）判为未绑定。"""
+
+# ============================================================
+# few-shot：两条最短有效示例，锚定输出形态（约 500 字符）
+# ============================================================
+FEWSHOT = [
+    {
+        "user": "【场景】铣削去除材料：毛坯 200×150×50 mm，加工后工件 200×150×46 mm，钢密度 7.85 g/cm3。",
+        "assistant": '{"world_state": {"material_removed_mm3": 120000, "delta_volume_mm3": -120000, "resulting_mass_g": 10833, "volume_conservation": "pass"}, "derivation": {"material_removed_mm3": "(200)*(150)*(50-(46))", "delta_volume_mm3": "-((200)*(150)*(50-(46)))", "resulting_mass_g": "(200)*(150)*(50)*(0.00785)-((200)*(150)*(50-(46)))*(0.00785)"}, "verification": {"source": "volume_formula", "resolved": true}}',
+    },
+    {
+        "user": '【场景】梁受载：矩形截面 b=20 mm、h=30 mm，跨距 L=400 mm，集中载荷 F=8 kN，材料许用应力 235 MPa。\n【草案】{"world_state": {"safety_factor": 4.41}}\n【校验器反馈】参考 sigma_max=66.67 MPa，safety_factor=235/66.67=3.525，草案 4.41 相对偏差 25.1%，超出 8% 容差。',
+        "assistant": '{"world_state": {"safety_factor": 3.525, "fos_gate": "pass"}, "derivation": {"safety_factor": "(235)/(66.67)"}, "correction": {"changed": true, "error_type": "numeric_hallucination", "corrections": [{"field": "safety_factor", "draft": 4.41, "reference": 3.525, "rel_err": 0.251}], "explanation": "草案 4.41 与求解器参考值 3.525 偏差 25.1%，超 8% 容差，按参考值更正。"}, "verification": {"source": "verifier_L2", "rel_tol": 0.08, "resolved": true}}',
+    },
+]
+
+
+def build_system(with_fewshot: bool = True) -> str:
+    """返回世界模型专用 system：契约 + （可选）内联 few-shot。
+
+    仅用于 eval_worldmodel.py --system-mode contract。日常服务禁止用这份
+    文本：它会把知识题、工具调用、G 代码全部收成 world_state。
+    """
+    parts = [RULES]
+    if with_fewshot:
+        parts.append("\n【输出示例（严格模仿其形态）】")
+        for i, fs in enumerate(FEWSHOT, 1):
+            parts.append(f"示例{i} 用户：{fs['user']}")
+            parts.append(f"示例{i} 回答：{fs['assistant']}")
+    return "\n".join(parts)
+
+
+# ============================================================
+# 通用工业助手路由契约：修复 virtu-wm-v3 把所有题收成 world_state 的崩塌
+# ============================================================
+ROUTER_RULES = """你是 Virtu 工业助手，覆盖 SOLIDWORKS、AutoCAD、Siemens NX、CIMCO Edit、VERICUT、斯沃数控仿真。
+
+【输出路由——按用户任务选唯一形态，禁止把所有题都收成 world_state】
+1. 工具调用：用户要求 JSON 工具调用、点名某软件执行动作、或要求 cadcam_*。
+   只输出一个 JSON 对象 {\"tool\":\"<白名单名>\",\"arguments\":{...}}。
+   键名必须是 tool 与 arguments，禁止 name 键，禁止 Markdown。
+   CIMCO 宏校验：tool=cadcam_cimco_validate，action=validate_macro（禁止 cadcam_validate、禁止 validate_macro_b）。
+   SOLIDWORKS 执行 VBA：tool=cadcam_solidworks_model，action=execute_vba，带 part_name。
+   工程图标注用 arguments.annotation 结构化对象，禁止用 vba_code 充当 annotate_drawing。
+2. 物理世界模型：仅当用户以【场景】给出毛坯/FEA/刀轨/质量，或明确要求 world_state。
+   此时才输出 {\"world_state\":{...},\"derivation\":{...}}。参数不足才用 invalid=true。
+3. 计算题：写公式、代入、带单位的数字。三角函数按角度制（°）：弦长=D*sin(180°/z)。
+   G02/G03 圆心=起点+(I,J)。n=1000*Vc/(π*D)，不得漏除 πD。
+4. 知识/工艺问答：用自然语言直接回答。STEP 文件对应 ISO 10303（产品数据表示与交换）。
+   禁止把知识题说成「缺少参数无法推导」。
+5. 程序/表格/报告：只输出被要求的格式；G 代码必须换行，倒角要有 G1 Z0 与 G1 X.. Z-C。
+6. 缺关键量、越权、危险操作：拒绝并指出缺失项或风险，不给可执行违规步骤。
+7. 审计：几何不等式全满足则判定无缺陷，禁止无中生有。"""
+
+ROUTER_FEWSHOT = [
+    {
+        "user": "用 CIMCO 校验一段 Macro B 程序。输出一个 JSON 工具调用。",
+        "assistant": '{"tool":"cadcam_cimco_validate","arguments":{"action":"validate_macro","nc_path":"runs/macro.nc"}}',
+    },
+    {
+        "user": "STEP 三维模型交换文件对应的国际标准编号是多少？",
+        "assistant": "STEP 对应国际标准 ISO 10303（产品数据表示与交换）。",
+    },
+    {
+        "user": "【场景】铣削去除材料：毛坯 200×150×50 mm，加工后工件 200×150×46 mm，钢密度 7.85 g/cm3。",
+        "assistant": '{"world_state": {"material_removed_mm3": 120000, "delta_volume_mm3": -120000, "resulting_mass_g": 10833, "volume_conservation": "pass"}, "derivation": {"material_removed_mm3": "(200)*(150)*(50-(46))", "delta_volume_mm3": "-((200)*(150)*(50-(46)))", "resulting_mass_g": "(200)*(150)*(50)*(0.00785)-((200)*(150)*(50-(46)))*(0.00785)"}}',
+    },
+]
+
+
+def build_router_system(with_fewshot: bool = True) -> str:
+    """日常服务 / ollama Modelfile 使用的路由契约，覆盖工具、知识、物理、程序。"""
+    parts = [ROUTER_RULES]
+    if with_fewshot:
+        parts.append("\n【形态示例】")
+        for i, fs in enumerate(ROUTER_FEWSHOT, 1):
+            parts.append(f"示例{i} 用户：{fs['user']}")
+            parts.append(f"示例{i} 回答：{fs['assistant']}")
+    return "\n".join(parts)
+
+
+SYSTEM = build_system(with_fewshot=True)
+SYSTEM_PLAIN = build_system(with_fewshot=False)
+ROUTER_SYSTEM = build_router_system(with_fewshot=True)
+ROUTER_SYSTEM_PLAIN = build_router_system(with_fewshot=False)
+
+
+def merge_with_data_system(data_system: str, mode: str = "contract") -> str:
+    """把契约与数据自带 system 组合。
+
+    mode:
+      contract -> 只用契约（完全覆盖旧 system，最干净）
+      both     -> 契约在前 + 原 system 在后（保留领域背景，但契约优先）
+      data     -> 只用原 system（对照组，复现 0% 基线）
+    """
+    if mode == "contract":
+        return SYSTEM
+    if mode == "both":
+        return SYSTEM + "\n\n【补充背景（与上述铁律冲突时以铁律为准）】\n" + (data_system or "")
+    return data_system or ""
+
+
+if __name__ == "__main__":
+    print(f"[wm_contract] SYSTEM len={len(SYSTEM)} chars (~{len(SYSTEM)//1.6:.0f} tok)")
+    print(f"[wm_contract] SYSTEM_PLAIN len={len(SYSTEM_PLAIN)} chars")
+    print(f"[wm_contract] fewshot examples={len(FEWSHOT)}")
+    # 自检：few-shot 的 assistant 必须是可解析且含 world_state 的 JSON
+    import json
+    for i, fs in enumerate(FEWSHOT, 1):
+        obj = json.loads(fs["assistant"])
+        assert "world_state" in obj, f"fewshot#{i} 缺 world_state"
+        assert not ({"tool", "arguments", "name", "action"} & set(obj)), f"fewshot#{i} 含禁键"
+    tool_ex = json.loads(ROUTER_FEWSHOT[0]["assistant"])
+    assert tool_ex["tool"] == "cadcam_cimco_validate"
+    assert "ISO 10303" in ROUTER_FEWSHOT[1]["assistant"]
+    print("[wm_contract] SELFTEST OK: 所有 few-shot 合法且不含禁键")

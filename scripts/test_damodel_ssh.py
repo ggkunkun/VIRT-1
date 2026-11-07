@@ -1,12 +1,19 @@
 """Test SSH connection to DAMODEL instance dbh0lss7v38s73anbheg."""
 
+import os
 import paramiko
 import sys
 
 HOST = "cn-north-b.ssh.damodel.com"
 PORT = 40526
 USER = "root"
-PASS = "m2A5jbYmbP"
+PASS = os.environ.get("DAMODEL_PASS", "")
+if not PASS:
+    raise SystemExit(
+        "[FATAL] 未设置 DAMODEL_PASS 环境变量；该实例口令已泄漏于 git 历史，"
+        "必须先轮换密码，再通过环境变量注入，不要写回源码。"
+    )
+
 
 def test_connection():
     client = paramiko.SSHClient()

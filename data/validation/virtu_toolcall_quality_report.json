@@ -1,0 +1,35 @@
+[
+  {
+    "file": "D:\\Virtu模型\\damodel_cad_cam_tuning\\dataset\\toolcall_sft_v1.jsonl",
+    "total": 1226,
+    "passed": 1226,
+    "failed": 0,
+    "pass_rate": 1.0,
+    "verdict": "PASS",
+    "failure_breakdown": {},
+    "warnings": {},
+    "failed_samples": []
+  },
+  {
+    "file": "D:\\Virtu模型\\damodel_cad_cam_tuning\\dataset\\toolcall_sft_v2_expanded.jsonl",
+    "total": 21952,
+    "passed": 21952,
+    "failed": 0,
+    "pass_rate": 1.0,
+    "verdict": "PASS",
+    "failure_breakdown": {},
+    "warnings": {},
+    "failed_samples": []
+  },
+  {
+    "file": "D:\\Virtu模型\\damodel_cad_cam_tuning\\dataset\\virtu_toolcall_train_unified.jsonl",
+    "total": 23178,
+    "passed": 23178,
+    "failed": 0,
+    "pass_rate": 1.0,
+    "verdict": "PASS",
+    "failure_breakdown": {},
+    "warnings": {},
+    "failed_samples": []
+  }
+]

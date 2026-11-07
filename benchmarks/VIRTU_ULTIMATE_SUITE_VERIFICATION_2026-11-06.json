@@ -1,0 +1,42 @@
+{
+  "run_id": "VIRTU_ULTIMA_20261107_181757_c1de8a74",
+  "timestamp": "2026-11-07 18:17:57",
+  "basis": "measured",
+  "sample_count_n": 13,
+  "elapsed_seconds": 0.26,
+  "falsifiable_probes": {
+    "all_passed": true,
+    "quiet_star_probe": true,
+    "deepseek_moe_probe": true,
+    "blueprint_grounding_probe": true,
+    "pinn_surrogate_probe": true
+  },
+  "quiet_star_results": {
+    "session_id": "QS_HEAL_20261107_181757_6a4951f5c9",
+    "success": true,
+    "attempts": 2,
+    "patch": "REPLACE_ZERO_DIVISOR_WITH_EPSILON"
+  },
+  "deepseek_moe_results": {
+    "active_ratio_pct": 33.33,
+    "aux_loss": 3.3626,
+    "shared_expert": true,
+    "top_k": 2
+  },
+  "blueprint_grounding_results": {
+    "part_name": "航空连接管套",
+    "material": "AL7075-T6",
+    "confidence_pct": 95.0,
+    "dimensions": {
+      "outer_diameter_mm": 75.0,
+      "length_mm": 140.0
+    }
+  },
+  "pinn_surrogate_results": {
+    "calc_time_ms": 0.0,
+    "peak_stress_mpa": 41.55,
+    "fos": 12.15,
+    "fos_compliant": true,
+    "mass_reduction_pct": 30.0
+  }
+}

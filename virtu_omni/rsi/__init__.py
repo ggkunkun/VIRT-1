@@ -3,7 +3,7 @@
 Importing this package never starts inference, training, or deployment.
 """
 
-from .approval import approved_policy, infer, review, verified_run
+from .approval import approved_policy, find_latest_approved_policy, get_active_rsi_strategy, infer, review, verified_run
 from .candidates import SUPPORTED, build_sft_candidates, development_feedback
 from .contracts import (
     Budget,
@@ -66,6 +66,8 @@ __all__ = [
     "review",
     "infer",
     "approved_policy",
+    "find_latest_approved_policy",
+    "get_active_rsi_strategy",
     "verified_run",
     "approve_run",
     "verify_approval",

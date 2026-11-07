@@ -1,0 +1,19 @@
+{
+  "selftest": "PASS",
+  "base": "D:/Virtu模型/checkpoints/_base_qwen3_8b",
+  "corpus": "D:\\Virtu模型\\engineering_capability_train\\data\\train_corpus.jsonl",
+  "corpus_sha256": "b36a24e12b97519e6f57158cce86f14f0e5c4306e6c87b2b599f03f26f927015",
+  "max_len": 2560,
+  "checked_rows": 6000,
+  "usable": 6000,
+  "bad": [],
+  "truncated": 0,
+  "truncated_rate": 0.0,
+  "loss_ratio_mean": 0.3148,
+  "loss_ratio_min": 0.0424,
+  "tokens_max": 2453,
+  "tokens_p99": 1219,
+  "mask_helper": "scripts/virtu_tokenize.py::build_example",
+  "requires_gpu": false,
+  "warnings": []
+}

@@ -1,0 +1,240 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+eval_worldmodel.py — 世界模型评测器（训练+注册后运行）
+===================================================
+方法：复用 build_worldmodel_sft 的生成器产出"已知真值"的评测用例
+（user 提示 + 期望 world_state JSON），调用 ollama 模型，解析其输出的
+JSON，逐字段比对数值精度，输出各 family 的通过率与总体精度。
+
+评测维度（可回灌验证的物理量）：
+  - removal/mrr：材料去除量、MRR、余下质量、ΔV<0
+  - roughness：Ra（μm）
+  - fea_fos：FOS、FOS≥1.5 闸门
+  - collision：碰撞/过切风险、Auto-Diff 颜色
+  - tolerance：极值/RSS 半宽、配合等级
+  - geom_delta：ΔV 守恒
+  - invalid：应拒绝的非法输入（world_state=null）
+
+用法：
+  python scripts/eval_worldmodel.py --model virtu-wm-all90 --n 120 --out _eval_wm.json
+"""
+import os
+import sys
+import json
+import argparse
+import subprocess
+import importlib.util
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+ROOT = os.path.dirname(HERE)
+sys.path.insert(0, HERE)
+import build_worldmodel_sft as W
+import wm_contract as C
+from guard_hooks import apply_guard  # 推理时护栏：生成即校验，替换旧的只判分用法
+
+GEN_BY_FAMILY = {
+    "removal": W.gen_removal_mrr,
+    "roughness": W.gen_roughness,
+    "fea_fos": W.gen_fea_fos,
+    "collision": W.gen_collision_gcode,
+    "tolerance": W.gen_tolerance,
+    "geom_delta": W.gen_geometric_delta,
+    "mass_props": W.gen_mass_props,
+    "invalid": W.gen_invalid,
+}
+NUM_KEYS = {  # 需要数值比对的字段（相对容差内算通过）
+    "removal": ["material_removed_mm3", "mrr_mm3_per_min", "resulting_mass_g", "delta_volume_mm3"],
+    "roughness": ["surface_roughness_ra_um"],
+    "fea_fos": ["safety_factor"],
+    "collision": [],
+    "tolerance": ["closed_loop_worstcase_halfwidth_mm", "closed_loop_rss_halfwidth_mm", "fit_clearance_mm"],
+    "geom_delta": ["delta_volume_mm3", "after_volume_mm3"],
+    "mass_props": ["volume_mm3", "mass_g"],
+    "invalid": [],
+}
+REL_TOL = 0.08  # 8% 相对容差
+
+
+def call_ollama(model, prompt, system, think=False, max_tokens=512):
+    # 关掉 Qwen3 等模型的默认思考模式（否则输出被 <think> 包裹、world_state JSON
+    # 无法解析，且思考 token 会吃光 num_predict）。非思考模型会忽略 think 字段；
+    # temperature=0 保持可复现，与 verify_guard_feasibility 的在线 A/B 基线一致。
+    payload = json.dumps({"model": model, "prompt": prompt,
+                          "system": system, "stream": False, "think": think,
+                          "options": {"temperature": 0, "num_predict": max_tokens}})
+    p = subprocess.run(["curl", "-s", "http://127.0.0.1:11434/api/generate", "-d", payload],
+                       capture_output=True, text=True, timeout=120)
+    try:
+        return json.loads(p.stdout)["response"]
+    except Exception as e:
+        return f"<parse-fail:{e}>"
+
+
+def _brace_match(s, start):
+    """从 s[start]（应为 '{'）起做括号配对，返回匹配右括号下标；失败返回 -1。"""
+    depth = 0
+    i = start
+    n = len(s)
+    while i < n:
+        c = s[i]
+        if c == '"':  # 跳过字符串（含转义）
+            i += 1
+            while i < n:
+                if s[i] == "\\":
+                    i += 2
+                    continue
+                if s[i] == '"':
+                    i += 1
+                    break
+                i += 1
+            continue
+        if c == "{":
+            depth += 1
+        elif c == "}":
+            depth -= 1
+            if depth == 0:
+                return i
+        i += 1
+    return -1
+
+
+def extract_json(text):
+    """稳健提取首个完整 JSON 对象：剥离 ```json 围栏，括号配对优先；
+    再回退到整段 / 首个 {~最后 } 启发式；任一能解析即返回。"""
+    if not text:
+        return None
+    candidates = []
+    # 1) 去 ```json ... ``` 围栏
+    stripped = text.strip()
+    if stripped.startswith("```"):
+        end = stripped.find("```", 3)
+        if end != -1:
+            stripped = stripped[3:end].strip()
+            if stripped.startswith("json"):
+                stripped = stripped[4:].strip()
+        candidates.append(stripped)
+    else:
+        candidates.append(stripped)
+    candidates.append(text)
+    # 2) 括号配对：从每个 { 找匹配的 }
+    pool = list(candidates)
+    # 同时尝试整段
+    for cand in candidates:
+        if cand.startswith("{"):
+            e = _brace_match(cand, 0)
+            if e != -1:
+                pool.append(cand[:e + 1])
+    # 3) 启发式兜底：首个 { ~ 最后一个 }
+    for cand in candidates:
+        s = cand.find("{")
+        e = cand.rfind("}")
+        if s != -1 and e != -1:
+            pool.append(cand[s:e + 1])
+    for cand in pool:
+        try:
+            return json.loads(cand)
+        except Exception:
+            continue
+    return None
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--model", default="virtu-wm-all90")
+    ap.add_argument("--n", type=int, default=120)
+    ap.add_argument("--out", default="_eval_wm.json")
+    ap.add_argument("--seed", type=int, default=777)
+    ap.add_argument("--system-mode", default="data",
+                    choices=["data", "contract", "both"],
+                    help="data=用数据自带 system（复现基线）; contract=纯世界模型契约; both=契约+原背景")
+    args = ap.parse_args()
+
+    import random
+    rng = random.Random(args.seed)
+    cases = []
+    per = max(1, args.n // len(GEN_BY_FAMILY))
+    for fam, g in GEN_BY_FAMILY.items():
+        for _ in range(per):
+            rec = g(rng)
+            u = rec["messages"][1]["content"]
+            sys_p = rec["messages"][0]["content"]
+            exp = json.loads(rec["messages"][2]["content"])
+            cases.append((fam, u, sys_p, exp))
+    rng.shuffle(cases)
+    cases = cases[:args.n]
+
+    stat = {fam: {"n": 0, "pass": 0, "parse_fail": 0, "fmt_ok": 0, "guard_checked": 0, "guard_blocked": 0} for fam in GEN_BY_FAMILY}
+    records = []
+    for fam, u, sys_p, exp in cases:
+        resp = call_ollama(args.model, u, C.merge_with_data_system(sys_p, args.system_mode))
+        pred = extract_json(resp)
+        stat[fam]["n"] += 1
+        # —— 推理时护栏（替换旧的只判分用法）：生成即校验/纠正 ——
+        # 评测用例无结构化 scenario，L2 求解器复算未启用；生产生成侧请经
+        # worldmodel_infer.generate_world_state 传入 scenario 以启用 L2 复算。
+        gres = apply_guard(resp, prompt=u, scenario=None, tol_rel=REL_TOL)
+        stat[fam]["guard_checked"] += 1
+        if gres["action"] in ("rejected", "escalate"):
+            stat[fam]["guard_blocked"] += 1
+        if isinstance(gres["final_world_state"], dict):
+            pred = gres["final_world_state"]  # 用护栏纠正后的结果参与判分
+        if pred is None:
+            stat[fam]["parse_fail"] += 1
+            records.append({"family": fam, "user": u, "expected": exp, "predicted": None,
+                            "pass": False, "guard_action": gres["action"]})
+            continue
+        # 格式合规：输出确实采用了世界模型契约（而非工具调用格式）
+        if fam == "invalid":
+            fmt_ok = (pred.get("invalid") is True)
+        else:
+            fmt_ok = isinstance(pred.get("world_state"), dict)
+        if fmt_ok:
+            stat[fam]["fmt_ok"] += 1
+        ok = True
+        if fam == "invalid":
+            ok = (pred.get("world_state") is None and pred.get("invalid") is True)
+        else:
+            ews = exp["world_state"]
+            pws = pred.get("world_state") or {}
+            for k in NUM_KEYS[fam]:
+                if k not in ews or k not in pws:
+                    ok = False
+                    break
+                ev, pv = float(ews[k]), float(pws[k])
+                if abs(ev) < 1e-9:
+                    if abs(pv) > 1e-6:
+                        ok = False
+                elif abs(pv - ev) / abs(ev) > REL_TOL:
+                    ok = False
+            # 闸门类一致性
+            for gate in ("fos_gate", "volume_conservation", "autodiff", "tolerance_pass"):
+                if gate in ews and gate in pws and ews[gate] != pws[gate]:
+                    ok = False
+        if ok:
+            stat[fam]["pass"] += 1
+        records.append({"family": fam, "user": u, "expected": exp, "predicted": pred,
+                        "pass": ok, "guard_action": gres["action"]})
+
+    # 汇总
+    total_n = sum(s["n"] for s in stat.values())
+    total_p = sum(s["pass"] for s in stat.values())
+    print(f"\n=== 世界模型评测: {args.model} (n={total_n}, system_mode={args.system_mode}) ===")
+    for fam, s in stat.items():
+        acc = s["pass"] / s["n"] * 100 if s["n"] else 0
+        fmt = s["fmt_ok"] / s["n"] * 100 if s["n"] else 0
+        print(f"  {fam:10s} 数值通过 {s['pass']:3d}/{s['n']:3d} {acc:5.1f}%  |  "
+              f"格式合规 {s['fmt_ok']:3d}/{s['n']:3d} {fmt:5.1f}%  |  解析失败 {s['parse_fail']}")
+    total_f = sum(s["fmt_ok"] for s in stat.values())
+    total_gc = sum(s["guard_checked"] for s in stat.values())
+    total_gb = sum(s["guard_blocked"] for s in stat.values())
+    print(f"  {'OVERALL':10s} 数值通过 {total_p:3d}/{total_n:3d} {total_p/total_n*100:5.1f}%  |  "
+          f"格式合规 {total_f:3d}/{total_n:3d} {total_f/total_n*100:5.1f}%")
+    print(f"  {'GUARD':10s} 护栏检查 {total_gc:3d}/{total_n:3d}  |  拦截(拒绝/升级) {total_gb:3d}")
+    json.dump(records, open(os.path.join(ROOT, args.out), "w", encoding="utf-8"),
+              ensure_ascii=False, indent=2)
+    print(f"[ok] 明细 -> {args.out}")
+
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,50 @@
+{
+  "model_label": "Baseline_GQA",
+  "loss_metrics": {
+    "loss_seq_64": 7.7585,
+    "loss_seq_256": 7.799,
+    "loss_seq_1024": 7.7743,
+    "loss_multimodal": 7.7768
+  },
+  "convergence": {
+    "initial_loss": 7.727,
+    "final_loss": 7.8179,
+    "loss_reduction": -0.0909,
+    "loss_reduction_pct": -1.18,
+    "mean_grad_norm": 1.1546,
+    "min_grad_norm": 1.1443,
+    "max_grad_norm": 1.1655
+  },
+  "generation": {
+    "cache_consistent": true,
+    "generated_tokens": [
+      554,
+      1281,
+      649,
+      40,
+      1045,
+      1964,
+      1070,
+      141,
+      772,
+      1342,
+      1797,
+      1510,
+      1333,
+      1533,
+      1997,
+      485,
+      630,
+      1540
+    ]
+  },
+  "latency": {
+    "latency_128_ms": 76.26,
+    "throughput_128_tok_s": 1678.5,
+    "latency_512_ms": 214.57,
+    "throughput_512_tok_s": 2386.2,
+    "latency_1024_ms": 167.84,
+    "throughput_1024_tok_s": 6101.2
+  },
+  "param_count": 5568000
+}

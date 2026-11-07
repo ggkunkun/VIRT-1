@@ -1,0 +1,115 @@
+{
+  "schema_version": "1.0.0",
+  "generated_at": "2026-11-04T17:04:21+08:00",
+  "seed": 20261104,
+  "python": "3.13.14",
+  "files": {
+    "D:\\Virtu模型\\engineering_capability_train\\data\\train_corpus.jsonl": {
+      "sha256": "b36a24e12b97519e6f57158cce86f14f0e5c4306e6c87b2b599f03f26f927015",
+      "bytes": 13330666,
+      "lines": 6000
+    },
+    "D:\\Virtu模型\\engineering_capability_train\\data\\dpo_pairs.jsonl": {
+      "sha256": "085091cd62d2863a75378039b8f47cf68a20393ca9b61f4006b6278a6fcbaf73",
+      "bytes": 3298613,
+      "lines": 900
+    },
+    "D:\\Virtu模型\\engineering_capability_train\\data\\eval_tasks.jsonl": {
+      "sha256": "9d3b464c21851d166c962cc596d920e1553d3a56bbe59e70e066ea64bb016846",
+      "bytes": 1626481,
+      "lines": 800
+    }
+  },
+  "extra": {
+    "seed": 20261104,
+    "generator_version": "1.0.0",
+    "stats": {
+      "generator_version": "1.0.0",
+      "seed": 20261104,
+      "target_samples": 6000,
+      "toolchain_generated": 4504,
+      "gui_generated": 3750,
+      "infeasible_refusals": 126,
+      "vision_generated": 3000,
+      "vision_eval_tasks": 2874,
+      "semantic_generated": 2250,
+      "semantic_eval_tasks": 2250,
+      "replay_tool_invalid_dropped": 202,
+      "replay_pool": 7234,
+      "quota_toolchain": {
+        "requested": 1800,
+        "available": 4500,
+        "used": 1800,
+        "dedup_dropped": 0,
+        "shortfall": 0
+      },
+      "quota_gui_trajectory": {
+        "requested": 1500,
+        "available": 3750,
+        "used": 1500,
+        "dedup_dropped": 0,
+        "shortfall": 0
+      },
+      "quota_vision_decision": {
+        "requested": 1200,
+        "available": 3000,
+        "used": 1200,
+        "dedup_dropped": 2,
+        "shortfall": 0
+      },
+      "quota_engineering_semantics": {
+        "requested": 900,
+        "available": 2250,
+        "used": 900,
+        "dedup_dropped": 0,
+        "shortfall": 0
+      },
+      "quota_replay": {
+        "requested": 600,
+        "available": 1500,
+        "used": 600,
+        "dedup_dropped": 131,
+        "shortfall": 0
+      },
+      "deduplicated": 133,
+      "physics_rejected_corpus": 0,
+      "rejected_examples": [],
+      "final_train_samples": 6000,
+      "capability_distribution": {
+        "vision_decision": 1200,
+        "replay": 600,
+        "toolchain": 1800,
+        "engineering_semantics": 900,
+        "gui_trajectory": 1500
+      },
+      "dpo_pairs": 900,
+      "dpo_categories": {
+        "physics_violation": 410,
+        "suboptimal_slow": 190,
+        "ungrounded_guess": 300
+      },
+      "eval_tasks_unsampled": 5284,
+      "eval_tasks_sampling": {
+        "method": "stratified_round_robin",
+        "seed": 20268881,
+        "cap": 800,
+        "from": 5284
+      },
+      "eval_tasks": 800,
+      "eval_capability_distribution": {
+        "engineering_semantics": 320,
+        "gui_trajectory": 100,
+        "toolchain": 60,
+        "vision_decision": 320
+      },
+      "train_eval_prompt_overlap": 0,
+      "hard_holdout_overlap": 0
+    },
+    "config_sha256": {
+      "pipeline.json": "49c743bf83c6e4917ad46c0e7477ec97fc64d417673c2a872d6e291768a4ad9b",
+      "train.json": "b713f16f3466a675ab8e974f5a26c6d5d1ed216420fb5442874be0694a53f6f3",
+      "metrics.json": "5d93f1a8c292e5ca341ce3f7a141f5a91e9d446fe97458617ced1108497fd780"
+    },
+    "created_at": "2026-11-04T17:04:20+08:00"
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "run_id": "VIRTU_FMERS_20261107_181833_c854a98b",
+  "timestamp": "2026-11-07 18:18:33",
+  "basis": "measured",
+  "sample_count_n": 19,
+  "elapsed_seconds": 0.07,
+  "falsifiable_probes": {
+    "all_passed": true,
+    "rlvr_probe": true,
+    "ties_probe": true,
+    "prm_probe": true,
+    "brep_probe": true
+  },
+  "rlvr_grpo_results": {
+    "group_size": 3,
+    "best_trajectory_reward": 1.0,
+    "best_advantage": 1.1592,
+    "worst_trajectory_reward": 0.0,
+    "worst_advantage": -1.2812
+  },
+  "ties_merge_results": {
+    "merge_id": "TIES_MERGE_20261107_181833_cb2ace6d",
+    "domains": [
+      "CAD",
+      "CAM",
+      "CAE",
+      "STANDARDS"
+    ],
+    "consensus_alignment_pct": 93.85,
+    "parameters_fused": 4096
+  },
+  "prm_stepwise_results": {
+    "total_steps": 6,
+    "all_steps_passed": true,
+    "overall_score_pct": 100.0
+  },
+  "brep_grammar_results": {
+    "is_valid_manifold": true,
+    "euler_characteristic": 2,
+    "profile_area_mm2": 4000.0,
+    "volume_mm3": 60000.0
+  }
+}

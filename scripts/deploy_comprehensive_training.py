@@ -7,16 +7,24 @@ import paramiko
 
 sys.stdout.reconfigure(encoding="utf-8")
 
-HOST = "cn-north-b.ssh.damodel.com"
-PORT = 40526
-USER = "root"
-PASS = "m2A5jbYmbP"
+# 凭据一律从环境变量读取，源码内不再保留明文口令。
+# 用法：$env:DAMODEL_PASS = "<新密码>"  （该密码已泄漏于 git 历史，必须轮换）
+HOST = os.environ.get("DAMODEL_HOST", "cn-north-b.ssh.damodel.com")
+PORT = int(os.environ.get("DAMODEL_PORT", "40526"))
+USER = os.environ.get("DAMODEL_USER", "root")
+PASS = os.environ.get("DAMODEL_PASS", "")
 
 LOCAL_DIR = r"D:\Virtu模型\damodel_cad_cam_tuning"
 REMOTE_DIR = "/root/cad_cam_finetune"
 
 
 def deploy_and_launch():
+    if not PASS:
+        raise SystemExit(
+            "[FATAL] 未设置 DAMODEL_PASS 环境变量。\n"
+            "该实例的明文口令曾硬编码在源码并进入 git 历史，必须先轮换密码，\n"
+            "再通过 $env:DAMODEL_PASS = '<新密码>' 注入，不要再写回源码。"
+        )
     print(f"Connecting to {USER}@{HOST}:{PORT} ...")
     client = paramiko.SSHClient()
     client.set_missing_host_key_policy(paramiko.AutoAddPolicy())

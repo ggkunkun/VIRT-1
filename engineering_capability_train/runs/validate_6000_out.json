@@ -1,0 +1,42 @@
+{
+  "checked_at": "2026-11-04T16:19:45+08:00",
+  "errors": [],
+  "warnings": [],
+  "ok": true
+}
+{
+  "corpus_dir_jsonl_files": [
+    "dpo_pairs.jsonl",
+    "eval_tasks.jsonl",
+    "train_corpus.jsonl"
+  ],
+  "manifest": {
+    "ok": true,
+    "checked": 3,
+    "mismatches": []
+  },
+  "train_rows": 6000,
+  "duplicates": 0,
+  "schema_bad": 0,
+  "tool_call_bad": 0,
+  "physics_violations": 0,
+  "p99_chars": 2132,
+  "approx_p99_tokens": 533.0,
+  "capability_distribution": {
+    "vision_decision": 1200,
+    "replay": 600,
+    "toolchain": 1800,
+    "engineering_semantics": 900,
+    "gui_trajectory": 1500
+  },
+  "eval_tasks": 800,
+  "train_eval_overlap": 0,
+  "hard_holdout_overlap": 0,
+  "dpo_pairs": 900,
+  "dpo_bad": 0,
+  "dpo_categories": {
+    "physics_violation": 410,
+    "suboptimal_slow": 190,
+    "ungrounded_guess": 300
+  }
+}

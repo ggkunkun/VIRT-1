@@ -1,0 +1,30 @@
+[
+  {
+    "step_name": "test_step_01",
+    "software_key": "solidworks",
+    "duration_seconds": 1.283,
+    "files_persisted": [
+      {
+        "path": "D:\\Virtu模型\\build\\pytest_tmp\\test_execute_step_with_memory_0\\01_test_artifact.txt",
+        "filename": "01_test_artifact.txt",
+        "size_bytes": 26,
+        "valid": true
+      }
+    ],
+    "persistence_success": true,
+    "memory_reclamation": {
+      "target": "solidworks",
+      "closed_pids": [],
+      "rss_freed_est_mb": 0.0,
+      "mem_before_mb": 800.31,
+      "mem_after_mb": 800.31,
+      "reclaimed_mb": 0.0,
+      "status": "NOT_RUNNING",
+      "timestamp": "2026-11-01 16:20:39"
+    },
+    "ram_before_step_mb": 869.04,
+    "ram_after_step_mb": 888.52,
+    "step_error": null,
+    "completed_at": "2026-11-01 16:20:39"
+  }
+]

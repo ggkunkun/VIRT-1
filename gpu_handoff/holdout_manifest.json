@@ -1,0 +1,83 @@
+{
+  "generated": "2026-10-31 18:54:54",
+  "seed": 42,
+  "source": "data/toolcall_optimal.jsonl",
+  "train": {
+    "file": "virtu_toolcall_train_final.jsonl",
+    "rows": 2414,
+    "rows_with_tool_calls": 2222,
+    "behavior_rows": 192,
+    "sha256": "89dfee6ffab69c86718b51dc896373bf8173e033fcb5c0c990263347c7437e00"
+  },
+  "holdout": {
+    "file": "virtu_toolcall_holdout.jsonl",
+    "rows": 94,
+    "combos": [
+      {
+        "material": "Ti-6Al-4V",
+        "chain": [
+          "cad.parse_wish_intent",
+          "solidworks.create_parametric_part",
+          "nx.create_nxopen_script",
+          "autocad.create_autolisp",
+          "vericut.create_project_config",
+          "cimco.create_macro_b",
+          "sscnc.create_setup_guide"
+        ],
+        "rows": 19
+      },
+      {
+        "material": "AL7075-T6",
+        "chain": [
+          "cad.parse_wish_intent",
+          "sscnc.create_setup_guide"
+        ],
+        "rows": 24
+      },
+      {
+        "material": "Ti-6Al-4V",
+        "chain": [
+          "cad.parse_wish_intent",
+          "autocad.create_autolisp"
+        ],
+        "rows": 25
+      },
+      {
+        "material": "SS304",
+        "chain": [
+          "cad.parse_wish_intent",
+          "autocad.create_autolisp"
+        ],
+        "rows": 26
+      }
+    ],
+    "sha256": "64623e8b363710ec3bcd54e4444534aa0d63f762ee9bc255177878c9acb7e03e"
+  },
+  "material_dist": {
+    "Cr12MoV": 300,
+    "Inconel718": 296,
+    "AL7075-T6": 276,
+    "SS304": 274,
+    "Ti-6Al-4V": 256,
+    "CuC360": 250,
+    "P20": 249,
+    "Steel45": 245,
+    "20CrMnTi": 50,
+    "None": 26
+  },
+  "chain_dist": {
+    "cad.parse_wish_intent > solidworks.create_parametric_part": 1211,
+    "cad.parse_wish_intent > nx.create_nxopen_script": 259,
+    "cad.parse_wish_intent > cimco.create_macro_b": 248,
+    "cad.parse_wish_intent > vericut.create_project_config": 166,
+    "cad.parse_wish_intent > sscnc.create_setup_guide": 119,
+    "cad.parse_wish_intent > solidworks.create_parametric_part > nx.create_nxopen_script > autocad.create_autolisp > vericut.create_project_config > cimco.create_macro_b > sscnc.create_setup_guide": 111,
+    "cad.parse_wish_intent > autocad.create_autolisp": 82,
+    "ontology.lookup_plugin": 26
+  },
+  "leakage_check": {
+    "train_combos": 30,
+    "holdout_combos_not_in_train": 0,
+    "duplicate_user_msgs": 0
+  }
+}

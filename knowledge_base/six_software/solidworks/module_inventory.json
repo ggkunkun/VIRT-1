@@ -1,0 +1,142 @@
+{
+  "software": "solidworks",
+  "display_name": "SOLIDWORKS 2021",
+  "version": "2021",
+  "generated": "2026-11-03",
+  "source": "reverse-skill offline-sample RE; evidence.md",
+  "category_enum_used": ["part_modeling", "assembly", "drafting", "fea_simulation", "data_exchange", "config_admin", "visualization"],
+  "modules": [
+    {
+      "id": "solidworks_sketch_manager",
+      "name": "草图 (Sketch)",
+      "category": "part_modeling",
+      "menu": ["插入|草图绘制"],
+      "commands": ["SW_CMD_InsertSketch", "SW_CMD_CornerRectangle", "SW_CMD_CircleByRadius", "SW_CMD_SelectPlane", "SW_CMD_ClearSelection"],
+      "api": ["ISketchManager::InsertSketch", "ISketchManager::CreateCornerRectangle", "ISketchManager::CreateCircleByRadius", "IModelDoc2::SelectByID"],
+      "file_formats": ["SLDPRT"],
+      "workflow_refs": ["wf_swfw1_parametric_part"],
+      "notes": "前视基准面=XY，世界Y向上，API内部米；verified-working(历史实测) [高]"
+    },
+    {
+      "id": "solidworks_feature_manager",
+      "name": "特征 (Feature)",
+      "category": "part_modeling",
+      "menu": ["特征|拉伸凸台", "特征|拉伸切除"],
+      "commands": ["SW_CMD_FeatureExtrusion2", "SW_CMD_FeatureCut"],
+      "api": ["IFeatureManager::FeatureExtrusion2", "IFeatureManager::FeatureCut"],
+      "file_formats": ["SLDPRT"],
+      "workflow_refs": ["wf_swfw1_parametric_part"],
+      "notes": "拉伸ΔV>0/切除ΔV<0体积守恒；FeatureExtrusion2已obsolete由FeatureExtrusion3取代但SW2021实测可用 [高]"
+    },
+    {
+      "id": "solidworks_equation_manager",
+      "name": "方程式管理器 (Equation Manager)",
+      "category": "part_modeling",
+      "menu": ["工具|方程式"],
+      "commands": ["SW_CMD_EquationMgr_Add"],
+      "api": ["IModelDoc2::GetEquationMgr", "EquationMgr::Add", "EquationMgr::AddEquation"],
+      "file_formats": ["SLDPRT"],
+      "workflow_refs": ["wf_swfw1_parametric_part"],
+      "notes": "参数化驱动核心，尺寸入方程便于改参重生成 [高]"
+    },
+    {
+      "id": "solidworks_fillet_chamfer",
+      "name": "圆角/倒角 (Fillet/Chamfer)",
+      "category": "part_modeling",
+      "menu": ["特征|圆角", "特征|倒角"],
+      "commands": ["SW_CMD_Fillet", "SW_CMD_Chamfer"],
+      "api": ["IFeatureManager::InsertFilletFeatureData2", "IFeatureManager::InsertChamferFeatureData2"],
+      "file_formats": ["SLDPRT"],
+      "workflow_refs": ["wf_swfw1_parametric_part"],
+      "notes": "ΔV≠0；恒定半径/角度倒角稳定，可变半径/face/full-round/setback须真机回归 [中]"
+    },
+    {
+      "id": "solidworks_hole_wizard",
+      "name": "异型孔向导 (Hole Wizard)",
+      "category": "part_modeling",
+      "menu": ["特征|异型孔向导"],
+      "commands": ["SW_CMD_HoleWizard"],
+      "api": ["IFeatureManager::HoleWizard"],
+      "file_formats": ["SLDPRT"],
+      "workflow_refs": ["wf_swfw1_parametric_part"],
+      "notes": "M3-M12公制粗牙verified；表外规格须显式指定底孔 [中]"
+    },
+    {
+      "id": "solidworks_assembly",
+      "name": "装配 (Assembly)",
+      "category": "assembly",
+      "menu": ["装配体|配合"],
+      "commands": ["SW_CMD_AddMate", "SW_CMD_InterferenceCheck", "SW_CMD_Explode"],
+      "api": ["AssemblyDoc::AddMate"],
+      "file_formats": ["SLDASM"],
+      "workflow_refs": ["wf_swfw4_data_exchange"],
+      "notes": "OTAssemblyMates.chm文档化；本轮未复测 [中]"
+    },
+    {
+      "id": "solidworks_drawing",
+      "name": "工程图 (Drawing)",
+      "category": "drafting",
+      "menu": ["插入|工程图视图"],
+      "commands": ["SW_CMD_DrawView", "SW_CMD_Dimension", "SW_CMD_GTol", "SW_CMD_CenterMark", "SW_CMD_SurfaceFinish", "SW_CMD_BOM", "SW_CMD_HoleTable", "SW_CMD_TitleBlock"],
+      "api": ["DrawingDoc::CreateDrawView"],
+      "file_formats": ["SLDDRW", "sldbomtbt", "sldholtbt", "sldtbt"],
+      "workflow_refs": ["wf_swfw3_drawing_gb"],
+      "notes": "第一角画法GB/T 17451；专业标注(剖视/局部视图)按能力阻断 [中]"
+    },
+    {
+      "id": "solidworks_simulation",
+      "name": "仿真静应力 (Simulation Static)",
+      "category": "fea_simulation",
+      "menu": ["Simulation|静应力"],
+      "commands": ["SW_CMD_StaticStudy", "SW_CMD_DesignChecker", "SW_CMD_MotionStudy"],
+      "api": ["SwSimulation Add-in API"],
+      "file_formats": ["SLDDRW"],
+      "workflow_refs": ["wf_swfw2_fea_loop"],
+      "notes": "cworks.chm/simulation_theory_manual.pdf存在；本轮未驱动求解器，FOS≥1.5由跨软件引擎承担 documented-not-probed [低]"
+    },
+    {
+      "id": "solidworks_sheetmetal_weldment",
+      "name": "钣金与焊接件 (Sheet Metal/Weldments)",
+      "category": "part_modeling",
+      "menu": ["钣金", "焊接件"],
+      "commands": ["SW_CMD_SheetMetal", "SW_CMD_Weldment"],
+      "api": ["SheetMetal Feature API"],
+      "file_formats": ["SLDPRT", "btl", "xls", "sldlfp"],
+      "workflow_refs": [],
+      "notes": "折弯表/焊件轮廓库齐全；documented-not-probed [低]"
+    },
+    {
+      "id": "solidworks_data_exchange",
+      "name": "数据交换 (Data Exchange)",
+      "category": "data_exchange",
+      "menu": ["文件|另存为"],
+      "commands": ["SW_CMD_SaveAs3", "SW_CMD_SaveAsSTEP", "SW_CMD_SaveAsDXF"],
+      "api": ["IModelDoc2::SaveAs3"],
+      "file_formats": ["STEP", "STL", "IGES", "DXF", "DWG"],
+      "workflow_refs": ["wf_swfw4_data_exchange"],
+      "notes": "step_export能力verified；STEP AP203/214/242 [高]"
+    },
+    {
+      "id": "solidworks_config_admin",
+      "name": "配置与模板 (Config Admin)",
+      "category": "config_admin",
+      "menu": ["编辑|材料", "选项|文件位置"],
+      "commands": ["SW_CMD_Material", "SW_CMD_Template"],
+      "api": ["IModelDocExtension::SetUserPreference"],
+      "file_formats": ["prtdot", "asmdot", "drwdot", "sldmat"],
+      "workflow_refs": [],
+      "notes": "材料库/模板/钣金表/BOM模板位置已勘察 [高]"
+    },
+    {
+      "id": "solidworks_visualization",
+      "name": "可视化与重建 (Visualization)",
+      "category": "visualization",
+      "menu": ["视图工具栏", "编辑|重建模型"],
+      "commands": ["SW_CMD_ViewZoomtofit2", "SW_CMD_EditRebuild3", "SW_CMD_ForceRebuild3"],
+      "api": ["IModelDoc2::ViewZoomtofit2", "IModelDoc2::EditRebuild3", "IModelDoc2::ForceRebuild3"],
+      "file_formats": [],
+      "workflow_refs": ["wf_swfw1_parametric_part"],
+      "notes": "桥接实测重建/缩放 [高]"
+    }
+  ]
+}

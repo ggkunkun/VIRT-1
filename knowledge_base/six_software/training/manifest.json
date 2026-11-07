@@ -1,0 +1,45 @@
+{
+  "generated": "2026-11-04",
+  "source": "six_software knowledge base (reverse-skill RE, phase1 plugins) + TRAINING_CONTRACT + fastest-methods (阶段 A/B 迭代)",
+  "total_train": 221,
+  "total_holdout": 50,
+  "total_records": 271,
+  "per_software": {
+    "solidworks": {"train": 38, "holdout": 8, "scenarios_train": {"core_op": 13, "plugin_op": 12, "kb_lookup": 5, "edge": 3, "fastest_route": 5}},
+    "autocad": {"train": 38, "holdout": 8, "scenarios_train": {"core_op": 13, "plugin_op": 12, "kb_lookup": 5, "edge": 3, "fastest_route": 5}},
+    "nx": {"train": 36, "holdout": 9, "scenarios_train": {"core_op": 12, "plugin_op": 12, "kb_lookup": 4, "edge": 2, "fastest_route": 6}},
+    "cimco": {"train": 36, "holdout": 9, "scenarios_train": {"core_op": 12, "plugin_op": 14, "kb_lookup": 3, "edge": 1, "fastest_route": 6}},
+    "vericut": {"train": 37, "holdout": 8, "scenarios_train": {"core_op": 12, "plugin_op": 12, "kb_lookup": 6, "edge": 2, "fastest_route": 5}},
+    "sscnc": {"train": 36, "holdout": 8, "scenarios_train": {"core_op": 14, "plugin_op": 9, "kb_lookup": 5, "edge": 3, "fastest_route": 5}}
+  },
+  "fastest_route_added": {"train": 32, "holdout": 8, "spec": "TRAINING_CONTRACT §11 场景E（fastest_route）；判定来源 fastest-methods\\<software>.md；holdout 与 train 路线/参数零重叠"},
+  "format": "OpenAI function-calling JSONL (messages+tools, arguments=JSON-string), C1-C5 compatible",
+  "files": {
+    "datasets": [
+      "solidworks_train.jsonl", "solidworks_holdout.jsonl",
+      "autocad_train.jsonl", "autocad_holdout.jsonl",
+      "nx_train.jsonl", "nx_holdout.jsonl",
+      "cimco_train.jsonl", "cimco_holdout.jsonl",
+      "vericut_train.jsonl", "vericut_holdout.jsonl",
+      "sscnc_train.jsonl", "sscnc_holdout.jsonl"
+    ],
+    "runbooks": [
+      "solidworks.runbook.md", "autocad.runbook.md", "nx.runbook.md",
+      "cimco.runbook.md", "vericut.runbook.md", "sscnc.runbook.md"
+    ],
+    "fastest_methods": [
+      "fastest-methods/FASTEST_METHODS_CONTRACT.md", "fastest-methods/fastest-methods.md",
+      "fastest-methods/toolchain_choice_matrix.md", "fastest-methods/solidworks.md",
+      "fastest-methods/autocad.md", "fastest-methods/nx.md", "fastest-methods/cimco.md",
+      "fastest-methods/vericut.md", "fastest-methods/sscnc.md"
+    ]
+  },
+  "validation_commands": [
+    "python scripts/validate_render_dataset.py --data D:/Virtu模型/knowledge_base/six_software/training/datasets/<software>_train.jsonl --out data/validation/render_report_<software>_train.json",
+    "python scripts/validate_render_dataset.py --data D:/Virtu模型/knowledge_base/six_software/training/datasets/<software>_holdout.jsonl --out data/validation/render_report_<software>_holdout.json",
+    "python -c \"import json,sys; [json.loads(l) for l in open(p,encoding='utf-8')]\"  # 逐行合法性（12 文件逐个执行）"
+  ],
+  "sha256": "pending（需有 shell 会话补算）",
+  "static_validation": "见 validation_report.md（独立校验子代理产出，C1-C5 等价静态结论，含本轮复检）",
+  "notes": "阶段一 plugins.md 已并入各软件目录（10 文件/软件）；阶段 A/B 迭代新增 fastest-methods 层（四任务族最快路线全集+选型矩阵）与 fastest_route 场景 E（train +32、holdout +8，共 271 条）；语料参数全部来自 knowledge_base commands/workflows/plugins/fastest-methods；严禁许可证/激活内容；holdout 只评测不入训（与 train 参数/插件/路线组合不重叠）。"
+}

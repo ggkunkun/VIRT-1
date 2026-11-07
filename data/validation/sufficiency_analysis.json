@@ -1,0 +1,62 @@
+{
+  "samples": 18330,
+  "d1_structures": 7,
+  "d2_material_values": 9,
+  "d2_material_dist": {
+    "Cr12MoV": 10395,
+    "Ti-6Al-4V": 2319,
+    "AL7075-T6": 2280,
+    "SS304": 2220,
+    "Inconel718": 296,
+    "CuC360": 250,
+    "P20": 249,
+    "Steel45": 245,
+    "20CrMnTi": 50
+  },
+  "d2_dim_combos": 5465,
+  "d2_full_param_fingerprints": 18330,
+  "d2_unique_rate_pct": 100.0,
+  "d3_user_phrasings": 121,
+  "saturation_curve": [
+    {
+      "samples": 500,
+      "unique_params": 500,
+      "coverage_pct": 2.7
+    },
+    {
+      "samples": 1000,
+      "unique_params": 1000,
+      "coverage_pct": 5.5
+    },
+    {
+      "samples": 2000,
+      "unique_params": 2000,
+      "coverage_pct": 10.9
+    },
+    {
+      "samples": 3000,
+      "unique_params": 3000,
+      "coverage_pct": 16.4
+    },
+    {
+      "samples": 5000,
+      "unique_params": 5000,
+      "coverage_pct": 27.3
+    },
+    {
+      "samples": 8000,
+      "unique_params": 8000,
+      "coverage_pct": 43.6
+    },
+    {
+      "samples": 12000,
+      "unique_params": 12000,
+      "coverage_pct": 65.5
+    },
+    {
+      "samples": 18330,
+      "unique_params": 18330,
+      "coverage_pct": 100.0
+    }
+  ]
+}

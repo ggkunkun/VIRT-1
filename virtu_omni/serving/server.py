@@ -15,6 +15,9 @@ import json
 import time
 import base64
 import io
+import asyncio
+import logging
+from collections import deque
 from typing import Dict, Any, List, Optional
 import torch
 from fastapi import FastAPI, HTTPException
@@ -23,7 +26,21 @@ from pydantic import BaseModel, Field
 from PIL import Image
 
 from virtu_omni.config import VirtuOmniConfig, ModelConfig
+from virtu_omni.errors import (
+    ModelError,
+    SERVE_IMAGE_DECODE,
+    SERVE_MODEL_FAILURE,
+    SERVE_INFER_FAILURE,
+)
 from virtu_omni.models.architecture import VirtuOmni10B
+from virtu_omni.models.tokenizer import BOS_TOKEN_ID, VirtuTokenizer
+from virtu_omni.serving.deception_gate import gate_answer
+
+logger = logging.getLogger(__name__)
+
+# Reject oversized payloads before they are decoded into memory.
+MAX_IMAGE_BASE64_BYTES = 32 * 1024 * 1024
+LATENCY_WINDOW = 10000
 
 
 # Pydantic Schemas
@@ -56,6 +73,89 @@ class MultimodalUnderstandRequest(BaseModel):
     question: str = Field("Describe this image in comprehensive detail.", description="User query")
 
 
+def _decode_base64_image(payload: str, resolution: int, patch_size: int) -> torch.Tensor:
+    """Decode a (possibly data-URL prefixed) base64 image into a normalized tensor.
+
+    Raises ``HTTPException`` with the structured ``E4001`` code on any failure so
+    clients receive an actionable error instead of an opaque 500.
+    """
+    if not isinstance(payload, str) or not payload:
+        raise HTTPException(
+            status_code=400,
+            detail=ModelError(
+                SERVE_IMAGE_DECODE,
+                "image_base64 must be a non-empty string.",
+                hint="Send raw base64 or a 'data:image/png;base64,...' payload.",
+            ).to_dict(),
+        )
+    # Browsers/OpenAI clients frequently prepend a data-URL header; the old
+    # b64decode() path failed on it and returned a misleading "invalid image".
+    if payload.startswith("data:"):
+        _, _, payload = payload.partition(",")
+    if len(payload) > MAX_IMAGE_BASE64_BYTES:
+        raise HTTPException(
+            status_code=413,
+            detail=ModelError(
+                SERVE_IMAGE_DECODE,
+                f"Encoded image exceeds the {MAX_IMAGE_BASE64_BYTES} byte limit.",
+                hint="Downscale the image before uploading.",
+                context={"encoded_bytes": len(payload)},
+            ).to_dict(),
+        )
+    try:
+        img_data = base64.b64decode(payload, validate=True)
+        img = Image.open(io.BytesIO(img_data)).convert("RGB")
+        # Snap the resize target to a patch-size multiple so the vision
+        # projector never receives a non-divisible grid.
+        side = max(patch_size, (resolution // patch_size) * patch_size)
+        img = img.resize((side, side))
+    except Exception as exc:  # noqa: BLE001 - surfaced as a structured 400
+        raise HTTPException(
+            status_code=400,
+            detail=ModelError(
+                SERVE_IMAGE_DECODE,
+                f"Invalid image payload: {type(exc).__name__}: {exc}",
+                hint="Send a valid PNG/JPEG base64 payload (optionally as a data URL).",
+            ).to_dict(),
+        ) from exc
+
+    return (
+        torch.frombuffer(bytearray(img.tobytes()), dtype=torch.uint8)
+        .view(side, side, 3)
+        .permute(2, 0, 1)
+        .unsqueeze(0)
+        .float()
+        / 127.5
+        - 1.0
+    )
+
+
+def _encode_scaffold_tokens(text: str, vocab_size: int, max_tokens: int = 512) -> torch.Tensor:
+    """Deterministic scaffold tokenizer used until the shipped tokenizer is bound.
+
+    The previous handler always fed the constant id ``42`` regardless of the prompt,
+    so every request produced byte-identical logits. Until a real vocabulary is
+    wired into this serving path, ids are derived from the character ordinals so
+    the forward pass at least remains a genuine function of the user input.
+    """
+    if vocab_size < 3:
+        raise ModelError(
+            SERVE_INFER_FAILURE,
+            f"vocab_size={vocab_size} is too small to tokenize text.",
+            hint="Use a model config with vocab_size >= 3.",
+            context={"vocab_size": vocab_size},
+        )
+    ids: List[int] = [1]  # BOS
+    budget = max(0, max_tokens - 1)
+    for ch in text:
+        if len(ids) - 1 >= budget:
+            break
+        ids.append(2 + (ord(ch) % (vocab_size - 2)))
+    if len(ids) == 1:
+        ids.append(2)  # never emit an empty sequence
+    return torch.tensor([ids], dtype=torch.long)
+
+
 def create_app(config: Optional[VirtuOmniConfig] = None) -> FastAPI:
     """Initialize FastAPI application with model lifecycle bindings."""
     if config is not None:
@@ -86,12 +186,21 @@ def create_app(config: Optional[VirtuOmniConfig] = None) -> FastAPI:
         redoc_url="/redoc",
     )
 
+    if torch.cuda.is_available():
+        torch.backends.cuda.matmul.allow_tf32 = True
+        if hasattr(torch.backends, "cudnn"):
+            torch.backends.cudnn.allow_tf32 = True
+        torch.set_float32_matmul_precision("high")
+
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model = VirtuOmni10B(cfg.model).to(device)
     model.eval()
+    tokenizer = VirtuTokenizer(vocab_size=cfg.model.vocab_size)
 
-    # Latency tracking stats
-    request_latencies: List[float] = []
+    # Latency tracking stats — bounded ring buffer. The previous unbounded list
+    # kept one float per request for the life of the process, so a long-running
+    # service leaked memory proportional to total traffic.
+    request_latencies: "deque[float]" = deque(maxlen=LATENCY_WINDOW)
 
     @app.get("/v1/health")
     async def health_check() -> Dict[str, Any]:
@@ -117,71 +226,179 @@ def create_app(config: Optional[VirtuOmniConfig] = None) -> FastAPI:
         # Extract last user message and possible image
         user_msg = next((m for m in reversed(request.messages) if m.role == "user"), None)
         if not user_msg:
-            raise HTTPException(status_code=400, detail="No user message provided in context.")
+            # Structured client error instead of a bare FastAPI string detail.
+            raise HTTPException(
+                status_code=400,
+                detail=ModelError(
+                    SERVE_INFER_FAILURE,
+                    "No user message provided in context.",
+                    hint="Include at least one message whose role is 'user'.",
+                    context={"messages": len(request.messages)},
+                ).to_dict(),
+            )
 
         image_tensor = None
         if user_msg.image_base64:
-            try:
-                img_data = base64.b64decode(user_msg.image_base64)
-                img = Image.open(io.BytesIO(img_data)).convert("RGB").resize((448, 448))
-                raw_bytes = img.tobytes()
-                image_tensor = (
-                    torch.frombuffer(raw_bytes, dtype=torch.uint8)
-                    .view(448, 448, 3)
-                    .permute(2, 0, 1)
-                    .unsqueeze(0)
-                    .float()
-                    / 127.5
-                    - 1.0
-                ).to(device)
-            except Exception as e:
-                raise HTTPException(status_code=400, detail=f"Invalid image format: {e}")
+            # Resolution now follows the configured model geometry instead of the
+            # previous hardcoded 448 px, which desynchronised the patch grid
+            # whenever patch_size did not divide 448.
+            image_tensor = _decode_base64_image(
+                user_msg.image_base64, cfg.model.image_resolution, cfg.model.patch_size
+            ).to(device)
 
-        # Tokenize text
-        token_val = min(42, cfg.model.vocab_size - 1)
-        input_ids = torch.tensor([[1, token_val]], device=device)
+        # A prompt is BOS + content. ``encode`` also appends EOS by default, which
+        # tells the decoder the sequence is already finished and inflates
+        # ``prompt_tokens`` by one; prepend BOS explicitly instead.
+        input_ids = tokenizer.encode(
+            user_msg.content,
+            max_length=cfg.model.max_position_embeddings,
+            add_special_tokens=False,
+        ).to(device)
+        input_ids = torch.cat(
+            [torch.full((1, 1), BOS_TOKEN_ID, dtype=input_ids.dtype, device=device), input_ids],
+            dim=1,
+        )
+
+        token_budget = min(request.max_tokens, 16 if cfg.model.vocab_size < 1000 else 512)
 
         if request.stream:
             async def event_generator():
-                tokens = ["Virtu-Omni-10B: ", "Multimodal ", "reasoning ", "completed ", "successfully."]
-                for tok in tokens:
-                    yield f"data: {json.dumps({'choices': [{'delta': {'content': tok}}]})}\n\n"
-                    time.sleep(0.02)
-                yield "data: [DONE]\n\n"
+                req_id = f"chatcmpl-virtu-{int(time.time() * 1000)}"
+                created_ts = int(time.time())
+                header = json.dumps({
+                    "id": req_id,
+                    "object": "chat.completion.chunk",
+                    "created": created_ts,
+                    "model": request.model,
+                    "choices": [{"index": 0, "delta": {"role": "assistant"}, "finish_reason": None}],
+                })
+                yield f"data: {header}\n\n"
+
+                streamer = tokenizer.create_streamer()
+
+                def _stream_runner():
+                    return list(model.generate_stream(
+                        input_ids=input_ids,
+                        images=image_tensor,
+                        max_new_tokens=token_budget,
+                        temperature=request.temperature,
+                        top_p=request.top_p,
+                        use_cache=True,
+                        loop_steps=1,
+                    ))
+
+                try:
+                    tokens = await asyncio.to_thread(_stream_runner)
+                    for tid in tokens:
+                        chunk = streamer.put(tid)
+                        if chunk:
+                            payload = json.dumps({
+                                "id": req_id,
+                                "object": "chat.completion.chunk",
+                                "created": created_ts,
+                                "model": request.model,
+                                "choices": [{"index": 0, "delta": {"content": chunk}, "finish_reason": None}],
+                            })
+                            yield f"data: {payload}\n\n"
+                            await asyncio.sleep(0)
+
+                    tail = streamer.flush()
+                    if tail:
+                        payload = json.dumps({
+                            "id": req_id,
+                            "object": "chat.completion.chunk",
+                            "created": created_ts,
+                            "model": request.model,
+                            "choices": [{"index": 0, "delta": {"content": tail}, "finish_reason": None}],
+                        })
+                        yield f"data: {payload}\n\n"
+
+                    end_payload = json.dumps({
+                        "id": req_id,
+                        "object": "chat.completion.chunk",
+                        "created": created_ts,
+                        "model": request.model,
+                        "choices": [{"index": 0, "delta": {}, "finish_reason": "stop"}],
+                    })
+                    yield f"data: {end_payload}\n\n"
+                    yield "data: [DONE]\n\n"
+                except Exception as exc:
+                    err_payload = json.dumps({"error": {"message": str(exc), "type": "server_error"}})
+                    yield f"data: {err_payload}\n\n"
 
             return StreamingResponse(event_generator(), media_type="text/event-stream")
 
-        # Non-streaming execution
-        with torch.no_grad():
-            _ = model(input_ids=input_ids, images=image_tensor, mode="text_gen")
+        def _generate_tokens() -> torch.Tensor:
+            with torch.inference_mode():
+                return model.generate(
+                    input_ids=input_ids,
+                    images=image_tensor,
+                    max_new_tokens=token_budget,
+                    temperature=request.temperature,
+                    top_p=request.top_p,
+                    use_cache=True,
+                    loop_steps=1,
+                )
+
+        try:
+            generated_ids = await asyncio.to_thread(_generate_tokens)
+        except ModelError as exc:
+            logger.warning("chat inference rejected: %s", exc.to_dict())
+            raise HTTPException(status_code=400, detail=exc.to_dict()) from exc
+        except Exception as exc:  # noqa: BLE001 - mapped to a structured 503
+            logger.exception("chat inference crashed")
+            raise HTTPException(
+                status_code=503,
+                detail=ModelError(
+                    SERVE_MODEL_FAILURE,
+                    f"Model execution failed: {type(exc).__name__}: {exc}",
+                    hint="Check server logs; retry once the model is ready.",
+                    context={"mode": "text_gen"},
+                ).to_dict(),
+            ) from exc
 
         latency_ms = (time.perf_counter() - start_time) * 1000
         request_latencies.append(latency_ms)
 
-        response_text = (
-            f"Virtu-Omni-10B Response: Successfully processed query '{user_msg.content[:50]}...' "
-            f"with unified multimodal feature flow."
+        prompt_tokens = int(input_ids.shape[1])
+        new_token_ids = generated_ids[0, prompt_tokens:].tolist()
+        completion_tokens = len(new_token_ids)
+        total_tokens = prompt_tokens + completion_tokens
+        response_text = tokenizer.decode(new_token_ids)
+        if not response_text:
+            response_text = "..."
+        gate = gate_answer(
+            response_text,
+            prompt=str(getattr(user_msg, "content", "") or ""),
+            done_reason="length" if completion_tokens >= request.max_tokens else None,
         )
+        response_text = gate.text
+
+        tps = round(completion_tokens / (latency_ms / 1000.0), 2) if latency_ms > 0 else 0.0
 
         return {
             "id": f"chatcmpl-virtu-{int(time.time() * 1000)}",
             "object": "chat.completion",
             "created": int(time.time()),
             "model": request.model,
+            "degraded": cfg.model.vocab_size < 1000,
+            "virtu_gate": gate.to_dict(),
             "choices": [
                 {
                     "index": 0,
                     "message": {"role": "assistant", "content": response_text},
-                    "finish_reason": "stop",
+                    "finish_reason": "length" if gate.action == "incomplete" else "stop",
                 }
             ],
             "usage": {
-                "prompt_tokens": input_ids.shape[1],
-                "completion_tokens": len(response_text.split()),
-                "total_tokens": input_ids.shape[1] + len(response_text.split()),
+                "prompt_tokens": prompt_tokens,
+                "completion_tokens": completion_tokens,
+                "total_tokens": total_tokens,
             },
+            "generated_token_ids": new_token_ids,
             "performance": {
                 "latency_ms": round(latency_ms, 2),
+                "tokens_per_second": tps,
                 "target_threshold_ms": cfg.serving.target_latency_ms,
                 "slo_satisfied": latency_ms <= cfg.serving.target_latency_ms,
             },
@@ -189,17 +406,21 @@ def create_app(config: Optional[VirtuOmniConfig] = None) -> FastAPI:
 
     @app.post("/v1/multimodal/generate_image")
     async def generate_image(request: ImageGenerationRequest) -> Dict[str, Any]:
-        """Text-to-Image Generation Endpoint."""
+        """Text-to-Image Generation Endpoint (synthetic placeholder renderer)."""
         start_time = time.perf_counter()
-        time.sleep(0.08)  # High performance flow matching step
-        latency_ms = (time.perf_counter() - start_time) * 1000
+        # Removed the blocking time.sleep(0.08) "simulated latency": inside an
+        # async endpoint it stalled the entire event loop instead of costing only
+        # this request's budget.
 
-        # Create placeholder high-res image
+        # The vision codebook head is not yet conditioned on the prompt, so a
+        # solid-colour frame is produced. It is explicitly labelled ``placeholder``
+        # instead of passing off a blue square as model output.
         img = Image.new("RGB", (request.width, request.height), color=(30, 144, 255))
         buffer = io.BytesIO()
         img.save(buffer, format="JPEG", quality=90)
         img_b64 = base64.b64encode(buffer.getvalue()).decode("utf-8")
 
+        latency_ms = (time.perf_counter() - start_time) * 1000
         return {
             "created": int(time.time()),
             "prompt": request.prompt,
@@ -208,29 +429,64 @@ def create_app(config: Optional[VirtuOmniConfig] = None) -> FastAPI:
             "image_base64": img_b64,
             "generation_time_ms": round(latency_ms, 2),
             "status": "SUCCESS",
+            "mode": "placeholder",
+            "synthetic": True,
+            "note": (
+                "Codebook-conditioned image synthesis is not wired to this endpoint; "
+                "the returned frame is a constant-colour placeholder."
+            ),
         }
 
     @app.post("/v1/multimodal/understand")
     async def understand_image(request: MultimodalUnderstandRequest) -> Dict[str, Any]:
-        """Image-to-Text Detailed Visual Question Answering Endpoint."""
+        """Image-to-Text Visual Question Answering Endpoint (scaffold)."""
         start_time = time.perf_counter()
-        try:
-            img_data = base64.b64decode(request.image_base64)
-            _ = Image.open(io.BytesIO(img_data)).convert("RGB")
-        except Exception as e:
-            raise HTTPException(status_code=400, detail=f"Image decoding failed: {e}")
+        image_tensor = _decode_base64_image(
+            request.image_base64, cfg.model.image_resolution, cfg.model.patch_size
+        ).to(device)
 
+        input_ids = _encode_scaffold_tokens(request.question, cfg.model.vocab_size).to(device)
+
+        def _forward() -> Dict[str, Any]:
+            with torch.inference_mode():
+                return model(input_ids=input_ids, images=image_tensor, mode="multimodal_eval")
+
+        try:
+            outputs = await asyncio.to_thread(_forward)
+        except ModelError as exc:
+            raise HTTPException(status_code=400, detail=exc.to_dict()) from exc
+        except Exception as exc:  # noqa: BLE001 - mapped to a structured 503
+            logger.exception("multimodal inference crashed")
+            raise HTTPException(
+                status_code=503,
+                detail=ModelError(
+                    SERVE_INFER_FAILURE,
+                    f"Multimodal execution failed: {type(exc).__name__}: {exc}",
+                    hint="Check server logs; retry once the model is ready.",
+                    context={"mode": "multimodal_eval"},
+                ).to_dict(),
+            ) from exc
+
+        logits = outputs["logits"]
+        last_logits = logits[0, -1].float()
+        next_token_id = int(last_logits.argmax(dim=-1))
+        # Report the measured next-token probability instead of the previous
+        # hardcoded 0.988 "confidence", which was not derived from the model.
+        confidence = float(torch.softmax(last_logits, dim=-1).max())
         latency_ms = (time.perf_counter() - start_time) * 1000
+        request_latencies.append(latency_ms)
+
         return {
             "question": request.question,
             "analysis": {
-                "primary_objects": ["foreground_subject", "scene_background", "spatial_geometry"],
                 "text_response": (
-                    f"Virtu-Omni-10B Visual Inspection: The image exhibits rich semantic composition "
-                    f"and crisp geometric structure. In response to '{request.question}': "
-                    f"Features are completely parsed via continuous patch projection."
+                    f"[scaffold] next_token_id={next_token_id}; the vision tower is "
+                    f"active but no detokenizer/QA decoder is bound to this path yet."
                 ),
-                "confidence_score": 0.988,
+                "next_token_id": next_token_id,
+                "confidence_score": round(confidence, 6),
+                "mode": "placeholder",
+                "degraded": True,
             },
             "latency_ms": round(latency_ms, 2),
             "slo_met": latency_ms <= cfg.serving.target_latency_ms,
@@ -239,26 +495,55 @@ def create_app(config: Optional[VirtuOmniConfig] = None) -> FastAPI:
     @app.get("/v1/metrics")
     async def metrics() -> Dict[str, Any]:
         """Prometheus telemetry metrics."""
-        avg_latency = sum(request_latencies) / max(1, len(request_latencies))
-        p99_latency = (
-            sorted(request_latencies)[int(len(request_latencies) * 0.99)]
-            if request_latencies
-            else 0.0
-        )
-        satisfied_count = sum(1 for lat in request_latencies if lat <= cfg.serving.target_latency_ms)
-        compliance = round(satisfied_count / max(1, len(request_latencies)) * 100, 2) if request_latencies else 100.0
+        latencies = list(request_latencies)
+        total = len(latencies)
+        if total:
+            ordered = sorted(latencies)
+            # Clamp the p99 index: for small samples int(n*0.99) == n and used to
+            # raise IndexError on a single-request window.
+            p99_latency = ordered[min(total - 1, int(total * 0.99))]
+            avg_latency = sum(latencies) / total
+            satisfied_count = sum(1 for lat in latencies if lat <= cfg.serving.target_latency_ms)
+            compliance = round(satisfied_count / total * 100, 2)
+        else:
+            # With zero samples there is no evidence of compliance; the old code
+            # reported 100.0 here, which is a fabricated SLO claim.
+            p99_latency = 0.0
+            avg_latency = 0.0
+            compliance = 0.0
+
         return {
-            "total_requests": len(request_latencies),
+            "total_requests": total,
             "average_latency_ms": round(avg_latency, 2),
             "p99_latency_ms": round(p99_latency, 2),
             "single_a100_slo_ms": cfg.serving.target_latency_ms,
             "slo_compliance_rate": compliance,
+            "slo_sample_size": total,
+            "latency_window": LATENCY_WINDOW,
         }
 
     return app
 
 
-app = create_app()
+_APP: Optional[FastAPI] = None
+
+
+def __getattr__(name: str):
+    """Lazily build the ASGI app on first attribute access.
+
+    ``app = create_app()`` at module scope instantiated the full model (and
+    allocated every weight tensor) merely by importing this module — including
+    inside test collection, CLI tools and documentation builds, which could OOM
+    far away from any real request. Uvicorn's ``module:app`` loader still works
+    because it performs a normal attribute lookup.
+    """
+    global _APP
+    if name == "app":
+        if _APP is None:
+            _APP = create_app()
+        return _APP
+    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
+
 
 if __name__ == "__main__":
     import uvicorn

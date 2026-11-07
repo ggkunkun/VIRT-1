@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "files": {
+    "audit.jsonl": "f890054bde44e0d541ea35d7248d9b7b37ca4f6c7d7886147105a5d21d353e55",
+    "cases.json": "bb11f266c1a002b901ee66f78af5c15c8563c5f8c1d4f36d5720696523ae5122",
+    "config.json": "789d017c1f36e6f51f9bea8e8e152fecb67a8f3116cfae4b0da22a06e62236c0",
+    "data/sft_candidate.jsonl": "e6d716b6cf2e9b9e3c1602bd82666168874f0d39d61ad01da1f0cff03b5446ee",
+    "data/validation.json": "f442e5e9b7df5e742d95b04cd64a055c5ab3ba734ec644db486529e98ddf1f1e",
+    "development_baseline.jsonl": "36ff4b1d8abb3c510efa437a6777e21d6f268f71cbc61aece44226e913144183",
+    "development_feedback.json": "e967c7304c45652a5b11749282ecaa940c967a8ae6e14abb47841cb01f9de358",
+    "gate.json": "e045bd78aa207fba8aefe5aeec26fd8c1d8bc12fc06b5b9e3b7eaace59d31c94",
+    "manifest.json": "997d1e2c343adb1fdd045afd766c9fc4a729c80daef1c273875b1b39d07aac1c",
+    "receipt.json": "8aabc4427c96ce3c352ed454f6d397089274076cf30e4e3503c7bd3563bcc5c0",
+    "rounds/01/proposal_raw.json": "949a0fe3d5031863b542b3e0cc19aa9be22371762703ffdca6b32bcc2fbe2e61",
+    "rounds/02/proposal_raw.json": "949a0fe3d5031863b542b3e0cc19aa9be22371762703ffdca6b32bcc2fbe2e61",
+    "rounds.json": "69d7f82a61498bbe9ef40a2fe73cd4418634a5aa0809339ac4560527c88ad336"
+  },
+  "sources": {
+    "data/cases/physics.jsonl": "e2fb44e7861f72fa2041ae102c0a756a095017e17fe5a34ef515f865c3b54534"
+  },
+  "review_sha256": "1f883183370a69c55962a8dab872d7db42baa9798ae0d867c50a0705da7aec96"
+}

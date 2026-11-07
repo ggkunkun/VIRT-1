@@ -1,0 +1,20 @@
+# Virtu 工程能力训练 — 云端依赖锁定
+# 与工作区 requirements-gpu.txt / 平台镜像对齐：PyTorch 2.5.0 + CUDA 12.4 + Python 3.11
+# 安装：pip install -r requirements-cloud.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
+#
+# 重要：V100(sm70) 不要装 flash-attn，也不要开 bf16；由 configs/train.json 的 profile 自动决定。
+torch==2.5.0
+transformers==4.57.0
+peft==0.28.0
+bitsandbytes==0.45.5
+datasets==2.21.0
+accelerate==1.2.1
+safetensors>=0.4.5
+tokenizers>=0.20.0
+sentencepiece>=0.2.0
+protobuf>=4.25.0
+numpy>=1.26,<3
+PyYAML>=6.0
+Pillow>=10.0
+# 可选（仅 a100_80g profile）：flash-attn==2.7.4.post1
+# V100 / L40S 一律不要装，编译 wheel 会白烧一小时且 V100 无法用。

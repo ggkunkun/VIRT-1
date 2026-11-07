@@ -1,0 +1,49 @@
+{
+  "levels": [
+    1,
+    2
+  ],
+  "per": 12,
+  "max_tokens": 40,
+  "expert_ratio": 30,
+  "pattern": "interleave",
+  "rows": [
+    {
+      "conc": 1,
+      "per": 12,
+      "wall_s": 351.39,
+      "throughput_rps": 0.03,
+      "ok": 12,
+      "fail": 0,
+      "empty": 0,
+      "lat_p50": 31.652,
+      "lat_p95": 39.721,
+      "lat_max": 42.939,
+      "route_acc": 1.0,
+      "fast_tps_avg": 37.0,
+      "fast_n": 8,
+      "hard_tps_avg": 10.2,
+      "hard_n": 4,
+      "avg_tps_all": 1.4
+    },
+    {
+      "conc": 2,
+      "per": 12,
+      "wall_s": 294.11,
+      "throughput_rps": 0.04,
+      "ok": 11,
+      "fail": 1,
+      "empty": 0,
+      "lat_p50": 46.186,
+      "lat_p95": 63.309,
+      "lat_max": 64.116,
+      "route_acc": 1.0,
+      "fast_tps_avg": 36.9,
+      "fast_n": 8,
+      "hard_tps_avg": 9.5,
+      "hard_n": 3,
+      "avg_tps_all": 0.9
+    }
+  ],
+  "generated_at": "2026-11-06T18:41:57"
+}

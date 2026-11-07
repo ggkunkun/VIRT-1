@@ -1,0 +1,91 @@
+' ============================================================
+' SOLIDWORKS VBA 宏：参数化法兰盘 (Flange)
+' 用法：
+'   1) 打开 SOLIDWORKS
+'   2) 工具 > 宏 > 新建 (Tools > Macro > New)，保存为 Flange_Parametric.swp
+'   3) 把本文件全部内容粘贴进宏编辑器，覆盖默认代码
+'   4) 工具 > 宏 > 运行 (Tools > Macro > Run)，选择该 .swp
+' 结果：生成带方程式全局变量的法兰盘零件并保存到
+'       D:\Virtu模型\Flange_Parametric.SLDPRT
+' 参数(米): 外径0.12 轴孔0.04 厚0.02 6×Ø0.012 均布Ø0.095
+' ============================================================
+Option Explicit
+
+Dim swApp As Object
+Dim Part As Object
+Dim FeatureManager As Object
+Dim SketchManager As Object
+Dim boolstatus As Boolean
+Dim longstatus As Long
+
+Sub main()
+    Set swApp = Application.SldWorks
+
+    ' 新建零件（默认零件模板）
+    Set Part = swApp.NewPart()
+    If Part Is Nothing Then
+        Set Part = swApp.NewDocument(swApp.GetUserPreferenceStringValue(0), 0, 0#, 0#)
+    End If
+    Set FeatureManager = Part.FeatureManager
+    Set SketchManager = Part.SketchManager
+
+    ' ---- 参数（米）----
+    Dim D_Outer As Double, D_Bore As Double, Thk As Double
+    Dim N As Integer, D_Bolt As Double, PCD As Double
+    D_Outer = 0.12: D_Bore = 0.04: Thk = 0.02
+    N = 6: D_Bolt = 0.012: PCD = 0.095
+
+    ' ---- 草图1：外圆 + 中心轴孔 ----
+    boolstatus = Part.Extension.SelectByID2("前视基准面", "PLANE", 0, 0, 0, False, 0, Nothing, 0)
+    SketchManager.InsertSketch True
+    SketchManager.CreateCircleByRadius 0, 0, 0, D_Outer / 2
+    SketchManager.CreateCircleByRadius 0, 0, 0, D_Bore / 2
+    SketchManager.InsertSketch True
+
+    ' ---- 拉伸盘主体（盲孔，厚度 Thk）----
+    Dim feat As Object
+    Set feat = FeatureManager.FeatureExtrusion2( _
+        True, False, False, _
+        0, 0, Thk, 0#, _
+        False, False, 0#, 0#, _
+        False, False, False, False, _
+        False, False, False, False, _
+        False, 0, 0#, False)
+
+    ' ---- 草图2：螺栓孔 ----
+    boolstatus = Part.Extension.SelectByID2("前视基准面", "PLANE", 0, 0, 0, False, 0, Nothing, 0)
+    SketchManager.InsertSketch True
+    Dim i As Integer, a As Double, x As Double, y As Double
+    For i = 0 To N - 1
+        a = 2 * 3.14159265358979 * i / N
+        x = (PCD / 2) * Cos(a)
+        y = (PCD / 2) * Sin(a)
+        SketchManager.CreateCircleByRadius x, y, 0, D_Bolt / 2
+    Next i
+    SketchManager.InsertSketch True
+
+    ' ---- 贯穿切除螺栓孔 ----
+    Set feat = FeatureManager.FeatureCut3( _
+        True, False, False, _
+        1, 0, 0#, 0#, _
+        False, False, 0#, 0#, _
+        False, False, False, False, _
+        False, False, False, False, _
+        False, 0, 0#, False)
+
+    ' ---- 方程式全局变量（参数化记录）----
+    Dim eqnMgr As Object
+    Set eqnMgr = Part.GetEquationMgr()
+    eqnMgr.AddEquation """D_Outer"" = " & D_Outer
+    eqnMgr.AddEquation """D_Bore"" = " & D_Bore
+    eqnMgr.AddEquation """Thk"" = " & Thk
+    eqnMgr.AddEquation """N"" = " & N
+    eqnMgr.AddEquation """D_Bolt"" = " & D_Bolt
+    eqnMgr.AddEquation """PCD"" = " & PCD
+
+    Part.ForceRebuild3 True
+
+    ' ---- 保存 ----
+    longstatus = Part.SaveAs3("D:\Virtu模型\Flange_Parametric.SLDPRT", 0, 1)
+    swApp.SendMsgToUser "法兰盘已生成并保存到 D:\Virtu模型\Flange_Parametric.SLDPRT"
+End Sub

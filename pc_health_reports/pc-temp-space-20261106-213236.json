@@ -1,0 +1,6815 @@
+{
+  "generated_at": "2026-11-06T21:32:36+08:00",
+  "read_only": true,
+  "scope": "仅 safe_cleanup.py allow_prefixes() 白名单目录（不含 Windows 更新缓存/回收站/私人目录）",
+  "totals": {
+    "files": 44045,
+    "bytes": 8314790233,
+    "skipped_reparse": 145,
+    "unreadable": 0
+  },
+  "by_group": {
+    "temp/(根目录)": {
+      "count": 9148,
+      "bytes": 3398088649,
+      "newest": 1793971548.278509,
+      "oldest": 1750680060.0
+    },
+    "temp/ollama04014": {
+      "count": 75,
+      "bytes": 2249786895,
+      "newest": 1793890559.0062542,
+      "oldest": 1793890527.5805454
+    },
+    "temp/trae-cn-user-x64": {
+      "count": 1,
+      "bytes": 512290888,
+      "newest": 1793867098.543544,
+      "oldest": 1793867098.543544
+    },
+    "cache/Cache_Data": {
+      "count": 1577,
+      "bytes": 363794797,
+      "newest": 1793966204.4759529,
+      "oldest": 1793803835.137541
+    },
+    "temp/nsl3B16.tmp": {
+      "count": 2,
+      "bytes": 249360896,
+      "newest": 1793050582.0,
+      "oldest": 1793050582.0
+    },
+    "temp/nsf399E.tmp": {
+      "count": 1,
+      "bytes": 245737472,
+      "newest": 1793221532.0,
+      "oldest": 1793221532.0
+    },
+    "temp/nsjB14A.tmp": {
+      "count": 1,
+      "bytes": 245737472,
+      "newest": 1793256118.0,
+      "oldest": 1793256118.0
+    },
+    "temp/pip-unpack-jyjshyj4": {
+      "count": 1,
+      "bytes": 198180864,
+      "newest": 1793800801.335165,
+      "oldest": 1793800801.335165
+    },
+    "temp/pip-unpack-ne9b6qso": {
+      "count": 5,
+      "bytes": 125530912,
+      "newest": 1793803586.821818,
+      "oldest": 1793803549.1152067
+    },
+    "temp/baidu": {
+      "count": 12,
+      "bytes": 86836736,
+      "newest": 1793255257.5298274,
+      "oldest": 1792721952.0
+    },
+    "temp/pip-unpack-i2_vr1ct": {
+      "count": 1,
+      "bytes": 63176704,
+      "newest": 1793800841.0387511,
+      "oldest": 1793800841.0387511
+    },
+    "temp/Clash Verge-2.5.10-updater-ww7X9L": {
+      "count": 1,
+      "bytes": 60045702,
+      "newest": 1793803725.872217,
+      "oldest": 1793803725.872217
+    },
+    "temp/Clash Verge-2.5.9-updater-ehBV47": {
+      "count": 1,
+      "bytes": 60044648,
+      "newest": 1793623441.7540145,
+      "oldest": 1793623441.7540145
+    },
+    "explorer/(根目录)": {
+      "count": 31,
+      "bytes": 23216672,
+      "newest": 1793968276.2050915,
+      "oldest": 1793411029.5936642
+    },
+    "temp/15FCE767F24F74D1": {
+      "count": 142,
+      "bytes": 15300977,
+      "newest": 1793929131.8777425,
+      "oldest": 1734013320.0
+    },
+    "temp/HeadlessChrome1426015022750": {
+      "count": 356,
+      "bytes": 13329679,
+      "newest": 1793179724.6674066,
+      "oldest": 1761680570.0
+    },
+    "temp/node-compile-cache": {
+      "count": 2249,
+      "bytes": 13178172,
+      "newest": 1793507498.9111698,
+      "oldest": 1793110848.3458693
+    },
+    "temp/vcall": {
+      "count": 1892,
+      "bytes": 13089351,
+      "newest": 1750680052.0,
+      "oldest": 1750680038.0
+    },
+    "temp/tile_cache": {
+      "count": 16,
+      "bytes": 12583776,
+      "newest": 1793783604.4934523,
+      "oldest": 1793783600.7615528
+    },
+    "temp/gen_py": {
+      "count": 67,
+      "bytes": 12288588,
+      "newest": 1793873881.9889133,
+      "oldest": 1793103970.7136157
+    },
+    "temp/HeadlessChrome1218814819140": {
+      "count": 333,
+      "bytes": 11405607,
+      "newest": 1793179359.3112893,
+      "oldest": 1761680570.0
+    },
+    "temp/HeadlessChrome918814458203": {
+      "count": 333,
+      "bytes": 11403314,
+      "newest": 1793179083.323865,
+      "oldest": 1761680570.0
+    },
+    "temp/HeadlessChrome1344016107734": {
+      "count": 303,
+      "bytes": 11244251,
+      "newest": 1793180689.5921557,
+      "oldest": 1761680570.0
+    },
+    "temp/ai-agent": {
+      "count": 71,
+      "bytes": 10579077,
+      "newest": 1793632174.2298098,
+      "oldest": 1793438910.026606
+    },
+    "temp/pip-unpack-ki7h8uao": {
+      "count": 1,
+      "bytes": 10485760,
+      "newest": 1793798921.95837,
+      "oldest": 1793798921.95837
+    },
+    "temp/ims_cdp_netprobe_0mjczvti": {
+      "count": 220,
+      "bytes": 8450179,
+      "newest": 1793197620.270291,
+      "oldest": 1761680570.0
+    },
+    "temp/ims_cdp_netprobe_a9adhppl": {
+      "count": 215,
+      "bytes": 8395253,
+      "newest": 1793197545.4883668,
+      "oldest": 1761680570.0
+    },
+    "temp/ims_cdp_netprobe_9bh6qt97": {
+      "count": 210,
+      "bytes": 8329837,
+      "newest": 1793197482.7460525,
+      "oldest": 1761680570.0
+    },
+    "temp/ims_cdp_netprobe_g5465780": {
+      "count": 210,
+      "bytes": 8329548,
+      "newest": 1793197506.6553218,
+      "oldest": 1761680570.0
+    },
+    "temp/pytest-temproot-Administrator": {
+      "count": 484,
+      "bytes": 6535989,
+      "newest": 1793168534.5663016,
+      "oldest": 1793104122.9800303
+    },
+    "temp/cchm": {
+      "count": 587,
+      "bytes": 6105229,
+      "newest": 1774249392.0,
+      "oldest": 1774249392.0
+    },
+    "temp/workbuddy-baas-preview": {
+      "count": 6,
+      "bytes": 5702270,
+      "newest": 1793169554.5186207,
+      "oldest": 1793166788.265078
+    },
+    "temp/smai_cu": {
+      "count": 20,
+      "bytes": 5270548,
+      "newest": 1793111543.3007739,
+      "oldest": 1793110907.8603866
+    },
+    "temp/is-YZ62R1RCQ0-uninstall.tmp": {
+      "count": 2,
+      "bytes": 3781376,
+      "newest": 1792297168.326933,
+      "oldest": 1791088885.2213573
+    },
+    "temp/iu-14D2O.tmp": {
+      "count": 1,
+      "bytes": 3603240,
+      "newest": 1790814298.4048479,
+      "oldest": 1790814298.4048479
+    },
+    "temp/iu-14D2N.tmp": {
+      "count": 1,
+      "bytes": 3565461,
+      "newest": 1792579554.6781816,
+      "oldest": 1792579554.6781816
+    },
+    "temp/caps_scale": {
+      "count": 13,
+      "bytes": 3235089,
+      "newest": 1793343876.5003405,
+      "oldest": 1793343830.3051436
+    },
+    "temp/ims_cdp_pub_pc_ioraitne": {
+      "count": 87,
+      "bytes": 2722586,
+      "newest": 1793197724.069813,
+      "oldest": 1793197717.404091
+    },
+    "temp/Tencent": {
+      "count": 46,
+      "bytes": 2594483,
+      "newest": 1793967614.9466603,
+      "oldest": 1793801767.4609506
+    },
+    "temp/ims_cdp_pub_m_ph3r7vdv": {
+      "count": 81,
+      "bytes": 2581365,
+      "newest": 1793197209.1226802,
+      "oldest": 1793197180.129771
+    },
+    "temp/codebuddy-Administrator": {
+      "count": 240,
+      "bytes": 2461045,
+      "newest": 1793968019.7782834,
+      "oldest": 1793166655.3228083
+    },
+    "temp/v8-compile-cache": {
+      "count": 2,
+      "bytes": 2395659,
+      "newest": 1793939086.6975007,
+      "oldest": 1793939086.6975007
+    },
+    "temp/ims_cdp_pub_pc_0g7q8m9u": {
+      "count": 49,
+      "bytes": 1746977,
+      "newest": 1793197219.4906433,
+      "oldest": 1793197189.4795494
+    },
+    "temp/dwgcheck": {
+      "count": 1,
+      "bytes": 1491482,
+      "newest": 1793644571.6833076,
+      "oldest": 1793644571.6833076
+    },
+    "temp/ld": {
+      "count": 3,
+      "bytes": 1454000,
+      "newest": 1789730163.090114,
+      "oldest": 1789730159.2730799
+    },
+    "temp/workbuddy-prompt-vars": {
+      "count": 72,
+      "bytes": 1388013,
+      "newest": 1793971638.2198298,
+      "oldest": 1793104687.1987917
+    },
+    "temp/chrome_url_fetcher_7012_1548649950": {
+      "count": 1,
+      "bytes": 1218478,
+      "newest": 1793269241.1858447,
+      "oldest": 1793269241.1858447
+    },
+    "temp/chrome_url_fetcher_7012_2011655403": {
+      "count": 1,
+      "bytes": 1218478,
+      "newest": 1793253182.7953317,
+      "oldest": 1793253182.7953317
+    },
+    "temp/chrome_url_fetcher_7012_650922647": {
+      "count": 1,
+      "bytes": 1218478,
+      "newest": 1793286011.5773003,
+      "oldest": 1793286011.5773003
+    },
+    "temp/chrome_url_fetcher_11784_378883275": {
+      "count": 1,
+      "bytes": 1191081,
+      "newest": 1793940802.8499453,
+      "oldest": 1793940802.8499453
+    },
+    "temp/chrome_url_fetcher_14088_565828065": {
+      "count": 1,
+      "bytes": 1191081,
+      "newest": 1793841983.599951,
+      "oldest": 1793841983.599951
+    },
+    "temp/chrome_url_fetcher_14088_674873327": {
+      "count": 1,
+      "bytes": 1191081,
+      "newest": 1793820969.0845168,
+      "oldest": 1793820969.0845168
+    },
+    "temp/chrome_url_fetcher_14280_378106682": {
+      "count": 1,
+      "bytes": 1191081,
+      "newest": 1793642518.8417702,
+      "oldest": 1793642518.8417702
+    },
+    "temp/chrome_url_fetcher_14612_1530438707": {
+      "count": 1,
+      "bytes": 1191081,
+      "newest": 1793700244.619429,
+      "oldest": 1793700244.619429
+    },
+    "temp/chrome_url_fetcher_15508_1283309897": {
+      "count": 1,
+      "bytes": 1191081,
+      "newest": 1793471180.4527485,
+      "oldest": 1793471180.4527485
+    },
+    "temp/chrome_url_fetcher_15992_733645360": {
+      "count": 1,
+      "bytes": 1191081,
+      "newest": 1793622343.9809809,
+      "oldest": 1793622343.9809809
+    },
+    "temp/chrome_url_fetcher_8444_1552604513": {
+      "count": 1,
+      "bytes": 1191081,
+      "newest": 1793491018.5629559,
+      "oldest": 1793491018.5629559
+    },
+    "temp/trae": {
+      "count": 2,
+      "bytes": 1132762,
+      "newest": 1793626839.0582185,
+      "oldest": 1793441027.428198
+    },
+    "temp/scoped_dir14808_1339268711": {
+      "count": 39,
+      "bytes": 858917,
+      "newest": 1793177525.8852715,
+      "oldest": 1761680570.0
+    },
+    "temp/scoped_dir16184_1599972294": {
+      "count": 39,
+      "bytes": 858917,
+      "newest": 1793178719.2932806,
+      "oldest": 1761680570.0
+    },
+    "temp/scoped_dir16960_1867366499": {
+      "count": 39,
+      "bytes": 858917,
+      "newest": 1793180174.1567118,
+      "oldest": 1761680570.0
+    },
+    "temp/scoped_dir17696_29517326": {
+      "count": 39,
+      "bytes": 858917,
+      "newest": 1793180200.1505997,
+      "oldest": 1761680570.0
+    },
+    "temp/scoped_dir18496_160049632": {
+      "count": 39,
+      "bytes": 858917,
+      "newest": 1793179984.6951082,
+      "oldest": 1761680570.0
+    },
+    "temp/scoped_dir2124_526431325": {
+      "count": 39,
+      "bytes": 858917,
+      "newest": 1793177534.5786815,
+      "oldest": 1761680570.0
+    },
+    "temp/scoped_dir24700_506311352": {
+      "count": 39,
+      "bytes": 858917,
+      "newest": 1793178079.9789014,
+      "oldest": 1761680570.0
+    },
+    "temp/scoped_dir25060_1347522795": {
+      "count": 39,
+      "bytes": 858917,
+      "newest": 1793178612.5692647,
+      "oldest": 1761680570.0
+    },
+    "temp/scoped_dir27408_590163958": {
+      "count": 39,
+      "bytes": 858917,
+      "newest": 1793177496.1329932,
+      "oldest": 1761680570.0
+    },
+    "temp/scoped_dir27544_1851985749": {
+      "count": 39,
+      "bytes": 858917,
+      "newest": 1793177731.0250175,
+      "oldest": 1761680570.0
+    },
+    "temp/scoped_dir2952_1198364040": {
+      "count": 39,
+      "bytes": 858917,
+      "newest": 1793180008.4186091,
+      "oldest": 1761680570.0
+    },
+    "temp/scoped_dir3056_1336662878": {
+      "count": 39,
+      "bytes": 858917,
+      "newest": 1793177472.9681065,
+      "oldest": 1761680570.0
+    },
+    "temp/scoped_dir5624_915254087": {
+      "count": 39,
+      "bytes": 858917,
+      "newest": 1793178024.9442582,
+      "oldest": 1761680570.0
+    },
+    "temp/scoped_dir6948_1431318467": {
+      "count": 39,
+      "bytes": 858917,
+      "newest": 1793179121.7385073,
+      "oldest": 1761680570.0
+    },
+    "temp/scoped_dir18348_1213950578": {
+      "count": 35,
+      "bytes": 848687,
+      "newest": 1793177536.4746583,
+      "oldest": 1761680570.0
+    },
+    "temp/scoped_dir24904_449274902": {
+      "count": 35,
+      "bytes": 848687,
+      "newest": 1793178736.6985114,
+      "oldest": 1761680570.0
+    },
+    "temp/scoped_dir30040_1127498139": {
+      "count": 35,
+      "bytes": 848687,
+      "newest": 1793177905.9058053,
+      "oldest": 1761680570.0
+    },
+    "temp/scoped_dir30260_1219180648": {
+      "count": 35,
+      "bytes": 848687,
+      "newest": 1793177444.8003798,
+      "oldest": 1761680570.0
+    },
+    "temp/scoped_dir32384_1895689749": {
+      "count": 35,
+      "bytes": 848687,
+      "newest": 1793179955.8994815,
+      "oldest": 1761680570.0
+    },
+    "temp/scoped_dir32640_1947479256": {
+      "count": 35,
+      "bytes": 848687,
+      "newest": 1793177406.5757523,
+      "oldest": 1761680570.0
+    },
+    "temp/workbuddy-product-spill-EVkMEB": {
+      "count": 1,
+      "bytes": 606977,
+      "newest": 1793939867.7292142,
+      "oldest": 1793939867.7292142
+    },
+    "temp/workbuddy-product-spill-GMG7Nn": {
+      "count": 1,
+      "bytes": 606846,
+      "newest": 1793938957.2704012,
+      "oldest": 1793938957.2704012
+    },
+    "temp/workbuddy-product-spill-eVQb5u": {
+      "count": 1,
+      "bytes": 606711,
+      "newest": 1793855955.6340466,
+      "oldest": 1793855955.6340466
+    },
+    "temp/workbuddy-product-spill-fI5q9n": {
+      "count": 1,
+      "bytes": 606695,
+      "newest": 1793854783.9611123,
+      "oldest": 1793854783.9611123
+    },
+    "temp/HeadlessChrome141645451046": {
+      "count": 9,
+      "bytes": 583302,
+      "newest": 1793169878.1244233,
+      "oldest": 1793169871.5014029
+    },
+    "temp/HeadlessChrome232812964984": {
+      "count": 9,
+      "bytes": 583302,
+      "newest": 1793177388.4067416,
+      "oldest": 1793177384.3870356
+    },
+    "temp/workbuddy-product-spill-7kDW8H": {
+      "count": 1,
+      "bytes": 571146,
+      "newest": 1793500694.694196,
+      "oldest": 1793500694.694196
+    },
+    "temp/workbuddy-product-spill-EGfdVx": {
+      "count": 1,
+      "bytes": 571146,
+      "newest": 1793502105.6780627,
+      "oldest": 1793502105.6780627
+    },
+    "temp/workbuddy-product-spill-EXobkH": {
+      "count": 1,
+      "bytes": 571146,
+      "newest": 1793511944.43318,
+      "oldest": 1793511944.43318
+    },
+    "temp/workbuddy-product-spill-5KsoVw": {
+      "count": 1,
+      "bytes": 571080,
+      "newest": 1793447407.5903187,
+      "oldest": 1793447407.5903187
+    },
+    "temp/workbuddy-product-spill-FVjeD7": {
+      "count": 1,
+      "bytes": 571046,
+      "newest": 1793373543.9060774,
+      "oldest": 1793373543.9060774
+    },
+    "temp/workbuddy-product-spill-NK9woF": {
+      "count": 1,
+      "bytes": 571046,
+      "newest": 1793348541.0338995,
+      "oldest": 1793348541.0338995
+    },
+    "temp/workbuddy-product-spill-4Qb6c5": {
+      "count": 1,
+      "bytes": 571015,
+      "newest": 1793498303.6525152,
+      "oldest": 1793498303.6525152
+    },
+    "temp/workbuddy-product-spill-RyYtVA": {
+      "count": 1,
+      "bytes": 571015,
+      "newest": 1793497823.7032056,
+      "oldest": 1793497823.7032056
+    },
+    "temp/workbuddy-product-spill-NHqKrz": {
+      "count": 1,
+      "bytes": 570983,
+      "newest": 1793418313.8488345,
+      "oldest": 1793418313.8488345
+    },
+    "temp/workbuddy-product-spill-PfP0Yt": {
+      "count": 1,
+      "bytes": 570983,
+      "newest": 1793410176.7440846,
+      "oldest": 1793410176.7440846
+    },
+    "temp/workbuddy-product-spill-uYyWBm": {
+      "count": 1,
+      "bytes": 570983,
+      "newest": 1793385993.393748,
+      "oldest": 1793385993.393748
+    },
+    "temp/workbuddy-product-spill-68z7A3": {
+      "count": 1,
+      "bytes": 570949,
+      "newest": 1793421644.9171205,
+      "oldest": 1793421644.9171205
+    },
+    "temp/workbuddy-product-spill-lgiQ7W": {
+      "count": 1,
+      "bytes": 570949,
+      "newest": 1793426596.4097557,
+      "oldest": 1793426596.4097557
+    },
+    "temp/workbuddy-product-spill-bMq8xd": {
+      "count": 1,
+      "bytes": 570852,
+      "newest": 1793410658.9834814,
+      "oldest": 1793410658.9834814
+    },
+    "temp/workbuddy-product-spill-fwzLtc": {
+      "count": 1,
+      "bytes": 570852,
+      "newest": 1793409304.736974,
+      "oldest": 1793409304.736974
+    },
+    "temp/workbuddy-product-spill-GFUkxQ": {
+      "count": 1,
+      "bytes": 570852,
+      "newest": 1793411082.8453577,
+      "oldest": 1793411082.8453577
+    },
+    "temp/workbuddy-product-spill-s7Ulnp": {
+      "count": 1,
+      "bytes": 570852,
+      "newest": 1793418979.0628822,
+      "oldest": 1793418979.0628822
+    },
+    "temp/workbuddy-product-spill-2iK6sS": {
+      "count": 1,
+      "bytes": 570683,
+      "newest": 1793337563.571326,
+      "oldest": 1793337563.571326
+    },
+    "temp/workbuddy-product-spill-BpO2fJ": {
+      "count": 1,
+      "bytes": 570683,
+      "newest": 1793336009.8737812,
+      "oldest": 1793336009.8737812
+    },
+    "temp/workbuddy-product-spill-t7It2Y": {
+      "count": 1,
+      "bytes": 570683,
+      "newest": 1793340000.6304693,
+      "oldest": 1793340000.6304693
+    },
+    "temp/workbuddy-product-spill-UACSLq": {
+      "count": 1,
+      "bytes": 570683,
+      "newest": 1793347651.7231586,
+      "oldest": 1793347651.7231586
+    },
+    "temp/workbuddy-product-spill-VH90d5": {
+      "count": 1,
+      "bytes": 570683,
+      "newest": 1793336376.2617297,
+      "oldest": 1793336376.2617297
+    },
+    "temp/workbuddy-product-spill-bEJ50g": {
+      "count": 1,
+      "bytes": 570680,
+      "newest": 1793288406.5631084,
+      "oldest": 1793288406.5631084
+    },
+    "temp/workbuddy-product-spill-eCCvOd": {
+      "count": 1,
+      "bytes": 570680,
+      "newest": 1793289622.0191543,
+      "oldest": 1793289622.0191543
+    },
+    "temp/workbuddy-product-spill-G7okKt": {
+      "count": 1,
+      "bytes": 570680,
+      "newest": 1793285791.809827,
+      "oldest": 1793285791.809827
+    },
+    "temp/workbuddy-product-spill-Gs6oXA": {
+      "count": 1,
+      "bytes": 570680,
+      "newest": 1793289158.655004,
+      "oldest": 1793289158.655004
+    },
+    "temp/workbuddy-product-spill-h8o0W0": {
+      "count": 1,
+      "bytes": 570680,
+      "newest": 1793284945.459162,
+      "oldest": 1793284945.459162
+    },
+    "temp/workbuddy-product-spill-kDZs1s": {
+      "count": 1,
+      "bytes": 570680,
+      "newest": 1793289621.983499,
+      "oldest": 1793289621.983499
+    },
+    "temp/workbuddy-product-spill-Lroyt2": {
+      "count": 1,
+      "bytes": 570680,
+      "newest": 1793289233.575622,
+      "oldest": 1793289233.575622
+    },
+    "temp/workbuddy-product-spill-M1y2E6": {
+      "count": 1,
+      "bytes": 570680,
+      "newest": 1793289687.4702082,
+      "oldest": 1793289687.4702082
+    },
+    "temp/workbuddy-product-spill-PwCHBU": {
+      "count": 1,
+      "bytes": 570680,
+      "newest": 1793289038.6807034,
+      "oldest": 1793289038.6807034
+    },
+    "temp/workbuddy-product-spill-7rNUHi": {
+      "count": 1,
+      "bytes": 570552,
+      "newest": 1793339869.8321488,
+      "oldest": 1793339869.8321488
+    },
+    "temp/workbuddy-product-spill-8EsFH0": {
+      "count": 1,
+      "bytes": 570552,
+      "newest": 1793335625.3365583,
+      "oldest": 1793335625.3365583
+    },
+    "temp/workbuddy-product-spill-9LJpui": {
+      "count": 1,
+      "bytes": 570552,
+      "newest": 1793343648.4804032,
+      "oldest": 1793343648.4804032
+    },
+    "temp/workbuddy-product-spill-j8B16C": {
+      "count": 1,
+      "bytes": 570552,
+      "newest": 1793343588.4183302,
+      "oldest": 1793343588.4183302
+    },
+    "temp/workbuddy-product-spill-k0LPLm": {
+      "count": 1,
+      "bytes": 570552,
+      "newest": 1793338854.3067422,
+      "oldest": 1793338854.3067422
+    },
+    "temp/workbuddy-product-spill-kAkYTo": {
+      "count": 1,
+      "bytes": 570552,
+      "newest": 1793346328.75079,
+      "oldest": 1793346328.75079
+    },
+    "temp/workbuddy-product-spill-nIiEMt": {
+      "count": 1,
+      "bytes": 570552,
+      "newest": 1793337343.2260728,
+      "oldest": 1793337343.2260728
+    },
+    "temp/workbuddy-product-spill-PZkC9K": {
+      "count": 1,
+      "bytes": 570552,
+      "newest": 1793341059.6710372,
+      "oldest": 1793341059.6710372
+    },
+    "temp/workbuddy-product-spill-T7g9jA": {
+      "count": 1,
+      "bytes": 570552,
+      "newest": 1793336074.2187407,
+      "oldest": 1793336074.2187407
+    },
+    "temp/workbuddy-product-spill-u9dQXH": {
+      "count": 1,
+      "bytes": 570552,
+      "newest": 1793343254.24483,
+      "oldest": 1793343254.24483
+    },
+    "temp/workbuddy-product-spill-yMoIKJ": {
+      "count": 1,
+      "bytes": 570552,
+      "newest": 1793336205.9530196,
+      "oldest": 1793336205.9530196
+    },
+    "temp/workbuddy-product-spill-ZbNBug": {
+      "count": 1,
+      "bytes": 570552,
+      "newest": 1793343491.168226,
+      "oldest": 1793343491.168226
+    },
+    "temp/workbuddy-product-spill-6XHKUB": {
+      "count": 1,
+      "bytes": 570549,
+      "newest": 1793286666.987448,
+      "oldest": 1793286666.987448
+    },
+    "temp/workbuddy-product-spill-iXjA1X": {
+      "count": 1,
+      "bytes": 570549,
+      "newest": 1793285838.4296415,
+      "oldest": 1793285838.4296415
+    },
+    "temp/workbuddy-product-spill-MxNkyY": {
+      "count": 1,
+      "bytes": 570549,
+      "newest": 1793283243.5697923,
+      "oldest": 1793283243.5697923
+    },
+    "temp/workbuddy-product-spill-N7M8xA": {
+      "count": 1,
+      "bytes": 570549,
+      "newest": 1793284324.09626,
+      "oldest": 1793284324.09626
+    },
+    "temp/workbuddy-product-spill-oCUs3H": {
+      "count": 1,
+      "bytes": 570549,
+      "newest": 1793289622.4955812,
+      "oldest": 1793289622.4955812
+    },
+    "temp/workbuddy-product-spill-tfWhTC": {
+      "count": 1,
+      "bytes": 570527,
+      "newest": 1793287773.714525,
+      "oldest": 1793287773.714525
+    },
+    "temp/workbuddy-product-spill-SKIFxQ": {
+      "count": 1,
+      "bytes": 570104,
+      "newest": 1793289621.9537315,
+      "oldest": 1793289621.9537315
+    },
+    "temp/workbuddy-product-spill-sUm7BE": {
+      "count": 1,
+      "bytes": 569671,
+      "newest": 1793281646.7669818,
+      "oldest": 1793281646.7669818
+    },
+    "temp/workbuddy-product-spill-pOGYLk": {
+      "count": 1,
+      "bytes": 569637,
+      "newest": 1793261053.4384723,
+      "oldest": 1793261053.4384723
+    },
+    "temp/workbuddy-product-spill-PpU6eW": {
+      "count": 1,
+      "bytes": 569637,
+      "newest": 1793265709.365637,
+      "oldest": 1793265709.365637
+    },
+    "temp/workbuddy-product-spill-4HR87P": {
+      "count": 1,
+      "bytes": 569486,
+      "newest": 1793206555.759219,
+      "oldest": 1793206555.759219
+    },
+    "temp/workbuddy-product-spill-HzYUhH": {
+      "count": 1,
+      "bytes": 569486,
+      "newest": 1793188170.6156144,
+      "oldest": 1793188170.6156144
+    },
+    "temp/workbuddy-product-spill-YYDaiL": {
+      "count": 1,
+      "bytes": 569486,
+      "newest": 1793192839.1560776,
+      "oldest": 1793192839.1560776
+    },
+    "temp/workbuddy-product-spill-TbaLB7": {
+      "count": 1,
+      "bytes": 569444,
+      "newest": 1793166646.137966,
+      "oldest": 1793166646.137966
+    },
+    "temp/workbuddy-product-spill-uFiivz": {
+      "count": 1,
+      "bytes": 569444,
+      "newest": 1793181140.4440188,
+      "oldest": 1793181140.4440188
+    },
+    "temp/workbuddy-product-spill-xv5MYx": {
+      "count": 1,
+      "bytes": 569444,
+      "newest": 1793183399.6898272,
+      "oldest": 1793183399.6898272
+    },
+    "temp/workbuddy-product-spill-cnPMsK": {
+      "count": 1,
+      "bytes": 569355,
+      "newest": 1793196474.3760743,
+      "oldest": 1793196474.3760743
+    },
+    "temp/workbuddy-product-spill-dnOKy0": {
+      "count": 1,
+      "bytes": 569355,
+      "newest": 1793194855.7235188,
+      "oldest": 1793194855.7235188
+    },
+    "temp/workbuddy-product-spill-p164b0": {
+      "count": 1,
+      "bytes": 569313,
+      "newest": 1793164927.9824862,
+      "oldest": 1793164927.9824862
+    },
+    "temp/workbuddy-product-spill-RwdTnh": {
+      "count": 1,
+      "bytes": 569313,
+      "newest": 1793170859.4479208,
+      "oldest": 1793170859.4479208
+    },
+    "temp/workbuddy-product-spill-YTxWnK": {
+      "count": 1,
+      "bytes": 569313,
+      "newest": 1793171300.412932,
+      "oldest": 1793171300.412932
+    },
+    "temp/workbuddy-product-spill-vpsI5W": {
+      "count": 1,
+      "bytes": 568999,
+      "newest": 1793181140.5076535,
+      "oldest": 1793181140.5076535
+    },
+    "temp/workbuddy-product-spill-7WDjZ0": {
+      "count": 1,
+      "bytes": 568649,
+      "newest": 1793108632.8442655,
+      "oldest": 1793108632.8442655
+    },
+    "temp/workbuddy-product-spill-aJW6qb": {
+      "count": 1,
+      "bytes": 568649,
+      "newest": 1793120584.101371,
+      "oldest": 1793120584.101371
+    },
+    "temp/workbuddy-product-spill-NFUDyD": {
+      "count": 1,
+      "bytes": 568649,
+      "newest": 1793111526.7453308,
+      "oldest": 1793111526.7453308
+    },
+    "temp/workbuddy-product-spill-rz2UsW": {
+      "count": 1,
+      "bytes": 568649,
+      "newest": 1793121090.3812468,
+      "oldest": 1793121090.3812468
+    },
+    "temp/workbuddy-product-spill-Ex5Q0E": {
+      "count": 1,
+      "bytes": 568518,
+      "newest": 1793118245.840312,
+      "oldest": 1793118245.840312
+    },
+    "temp/workbuddy-product-spill-jlAzvv": {
+      "count": 1,
+      "bytes": 568518,
+      "newest": 1793103599.3186002,
+      "oldest": 1793103599.3186002
+    },
+    "temp/workbuddy-product-spill-nG1usU": {
+      "count": 1,
+      "bytes": 568518,
+      "newest": 1793109442.5385008,
+      "oldest": 1793109442.5385008
+    },
+    "temp/workbuddy-product-spill-tWDje6": {
+      "count": 1,
+      "bytes": 568518,
+      "newest": 1793121090.7938297,
+      "oldest": 1793121090.7938297
+    },
+    "temp/workbuddy-product-spill-yhnCdq": {
+      "count": 1,
+      "bytes": 568518,
+      "newest": 1793121090.39682,
+      "oldest": 1793121090.39682
+    },
+    "temp/workbuddy-product-spill-3X5u2t": {
+      "count": 1,
+      "bytes": 568220,
+      "newest": 1793254055.9830132,
+      "oldest": 1793254055.9830132
+    },
+    "temp/workbuddy-product-spill-kqDIwn": {
+      "count": 1,
+      "bytes": 568204,
+      "newest": 1793121090.3235204,
+      "oldest": 1793121090.3235204
+    },
+    "temp/workbuddy-product-spill-u359nD": {
+      "count": 1,
+      "bytes": 568089,
+      "newest": 1793207637.081762,
+      "oldest": 1793207637.081762
+    },
+    "temp/workbuddy-product-spill-up4a1b": {
+      "count": 1,
+      "bytes": 568089,
+      "newest": 1793260438.2342474,
+      "oldest": 1793260438.2342474
+    },
+    "temp/workbuddy-product-spill-4yCsxr": {
+      "count": 1,
+      "bytes": 566553,
+      "newest": 1793522526.071149,
+      "oldest": 1793522526.071149
+    },
+    "temp/workbuddy-product-spill-D5TYwK": {
+      "count": 1,
+      "bytes": 566553,
+      "newest": 1793520170.0686638,
+      "oldest": 1793520170.0686638
+    },
+    "temp/workbuddy-product-spill-iOHDyh": {
+      "count": 1,
+      "bytes": 566553,
+      "newest": 1793522030.8872292,
+      "oldest": 1793522030.8872292
+    },
+    "temp/workbuddy-product-spill-qfrQAS": {
+      "count": 1,
+      "bytes": 566553,
+      "newest": 1793515798.9563367,
+      "oldest": 1793515798.9563367
+    },
+    "temp/workbuddy-product-spill-GOYqQU": {
+      "count": 1,
+      "bytes": 566422,
+      "newest": 1793523536.6508336,
+      "oldest": 1793523536.6508336
+    },
+    "temp/workbuddy-product-spill-S3frof": {
+      "count": 1,
+      "bytes": 566422,
+      "newest": 1793520373.500017,
+      "oldest": 1793520373.500017
+    },
+    "temp/workbuddy-product-spill-fyX8SO": {
+      "count": 1,
+      "bytes": 563427,
+      "newest": 1793780469.0789669,
+      "oldest": 1793780469.0789669
+    },
+    "temp/workbuddy-product-spill-s9CSCn": {
+      "count": 1,
+      "bytes": 563427,
+      "newest": 1793779599.3260703,
+      "oldest": 1793779599.3260703
+    },
+    "temp/workbuddy-product-spill-b7INSh": {
+      "count": 1,
+      "bytes": 563296,
+      "newest": 1793777871.7124412,
+      "oldest": 1793777871.7124412
+    },
+    "temp/workbuddy-product-spill-J0Qpcc": {
+      "count": 1,
+      "bytes": 563296,
+      "newest": 1793778110.7098732,
+      "oldest": 1793778110.7098732
+    },
+    "temp/workbuddy-product-spill-zBq1Zd": {
+      "count": 1,
+      "bytes": 563296,
+      "newest": 1793780306.5181198,
+      "oldest": 1793780306.5181198
+    },
+    "temp/workbuddy-product-spill-fwyGOz": {
+      "count": 1,
+      "bytes": 562258,
+      "newest": 1793894848.8981478,
+      "oldest": 1793894848.8981478
+    },
+    "temp/workbuddy-product-spill-kcbuWk": {
+      "count": 1,
+      "bytes": 562220,
+      "newest": 1793892925.787518,
+      "oldest": 1793892925.787518
+    },
+    "temp/workbuddy-product-spill-ypsu8q": {
+      "count": 1,
+      "bytes": 562216,
+      "newest": 1793893683.229785,
+      "oldest": 1793893683.229785
+    },
+    "temp/workbuddy-product-spill-PNkUv1": {
+      "count": 1,
+      "bytes": 562200,
+      "newest": 1793892577.9719334,
+      "oldest": 1793892577.9719334
+    },
+    "temp/workbuddy-product-spill-SNjSxH": {
+      "count": 1,
+      "bytes": 562189,
+      "newest": 1793892338.1388617,
+      "oldest": 1793892338.1388617
+    },
+    "temp/workbuddy-product-spill-3nYBZR": {
+      "count": 1,
+      "bytes": 561987,
+      "newest": 1793881612.71627,
+      "oldest": 1793881612.71627
+    },
+    "temp/workbuddy-product-spill-9ngB82": {
+      "count": 1,
+      "bytes": 561987,
+      "newest": 1793855606.2406726,
+      "oldest": 1793855606.2406726
+    },
+    "temp/workbuddy-product-spill-EBAXM2": {
+      "count": 1,
+      "bytes": 561987,
+      "newest": 1793879720.9219387,
+      "oldest": 1793879720.9219387
+    },
+    "temp/workbuddy-product-spill-IP9S1S": {
+      "count": 1,
+      "bytes": 561987,
+      "newest": 1793848622.2707374,
+      "oldest": 1793848622.2707374
+    },
+    "temp/workbuddy-product-spill-tJpeZy": {
+      "count": 1,
+      "bytes": 561987,
+      "newest": 1793889048.1472898,
+      "oldest": 1793889048.1472898
+    },
+    "temp/workbuddy-product-spill-1pWuZg": {
+      "count": 1,
+      "bytes": 561945,
+      "newest": 1793847591.7260609,
+      "oldest": 1793847591.7260609
+    },
+    "temp/workbuddy-product-spill-tNADk7": {
+      "count": 1,
+      "bytes": 561945,
+      "newest": 1793855955.6481004,
+      "oldest": 1793855955.6481004
+    },
+    "temp/workbuddy-product-spill-ayfttZ": {
+      "count": 1,
+      "bytes": 561891,
+      "newest": 1793785334.7287774,
+      "oldest": 1793785334.7287774
+    },
+    "temp/workbuddy-product-spill-bii75D": {
+      "count": 1,
+      "bytes": 561891,
+      "newest": 1793781349.9241996,
+      "oldest": 1793781349.9241996
+    },
+    "temp/workbuddy-product-spill-cK2jV3": {
+      "count": 1,
+      "bytes": 561856,
+      "newest": 1793855956.3410542,
+      "oldest": 1793855956.3410542
+    },
+    "temp/workbuddy-product-spill-LzPULc": {
+      "count": 1,
+      "bytes": 561856,
+      "newest": 1793871946.0045977,
+      "oldest": 1793871946.0045977
+    },
+    "temp/workbuddy-product-spill-PHhhp3": {
+      "count": 1,
+      "bytes": 561856,
+      "newest": 1793893544.6106682,
+      "oldest": 1793893544.6106682
+    },
+    "temp/workbuddy-product-spill-ueQG3p": {
+      "count": 1,
+      "bytes": 561856,
+      "newest": 1793878541.9150538,
+      "oldest": 1793878541.9150538
+    },
+    "temp/workbuddy-product-spill-5AC6e0": {
+      "count": 1,
+      "bytes": 561814,
+      "newest": 1793893682.802544,
+      "oldest": 1793893682.802544
+    },
+    "temp/workbuddy-product-spill-lRPlWs": {
+      "count": 1,
+      "bytes": 561814,
+      "newest": 1793888648.273806,
+      "oldest": 1793888648.273806
+    },
+    "temp/workbuddy-product-spill-oNgvxE": {
+      "count": 1,
+      "bytes": 561814,
+      "newest": 1793846672.9073558,
+      "oldest": 1793846672.9073558
+    },
+    "temp/workbuddy-product-spill-SpOqG1": {
+      "count": 1,
+      "bytes": 561814,
+      "newest": 1793841116.5987377,
+      "oldest": 1793841116.5987377
+    },
+    "temp/workbuddy-product-spill-8fKINY": {
+      "count": 1,
+      "bytes": 561760,
+      "newest": 1793800784.6273937,
+      "oldest": 1793800784.6273937
+    },
+    "temp/workbuddy-product-spill-9aCzSV": {
+      "count": 1,
+      "bytes": 561760,
+      "newest": 1793790245.3332582,
+      "oldest": 1793790245.3332582
+    },
+    "temp/workbuddy-product-spill-eGe2l2": {
+      "count": 1,
+      "bytes": 561760,
+      "newest": 1793782325.5528278,
+      "oldest": 1793782325.5528278
+    },
+    "temp/workbuddy-product-spill-HuWEv0": {
+      "count": 1,
+      "bytes": 561760,
+      "newest": 1793781068.5696516,
+      "oldest": 1793781068.5696516
+    },
+    "temp/workbuddy-product-spill-IaH9lN": {
+      "count": 1,
+      "bytes": 561760,
+      "newest": 1793784098.5490305,
+      "oldest": 1793784098.5490305
+    },
+    "temp/workbuddy-product-spill-W9w2ct": {
+      "count": 1,
+      "bytes": 561760,
+      "newest": 1793780469.4246764,
+      "oldest": 1793780469.4246764
+    },
+    "temp/workbuddy-product-spill-FrA80i": {
+      "count": 1,
+      "bytes": 561467,
+      "newest": 1793960117.506044,
+      "oldest": 1793960117.506044
+    },
+    "temp/workbuddy-product-spill-r3E3lx": {
+      "count": 1,
+      "bytes": 561467,
+      "newest": 1793967838.7712266,
+      "oldest": 1793967838.7712266
+    },
+    "temp/workbuddy-product-spill-uUnVzC": {
+      "count": 1,
+      "bytes": 561467,
+      "newest": 1793968928.912185,
+      "oldest": 1793968928.912185
+    },
+    "temp/workbuddy-product-spill-VxpDJW": {
+      "count": 1,
+      "bytes": 561467,
+      "newest": 1793940484.9945047,
+      "oldest": 1793940484.9945047
+    },
+    "temp/workbuddy-product-spill-1hyhai": {
+      "count": 1,
+      "bytes": 561425,
+      "newest": 1793931658.3435924,
+      "oldest": 1793931658.3435924
+    },
+    "temp/workbuddy-product-spill-4XeCxR": {
+      "count": 1,
+      "bytes": 561425,
+      "newest": 1793897705.3424668,
+      "oldest": 1793897705.3424668
+    },
+    "temp/workbuddy-product-spill-69UiKy": {
+      "count": 1,
+      "bytes": 561425,
+      "newest": 1793931059.981239,
+      "oldest": 1793931059.981239
+    },
+    "temp/workbuddy-product-spill-7qNaHB": {
+      "count": 1,
+      "bytes": 561425,
+      "newest": 1793902164.1708763,
+      "oldest": 1793902164.1708763
+    },
+    "temp/workbuddy-product-spill-AdpwuI": {
+      "count": 1,
+      "bytes": 561425,
+      "newest": 1793969934.3987367,
+      "oldest": 1793969934.3987367
+    },
+    "temp/workbuddy-product-spill-HUfDmz": {
+      "count": 1,
+      "bytes": 561425,
+      "newest": 1793971501.4724462,
+      "oldest": 1793971501.4724462
+    },
+    "temp/workbuddy-product-spill-iqyjxG": {
+      "count": 1,
+      "bytes": 561425,
+      "newest": 1793971844.8974671,
+      "oldest": 1793971844.8974671
+    },
+    "temp/workbuddy-product-spill-iULSmv": {
+      "count": 1,
+      "bytes": 561425,
+      "newest": 1793932772.81711,
+      "oldest": 1793932772.81711
+    },
+    "temp/workbuddy-product-spill-jGoldm": {
+      "count": 1,
+      "bytes": 561425,
+      "newest": 1793897168.344385,
+      "oldest": 1793897168.344385
+    },
+    "temp/workbuddy-product-spill-Ksdvov": {
+      "count": 1,
+      "bytes": 561425,
+      "newest": 1793930823.7085872,
+      "oldest": 1793930823.7085872
+    },
+    "temp/workbuddy-product-spill-TbfXiV": {
+      "count": 1,
+      "bytes": 561425,
+      "newest": 1793899941.5784314,
+      "oldest": 1793899941.5784314
+    },
+    "temp/workbuddy-product-spill-ZkeOnQ": {
+      "count": 1,
+      "bytes": 561425,
+      "newest": 1793929137.5324063,
+      "oldest": 1793929137.5324063
+    },
+    "temp/workbuddy-product-spill-5NZ7CH": {
+      "count": 1,
+      "bytes": 561336,
+      "newest": 1793944703.1207404,
+      "oldest": 1793944703.1207404
+    },
+    "temp/workbuddy-product-spill-aOyZXd": {
+      "count": 1,
+      "bytes": 561336,
+      "newest": 1793941522.1194077,
+      "oldest": 1793941522.1194077
+    },
+    "temp/workbuddy-product-spill-BRhTHb": {
+      "count": 1,
+      "bytes": 561336,
+      "newest": 1793949965.6842494,
+      "oldest": 1793949965.6842494
+    },
+    "temp/workbuddy-product-spill-CytAZu": {
+      "count": 1,
+      "bytes": 561336,
+      "newest": 1793963150.5194397,
+      "oldest": 1793963150.5194397
+    },
+    "temp/workbuddy-product-spill-iddCfG": {
+      "count": 1,
+      "bytes": 561336,
+      "newest": 1793948010.9070666,
+      "oldest": 1793948010.9070666
+    },
+    "temp/workbuddy-product-spill-oOTOC6": {
+      "count": 1,
+      "bytes": 561336,
+      "newest": 1793959896.4549997,
+      "oldest": 1793959896.4549997
+    },
+    "temp/workbuddy-product-spill-PInP0V": {
+      "count": 1,
+      "bytes": 561336,
+      "newest": 1793961199.8360171,
+      "oldest": 1793961199.8360171
+    },
+    "temp/workbuddy-product-spill-QfA7g0": {
+      "count": 1,
+      "bytes": 561336,
+      "newest": 1793963320.2448933,
+      "oldest": 1793963320.2448933
+    },
+    "temp/workbuddy-product-spill-s2BHUa": {
+      "count": 1,
+      "bytes": 561336,
+      "newest": 1793948010.150773,
+      "oldest": 1793948010.150773
+    },
+    "temp/workbuddy-product-spill-6jei1C": {
+      "count": 1,
+      "bytes": 561315,
+      "newest": 1793798338.766044,
+      "oldest": 1793798338.766044
+    },
+    "temp/workbuddy-product-spill-5ilUVB": {
+      "count": 1,
+      "bytes": 561294,
+      "newest": 1793895894.0242996,
+      "oldest": 1793895894.0242996
+    },
+    "temp/workbuddy-product-spill-bBvcCF": {
+      "count": 1,
+      "bytes": 561294,
+      "newest": 1793970490.9120395,
+      "oldest": 1793970490.9120395
+    },
+    "temp/workbuddy-product-spill-brdMmN": {
+      "count": 1,
+      "bytes": 561294,
+      "newest": 1793898666.702887,
+      "oldest": 1793898666.702887
+    },
+    "temp/workbuddy-product-spill-cWSuqH": {
+      "count": 1,
+      "bytes": 561294,
+      "newest": 1793925957.9548113,
+      "oldest": 1793925957.9548113
+    },
+    "temp/workbuddy-product-spill-fJp88s": {
+      "count": 1,
+      "bytes": 561294,
+      "newest": 1793965610.4009323,
+      "oldest": 1793965610.4009323
+    },
+    "temp/workbuddy-product-spill-FYkqyg": {
+      "count": 1,
+      "bytes": 561294,
+      "newest": 1793926062.0453415,
+      "oldest": 1793926062.0453415
+    },
+    "temp/workbuddy-product-spill-gaAbKo": {
+      "count": 1,
+      "bytes": 561294,
+      "newest": 1793968189.0963402,
+      "oldest": 1793968189.0963402
+    },
+    "temp/workbuddy-product-spill-IZKbEr": {
+      "count": 1,
+      "bytes": 561294,
+      "newest": 1793969609.2323327,
+      "oldest": 1793969609.2323327
+    },
+    "temp/workbuddy-product-spill-phMYIg": {
+      "count": 1,
+      "bytes": 561294,
+      "newest": 1793965610.7920766,
+      "oldest": 1793965610.7920766
+    },
+    "temp/workbuddy-product-spill-qZsxKZ": {
+      "count": 1,
+      "bytes": 561294,
+      "newest": 1793897555.338547,
+      "oldest": 1793897555.338547
+    },
+    "temp/workbuddy-product-spill-Sdh6Y6": {
+      "count": 1,
+      "bytes": 561294,
+      "newest": 1793968232.4353602,
+      "oldest": 1793968232.4353602
+    },
+    "temp/workbuddy-product-spill-AxaTLi": {
+      "count": 1,
+      "bytes": 559975,
+      "newest": 1793553428.8859086,
+      "oldest": 1793553428.8859086
+    },
+    "temp/workbuddy-product-spill-JcpivP": {
+      "count": 1,
+      "bytes": 559844,
+      "newest": 1793526925.4141927,
+      "oldest": 1793526925.4141927
+    },
+    "temp/workbuddy-product-spill-mqUlRs": {
+      "count": 1,
+      "bytes": 559844,
+      "newest": 1793523055.6246634,
+      "oldest": 1793523055.6246634
+    },
+    "temp/workbuddy-product-spill-1ZKOE2": {
+      "count": 1,
+      "bytes": 559327,
+      "newest": 1793606773.3352525,
+      "oldest": 1793606773.3352525
+    },
+    "temp/workbuddy-product-spill-PNXP0p": {
+      "count": 1,
+      "bytes": 559327,
+      "newest": 1793604065.6259904,
+      "oldest": 1793604065.6259904
+    },
+    "temp/workbuddy-product-spill-52PF8C": {
+      "count": 1,
+      "bytes": 559303,
+      "newest": 1793553429.051735,
+      "oldest": 1793553429.051735
+    },
+    "temp/workbuddy-product-spill-6JGCDn": {
+      "count": 1,
+      "bytes": 559303,
+      "newest": 1793547955.920896,
+      "oldest": 1793547955.920896
+    },
+    "temp/workbuddy-product-spill-hpeEU6": {
+      "count": 1,
+      "bytes": 559303,
+      "newest": 1793546626.1449187,
+      "oldest": 1793546626.1449187
+    },
+    "temp/workbuddy-product-spill-JNnpXi": {
+      "count": 1,
+      "bytes": 559303,
+      "newest": 1793542743.246555,
+      "oldest": 1793542743.246555
+    },
+    "temp/workbuddy-product-spill-m7Hy1b": {
+      "count": 1,
+      "bytes": 559303,
+      "newest": 1793547956.3441193,
+      "oldest": 1793547956.3441193
+    },
+    "temp/workbuddy-product-spill-NqYXVK": {
+      "count": 1,
+      "bytes": 559303,
+      "newest": 1793548439.380103,
+      "oldest": 1793548439.380103
+    },
+    "temp/workbuddy-product-spill-OOU9wI": {
+      "count": 1,
+      "bytes": 559303,
+      "newest": 1793543342.9276292,
+      "oldest": 1793543342.9276292
+    },
+    "temp/workbuddy-product-spill-QYrGyx": {
+      "count": 1,
+      "bytes": 559303,
+      "newest": 1793550039.7957702,
+      "oldest": 1793550039.7957702
+    },
+    "temp/workbuddy-product-spill-XY3sXl": {
+      "count": 1,
+      "bytes": 559303,
+      "newest": 1793538727.1580985,
+      "oldest": 1793538727.1580985
+    },
+    "temp/workbuddy-product-spill-daPkp4": {
+      "count": 1,
+      "bytes": 559267,
+      "newest": 1793676220.2098436,
+      "oldest": 1793676220.2098436
+    },
+    "temp/workbuddy-product-spill-XDLU0d": {
+      "count": 1,
+      "bytes": 559267,
+      "newest": 1793704602.1320145,
+      "oldest": 1793704602.1320145
+    },
+    "temp/workbuddy-product-spill-y9Pzq0": {
+      "count": 1,
+      "bytes": 559267,
+      "newest": 1793703310.216355,
+      "oldest": 1793703310.216355
+    },
+    "temp/workbuddy-product-spill-74TZa4": {
+      "count": 1,
+      "bytes": 559225,
+      "newest": 1793644672.3127055,
+      "oldest": 1793644672.3127055
+    },
+    "temp/workbuddy-product-spill-dwrwAz": {
+      "count": 1,
+      "bytes": 559225,
+      "newest": 1793675239.1604972,
+      "oldest": 1793675239.1604972
+    },
+    "temp/workbuddy-product-spill-g6BBES": {
+      "count": 1,
+      "bytes": 559225,
+      "newest": 1793626024.1538548,
+      "oldest": 1793626024.1538548
+    },
+    "temp/workbuddy-product-spill-gFBi1n": {
+      "count": 1,
+      "bytes": 559225,
+      "newest": 1793669551.590929,
+      "oldest": 1793669551.590929
+    },
+    "temp/workbuddy-product-spill-GmAMq0": {
+      "count": 1,
+      "bytes": 559225,
+      "newest": 1793643232.8741875,
+      "oldest": 1793643232.8741875
+    },
+    "temp/workbuddy-product-spill-iiZ22S": {
+      "count": 1,
+      "bytes": 559225,
+      "newest": 1793668660.3740206,
+      "oldest": 1793668660.3740206
+    },
+    "temp/workbuddy-product-spill-IttjON": {
+      "count": 1,
+      "bytes": 559225,
+      "newest": 1793625627.011515,
+      "oldest": 1793625627.011515
+    },
+    "temp/workbuddy-product-spill-JI4Tyz": {
+      "count": 1,
+      "bytes": 559225,
+      "newest": 1793666547.1580017,
+      "oldest": 1793666547.1580017
+    },
+    "temp/workbuddy-product-spill-Ma9Kc5": {
+      "count": 1,
+      "bytes": 559225,
+      "newest": 1793669242.1315825,
+      "oldest": 1793669242.1315825
+    },
+    "temp/workbuddy-product-spill-NpDWQ4": {
+      "count": 1,
+      "bytes": 559225,
+      "newest": 1793668677.5455577,
+      "oldest": 1793668677.5455577
+    },
+    "temp/workbuddy-product-spill-RfFUPF": {
+      "count": 1,
+      "bytes": 559225,
+      "newest": 1793667283.3406775,
+      "oldest": 1793667283.3406775
+    },
+    "temp/workbuddy-product-spill-USrceV": {
+      "count": 1,
+      "bytes": 559225,
+      "newest": 1793644672.1351764,
+      "oldest": 1793644672.1351764
+    },
+    "temp/workbuddy-product-spill-yDRCMA": {
+      "count": 1,
+      "bytes": 559225,
+      "newest": 1793624562.5866506,
+      "oldest": 1793624562.5866506
+    },
+    "temp/workbuddy-product-spill-hAEqo5": {
+      "count": 1,
+      "bytes": 559201,
+      "newest": 1793527381.6470563,
+      "oldest": 1793527381.6470563
+    },
+    "temp/workbuddy-product-spill-ojtajL": {
+      "count": 1,
+      "bytes": 559201,
+      "newest": 1793531053.067884,
+      "oldest": 1793531053.067884
+    },
+    "temp/workbuddy-product-spill-88AMga": {
+      "count": 1,
+      "bytes": 559196,
+      "newest": 1793603933.823363,
+      "oldest": 1793603933.823363
+    },
+    "temp/workbuddy-product-spill-OR8zH7": {
+      "count": 1,
+      "bytes": 559196,
+      "newest": 1793606237.6997838,
+      "oldest": 1793606237.6997838
+    },
+    "temp/workbuddy-product-spill-rdVXwK": {
+      "count": 1,
+      "bytes": 559196,
+      "newest": 1793606527.7223823,
+      "oldest": 1793606527.7223823
+    },
+    "temp/workbuddy-product-spill-t4YJVn": {
+      "count": 1,
+      "bytes": 559196,
+      "newest": 1793620731.5686836,
+      "oldest": 1793620731.5686836
+    },
+    "temp/workbuddy-product-spill-U176sZ": {
+      "count": 1,
+      "bytes": 559196,
+      "newest": 1793603846.7034686,
+      "oldest": 1793603846.7034686
+    },
+    "temp/workbuddy-product-spill-z7h5Hi": {
+      "count": 1,
+      "bytes": 559196,
+      "newest": 1793604571.4284334,
+      "oldest": 1793604571.4284334
+    },
+    "temp/workbuddy-product-spill-E4036W": {
+      "count": 1,
+      "bytes": 559136,
+      "newest": 1793705040.974691,
+      "oldest": 1793705040.974691
+    },
+    "temp/workbuddy-product-spill-gjYPDt": {
+      "count": 1,
+      "bytes": 559136,
+      "newest": 1793705335.1848922,
+      "oldest": 1793705335.1848922
+    },
+    "temp/workbuddy-product-spill-mRGg6S": {
+      "count": 1,
+      "bytes": 559136,
+      "newest": 1793675556.8471932,
+      "oldest": 1793675556.8471932
+    },
+    "temp/workbuddy-product-spill-sYmfQK": {
+      "count": 1,
+      "bytes": 559136,
+      "newest": 1793675519.1756701,
+      "oldest": 1793675519.1756701
+    },
+    "temp/workbuddy-product-spill-440hEw": {
+      "count": 1,
+      "bytes": 559094,
+      "newest": 1793704481.67846,
+      "oldest": 1793704481.67846
+    },
+    "temp/workbuddy-product-spill-99qZNm": {
+      "count": 1,
+      "bytes": 559094,
+      "newest": 1793672857.8278966,
+      "oldest": 1793672857.8278966
+    },
+    "temp/workbuddy-product-spill-dm8TfZ": {
+      "count": 1,
+      "bytes": 559094,
+      "newest": 1793681163.2900138,
+      "oldest": 1793681163.2900138
+    },
+    "temp/workbuddy-product-spill-esTjRL": {
+      "count": 1,
+      "bytes": 559094,
+      "newest": 1793675248.2457755,
+      "oldest": 1793675248.2457755
+    },
+    "temp/workbuddy-product-spill-f9HsZ1": {
+      "count": 1,
+      "bytes": 559094,
+      "newest": 1793702428.7705314,
+      "oldest": 1793702428.7705314
+    },
+    "temp/workbuddy-product-spill-FIheJV": {
+      "count": 1,
+      "bytes": 559094,
+      "newest": 1793705040.9341161,
+      "oldest": 1793705040.9341161
+    },
+    "temp/workbuddy-product-spill-FsYyiz": {
+      "count": 1,
+      "bytes": 559094,
+      "newest": 1793680445.0867078,
+      "oldest": 1793680445.0867078
+    },
+    "temp/workbuddy-product-spill-gN90eh": {
+      "count": 1,
+      "bytes": 559094,
+      "newest": 1793688051.2989447,
+      "oldest": 1793688051.2989447
+    },
+    "temp/workbuddy-product-spill-L2kSGT": {
+      "count": 1,
+      "bytes": 559094,
+      "newest": 1793688073.5542636,
+      "oldest": 1793688073.5542636
+    },
+    "temp/workbuddy-product-spill-mGjGxP": {
+      "count": 1,
+      "bytes": 559094,
+      "newest": 1793703376.2030268,
+      "oldest": 1793703376.2030268
+    },
+    "temp/workbuddy-product-spill-OPnUFn": {
+      "count": 1,
+      "bytes": 559094,
+      "newest": 1793681388.3563573,
+      "oldest": 1793681388.3563573
+    },
+    "temp/workbuddy-product-spill-SGoPVi": {
+      "count": 1,
+      "bytes": 559094,
+      "newest": 1793679307.1264565,
+      "oldest": 1793679307.1264565
+    },
+    "temp/workbuddy-product-spill-SyTXvP": {
+      "count": 1,
+      "bytes": 559094,
+      "newest": 1793676220.6370625,
+      "oldest": 1793676220.6370625
+    },
+    "temp/workbuddy-product-spill-UJ2df7": {
+      "count": 1,
+      "bytes": 559094,
+      "newest": 1793698608.5323193,
+      "oldest": 1793698608.5323193
+    },
+    "temp/workbuddy-product-spill-XTKMYf": {
+      "count": 1,
+      "bytes": 559094,
+      "newest": 1793688628.1569898,
+      "oldest": 1793688628.1569898
+    },
+    "temp/workbuddy-product-spill-ZGMgTt": {
+      "count": 1,
+      "bytes": 559094,
+      "newest": 1793667297.6986523,
+      "oldest": 1793667297.6986523
+    },
+    "temp/workbuddy-product-spill-ZW1fit": {
+      "count": 1,
+      "bytes": 559094,
+      "newest": 1793673622.660813,
+      "oldest": 1793673622.660813
+    },
+    "temp/workbuddy-product-spill-91sRSk": {
+      "count": 1,
+      "bytes": 558649,
+      "newest": 1793705335.096517,
+      "oldest": 1793705335.096517
+    },
+    "temp/HeadlessChrome2576413567859": {
+      "count": 8,
+      "bytes": 530054,
+      "newest": 1793177992.0699277,
+      "oldest": 1793177989.5291865
+    },
+    "temp/HeadlessChrome3004013490406": {
+      "count": 7,
+      "bytes": 530054,
+      "newest": 1793177910.9838996,
+      "oldest": 1793177905.8337817
+    },
+    "temp/HeadlessChrome3032813037390": {
+      "count": 7,
+      "bytes": 530054,
+      "newest": 1793177461.9749289,
+      "oldest": 1793177454.1343794
+    },
+    "temp/HeadlessChrome335613049890": {
+      "count": 7,
+      "bytes": 530054,
+      "newest": 1793177469.7642772,
+      "oldest": 1793177464.835553
+    },
+    "temp/dwg_crop": {
+      "count": 3,
+      "bytes": 517588,
+      "newest": 1793632147.7829764,
+      "oldest": 1793632147.7245605
+    },
+    "temp/qoder-cli-cn": {
+      "count": 305,
+      "bytes": 482491,
+      "newest": 1793971397.0539134,
+      "oldest": 1793111057.2793581
+    },
+    "temp/HeadlessChrome214045153765": {
+      "count": 3,
+      "bytes": 472462,
+      "newest": 1793169573.058031,
+      "oldest": 1793169571.622066
+    },
+    "temp/HeadlessChrome115562612875": {
+      "count": 1,
+      "bytes": 451982,
+      "newest": 1793196566.5142477,
+      "oldest": 1793196566.5142477
+    },
+    "temp/HeadlessChrome121842010718": {
+      "count": 1,
+      "bytes": 451982,
+      "newest": 1793195964.4401753,
+      "oldest": 1793195964.4401753
+    },
+    "temp/HeadlessChrome123206748671": {
+      "count": 1,
+      "bytes": 451982,
+      "newest": 1793188067.437586,
+      "oldest": 1793188067.437586
+    },
+    "temp/HeadlessChrome123682004468": {
+      "count": 1,
+      "bytes": 451982,
+      "newest": 1793195957.9791594,
+      "oldest": 1793195957.9791594
+    },
+    "temp/HeadlessChrome132285112046": {
+      "count": 1,
+      "bytes": 451982,
+      "newest": 1793169528.711851,
+      "oldest": 1793169528.711851
+    },
+    "temp/HeadlessChrome135203042359": {
+      "count": 1,
+      "bytes": 451982,
+      "newest": 1793184361.2027538,
+      "oldest": 1793184361.2027538
+    },
+    "temp/HeadlessChrome1480813110250": {
+      "count": 1,
+      "bytes": 451982,
+      "newest": 1793177525.7070098,
+      "oldest": 1793177525.7070098
+    },
+    "temp/HeadlessChrome1549613818453": {
+      "count": 1,
+      "bytes": 451982,
+      "newest": 1793178233.982507,
+      "oldest": 1793178233.982507
+    },
+    "temp/HeadlessChrome1584415598875": {
+      "count": 1,
+      "bytes": 451982,
+      "newest": 1793180014.5137694,
+      "oldest": 1793180014.5137694
+    },
+    "temp/HeadlessChrome1646013320171": {
+      "count": 1,
+      "bytes": 451982,
+      "newest": 1793177735.8285592,
+      "oldest": 1793177735.8285592
+    },
+    "temp/HeadlessChrome1679215985328": {
+      "count": 1,
+      "bytes": 451982,
+      "newest": 1793180437.9019754,
+      "oldest": 1793180437.9019754
+    },
+    "temp/HeadlessChrome1696015756812": {
+      "count": 1,
+      "bytes": 451982,
+      "newest": 1793180173.8160138,
+      "oldest": 1793180173.8160138
+    },
+    "temp/HeadlessChrome1769615784218": {
+      "count": 1,
+      "bytes": 451982,
+      "newest": 1793180199.7845733,
+      "oldest": 1793180199.7845733
+    },
+    "temp/HeadlessChrome1829215579578": {
+      "count": 1,
+      "bytes": 451982,
+      "newest": 1793179995.7156005,
+      "oldest": 1793179995.7156005
+    },
+    "temp/HeadlessChrome1849615568937": {
+      "count": 1,
+      "bytes": 451982,
+      "newest": 1793179984.5417118,
+      "oldest": 1793179984.5417118
+    },
+    "temp/HeadlessChrome199209831906": {
+      "count": 1,
+      "bytes": 451982,
+      "newest": 1793191150.5781538,
+      "oldest": 1793191150.5781538
+    },
+    "temp/HeadlessChrome200965127031": {
+      "count": 1,
+      "bytes": 451982,
+      "newest": 1793186445.7431126,
+      "oldest": 1793186445.7431126
+    },
+    "temp/HeadlessChrome203682606437": {
+      "count": 1,
+      "bytes": 451982,
+      "newest": 1793196559.7825024,
+      "oldest": 1793196559.7825024
+    },
+    "temp/HeadlessChrome212413119359": {
+      "count": 1,
+      "bytes": 451982,
+      "newest": 1793177534.395134,
+      "oldest": 1793177534.395134
+    },
+    "temp/HeadlessChrome218813311703": {
+      "count": 1,
+      "bytes": 451982,
+      "newest": 1793177726.9121544,
+      "oldest": 1793177726.9121544
+    },
+    "temp/HeadlessChrome2264813505312": {
+      "count": 1,
+      "bytes": 451982,
+      "newest": 1793177922.1580315,
+      "oldest": 1793177922.1580315
+    },
+    "temp/HeadlessChrome226483041390": {
+      "count": 1,
+      "bytes": 451982,
+      "newest": 1793184360.0451593,
+      "oldest": 1793184360.0451593
+    },
+    "temp/HeadlessChrome228889652125": {
+      "count": 1,
+      "bytes": 451982,
+      "newest": 1793190971.0425105,
+      "oldest": 1793190971.0425105
+    },
+    "temp/HeadlessChrome231213317484": {
+      "count": 1,
+      "bytes": 451982,
+      "newest": 1793177733.5082421,
+      "oldest": 1793177733.5082421
+    },
+    "temp/HeadlessChrome235006396562": {
+      "count": 1,
+      "bytes": 451982,
+      "newest": 1793187715.3254588,
+      "oldest": 1793187715.3254588
+    },
+    "temp/HeadlessChrome240289836375": {
+      "count": 1,
+      "bytes": 451982,
+      "newest": 1793191155.08069,
+      "oldest": 1793191155.08069
+    },
+    "temp/HeadlessChrome2436813606968": {
+      "count": 1,
+      "bytes": 451982,
+      "newest": 1793178022.3905375,
+      "oldest": 1793178022.3905375
+    },
+    "temp/HeadlessChrome2470013664828": {
+      "count": 1,
+      "bytes": 451982,
+      "newest": 1793178079.94233,
+      "oldest": 1793178079.94233
+    },
+    "temp/HeadlessChrome2506014196546": {
+      "count": 1,
+      "bytes": 451982,
+      "newest": 1793178612.1593764,
+      "oldest": 1793178612.1593764
+    },
+    "temp/HeadlessChrome251361999171": {
+      "count": 1,
+      "bytes": 451982,
+      "newest": 1793195952.324118,
+      "oldest": 1793195952.324118
+    },
+    "temp/HeadlessChrome259761994484": {
+      "count": 1,
+      "bytes": 451982,
+      "newest": 1793195948.6858315,
+      "oldest": 1793195948.6858315
+    },
+    "temp/HeadlessChrome268402595562": {
+      "count": 1,
+      "bytes": 451982,
+      "newest": 1793196549.2299142,
+      "oldest": 1793196549.2299142
+    },
+    "temp/HeadlessChrome2688013596421": {
+      "count": 1,
+      "bytes": 451982,
+      "newest": 1793178011.364995,
+      "oldest": 1793178011.364995
+    },
+    "temp/HeadlessChrome269402002031": {
+      "count": 1,
+      "bytes": 451982,
+      "newest": 1793195955.0236692,
+      "oldest": 1793195955.0236692
+    },
+    "temp/HeadlessChrome2713614311906": {
+      "count": 1,
+      "bytes": 451982,
+      "newest": 1793178727.4120834,
+      "oldest": 1793178727.4120834
+    },
+    "temp/HeadlessChrome271642608312": {
+      "count": 1,
+      "bytes": 451982,
+      "newest": 1793196562.169488,
+      "oldest": 1793196562.169488
+    },
+    "temp/HeadlessChrome272522610718": {
+      "count": 1,
+      "bytes": 451982,
+      "newest": 1793196564.2909865,
+      "oldest": 1793196564.2909865
+    },
+    "temp/HeadlessChrome275362604312": {
+      "count": 1,
+      "bytes": 451982,
+      "newest": 1793196557.7562194,
+      "oldest": 1793196557.7562194
+    },
+    "temp/HeadlessChrome2754413315796": {
+      "count": 1,
+      "bytes": 451982,
+      "newest": 1793177730.922119,
+      "oldest": 1793177730.922119
+    },
+    "temp/HeadlessChrome2786813305656": {
+      "count": 1,
+      "bytes": 451982,
+      "newest": 1793177720.6727452,
+      "oldest": 1793177720.6727452
+    },
+    "temp/HeadlessChrome2816013613921": {
+      "count": 1,
+      "bytes": 451982,
+      "newest": 1793178029.5820954,
+      "oldest": 1793178029.5820954
+    },
+    "temp/HeadlessChrome286814051171": {
+      "count": 1,
+      "bytes": 451982,
+      "newest": 1793178471.717435,
+      "oldest": 1793178471.717435
+    },
+    "temp/HeadlessChrome2904815342875": {
+      "count": 1,
+      "bytes": 451982,
+      "newest": 1793179768.9518342,
+      "oldest": 1793179768.9518342
+    },
+    "temp/HeadlessChrome2905613307359": {
+      "count": 1,
+      "bytes": 451982,
+      "newest": 1793177723.1412785,
+      "oldest": 1793177723.1412785
+    },
+    "temp/HeadlessChrome29242007296": {
+      "count": 1,
+      "bytes": 451982,
+      "newest": 1793195961.134974,
+      "oldest": 1793195961.134974
+    },
+    "temp/HeadlessChrome2942414124500": {
+      "count": 1,
+      "bytes": 451982,
+      "newest": 1793178546.4874938,
+      "oldest": 1793178546.4874938
+    },
+    "temp/HeadlessChrome295215592171": {
+      "count": 1,
+      "bytes": 451982,
+      "newest": 1793180008.087853,
+      "oldest": 1793180008.087853
+    },
+    "temp/HeadlessChrome30609837281": {
+      "count": 1,
+      "bytes": 451982,
+      "newest": 1793191155.8985052,
+      "oldest": 1793191155.8985052
+    },
+    "temp/HeadlessChrome3148413456531": {
+      "count": 1,
+      "bytes": 451982,
+      "newest": 1793177871.6567786,
+      "oldest": 1793177871.6567786
+    },
+    "temp/HeadlessChrome3184413980328": {
+      "count": 1,
+      "bytes": 451982,
+      "newest": 1793178395.3950944,
+      "oldest": 1793178395.3950944
+    },
+    "temp/HeadlessChrome320414376765": {
+      "count": 1,
+      "bytes": 451982,
+      "newest": 1793178792.3125021,
+      "oldest": 1793178792.3125021
+    },
+    "temp/HeadlessChrome3211213309812": {
+      "count": 1,
+      "bytes": 451982,
+      "newest": 1793177724.8033867,
+      "oldest": 1793177724.8033867
+    },
+    "temp/HeadlessChrome3238415540015": {
+      "count": 1,
+      "bytes": 451982,
+      "newest": 1793179955.544233,
+      "oldest": 1793179955.544233
+    },
+    "temp/HeadlessChrome3264012991328": {
+      "count": 2,
+      "bytes": 451982,
+      "newest": 1793177410.5305622,
+      "oldest": 1793177406.5118825
+    },
+    "temp/HeadlessChrome3269614252671": {
+      "count": 1,
+      "bytes": 451982,
+      "newest": 1793178668.2666433,
+      "oldest": 1793178668.2666433
+    },
+    "temp/HeadlessChrome399213680890": {
+      "count": 1,
+      "bytes": 451982,
+      "newest": 1793178096.2571454,
+      "oldest": 1793178096.2571454
+    },
+    "temp/HeadlessChrome562413609859": {
+      "count": 1,
+      "bytes": 451982,
+      "newest": 1793178024.8786576,
+      "oldest": 1793178024.8786576
+    },
+    "temp/HeadlessChrome584013500859": {
+      "count": 1,
+      "bytes": 451982,
+      "newest": 1793177916.5747077,
+      "oldest": 1793177916.5747077
+    },
+    "temp/HeadlessChrome694814696859": {
+      "count": 1,
+      "bytes": 451982,
+      "newest": 1793179121.379387,
+      "oldest": 1793179121.379387
+    },
+    "temp/HeadlessChrome79202600046": {
+      "count": 1,
+      "bytes": 451982,
+      "newest": 1793196554.0574505,
+      "oldest": 1793196554.0574505
+    },
+    "temp/HeadlessChrome82803040343": {
+      "count": 1,
+      "bytes": 451982,
+      "newest": 1793184359.1129284,
+      "oldest": 1793184359.1129284
+    },
+    "temp/HeadlessChrome96083039125": {
+      "count": 1,
+      "bytes": 451982,
+      "newest": 1793184357.9460464,
+      "oldest": 1793184357.9460464
+    },
+    "temp/spiop": {
+      "count": 10,
+      "bytes": 449346,
+      "newest": 1793879782.9552255,
+      "oldest": 1793879779.5703163
+    },
+    "temp/agent-harness-product-KLd12b": {
+      "count": 1,
+      "bytes": 414902,
+      "newest": 1793362607.3884528,
+      "oldest": 1793362607.3884528
+    },
+    "temp/agent-harness-product-QWBfh2": {
+      "count": 1,
+      "bytes": 413363,
+      "newest": 1793179720.9605148,
+      "oldest": 1793179720.9605148
+    },
+    "temp/ai-agent-Administrator": {
+      "count": 76,
+      "bytes": 409281,
+      "newest": 1793959269.3501601,
+      "oldest": 1793811731.3382137
+    },
+    "temp/agent-harness-product-p26tnE": {
+      "count": 1,
+      "bytes": 403222,
+      "newest": 1793532774.4856925,
+      "oldest": 1793532774.4856925
+    },
+    "temp/agent-harness-product-v27T2V": {
+      "count": 1,
+      "bytes": 403144,
+      "newest": 1793626055.6993484,
+      "oldest": 1793626055.6993484
+    },
+    "temp/swx9880": {
+      "count": 14,
+      "bytes": 339293,
+      "newest": 1793890915.769209,
+      "oldest": 1793890897.758
+    },
+    "temp/virtual_camera": {
+      "count": 116,
+      "bytes": 325946,
+      "newest": 1793966335.491663,
+      "oldest": 1792805396.7106793
+    },
+    "temp/vcj": {
+      "count": 14,
+      "bytes": 277741,
+      "newest": 1750680052.0,
+      "oldest": 1750680038.0
+    },
+    "temp/datacloud_telemetry": {
+      "count": 21282,
+      "bytes": 276666,
+      "newest": 1793928311.8368237,
+      "oldest": 1793173916.6591125
+    },
+    "temp/trae-paste-files": {
+      "count": 2,
+      "bytes": 275470,
+      "newest": 1793631261.0748,
+      "oldest": 1793630302.8754537
+    },
+    "temp/scoped_dir5840_1289484443": {
+      "count": 2,
+      "bytes": 274830,
+      "newest": 1783326329.7816792,
+      "oldest": 1761680572.0
+    },
+    "temp/kccsdkbak": {
+      "count": 1,
+      "bytes": 262144,
+      "newest": 1793967759.4291096,
+      "oldest": 1793967759.4291096
+    },
+    "temp/scoped_dir19148_780510434": {
+      "count": 86,
+      "bytes": 261752,
+      "newest": 1793756293.1434548,
+      "oldest": 1603174358.0
+    },
+    "temp/jna-146731693": {
+      "count": 2,
+      "bytes": 246784,
+      "newest": 1793627656.9259908,
+      "oldest": 1793627656.8852148
+    },
+    "temp/remoteIpMoProxy_ConfigDefender_1.0_localhost_8c89ba6c-cf88-4aec-a6d3-de3422304427": {
+      "count": 3,
+      "bytes": 236257,
+      "newest": 1793971823.8324766,
+      "oldest": 1793971823.8234742
+    },
+    "temp/~nsu.tmp": {
+      "count": 1,
+      "bytes": 201592,
+      "newest": 1791936926.0,
+      "oldest": 1791936926.0
+    },
+    "temp/swcachedir": {
+      "count": 9,
+      "bytes": 150650,
+      "newest": 1793110629.1287663,
+      "oldest": 1793110623.3457334
+    },
+    "temp/pip-metadata-czonb1rm": {
+      "count": 1,
+      "bytes": 137593,
+      "newest": 1793801666.5807898,
+      "oldest": 1793801666.5807898
+    },
+    "temp/pip-metadata-lrt0h6_b": {
+      "count": 1,
+      "bytes": 137593,
+      "newest": 1793800601.6788838,
+      "oldest": 1793800601.6788838
+    },
+    "temp/pip-unpack-0jvh4q08": {
+      "count": 1,
+      "bytes": 137593,
+      "newest": 1793800601.58601,
+      "oldest": 1793800601.58601
+    },
+    "temp/pip-unpack-tcr3gmyj": {
+      "count": 1,
+      "bytes": 137593,
+      "newest": 1793801666.5389345,
+      "oldest": 1793801666.5389345
+    },
+    "temp/HeadlessChrome1205212860671": {
+      "count": 9,
+      "bytes": 131553,
+      "newest": 1793177317.091772,
+      "oldest": 1793177296.925765
+    },
+    "temp/virtu_vtrain_1793369003": {
+      "count": 5,
+      "bytes": 130984,
+      "newest": 1793369011.648985,
+      "oldest": 1793368232.9317796
+    },
+    "temp/virtu_vtrain": {
+      "count": 5,
+      "bytes": 130855,
+      "newest": 1793872872.0868409,
+      "oldest": 1793627647.8971982
+    },
+    "temp/cursor-agent-logs-Administrator": {
+      "count": 16,
+      "bytes": 130149,
+      "newest": 1793811376.4694395,
+      "oldest": 1793423945.4283223
+    },
+    "temp/ims-drill-xzhl9l03": {
+      "count": 5,
+      "bytes": 110148,
+      "newest": 1793197022.332109,
+      "oldest": 1793197022.0398395
+    },
+    "temp/ims-drill-q1k3h5wx": {
+      "count": 5,
+      "bytes": 110147,
+      "newest": 1793197790.148078,
+      "oldest": 1793197790.0622408
+    },
+    "temp/ims-cpi-guard-071sua1r": {
+      "count": 5,
+      "bytes": 109816,
+      "newest": 1793197794.1366837,
+      "oldest": 1793197794.0376914
+    },
+    "temp/ims-cpi-guard-4tucw0ha": {
+      "count": 5,
+      "bytes": 109811,
+      "newest": 1793197028.8947003,
+      "oldest": 1793197028.7936616
+    },
+    "temp/ims-drill-52fasf61": {
+      "count": 5,
+      "bytes": 109431,
+      "newest": 1793197027.702832,
+      "oldest": 1793197027.622946
+    },
+    "temp/ims-drill-kq7k6ros": {
+      "count": 5,
+      "bytes": 109427,
+      "newest": 1793197793.2840283,
+      "oldest": 1793197793.2254567
+    },
+    "temp/ims-drill-lyc_cdjl": {
+      "count": 5,
+      "bytes": 109241,
+      "newest": 1793197793.6486318,
+      "oldest": 1793197793.5811486
+    },
+    "temp/ims-drill-zxbb0haz": {
+      "count": 5,
+      "bytes": 109240,
+      "newest": 1793197028.2054589,
+      "oldest": 1793197028.1274524
+    },
+    "temp/ims-drill-lc5h2fc4": {
+      "count": 5,
+      "bytes": 108950,
+      "newest": 1793197790.52639,
+      "oldest": 1793197790.4902956
+    },
+    "temp/ims-drill-8teqr371": {
+      "count": 5,
+      "bytes": 108947,
+      "newest": 1793197023.4971626,
+      "oldest": 1793197023.4026763
+    },
+    "temp/ims-recover-0indptdi": {
+      "count": 5,
+      "bytes": 108221,
+      "newest": 1793197023.7238252,
+      "oldest": 1793197023.522615
+    },
+    "temp/ims-recover-ahnp6lhz": {
+      "count": 5,
+      "bytes": 108221,
+      "newest": 1793197024.0151806,
+      "oldest": 1793197023.754794
+    },
+    "temp/ims-recover-3y4_wcu5": {
+      "count": 5,
+      "bytes": 108219,
+      "newest": 1793197790.719778,
+      "oldest": 1793197790.632863
+    },
+    "temp/ims-recover-izaz726_": {
+      "count": 5,
+      "bytes": 108219,
+      "newest": 1793197790.6168025,
+      "oldest": 1793197790.5412388
+    },
+    "temp/ims-actions-sak7ckxf": {
+      "count": 5,
+      "bytes": 108134,
+      "newest": 1793197784.7578645,
+      "oldest": 1793197784.6841493
+    },
+    "temp/ims-ports-bqoo9_hd": {
+      "count": 5,
+      "bytes": 108133,
+      "newest": 1793197793.7315881,
+      "oldest": 1793197793.6794753
+    },
+    "temp/ims-actions-mf5qzqh_": {
+      "count": 5,
+      "bytes": 108132,
+      "newest": 1793197011.5379875,
+      "oldest": 1793197011.4502716
+    },
+    "temp/ims-node-08v2megr": {
+      "count": 5,
+      "bytes": 108132,
+      "newest": 1793197028.4536796,
+      "oldest": 1793197028.3629293
+    },
+    "temp/ims-node-swousr8m": {
+      "count": 5,
+      "bytes": 108132,
+      "newest": 1793197793.802612,
+      "oldest": 1793197793.7518735
+    },
+    "temp/ims-ports-soc3ux07": {
+      "count": 5,
+      "bytes": 108132,
+      "newest": 1793197028.3347678,
+      "oldest": 1793197028.2338228
+    },
+    "temp/ims-guard-42c55bxz": {
+      "count": 5,
+      "bytes": 108131,
+      "newest": 1793197147.311151,
+      "oldest": 1793197147.150838
+    },
+    "temp/ims-guard-5_1902af": {
+      "count": 5,
+      "bytes": 108131,
+      "newest": 1793197145.8595493,
+      "oldest": 1793197145.7572265
+    },
+    "temp/ims-guard-f2qhz9a5": {
+      "count": 5,
+      "bytes": 108131,
+      "newest": 1793197146.6959863,
+      "oldest": 1793197146.4870293
+    },
+    "temp/ims-guard-mtb6474t": {
+      "count": 5,
+      "bytes": 108131,
+      "newest": 1793197145.9825249,
+      "oldest": 1793197145.9002216
+    },
+    "temp/ims-guard-mu63x4y_": {
+      "count": 5,
+      "bytes": 108131,
+      "newest": 1793197146.9400065,
+      "oldest": 1793197146.7433765
+    },
+    "temp/ims-guard-vva2eif9": {
+      "count": 5,
+      "bytes": 108131,
+      "newest": 1793197146.1464381,
+      "oldest": 1793197146.0135994
+    },
+    "temp/ims-guard-wcp_gh6t": {
+      "count": 5,
+      "bytes": 108131,
+      "newest": 1793197146.4312308,
+      "oldest": 1793197146.192732
+    },
+    "temp/ims-guard-z6bjd2qs": {
+      "count": 5,
+      "bytes": 108131,
+      "newest": 1793197147.0957499,
+      "oldest": 1793197146.9849727
+    },
+    "temp/ims-live-tcgdwd9u": {
+      "count": 5,
+      "bytes": 108131,
+      "newest": 1793197027.7088933,
+      "oldest": 1793197024.0549881
+    },
+    "temp/ims-live-y6grz4yf": {
+      "count": 5,
+      "bytes": 108131,
+      "newest": 1793197028.2109833,
+      "oldest": 1793197027.737173
+    },
+    "temp/ims-guard-d5le2hlx": {
+      "count": 5,
+      "bytes": 108130,
+      "newest": 1793197147.4293225,
+      "oldest": 1793197147.3538482
+    },
+    "temp/ims-guard-kfh8gd3e": {
+      "count": 5,
+      "bytes": 108130,
+      "newest": 1793197895.5508304,
+      "oldest": 1793197895.4542282
+    },
+    "temp/ims-guard-0aa6tqtm": {
+      "count": 5,
+      "bytes": 108129,
+      "newest": 1793197895.9884076,
+      "oldest": 1793197895.9509532
+    },
+    "temp/ims-guard-2a0d6d2l": {
+      "count": 5,
+      "bytes": 108129,
+      "newest": 1793197895.6300683,
+      "oldest": 1793197895.5788202
+    },
+    "temp/ims-guard-81jl_kkg": {
+      "count": 5,
+      "bytes": 108129,
+      "newest": 1793197896.042364,
+      "oldest": 1793197896.004591
+    },
+    "temp/ims-guard-fezop_s6": {
+      "count": 5,
+      "bytes": 108129,
+      "newest": 1793197895.9365287,
+      "oldest": 1793197895.897516
+    },
+    "temp/ims-guard-gb_w4l4t": {
+      "count": 5,
+      "bytes": 108129,
+      "newest": 1793197895.8827257,
+      "oldest": 1793197895.8406677
+    },
+    "temp/ims-guard-kuwg8ldl": {
+      "count": 5,
+      "bytes": 108129,
+      "newest": 1793197895.752558,
+      "oldest": 1793197895.713889
+    },
+    "temp/ims-guard-m33nmn8k": {
+      "count": 5,
+      "bytes": 108129,
+      "newest": 1793197895.6982334,
+      "oldest": 1793197895.6475089
+    },
+    "temp/ims-guard-p44gh9ld": {
+      "count": 5,
+      "bytes": 108129,
+      "newest": 1793197895.820266,
+      "oldest": 1793197895.7673235
+    },
+    "temp/ims-live-7pz28wct": {
+      "count": 5,
+      "bytes": 108129,
+      "newest": 1793197793.6547287,
+      "oldest": 1793197793.310658
+    },
+    "temp/ims-live-jrnzugaf": {
+      "count": 5,
+      "bytes": 108129,
+      "newest": 1793197793.2886517,
+      "oldest": 1793197790.7365582
+    },
+    "temp/ims-equip-0f0gn8w5": {
+      "count": 6,
+      "bytes": 106496,
+      "newest": 1793197042.2251334,
+      "oldest": 1793197039.5073762
+    },
+    "temp/ims-equip-5cbcrty9": {
+      "count": 6,
+      "bytes": 106496,
+      "newest": 1793197808.303579,
+      "oldest": 1793197805.4988844
+    },
+    "temp/ims-equip-w9iq84go": {
+      "count": 6,
+      "bytes": 106496,
+      "newest": 1793197805.5200362,
+      "oldest": 1793197805.3808053
+    },
+    "temp/ims-equip-z14cxgld": {
+      "count": 6,
+      "bytes": 106496,
+      "newest": 1793197039.5291202,
+      "oldest": 1793197039.380618
+    },
+    "temp/tmpx9c41emc": {
+      "count": 87,
+      "bytes": 94457,
+      "newest": 1793865431.23,
+      "oldest": 1793865431.0312824
+    },
+    "temp/ims-surface-jwk_uhd8": {
+      "count": 3,
+      "bytes": 90112,
+      "newest": 1793197154.8376477,
+      "oldest": 1793196984.5061882
+    },
+    "temp/ims-surface-xkp07sho": {
+      "count": 3,
+      "bytes": 90112,
+      "newest": 1793197898.4164126,
+      "oldest": 1793197759.9951684
+    },
+    "temp/HeadlessChrome1676413007015": {
+      "count": 6,
+      "bytes": 78072,
+      "newest": 1793177439.1206465,
+      "oldest": 1793177432.3387468
+    },
+    "temp/HeadlessChrome2472415551734": {
+      "count": 6,
+      "bytes": 78072,
+      "newest": 1793179981.6969395,
+      "oldest": 1793179975.649951
+    },
+    "temp/vericut_24212": {
+      "count": 76,
+      "bytes": 75656,
+      "newest": 1793627658.5198457,
+      "oldest": 1793627655.5551794
+    },
+    "temp/SWUtilities2016": {
+      "count": 12,
+      "bytes": 65448,
+      "newest": 1793847293.77151,
+      "oldest": 1793847293.5943978
+    },
+    "temp/WinGet": {
+      "count": 19,
+      "bytes": 61459,
+      "newest": 1793842646.1711504,
+      "oldest": 1793382323.7707288
+    },
+    "temp/pip-metadata-jy__bhmm": {
+      "count": 1,
+      "bytes": 47287,
+      "newest": 1793800823.0226672,
+      "oldest": 1793800823.0226672
+    },
+    "temp/pip-unpack-jn772reu": {
+      "count": 1,
+      "bytes": 47287,
+      "newest": 1793800822.9616282,
+      "oldest": 1793800822.9616282
+    },
+    "temp/Admi5FFCD555rgxe_pal": {
+      "count": 3,
+      "bytes": 45822,
+      "newest": 1793431921.73735,
+      "oldest": 1793431921.1396859
+    },
+    "temp/Admi6704B7E1rgy4_pal": {
+      "count": 3,
+      "bytes": 45822,
+      "newest": 1793431949.1520164,
+      "oldest": 1793431947.9666388
+    },
+    "temp/Admi6B6CAF29rbrh_pal": {
+      "count": 3,
+      "bytes": 45822,
+      "newest": 1793425230.1619165,
+      "oldest": 1793425228.7876441
+    },
+    "temp/Admi30ECCD9Dpl1p_pal": {
+      "count": 3,
+      "bytes": 45805,
+      "newest": 1793343950.0947092,
+      "oldest": 1793343948.3140578
+    },
+    "temp/Admi6690D9E9rjpk_pal": {
+      "count": 3,
+      "bytes": 45805,
+      "newest": 1793435528.4510665,
+      "oldest": 1793435527.6019049
+    },
+    "temp/swx15284": {
+      "count": 3,
+      "bytes": 45056,
+      "newest": 1793424514.9995255,
+      "oldest": 1793424513.366
+    },
+    "temp/swx20304": {
+      "count": 3,
+      "bytes": 45056,
+      "newest": 1793424758.5774872,
+      "oldest": 1793424757.359
+    },
+    "temp/swx24056": {
+      "count": 3,
+      "bytes": 45056,
+      "newest": 1793425037.0737996,
+      "oldest": 1793425035.51
+    },
+    "temp/swx27028": {
+      "count": 3,
+      "bytes": 45056,
+      "newest": 1793289694.1412556,
+      "oldest": 1793289552.701
+    },
+    "temp/swx27360": {
+      "count": 3,
+      "bytes": 45056,
+      "newest": 1793424648.0561254,
+      "oldest": 1793424646.881
+    },
+    "temp/swx29280": {
+      "count": 3,
+      "bytes": 45056,
+      "newest": 1793550910.289899,
+      "oldest": 1793550446.193
+    },
+    "temp/swx29564": {
+      "count": 3,
+      "bytes": 45056,
+      "newest": 1793430351.6319542,
+      "oldest": 1793430350.146
+    },
+    "temp/swx4224": {
+      "count": 3,
+      "bytes": 45056,
+      "newest": 1793424949.1877227,
+      "oldest": 1793424948.114
+    },
+    "temp/workbuddy-cli-args-x2W2tM": {
+      "count": 1,
+      "bytes": 44003,
+      "newest": 1793855112.9689333,
+      "oldest": 1793855112.9689333
+    },
+    "temp/pip-metadata-ek2tilz3": {
+      "count": 1,
+      "bytes": 39981,
+      "newest": 1793801897.6615374,
+      "oldest": 1793801897.6615374
+    },
+    "temp/pip-unpack-c124fghk": {
+      "count": 1,
+      "bytes": 39981,
+      "newest": 1793801897.6324806,
+      "oldest": 1793801897.6324806
+    },
+    "temp/swx22048": {
+      "count": 5,
+      "bytes": 39896,
+      "newest": 1793110554.281713,
+      "oldest": 1793110211.448
+    },
+    "temp/tmpwom_ch6o": {
+      "count": 14,
+      "bytes": 37208,
+      "newest": 1793412952.2343009,
+      "oldest": 1793412950.511979
+    },
+    "temp/tmp5up7o3xa": {
+      "count": 14,
+      "bytes": 37205,
+      "newest": 1793413007.9759207,
+      "oldest": 1793413006.2141852
+    },
+    "temp/swx10052": {
+      "count": 3,
+      "bytes": 36864,
+      "newest": 1793890770.74253,
+      "oldest": 1793890760.2867134
+    },
+    "temp/swx14260": {
+      "count": 3,
+      "bytes": 36864,
+      "newest": 1793892997.3643239,
+      "oldest": 1793892984.2932055
+    },
+    "temp/swx5004": {
+      "count": 3,
+      "bytes": 36864,
+      "newest": 1793894707.7592711,
+      "oldest": 1793894703.3321376
+    },
+    "temp/pip-metadata-1kaawuj4": {
+      "count": 1,
+      "bytes": 36044,
+      "newest": 1793801653.1386645,
+      "oldest": 1793801653.1386645
+    },
+    "temp/pip-metadata-ndh3bfcg": {
+      "count": 1,
+      "bytes": 36044,
+      "newest": 1793798836.382476,
+      "oldest": 1793798836.382476
+    },
+    "temp/pip-metadata-p5rp_y_p": {
+      "count": 1,
+      "bytes": 36044,
+      "newest": 1793800593.4315183,
+      "oldest": 1793800593.4315183
+    },
+    "temp/pip-unpack-0vl2c3s3": {
+      "count": 1,
+      "bytes": 36044,
+      "newest": 1793801653.1027856,
+      "oldest": 1793801653.1027856
+    },
+    "temp/pip-unpack-b17s1ukp": {
+      "count": 1,
+      "bytes": 36044,
+      "newest": 1793800593.3741927,
+      "oldest": 1793800593.3741927
+    },
+    "temp/pip-unpack-nfr1nzk8": {
+      "count": 1,
+      "bytes": 36044,
+      "newest": 1793798836.1217659,
+      "oldest": 1793798836.1217659
+    },
+    "temp/swx10260": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793414156.726,
+      "oldest": 1793414156.719
+    },
+    "temp/swx10264": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793414047.457,
+      "oldest": 1793414047.447
+    },
+    "temp/swx10320": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793414640.781,
+      "oldest": 1793414640.645
+    },
+    "temp/swx10512": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793281021.903,
+      "oldest": 1793281021.895
+    },
+    "temp/swx10532": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793491960.604,
+      "oldest": 1793491960.598
+    },
+    "temp/swx1080": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793415666.413,
+      "oldest": 1793415666.405
+    },
+    "temp/swx11040": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793879777.591,
+      "oldest": 1793879777.583
+    },
+    "temp/swx11068": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793421175.52,
+      "oldest": 1793421175.495
+    },
+    "temp/swx11200": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793893774.883,
+      "oldest": 1793893774.874
+    },
+    "temp/swx11208": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793613634.286,
+      "oldest": 1793613634.251
+    },
+    "temp/swx11224": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793287871.474,
+      "oldest": 1793287871.465
+    },
+    "temp/swx11396": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793109979.989,
+      "oldest": 1793109979.977
+    },
+    "temp/swx11412": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793282800.726,
+      "oldest": 1793282800.344
+    },
+    "temp/swx11456": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793426752.207,
+      "oldest": 1793426752.201
+    },
+    "temp/swx11920": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793421435.787,
+      "oldest": 1793421435.772
+    },
+    "temp/swx12256": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793608475.081,
+      "oldest": 1793608475.07
+    },
+    "temp/swx12520": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793413876.901,
+      "oldest": 1793413876.89
+    },
+    "temp/swx12692": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793427487.669,
+      "oldest": 1793427487.663
+    },
+    "temp/swx12764": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793417924.297,
+      "oldest": 1793417924.223
+    },
+    "temp/swx12852": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793420560.139,
+      "oldest": 1793420560.114
+    },
+    "temp/swx1320": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793283536.102,
+      "oldest": 1793283536.093
+    },
+    "temp/swx13640": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793412277.67,
+      "oldest": 1793412277.66
+    },
+    "temp/swx13760": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793412356.63,
+      "oldest": 1793412356.621
+    },
+    "temp/swx1392": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793417807.558,
+      "oldest": 1793417807.45
+    },
+    "temp/swx14240": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793428097.382,
+      "oldest": 1793428097.375
+    },
+    "temp/swx1436": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793415996.014,
+      "oldest": 1793415995.994
+    },
+    "temp/swx14668": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793414873.241,
+      "oldest": 1793414873.234
+    },
+    "temp/swx14672": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793280933.022,
+      "oldest": 1793280933.015
+    },
+    "temp/swx1488": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793281284.728,
+      "oldest": 1793281284.72
+    },
+    "temp/swx15528": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793879739.646,
+      "oldest": 1793879739.638
+    },
+    "temp/swx17024": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793413319.402,
+      "oldest": 1793413319.392
+    },
+    "temp/swx17568": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793423222.836,
+      "oldest": 1793423222.831
+    },
+    "temp/swx17680": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793847642.03,
+      "oldest": 1793847641.043
+    },
+    "temp/swx17876": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793287056.983,
+      "oldest": 1793287056.973
+    },
+    "temp/swx1804": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793282153.269,
+      "oldest": 1793282153.261
+    },
+    "temp/swx18100": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793109671.611,
+      "oldest": 1793109671.586
+    },
+    "temp/swx18256": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793881395.82,
+      "oldest": 1793881395.807
+    },
+    "temp/swx18456": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793414249.542,
+      "oldest": 1793414249.529
+    },
+    "temp/swx18624": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793491909.533,
+      "oldest": 1793491909.528
+    },
+    "temp/swx18684": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793109981.021,
+      "oldest": 1793109981.007
+    },
+    "temp/swx18868": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793282903.232,
+      "oldest": 1793282903.225
+    },
+    "temp/swx19264": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793871126.204,
+      "oldest": 1793871126.195
+    },
+    "temp/swx20020": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793606810.613,
+      "oldest": 1793606810.605
+    },
+    "temp/swx20220": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793893248.821,
+      "oldest": 1793893248.814
+    },
+    "temp/swx20224": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793428024.728,
+      "oldest": 1793428024.722
+    },
+    "temp/swx20368": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793429148.91,
+      "oldest": 1793429148.906
+    },
+    "temp/swx20840": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793491992.615,
+      "oldest": 1793491992.606
+    },
+    "temp/swx21056": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793416187.558,
+      "oldest": 1793416187.54
+    },
+    "temp/swx21084": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793425132.663,
+      "oldest": 1793425132.656
+    },
+    "temp/swx21100": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793424974.848,
+      "oldest": 1793424974.843
+    },
+    "temp/swx21300": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793283698.598,
+      "oldest": 1793283698.591
+    },
+    "temp/swx21560": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793881549.55,
+      "oldest": 1793881549.54
+    },
+    "temp/swx21716": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793428134.667,
+      "oldest": 1793428134.66
+    },
+    "temp/swx21756": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793414563.496,
+      "oldest": 1793414563.482
+    },
+    "temp/swx21764": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793428282.749,
+      "oldest": 1793428282.732
+    },
+    "temp/swx21940": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793492925.694,
+      "oldest": 1793492925.687
+    },
+    "temp/swx22300": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793167622.083,
+      "oldest": 1793167622.073
+    },
+    "temp/swx22308": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793416812.033,
+      "oldest": 1793416812.025
+    },
+    "temp/swx22312": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793423653.806,
+      "oldest": 1793423653.8
+    },
+    "temp/swx22432": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793492731.419,
+      "oldest": 1793492731.412
+    },
+    "temp/swx22556": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793893954.506,
+      "oldest": 1793893954.48
+    },
+    "temp/swx22588": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793418689.871,
+      "oldest": 1793418689.817
+    },
+    "temp/swx22596": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793881216.746,
+      "oldest": 1793881216.731
+    },
+    "temp/swx22828": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793891769.571,
+      "oldest": 1793891769.552
+    },
+    "temp/swx2296": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793412198.57,
+      "oldest": 1793412198.56
+    },
+    "temp/swx23140": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793607842.315,
+      "oldest": 1793607842.294
+    },
+    "temp/swx23228": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793168112.944,
+      "oldest": 1793168112.934
+    },
+    "temp/swx23276": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793493115.256,
+      "oldest": 1793493115.248
+    },
+    "temp/swx23340": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793493006.995,
+      "oldest": 1793493006.979
+    },
+    "temp/swx23768": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793415326.263,
+      "oldest": 1793415326.205
+    },
+    "temp/swx24444": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793423543.21,
+      "oldest": 1793423543.204
+    },
+    "temp/swx24708": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793431602.442,
+      "oldest": 1793431602.438
+    },
+    "temp/swx24780": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793109671.617,
+      "oldest": 1793109671.592
+    },
+    "temp/swx24948": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793424191.948,
+      "oldest": 1793424191.942
+    },
+    "temp/swx24968": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793424920.516,
+      "oldest": 1793424920.508
+    },
+    "temp/swx25208": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793602930.45,
+      "oldest": 1793602930.444
+    },
+    "temp/swx25244": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793425326.165,
+      "oldest": 1793425326.16
+    },
+    "temp/swx25468": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793415472.43,
+      "oldest": 1793415472.408
+    },
+    "temp/swx2548": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793492257.618,
+      "oldest": 1793492257.606
+    },
+    "temp/swx25776": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793428175.605,
+      "oldest": 1793428175.6
+    },
+    "temp/swx25888": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793283336.776,
+      "oldest": 1793283336.767
+    },
+    "temp/swx26432": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793425005.25,
+      "oldest": 1793425005.244
+    },
+    "temp/swx26524": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793416558.279,
+      "oldest": 1793416558.264
+    },
+    "temp/swx26636": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793281436.798,
+      "oldest": 1793281436.784
+    },
+    "temp/swx26756": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793426616.102,
+      "oldest": 1793426616.09
+    },
+    "temp/swx26764": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793425073.053,
+      "oldest": 1793425073.048
+    },
+    "temp/swx26804": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793426147.155,
+      "oldest": 1793426147.149
+    },
+    "temp/swx27140": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793426680.319,
+      "oldest": 1793426680.314
+    },
+    "temp/swx27268": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793415870.213,
+      "oldest": 1793415870.179
+    },
+    "temp/swx27292": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793435064.954,
+      "oldest": 1793435064.947
+    },
+    "temp/swx27380": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793425503.339,
+      "oldest": 1793425503.329
+    },
+    "temp/swx27748": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793416631.561,
+      "oldest": 1793416631.544
+    },
+    "temp/swx28004": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793425850.533,
+      "oldest": 1793425850.527
+    },
+    "temp/swx28476": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793435497.071,
+      "oldest": 1793435497.066
+    },
+    "temp/swx2848": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793413459.535,
+      "oldest": 1793413459.523
+    },
+    "temp/swx28608": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793416981.934,
+      "oldest": 1793416981.918
+    },
+    "temp/swx28628": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793418021.136,
+      "oldest": 1793418021.125
+    },
+    "temp/swx28716": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793552771.431,
+      "oldest": 1793552771.424
+    },
+    "temp/swx28772": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793426205.31,
+      "oldest": 1793426205.304
+    },
+    "temp/swx29128": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793283284.882,
+      "oldest": 1793283284.873
+    },
+    "temp/swx29708": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793283812.571,
+      "oldest": 1793283812.564
+    },
+    "temp/swx29816": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793265648.645,
+      "oldest": 1793265648.638
+    },
+    "temp/swx29844": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793282177.05,
+      "oldest": 1793282177.042
+    },
+    "temp/swx30180": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793605444.251,
+      "oldest": 1793605444.242
+    },
+    "temp/swx30272": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793604853.022,
+      "oldest": 1793604853.012
+    },
+    "temp/swx31168": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793287847.748,
+      "oldest": 1793287847.738
+    },
+    "temp/swx31432": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793280765.96,
+      "oldest": 1793280765.952
+    },
+    "temp/swx31592": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793281211.8,
+      "oldest": 1793281211.791
+    },
+    "temp/swx32216": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793280972.187,
+      "oldest": 1793280972.179
+    },
+    "temp/swx32292": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793283163.78,
+      "oldest": 1793283163.771
+    },
+    "temp/swx3320": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793414199.929,
+      "oldest": 1793414199.921
+    },
+    "temp/swx33640": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793281538.676,
+      "oldest": 1793281538.667
+    },
+    "temp/swx33988": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793284109.124,
+      "oldest": 1793284109.116
+    },
+    "temp/swx34360": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793282741.118,
+      "oldest": 1793282741.11
+    },
+    "temp/swx34656": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793282947.814,
+      "oldest": 1793282947.806
+    },
+    "temp/swx3776": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793878674.841,
+      "oldest": 1793878674.832
+    },
+    "temp/swx3780": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793416687.22,
+      "oldest": 1793416687.21
+    },
+    "temp/swx3820": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793847252.527,
+      "oldest": 1793847252.516
+    },
+    "temp/swx3836": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793426903.803,
+      "oldest": 1793426903.796
+    },
+    "temp/swx3976": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793471331.165,
+      "oldest": 1793471331.16
+    },
+    "temp/swx4592": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793424828.195,
+      "oldest": 1793424828.189
+    },
+    "temp/swx4596": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793418595.617,
+      "oldest": 1793418595.581
+    },
+    "temp/swx4852": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793492224.818,
+      "oldest": 1793492224.801
+    },
+    "temp/swx4940": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793606072.174,
+      "oldest": 1793606072.14
+    },
+    "temp/swx5060": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793492841.464,
+      "oldest": 1793492841.452
+    },
+    "temp/swx5152": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793280731.753,
+      "oldest": 1793280731.746
+    },
+    "temp/swx5160": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793416986.959,
+      "oldest": 1793416986.87
+    },
+    "temp/swx5380": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793423170.331,
+      "oldest": 1793423170.325
+    },
+    "temp/swx5436": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793424858.632,
+      "oldest": 1793424858.624
+    },
+    "temp/swx5468": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793283237.744,
+      "oldest": 1793283237.735
+    },
+    "temp/swx5492": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793604500.47,
+      "oldest": 1793604500.461
+    },
+    "temp/swx5804": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793492376.358,
+      "oldest": 1793492376.345
+    },
+    "temp/swx5904": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793879864.12,
+      "oldest": 1793879864.103
+    },
+    "temp/swx6528": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793415597.035,
+      "oldest": 1793415597.027
+    },
+    "temp/swx6552": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793423409.647,
+      "oldest": 1793423409.641
+    },
+    "temp/swx6736": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793492133.67,
+      "oldest": 1793492133.663
+    },
+    "temp/swx7260": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793548154.528,
+      "oldest": 1793548154.52
+    },
+    "temp/swx7292": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793415440.497,
+      "oldest": 1793415440.488
+    },
+    "temp/swx7436": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793492631.032,
+      "oldest": 1793492631.024
+    },
+    "temp/swx7492": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793428738.314,
+      "oldest": 1793428738.309
+    },
+    "temp/swx7660": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793493215.299,
+      "oldest": 1793493214.956
+    },
+    "temp/swx7748": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793605233.429,
+      "oldest": 1793605233.409
+    },
+    "temp/swx8332": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793605634.755,
+      "oldest": 1793605634.611
+    },
+    "temp/swx8344": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793413112.537,
+      "oldest": 1793413112.523
+    },
+    "temp/swx9568": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793428221.267,
+      "oldest": 1793428221.261
+    },
+    "temp/swx9764": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793492542.898,
+      "oldest": 1793492542.886
+    },
+    "temp/swx9936": {
+      "count": 2,
+      "bytes": 32768,
+      "newest": 1793423451.379,
+      "oldest": 1793423451.373
+    },
+    "temp/swx3516": {
+      "count": 9,
+      "bytes": 28902,
+      "newest": 1793111239.581095,
+      "oldest": 1793110647.726721
+    },
+    "temp/pip-metadata-1s8umm33": {
+      "count": 1,
+      "bytes": 26953,
+      "newest": 1793800596.8516514,
+      "oldest": 1793800596.8516514
+    },
+    "temp/pip-metadata-c6aolpvt": {
+      "count": 1,
+      "bytes": 26953,
+      "newest": 1793801660.8867779,
+      "oldest": 1793801660.8867779
+    },
+    "temp/pip-unpack-4_021k8g": {
+      "count": 1,
+      "bytes": 26953,
+      "newest": 1793801660.8616414,
+      "oldest": 1793801660.8616414
+    },
+    "temp/pip-unpack-walxj81e": {
+      "count": 1,
+      "bytes": 26953,
+      "newest": 1793800596.8078108,
+      "oldest": 1793800596.8078108
+    },
+    "temp/harness2_refine_tn5wdqeu": {
+      "count": 47,
+      "bytes": 26648,
+      "newest": 1793893722.8949094,
+      "oldest": 1793893722.8343294
+    },
+    "temp/harness2_refine_ts4hl34h": {
+      "count": 47,
+      "bytes": 26648,
+      "newest": 1793893723.4022717,
+      "oldest": 1793893723.3246481
+    },
+    "temp/SMAI_NX": {
+      "count": 4,
+      "bytes": 25440,
+      "newest": 1793110142.8747532,
+      "oldest": 1793109585.1082678
+    },
+    "temp/swx9348": {
+      "count": 2,
+      "bytes": 24576,
+      "newest": 1793893379.4705877,
+      "oldest": 1793893317.768695
+    },
+    "temp/ims-backlog-ap9f3h5m": {
+      "count": 3,
+      "bytes": 20480,
+      "newest": 1793197706.5198066,
+      "oldest": 1793197704.3441515
+    },
+    "temp/ims-backlog-d4c8sbum": {
+      "count": 3,
+      "bytes": 20480,
+      "newest": 1793197818.525895,
+      "oldest": 1793197818.476941
+    },
+    "temp/ims-backlog-jtmwqpur": {
+      "count": 3,
+      "bytes": 20480,
+      "newest": 1793197702.8333285,
+      "oldest": 1793197702.7504897
+    },
+    "temp/ims-burst-8_5otlcu": {
+      "count": 3,
+      "bytes": 20480,
+      "newest": 1793197653.035074,
+      "oldest": 1793197652.296864
+    },
+    "temp/ims-burst-bpr59mn3": {
+      "count": 3,
+      "bytes": 20480,
+      "newest": 1793197677.8446455,
+      "oldest": 1793197676.2338564
+    },
+    "temp/ims-cred-50b9qyz8": {
+      "count": 3,
+      "bytes": 20480,
+      "newest": 1793197042.21607,
+      "oldest": 1793197028.9969447
+    },
+    "temp/ims-cred-g4pfq_pq": {
+      "count": 3,
+      "bytes": 20480,
+      "newest": 1793197808.2964985,
+      "oldest": 1793197794.2408676
+    },
+    "temp/ims-cred-w3n9usnt": {
+      "count": 3,
+      "bytes": 20480,
+      "newest": 1793197042.2191005,
+      "oldest": 1793197028.9360118
+    },
+    "temp/ims-cred-xlkk4g62": {
+      "count": 3,
+      "bytes": 20480,
+      "newest": 1793197808.2995791,
+      "oldest": 1793197794.185563
+    },
+    "temp/ims-db-09h_xsgs": {
+      "count": 3,
+      "bytes": 20480,
+      "newest": 1793197795.2473936,
+      "oldest": 1793197795.1079788
+    },
+    "temp/ims-db-hkmqdrjs": {
+      "count": 3,
+      "bytes": 20480,
+      "newest": 1793197029.8490722,
+      "oldest": 1793197029.8074248
+    },
+    "temp/ims-plaintls-14jofz62": {
+      "count": 3,
+      "bytes": 20480,
+      "newest": 1793197030.202852,
+      "oldest": 1793197029.5399907
+    },
+    "temp/ims-plaintls-21c6359n": {
+      "count": 3,
+      "bytes": 20480,
+      "newest": 1793197795.6534333,
+      "oldest": 1793197794.8322415
+    },
+    "temp/ims-plaintls-cgu1tjos": {
+      "count": 3,
+      "bytes": 20480,
+      "newest": 1793197795.6572764,
+      "oldest": 1793197794.9915304
+    },
+    "temp/ims-plaintls-e7qh9q0r": {
+      "count": 3,
+      "bytes": 20480,
+      "newest": 1793197030.2179568,
+      "oldest": 1793197029.7322857
+    },
+    "temp/ims-plaintls-kk93bncz": {
+      "count": 3,
+      "bytes": 20480,
+      "newest": 1793197795.6493254,
+      "oldest": 1793197794.8999002
+    },
+    "temp/ims-plaintls-kq8s5s2y": {
+      "count": 3,
+      "bytes": 20480,
+      "newest": 1793197030.210912,
+      "oldest": 1793197029.6071892
+    },
+    "temp/ims-plaintls-vw6n1510": {
+      "count": 3,
+      "bytes": 20480,
+      "newest": 1793197795.6437848,
+      "oldest": 1793197794.7746654
+    },
+    "temp/ims-plaintls-xzn1oqqe": {
+      "count": 3,
+      "bytes": 20480,
+      "newest": 1793197030.2079067,
+      "oldest": 1793197029.6667557
+    },
+    "temp/ims-prod-3u0o3sia": {
+      "count": 3,
+      "bytes": 20480,
+      "newest": 1793197795.6187649,
+      "oldest": 1793197794.3237782
+    },
+    "temp/ims-prod-96ynakxa": {
+      "count": 3,
+      "bytes": 20480,
+      "newest": 1793197795.622759,
+      "oldest": 1793197794.5368247
+    },
+    "temp/ims-prod-a98e1r9e": {
+      "count": 3,
+      "bytes": 20480,
+      "newest": 1793197030.1943598,
+      "oldest": 1793197029.3098602
+    },
+    "temp/ims-prod-ab4irvke": {
+      "count": 3,
+      "bytes": 20480,
+      "newest": 1793197029.2501252,
+      "oldest": 1793197029.2189448
+    },
+    "temp/ims-prod-ib1sxps2": {
+      "count": 3,
+      "bytes": 20480,
+      "newest": 1793197030.1908474,
+      "oldest": 1793197029.399227
+    },
+    "temp/ims-prod-kls910w5": {
+      "count": 3,
+      "bytes": 20480,
+      "newest": 1793197030.1869621,
+      "oldest": 1793197029.244592
+    },
+    "temp/ims-prod-mnvn7m_f": {
+      "count": 3,
+      "bytes": 20480,
+      "newest": 1793197030.182059,
+      "oldest": 1793197029.0770776
+    },
+    "temp/ims-prod-o93ifcgi": {
+      "count": 3,
+      "bytes": 20480,
+      "newest": 1793197795.6300983,
+      "oldest": 1793197794.6505554
+    },
+    "temp/ims-prod-p3ip44t_": {
+      "count": 3,
+      "bytes": 20480,
+      "newest": 1793197030.198448,
+      "oldest": 1793197029.4667225
+    },
+    "temp/ims-prod-pci6pko6": {
+      "count": 3,
+      "bytes": 20480,
+      "newest": 1793197794.5415983,
+      "oldest": 1793197794.5045173
+    },
+    "temp/ims-prod-rclz8v3w": {
+      "count": 3,
+      "bytes": 20480,
+      "newest": 1793197795.6397784,
+      "oldest": 1793197794.7095723
+    },
+    "temp/ims-prod-w8vzwu7x": {
+      "count": 3,
+      "bytes": 20480,
+      "newest": 1793197795.6341221,
+      "oldest": 1793197794.5964339
+    },
+    "temp/DesignChecker": {
+      "count": 7,
+      "bytes": 20370,
+      "newest": 1793847346.2004895,
+      "oldest": 1793847346.1826868
+    },
+    "temp/pip-metadata-bhwo5ujc": {
+      "count": 1,
+      "bytes": 18445,
+      "newest": 1793801679.8325753,
+      "oldest": 1793801679.8325753
+    },
+    "temp/pip-metadata-ljrrdl92": {
+      "count": 1,
+      "bytes": 18445,
+      "newest": 1793800621.4085813,
+      "oldest": 1793800621.4085813
+    },
+    "temp/pip-unpack-29be9dc1": {
+      "count": 1,
+      "bytes": 18445,
+      "newest": 1793800621.3225782,
+      "oldest": 1793800621.3225782
+    },
+    "temp/pip-unpack-vsl7ct1q": {
+      "count": 1,
+      "bytes": 18445,
+      "newest": 1793801679.7849777,
+      "oldest": 1793801679.7849777
+    },
+    "temp/repomix": {
+      "count": 2,
+      "bytes": 17489,
+      "newest": 1793492610.638988,
+      "oldest": 1793492610.6365466
+    },
+    "temp/pip-metadata-64j363hq": {
+      "count": 1,
+      "bytes": 17158,
+      "newest": 1793800796.3702767,
+      "oldest": 1793800796.3702767
+    },
+    "temp/pip-unpack-q41_h6q7": {
+      "count": 1,
+      "bytes": 17158,
+      "newest": 1793800796.3306828,
+      "oldest": 1793800796.3306828
+    },
+    "temp/codebuddy-shell-payload-9824-lzE07Y": {
+      "count": 1,
+      "bytes": 16881,
+      "newest": 1793547957.485987,
+      "oldest": 1793547957.485987
+    },
+    "temp/HeadlessChrome1700813464562": {
+      "count": 2,
+      "bytes": 16384,
+      "newest": 1793177897.7406049,
+      "oldest": 1793177897.739602
+    },
+    "temp/HeadlessChrome248015442875": {
+      "count": 2,
+      "bytes": 16384,
+      "newest": 1793179890.4105206,
+      "oldest": 1793179890.409521
+    },
+    "temp/HeadlessChrome3026013029796": {
+      "count": 2,
+      "bytes": 16384,
+      "newest": 1793177448.7189393,
+      "oldest": 1793177448.7153914
+    },
+    "temp/swx14776": {
+      "count": 1,
+      "bytes": 16384,
+      "newest": 1793537851.294,
+      "oldest": 1793537851.294
+    },
+    "temp/swx26680": {
+      "count": 1,
+      "bytes": 16384,
+      "newest": 1793378294.26,
+      "oldest": 1793378294.26
+    },
+    "temp/pip-metadata-0nkens4u": {
+      "count": 1,
+      "bytes": 15009,
+      "newest": 1793800645.1749594,
+      "oldest": 1793800645.1749594
+    },
+    "temp/pip-metadata-sipeijvu": {
+      "count": 1,
+      "bytes": 15009,
+      "newest": 1793801703.4520981,
+      "oldest": 1793801703.4520981
+    },
+    "temp/pip-unpack-3z20lmhp": {
+      "count": 1,
+      "bytes": 15009,
+      "newest": 1793801703.3630855,
+      "oldest": 1793801703.3630855
+    },
+    "temp/pip-unpack-64w2937o": {
+      "count": 1,
+      "bytes": 15009,
+      "newest": 1793800645.1166852,
+      "oldest": 1793800645.1166852
+    },
+    "temp/virtu_audit_20261031_run2": {
+      "count": 21,
+      "bytes": 13353,
+      "newest": 1793424710.5503907,
+      "oldest": 1700000000.0
+    },
+    "temp/pip-metadata-i0cbsq0r": {
+      "count": 1,
+      "bytes": 12816,
+      "newest": 1793801689.784967,
+      "oldest": 1793801689.784967
+    },
+    "temp/pip-metadata-oedq74cf": {
+      "count": 1,
+      "bytes": 12816,
+      "newest": 1793801904.6199687,
+      "oldest": 1793801904.6199687
+    },
+    "temp/pip-metadata-ozt_056m": {
+      "count": 1,
+      "bytes": 12816,
+      "newest": 1793800629.2847836,
+      "oldest": 1793800629.2847836
+    },
+    "temp/pip-unpack-8k1pajbs": {
+      "count": 1,
+      "bytes": 12816,
+      "newest": 1793801904.604448,
+      "oldest": 1793801904.604448
+    },
+    "temp/pip-unpack-ri3wt__6": {
+      "count": 1,
+      "bytes": 12816,
+      "newest": 1793800629.2241123,
+      "oldest": 1793800629.2241123
+    },
+    "temp/pip-unpack-slcbbbdd": {
+      "count": 1,
+      "bytes": 12816,
+      "newest": 1793801689.752321,
+      "oldest": 1793801689.752321
+    },
+    "temp/fworks": {
+      "count": 6,
+      "bytes": 12792,
+      "newest": 1793847283.687825,
+      "oldest": 1793847283.6527534
+    },
+    "temp/codebuddy-safe-delete-bulk": {
+      "count": 30,
+      "bytes": 12569,
+      "newest": 1793969502.9992714,
+      "oldest": 1793111653.2579274
+    },
+    "temp/swx12120": {
+      "count": 1,
+      "bytes": 12288,
+      "newest": 1793104226.3451326,
+      "oldest": 1793104226.3451326
+    },
+    "temp/swx1580": {
+      "count": 1,
+      "bytes": 12288,
+      "newest": 1793889008.0533218,
+      "oldest": 1793889008.0533218
+    },
+    "temp/swx17136": {
+      "count": 1,
+      "bytes": 12288,
+      "newest": 1793618806.9190483,
+      "oldest": 1793618806.9190483
+    },
+    "temp/swx5744": {
+      "count": 1,
+      "bytes": 12288,
+      "newest": 1793551659.4808977,
+      "oldest": 1793551659.4808977
+    },
+    "temp/pip-metadata-jah8cwgk": {
+      "count": 1,
+      "bytes": 10609,
+      "newest": 1793800631.5756645,
+      "oldest": 1793800631.5756645
+    },
+    "temp/pip-metadata-n72flsm4": {
+      "count": 1,
+      "bytes": 10609,
+      "newest": 1793801694.1228848,
+      "oldest": 1793801694.1228848
+    },
+    "temp/pip-metadata-pm8kv164": {
+      "count": 1,
+      "bytes": 10609,
+      "newest": 1793801909.4724944,
+      "oldest": 1793801909.4724944
+    },
+    "temp/pip-unpack-2ue2hpyp": {
+      "count": 1,
+      "bytes": 10609,
+      "newest": 1793801909.449974,
+      "oldest": 1793801909.449974
+    },
+    "temp/pip-unpack-xw04miv5": {
+      "count": 1,
+      "bytes": 10609,
+      "newest": 1793801694.0921113,
+      "oldest": 1793801694.0921113
+    },
+    "temp/pip-unpack-z1vvi67l": {
+      "count": 1,
+      "bytes": 10609,
+      "newest": 1793800631.5133471,
+      "oldest": 1793800631.5133471
+    },
+    "temp/pip-metadata-qq2qjnli": {
+      "count": 1,
+      "bytes": 9300,
+      "newest": 1793800609.7686083,
+      "oldest": 1793800609.7686083
+    },
+    "temp/pip-metadata-s0t73tz6": {
+      "count": 1,
+      "bytes": 9300,
+      "newest": 1793801672.3463006,
+      "oldest": 1793801672.3463006
+    },
+    "temp/pip-unpack-3df18cpr": {
+      "count": 1,
+      "bytes": 9300,
+      "newest": 1793800609.7036667,
+      "oldest": 1793800609.7036667
+    },
+    "temp/pip-unpack-l8uqszen": {
+      "count": 1,
+      "bytes": 9300,
+      "newest": 1793801672.3051157,
+      "oldest": 1793801672.3051157
+    },
+    "temp/pip-metadata-59rhrok5": {
+      "count": 1,
+      "bytes": 8630,
+      "newest": 1793800832.0170238,
+      "oldest": 1793800832.0170238
+    },
+    "temp/pip-metadata-irbbiahm": {
+      "count": 1,
+      "bytes": 8630,
+      "newest": 1793801910.6021864,
+      "oldest": 1793801910.6021864
+    },
+    "temp/pip-unpack-2kxhpd_6": {
+      "count": 1,
+      "bytes": 8630,
+      "newest": 1793801910.5829396,
+      "oldest": 1793801910.5829396
+    },
+    "temp/pip-unpack-3v1yx1uw": {
+      "count": 1,
+      "bytes": 8630,
+      "newest": 1793800831.9616683,
+      "oldest": 1793800831.9616683
+    },
+    "temp/pip-metadata-5pn34ea9": {
+      "count": 1,
+      "bytes": 8348,
+      "newest": 1793801701.875652,
+      "oldest": 1793801701.875652
+    },
+    "temp/pip-metadata-xasmyegc": {
+      "count": 1,
+      "bytes": 8348,
+      "newest": 1793800640.4249935,
+      "oldest": 1793800640.4249935
+    },
+    "temp/pip-unpack-5k79rf21": {
+      "count": 1,
+      "bytes": 8348,
+      "newest": 1793800640.286015,
+      "oldest": 1793800640.286015
+    },
+    "temp/pip-unpack-edgsmy17": {
+      "count": 1,
+      "bytes": 8348,
+      "newest": 1793801701.8536074,
+      "oldest": 1793801701.8536074
+    },
+    "temp/pip-metadata-a0trjwae": {
+      "count": 1,
+      "bytes": 7869,
+      "newest": 1793801673.519767,
+      "oldest": 1793801673.519767
+    },
+    "temp/pip-metadata-ppk86o3o": {
+      "count": 1,
+      "bytes": 7869,
+      "newest": 1793800610.32937,
+      "oldest": 1793800610.32937
+    },
+    "temp/pip-unpack-m03y7pfg": {
+      "count": 1,
+      "bytes": 7869,
+      "newest": 1793800610.3136802,
+      "oldest": 1793800610.3136802
+    },
+    "temp/pip-unpack-uadckx7p": {
+      "count": 1,
+      "bytes": 7869,
+      "newest": 1793801673.5126696,
+      "oldest": 1793801673.5126696
+    },
+    "temp/pip-metadata-vj4ewaph": {
+      "count": 1,
+      "bytes": 7410,
+      "newest": 1793800804.6791143,
+      "oldest": 1793800804.6791143
+    },
+    "temp/pip-unpack-9zvyugu0": {
+      "count": 1,
+      "bytes": 7410,
+      "newest": 1793800804.665651,
+      "oldest": 1793800804.665651
+    },
+    "temp/pip-metadata-c_myklrf": {
+      "count": 1,
+      "bytes": 7389,
+      "newest": 1793800827.4208481,
+      "oldest": 1793800827.4208481
+    },
+    "temp/pip-unpack-9ifz8dzy": {
+      "count": 1,
+      "bytes": 7389,
+      "newest": 1793800827.4141464,
+      "oldest": 1793800827.4141464
+    },
+    "temp/pip-metadata-bek_opc7": {
+      "count": 1,
+      "bytes": 7207,
+      "newest": 1793800824.989622,
+      "oldest": 1793800824.989622
+    },
+    "temp/pip-unpack-mz4sru3v": {
+      "count": 1,
+      "bytes": 7207,
+      "newest": 1793800824.9599688,
+      "oldest": 1793800824.9599688
+    },
+    "temp/pip-metadata-44vl5ggu": {
+      "count": 1,
+      "bytes": 6719,
+      "newest": 1793801691.6960087,
+      "oldest": 1793801691.6960087
+    },
+    "temp/pip-metadata-is1wy0g8": {
+      "count": 1,
+      "bytes": 6719,
+      "newest": 1793801907.0280404,
+      "oldest": 1793801907.0280404
+    },
+    "temp/pip-metadata-rv06_zcw": {
+      "count": 1,
+      "bytes": 6719,
+      "newest": 1793800629.9013717,
+      "oldest": 1793800629.9013717
+    },
+    "temp/pip-unpack-3yq6p979": {
+      "count": 1,
+      "bytes": 6719,
+      "newest": 1793800629.8841813,
+      "oldest": 1793800629.8841813
+    },
+    "temp/pip-unpack-57mmftb9": {
+      "count": 1,
+      "bytes": 6719,
+      "newest": 1793801691.6431653,
+      "oldest": 1793801691.6431653
+    },
+    "temp/pip-unpack-58ytnl44": {
+      "count": 1,
+      "bytes": 6719,
+      "newest": 1793801907.0065176,
+      "oldest": 1793801907.0065176
+    },
+    "temp/pip-metadata-hv3l5gta": {
+      "count": 1,
+      "bytes": 6650,
+      "newest": 1793800795.9798944,
+      "oldest": 1793800795.9798944
+    },
+    "temp/pip-unpack-or3nv2l3": {
+      "count": 1,
+      "bytes": 6650,
+      "newest": 1793800795.9485161,
+      "oldest": 1793800795.9485161
+    },
+    "temp/pip-metadata-1nat73x8": {
+      "count": 1,
+      "bytes": 6635,
+      "newest": 1793801678.6573606,
+      "oldest": 1793801678.6573606
+    },
+    "temp/pip-metadata-d9tcetfs": {
+      "count": 1,
+      "bytes": 6635,
+      "newest": 1793800619.4960616,
+      "oldest": 1793800619.4960616
+    },
+    "temp/pip-unpack-8b8f5toi": {
+      "count": 1,
+      "bytes": 6635,
+      "newest": 1793800619.4307868,
+      "oldest": 1793800619.4307868
+    },
+    "temp/pip-unpack-pw65yr29": {
+      "count": 1,
+      "bytes": 6635,
+      "newest": 1793801678.6200285,
+      "oldest": 1793801678.6200285
+    },
+    "temp/pip-metadata-m3kjlnpt": {
+      "count": 1,
+      "bytes": 6607,
+      "newest": 1793801662.5569968,
+      "oldest": 1793801662.5569968
+    },
+    "temp/pip-metadata-yqlro34d": {
+      "count": 1,
+      "bytes": 6607,
+      "newest": 1793800598.165298,
+      "oldest": 1793800598.165298
+    },
+    "temp/pip-unpack-qrlq3s5w": {
+      "count": 1,
+      "bytes": 6607,
+      "newest": 1793800598.0810742,
+      "oldest": 1793800598.0810742
+    },
+    "temp/pip-unpack-w_z1w4p4": {
+      "count": 1,
+      "bytes": 6607,
+      "newest": 1793801662.523144,
+      "oldest": 1793801662.523144
+    },
+    "temp/pip-metadata-7_7klnoz": {
+      "count": 1,
+      "bytes": 6599,
+      "newest": 1793801902.7386048,
+      "oldest": 1793801902.7386048
+    },
+    "temp/pip-unpack-5zrknmc1": {
+      "count": 1,
+      "bytes": 6599,
+      "newest": 1793801902.718373,
+      "oldest": 1793801902.718373
+    },
+    "temp/pip-metadata-j3f3jo5x": {
+      "count": 1,
+      "bytes": 6581,
+      "newest": 1793800628.6980274,
+      "oldest": 1793800628.6980274
+    },
+    "temp/pip-metadata-qailgb_j": {
+      "count": 1,
+      "bytes": 6581,
+      "newest": 1793801688.124904,
+      "oldest": 1793801688.124904
+    },
+    "temp/pip-unpack-t1o1_rsb": {
+      "count": 1,
+      "bytes": 6581,
+      "newest": 1793801688.0966392,
+      "oldest": 1793801688.0966392
+    },
+    "temp/pip-unpack-ucnsqmio": {
+      "count": 1,
+      "bytes": 6581,
+      "newest": 1793800628.6342437,
+      "oldest": 1793800628.6342437
+    },
+    "temp/pip-metadata-5i7su2s2": {
+      "count": 1,
+      "bytes": 6560,
+      "newest": 1793801695.6315615,
+      "oldest": 1793801695.6315615
+    },
+    "temp/pip-metadata-gw72guj6": {
+      "count": 1,
+      "bytes": 6560,
+      "newest": 1793800633.2445142,
+      "oldest": 1793800633.2445142
+    },
+    "temp/pip-unpack-42qg9o6_": {
+      "count": 1,
+      "bytes": 6560,
+      "newest": 1793800633.1833174,
+      "oldest": 1793800633.1833174
+    },
+    "temp/pip-unpack-69vag4e7": {
+      "count": 1,
+      "bytes": 6560,
+      "newest": 1793801695.5875914,
+      "oldest": 1793801695.5875914
+    },
+    "temp/pip-metadata-bfa3cyd9": {
+      "count": 1,
+      "bytes": 6516,
+      "newest": 1793801698.953328,
+      "oldest": 1793801698.953328
+    },
+    "temp/pip-metadata-wc_81q1v": {
+      "count": 1,
+      "bytes": 6516,
+      "newest": 1793800635.4813707,
+      "oldest": 1793800635.4813707
+    },
+    "temp/pip-unpack-99jkw5d1": {
+      "count": 1,
+      "bytes": 6516,
+      "newest": 1793801698.920768,
+      "oldest": 1793801698.920768
+    },
+    "temp/pip-unpack-_3tqpe8j": {
+      "count": 1,
+      "bytes": 6516,
+      "newest": 1793800635.4000592,
+      "oldest": 1793800635.4000592
+    },
+    "temp/msedge_url_fetcher_7320_1454034270": {
+      "count": 1,
+      "bytes": 6188,
+      "newest": 1793461082.5578096,
+      "oldest": 1793461082.5578096
+    },
+    "temp/is-UYJ4JHGAF0.tmp": {
+      "count": 1,
+      "bytes": 6144,
+      "newest": 1792074905.1002831,
+      "oldest": 1792074905.1002831
+    },
+    "temp/pip-metadata-4q3ts0xe": {
+      "count": 1,
+      "bytes": 5675,
+      "newest": 1793801659.370866,
+      "oldest": 1793801659.370866
+    },
+    "temp/pip-metadata-bhigv_ta": {
+      "count": 1,
+      "bytes": 5675,
+      "newest": 1793798841.5100741,
+      "oldest": 1793798841.5100741
+    },
+    "temp/pip-metadata-jikc2rv1": {
+      "count": 1,
+      "bytes": 5675,
+      "newest": 1793800594.037395,
+      "oldest": 1793800594.037395
+    },
+    "temp/pip-unpack-13ow6cs4": {
+      "count": 1,
+      "bytes": 5675,
+      "newest": 1793798841.4548478,
+      "oldest": 1793798841.4548478
+    },
+    "temp/pip-unpack-m1f569by": {
+      "count": 1,
+      "bytes": 5675,
+      "newest": 1793801659.3465736,
+      "oldest": 1793801659.3465736
+    },
+    "temp/pip-unpack-mvcqpyah": {
+      "count": 1,
+      "bytes": 5675,
+      "newest": 1793800593.9821737,
+      "oldest": 1793800593.9821737
+    },
+    "temp/aiep_sbox_selftest_24028": {
+      "count": 2,
+      "bytes": 5576,
+      "newest": 1793758839.7244856,
+      "oldest": 1793758839.7055
+    },
+    "temp/pip-metadata-0soj_7sc": {
+      "count": 1,
+      "bytes": 5035,
+      "newest": 1793800800.7265232,
+      "oldest": 1793800800.7265232
+    },
+    "temp/pip-metadata-9s_9au6z": {
+      "count": 1,
+      "bytes": 5035,
+      "newest": 1793798848.605931,
+      "oldest": 1793798848.605931
+    },
+    "temp/pip-unpack-9og1zpab": {
+      "count": 1,
+      "bytes": 5035,
+      "newest": 1793800800.7130034,
+      "oldest": 1793800800.7130034
+    },
+    "temp/pip-unpack-c7q3oe6h": {
+      "count": 1,
+      "bytes": 5035,
+      "newest": 1793798848.5347161,
+      "oldest": 1793798848.5347161
+    },
+    "temp/pip-metadata-acy2gtac": {
+      "count": 1,
+      "bytes": 4966,
+      "newest": 1793800800.1040866,
+      "oldest": 1793800800.1040866
+    },
+    "temp/pip-unpack-fgnd08lg": {
+      "count": 1,
+      "bytes": 4966,
+      "newest": 1793800800.0965762,
+      "oldest": 1793800800.0965762
+    },
+    "temp/acad": {
+      "count": 18,
+      "bytes": 4930,
+      "newest": 1793934380.8584652,
+      "oldest": 1793783037.6392035
+    },
+    "temp/pip-metadata-8wt5igk5": {
+      "count": 1,
+      "bytes": 4806,
+      "newest": 1793800622.8821802,
+      "oldest": 1793800622.8821802
+    },
+    "temp/pip-metadata-ijqtgyhj": {
+      "count": 1,
+      "bytes": 4806,
+      "newest": 1793801681.2585394,
+      "oldest": 1793801681.2585394
+    },
+    "temp/pip-unpack-ntxiewk8": {
+      "count": 1,
+      "bytes": 4806,
+      "newest": 1793800622.7971888,
+      "oldest": 1793800622.7971888
+    },
+    "temp/pip-unpack-tyudd9ln": {
+      "count": 1,
+      "bytes": 4806,
+      "newest": 1793801681.1676557,
+      "oldest": 1793801681.1676557
+    },
+    "temp/pip-metadata-o4827iyt": {
+      "count": 1,
+      "bytes": 4733,
+      "newest": 1793800831.5500376,
+      "oldest": 1793800831.5500376
+    },
+    "temp/pip-unpack-bg4cl2q1": {
+      "count": 1,
+      "bytes": 4733,
+      "newest": 1793800831.5044615,
+      "oldest": 1793800831.5044615
+    },
+    "temp/__pycache__": {
+      "count": 1,
+      "bytes": 4692,
+      "newest": 1793759435.8163683,
+      "oldest": 1793759435.8163683
+    },
+    "cache/No_Vary_Search": {
+      "count": 4,
+      "bytes": 4524,
+      "newest": 1793965726.176048,
+      "oldest": 1793099278.9687436
+    },
+    "temp/pip-metadata-bef7oifb": {
+      "count": 1,
+      "bytes": 4483,
+      "newest": 1793798849.3186407,
+      "oldest": 1793798849.3186407
+    },
+    "temp/pip-metadata-uk_n7rou": {
+      "count": 1,
+      "bytes": 4483,
+      "newest": 1793800801.0298288,
+      "oldest": 1793800801.0298288
+    },
+    "temp/pip-unpack-j491fesl": {
+      "count": 1,
+      "bytes": 4483,
+      "newest": 1793800801.0214212,
+      "oldest": 1793800801.0214212
+    },
+    "temp/pip-unpack-sj303ln2": {
+      "count": 1,
+      "bytes": 4483,
+      "newest": 1793798849.2790563,
+      "oldest": 1793798849.2790563
+    },
+    "temp/acadlisp_ivf8y5jq": {
+      "count": 1,
+      "bytes": 4117,
+      "newest": 1793632461.9993165,
+      "oldest": 1793632461.9993165
+    },
+    "temp/pip-metadata-3pgqd_7x": {
+      "count": 1,
+      "bytes": 3777,
+      "newest": 1793798843.025344,
+      "oldest": 1793798843.025344
+    },
+    "temp/pip-metadata-qbnpf4j3": {
+      "count": 1,
+      "bytes": 3777,
+      "newest": 1793801674.1205416,
+      "oldest": 1793801674.1205416
+    },
+    "temp/pip-metadata-t9_daq5s": {
+      "count": 1,
+      "bytes": 3777,
+      "newest": 1793800611.7394056,
+      "oldest": 1793800611.7394056
+    },
+    "temp/pip-unpack-a2n0lykv": {
+      "count": 1,
+      "bytes": 3777,
+      "newest": 1793800611.6469152,
+      "oldest": 1793800611.6469152
+    },
+    "temp/pip-unpack-fm3jkwjg": {
+      "count": 1,
+      "bytes": 3777,
+      "newest": 1793798842.999988,
+      "oldest": 1793798842.999988
+    },
+    "temp/pip-unpack-yj3pjr1k": {
+      "count": 1,
+      "bytes": 3777,
+      "newest": 1793801674.0979636,
+      "oldest": 1793801674.0979636
+    },
+    "temp/pip-metadata-jo6otzgr": {
+      "count": 1,
+      "bytes": 3666,
+      "newest": 1793800802.3304486,
+      "oldest": 1793800802.3304486
+    },
+    "temp/pip-metadata-mkr1qjc4": {
+      "count": 1,
+      "bytes": 3666,
+      "newest": 1793798851.5427046,
+      "oldest": 1793798851.5427046
+    },
+    "temp/pip-unpack-w23rxxif": {
+      "count": 1,
+      "bytes": 3666,
+      "newest": 1793798851.491177,
+      "oldest": 1793798851.491177
+    },
+    "temp/pip-unpack-wx633j1g": {
+      "count": 1,
+      "bytes": 3666,
+      "newest": 1793800802.3234487,
+      "oldest": 1793800802.3234487
+    },
+    "temp/ims-audit-1ydph5rl": {
+      "count": 1,
+      "bytes": 3546,
+      "newest": 1793197784.4820485,
+      "oldest": 1793197784.4820485
+    },
+    "temp/ims-audit-2hx26_go": {
+      "count": 1,
+      "bytes": 3546,
+      "newest": 1793197011.1791267,
+      "oldest": 1793197011.1791267
+    },
+    "temp/ims-audit-6827nr5t": {
+      "count": 1,
+      "bytes": 3546,
+      "newest": 1793197011.2006328,
+      "oldest": 1793197011.2006328
+    },
+    "temp/ims-audit-egbj_fde": {
+      "count": 1,
+      "bytes": 3546,
+      "newest": 1793197784.467384,
+      "oldest": 1793197784.467384
+    },
+    "temp/ims-audit-g9bgdbwp": {
+      "count": 1,
+      "bytes": 3546,
+      "newest": 1793197784.4992535,
+      "oldest": 1793197784.4992535
+    },
+    "temp/ims-audit-i_txaw99": {
+      "count": 1,
+      "bytes": 3546,
+      "newest": 1793197011.1435356,
+      "oldest": 1793197011.1435356
+    },
+    "temp/pip-metadata-x1koyleg": {
+      "count": 1,
+      "bytes": 3544,
+      "newest": 1793800799.7452981,
+      "oldest": 1793800799.7452981
+    },
+    "temp/pip-unpack-erq76odt": {
+      "count": 1,
+      "bytes": 3544,
+      "newest": 1793800799.7045076,
+      "oldest": 1793800799.7045076
+    },
+    "temp/gbus_cgsdk": {
+      "count": 1,
+      "bytes": 3432,
+      "newest": 1793966294.0086434,
+      "oldest": 1793966294.0086434
+    },
+    "temp/pip-metadata-6odb3b9t": {
+      "count": 1,
+      "bytes": 3310,
+      "newest": 1793801684.646575,
+      "oldest": 1793801684.646575
+    },
+    "temp/pip-metadata-br1iknmw": {
+      "count": 1,
+      "bytes": 3310,
+      "newest": 1793801902.271037,
+      "oldest": 1793801902.271037
+    },
+    "temp/pip-metadata-yhwrrzvh": {
+      "count": 1,
+      "bytes": 3310,
+      "newest": 1793800627.693831,
+      "oldest": 1793800627.693831
+    },
+    "temp/pip-unpack-8dw91uuh": {
+      "count": 1,
+      "bytes": 3310,
+      "newest": 1793800627.6734831,
+      "oldest": 1793800627.6734831
+    },
+    "temp/pip-unpack-knbb9co2": {
+      "count": 1,
+      "bytes": 3310,
+      "newest": 1793801902.242554,
+      "oldest": 1793801902.242554
+    },
+    "temp/pip-unpack-pd84pl73": {
+      "count": 1,
+      "bytes": 3310,
+      "newest": 1793801684.6184232,
+      "oldest": 1793801684.6184232
+    },
+    "temp/pip-metadata-4j3n9ywf": {
+      "count": 1,
+      "bytes": 2871,
+      "newest": 1793801907.49006,
+      "oldest": 1793801907.49006
+    },
+    "temp/pip-metadata-7fuibq5f": {
+      "count": 1,
+      "bytes": 2871,
+      "newest": 1793798843.9802048,
+      "oldest": 1793798843.9802048
+    },
+    "temp/pip-metadata-owoqbtnp": {
+      "count": 1,
+      "bytes": 2871,
+      "newest": 1793800630.9058497,
+      "oldest": 1793800630.9058497
+    },
+    "temp/pip-metadata-ruudw1ur": {
+      "count": 1,
+      "bytes": 2871,
+      "newest": 1793801692.4901838,
+      "oldest": 1793801692.4901838
+    },
+    "temp/pip-unpack-03h6jfem": {
+      "count": 1,
+      "bytes": 2871,
+      "newest": 1793801907.4673133,
+      "oldest": 1793801907.4673133
+    },
+    "temp/pip-unpack-lhihkkuo": {
+      "count": 1,
+      "bytes": 2871,
+      "newest": 1793798843.9524536,
+      "oldest": 1793798843.9524536
+    },
+    "temp/pip-unpack-naegkbc2": {
+      "count": 1,
+      "bytes": 2871,
+      "newest": 1793800630.8491464,
+      "oldest": 1793800630.8491464
+    },
+    "temp/pip-unpack-wwrc8sl0": {
+      "count": 1,
+      "bytes": 2871,
+      "newest": 1793801692.3902519,
+      "oldest": 1793801692.3902519
+    },
+    "temp/pip-metadata-zpldcfx6": {
+      "count": 1,
+      "bytes": 2826,
+      "newest": 1793800796.7604382,
+      "oldest": 1793800796.7604382
+    },
+    "temp/pip-unpack-s42uda4b": {
+      "count": 1,
+      "bytes": 2826,
+      "newest": 1793800796.7409184,
+      "oldest": 1793800796.7409184
+    },
+    "temp/pip-metadata-1k483vtz": {
+      "count": 1,
+      "bytes": 2764,
+      "newest": 1793800839.0784433,
+      "oldest": 1793800839.0784433
+    },
+    "temp/pip-metadata-vtbxfdqa": {
+      "count": 1,
+      "bytes": 2764,
+      "newest": 1793801912.6213255,
+      "oldest": 1793801912.6213255
+    },
+    "temp/pip-unpack-7_tijom7": {
+      "count": 1,
+      "bytes": 2764,
+      "newest": 1793800839.0353684,
+      "oldest": 1793800839.0353684
+    },
+    "temp/pip-unpack-vqlizd95": {
+      "count": 1,
+      "bytes": 2764,
+      "newest": 1793801912.597809,
+      "oldest": 1793801912.597809
+    },
+    "temp/scoped_dir17468_212623893": {
+      "count": 2,
+      "bytes": 2618,
+      "newest": 1793189800.9644723,
+      "oldest": 1793189710.7152092
+    },
+    "temp/pip-metadata-v93zh4cl": {
+      "count": 1,
+      "bytes": 2567,
+      "newest": 1793801701.0408533,
+      "oldest": 1793801701.0408533
+    },
+    "temp/pip-metadata-zybtr7ku": {
+      "count": 1,
+      "bytes": 2567,
+      "newest": 1793800638.585547,
+      "oldest": 1793800638.585547
+    },
+    "temp/pip-unpack-002e6165": {
+      "count": 1,
+      "bytes": 2567,
+      "newest": 1793800638.5429826,
+      "oldest": 1793800638.5429826
+    },
+    "temp/pip-unpack-omfumd47": {
+      "count": 1,
+      "bytes": 2567,
+      "newest": 1793801701.0131574,
+      "oldest": 1793801701.0131574
+    },
+    "temp/pip-metadata-b3_8nyxh": {
+      "count": 1,
+      "bytes": 2554,
+      "newest": 1793800634.6553977,
+      "oldest": 1793800634.6553977
+    },
+    "temp/pip-metadata-te_r7cgy": {
+      "count": 1,
+      "bytes": 2554,
+      "newest": 1793801697.47878,
+      "oldest": 1793801697.47878
+    },
+    "temp/pip-unpack-mqbign4b": {
+      "count": 1,
+      "bytes": 2554,
+      "newest": 1793800634.556229,
+      "oldest": 1793800634.556229
+    },
+    "temp/pip-unpack-wvl1ki9u": {
+      "count": 1,
+      "bytes": 2554,
+      "newest": 1793801697.4502568,
+      "oldest": 1793801697.4502568
+    },
+    "temp/pip-metadata-rz6womac": {
+      "count": 1,
+      "bytes": 2527,
+      "newest": 1793800800.4312198,
+      "oldest": 1793800800.4312198
+    },
+    "temp/pip-unpack-wlw33t39": {
+      "count": 1,
+      "bytes": 2527,
+      "newest": 1793800800.4246924,
+      "oldest": 1793800800.4246924
+    },
+    "temp/pip-metadata-y6hjp2tc": {
+      "count": 1,
+      "bytes": 2526,
+      "newest": 1793800827.781171,
+      "oldest": 1793800827.781171
+    },
+    "temp/pip-unpack-m182ojcw": {
+      "count": 1,
+      "bytes": 2526,
+      "newest": 1793800827.7683275,
+      "oldest": 1793800827.7683275
+    },
+    "temp/pip-metadata-9nns14j3": {
+      "count": 1,
+      "bytes": 2410,
+      "newest": 1793801667.8767323,
+      "oldest": 1793801667.8767323
+    },
+    "temp/pip-metadata-ja2gh0vd": {
+      "count": 1,
+      "bytes": 2410,
+      "newest": 1793800603.5971508,
+      "oldest": 1793800603.5971508
+    },
+    "temp/pip-unpack-n0h0d8up": {
+      "count": 1,
+      "bytes": 2410,
+      "newest": 1793800603.5566163,
+      "oldest": 1793800603.5566163
+    },
+    "temp/pip-unpack-_95dd7dx": {
+      "count": 1,
+      "bytes": 2410,
+      "newest": 1793801667.8560355,
+      "oldest": 1793801667.8560355
+    },
+    "temp/pip-metadata-aaf04xir": {
+      "count": 1,
+      "bytes": 2263,
+      "newest": 1793801682.2069402,
+      "oldest": 1793801682.2069402
+    },
+    "temp/pip-metadata-wjnpn4r0": {
+      "count": 1,
+      "bytes": 2263,
+      "newest": 1793800624.7633576,
+      "oldest": 1793800624.7633576
+    },
+    "temp/pip-unpack-gdw5kzhl": {
+      "count": 1,
+      "bytes": 2263,
+      "newest": 1793801682.149597,
+      "oldest": 1793801682.149597
+    },
+    "temp/pip-unpack-ozzbhu8e": {
+      "count": 1,
+      "bytes": 2263,
+      "newest": 1793800624.6797233,
+      "oldest": 1793800624.6797233
+    },
+    "temp/pip-metadata-khou8_fc": {
+      "count": 1,
+      "bytes": 1976,
+      "newest": 1793801900.6647696,
+      "oldest": 1793801900.6647696
+    },
+    "temp/pip-unpack-fe53r0w8": {
+      "count": 1,
+      "bytes": 1976,
+      "newest": 1793801900.6390278,
+      "oldest": 1793801900.6390278
+    },
+    "temp/HeadlessChrome1834813121250": {
+      "count": 12,
+      "bytes": 1927,
+      "newest": 1793177536.4653685,
+      "oldest": 1793177535.9578147
+    },
+    "temp/ims-audit-2d88esci": {
+      "count": 1,
+      "bytes": 1785,
+      "newest": 1793197784.4851117,
+      "oldest": 1793197784.4851117
+    },
+    "temp/ims-audit-7w9rgwsp": {
+      "count": 1,
+      "bytes": 1785,
+      "newest": 1793197011.1859467,
+      "oldest": 1793197011.1859467
+    },
+    "temp/ims-audit-8_l6_wrp": {
+      "count": 1,
+      "bytes": 1785,
+      "newest": 1793197784.472475,
+      "oldest": 1793197784.472475
+    },
+    "temp/ims-audit-a01ox7j4": {
+      "count": 1,
+      "bytes": 1785,
+      "newest": 1793197784.5062118,
+      "oldest": 1793197784.5062118
+    },
+    "temp/ims-audit-gwz_qcrd": {
+      "count": 1,
+      "bytes": 1785,
+      "newest": 1793197784.4524205,
+      "oldest": 1793197784.4524205
+    },
+    "temp/ims-audit-l69ljdn5": {
+      "count": 1,
+      "bytes": 1785,
+      "newest": 1793197784.447391,
+      "oldest": 1793197784.447391
+    },
+    "temp/ims-audit-lnkb8vlo": {
+      "count": 1,
+      "bytes": 1785,
+      "newest": 1793197011.2072003,
+      "oldest": 1793197011.2072003
+    },
+    "temp/ims-audit-muv3db7t": {
+      "count": 1,
+      "bytes": 1785,
+      "newest": 1793197011.116798,
+      "oldest": 1793197011.116798
+    },
+    "temp/ims-audit-pdpboc1x": {
+      "count": 1,
+      "bytes": 1785,
+      "newest": 1793197011.1720874,
+      "oldest": 1793197011.1720874
+    },
+    "temp/ims-audit-_aatjs34": {
+      "count": 1,
+      "bytes": 1785,
+      "newest": 1793197011.1102047,
+      "oldest": 1793197011.1102047
+    },
+    "temp/ims-audit-3_q8u8fm": {
+      "count": 1,
+      "bytes": 1760,
+      "newest": 1793197784.4911835,
+      "oldest": 1793197784.4911835
+    },
+    "temp/ims-audit-gki1ejc3": {
+      "count": 1,
+      "bytes": 1760,
+      "newest": 1793197011.2311997,
+      "oldest": 1793197011.2311997
+    },
+    "temp/ims-audit-u2pdt7_4": {
+      "count": 1,
+      "bytes": 1760,
+      "newest": 1793197011.1909719,
+      "oldest": 1793197011.1909719
+    },
+    "temp/ims-audit-w6ogkj54": {
+      "count": 1,
+      "bytes": 1760,
+      "newest": 1793197784.5281105,
+      "oldest": 1793197784.5281105
+    },
+    "temp/pip-metadata-n36vblp2": {
+      "count": 1,
+      "bytes": 1638,
+      "newest": 1793800828.7485461,
+      "oldest": 1793800828.7485461
+    },
+    "temp/pip-unpack-__plw8ff": {
+      "count": 1,
+      "bytes": 1638,
+      "newest": 1793800828.7228951,
+      "oldest": 1793800828.7228951
+    },
+    "temp/pip-metadata-6acrhafs": {
+      "count": 1,
+      "bytes": 1411,
+      "newest": 1793801699.9387379,
+      "oldest": 1793801699.9387379
+    },
+    "temp/pip-metadata-nbm4xfth": {
+      "count": 1,
+      "bytes": 1411,
+      "newest": 1793800636.9136245,
+      "oldest": 1793800636.9136245
+    },
+    "temp/pip-unpack-m0ijufxg": {
+      "count": 1,
+      "bytes": 1411,
+      "newest": 1793801699.9267726,
+      "oldest": 1793801699.9267726
+    },
+    "temp/pip-unpack-tfzm2vtm": {
+      "count": 1,
+      "bytes": 1411,
+      "newest": 1793800636.8553646,
+      "oldest": 1793800636.8553646
+    },
+    "temp/scoped_dir12096_441502154": {
+      "count": 1,
+      "bytes": 1309,
+      "newest": 1793252394.850865,
+      "oldest": 1793252394.850865
+    },
+    "temp/scoped_dir6548_2092308127": {
+      "count": 1,
+      "bytes": 1309,
+      "newest": 1793177489.550537,
+      "oldest": 1793177489.550537
+    },
+    "temp/ims-audit-restart-gn5cvsav": {
+      "count": 1,
+      "bytes": 1062,
+      "newest": 1793197784.5538132,
+      "oldest": 1793197784.5538132
+    },
+    "temp/ims-audit-restart-pvvx9we6": {
+      "count": 1,
+      "bytes": 1062,
+      "newest": 1793197011.2735033,
+      "oldest": 1793197011.2735033
+    },
+    "temp/ims-audit-fyt5isft": {
+      "count": 1,
+      "bytes": 1022,
+      "newest": 1793197011.2251062,
+      "oldest": 1793197011.2251062
+    },
+    "temp/ims-audit-u58kmqzd": {
+      "count": 1,
+      "bytes": 1022,
+      "newest": 1793197784.522485,
+      "oldest": 1793197784.522485
+    },
+    "temp/system-commandline-sentinel-files": {
+      "count": 2,
+      "bytes": 992,
+      "newest": 1793552394.9458463,
+      "oldest": 1793195458.4997811
+    },
+    "temp/lancedb_probe_4tih9jd4": {
+      "count": 3,
+      "bytes": 826,
+      "newest": 1793873910.4112911,
+      "oldest": 1793873910.3894737
+    },
+    "temp/lancedb_probe_sj24ezyf": {
+      "count": 3,
+      "bytes": 826,
+      "newest": 1793966098.5239356,
+      "oldest": 1793966098.4019265
+    },
+    "temp/ims-audit-iz2z8kno": {
+      "count": 1,
+      "bytes": 683,
+      "newest": 1793197011.2198102,
+      "oldest": 1793197011.2198102
+    },
+    "temp/ims-audit-jld2xmxv": {
+      "count": 1,
+      "bytes": 683,
+      "newest": 1793197011.2137065,
+      "oldest": 1793197011.2137065
+    },
+    "temp/ims-audit-w3pms3z4": {
+      "count": 1,
+      "bytes": 683,
+      "newest": 1793197784.5181153,
+      "oldest": 1793197784.5181153
+    },
+    "temp/ims-audit-zswyex9z": {
+      "count": 1,
+      "bytes": 683,
+      "newest": 1793197784.5129762,
+      "oldest": 1793197784.5129762
+    },
+    "temp/agy-plugin-cli-3618209996": {
+      "count": 5,
+      "bytes": 589,
+      "newest": 1793448257.318819,
+      "oldest": 1793448257.313245
+    },
+    "temp/cloudbusinessicons": {
+      "count": 1,
+      "bytes": 537,
+      "newest": 1793251455.0,
+      "oldest": 1793251455.0
+    },
+    "temp/ims-audit-disk-na8uw3md": {
+      "count": 1,
+      "bytes": 354,
+      "newest": 1793197784.559872,
+      "oldest": 1793197784.559872
+    },
+    "temp/ims-audit-disk-v_ixttgi": {
+      "count": 1,
+      "bytes": 354,
+      "newest": 1793197011.2845838,
+      "oldest": 1793197011.2845838
+    },
+    "temp/wb": {
+      "count": 2,
+      "bytes": 266,
+      "newest": 1793971638.5761409,
+      "oldest": 1793966373.765515
+    },
+    "temp/gitkraken": {
+      "count": 1,
+      "bytes": 200,
+      "newest": 1793939060.6572168,
+      "oldest": 1793939060.6572168
+    },
+    "temp/tmp9kkr9xnk": {
+      "count": 2,
+      "bytes": 199,
+      "newest": 1793360295.5806458,
+      "oldest": 1793360295.5806458
+    },
+    "temp/tmpzm_rmn_6": {
+      "count": 2,
+      "bytes": 199,
+      "newest": 1793360280.7495036,
+      "oldest": 1793360280.7495036
+    },
+    "temp/tmpn7g6d4bn": {
+      "count": 24,
+      "bytes": 197,
+      "newest": 1793119022.6100254,
+      "oldest": 1793119022.3070903
+    },
+    "temp/tmprw5jvc6r": {
+      "count": 24,
+      "bytes": 197,
+      "newest": 1793104482.9338958,
+      "oldest": 1793104482.341803
+    },
+    "temp/tmpv6vw4q3f": {
+      "count": 24,
+      "bytes": 197,
+      "newest": 1793117354.2451458,
+      "oldest": 1793117353.8511643
+    },
+    "temp/tmpwqxr4u66": {
+      "count": 24,
+      "bytes": 197,
+      "newest": 1793117893.4468718,
+      "oldest": 1793117892.9729846
+    },
+    "temp/tmpkjb_dkp4": {
+      "count": 4,
+      "bytes": 128,
+      "newest": 1793783201.6004987,
+      "oldest": 1793783201.5925026
+    },
+    "temp/tmpsd9jgxrh": {
+      "count": 4,
+      "bytes": 128,
+      "newest": 1793783029.4710705,
+      "oldest": 1793783029.467067
+    },
+    "temp/tmpsj437p0e": {
+      "count": 2,
+      "bytes": 65,
+      "newest": 1793783029.5629358,
+      "oldest": 1793783029.5609224
+    },
+    "temp/tmpxno0po0m": {
+      "count": 2,
+      "bytes": 65,
+      "newest": 1793783201.6640947,
+      "oldest": 1793783201.6630943
+    },
+    "temp/tmp09fadfqr": {
+      "count": 2,
+      "bytes": 64,
+      "newest": 1793783201.6388159,
+      "oldest": 1793783201.6376104
+    },
+    "temp/tmp7vtqc2sc": {
+      "count": 2,
+      "bytes": 64,
+      "newest": 1793783029.5256517,
+      "oldest": 1793783029.523643
+    },
+    "temp/tmp3f4hxu8p": {
+      "count": 2,
+      "bytes": 60,
+      "newest": 1793507569.8961978,
+      "oldest": 1793507569.8952045
+    },
+    "temp/tmpatywhg5l": {
+      "count": 2,
+      "bytes": 60,
+      "newest": 1793507570.0967505,
+      "oldest": 1793507570.0934184
+    },
+    "temp/tmpjs59idfj": {
+      "count": 2,
+      "bytes": 60,
+      "newest": 1793507570.117907,
+      "oldest": 1793507570.116907
+    },
+    "temp/tmpn_3hcixp": {
+      "count": 2,
+      "bytes": 60,
+      "newest": 1793507570.0545933,
+      "oldest": 1793507570.0495448
+    },
+    "temp/qoder-sdk-auth-cSj63T": {
+      "count": 1,
+      "bytes": 45,
+      "newest": 1793283914.8229535,
+      "oldest": 1793283914.8229535
+    },
+    "temp/qoder-sdk-auth-evmkOH": {
+      "count": 1,
+      "bytes": 45,
+      "newest": 1793385865.107333,
+      "oldest": 1793385865.107333
+    },
+    "temp/qoder-sdk-auth-jYlthY": {
+      "count": 1,
+      "bytes": 45,
+      "newest": 1793283914.8229535,
+      "oldest": 1793283914.8229535
+    },
+    "temp/qoder-sdk-auth-PHTLLN": {
+      "count": 1,
+      "bytes": 45,
+      "newest": 1793283887.7087681,
+      "oldest": 1793283887.7087681
+    },
+    "temp/qoder-sdk-auth-V6uDMV": {
+      "count": 1,
+      "bytes": 45,
+      "newest": 1793460504.3789308,
+      "oldest": 1793460504.3789308
+    },
+    "temp/tmp.488KAFjyxK": {
+      "count": 1,
+      "bytes": 23,
+      "newest": 1793782596.3429804,
+      "oldest": 1793782596.3429804
+    },
+    "temp/ims-db-dkt5_c3i": {
+      "count": 3,
+      "bytes": 7,
+      "newest": 1793197795.2141604,
+      "oldest": 1793197795.2040741
+    },
+    "temp/ims-db-otm2fqp7": {
+      "count": 3,
+      "bytes": 7,
+      "newest": 1793197029.8227775,
+      "oldest": 1793197029.816741
+    },
+    "temp/ims-prod-f47vlp8u": {
+      "count": 3,
+      "bytes": 7,
+      "newest": 1793197029.510565,
+      "oldest": 1793197029.4899144
+    },
+    "temp/ims-prod-kcdcqut8": {
+      "count": 3,
+      "bytes": 7,
+      "newest": 1793197794.753367,
+      "oldest": 1793197794.7247574
+    },
+    "temp/tmpevg_wl6c": {
+      "count": 2,
+      "bytes": 4,
+      "newest": 1793339645.7911103,
+      "oldest": 1793339645.7901106
+    },
+    "temp/tmpmjczczh7": {
+      "count": 2,
+      "bytes": 4,
+      "newest": 1793339753.1242063,
+      "oldest": 1793339753.121556
+    },
+    "temp/tmpm_g539a2": {
+      "count": 1,
+      "bytes": 2,
+      "newest": 1793337409.9593782,
+      "oldest": 1793337409.9593782
+    },
+    "temp/trae-agent-toolhost": {
+      "count": 1,
+      "bytes": 1,
+      "newest": 1793960282.3409111,
+      "oldest": 1793960282.3409111
+    },
+    "temp/ai": {
+      "count": 2,
+      "bytes": 0,
+      "newest": 1793635950.6495583,
+      "oldest": 1793107897.9957433
+    },
+    "temp/chrome_BITS_14156_1685057126": {
+      "count": 1,
+      "bytes": 0,
+      "newest": 1793900946.3001173,
+      "oldest": 1793900946.3001173
+    },
+    "temp/chrome_chrome_BITS_23448_724041729": {
+      "count": 1,
+      "bytes": 0,
+      "newest": 1793792250.8602462,
+      "oldest": 1793792250.8602462
+    },
+    "temp/chrome_chrome_BITS_24288_287468759": {
+      "count": 1,
+      "bytes": 0,
+      "newest": 1793930796.9237597,
+      "oldest": 1793930796.9237597
+    },
+    "temp/chrome_chrome_BITS_8480_287309422": {
+      "count": 1,
+      "bytes": 0,
+      "newest": 1793802916.3224032,
+      "oldest": 1793802916.3224032
+    },
+    "temp/chromium_chrome_BITS_14812_1748955977": {
+      "count": 1,
+      "bytes": 0,
+      "newest": 1793423548.8444173,
+      "oldest": 1793423548.8444173
+    },
+    "temp/harness_hooks_env": {
+      "count": 21,
+      "bytes": 0,
+      "newest": 1793630705.2123005,
+      "oldest": 1793438909.1908095
+    },
+    "temp/harness_hooks_env-Administrator": {
+      "count": 24,
+      "bytes": 0,
+      "newest": 1793959264.9400744,
+      "oldest": 1793811779.9289253
+    },
+    "temp/HeadlessChrome1992813578531": {
+      "count": 1,
+      "bytes": 0,
+      "newest": 1793178001.1483555,
+      "oldest": 1793178001.1483555
+    },
+    "temp/Microsoft.PackageManagement": {
+      "count": 1,
+      "bytes": 0,
+      "newest": 1793841482.862992,
+      "oldest": 1793841482.862992
+    },
+    "temp/msedgecrxedge_BITS_7548_578713950": {
+      "count": 1,
+      "bytes": 0,
+      "newest": 1793943986.553754,
+      "oldest": 1793943986.553754
+    },
+    "temp/msedgeedge_BITS_12432_413734747": {
+      "count": 1,
+      "bytes": 0,
+      "newest": 1793966719.6964438,
+      "oldest": 1793966719.6964438
+    },
+    "temp/msedgeedge_BITS_14676_1832573778": {
+      "count": 1,
+      "bytes": 0,
+      "newest": 1793966625.4488742,
+      "oldest": 1793966625.4488742
+    },
+    "temp/msedgeedge_BITS_17980_1990959270": {
+      "count": 1,
+      "bytes": 0,
+      "newest": 1793752525.613227,
+      "oldest": 1793752525.613227
+    },
+    "temp/msedgeedge_BITS_25120_154472515": {
+      "count": 1,
+      "bytes": 0,
+      "newest": 1793784742.5210042,
+      "oldest": 1793784742.5210042
+    },
+    "temp/msedgeedge_BITS_8896_2038371045": {
+      "count": 1,
+      "bytes": 0,
+      "newest": 1793778353.0079672,
+      "oldest": 1793778353.0079672
+    },
+    "temp/python-languageserver-cancellation": {
+      "count": 223,
+      "bytes": 0,
+      "newest": 1793872373.369339,
+      "oldest": 1793627043.519489
+    },
+    "temp/quark-agent": {
+      "count": 1,
+      "bytes": 0,
+      "newest": 1793251133.7884834,
+      "oldest": 1793251133.7884834
+    },
+    "temp/QuarkClouddrive": {
+      "count": 2,
+      "bytes": 0,
+      "newest": 1793251262.8178344,
+      "oldest": 1793251262.8178344
+    },
+    "temp/SaveToWebMobile": {
+      "count": 5,
+      "bytes": 0,
+      "newest": 1793964612.4073281,
+      "oldest": 1793934679.3025365
+    },
+    "temp/tmpeq3vfrac": {
+      "count": 1,
+      "bytes": 0,
+      "newest": 0.0,
+      "oldest": 0.0
+    },
+    "inetcache/IE": {
+      "count": 1,
+      "bytes": 0,
+      "newest": 1783701804.4955387,
+      "oldest": 1783701804.4955387
+    }
+  },
+  "by_age": {
+    "0-7 天": {
+      "count": 26336,
+      "bytes": 6424696497,
+      "newest": 1793971844.8974671,
+      "oldest": 1793367390.0
+    },
+    "8-30 天": {
+      "count": 14075,
+      "bytes": 1835255868,
+      "newest": 1793367027.8011532,
+      "oldest": 1791936926.0
+    },
+    "> 365 天": {
+      "count": 3012,
+      "bytes": 33872428,
+      "newest": 1761680572.0,
+      "oldest": 0.0
+    },
+    "91-365 天": {
+      "count": 616,
+      "bytes": 12126824,
+      "newest": 1783701804.4955387,
+      "oldest": 1773407252.7855432
+    },
+    "31-90 天": {
+      "count": 6,
+      "bytes": 8838616,
+      "newest": 1791088885.2213573,
+      "oldest": 1787753416.352231
+    }
+  },
+  "by_ext": {
+    ".dll": {
+      "count": 80,
+      "bytes": 2312869152,
+      "newest": 1793890558.5629277,
+      "oldest": 1789730162.944729
+    },
+    ".zip": {
+      "count": 1,
+      "bytes": 1601954968,
+      "newest": 1793890443.0961754,
+      "oldest": 1793890443.0961754
+    },
+    ".exe": {
+      "count": 11,
+      "bytes": 1411316998,
+      "newest": 1793890559.0062542,
+      "oldest": 1789730159.2730799
+    },
+    ".tmp": {
+      "count": 7224,
+      "bytes": 821445306,
+      "newest": 1793971342.9960852,
+      "oldest": 1790814298.4048479
+    },
+    "(无扩展名)": {
+      "count": 6083,
+      "bytes": 700513007,
+      "newest": 1793971397.1516137,
+      "oldest": 1774249392.0
+    },
+    ".whl": {
+      "count": 8,
+      "bytes": 397374240,
+      "newest": 1793803586.821818,
+      "oldest": 1793798921.95837
+    },
+    ".jsonl": {
+      "count": 140,
+      "bytes": 310086461,
+      "newest": 1793873117.2393267,
+      "oldest": 1793104198.9692254
+    },
+    ".png": {
+      "count": 1293,
+      "bytes": 179736240,
+      "newest": 1793778764.2243555,
+      "oldest": 1607384590.0
+    },
+    ".json": {
+      "count": 888,
+      "bytes": 129382691,
+      "newest": 1793971844.8974671,
+      "oldest": 1603174358.0
+    },
+    ".ac$": {
+      "count": 97,
+      "bytes": 79036416,
+      "newest": 1793935422.292386,
+      "oldest": 1793109836.0087843
+    },
+    ".bdic": {
+      "count": 76,
+      "bytes": 34350632,
+      "newest": 1793197718.533173,
+      "oldest": 1793169528.711851
+    },
+    ".msi": {
+      "count": 1,
+      "bytes": 33656320,
+      "newest": 1793787464.2075171,
+      "oldest": 1793787464.2075171
+    },
+    ".cpuprofile": {
+      "count": 94,
+      "bytes": 31226487,
+      "newest": 1793939067.5394602,
+      "oldest": 1793164777.0553074
+    },
+    ".db": {
+      "count": 207,
+      "bytes": 30622240,
+      "newest": 1793968276.2050915,
+      "oldest": 1793104141.1884446
+    },
+    ".pma": {
+      "count": 15,
+      "bytes": 28311552,
+      "newest": 1793197722.3609922,
+      "oldest": 1793178892.3134515
+    },
+    ".txt": {
+      "count": 144,
+      "bytes": 23993866,
+      "newest": 1793929739.6951902,
+      "oldest": 1740730944.0
+    },
+    ".class": {
+      "count": 1906,
+      "bytes": 13367092,
+      "newest": 1750680052.0,
+      "oldest": 1750680038.0
+    },
+    ".tile": {
+      "count": 16,
+      "bytes": 12583776,
+      "newest": 1793783604.4934523,
+      "oldest": 1793783600.7615528
+    },
+    ".cache": {
+      "count": 2,
+      "bytes": 12506991,
+      "newest": 1793966072.3537734,
+      "oldest": 1793784692.5023806
+    },
+    ".pptx": {
+      "count": 8,
+      "bytes": 11659629,
+      "newest": 1793671252.0983677,
+      "oldest": 1793667490.0375314
+    },
+    ".syslog": {
+      "count": 47,
+      "bytes": 11279734,
+      "newest": 1793435540.6234043,
+      "oldest": 1793104306.4167252
+    },
+    ".node": {
+      "count": 27,
+      "bytes": 10355712,
+      "newest": 1793966316.832545,
+      "oldest": 1793053985.6987538
+    },
+    ".js": {
+      "count": 396,
+      "bytes": 10117836,
+      "newest": 1793169451.8833866,
+      "oldest": 1691323792.0
+    },
+    ".bmp": {
+      "count": 39,
+      "bytes": 8445478,
+      "newest": 1793894748.369611,
+      "oldest": 1793110554.2138085
+    },
+    ".bin": {
+      "count": 74,
+      "bytes": 8390288,
+      "newest": 1793627658.2147155,
+      "oldest": 1793338076.4571898
+    },
+    ".md": {
+      "count": 855,
+      "bytes": 7989525,
+      "newest": 1793966486.1849978,
+      "oldest": 1793164726.9677339
+    },
+    ".html": {
+      "count": 98,
+      "bytes": 7049410,
+      "newest": 1793785985.6182,
+      "oldest": 1670852010.0
+    },
+    ".mnr": {
+      "count": 12,
+      "bytes": 6963472,
+      "newest": 1793785036.8710108,
+      "oldest": 1773407334.3236642
+    },
+    ".py": {
+      "count": 110,
+      "bytes": 6775089,
+      "newest": 1793967788.098527,
+      "oldest": 1793101298.708084
+    },
+    ".pyc": {
+      "count": 23,
+      "bytes": 5771001,
+      "newest": 1793759435.8163683,
+      "oldest": 1793414750.7810917
+    },
+    ".crx": {
+      "count": 21,
+      "bytes": 5730711,
+      "newest": 1783326329.7816792,
+      "oldest": 1783326329.7816792
+    },
+    ".css": {
+      "count": 169,
+      "bytes": 5535517,
+      "newest": 1774249392.0,
+      "oldest": 1761680572.0
+    },
+    ".log": {
+      "count": 657,
+      "bytes": 5391155,
+      "newest": 1793968019.7782834,
+      "oldest": 1700000000.0
+    },
+    ".swp": {
+      "count": 315,
+      "bytes": 5160960,
+      "newest": 1793893954.506,
+      "oldest": 1793109671.586
+    },
+    ".gz": {
+      "count": 76,
+      "bytes": 3452280,
+      "newest": 1793631094.684444,
+      "oldest": 1793438876.309714
+    },
+    ".db-wal": {
+      "count": 16,
+      "bytes": 2628816,
+      "newest": 1793627658.5198457,
+      "oldest": 1793104650.1481164
+    },
+    ".blob": {
+      "count": 1,
+      "bytes": 2395512,
+      "newest": 1793939086.6975007,
+      "oldest": 1793939086.6975007
+    },
+    ".atc": {
+      "count": 5,
+      "bytes": 2092111,
+      "newest": 1740730944.0,
+      "oldest": 1740730944.0
+    },
+    ".jpg": {
+      "count": 9,
+      "bytes": 2091652,
+      "newest": 1793343831.2044232,
+      "oldest": 1793343830.3051436
+    },
+    ".dwg": {
+      "count": 144,
+      "bytes": 1994105,
+      "newest": 1793634239.1261413,
+      "oldest": 1740730946.0
+    },
+    ".bak": {
+      "count": 8,
+      "bytes": 1668463,
+      "newest": 1793713696.0,
+      "oldest": 1793367390.0
+    },
+    ".dxf": {
+      "count": 2,
+      "bytes": 1491597,
+      "newest": 1793644571.6833076,
+      "oldest": 1793104733.6789324
+    },
+    ".wav": {
+      "count": 9,
+      "bytes": 1234368,
+      "newest": 1793755970.758594,
+      "oldest": 1793423505.0163062
+    },
+    ".32_13437653213924424": {
+      "count": 1,
+      "bytes": 1048576,
+      "newest": 1793179613.938659,
+      "oldest": 1793179613.938659
+    },
+    ".metadata": {
+      "count": 87,
+      "bytes": 1006761,
+      "newest": 1793801912.597809,
+      "oldest": 1793798836.1217659
+    },
+    ".output": {
+      "count": 315,
+      "bytes": 938277,
+      "newest": 1793971397.0539134,
+      "oldest": 1793111057.2793581
+    },
+    ".htm": {
+      "count": 154,
+      "bytes": 899957,
+      "newest": 1774249392.0,
+      "oldest": 1774249392.0
+    },
+    ".tsv": {
+      "count": 4,
+      "bytes": 854894,
+      "newest": 1793633409.081823,
+      "oldest": 1793630364.3298554
+    },
+    ".snap": {
+      "count": 42,
+      "bytes": 731003,
+      "newest": 1793197896.024986,
+      "oldest": 1793197011.5031188
+    },
+    ".dwt": {
+      "count": 18,
+      "bytes": 697812,
+      "newest": 1740730948.0,
+      "oldest": 1740730948.0
+    },
+    ".cuix": {
+      "count": 9,
+      "bytes": 657635,
+      "newest": 1793785037.009601,
+      "oldest": 1734013320.0
+    },
+    ".step": {
+      "count": 47,
+      "bytes": 649777,
+      "newest": 1793871372.0857072,
+      "oldest": 1793104204.8084924
+    },
+    ".x_t": {
+      "count": 4,
+      "bytes": 410202,
+      "newest": 1793879782.890448,
+      "oldest": 1793879782.5571134
+    },
+    ".sv$": {
+      "count": 4,
+      "bytes": 364597,
+      "newest": 1793673584.0,
+      "oldest": 1793433848.0
+    },
+    ".sldprt": {
+      "count": 61,
+      "bytes": 332207,
+      "newest": 1793890909.024343,
+      "oldest": 1793104204.8054554
+    },
+    ".dat": {
+      "count": 13,
+      "bytes": 317007,
+      "newest": 1793967759.4291096,
+      "oldest": 1783701804.4955387
+    },
+    ".dgn": {
+      "count": 14,
+      "bytes": 298496,
+      "newest": 1740730948.0,
+      "oldest": 1740730948.0
+    },
+    ".20261027_203850": {
+      "count": 6,
+      "bytes": 290816,
+      "newest": 1793104730.35898,
+      "oldest": 1793104730.0713522
+    },
+    ".32_13437653213978728": {
+      "count": 1,
+      "bytes": 278304,
+      "newest": 1793179613.982333,
+      "oldest": 1793179613.982333
+    },
+    ".lock": {
+      "count": 21291,
+      "bytes": 276670,
+      "newest": 1793928311.8368237,
+      "oldest": 1793102457.9264145
+    },
+    ".db-shm": {
+      "count": 8,
+      "bytes": 262144,
+      "newest": 1793627655.5572002,
+      "oldest": 1793104650.0124424
+    },
+    ".vcproject": {
+      "count": 12,
+      "bytes": 261753,
+      "newest": 1793872872.0832796,
+      "oldest": 1793368232.9317796
+    },
+    ".20261028_141542": {
+      "count": 4,
+      "bytes": 221184,
+      "newest": 1793168142.9766226,
+      "oldest": 1793168142.1367939
+    },
+    ".prt": {
+      "count": 86,
+      "bytes": 209947,
+      "newest": 1793168140.5879252,
+      "oldest": 1793104122.9800303
+    },
+    ".cdc": {
+      "count": 1,
+      "bytes": 195584,
+      "newest": 1740730946.0,
+      "oldest": 1740730946.0
+    },
+    ".ps1xml": {
+      "count": 1,
+      "bytes": 172959,
+      "newest": 1793971823.8304756,
+      "oldest": 1793971823.8304756
+    },
+    ".dcl": {
+      "count": 5,
+      "bytes": 155099,
+      "newest": 1740730946.0,
+      "oldest": 1740730944.0
+    },
+    ".d": {
+      "count": 6,
+      "bytes": 146314,
+      "newest": 1793965944.4744198,
+      "oldest": 1793965944.0543778
+    },
+    ".startup": {
+      "count": 1,
+      "bytes": 145052,
+      "newest": 1793929036.408342,
+      "oldest": 1793929036.408342
+    },
+    ".20261027_203730": {
+      "count": 3,
+      "bytes": 135168,
+      "newest": 1793104650.1828804,
+      "oldest": 1793104650.0614161
+    },
+    ".4_13437653213968484": {
+      "count": 1,
+      "bytes": 131072,
+      "newest": 1793179613.975752,
+      "oldest": 1793179613.975752
+    },
+    ".4_13437653213987870": {
+      "count": 1,
+      "bytes": 131072,
+      "newest": 1793179613.9945486,
+      "oldest": 1793179613.9945486
+    },
+    ".4_13437653213888405": {
+      "count": 1,
+      "bytes": 131072,
+      "newest": 1793179613.89715,
+      "oldest": 1793179613.89715
+    },
+    ".xml": {
+      "count": 8,
+      "bytes": 121552,
+      "newest": 1793879782.9369218,
+      "oldest": 1740730938.0
+    },
+    ".properties": {
+      "count": 22,
+      "bytes": 120926,
+      "newest": 1750680060.0,
+      "oldest": 1750680060.0
+    },
+    ".4_13437653213955734": {
+      "count": 1,
+      "bytes": 111276,
+      "newest": 1793179613.962582,
+      "oldest": 1793179613.962582
+    },
+    ".20261027_202908": {
+      "count": 2,
+      "bytes": 110592,
+      "newest": 1793104148.9161313,
+      "oldest": 1793104148.483662
+    },
+    ".20261027_202905": {
+      "count": 2,
+      "bytes": 110592,
+      "newest": 1793104145.903337,
+      "oldest": 1793104145.7657614
+    },
+    ".20261027_202854": {
+      "count": 2,
+      "bytes": 110592,
+      "newest": 1793104134.999175,
+      "oldest": 1793104134.6148
+    },
+    ".20261027_202858": {
+      "count": 2,
+      "bytes": 110592,
+      "newest": 1793104138.2570498,
+      "oldest": 1793104138.0899866
+    },
+    ".20261027_202902": {
+      "count": 2,
+      "bytes": 110592,
+      "newest": 1793104142.64416,
+      "oldest": 1793104142.326061
+    },
+    ".20261028_141544": {
+      "count": 2,
+      "bytes": 110592,
+      "newest": 1793168144.3126793,
+      "oldest": 1793168144.254113
+    },
+    ".20261028_141543": {
+      "count": 2,
+      "bytes": 110592,
+      "newest": 1793168143.7419102,
+      "oldest": 1793168143.6531796
+    },
+    ".20261028_141541": {
+      "count": 2,
+      "bytes": 110592,
+      "newest": 1793168141.5938404,
+      "oldest": 1793168141.4975743
+    },
+    ".dst": {
+      "count": 7,
+      "bytes": 110408,
+      "newest": 1740730946.0,
+      "oldest": 1740730946.0
+    },
+    ".ico": {
+      "count": 2,
+      "bytes": 88991,
+      "newest": 1793110629.0582213,
+      "oldest": 1793110629.052218
+    },
+    ".fdc": {
+      "count": 1,
+      "bytes": 87408,
+      "newest": 1740730944.0,
+      "oldest": 1740730944.0
+    },
+    ".1": {
+      "count": 1,
+      "bytes": 70188,
+      "newest": 1793104199.047381,
+      "oldest": 1793104199.047381
+    },
+    ".cus": {
+      "count": 2,
+      "bytes": 67192,
+      "newest": 1793628987.71294,
+      "oldest": 1740730944.0
+    },
+    ".psm1": {
+      "count": 4,
+      "bytes": 62862,
+      "newest": 1793971823.8234742,
+      "oldest": 1793462486.0025647
+    },
+    ".4_13437653213916201": {
+      "count": 1,
+      "bytes": 49712,
+      "newest": 1793179613.9215586,
+      "oldest": 1793179613.9215586
+    },
+    ".aws": {
+      "count": 2,
+      "bytes": 47900,
+      "newest": 1793929131.8777425,
+      "oldest": 1793929131.8712087
+    },
+    ".mszyml": {
+      "count": 16,
+      "bytes": 46916,
+      "newest": 1793842645.8986778,
+      "oldest": 1793382323.7707288
+    },
+    ".4_13437653213943482": {
+      "count": 1,
+      "bytes": 41736,
+      "newest": 1793179613.9452195,
+      "oldest": 1793179613.9452195
+    },
+    ".nc": {
+      "count": 39,
+      "bytes": 41362,
+      "newest": 1793424698.6795893,
+      "oldest": 1793104204.813507
+    },
+    ".ctb": {
+      "count": 9,
+      "bytes": 38988,
+      "newest": 1740730944.0,
+      "oldest": 1740730944.0
+    },
+    ".32_13437653213908664": {
+      "count": 1,
+      "bytes": 37344,
+      "newest": 1793179613.9095223,
+      "oldest": 1793179613.9095223
+    },
+    ".psf": {
+      "count": 1,
+      "bytes": 37210,
+      "newest": 1740730944.0,
+      "oldest": 1740730944.0
+    },
+    ".20261027_202857": {
+      "count": 1,
+      "bytes": 32768,
+      "newest": 1793104137.7743223,
+      "oldest": 1793104137.7743223
+    },
+    ".pat": {
+      "count": 2,
+      "bytes": 31160,
+      "newest": 1740730944.0,
+      "oldest": 1740730944.0
+    },
+    ".hhc": {
+      "count": 1,
+      "bytes": 28184,
+      "newest": 1774249392.0,
+      "oldest": 1774249392.0
+    },
+    ".meta": {
+      "count": 43,
+      "bytes": 26862,
+      "newest": 1793865431.1774507,
+      "oldest": 1793197011.5104673
+    },
+    ".sldasm": {
+      "count": 2,
+      "bytes": 24178,
+      "newest": 1793890908.5981834,
+      "oldest": 1793890906.4357092
+    },
+    ".ps1": {
+      "count": 13,
+      "bytes": 23445,
+      "newest": 1793842218.8125339,
+      "oldest": 1793111175.4862318
+    },
+    ".shx": {
+      "count": 3,
+      "bytes": 23077,
+      "newest": 1740730946.0,
+      "oldest": 1740730946.0
+    },
+    ".pc3": {
+      "count": 11,
+      "bytes": 20499,
+      "newest": 1740730944.0,
+      "oldest": 1740730944.0
+    },
+    ".pgp": {
+      "count": 3,
+      "bytes": 19668,
+      "newest": 1740730944.0,
+      "oldest": 1740730944.0
+    },
+    ".sh": {
+      "count": 1,
+      "bytes": 16881,
+      "newest": 1793547957.485987,
+      "oldest": 1793547957.485987
+    },
+    ".etl": {
+      "count": 1,
+      "bytes": 16384,
+      "newest": 1793602645.6713274,
+      "oldest": 1793602645.6713274
+    },
+    ".lin": {
+      "count": 2,
+      "bytes": 12446,
+      "newest": 1740730944.0,
+      "oldest": 1740730944.0
+    },
+    ".yaml": {
+      "count": 3,
+      "bytes": 10586,
+      "newest": 1793104733.575287,
+      "oldest": 1793104728.4168136
+    },
+    ".cs": {
+      "count": 2,
+      "bytes": 9976,
+      "newest": 1793622387.4155023,
+      "oldest": 1793383155.2670317
+    },
+    ".pmp": {
+      "count": 2,
+      "bytes": 9278,
+      "newest": 1740730944.0,
+      "oldest": 1740730944.0
+    },
+    ".unt": {
+      "count": 1,
+      "bytes": 7237,
+      "newest": 1740730944.0,
+      "oldest": 1740730944.0
+    },
+    ".csv": {
+      "count": 2,
+      "bytes": 6572,
+      "newest": 1793790197.0237298,
+      "oldest": 1793790197.0237298
+    },
+    ".cmd": {
+      "count": 7,
+      "bytes": 6531,
+      "newest": 1793448257.318819,
+      "oldest": 1793104285.6148863
+    },
+    ".lsp": {
+      "count": 3,
+      "bytes": 5413,
+      "newest": 1793632461.9993165,
+      "oldest": 1793424696.6724575
+    },
+    ".mnl": {
+      "count": 1,
+      "bytes": 5396,
+      "newest": 1740730944.0,
+      "oldest": 1740730944.0
+    },
+    ".db-journal": {
+      "count": 30,
+      "bytes": 5124,
+      "newest": 1793197722.992905,
+      "oldest": 1793169871.5198963
+    },
+    ".4_13437653213902127": {
+      "count": 1,
+      "bytes": 3960,
+      "newest": 1793179613.9060235,
+      "oldest": 1793179613.9060235
+    },
+    ".swb": {
+      "count": 2,
+      "bytes": 2930,
+      "newest": 1793413006.8832443,
+      "oldest": 1793412951.2477958
+    },
+    ".def": {
+      "count": 2,
+      "bytes": 2904,
+      "newest": 1793104307.064271,
+      "oldest": 1793104285.609288
+    },
+    ".baf": {
+      "count": 10,
+      "bytes": 2904,
+      "newest": 1793930840.1093476,
+      "oldest": 1793099278.9687436
+    },
+    ".stb": {
+      "count": 4,
+      "bytes": 2150,
+      "newest": 1740730944.0,
+      "oldest": 1740730944.0
+    },
+    ".baj": {
+      "count": 12,
+      "bytes": 1820,
+      "newest": 1793965726.176048,
+      "oldest": 1793178996.8617208
+    },
+    ".lnk": {
+      "count": 2,
+      "bytes": 1366,
+      "newest": 1773407252.7895362,
+      "oldest": 1773407252.7855432
+    },
+    ".store": {
+      "count": 11,
+      "bytes": 1234,
+      "newest": 1793179613.9965584,
+      "oldest": 1793179613.8997707
+    },
+    ".32_13437653213903286": {
+      "count": 1,
+      "bytes": 1120,
+      "newest": 1793179613.9044762,
+      "oldest": 1793179613.9044762
+    },
+    ".cjs": {
+      "count": 1,
+      "bytes": 1101,
+      "newest": 1793966316.5893483,
+      "oldest": 1793966316.5893483
+    },
+    ".0, culture=neutral, publickeytoken=null": {
+      "count": 2,
+      "bytes": 992,
+      "newest": 1793552394.9458463,
+      "oldest": 1793195458.4997811
+    },
+    ".safetensors": {
+      "count": 4,
+      "bytes": 888,
+      "newest": 1793104733.6514091,
+      "oldest": 1793104733.5313497
+    },
+    ".cmdline": {
+      "count": 2,
+      "bytes": 734,
+      "newest": 1793622387.419499,
+      "oldest": 1793383155.315013
+    },
+    ".pss": {
+      "count": 2,
+      "bytes": 702,
+      "newest": 1740730946.0,
+      "oldest": 1740730944.0
+    },
+    ".manifest": {
+      "count": 2,
+      "bytes": 616,
+      "newest": 1793966098.5239356,
+      "oldest": 1793873910.4112911
+    },
+    ".psd1": {
+      "count": 1,
+      "bytes": 616,
+      "newest": 1793971823.8324766,
+      "oldest": 1793971823.8324766
+    },
+    ".igs": {
+      "count": 4,
+      "bytes": 588,
+      "newest": 1793168083.2296143,
+      "oldest": 1793104123.5878904
+    },
+    ".lance": {
+      "count": 2,
+      "bytes": 570,
+      "newest": 1793966098.4019265,
+      "oldest": 1793873910.3894737
+    },
+    ".ini": {
+      "count": 2,
+      "bytes": 515,
+      "newest": 1793887030.4459047,
+      "oldest": 1740730946.0
+    },
+    ".txn": {
+      "count": 2,
+      "bytes": 466,
+      "newest": 1793966098.5167694,
+      "oldest": 1793873910.4012148
+    },
+    ".out": {
+      "count": 2,
+      "bytes": 451,
+      "newest": 1793622387.4225004,
+      "oldest": 1793383155.3170235
+    },
+    ".cfg": {
+      "count": 1,
+      "bytes": 418,
+      "newest": 1793784684.2718058,
+      "oldest": 1793784684.2718058
+    },
+    ".udl": {
+      "count": 1,
+      "bytes": 380,
+      "newest": 1773407252.828249,
+      "oldest": 1773407252.828249
+    },
+    ".2": {
+      "count": 1,
+      "bytes": 311,
+      "newest": 1793104199.022032,
+      "oldest": 1793104199.022032
+    },
+    ".fmp": {
+      "count": 1,
+      "bytes": 294,
+      "newest": 1740730944.0,
+      "oldest": 1740730944.0
+    },
+    ".tbl": {
+      "count": 2,
+      "bytes": 281,
+      "newest": 1793872872.0868409,
+      "oldest": 1793369003.76479
+    },
+    ".mln": {
+      "count": 1,
+      "bytes": 197,
+      "newest": 1740730944.0,
+      "oldest": 1740730944.0
+    },
+    ".pid": {
+      "count": 2,
+      "bytes": 182,
+      "newest": 1793966373.765515,
+      "oldest": 1793966209.7624133
+    },
+    ".map": {
+      "count": 1,
+      "bytes": 147,
+      "newest": 1793939086.6975007,
+      "oldest": 1793939086.6975007
+    },
+    ".prod": {
+      "count": 1,
+      "bytes": 135,
+      "newest": 1793442169.1270747,
+      "oldest": 1793442169.1270747
+    },
+    ".scr": {
+      "count": 7,
+      "bytes": 133,
+      "newest": 1793929133.6322494,
+      "oldest": 1793107655.4317544
+    },
+    ".bad_20261031_133148": {
+      "count": 1,
+      "bytes": 113,
+      "newest": 1793424708.5425804,
+      "oldest": 1793424708.5425804
+    },
+    ".toolcall": {
+      "count": 1,
+      "bytes": 110,
+      "newest": 1793442169.1311195,
+      "oldest": 1793442169.1311195
+    },
+    ".ipc": {
+      "count": 1,
+      "bytes": 73,
+      "newest": 1793879782.9552255,
+      "oldest": 1793879782.9552255
+    },
+    ".4_13437653213949624": {
+      "count": 1,
+      "bytes": 68,
+      "newest": 1793179613.949745,
+      "oldest": 1793179613.949745
+    },
+    ".stp": {
+      "count": 8,
+      "bytes": 52,
+      "newest": 1793119022.310085,
+      "oldest": 1793104482.3438227
+    },
+    ".gguf": {
+      "count": 4,
+      "bytes": 40,
+      "newest": 1793507570.116907,
+      "oldest": 1793507569.8952045
+    },
+    ".wal": {
+      "count": 4,
+      "bytes": 28,
+      "newest": 1793197795.2040741,
+      "oldest": 1793197029.4899144
+    },
+    ".done": {
+      "count": 1,
+      "bytes": 5,
+      "newest": 1793902213.2205856,
+      "oldest": 1793902213.2205856
+    },
+    ".mdat": {
+      "count": 2,
+      "bytes": 0,
+      "newest": 1793421662.3560417,
+      "oldest": 1793421661.8653624
+    },
+    ".err": {
+      "count": 1,
+      "bytes": 0,
+      "newest": 1793622387.4225004,
+      "oldest": 1793622387.4225004
+    },
+    ".env": {
+      "count": 45,
+      "bytes": 0,
+      "newest": 1793959264.9400744,
+      "oldest": 1793438909.1908095
+    },
+    ".journal": {
+      "count": 8,
+      "bytes": 0,
+      "newest": 1793197608.8886187,
+      "oldest": 1793178872.6668243
+    },
+    ".x": {
+      "count": 1,
+      "bytes": 0,
+      "newest": 1793627656.9259908,
+      "oldest": 1793627656.9259908
+    },
+    ".fuy": {
+      "count": 1,
+      "bytes": 0,
+      "newest": 1793841482.862992,
+      "oldest": 1793841482.862992
+    },
+    ".flag": {
+      "count": 1,
+      "bytes": 0,
+      "newest": 0.0,
+      "oldest": 0.0
+    }
+  },
+  "top_files": [
+    {
+      "path": "c:\\users\\administrator\\appdata\\local\\temp\\ollama-04014.zip",
+      "size_bytes": 1601954968,
+      "mtime": "2026-11-05T22:54:03+08:00",
+      "age_days": 0.9,
+      "group": "temp/(根目录)",
+      "ext": ".zip"
+    },
+    {
+      "path": "c:\\users\\administrator\\appdata\\local\\temp\\ollama04014\\lib\\ollama\\cuda_v12\\cublasLt64_12.dll",
+      "size_bytes": 692449672,
+      "mtime": "2026-11-05T22:55:43+08:00",
+      "age_days": 0.9,
+      "group": "temp/ollama04014",
+      "ext": ".dll"
+    },
+    {
+      "path": "c:\\users\\administrator\\appdata\\local\\temp\\trae-cn-user-x64\\TRAESetup-stable-2.3.100185.exe",
+      "size_bytes": 512290888,
+      "mtime": "2026-11-05T16:24:58+08:00",
+      "age_days": 1.2,
+      "group": "temp/trae-cn-user-x64",
+      "ext": ".exe"
+    },
+    {
+      "path": "c:\\users\\administrator\\appdata\\local\\temp\\ollama04014\\lib\\ollama\\cuda_v13\\cublasLt64_13.dll",
+      "size_bytes": 477894536,
+      "mtime": "2026-11-05T22:55:52+08:00",
+      "age_days": 0.9,
+      "group": "temp/ollama04014",
+      "ext": ".dll"
+    },
+    {
+      "path": "c:\\users\\administrator\\appdata\\local\\temp\\ollama04014\\lib\\ollama\\cuda_v12\\ggml-cuda.dll",
+      "size_bytes": 369323400,
+      "mtime": "2026-11-05T22:55:46+08:00",
+      "age_days": 0.9,
+      "group": "temp/ollama04014",
+      "ext": ".dll"
+    },
+    {
+      "path": "c:\\users\\administrator\\appdata\\local\\temp\\nsl3B16.tmp\\old-install\\Antigravity.exe",
+      "size_bytes": 246247424,
+      "mtime": "2026-10-27T05:36:22+08:00",
+      "age_days": 10.7,
+      "group": "temp/nsl3B16.tmp",
+      "ext": ".exe"
+    },
+    {
+      "path": "c:\\users\\administrator\\appdata\\local\\temp\\nsf399E.tmp\\old-install\\Antigravity.exe",
+      "size_bytes": 245737472,
+      "mtime": "2026-10-29T05:05:32+08:00",
+      "age_days": 8.7,
+      "group": "temp/nsf399E.tmp",
+      "ext": ".exe"
+    },
+    {
+      "path": "c:\\users\\administrator\\appdata\\local\\temp\\nsjB14A.tmp\\old-install\\Antigravity.exe",
+      "size_bytes": 245737472,
+      "mtime": "2026-10-29T14:41:58+08:00",
+      "age_days": 8.3,
+      "group": "temp/nsjB14A.tmp",
+      "ext": ".exe"
+    },
+    {
+      "path": "c:\\users\\administrator\\appdata\\local\\temp\\tmpdgl1_m6a",
+      "size_bytes": 198180864,
+      "mtime": "2026-11-04T22:00:01+08:00",
+      "age_days": 2.0,
+      "group": "temp/(根目录)",
+      "ext": "(无扩展名)"
+    },
+    {
+      "path": "c:\\users\\administrator\\appdata\\local\\temp\\pip-unpack-jyjshyj4\\torch-2.2.0+cpu-cp312-cp312-win_amd64.whl",
+      "size_bytes": 198180864,
+      "mtime": "2026-11-04T22:00:01+08:00",
+      "age_days": 2.0,
+      "group": "temp/pip-unpack-jyjshyj4",
+      "ext": ".whl"
+    },
+    {
+      "path": "c:\\users\\administrator\\appdata\\local\\temp\\tc_dedup.jsonl",
+      "size_bytes": 147887090,
+      "mtime": "2026-10-30T17:10:23+08:00",
+      "age_days": 7.2,
+      "group": "temp/(根目录)",
+      "ext": ".jsonl"
+    },
+    {
+      "path": "c:\\users\\administrator\\appdata\\local\\temp\\ollama04014\\lib\\ollama\\cuda_v13\\ggml-cuda.dll",
+      "size_bytes": 141051784,
+      "mtime": "2026-11-05T22:55:53+08:00",
+      "age_days": 0.9,
+      "group": "temp/ollama04014",
+      "ext": ".dll"
+    },
+    {
+      "path": "c:\\users\\administrator\\appdata\\local\\temp\\wct9D1F.tmp",
+      "size_bytes": 134649192,
+      "mtime": "2026-10-24T05:23:46+08:00",
+      "age_days": 13.7,
+      "group": "temp/(根目录)",
+      "ext": ".tmp"
+    },
+    {
+      "path": "c:\\users\\administrator\\appdata\\local\\temp\\wctD780.tmp",
+      "size_bytes": 132779408,
+      "mtime": "2026-10-24T04:03:58+08:00",
+      "age_days": 13.7,
+      "group": "temp/(根目录)",
+      "ext": ".tmp"
+    },
+    {
+      "path": "c:\\users\\administrator\\appdata\\local\\temp\\pip-unpack-ne9b6qso\\torch-2.13.0+cpu-cp312-cp312-win_amd64.whl",
+      "size_bytes": 121933498,
+      "mtime": "2026-11-04T22:45:49+08:00",
+      "age_days": 1.9,
+      "group": "temp/pip-unpack-ne9b6qso",
+      "ext": ".whl"
+    },
+    {
+      "path": "c:\\users\\administrator\\appdata\\local\\temp\\ollama04014\\lib\\ollama\\cuda_v12\\cublas64_12.dll",
+      "size_bytes": 113720712,
+      "mtime": "2026-11-05T22:55:29+08:00",
+      "age_days": 0.9,
+      "group": "temp/ollama04014",
+      "ext": ".dll"
+    },
+    {
+      "path": "c:\\users\\administrator\\appdata\\local\\temp\\tc_drop2.jsonl",
+      "size_bytes": 113339120,
+      "mtime": "2026-10-30T17:10:34+08:00",
+      "age_days": 7.2,
+      "group": "temp/(根目录)",
+      "ext": ".jsonl"
+    },
+    {
+      "path": "c:\\users\\administrator\\appdata\\local\\temp\\ollama04014\\lib\\ollama\\cuda_v13\\nvrtc64_130_0.alt.dll",
+      "size_bytes": 91026824,
+      "mtime": "2026-11-05T22:55:56+08:00",
+      "age_days": 0.9,
+      "group": "temp/ollama04014",
+      "ext": ".dll"
+    },
+    {
+      "path": "c:\\users\\administrator\\appdata\\local\\temp\\ollama04014\\lib\\ollama\\cuda_v13\\nvrtc64_130_0.dll",
+      "size_bytes": 90959752,
+      "mtime": "2026-11-05T22:55:57+08:00",
+      "age_days": 0.9,
+      "group": "temp/ollama04014",
+      "ext": ".dll"
+    },
+    {
+      "path": "c:\\users\\administrator\\appdata\\local\\temp\\ollama04014\\lib\\ollama\\cuda_v13\\nvJitLink_130_0.dll",
+      "size_bytes": 88216968,
+      "mtime": "2026-11-05T22:55:55+08:00",
+      "age_days": 0.9,
+      "group": "temp/ollama04014",
+      "ext": ".dll"
+    }
+  ]
+}

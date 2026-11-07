@@ -1,0 +1,77 @@
+{
+  "timestamp": 1793894004.1806142,
+  "engine": "Virtu Harness 2",
+  "k": 1,
+  "mode": "parallel",
+  "domains": {
+    "die_and_mold": {
+      "domain": "die_and_mold",
+      "n_tasks": 2,
+      "seed": null,
+      "done": 2,
+      "failed": 0,
+      "tasks": [
+        {
+          "task": "cad-sleeve-01",
+          "status": "ok",
+          "library_entries_before": {
+            "agg": 0,
+            "seq": 0
+          }
+        },
+        {
+          "task": "shaft-cr12mov-04",
+          "status": "ok",
+          "library_entries_before": {
+            "agg": 0,
+            "seq": 0
+          }
+        }
+      ]
+    }
+  },
+  "tasks": {
+    "cad-sleeve-01": {
+      "task_id": "cad-sleeve-01",
+      "domain": "die_and_mold",
+      "prompt": "我想要一个材质为SS304的回转模具套筒，要求最大外径为110.0mm，轴心通孔为30.0mm，总长为30.0mm，带有12道槽底圆角R8.0的特征。",
+      "status": "ok",
+      "score": {
+        "score": 1.0,
+        "passed": true,
+        "status": "pass",
+        "checks": [
+          "Passed guardrail validation",
+          "Correctly matched material SS304",
+          "Verified parametric code synthesis"
+        ],
+        "wall_time_s": 1.955
+      },
+      "chosen_label": "agg1",
+      "chosen_dir": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\tmpsaozei84\\pipeline_runs\\runs\\virtu_cad_cam-virtu-agg1\\cad-sleeve-01\\harnesses\\executions\\virtu_cad_cam-virtu-agg1\\cad-sleeve-01\\agg1"
+    },
+    "shaft-cr12mov-04": {
+      "task_id": "shaft-cr12mov-04",
+      "domain": "die_and_mold",
+      "prompt": "制造一款微型机冷挤压冲头轴模具，材质为Cr12MoV，外径53mm，内孔14mm，总长45mm，三道圆弧过渡槽R15/R12/R10，要求输出SOLIDWORKS参数化宏与斯沃对刀指南。",
+      "status": "ok",
+      "score": {
+        "score": 1.0,
+        "passed": true,
+        "status": "pass",
+        "checks": [
+          "Passed guardrail validation",
+          "Correctly matched material Cr12MoV",
+          "Verified parametric code synthesis"
+        ],
+        "wall_time_s": 2.559
+      },
+      "chosen_label": "agg1",
+      "chosen_dir": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\tmpsaozei84\\pipeline_runs\\runs\\virtu_cad_cam-virtu-agg1\\shaft-cr12mov-04\\harnesses\\executions\\virtu_cad_cam-virtu-agg1\\shaft-cr12mov-04\\agg1"
+    }
+  },
+  "elapsed_s": 97.74,
+  "total_tasks": 2,
+  "passed_tasks": 2,
+  "pass_rate": 100.0
+}

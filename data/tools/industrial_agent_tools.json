@@ -1,0 +1,600 @@
+[
+  {
+    "type": "function",
+    "function": {
+      "name": "cad.infer_equipment_intent",
+      "description": "揣测并解析用户的非标自动化设备设计意图，推导出节拍要求、运动行程、负载惯量、工艺流程与模块划分方案。",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "equipment_type": {
+            "type": "string",
+            "description": "设备类型，如：双工位自动螺丝机、锂电池贴胶机、自动上料机、点胶组装机、视觉检测机等"
+          },
+          "cycle_time_sec": {
+            "type": "number",
+            "description": "生产节拍要求（秒/件）"
+          },
+          "target_product": {
+            "type": "string",
+            "description": "目标工件产品（如：18650锂电池、手机中框、汽车马达齿轮等）"
+          },
+          "motion_axes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "运动自由度配置，如：['X轴伺服滑台300mm', 'Z轴气动升降100mm', 'R轴旋转90度']"
+          },
+          "payload_kg": {
+            "type": "number",
+            "description": "末端有效负载质量（kg）"
+          },
+          "air_pressure_mpa": {
+            "type": "number",
+            "description": "气源工作压力（MPa），默认0.5-0.7"
+          }
+        },
+        "required": [
+          "equipment_type",
+          "target_product",
+          "motion_axes"
+        ]
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "cad.decompose_automation_assembly",
+      "description": "将整台非标自动化设备按工业系统工程拆解为层级化的子装配体（模块）与零部件清单，构建装配树架构。",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "assembly_name": {
+            "type": "string",
+            "description": "总装配体名称，如：多头螺丝自动锁付机.SLDASM"
+          },
+          "sub_modules": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "module_name": {
+                  "type": "string",
+                  "description": "功能子模组名称，如：螺丝机架组合、横向送料机构、升降工作组、批头装配、电气安装组件"
+                },
+                "module_type": {
+                  "type": "string",
+                  "enum": [
+                    "frame_structure",
+                    "feeding_mechanism",
+                    "transfer_station",
+                    "actuator_tooling",
+                    "electric_pneumatic",
+                    "fixture_nest"
+                  ]
+                },
+                "custom_parts": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "该模组下的自制加工件列表（板类、块类、轴类、支架类）"
+                },
+                "cots_components": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "该模组调用的标准外购件（气缸、电机、滑台、导轨、传感器、紧固件）"
+                }
+              },
+              "required": [
+                "module_name",
+                "module_type",
+                "custom_parts",
+                "cots_components"
+              ]
+            },
+            "description": "设备的全部功能模块清单"
+          }
+        },
+        "required": [
+          "assembly_name",
+          "sub_modules"
+        ]
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "cad.query_standard_parts_library",
+      "description": "从GB型材库与A研发设计库中检索调取标准件与外购件（型材截面、气缸、滑轨、伺服电机、减速机、轴承等）。",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "category": {
+            "type": "string",
+            "enum": [
+              "gb_profile",
+              "pneumatic_cylinder",
+              "linear_guide",
+              "servo_motor",
+              "reducer",
+              "sensor_relay",
+              "fastener_hardware"
+            ]
+          },
+          "standard_code": {
+            "type": "string",
+            "description": "标准型号代码，如：'40x40铝型材', 'CDM2B25-200', 'CSHN75-N', 'PYF08A继电器', 'M4x16内六角螺栓'"
+          },
+          "specification": {
+            "type": "object",
+            "description": "规格参数（长度、行程、截面尺寸、电压等）"
+          }
+        },
+        "required": [
+          "category",
+          "standard_code"
+        ]
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "cad.model_parametric_feature_part",
+      "description": "绘制零件并生成具有完整SolidWorks FeatureManager特征树的参数化模型代码（基准面->草图尺寸约束->基体拉伸->切除->异型孔->圆角倒角->阵列）。",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "part_name": {
+            "type": "string",
+            "description": "零件文件名，如：连接块_横向滑台.SLDPRT"
+          },
+          "material": {
+            "type": "string",
+            "enum": [
+              "AL6061-T6",
+              "AL7075-T6",
+              "Steel45",
+              "Cr12MoV",
+              "SS304",
+              "POM_Black",
+              "Bakelite",
+              "Q235A"
+            ],
+            "description": "工程材料选用"
+          },
+          "feature_tree": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "feature_type": {
+                  "type": "string",
+                  "enum": [
+                    "SketchOnPlane",
+                    "BossExtrude",
+                    "BossRevolve",
+                    "CutExtrude",
+                    "HoleWizard",
+                    "Fillet",
+                    "Chamfer",
+                    "LinearPattern",
+                    "CircularPattern",
+                    "EquationMgr"
+                  ]
+                },
+                "feature_name": {
+                  "type": "string",
+                  "description": "特征树节点名称，如：草图1, 凸台-拉伸1, 切除-拉伸1, M5螺纹孔向导1"
+                },
+                "plane_ref": {
+                  "type": "string",
+                  "description": "基准面或参考实体面（Front Plane, Top Plane, Right Plane, FaceID）"
+                },
+                "parameters": {
+                  "type": "object",
+                  "description": "该特征的完全几何参数（长、宽、深、孔径、沉头深、倒角大小、间距等）"
+                }
+              },
+              "required": [
+                "feature_type",
+                "feature_name",
+                "parameters"
+              ]
+            },
+            "description": "SolidWorks特征树的严格顺序操作序列"
+          },
+          "surface_treatment": {
+            "type": "string",
+            "description": "表面处理工艺，如：本色阳极氧化、发黑、淬火HRC52-58、化学镀镍"
+          }
+        },
+        "required": [
+          "part_name",
+          "material",
+          "feature_tree"
+        ]
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "cad.generate_engineering_drawing_annotation",
+      "description": "自动生成标准二维工程图及智能标注，包括三视图投影、关键配合公差（H7/g6等）、形位公差GD&T、粗糙度与技术要求。",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "drawing_name": {
+            "type": "string",
+            "description": "工程图文件名称，如：连接块_横向滑台.SLDDRW"
+          },
+          "sheet_size": {
+            "type": "string",
+            "enum": [
+              "A4_Landscape",
+              "A4_Portrait",
+              "A3_Landscape",
+              "A2_Landscape"
+            ]
+          },
+          "projection_views": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "生成视图清单，如：['主视图', '俯视图', '左视图', '轴测图', '局部剖视图A-A']"
+          },
+          "fit_tolerances": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "dimension_target": {
+                  "type": "string",
+                  "description": "标注目标，如：'导轨配合安装槽宽'、'销钉定位孔'"
+                },
+                "nominal_size": {
+                  "type": "number",
+                  "description": "基本尺寸 mm"
+                },
+                "tolerance_class": {
+                  "type": "string",
+                  "description": "公差带代号，如：'H7', 'g6', 'h6', '±0.02'"
+                }
+              },
+              "required": [
+                "dimension_target",
+                "nominal_size",
+                "tolerance_class"
+              ]
+            }
+          },
+          "geometric_tolerances_gdt": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "gdt_symbol": {
+                  "type": "string",
+                  "enum": [
+                    "perpendicularity",
+                    "parallelism",
+                    "flatness",
+                    "concentricity",
+                    "position",
+                    "runout"
+                  ]
+                },
+                "tolerance_val": {
+                  "type": "number",
+                  "description": "公差值 mm（如：0.02）"
+                },
+                "datum_refs": {
+                  "type": "string",
+                  "description": "基准代号（如：'A', 'A-B'）"
+                }
+              },
+              "required": [
+                "gdt_symbol",
+                "tolerance_val"
+              ]
+            }
+          },
+          "surface_roughness_ra": {
+            "type": "string",
+            "description": "主要加工面粗糙度，如：Ra 1.6, Ra 3.2, 其余 Ra 6.3"
+          },
+          "technical_notes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "工程图技术要求条款（去毛刺倒钝、热处理要求等）"
+          }
+        },
+        "required": [
+          "drawing_name",
+          "projection_views",
+          "fit_tolerances",
+          "technical_notes"
+        ]
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "cad.assemble_components_with_mates",
+      "description": "在SolidWorks装配体中建立配合关系（重合、共面、同心、距离、对称），将自制零件和外购标准件组装为整机并生成装配配合树。",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "assembly_name": {
+            "type": "string",
+            "description": "装配体文件名称，如：多头螺丝自动锁付机.SLDASM"
+          },
+          "base_component": {
+            "type": "string",
+            "description": "固定的基准零件或基架（Fixed Base Component）"
+          },
+          "mates_sequence": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "mate_type": {
+                  "type": "string",
+                  "enum": [
+                    "Coincident",
+                    "Concentric",
+                    "Distance",
+                    "Parallel",
+                    "Perpendicular",
+                    "Tangent",
+                    "Width",
+                    "Gear"
+                  ]
+                },
+                "component_1": {
+                  "type": "string",
+                  "description": "参与配合的组件1及实体参考"
+                },
+                "component_2": {
+                  "type": "string",
+                  "description": "参与配合的组件2及实体参考"
+                },
+                "mate_value": {
+                  "type": "number",
+                  "description": "配合数值（距离mm或角度deg，重合/同心为0）"
+                },
+                "is_flipped": {
+                  "type": "boolean",
+                  "description": "对齐方向是否翻转反向"
+                }
+              },
+              "required": [
+                "mate_type",
+                "component_1",
+                "component_2"
+              ]
+            },
+            "description": "装配约束配合的先后建立步骤"
+          }
+        },
+        "required": [
+          "assembly_name",
+          "base_component",
+          "mates_sequence"
+        ]
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "cad.execute_solidworks_macro",
+      "description": "调用青沐清晨SolidWorks工程级宏命令库，执行图纸批量转换、图名图号分离、切割清单填写、自动打孔、着色分类与BOM自动导出。",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "macro_action": {
+            "type": "string",
+            "enum": [
+              "sw_export_dwg_oneclick",
+              "sw_export_pdf_and_stp",
+              "sw_batch_export_dwg_pdf",
+              "sw_separate_drawing_number_and_name",
+              "sw_auto_weldment_cutlist_weight",
+              "sw_auto_bom_generator",
+              "sw_auto_drilling_holes",
+              "sw_calculate_bounding_box",
+              "sw_batch_replace_title_block",
+              "sw_auto_coloring_by_process"
+            ]
+          },
+          "target_files": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "宏命令作用的目标文件或路径列表"
+          },
+          "macro_options": {
+            "type": "object",
+            "description": "宏命令专属配置项（如：图层映射配置、公差提取规则等）"
+          }
+        },
+        "required": [
+          "macro_action",
+          "target_files"
+        ]
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "cad.one_sentence_parametric_engine",
+      "description": "用户单句自然语言愿景一键全流程执行工具：意图揣测 -> 参数化草图与特征树建模 (SolidWorks FeatureManager) -> 二维工程图与配合公差/GD&T标注 -> 装配体配合树组装 -> 宏命令批处理输出。",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "user_wish": {
+            "type": "string",
+            "description": "用户的单句自然语言设计愿景"
+          },
+          "part_name": {
+            "type": "string",
+            "description": "零件或装配体图号/名称，如：UG-01_轴承支座.SLDPRT"
+          },
+          "material": {
+            "type": "string",
+            "description": "工程材料牌号，如：HT200, AL6061-T6, Steel45, AL7075-T6"
+          },
+          "parametric_dimensions": {
+            "type": "object",
+            "description": "从一句话中揣测提取的完全参数化尺寸字典（长、宽、高、直径、孔距等）"
+          },
+          "feature_tree": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "feature_type": {
+                  "type": "string"
+                },
+                "feature_name": {
+                  "type": "string"
+                },
+                "plane_ref": {
+                  "type": "string"
+                },
+                "parameters": {
+                  "type": "object"
+                }
+              },
+              "required": [
+                "feature_type",
+                "feature_name",
+                "parameters"
+              ]
+            },
+            "description": "SolidWorks原生特征树序列（基准面->完全定义草图->基体拉伸/旋转->切槽->异型孔向导->倒角圆角->方程式绑定）"
+          },
+          "drawing_annotations": {
+            "type": "object",
+            "properties": {
+              "projection_views": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "fit_tolerances": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              },
+              "gdt_tolerances": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              },
+              "surface_roughness": {
+                "type": "string"
+              },
+              "technical_notes": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": [
+              "projection_views",
+              "fit_tolerances",
+              "surface_roughness",
+              "technical_notes"
+            ]
+          },
+          "assembly_mates": {
+            "type": "object",
+            "properties": {
+              "target_assembly": {
+                "type": "string"
+              },
+              "base_component": {
+                "type": "string"
+              },
+              "mates": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              }
+            },
+            "required": [
+              "target_assembly",
+              "base_component",
+              "mates"
+            ]
+          }
+        },
+        "required": [
+          "user_wish",
+          "part_name",
+          "material",
+          "parametric_dimensions",
+          "feature_tree",
+          "drawing_annotations",
+          "assembly_mates"
+        ]
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "software.dispatch_industrial_tool",
+      "description": "调用本地安装的六大工业CAD/CAM/CNC软件进行原生建模、图纸生成、宏程序校验、仿真与机床设置 (SOLIDWORKS, Siemens NX 12, AutoCAD 2026, VERICUT 9.6, CIMCO Edit 2026, 斯沃数控 SSCNC)。",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "target_software": {
+            "type": "string",
+            "enum": [
+              "SOLIDWORKS",
+              "Siemens_NX",
+              "AutoCAD",
+              "VERICUT",
+              "CIMCO_Edit",
+              "SSCNC"
+            ],
+            "description": "目标软件系统"
+          },
+          "action": {
+            "type": "string",
+            "description": "执行动作，如 execute_vba, run_journal, send_lisp, create_dxf, run_simulation, validate_macro, calculate_offsets"
+          },
+          "parameters": {
+            "type": "object",
+            "description": "传递给软件网桥的具体参数字典"
+          }
+        },
+        "required": [
+          "target_software",
+          "action"
+        ]
+      }
+    }
+  }
+]

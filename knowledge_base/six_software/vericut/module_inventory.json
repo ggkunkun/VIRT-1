@@ -1,0 +1,108 @@
+{
+  "software": "vericut",
+  "display_name": "VERICUT 9.6 by CGTech",
+  "version": "9.6",
+  "generated": "2026-11-03",
+  "source": "reverse-skill offline-sample RE; evidence.md",
+  "modules": [
+    {
+      "id": "vericut_project_setup",
+      "name": "工程与数据配置 (Project Setup & Data)",
+      "category": "config_admin",
+      "menu": ["File|Open Project", "Project Tree|Setup", "Project Tree|NC Programs", "Project Tree|Models"],
+      "commands": ["VC-01", "VC-02", "VC-03", "VC-05"],
+      "api": ["env:CGTECH_VCPROJECT", "vericut_link.parse_vcproject"],
+      "file_formats": ["vcproject", "nc", "mcd", "tp", "stl", "stp", "vct", "sor", "swp"],
+      "workflow_refs": ["WF-V1", "WF-V3"],
+      "notes": "工程 XML + NC 程序 + 模型配置；启动自动加载 verified-working [高]"
+    },
+    {
+      "id": "vericut_tool_manager",
+      "name": "刀具库管理 (Tool Manager)",
+      "category": "data_exchange",
+      "menu": ["Tool Manager|Project|Tools"],
+      "commands": ["VC-04"],
+      "api": ["Tool Manager GUI"],
+      "file_formats": ["tls"],
+      "workflow_refs": ["WF-V1"],
+      "notes": "ASCII 刀具库按 Tool ID 存取 documented-not-probed [中]"
+    },
+    {
+      "id": "vericut_machine_control",
+      "name": "机床与控制系统 (Machine & Control)",
+      "category": "virtual_machine",
+      "menu": ["Machine/Control|Save As Machine", "Machine/Control|Control"],
+      "commands": ["VC-06", "VC-07", "VC-08"],
+      "api": ["env:CGTECH_MACHINE_CONFIG"],
+      "file_formats": ["mch", "xmch", "ctl", "xctl"],
+      "workflow_refs": ["WF-V1"],
+      "notes": "运动学机床文件 + G 代码解释控制文件 documented-not-probed [中]"
+    },
+    {
+      "id": "vericut_simulation_playback",
+      "name": "仿真播放与日志回读 (Simulation Playback)",
+      "category": "simulation_verification",
+      "menu": ["播放条|Play", "Info|Vericut Log"],
+      "commands": ["VC-09", "VC-10", "VC-11", "VC-19", "VC-20", "VC-22"],
+      "api": ["vericut_link.play_simulation", "vericut_link.parse_sim_log", "vericut_link.monitor_log", "vericut_link.bring_vericut_front", "vericut_link.close_vericut"],
+      "file_formats": ["log"],
+      "workflow_refs": ["WF-V1"],
+      "notes": "GUI 坐标驱动 verified-working [高]（历史实测）；播放按钮无快捷键 confirmed-negative"
+    },
+    {
+      "id": "vericut_autodiff",
+      "name": "自动偏差对比 (Auto-Diff)",
+      "category": "simulation_verification",
+      "menu": ["Analysis|AUTO-DIFF|Options"],
+      "commands": ["VC-12"],
+      "api": ["parse_collision_log.is_safe"],
+      "file_formats": ["pts"],
+      "workflow_refs": ["WF-V2"],
+      "notes": "红=过切致命/蓝=残料加半精/绿=合格，对齐 AGENTS.md 公理 [高]"
+    },
+    {
+      "id": "vericut_optipath_force",
+      "name": "进给优化 (OptiPath / Force)",
+      "category": "cam_toolpath",
+      "menu": ["Analysis|OptiPath", "Analysis|Force"],
+      "commands": ["VC-13"],
+      "api": ["env:CGTECH_OPAPI"],
+      "file_formats": ["olb", "opti", "mco", "tpo"],
+      "workflow_refs": ["WF-V3"],
+      "notes": "进给率优化 documented-not-probed [中]"
+    },
+    {
+      "id": "vericut_measurement",
+      "name": "测量与检验 (X-Caliper / Inspection)",
+      "category": "visualization",
+      "menu": ["Analysis|X-Caliper", "Analysis|Inspection"],
+      "commands": ["VC-14"],
+      "api": ["Inspection GUI"],
+      "file_formats": ["VcInspect"],
+      "workflow_refs": ["WF-V2"],
+      "notes": "尺寸测量/检验序列 documented-not-probed [中]"
+    },
+    {
+      "id": "vericut_reviewer_export",
+      "name": "复查与导出 (Review & Export)",
+      "category": "visualization",
+      "menu": ["ribbon|保存复查文件", "File|Save As In-Process", "输出面板|应用"],
+      "commands": ["VC-15", "VC-16", "VC-17"],
+      "api": ["vericut_link.read_vcreview"],
+      "file_formats": ["vcreview", "ip", "stp", "stl"],
+      "workflow_refs": ["WF-V1"],
+      "notes": ".vcreview ZIP 回读 verified-working [高]；几何输出路径曾误置 F:\\ [中]"
+    },
+    {
+      "id": "vericut_audit_converters",
+      "name": "审计与几何转换器 (Audit & Converters)",
+      "category": "data_exchange",
+      "menu": ["commands\\*.bat"],
+      "commands": ["VC-18", "VC-21", "VC-23", "VC-24", "VC-25"],
+      "api": ["vericut_link.read_transaction_log", "vericut_link.parse_vcproject", "dxf2sor.bat", "call vericut batch"],
+      "file_formats": ["cme", "rpt", "VcPost"],
+      "workflow_refs": ["WF-V1", "WF-V4"],
+      "notes": "事务日志 verified-working [高]；batch 语法 documented-not-probed 且本机判死 confirmed-negative"
+    }
+  ]
+}

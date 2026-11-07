@@ -1,0 +1,27 @@
+# Virtu-ToolCall-8B —— Qwen3-8B + tool-call LoRA（r=32/alpha=64）合并后再量化
+# 训练来源：data/toolcall_optimal.jsonl（2316 条 / 3.14M token / loss 仅算 assistant 段）
+# 实跑：damodel L40S 单卡，2 epoch 58.5 分钟，train_loss 0.0238
+# GGUF Q4_0 由 scripts/hf_to_gguf_numpy.py 纯 numpy 流式转换（零 torch 依赖）
+#
+# 导入命令（Windows 必须绕过本机透明代理，否则连不上 127.0.0.1:11434）：
+#   HTTP_PROXY= HTTPS_PROXY= http_proxy= https_proxy= ALL_PROXY= all_proxy= \
+#   NO_PROXY=127.0.0.1,localhost no_proxy=127.0.0.1,localhost \
+#   ollama create virtu-toolcall -f scripts/Modelfile.virtu-toolcall
+FROM D:/Virtu模型/checkpoints/virtu-toolcall-q4_0.gguf
+
+# 推理提速：上下文收紧，KV cache 减半、prefill 更快。tool-call 对话基本用不到 4k；
+# 若你的完整 tools schema + 历史超过 ~2048 token，把这调回 4096 即可
+PARAMETER num_ctx 2048
+# 注：num_gpu（GPU 层数）故意不写死——本地 4050(6GB) 强制全 offload 会 OOM 加载失败，
+# 而 L40S(45GB) 上 Ollama 默认 -1 本来就会把所有层塞进显存。需要强制时由客户端
+# chat(num_gpu=...) 在请求级按机器能力传，不污染共享 Modelfile。
+# tool-call 输出要的是结构化确定性，temperature 压低；>=0.7 会把 JSON 搞乱
+PARAMETER temperature 0.2
+PARAMETER top_p 0.9
+# ⚠️ stop 只能留 <|im_end|>。实测把 <|im_start|> 也设成 stop 会把 tool_call 输出掐成空串
+PARAMETER stop "<|im_end|>"
+PARAMETER stop "<|endoftext|>"
+# 注：本模型是工具调用模型、训练语料不含 thinking 段，故默认关思考模式。
+# Ollama 0.35.1 的 Modelfile 不支持 `PARAMETER think`，由请求级字段 {"think": false}
+# （见 scripts/ollama_toolcall_client.py 的 chat()）在调用端统一压制；纯文本泄漏
+# 再由 _clean() 的 <think> 正则兜底，双保险。

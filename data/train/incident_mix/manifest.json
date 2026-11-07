@@ -1,0 +1,9 @@
+{
+  "file": "D:\\Virtu模型\\data\\train\\incident_mix\\train\\incident_mix_v1.jsonl",
+  "v3_total": 7216,
+  "replay_sampled": 2000,
+  "incident": 265,
+  "total": 2265,
+  "seed": 1234,
+  "bytes": 3917760
+}

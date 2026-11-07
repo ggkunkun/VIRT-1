@@ -1,12 +1,19 @@
 """Clean all stale processes on remote GPU and restart training cleanly."""
 
+import os
 import time
 import paramiko
 
 HOST = "cn-north-b.ssh.damodel.com"
 PORT = 40526
 USER = "root"
-PASS = "m2A5jbYmbP"
+PASS = os.environ.get("DAMODEL_PASS", "")
+if not PASS:
+    raise SystemExit(
+        "[FATAL] 未设置 DAMODEL_PASS 环境变量；该实例口令已泄漏于 git 历史，"
+        "必须先轮换密码，再通过环境变量注入，不要写回源码。"
+    )
+
 REMOTE_DIR = "/root/cad_cam_finetune"
 
 client = paramiko.SSHClient()

@@ -1,0 +1,262 @@
+{
+  "subject": "virtu-moe-14b (13.63B 稀疏总参 / 8,191,030,272 每 token 激活)",
+  "generated_at": "2026-11-06T20:38:15+0800",
+  "companion_doc": "VIRTU_13_63B_OPTIMIZATION_2026-11-06.md",
+  "ruler": {
+    "paired_sigma": 8.84,
+    "n_pairs": 8,
+    "p_score_changed": 0.125,
+    "max_paired_delta": 25.0,
+    "basis": "measured",
+    "evidence": "runs/moe14b_noise_probe.json",
+    "resolution_band_at_n30": 4.47,
+    "resolution_band_at_n24": 5.0,
+    "band_formula": "1.96 * paired_sigma * sqrt(2/n)  (与 virtu_eval.provenance.delta_verdict 同源)",
+    "required_n_for_delta": {
+      "2.78": 78,
+      "4.44": 31,
+      "6.95": 13
+    },
+    "self_correction": "初稿手算带值 7.05/6.29 大了 √2 倍，已按脚本公式重算"
+  },
+  "service_point": {
+    "best_num_gpu": 30,
+    "best_num_ctx": 4096,
+    "tok_s": [
+      10.18,
+      9.77
+    ],
+    "spread_across_time": [
+      7.55,
+      7.27
+    ],
+    "supersedes": {
+      "num_gpu": 22,
+      "why": "另一次运行同配置 500 崩溃；本格仅 5.23 tok/s"
+    },
+    "crash_cells": 3,
+    "crash_signal": "CUDA ggml_cuda_kernel_can_use_pdl 初始化失败 ⇒ 进程 0xc0000409",
+    "basis": "measured",
+    "evidence": [
+      "runs/moe14b_grid_offload.json",
+      "runs/moe14b_grid_ctx_penalty.json"
+    ]
+  },
+  "tiers": {
+    "deliverable_locally_zero_training": [
+      {
+        "item": "路由几何独立取证（435 张量/36 门控差异全部为 ffn_gate_inp）",
+        "status": "done",
+        "basis": "measured",
+        "evidence": "runs/moe14b_gate_forensics.json",
+        "run_id": "efa73072469d7761"
+      },
+      {
+        "item": "只差路由权重的配对臂（G-0..G-5 全绿）",
+        "status": "done",
+        "basis": "measured",
+        "evidence": "runs/moe14b_matched_tags.json",
+        "tags": [
+          "virtu-moe-14b:a2103c68",
+          "virtu-moe-14b:01068725"
+        ]
+      },
+      {
+        "item": "判分器噪声底线生产者",
+        "status": "done",
+        "basis": "measured",
+        "evidence": "scripts/moe14b_noise_probe.py"
+      },
+      {
+        "item": "服务位网格（含崩溃记录）",
+        "status": "done",
+        "basis": "measured"
+      },
+      {
+        "item": "反证测试 23 条",
+        "status": "done",
+        "basis": "measured",
+        "evidence": "tests/test_moe14b_asset_gates.py"
+      },
+      {
+        "item": "三臂配对 A/B 出判",
+        "status": "running",
+        "basis": "measured",
+        "evidence": "runs/moe14b_ab_chain.log"
+      },
+      {
+        "item": "判定回执可归因化（run_id 由证据字节派生 + I0–I4 身份闸）",
+        "status": "done",
+        "basis": "measured",
+        "evidence": [
+          "runs/moe14b_ab_verdict_toolcall_vs_dense.json",
+          "runs/moe14b_ab_verdict_gate_toolcall.json",
+          "runs/moe14b_ab_verdict_knowledge_gate.json",
+          "tests/test_paired_verdict_ruler.py"
+        ]
+      },
+      {
+        "item": "判据按槽位拆细 + 零推理重打分验证 σ(Δ) 下降（今晚唯一被实测支持的降噪杠杆）",
+        "status": "done_partial",
+        "basis": "measured",
+        "measured_effect": {
+          "sigma_delta": [
+            24.14,
+            20.76
+          ],
+          "ci95": [
+            8.79,
+            7.56
+          ],
+          "discordant": [
+            "4/29",
+            "6/29"
+          ],
+          "coverage": "7/30 题达 ≥5 判据",
+          "run_id": "8421bf66d5c7c28b"
+        },
+        "limit": "17/30 题的 gold 只有 2–4 个槽 ⇒ 必须新写多参数题面才能全库生效",
+        "evidence": [
+          "scripts/moe14b_build_discriminative_cases.py",
+          "scripts/moe14b_rescore_discriminative.py",
+          "runs/moe14b_discriminative_cases.json",
+          "runs/moe14b_rescore_gate_pair.json"
+        ]
+      }
+    ],
+    "deliverable_with_time_or_approval": [
+      {
+        "item": "把 score 改为逐判据 pass_ratio 均值 / 3 次同 seed 取中位 ⇒ σ 目标 ≤4",
+        "est": "1 人日",
+        "basis": "design",
+        "why": "σ=4 时 n=30 可分辨 2.02 分，2.78/4.44 类结论才第一次可判"
+      },
+      {
+        "item": "A/B 扩到 6 维全板",
+        "est": "≈3 h 本机",
+        "basis": "measured 外推",
+        "note": "MoE 腿 10 tok/s 主导"
+      },
+      {
+        "item": "惩罚项对重复退化的作用（repeat_runs 本轮未复现）",
+        "status": "未测",
+        "est": "≥512 tok × 多题 ≈1 h",
+        "basis": "design"
+      },
+      {
+        "item": "virtu_eval/ 纳入 git 跟踪",
+        "risk": "改变仓库跟踪面，需确认",
+        "status": "未执行",
+        "basis": "measured(现状：?? 未跟踪)"
+      },
+      {
+        "item": "修复 11434 服务（app 看门狗实例 0 标签）",
+        "status": "未执行",
+        "risk": "要停/换共享服务进程",
+        "basis": "measured"
+      },
+      {
+        "item": "bf16 参考件 25.4 GB 迁出 D 盘",
+        "status": "未执行",
+        "risk": "文件搬迁，需确认目标",
+        "basis": "measured"
+      }
+    ],
+    "not_attainable_locally": [
+      {
+        "item": "训练 W_gate（294,912 参数）需要 hidden-state 监督",
+        "reason": "6GB/16GB 上 8B 前向不可行；且零租卡",
+        "basis": "measured(硬件)+asserted(方案)"
+      },
+      {
+        "item": "专家继续预训练（阶段 B）",
+        "reason": "2026-11-06 已由用户终止",
+        "basis": "measured(决策记录)"
+      },
+      {
+        "item": "恒选单专家的门控改写",
+        "reason": "无 bias 的 2 专家线性门控决策面必过原点，数学上不可能恒定；只能改造单专家稠密件",
+        "basis": "design(证明)"
+      },
+      {
+        "item": "把 13.63B 说成每 token 稠密 13.63B",
+        "reason": "expert_used_count=1、shared_expert=0",
+        "basis": "measured"
+      }
+    ],
+    "not_feasible_local": [
+      {
+        "item": "--repeats 3 的经验降噪腿",
+        "blocker": "提交内存：22:4x CommitAvail −3.31GB（全失败），23:0x 复测 +1.87GB 仍不足以同时载两臂",
+        "basis": "measured",
+        "mitigation": "判据杠杆已可用零推理方式验证，repeats 降为第二优先"
+      }
+    ]
+  },
+  "voided_claims": [
+    {
+      "claim": "MoE 知识维领先 4.44 / 2.78 分",
+      "verdict": "噪声内（带 ±4.47~5.00）"
+    },
+    {
+      "claim": "hybrid 路由 +6.95 分",
+      "verdict": "样本内 oracle 上限，非现场保底；且≤带"
+    },
+    {
+      "claim": "正交语义门控 GATE_PASSED=能力强化",
+      "verdict": "仅构造性质；当时两臂 8 处配置混淆不可测"
+    },
+    {
+      "claim": "gate_orthogonality_cos=-7.45e-09",
+      "verdict": "与字节实测 -0.015 不符（收据待修）"
+    },
+    {
+      "claim": "路由≈隐状态均值符号",
+      "verdict": "朝向读错；实测能量占比 <4e-4"
+    },
+    {
+      "claim": "主动预热触发 500 = keep_alive 语义",
+      "verdict": "真因是 llama-server CUDA 崩溃"
+    },
+    {
+      "claim": "正交门与随机门在工具面上完全等价（Δ̄=+0.00、σ(Δ)=0.00、0/30 题不同分）",
+      "verdict": "作废为不可引用：那批腿 tools_requested=0，从未测过工具面（I4/Q5 现已判红）"
+    },
+    {
+      "claim": "MoE 在 toolcall 落后稠密 5.56 分（CI ±9.44）",
+      "verdict": "含 2.11 分服务侧伪影；剔除不可归因空响应后为 3.45 分（CI ±8.79），仍不可判"
+    },
+    {
+      "claim": "五份 runs/moe14b_ab_verdict_*.json 里的任何数字（22:5x 之前）",
+      "verdict": "当时 run_id=null ⇒ 不可归因；旧稿已打 superseded_by + cite_policy=禁止引用"
+    }
+  ],
+  "attribution_round_2026_11_06": {
+    "at": "2026-11-06T23:11:11+0800",
+    "identity_gates": [
+      "I0 噪声尺子存在",
+      "I1 单臂 served_model 唯一",
+      "I2 两臂必须异模型",
+      "I3 每条计分响应可归因（默认零容忍）",
+      "I4 toolcall 维必须真发过 tools"
+    ],
+    "identity_source": "逐条响应的 served_model（服务方回写），不取目录名/标签名",
+    "corrected_numbers": {
+      "pair": "随机门 vs 稠密v2（toolcall+tools）",
+      "before": {
+        "delta": -5.56,
+        "sigma_delta": 26.38,
+        "ci95": 9.44
+      },
+      "after": {
+        "delta": -3.45,
+        "sigma_delta": 24.14,
+        "ci95": 8.79,
+        "run_id": "4eec822bba919daa",
+        "basis": "measured_degraded"
+      },
+      "cause": "稠密臂 toolcall-m14 是空响应（当时 manifest missing），被误计为能力失败",
+      "verdict_still": "不可判"
+    }
+  }
+}

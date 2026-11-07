@@ -1,0 +1,84 @@
+{
+  "pipeline": "virtu-engineering-capability",
+  "version": "1.0.0",
+  "started_at": "2026-11-04T15:59:20+08:00",
+  "seed": 20261104,
+  "cloud_mode": false,
+  "stages": [
+    "prepare",
+    "validate",
+    "bundle",
+    "train",
+    "dpo",
+    "evaluate"
+  ],
+  "steps": [
+    {
+      "stage": "prepare",
+      "cmd": "C:\\Users\\Administrator\\.workbuddy\\binaries\\python\\versions\\3.13.12\\python.exe D:\\Virtu模型\\engineering_capability_train\\01_prepare_data.py --target-samples 300 --seed 20261104",
+      "started_at": "2026-11-04T15:59:20+08:00",
+      "status": "SKIPPED_DRY_RUN",
+      "returncode": 0
+    },
+    {
+      "stage": "validate",
+      "cmd": "C:\\Users\\Administrator\\.workbuddy\\binaries\\python\\versions\\3.13.12\\python.exe D:\\Virtu模型\\engineering_capability_train\\validate_corpus.py --report-out engineering_capability_train/data/validation_report.json",
+      "started_at": "2026-11-04T15:59:20+08:00",
+      "status": "SKIPPED_DRY_RUN",
+      "returncode": 0
+    },
+    {
+      "stage": "bundle",
+      "cmd": "C:\\Users\\Administrator\\.workbuddy\\binaries\\python\\versions\\3.13.12\\python.exe D:\\Virtu模型\\engineering_capability_train\\01_prepare_data.py --target-samples 300 --seed 20261104 --bundle",
+      "started_at": "2026-11-04T15:59:20+08:00",
+      "status": "SKIPPED_DRY_RUN",
+      "returncode": 0
+    },
+    {
+      "stage": "train",
+      "cmd": "C:\\Users\\Administrator\\.workbuddy\\binaries\\python\\versions\\3.13.12\\python.exe D:\\Virtu模型\\engineering_capability_train\\train_sft.py --profile auto --engine native --seed 20261104 --max-len 2560 --base D:/AI apps/WorkBuddy/resources/vendor/PortableGit/root/models/Qwen3-8B",
+      "started_at": "2026-11-04T15:59:20+08:00",
+      "status": "SKIPPED_DRY_RUN",
+      "returncode": 0
+    },
+    {
+      "stage": "dpo",
+      "cmd": "C:\\Users\\Administrator\\.workbuddy\\binaries\\python\\versions\\3.13.12\\python.exe D:\\Virtu模型\\engineering_capability_train\\train_dpo.py --seed 20261104 --base D:/AI apps/WorkBuddy/resources/vendor/PortableGit/root/models/Qwen3-8B",
+      "started_at": "2026-11-04T15:59:20+08:00",
+      "status": "SKIPPED_DRY_RUN",
+      "returncode": 0
+    },
+    {
+      "stage": "evaluate",
+      "cmd": "C:\\Users\\Administrator\\.workbuddy\\binaries\\python\\versions\\3.13.12\\python.exe D:\\Virtu模型\\engineering_capability_train\\evaluate.py --endpoint http://127.0.0.1:8000/v1 --model virtu-ect",
+      "started_at": "2026-11-04T15:59:20+08:00",
+      "status": "SKIPPED_DRY_RUN",
+      "returncode": 0
+    }
+  ],
+  "status": "SKIPPED_DRY_RUN",
+  "config_sha256": {
+    "pipeline.json": "fffc5b627e29c4c4b6c3328d30358dd2b244cca2acb57b7aab6d6d6a95f060b0",
+    "train.json": "b713f16f3466a675ab8e974f5a26c6d5d1ed216420fb5442874be0694a53f6f3",
+    "metrics.json": "5d93f1a8c292e5ca341ce3f7a141f5a91e9d446fe97458617ced1108497fd780"
+  },
+  "finished_at": "2026-11-04T15:59:20+08:00",
+  "total_elapsed_s": 0.0,
+  "artifacts": {
+    "corpus_out": {
+      "path": "D:\\Virtu模型\\engineering_capability_train\\data\\train_corpus.jsonl",
+      "sha256": "caa0dcb0bb6416457b7f3046f5ed7bfad3c40c5ae5731b4ad954657ec5a2a094",
+      "bytes": 647204
+    },
+    "dpo_out": {
+      "path": "D:\\Virtu模型\\engineering_capability_train\\data\\dpo_pairs.jsonl",
+      "sha256": "1e902047ad433eb7c2a6c1dc35f3ad2d21dc5ba925362da67e7e037864626f99",
+      "bytes": 792370
+    },
+    "manifest_out": {
+      "path": "D:\\Virtu模型\\engineering_capability_train\\data\\corpus_manifest.json",
+      "sha256": "43a441b7c535f25dd569ae00c83e81cd128315f3d982f867ddfe417fdd483141",
+      "bytes": 3064
+    }
+  }
+}

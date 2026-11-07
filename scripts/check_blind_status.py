@@ -1,8 +1,20 @@
+import os
 import paramiko
+import os, sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import damodel_env
 
 client = paramiko.SSHClient()
 client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-client.connect("cn-north-b.ssh.damodel.com", port=40526, username="root", password="m2A5jbYmbP", timeout=15)
+DAMODEL_PASS = os.environ.get("DAMODEL_PASS", "")
+if not DAMODEL_PASS:
+    raise SystemExit(
+        "[FATAL] 未设置 DAMODEL_PASS 环境变量；该实例口令已泄漏于 git 历史，"
+        "必须先轮换密码，再通过环境变量注入，不要写回源码。"
+    )
+
+host, port, user, password = damodel_env.load()
+client.connect(host, port=port, username=user, password=DAMODEL_PASS, timeout=15)
 
 stdin, stdout, stderr = client.exec_command("ls -lt /root/cad_cam_finetune/*.json /root/*.json 2>/dev/null")
 print("=== JSON FILES ===")

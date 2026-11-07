@@ -1,0 +1,18 @@
+# L40S 48GB training environment (Linux, CUDA 12.4 wheels, Ada sm_89)
+# Route A: bf16 LoRA on the unquantized base. Install torch from a CUDA index:
+#   pip install torch==2.5.0 --index-url https://download.pytorch.org/whl/cu124
+#   # China mirror: https://mirrors.aliyun.com/pytorch-wheels/cu124/
+torch==2.5.0
+transformers==4.51.0
+peft==0.14.0
+# only needed by the --load-4bit fallback; the default path does not quantize
+bitsandbytes>=0.45.0,<0.46
+datasets>=3.0.0
+accelerate>=1.0.0
+sentencepiece
+protobuf
+safetensors
+huggingface-hub
+modelscope
+# flash-attn is OPTIONAL. The trainer uses sdpa when it is absent; building the
+# wheel on the instance can cost an hour of billed GPU time for no measured gain.

@@ -1,0 +1,50 @@
+{
+  "model_label": "Hierarchical_HAM",
+  "loss_metrics": {
+    "loss_seq_64": 7.7289,
+    "loss_seq_256": 7.8013,
+    "loss_seq_1024": 7.7708,
+    "loss_multimodal": 7.8322
+  },
+  "convergence": {
+    "initial_loss": 7.8162,
+    "final_loss": 7.783,
+    "loss_reduction": 0.0332,
+    "loss_reduction_pct": 0.42,
+    "mean_grad_norm": 1.2527,
+    "min_grad_norm": 1.2368,
+    "max_grad_norm": 1.2773
+  },
+  "generation": {
+    "cache_consistent": false,
+    "generated_tokens": [
+      554,
+      1281,
+      649,
+      40,
+      1045,
+      1964,
+      1070,
+      141,
+      604,
+      1021,
+      1090,
+      880,
+      475,
+      1024,
+      1970,
+      1887,
+      1903,
+      1202
+    ]
+  },
+  "latency": {
+    "latency_128_ms": 216.48,
+    "throughput_128_tok_s": 591.3,
+    "latency_512_ms": 225.28,
+    "throughput_512_tok_s": 2272.8,
+    "latency_1024_ms": 843.88,
+    "throughput_1024_tok_s": 1213.4
+  },
+  "param_count": 7141888
+}

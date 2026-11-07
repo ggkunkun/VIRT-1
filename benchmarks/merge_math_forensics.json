@@ -1,0 +1,366 @@
+{
+  "base": "D:\\Virtu模型\\checkpoints\\_base_qwen3_8b",
+  "merged": "D:\\Virtu模型\\checkpoints\\virtu_merged",
+  "results": [
+    {
+      "target": "model.layers.0.mlp.down_proj.weight",
+      "adapters_used": [
+        {
+          "adapter": "turing_conversational_lora",
+          "weight": 1.2,
+          "alpha": 64.0,
+          "r": 32,
+          "g": 2.4,
+          "A_shape": [
+            32,
+            12288
+          ],
+          "B_shape": [
+            4096,
+            32
+          ]
+        },
+        {
+          "adapter": "cad_cam_six_software_lora",
+          "weight": 1.0,
+          "alpha": 64.0,
+          "r": 32,
+          "g": 2.0,
+          "A_shape": [
+            32,
+            12288
+          ],
+          "B_shape": [
+            4096,
+            32
+          ]
+        },
+        {
+          "adapter": "omni_autonomous_agent_lora",
+          "weight": 0.8,
+          "alpha": 64.0,
+          "r": 32,
+          "g": 1.6,
+          "A_shape": [
+            32,
+            12288
+          ],
+          "B_shape": [
+            4096,
+            32
+          ]
+        },
+        {
+          "adapter": "ug_teacher_guided_agent_lora",
+          "weight": 0.7,
+          "alpha": 64.0,
+          "r": 32,
+          "g": 1.4,
+          "A_shape": [
+            32,
+            12288
+          ],
+          "B_shape": [
+            4096,
+            32
+          ]
+        }
+      ],
+      "delta_actually_in_merged_file": {
+        "l2": 3.4495127201080322,
+        "max_abs": 0.00439453125,
+        "rms": 0.00048700804472900927
+      },
+      "correct_sum_of_lora_deltas": {
+        "l2": 2.3982510566711426,
+        "max_abs": 0.00347834057174623,
+        "rms": 0.00033824623096734285
+      },
+      "buggy_cross_term_formula": {
+        "l2": 3.441034912615806,
+        "max_abs": 0.004318483975920431,
+        "rms": 0.00048502989089102474
+      },
+      "pure_cross_term_noise": {
+        "l2": 2.5019293810595102,
+        "max_abs": 0.0026688717695288917,
+        "rms": 0.00035265859415237844
+      },
+      "relerr_file_vs_correct": 1.0507292747497559,
+      "relerr_file_vs_buggy": 0.09049116390568088,
+      "relerr_cross_vs_correct": 1.0432308052570096,
+      "noise_share_of_file_delta": 0.7252993637261191,
+      "verdict": "merged file matches NEITHER"
+    },
+    {
+      "target": "model.layers.0.self_attn.q_proj.weight",
+      "adapters_used": [
+        {
+          "adapter": "turing_conversational_lora",
+          "weight": 1.2,
+          "alpha": 64.0,
+          "r": 32,
+          "g": 2.4,
+          "A_shape": [
+            32,
+            4096
+          ],
+          "B_shape": [
+            4096,
+            32
+          ]
+        },
+        {
+          "adapter": "cad_cam_six_software_lora",
+          "weight": 1.0,
+          "alpha": 64.0,
+          "r": 32,
+          "g": 2.0,
+          "A_shape": [
+            32,
+            4096
+          ],
+          "B_shape": [
+            4096,
+            32
+          ]
+        },
+        {
+          "adapter": "omni_autonomous_agent_lora",
+          "weight": 0.8,
+          "alpha": 64.0,
+          "r": 32,
+          "g": 1.6,
+          "A_shape": [
+            32,
+            4096
+          ],
+          "B_shape": [
+            4096,
+            32
+          ]
+        },
+        {
+          "adapter": "ug_teacher_guided_agent_lora",
+          "weight": 0.7,
+          "alpha": 64.0,
+          "r": 32,
+          "g": 1.4,
+          "A_shape": [
+            32,
+            4096
+          ],
+          "B_shape": [
+            4096,
+            32
+          ]
+        }
+      ],
+      "delta_actually_in_merged_file": {
+        "l2": 2.839812755584717,
+        "max_abs": 0.00537109375,
+        "rms": 0.0006935049314051867
+      },
+      "correct_sum_of_lora_deltas": {
+        "l2": 1.7381269931793213,
+        "max_abs": 0.003564218059182167,
+        "rms": 0.0004243918810971081
+      },
+      "buggy_cross_term_formula": {
+        "l2": 2.835140328008077,
+        "max_abs": 0.005391101191545318,
+        "rms": 0.0006921729316425974
+      },
+      "pure_cross_term_noise": {
+        "l2": 2.242830799668268,
+        "max_abs": 0.004617786928148996,
+        "rms": 0.0005475661132002608
+      },
+      "relerr_file_vs_correct": 1.2942200899124146,
+      "relerr_file_vs_buggy": 0.06239761071162196,
+      "relerr_cross_vs_correct": 1.2903722273858484,
+      "noise_share_of_file_delta": 0.789781225983144,
+      "verdict": "merged file matches NEITHER"
+    },
+    {
+      "target": "model.layers.17.mlp.gate_proj.weight",
+      "adapters_used": [
+        {
+          "adapter": "turing_conversational_lora",
+          "weight": 1.2,
+          "alpha": 64.0,
+          "r": 32,
+          "g": 2.4,
+          "A_shape": [
+            32,
+            4096
+          ],
+          "B_shape": [
+            12288,
+            32
+          ]
+        },
+        {
+          "adapter": "cad_cam_six_software_lora",
+          "weight": 1.0,
+          "alpha": 64.0,
+          "r": 32,
+          "g": 2.0,
+          "A_shape": [
+            32,
+            4096
+          ],
+          "B_shape": [
+            12288,
+            32
+          ]
+        },
+        {
+          "adapter": "omni_autonomous_agent_lora",
+          "weight": 0.8,
+          "alpha": 64.0,
+          "r": 32,
+          "g": 1.6,
+          "A_shape": [
+            32,
+            4096
+          ],
+          "B_shape": [
+            12288,
+            32
+          ]
+        },
+        {
+          "adapter": "ug_teacher_guided_agent_lora",
+          "weight": 0.7,
+          "alpha": 64.0,
+          "r": 32,
+          "g": 1.4,
+          "A_shape": [
+            32,
+            4096
+          ],
+          "B_shape": [
+            12288,
+            32
+          ]
+        }
+      ],
+      "delta_actually_in_merged_file": {
+        "l2": 7.308810234069824,
+        "max_abs": 0.0109100341796875,
+        "rms": 0.001031630439683795
+      },
+      "correct_sum_of_lora_deltas": {
+        "l2": 5.486557960510254,
+        "max_abs": 0.008963261730968952,
+        "rms": 0.0007737615960650146
+      },
+      "buggy_cross_term_formula": {
+        "l2": 7.312326962957553,
+        "max_abs": 0.010902673125907706,
+        "rms": 0.0010307065284341065
+      },
+      "pure_cross_term_noise": {
+        "l2": 4.979480436587747,
+        "max_abs": 0.007021797092892946,
+        "rms": 0.0007018809498262728
+      },
+      "relerr_file_vs_correct": 0.9088550806045532,
+      "relerr_file_vs_buggy": 0.042612038761867393,
+      "relerr_cross_vs_correct": 0.907578207033951,
+      "noise_share_of_file_delta": 0.6812983614454828,
+      "verdict": "merged file matches the CROSS-TERM formula"
+    },
+    {
+      "target": "model.layers.35.self_attn.o_proj.weight",
+      "adapters_used": [
+        {
+          "adapter": "turing_conversational_lora",
+          "weight": 1.2,
+          "alpha": 64.0,
+          "r": 32,
+          "g": 2.4,
+          "A_shape": [
+            32,
+            4096
+          ],
+          "B_shape": [
+            4096,
+            32
+          ]
+        },
+        {
+          "adapter": "cad_cam_six_software_lora",
+          "weight": 1.0,
+          "alpha": 64.0,
+          "r": 32,
+          "g": 2.0,
+          "A_shape": [
+            32,
+            4096
+          ],
+          "B_shape": [
+            4096,
+            32
+          ]
+        },
+        {
+          "adapter": "omni_autonomous_agent_lora",
+          "weight": 0.8,
+          "alpha": 64.0,
+          "r": 32,
+          "g": 1.6,
+          "A_shape": [
+            32,
+            4096
+          ],
+          "B_shape": [
+            4096,
+            32
+          ]
+        },
+        {
+          "adapter": "ug_teacher_guided_agent_lora",
+          "weight": 0.7,
+          "alpha": 64.0,
+          "r": 32,
+          "g": 1.4,
+          "A_shape": [
+            32,
+            4096
+          ],
+          "B_shape": [
+            4096,
+            32
+          ]
+        }
+      ],
+      "delta_actually_in_merged_file": {
+        "l2": 3.2245476245880127,
+        "max_abs": 0.00682830810546875,
+        "rms": 0.0007876122836023569
+      },
+      "correct_sum_of_lora_deltas": {
+        "l2": 2.019110918045044,
+        "max_abs": 0.0064608086831867695,
+        "rms": 0.0004929951392114162
+      },
+      "buggy_cross_term_formula": {
+        "l2": 3.2214466816931555,
+        "max_abs": 0.006815696285089659,
+        "rms": 0.0007864860062727433
+      },
+      "pure_cross_term_noise": {
+        "l2": 2.4832720210910315,
+        "max_abs": 0.0049844703451696615,
+        "rms": 0.0006062675832741776
+      },
+      "relerr_file_vs_correct": 1.2327405214309692,
+      "relerr_file_vs_buggy": 0.05368231792708536,
+      "relerr_cross_vs_correct": 1.2298839052860953,
+      "noise_share_of_file_delta": 0.7701148533690239,
+      "verdict": "merged file matches NEITHER"
+    }
+  ]
+}
