@@ -1,6 +1,6 @@
 # 数控加工仿真系统验证报告 — AE-CI-258
 
-- 生成时间：2026-11-18 21:50:04
+- 生成时间：2026-11-18 22:20:00
 - 零件：航空发动机封闭式叶轮（TC11）
 - 毛坯：264.06×264.06×82.85 mm，包容块，唯一实例
 - 口径：所有结论标注 basis；未实测项写“未测”，不以估算冒充实测。
@@ -55,13 +55,13 @@
 | 工序 | 方言 | 机床 | 行数 | SHA256 | 审查 | 节拍(s) | 坐标回读误差 |
 |---|---|---|---|---|---|---|---|
 | OP1 | fanuc | prod_5ax_fanuc_0imf | 183 | 144d42294d88 | PASS | 7336.5 | 0.0 |
-| OP2 | fanuc | prod_5ax_fanuc_0imf | 1199 | db525900ff4d | PASS | 3251.2 | 0.000494 |
+| OP2 | fanuc | prod_5ax_fanuc_0imf | 1199 | e5d75e7b5913 | PASS | 2079.5 | 0.000494 |
 | OP3 | fanuc | prod_5ax_fanuc_0imf | 86 | b158538d5c20 | PASS | 3496.6 | 0.0 |
 | OP1 | siemens | prod_5ax_siemens_840dsl | 175 | 248325282129 | PASS | 7336.5 | 0.0 |
-| OP2 | siemens | prod_5ax_siemens_840dsl | 1193 | 7806d05e9ce7 | PASS | 3251.2 | 0.000494 |
+| OP2 | siemens | prod_5ax_siemens_840dsl | 1193 | f464a949a78a | PASS | 2079.5 | 0.000494 |
 | OP3 | siemens | prod_5ax_siemens_840dsl | 76 | 07d91bee6aad | PASS | 3496.6 | 0.0 |
 | OP1 | hnc | prod_5ax_hnc8 | 183 | 05f4f5b2911f | PASS | 7336.5 | 0.0 |
-| OP2 | hnc | prod_5ax_hnc8 | 1199 | 8767b09e5ab0 | PASS | 3251.2 | 0.000494 |
+| OP2 | hnc | prod_5ax_hnc8 | 1199 | b17da082fac3 | PASS | 2079.5 | 0.000494 |
 | OP3 | hnc | prod_5ax_hnc8 | 86 | b584fa3e818c | PASS | 3496.6 | 0.0 |
 
 ## 4. 扫掠碰撞 / 过切 / 超程（实测）
@@ -69,49 +69,49 @@
 | 工序 | 采样点 | 最小夹具间隙 | 刀尖过切 | 刀具表面过切 | 刀柄-毛坯 | 行程 |
 |---|---|---|---|---|---|---|
 | OP1 | 18917 | 1.85 | 9.5 | 1.5 | 18.0 | PASS |
-| OP2 | 7782 | 1.45 | -22.626 | -23.514 | 27.032 | PASS |
+| OP2 | 5456 | 1.45 | -0.48 | -0.931 | 27.032 | PASS |
 | OP3 | 7111 | 27.85 | -0.0 | -0.003 | 64.5 | PASS |
 
 ### 违规明细
 
-- `{'type': 'DESIGN_GOUGE', 'line': 23, 'penetration_mm': -0.325, 'world': [132.32, -0.75, 96.92], 'op': 'OP2'}`
-- `{'type': 'DESIGN_GOUGE', 'line': 23, 'penetration_mm': -0.95, 'world': [122.72, -0.7, 97.64], 'op': 'OP2'}`
+- `{'type': 'DESIGN_GOUGE', 'line': 23, 'penetration_mm': -0.299, 'world': [132.32, -0.75, 96.92], 'op': 'OP2'}`
+- `{'type': 'DESIGN_GOUGE', 'line': 23, 'penetration_mm': -0.931, 'world': [122.72, -0.7, 97.64], 'op': 'OP2'}`
 - `{'type': 'DESIGN_GOUGE', 'line': 92, 'penetration_mm': -0.597, 'world': [124.64, -0.71, 97.5], 'op': 'OP2'}`
-- `{'type': 'DESIGN_GOUGE', 'line': 96, 'penetration_mm': -0.332, 'world': [126.95, 39.46, 96.74], 'op': 'OP2'}`
-- `{'type': 'DESIGN_GOUGE', 'line': 96, 'penetration_mm': -0.082, 'world': [125.03, 29.91, 97.03], 'op': 'OP2'}`
-- `{'type': 'DESIGN_GOUGE', 'line': 96, 'penetration_mm': -1.084, 'world': [123.11, 20.35, 97.31], 'op': 'OP2'}`
-- `{'type': 'DESIGN_GOUGE', 'line': 96, 'penetration_mm': -0.843, 'world': [121.18, 10.79, 97.59], 'op': 'OP2'}`
-- `{'type': 'DESIGN_GOUGE', 'line': 165, 'penetration_mm': -0.065, 'world': [122.34, 16.53, 97.42], 'op': 'OP2'}`
-- `{'type': 'DESIGN_GOUGE', 'line': 165, 'penetration_mm': -0.652, 'world': [124.26, 26.08, 97.14], 'op': 'OP2'}`
-- `{'type': 'DESIGN_GOUGE', 'line': 165, 'penetration_mm': -0.549, 'world': [126.18, 35.64, 96.86], 'op': 'OP2'}`
-- `{'type': 'DESIGN_GOUGE', 'line': 169, 'penetration_mm': -0.651, 'world': [103.72, 77.06, 96.69], 'op': 'OP2'}`
-- `{'type': 'DESIGN_GOUGE', 'line': 169, 'penetration_mm': -0.148, 'world': [105.62, 67.34, 96.85], 'op': 'OP2'}`
-- `{'type': 'DESIGN_GOUGE', 'line': 169, 'penetration_mm': -0.087, 'world': [107.51, 57.62, 97.0], 'op': 'OP2'}`
-- `{'type': 'DESIGN_GOUGE', 'line': 169, 'penetration_mm': -1.029, 'world': [115.09, 18.76, 97.62], 'op': 'OP2'}`
-- `{'type': 'DESIGN_GOUGE', 'line': 238, 'penetration_mm': -0.73, 'world': [115.09, 18.76, 97.62], 'op': 'OP2'}`
-- `{'type': 'DESIGN_GOUGE', 'line': 238, 'penetration_mm': -0.148, 'world': [105.62, 67.34, 96.85], 'op': 'OP2'}`
-- `{'type': 'DESIGN_GOUGE', 'line': 238, 'penetration_mm': -0.161, 'world': [103.72, 77.06, 96.69], 'op': 'OP2'}`
-- `{'type': 'DESIGN_GOUGE', 'line': 242, 'penetration_mm': -0.085, 'world': [62.27, 113.05, 96.54], 'op': 'OP2'}`
-- `{'type': 'DESIGN_GOUGE', 'line': 242, 'penetration_mm': -0.452, 'world': [66.69, 104.16, 96.65], 'op': 'OP2'}`
-- `{'type': 'DESIGN_GOUGE', 'line': 242, 'penetration_mm': -0.943, 'world': [71.11, 95.28, 96.76], 'op': 'OP2'}`
+- `{'type': 'DESIGN_GOUGE', 'line': 96, 'penetration_mm': -0.082, 'world': [117.2, 47.77, 97.36], 'op': 'OP2'}`
+- `{'type': 'DESIGN_GOUGE', 'line': 238, 'penetration_mm': -0.771, 'world': [90.0, 88.98, 97.36], 'op': 'OP2'}`
+- `{'type': 'DESIGN_GOUGE', 'line': 311, 'penetration_mm': -0.821, 'world': [47.6, 113.11, 97.64], 'op': 'OP2'}`
+- `{'type': 'DESIGN_GOUGE', 'line': 315, 'penetration_mm': -0.48, 'world': [0.73, 128.48, 97.21], 'op': 'OP2'}`
+- `{'type': 'DESIGN_GOUGE', 'line': 384, 'penetration_mm': -0.48, 'world': [0.73, 128.48, 97.21], 'op': 'OP2'}`
+- `{'type': 'DESIGN_GOUGE', 'line': 388, 'penetration_mm': -0.299, 'world': [-49.94, 122.53, 96.92], 'op': 'OP2'}`
+- `{'type': 'DESIGN_GOUGE', 'line': 388, 'penetration_mm': -0.931, 'world': [-46.32, 113.64, 97.64], 'op': 'OP2'}`
+- `{'type': 'DESIGN_GOUGE', 'line': 457, 'penetration_mm': -0.886, 'world': [-47.04, 115.42, 97.5], 'op': 'OP2'}`
+- `{'type': 'DESIGN_GOUGE', 'line': 461, 'penetration_mm': -0.082, 'world': [-88.98, 90.0, 97.36], 'op': 'OP2'}`
+- `{'type': 'DESIGN_GOUGE', 'line': 530, 'penetration_mm': -0.059, 'world': [-91.68, 92.73, 97.07], 'op': 'OP2'}`
+- `{'type': 'DESIGN_GOUGE', 'line': 603, 'penetration_mm': -0.505, 'world': [-116.65, 49.09, 97.36], 'op': 'OP2'}`
+- `{'type': 'DESIGN_GOUGE', 'line': 676, 'penetration_mm': -0.804, 'world': [-122.72, 0.7, 97.64], 'op': 'OP2'}`
+- `{'type': 'DESIGN_GOUGE', 'line': 676, 'penetration_mm': -0.058, 'world': [-132.32, 0.75, 96.92], 'op': 'OP2'}`
+- `{'type': 'DESIGN_GOUGE', 'line': 680, 'penetration_mm': -0.48, 'world': [-118.98, -48.49, 97.21], 'op': 'OP2'}`
+- `{'type': 'DESIGN_GOUGE', 'line': 749, 'penetration_mm': -0.786, 'world': [-118.98, -48.49, 97.21], 'op': 'OP2'}`
+- `{'type': 'DESIGN_GOUGE', 'line': 753, 'penetration_mm': -0.299, 'world': [-94.09, -93.03, 96.92], 'op': 'OP2'}`
+- `{'type': 'DESIGN_GOUGE', 'line': 753, 'penetration_mm': -0.931, 'world': [-87.27, -86.28, 97.64], 'op': 'OP2'}`
 
 ## 5. 量产一致性与预警
 
 | 刀具 | Vc | 预计寿命(min) | 已用(min) | 磨损 | 等级 | 每刀件数 |
 |---|---|---|---|---|---|---|
 | T1 | 35.2 | 37.0 | 180.6 | 488.6% | ALARM | 1 |
-| T2 | 29.8 | 35.1 | 112.5 | 320.6% | ALARM | 1 |
+| T2 | 29.8 | 35.1 | 92.9 | 264.9% | ALARM | 1 |
 
 - 撞机风险：**MEDIUM**（最小间隙 1.45 mm）
 - SPC：PASS，Cpk=1.8，超差 0 件（basis=simulated）
-- 批量：50 件，单件 234.7 min，预计 203.12 h，每刀 1 件
+- 批量：50 件，单件 215.2 min，预计 186.84 h，每刀 1 件
 - 换产：14.5 min（目标 ≤15.0 min）→ PASS
 - 预警：4 条
 
 | 类型 | 等级 | 工序 | 数值 |
 |---|---|---|---|
 | TOOL_WEAR | ALARM |  | 488.6 |
-| TOOL_WEAR | ALARM |  | 320.6 |
+| TOOL_WEAR | ALARM |  | 264.9 |
 | CYCLE_TARGET |  | OP1 |  |
 | CYCLE_TARGET |  | OP3 |  |
 

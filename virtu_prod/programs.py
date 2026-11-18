@@ -146,25 +146,34 @@ def _passage_blocks(p: Process, op: dict) -> List[Block]:
     blocks: List[Block] = []
     for ch in range(geo.Z_BLADES):
         base = ch * pitch
-        ex, ey, ez, ec = pts[0]
-        ang = math.radians(ec + base)
-        c_entry = (ec + base) % 360.0
-        blocks.append(Block("rapid", x=entry_r * math.cos(ang), y=entry_r * math.sin(ang),
-                            z=rate, b=0.0, c=c_entry,
+        # 第 k 条流道在零件坐标系里是基准流道绕 Z 转 base；
+        # 工作台 C 转 -(基准出口角 + base)，使该流道出口正对主轴（机床角 0）。
+        ex0, ey0, ez0, ec0 = pts[0]
+        th0 = math.radians(ec0 + base)
+        ex, ey = entry_r * math.cos(th0), entry_r * math.sin(th0)
+        c_slot = (-(ec0 + base)) % 360.0
+        ca, sa = math.cos(math.radians(base)), math.sin(math.radians(base))
+
+        def rot(x: float, y: float) -> tuple:
+            return (x * ca - y * sa, x * sa + y * ca)
+
+        blocks.append(Block("rapid", x=ex, y=ey, z=rate, b=0.0, c=c_slot,
                             comment=f"PASSAGE {ch + 1}/{geo.Z_BLADES} 入口定位"))
         blocks.append(Block("feed", z=lateral_z, f=float(op["feed_plunge"])))
         n = len(pts)
-        for i, (x, y, zw, c) in enumerate(pts):
+        for i, (x, y, zw, _c) in enumerate(pts):
             b = b0 + span * math.sin(math.pi * (1.0 - i / max(1, n - 1)))
-            blocks.append(Block("feed", x=x, y=y, z=zw, b=b,
-                                c=(c + base) % 360.0, f=float(op["feed_cut"])))
+            rx, ry = rot(x, y)
+            blocks.append(Block("feed", x=rx, y=ry, z=zw, b=b, c=c_slot,
+                                f=float(op["feed_cut"])))
         for i in range(n - 2, -1, -1):
-            x, y, zw, c = pts[i]
+            x, y, zw, _c = pts[i]
             b = b0 + span * math.sin(math.pi * (1.0 - i / max(1, n - 1)))
-            blocks.append(Block("feed", x=x, y=y, z=zw, b=b,
-                                c=(c + base) % 360.0, f=float(op["feed_return"])))
-        blocks.append(Block("feed", x=entry_r * math.cos(ang), y=entry_r * math.sin(ang),
-                            z=lateral_z, b=0.0, f=float(op["feed_return"])))
+            rx, ry = rot(x, y)
+            blocks.append(Block("feed", x=rx, y=ry, z=zw, b=b, c=c_slot,
+                                f=float(op["feed_return"])))
+        blocks.append(Block("feed", x=ex, y=ey, z=lateral_z, b=0.0, c=c_slot,
+                            f=float(op["feed_return"])))
         blocks.append(Block("rapid", z=rate))
     return blocks
 

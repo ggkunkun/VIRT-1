@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-18 21:50:04",
+  "generated_at": "2026-11-18 22:20:00",
   "part": {
     "id": "AE-CI-258",
     "name": "航空发动机封闭式叶轮",
@@ -516,7 +516,7 @@
       "machine": "prod_5ax_fanuc_0imf",
       "nc_file": "D:\\Virtu模型\\production\\nc\\prod_5ax_fanuc_0imf\\AE-CI-258_OP2.nc",
       "lines": 1199,
-      "sha256": "db525900ff4d0da17fc66e6aabf6d7effa38a6707f1faf1460b64d3d4c699efe",
+      "sha256": "e5d75e7b5913c2c725545211d1f1127be2f9617f7282eb55c8b559e2da9a5bbe",
       "lint": {
         "checks": [
           {
@@ -664,8 +664,8 @@
             "gate": "C-LIMIT",
             "status": "PASS",
             "evidence": {
-              "min": 0.022,
-              "max": 359.675
+              "min": 0.325,
+              "max": 337.825
             },
             "rule": "C 轴硬限位"
           },
@@ -712,11 +712,11 @@
       },
       "cycle": {
         "per_op_s": {
-          "PROGRAM": 3243.2
+          "PROGRAM": 2071.5
         },
         "tool_changes": 1,
-        "total_s": 3251.2,
-        "path_length_mm": 11229.1,
+        "total_s": 2079.5,
+        "path_length_mm": 6574.8,
         "basis": "derived (length/feed + rapid + tool change + optional stop)"
       },
       "restart": {
@@ -1113,7 +1113,7 @@
       "machine": "prod_5ax_siemens_840dsl",
       "nc_file": "D:\\Virtu模型\\production\\nc\\prod_5ax_siemens_840dsl\\AE-CI-258_OP2.nc",
       "lines": 1193,
-      "sha256": "7806d05e9ce728ff255f9001fd5ece702084c5c7ad9a2ecfb7be407067cfc1f1",
+      "sha256": "f464a949a78a2eb9c297924bfafa7ed4f1f41ec497dfaa71f49fd7de3d42a477",
       "lint": {
         "checks": [
           {
@@ -1283,11 +1283,11 @@
       },
       "cycle": {
         "per_op_s": {
-          "PROGRAM": 3243.2
+          "PROGRAM": 2071.5
         },
         "tool_changes": 1,
-        "total_s": 3251.2,
-        "path_length_mm": 11229.1,
+        "total_s": 2079.5,
+        "path_length_mm": 6574.8,
         "basis": "derived (length/feed + rapid + tool change + optional stop)"
       },
       "restart": {
@@ -1684,7 +1684,7 @@
       "machine": "prod_5ax_hnc8",
       "nc_file": "D:\\Virtu模型\\production\\nc\\prod_5ax_hnc8\\AE-CI-258_OP2.nc",
       "lines": 1199,
-      "sha256": "8767b09e5ab06e26de86f663674617cb1383e54f9c3d1b2a55eefb7d50b02c92",
+      "sha256": "b17da082fac3b5dc9bb9725265f7c0b20c4ffd60c9bacf65b0a48a05be103bfc",
       "lint": {
         "checks": [
           {
@@ -1832,8 +1832,8 @@
             "gate": "C-LIMIT",
             "status": "PASS",
             "evidence": {
-              "min": 0.022,
-              "max": 359.675
+              "min": 0.325,
+              "max": 337.825
             },
             "rule": "C 轴硬限位"
           },
@@ -1880,11 +1880,11 @@
       },
       "cycle": {
         "per_op_s": {
-          "PROGRAM": 3243.2
+          "PROGRAM": 2071.5
         },
         "tool_changes": 1,
-        "total_s": 3251.2,
-        "path_length_mm": 11229.1,
+        "total_s": 2079.5,
+        "path_length_mm": 6574.8,
         "basis": "derived (length/feed + rapid + tool change + optional stop)"
       },
       "restart": {
@@ -2174,7 +2174,7 @@
     },
     {
       "op": "OP2",
-      "samples": 7782,
+      "samples": 5456,
       "checks": [
         {
           "gate": "MACHINE-TRAVEL",
@@ -2224,21 +2224,21 @@
         {
           "gate": "DESIGN-GOUGE",
           "status": "FAIL",
-          "evidence": -22.626,
+          "evidence": -0.48,
           "where": {
-            "line": 607,
+            "line": 23,
             "op": "PROGRAM",
             "world": [
-              67.1,
-              -0.38,
-              97.61
+              122.72,
+              -0.7,
+              97.64
             ]
           }
         },
         {
           "gate": "DESIGN-SURFACE",
           "status": "FAIL",
-          "evidence": -23.514
+          "evidence": -0.931
         },
         {
           "gate": "HOLDER-STOCK",
@@ -2249,8 +2249,8 @@
       ],
       "min_clearance": {
         "fixture": 1.45,
-        "design": -22.626,
-        "design_surface": -23.514,
+        "design": -0.48,
+        "design_surface": -0.931,
         "stock_holder": 27.032
       }
     },
@@ -2341,7 +2341,7 @@
     {
       "type": "DESIGN_GOUGE",
       "line": 23,
-      "penetration_mm": -0.325,
+      "penetration_mm": -0.299,
       "world": [
         132.32,
         -0.75,
@@ -2352,7 +2352,7 @@
     {
       "type": "DESIGN_GOUGE",
       "line": 23,
-      "penetration_mm": -0.95,
+      "penetration_mm": -0.931,
       "world": [
         122.72,
         -0.7,
@@ -2374,187 +2374,187 @@
     {
       "type": "DESIGN_GOUGE",
       "line": 96,
-      "penetration_mm": -0.332,
-      "world": [
-        126.95,
-        39.46,
-        96.74
-      ],
-      "op": "OP2"
-    },
-    {
-      "type": "DESIGN_GOUGE",
-      "line": 96,
       "penetration_mm": -0.082,
       "world": [
-        125.03,
-        29.91,
-        97.03
-      ],
-      "op": "OP2"
-    },
-    {
-      "type": "DESIGN_GOUGE",
-      "line": 96,
-      "penetration_mm": -1.084,
-      "world": [
-        123.11,
-        20.35,
-        97.31
-      ],
-      "op": "OP2"
-    },
-    {
-      "type": "DESIGN_GOUGE",
-      "line": 96,
-      "penetration_mm": -0.843,
-      "world": [
-        121.18,
-        10.79,
-        97.59
-      ],
-      "op": "OP2"
-    },
-    {
-      "type": "DESIGN_GOUGE",
-      "line": 165,
-      "penetration_mm": -0.065,
-      "world": [
-        122.34,
-        16.53,
-        97.42
-      ],
-      "op": "OP2"
-    },
-    {
-      "type": "DESIGN_GOUGE",
-      "line": 165,
-      "penetration_mm": -0.652,
-      "world": [
-        124.26,
-        26.08,
-        97.14
-      ],
-      "op": "OP2"
-    },
-    {
-      "type": "DESIGN_GOUGE",
-      "line": 165,
-      "penetration_mm": -0.549,
-      "world": [
-        126.18,
-        35.64,
-        96.86
-      ],
-      "op": "OP2"
-    },
-    {
-      "type": "DESIGN_GOUGE",
-      "line": 169,
-      "penetration_mm": -0.651,
-      "world": [
-        103.72,
-        77.06,
-        96.69
-      ],
-      "op": "OP2"
-    },
-    {
-      "type": "DESIGN_GOUGE",
-      "line": 169,
-      "penetration_mm": -0.148,
-      "world": [
-        105.62,
-        67.34,
-        96.85
-      ],
-      "op": "OP2"
-    },
-    {
-      "type": "DESIGN_GOUGE",
-      "line": 169,
-      "penetration_mm": -0.087,
-      "world": [
-        107.51,
-        57.62,
-        97.0
-      ],
-      "op": "OP2"
-    },
-    {
-      "type": "DESIGN_GOUGE",
-      "line": 169,
-      "penetration_mm": -1.029,
-      "world": [
-        115.09,
-        18.76,
-        97.62
+        117.2,
+        47.77,
+        97.36
       ],
       "op": "OP2"
     },
     {
       "type": "DESIGN_GOUGE",
       "line": 238,
-      "penetration_mm": -0.73,
+      "penetration_mm": -0.771,
       "world": [
-        115.09,
-        18.76,
-        97.62
+        90.0,
+        88.98,
+        97.36
       ],
       "op": "OP2"
     },
     {
       "type": "DESIGN_GOUGE",
-      "line": 238,
-      "penetration_mm": -0.148,
+      "line": 311,
+      "penetration_mm": -0.821,
       "world": [
-        105.62,
-        67.34,
-        96.85
+        47.6,
+        113.11,
+        97.64
       ],
       "op": "OP2"
     },
     {
       "type": "DESIGN_GOUGE",
-      "line": 238,
-      "penetration_mm": -0.161,
+      "line": 315,
+      "penetration_mm": -0.48,
       "world": [
-        103.72,
-        77.06,
-        96.69
+        0.73,
+        128.48,
+        97.21
       ],
       "op": "OP2"
     },
     {
       "type": "DESIGN_GOUGE",
-      "line": 242,
-      "penetration_mm": -0.085,
+      "line": 384,
+      "penetration_mm": -0.48,
       "world": [
-        62.27,
-        113.05,
-        96.54
+        0.73,
+        128.48,
+        97.21
       ],
       "op": "OP2"
     },
     {
       "type": "DESIGN_GOUGE",
-      "line": 242,
-      "penetration_mm": -0.452,
+      "line": 388,
+      "penetration_mm": -0.299,
       "world": [
-        66.69,
-        104.16,
-        96.65
+        -49.94,
+        122.53,
+        96.92
       ],
       "op": "OP2"
     },
     {
       "type": "DESIGN_GOUGE",
-      "line": 242,
-      "penetration_mm": -0.943,
+      "line": 388,
+      "penetration_mm": -0.931,
       "world": [
-        71.11,
-        95.28,
-        96.76
+        -46.32,
+        113.64,
+        97.64
+      ],
+      "op": "OP2"
+    },
+    {
+      "type": "DESIGN_GOUGE",
+      "line": 457,
+      "penetration_mm": -0.886,
+      "world": [
+        -47.04,
+        115.42,
+        97.5
+      ],
+      "op": "OP2"
+    },
+    {
+      "type": "DESIGN_GOUGE",
+      "line": 461,
+      "penetration_mm": -0.082,
+      "world": [
+        -88.98,
+        90.0,
+        97.36
+      ],
+      "op": "OP2"
+    },
+    {
+      "type": "DESIGN_GOUGE",
+      "line": 530,
+      "penetration_mm": -0.059,
+      "world": [
+        -91.68,
+        92.73,
+        97.07
+      ],
+      "op": "OP2"
+    },
+    {
+      "type": "DESIGN_GOUGE",
+      "line": 603,
+      "penetration_mm": -0.505,
+      "world": [
+        -116.65,
+        49.09,
+        97.36
+      ],
+      "op": "OP2"
+    },
+    {
+      "type": "DESIGN_GOUGE",
+      "line": 676,
+      "penetration_mm": -0.804,
+      "world": [
+        -122.72,
+        0.7,
+        97.64
+      ],
+      "op": "OP2"
+    },
+    {
+      "type": "DESIGN_GOUGE",
+      "line": 676,
+      "penetration_mm": -0.058,
+      "world": [
+        -132.32,
+        0.75,
+        96.92
+      ],
+      "op": "OP2"
+    },
+    {
+      "type": "DESIGN_GOUGE",
+      "line": 680,
+      "penetration_mm": -0.48,
+      "world": [
+        -118.98,
+        -48.49,
+        97.21
+      ],
+      "op": "OP2"
+    },
+    {
+      "type": "DESIGN_GOUGE",
+      "line": 749,
+      "penetration_mm": -0.786,
+      "world": [
+        -118.98,
+        -48.49,
+        97.21
+      ],
+      "op": "OP2"
+    },
+    {
+      "type": "DESIGN_GOUGE",
+      "line": 753,
+      "penetration_mm": -0.299,
+      "world": [
+        -94.09,
+        -93.03,
+        96.92
+      ],
+      "op": "OP2"
+    },
+    {
+      "type": "DESIGN_GOUGE",
+      "line": 753,
+      "penetration_mm": -0.931,
+      "world": [
+        -87.27,
+        -86.28,
+        97.64
       ],
       "op": "OP2"
     }
@@ -2574,8 +2574,8 @@
       "tool": "T2",
       "vc_m_min": 29.8,
       "expected_life_min": 35.1,
-      "used_min": 112.5,
-      "wear_pct": 320.6,
+      "used_min": 92.9,
+      "wear_pct": 264.9,
       "level": "ALARM",
       "parts_per_tool": 1,
       "basis": "derived (Taylor VT^n=C + measured cycle time)"
@@ -2631,12 +2631,12 @@
   },
   "batch": {
     "batch_size": 50,
-    "cycle_per_part_min": 234.7,
+    "cycle_per_part_min": 215.2,
     "parts_per_tool_change": 1,
     "tool_changes": 50,
-    "machining_h": 195.62,
+    "machining_h": 179.34,
     "tool_change_h": 7.5,
-    "total_h": 203.12,
+    "total_h": 186.84,
     "consistency": "同程序哈希 + 同刀补/零点 + 首件与每 N 件抽检（Cpk≥1.33）",
     "basis": "derived (cycle + Taylor wear)"
   },
@@ -2663,7 +2663,7 @@
         "planned_min": 1.5
       }
     ],
-    "software_reconfig_s": 0.04,
+    "software_reconfig_s": 0.03,
     "on_site_planned_min": 14.5,
     "total_min": 14.5,
     "target_min": 15.0,
@@ -2682,7 +2682,7 @@
         "type": "TOOL_WEAR",
         "tool": "T2",
         "level": "ALARM",
-        "wear_pct": 320.6
+        "wear_pct": 264.9
       },
       {
         "type": "CYCLE_TARGET",
@@ -2794,7 +2794,7 @@
       },
       "prod_5ax_fanuc_0imf/OP2": {
         "file": "D:\\Virtu模型\\production\\nc\\prod_5ax_fanuc_0imf\\AE-CI-258_OP2.nc",
-        "sha256": "db525900ff4d0da17fc66e6aabf6d7effa38a6707f1faf1460b64d3d4c699efe",
+        "sha256": "e5d75e7b5913c2c725545211d1f1127be2f9617f7282eb55c8b559e2da9a5bbe",
         "restart": {
           "OP2": 40
         }
@@ -2816,7 +2816,7 @@
       },
       "prod_5ax_siemens_840dsl/OP2": {
         "file": "D:\\Virtu模型\\production\\nc\\prod_5ax_siemens_840dsl\\AE-CI-258_OP2.nc",
-        "sha256": "7806d05e9ce728ff255f9001fd5ece702084c5c7ad9a2ecfb7be407067cfc1f1",
+        "sha256": "f464a949a78a2eb9c297924bfafa7ed4f1f41ec497dfaa71f49fd7de3d42a477",
         "restart": {
           "OP2": 30
         }
@@ -2838,7 +2838,7 @@
       },
       "prod_5ax_hnc8/OP2": {
         "file": "D:\\Virtu模型\\production\\nc\\prod_5ax_hnc8\\AE-CI-258_OP2.nc",
-        "sha256": "8767b09e5ab06e26de86f663674617cb1383e54f9c3d1b2a55eefb7d50b02c92",
+        "sha256": "b17da082fac3b5dc9bb9725265f7c0b20c4ffd60c9bacf65b0a48a05be103bfc",
         "restart": {
           "OP2": 40
         }
@@ -2854,5 +2854,5 @@
     },
     "hashes": {}
   },
-  "elapsed_s": 49.8
+  "elapsed_s": 40.3
 }
