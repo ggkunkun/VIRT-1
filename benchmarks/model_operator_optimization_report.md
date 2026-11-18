@@ -1,14 +1,14 @@
 # Virtu 模型算子优化与核验报告（可归因版）
 
-- **run_id（内容指纹）**: `f527ad8d74cdd866`
-- **硬件 / 引擎**: `NVIDIA GeForce RTX 4050 Laptop GPU` / PyTorch `2.6.0+cu124`（CUDA=True, SDPA 接口可用=True）
+- **run_id（内容指纹）**: `1a4171a791e7668b`
+- **硬件 / 引擎**: `CPU` / PyTorch `2.15.0+cpu`（CUDA=False, SDPA 接口可用=True）
 - **口径**: 所有耗时与显存数字 `basis=measured`，来自本机实际计时；计时样本总量 `n=36`；证据文件 `benchmarks\model_operator_optimization_report.json`
 - **瓶颈诊断**: 以下为静态源码审查结论（`basis=inferred`），**非实测**
 
 ## 0. 归因与漂移
 
 被测字节（sha256 前缀）:
-  - `virtu_eval/provenance.py` = `33a9617523b72718`
+  - `virtu_eval/provenance.py` = `bd3336778a4e9cc3`
   - `virtu_omni/config.py` = `c986bbe3d6900ad3`
   - `virtu_omni/models/architecture.py` = `59d8070d554f62c7`
   - `virtu_omni/models/operator_optimizer.py` = `4b9308168dd9d6f5`
@@ -27,14 +27,14 @@
 
 | 算子 | seq | 基线 ms | 优化 ms | 加速比 | 显存降幅 | max_abs_diff | 闸门 | n |
 | :--- | ---: | ---: | ---: | ---: | ---: | ---: | :---: | ---: |
-| `VirtuAttention (fused QKV + SDPA)` | 64 | 2.257 | 1.602 | 1.41x | +6.2% | `1.40e-04` | PASS | 9 |
-| `UniRoPE (1D cached)` | 64 | 1.922 | 1.826 | 1.05x | +43.0% | `2.38e-07` | PASS | 9 |
-| `VirtuSwiGLU (fused gate/up GEMM)` | 64 | 2.373 | 2.012 | 1.18x | -22.2% | `3.42e-05` | PASS | 9 |
-| `VirtuRMSNorm (fused kernel)` | 64 | 0.456 | 0.395 | 1.16x | +25.0% | `4.77e-07` | PASS | 9 |
+| `VirtuAttention (fused QKV + SDPA)` | 64 | 7.406 | 7.133 | 1.04x | 未测 | `1.38e-07` | PASS | 9 |
+| `UniRoPE (1D cached)` | 64 | 0.414 | 0.311 | 1.33x | 未测 | `0.00e+00` | PASS | 9 |
+| `VirtuSwiGLU (fused gate/up GEMM)` | 64 | 15.595 | 16.377 | 0.95x | 未测 | `0.00e+00` | PASS | 9 |
+| `VirtuRMSNorm (fused kernel)` | 64 | 0.116 | 0.122 | 0.94x | 未测 | `0.00e+00` | PASS | 9 |
 
-- **四算子微基准合计耗时比（非整模型端到端）**: **1.20x**
-- **峰值显存降幅**: **5.4%** — 各算子独立隔离测得的峰值显存之和的降幅（非整模型峰值显存）
+- **四算子微基准合计耗时比（非整模型端到端）**: **0.98x**
+- **峰值显存降幅**: **0.0%** — 未测（CPU 环境无 CUDA 显存计数）
 - **数值等价性核验**: `[PASS] 全部等价性闸门通过`
-- **退化算子（speedup < 1.00x，不做平均掩盖）**: 无
+- **退化算子（speedup < 1.00x，不做平均掩盖）**: `VirtuSwiGLU (fused gate/up GEMM)@64=0.95x`; `VirtuRMSNorm (fused kernel)@64=0.94x`
 
 > 说明：`overall_speedup` = 本表所有配对的 `基线 ms 之和 / 优化 ms 之和`，仅代表这四个微基准，不代表 Ollama/GGUF 部署模型的端到端生成速度。显存列负值表示优化后占用增加，未做截断。

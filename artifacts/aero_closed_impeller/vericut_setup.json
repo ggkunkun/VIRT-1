@@ -21,7 +21,7 @@
   },
   "stock_source": "reused_existing_stock_stl_verified_against_spec",
   "stock_basis": "measured_from_sample_inverse_derivation",
-  "part_type": "我想制造一款外径60mm，内孔22mm，长度80mm，材质为AL7075-T6的高强连杆衬套",
+  "part_type": "铝合金闭式叶轮",
   "stock_hint": "",
   "inferred_is_revolution": true,
   "inverse_sample_evidence": {
@@ -61,7 +61,7 @@
       74.85
     ],
     "semantic_is_revolution": true,
-    "inference_reason": "bbox_radial_symmetry",
+    "inference_reason": "rotational_impeller_bar_stock",
     "basis": "measured_from_sample",
     "sample_stock_mesh": "E:\\samples\\Support_files\\force-impeller_stock.ply",
     "sample_design_mesh": "E:\\samples\\Support_files\\force-impeller_design.ply",

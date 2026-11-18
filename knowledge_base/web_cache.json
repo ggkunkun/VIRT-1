@@ -50,24 +50,16 @@
     ]
   },
   "926e2c092ed664990945089b5c047ac0a3ae212d72118c2b99632e9b92595347": {
-    "timestamp": 1794836838.3167555,
+    "timestamp": 1795018601.2829332,
     "query": "SolidWorks EquationMgr 参数化建模",
     "results": [
       {
-        "title": "GetEquationMgr Method (IModelDoc2) - 2020 - SOLIDWORKS Design Help",
-        "url": "https://help.solidworks.com/2020/English/api/sldworksapi/SOLIDWORKS.Interop.sldworks~SOLIDWORKS.Interop.sldworks.IModelDoc2~GetEquationMgr.html",
-        "snippet": "Use the equation manager to work with the existing equations in a model and modify a specific equation. The IEquationMgr object is associated with the configuration that was active at the time it was acquired. If you change the active configuration while holding an IEquationMgr object reference, release it and reacquire it if it is needed.",
-        "source_engine": "duckduckgo_lite",
+        "title": "工业与制造工程综合知识库: SolidWorks EquationMgr 参数化建模",
+        "url": "local://virtu/engineering_kb",
+        "snippet": "关于 'SolidWorks EquationMgr 参数化建模' 的工业制造标准规范，系统遵循 GB/ISO 国标及力学安全守则（FOS >= 1.5，体积守恒 Delta V != 0）。",
+        "source_engine": "engineering_fallback_kb",
         "relevance_score": 1.0,
-        "timestamp": 1794836838.3167555
-      },
-      {
-        "title": "Solidworks——参数化建模 - Csdn博客",
-        "url": "https://blog.csdn.net/qq_45769063/article/details/106494702",
-        "snippet": "AI驱动SOLIDWORKS：MCP协议实现参数化建模与自动出图 参数化建模通过参数与约束驱动几何形状，是CAD领域提升设计复用性的核心技术。 其原理在于将设计意图转化为可计算的规则，借助API实现自动化特征生成与图纸输出。",
-        "source_engine": "duckduckgo_lite",
-        "relevance_score": 1.0,
-        "timestamp": 1794836838.3167555
+        "timestamp": 1795018601.2829332
       }
     ]
   },
@@ -2392,6 +2384,34 @@
         "source_engine": "engineering_fallback_kb",
         "relevance_score": 1.0,
         "timestamp": 1795013407.7776978
+      }
+    ]
+  },
+  "73202a2e1b5f09e01a117823e1fa7a425b964d7f4a9f033f67dbd1bbef2fddf6": {
+    "timestamp": 1795017362.354325,
+    "query": "故障与知识补齐: 缺少未知切削刀具参数_1795017359038",
+    "results": [
+      {
+        "title": "工业与制造工程综合知识库: 故障与知识补齐: 缺少未知切削刀具参数_1795017359038",
+        "url": "local://virtu/engineering_kb",
+        "snippet": "关于 '故障与知识补齐: 缺少未知切削刀具参数_1795017359038' 的工业制造标准规范，系统遵循 GB/ISO 国标及力学安全守则（FOS >= 1.5，体积守恒 Delta V != 0）。",
+        "source_engine": "engineering_fallback_kb",
+        "relevance_score": 1.0,
+        "timestamp": 1795017362.354325
+      }
+    ]
+  },
+  "7b9f6e51b34532aa4f409c46bce7e145dca34cf0f2f2918d8bcc3aad8bcb415c": {
+    "timestamp": 1795017889.4163027,
+    "query": "故障与知识补齐: 缺少未知切削刀具参数_1795017886594",
+    "results": [
+      {
+        "title": "工业与制造工程综合知识库: 故障与知识补齐: 缺少未知切削刀具参数_1795017886594",
+        "url": "local://virtu/engineering_kb",
+        "snippet": "关于 '故障与知识补齐: 缺少未知切削刀具参数_1795017886594' 的工业制造标准规范，系统遵循 GB/ISO 国标及力学安全守则（FOS >= 1.5，体积守恒 Delta V != 0）。",
+        "source_engine": "engineering_fallback_kb",
+        "relevance_score": 1.0,
+        "timestamp": 1795017889.4163027
       }
     ]
   }
