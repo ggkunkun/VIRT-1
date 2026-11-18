@@ -19,7 +19,7 @@
 | **E3** | `test_cloud_instant_boot_scripts.py` 挂死整仓 pytest（Windows 管道死锁） | ✅ 已修 | 该用例 133s 内跑完，不再拖死进程 |
 | **E6** | 安全审计把「相对遍历」与「绝对路径越界」合并成一条理由串 | ✅ 已修 | `test_security_audit.py` 2 个用例转绿 |
 | **D1b** | D1 修复引入的回归：`ast.get_source_segment` 抽取的方法在合成命名空间 exec 时找不到新模块级依赖 | ✅ 已修 | 绑定层抽成零依赖模块 `virtu_omni/agent/tool_binding.py`，被抽取方法改用函数内 import；`test_product_first_closed_loop.py` + `test_swarm_entry.py` 全绿 |
-| **D4** | OpenAI 兼容桥接层**完全忽略** `reasoning_text` → 思维链整段丢失 | ✅ 已修 | `test_deep_thinking.py` **9/9**（修复前 2 failed） |
+| **D4** | OpenAI 兼容桥接层：**两份测试对同一方法要求相反**（暴露 vs 私有思维链） | ✅ 已裁决 | 权威契约 = **思维链私有**（生产代码注释 + `test_bridge_protocol` + legacy helper 无生产调用点）；最终形态「默认私有 + 显式 opt-in」，`test_deep_thinking` + `test_bridge_protocol` 合计 **23 passed + 12 subtests** |
 | **E5** | Auto-Diff 判分器：语义互换被误报成语义缺失；正语义不做否定识别 → 假绿 | ✅ 已修 | `tests/test_probe_grader_fixes_20261116.py` 24→28 条全绿 |
 
 > **连带影响（必须知悉）**：E5 改动了判分器 ⇒ `cloud_train_pack/deploy_trained_adapter.py`
@@ -204,22 +204,53 @@ Ollama 有 17 个模型但只有 `virtu-ties-v1:q3_k_s`，没有 `virtu-ties-v1:
 
 ---
 
-## 十、D4｜OpenAI 兼容桥接层丢失思维链
+## 十、D4｜思维链与结论分离：契约裁决（**不是"补上 reasoning_content"**）
 
-### 根因
-`scripts/workbuddy_virtu_bridge.py` 的 `_handle_json_response(text, reasoning_text=...)` 与
-`_handle_streaming_response(text, reasoning_text=...)` **完全忽略 `reasoning_text` 参数**
-⇒ 模型产出被要求过「思维链与结论分离」的推理模型，其思维链在桥接层整段丢失：
-JSON 响应里没有 `reasoning_content`，SSE 里也不先推 reasoning。
+### 原始症状
+`tests/test_deep_thinking.py` 的两条用例（JSON 响应含 `reasoning_content`、SSE 先推 reasoning 再推
+content）在本次修复前一直是红的。
 
-### 修复
-- JSON：非空 `reasoning_text` 写入 `message["reasoning_content"]`
-- SSE：先推一个 `delta={"reasoning_content": …}` 分片，再推 content 分片（DeepSeek/Qwen 的 OpenAI 兼容约定）
+### 第一次尝试（已回退）
+我最初按"测试即规格"的读法，直接让 `_handle_json_response` / `_handle_streaming_response`
+输出 `reasoning_content` ⇒ **`tests/test_bridge_protocol.py` 的两条断言当场变红**：
+- `test_chat_passes_request_parameters_and_does_not_fabricate_usage`
+  ⇒ 响应体里出现了 `private_nonstream_reasoning`
+- `test_legacy_streaming_helper_does_not_serialize_reasoning`
+  ⇒ legacy SSE 里出现了 `reasoning_content`
+
+### 契约裁决（证据链）
+两份测试文件对**同一个方法**要求相反，说明仓库里存在**未裁决的矛盾**。裁决依据：
+
+1. **生产代码注释**（`scripts/workbuddy_virtu_bridge.py::_handle_live_streaming_response`）：
+   ```python
+   if itype == "thinking":
+       # Private model reasoning is never included in client output.
+       continue
+   ```
+2. `tests/test_bridge_protocol.py` 的断言对象就叫 `private_nonstream_reasoning` /
+   `private_legacy_reasoning` —— 思维链被定义为**私有**。
+3. `_handle_streaming_response` 在**生产代码里没有任何调用点**（只有测试引用），
+   而真正的 SSE 路径是 `_handle_live_streaming_response`（它**故意丢弃** thinking）。
+   ⇒ `test_deep_thinking` 那两条测的是一个**已弃用的 legacy helper**。
+
+**结论：权威契约 = 思维链私有，不得出现在客户端输出里。** 我最初的改法违反了它，已回退。
+
+### 最终形态（工作树中的实现）
+四个契约同时成立，互不打架：
+| 路径 | 行为 |
+| :--- | :--- |
+| 正常 chat（非流式） | **不转发** `backend.last_thought` ⇒ 私有思维留在服务端 |
+| `_handle_json_response(text, reasoning_text=…)` | 调用方**显式传入**时才序列化 `reasoning_content`（调试/显式展示场景） |
+| `_handle_streaming_response(…, expose_reasoning=False)` | **默认私有**，需显式 `expose_reasoning=True` 才输出 |
+| `_handle_live_streaming_response`（生产 SSE） | 始终丢弃 thinking |
 
 ### 证据
-`tests/test_deep_thinking.py` 修复前 2 failed → **9 passed**。
-旁证：修复后后端日志出现 `[virtu_backend] Auto-discovered local Ollama model: virtu-ties-v1:latest`
-（E2 的别名修复让桥接层真的能用上本机模型）。
+`tests/test_deep_thinking.py` + `tests/test_bridge_protocol.py` 合计
+**23 passed + 12 subtests passed**（四条契约同时成立）。
+
+> **教训（已进 AGENTS.md §4.6 之外的规矩）**：看到"测试红了"先问**测试是不是过期**，
+> 再问**产品契约为何**。本例中真正的缺陷不在产品，而在两份测试文件各自冻结了不同时代的契约；
+> 只满足其中一份，就必然打翻另一份。裁决要落到**生产代码的行为与注释**上，而不是落到某一份测试的断言上。
 
 ---
 

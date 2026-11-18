@@ -220,18 +220,26 @@ python scripts/desktop_panic.py --clear    # 确认安全后解除急停
 真实 inputSchema，契约破损 9/10→0/10，`tests/test_facet_call_contract.py` 19/19）；D1 修复自身引入
 的 AST 抽取回归（D1b，绑定层已抽成零依赖模块 `virtu_omni/agent/tool_binding.py`，被抽取方法改用
 函数内 import）；subprocess 未指定编码致 cp936 解码崩溃（D2）；v3 DPO 负样本语义正确致训练对失效（D3）；
-OpenAI 兼容桥接层**完全忽略** `reasoning_text` 致思维链整段丢失（D4，JSON 补 `reasoning_content`、
-SSE 先推 reasoning）；NX 12.0 介质被清理致预检只 5/6（E1，已改动态发现并实测 NxOpen journal 端到端
-跑通，现 6/6）；缺 `virtu-ties-v1:latest`（E2）；一个用例挂死整仓 pytest（E3）；Auto-Diff 判分器把
-语义互换误报成语义缺失、且正语义不做否定识别造成假绿（E5，判分器哈希变更 ⇒ 旧 receipt 全部成
-「旧法判决」，需重出）；安全审计两类越界共用一条理由串（E6）。
+桥接层思维链契约矛盾（D4，见下）；NX 12.0 介质被清理致预检只 5/6（E1，已改动态发现并实测 NxOpen
+journal 端到端跑通，现 6/6）；缺 `virtu-ties-v1:latest`（E2）；一个用例挂死整仓 pytest（E3）；
+Auto-Diff 判分器把语义互换误报成语义缺失、且正语义不做否定识别造成假绿（E5，判分器哈希变更 ⇒
+旧 receipt 全部成「旧法判决」，需重出）；安全审计两类越界共用一条理由串（E6）。
+
+**D4 的契约裁决（重要，勿再改反）**：`test_deep_thinking.py` 与 `test_bridge_protocol.py`
+曾对同一个桥接方法要求相反（暴露 `reasoning_content` vs 私有）。权威契约 = **思维链私有、
+不得出现在客户端输出**（生产代码注释「Private model reasoning is never included in client
+output.」+ `_handle_streaming_response` 无生产调用点）。最终形态：正常 chat 路径**不转发**
+`backend.last_thought`；`_handle_json_response` 仅在调用方显式传入时序列化；legacy SSE 助手
+默认私有、需 `expose_reasoning=True` 显式 opt-in。
 
 **新增规矩（2026-11-16）**：① 多参 facet 必须广播真实 inputSchema——`deep_agent` 的
 `tool_brief`/`validate_plan` 直接消费它，不写真实形参规划器只能猜形状；② Windows 上
 `subprocess.run(capture_output=True)` 是管道死锁源——长任务改文件捕获或 `stdout=DEVNULL`，
 否则父进程被 timeout 杀掉会把整仓 pytest 一起拖死（无 summary、无 FAILED 列表）；
 ③ 工业软件路径不要硬编码——用动态发现（注册表/快捷方式/已知容器目录），否则介质一搬家就静默失效；
-④ 会被 `ast.get_source_segment` 抽取后 exec 的方法**不能依赖模块级名字**，依赖一律走函数内 import。
+④ 会被 `ast.get_source_segment` 抽取后 exec 的方法**不能依赖模块级名字**，依赖一律走函数内 import；
+⑤ 测试红了先问**是不是过期**——两份测试冻结了不同时代的契约时，只满足一份必然打翻另一份，
+裁决要落到生产代码的行为与注释上。
 
 ---
 
