@@ -2414,5 +2414,35 @@
         "timestamp": 1795017889.4163027
       }
     ]
+  },
+  "025db2e2db7edb8a83e7cde9e08b3fad95ba8bcfa5b30f328e4e5b48d61987e5": {
+    "timestamp": 1795020033.8658397,
+    "query": "故障与知识补齐: 缺少未知切削刀具参数_1795020031465",
+    "results": [
+      {
+        "title": "数控刀具现场故障排查：从装夹到切削的参数与操作要点",
+        "url": "https://b2bwiki.baidu.com/article/aw_6b4105b53675170fd63b2226b5b74870",
+        "snippet": "对于工厂采购和设备工程师来说，数控刀具的故障往往不是单一原因造成的。实际生产中，刀具崩刃、磨损过快、加工表面粗糙度超标等问题，绝大多数情况下是装夹、切削参数、冷却方式与刀具本身匹配不当共同作用的结果。本文从一线故障排查的视角，梳理从刀具装夹到切削完成的全流程检查 ...",
+        "source_engine": "duckduckgo_lite",
+        "relevance_score": 1.0,
+        "timestamp": 1795020033.8611848
+      },
+      {
+        "title": "齿轮加工刀具效率低？按这几步排查切削故障与参数匹配",
+        "url": "https://b2bwiki.baidu.com/article/aw_9e93f38377fa5ebe1cd3576452b56c2c",
+        "snippet": "齿轮加工刀具效率低？按这几步排查切削故障与参数匹配 刀尖上的农人 · 2026-04-04 14:56:52 刀尖上的农人 咨询 进店 从农机厂转型自己接单，主做山区和丘陵的割草刀 在线咨询 查看店铺 导读：",
+        "source_engine": "duckduckgo_lite",
+        "relevance_score": 1.0,
+        "timestamp": 1795020033.8611848
+      },
+      {
+        "title": "nanfeng2021/cnc-tooling-knowledge: CNC 刀具知识库 - GitHub",
+        "url": "https://github.com/nanfeng2021/cnc-tooling-knowledge",
+        "snippet": "🔍 智能语义搜索 - 自然语言查询刀具信息 🛠️ 多轴加工支持 - 覆盖 2 轴车削、3 轴铣削、5 轴联动加工 🏭 厂商数据集成 - Sandvik、Kennametal、Mitsubishi、OSG、YAMAWA、ZCC 等 ⚙️ 切削参数推荐 - 基于材料和工艺的智能化参数推荐 💬 知识问答 - 集成 LLM 的智能问答系统",
+        "source_engine": "duckduckgo_lite",
+        "relevance_score": 1.0,
+        "timestamp": 1795020033.8658397
+      }
+    ]
   }
 }
