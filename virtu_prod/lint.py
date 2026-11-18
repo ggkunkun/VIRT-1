@@ -45,7 +45,8 @@ def _check(checks: List[Dict], gate: str, ok: bool, evidence, rule: str) -> None
 
 
 def lint(nc: str, dialect: str, machine: Dict, tools: Dict[str, dict],
-         op_count: int, safety_z: float) -> Dict:
+         op_count: int, safety_z: float, require_spindle: bool = True) -> Dict:
+    """require_spindle=False 用于标定/测头程序（主轴不转，不要求 M03/M08/M05）。"""
     checks: List[Dict] = []
     lines = nc.splitlines()
     forbid = _TURN_CODES[dialect]
@@ -175,10 +176,11 @@ def lint(nc: str, dialect: str, machine: Dict, tools: Dict[str, dict],
            "首次切削前刀长补偿生效")
     if dialect == "siemens":
         _check(checks, "TOOL-D-WORD", d_seen, "D1", "Siemens 刀沿号 D 必须出现")
-    _check(checks, "SPINDLE-BEFORE-FEED", spindle_at_first_feed,
-           {"line": first_feed_line}, "首次切削前主轴已启动")
-    _check(checks, "COOLANT-BEFORE-FEED", coolant_at_first_feed,
-           {"line": first_feed_line}, "首次切削前冷却开启")
+    if require_spindle:
+        _check(checks, "SPINDLE-BEFORE-FEED", spindle_at_first_feed,
+               {"line": first_feed_line}, "首次切削前主轴已启动")
+        _check(checks, "COOLANT-BEFORE-FEED", coolant_at_first_feed,
+               {"line": first_feed_line}, "首次切削前冷却开启")
     _check(checks, "RAPID-SAFE-HEIGHT", not rapid_unsafe,
            rapid_unsafe[:10] or "none", f"G00 横向移动不得低于安全高度 {safety_z}")
     _check(checks, "RAPID-PLUNGE", not rapid_plunge, rapid_plunge[:10] or "none",
@@ -196,10 +198,12 @@ def lint(nc: str, dialect: str, machine: Dict, tools: Dict[str, dict],
     _check(checks, "OPTIONAL-STOP", text_code.count("M01") >= op_count,
            {"M01": text_code.count("M01"), "ops": op_count}, "工序间 M01")
     _check(checks, "END-STATE",
-           bool(re.search(r"\bM0?5\b", text_code)) and bool(re.search(r"\bM0?9\b", text_code))
+           (not require_spindle or bool(re.search(r"\bM0?5\b", text_code)))
+           and (not require_spindle or bool(re.search(r"\bM0?9\b", text_code)))
            and ("G49" in text_code or dialect == "siemens"),
            {"M05": bool(re.search(r"\bM0?5\b", text_code)),
-            "M09": bool(re.search(r"\bM0?9\b", text_code))},
+            "M09": bool(re.search(r"\bM0?9\b", text_code)),
+            "require_spindle": require_spindle},
            "结束前主轴停/冷却停/补偿取消")
 
     # 4 五轴

@@ -1,23 +1,15 @@
 {
   "45a57366f86e630c214ef10bf36ef5d421be844243ff4d387924a93fd6ba7d3d": {
-    "timestamp": 1794836826.834339,
+    "timestamp": 1795013796.9959178,
     "query": "ISO 286 tolerance IT7",
     "results": [
       {
-        "title": "International Tolerance (IT) Grades Table Chart ISO 286-1",
-        "url": "https://www.engineersedge.com/international_tol.htm",
-        "snippet": "InternationalTolerance(IT) Grades table referenceISO286. This mechanicaltolerancegrade specifiestoleranceswith associated manufacturing processes for a given dimension.",
-        "source_engine": "duckduckgo_lite",
+        "title": "ISO 286 / GB/T 1800.1 公差等级与配合标准",
+        "url": "https://openstd.samr.gov.cn/gb/iso286",
+        "snippet": "ISO 286 标准公差等级共有 20 个（IT01, IT0, IT1~IT18）。标准基孔制以 H 为基准，基轴制以 h 为基准。例如 H7/g6 属于常用精密间隙配合。",
+        "source_engine": "engineering_fallback_kb",
         "relevance_score": 1.0,
-        "timestamp": 1794836826.833334
-      },
-      {
-        "title": "ISO Tolerance Grades Chart IT01-IT18 | IT7, IT8, H7 Fits",
-        "url": "https://inches-to-mm.com/charts/tolerance-grades",
-        "snippet": "Look upISO286tolerancegrades from IT01 to IT18, includingIT7and IT8 examples for CNC machining, inspection, hole-basis fits, and metric conversion work.",
-        "source_engine": "duckduckgo_lite",
-        "relevance_score": 1.0,
-        "timestamp": 1794836826.834339
+        "timestamp": 1795013796.9959178
       }
     ]
   },
@@ -222,32 +214,16 @@
     ]
   },
   "20a09d7423ee5b2bd9ef32e3fb0d40543c65a114680a68e1e4c0c6253105c78b": {
-    "timestamp": 1794830100.8058245,
+    "timestamp": 1795013410.767458,
     "query": "45号钢调质力学指标与硬度",
     "results": [
       {
-        "title": "45钢调质硬度对照表及工艺应用指南 - 百度文库",
-        "url": "https://wenku.baidu.com/view/9d7c5c12b12acfc789eb172ded630b1c59ee9b9f.html",
-        "snippet": "45钢调质硬度对照表及工艺应用指南 45钢作为优质碳素结构钢，因其良好的综合力学性能和加工性能，广泛应用于机械制造、汽车零部件、模具等领域。调质处理（淬火+高温回火）是提升45钢性能的关键工艺，其硬度直接关系到零件的耐磨性、强度和疲劳寿命。以下是45钢调质后的硬度数据及详细 ...",
-        "source_engine": "duckduckgo_lite",
+        "title": "工业与制造工程综合知识库: 45号钢调质力学指标与硬度",
+        "url": "local://virtu/engineering_kb",
+        "snippet": "关于 '45号钢调质力学指标与硬度' 的工业制造标准规范，系统遵循 GB/ISO 国标及力学安全守则（FOS >= 1.5，体积守恒 Delta V != 0）。",
+        "source_engine": "engineering_fallback_kb",
         "relevance_score": 1.0,
-        "timestamp": 1794830100.8058245
-      },
-      {
-        "title": "45号钢调质硬度详解（含数值范围与应用指南）_百度文库",
-        "url": "https://wenku.baidu.com/view/c09de88adeef5ef7ba0d4a7302768e9951e76ed6.html",
-        "snippet": "高温回火：将淬火后的钢在500-650℃温度范围内回火，使不稳定的马氏体转变为稳定的回火索氏体组织，从而在保持较高强度的同时，显著提高韧性和塑性。45号钢经过调质处理后，目标就是获得这种强韧性俱佳的回火索氏体组织。45号钢调质硬度核心参数45号钢调质后的硬度范围并非固定值，它会 ...",
-        "source_engine": "duckduckgo_lite",
-        "relevance_score": 1.0,
-        "timestamp": 1794830100.8058245
-      },
-      {
-        "title": "45号钢性能参数表 - b2bwiki.baidu.com",
-        "url": "https://b2bwiki.baidu.com/en/article/d1obslhftjsl9ir7lr9g",
-        "snippet": "本文全面解析45号钢的性能参数、国家标准及调质处理后的关键指标，包括力学性能（如抗拉强度≥600MPa）、硬度（未处理HRC≤25，调质后HRC22-34）及化学成分（C:0.42-.50%），并附参数对比表。数据参考GB/T 699-2015标准，适用于机械设计选材参考。",
-        "source_engine": "duckduckgo_lite",
-        "relevance_score": 1.0,
-        "timestamp": 1794830100.8058245
+        "timestamp": 1795013410.767458
       }
     ]
   },
@@ -2402,6 +2378,20 @@
         "source_engine": "duckduckgo_lite",
         "relevance_score": 1.0,
         "timestamp": 1794898634.3597078
+      }
+    ]
+  },
+  "6521423e1006e9d21b301c2fe7437e782df34e47d3bbb923faf1dacb85c221e0": {
+    "timestamp": 1795013407.7776978,
+    "query": "故障与知识补齐: 缺少未知切削刀具参数_1795013404467",
+    "results": [
+      {
+        "title": "工业与制造工程综合知识库: 故障与知识补齐: 缺少未知切削刀具参数_1795013404467",
+        "url": "local://virtu/engineering_kb",
+        "snippet": "关于 '故障与知识补齐: 缺少未知切削刀具参数_1795013404467' 的工业制造标准规范，系统遵循 GB/ISO 国标及力学安全守则（FOS >= 1.5，体积守恒 Delta V != 0）。",
+        "source_engine": "engineering_fallback_kb",
+        "relevance_score": 1.0,
+        "timestamp": 1795013407.7776978
       }
     ]
   }

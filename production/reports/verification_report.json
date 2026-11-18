@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-18 22:46:04",
+  "generated_at": "2026-11-18 22:51:26",
   "part": {
     "id": "AE-CI-258",
     "name": "航空发动机封闭式叶轮",
@@ -452,7 +452,8 @@
             "status": "PASS",
             "evidence": {
               "M05": true,
-              "M09": true
+              "M09": true,
+              "require_spindle": true
             },
             "rule": "结束前主轴停/冷却停/补偿取消"
           },
@@ -642,7 +643,8 @@
             "status": "PASS",
             "evidence": {
               "M05": true,
-              "M09": true
+              "M09": true,
+              "require_spindle": true
             },
             "rule": "结束前主轴停/冷却停/补偿取消"
           },
@@ -867,7 +869,8 @@
             "status": "PASS",
             "evidence": {
               "M05": true,
-              "M09": true
+              "M09": true,
+              "require_spindle": true
             },
             "rule": "结束前主轴停/冷却停/补偿取消"
           },
@@ -1058,7 +1061,8 @@
             "status": "PASS",
             "evidence": {
               "M05": true,
-              "M09": true
+              "M09": true,
+              "require_spindle": true
             },
             "rule": "结束前主轴停/冷却停/补偿取消"
           },
@@ -1125,7 +1129,7 @@
       "machine": "prod_5ax_siemens_840dsl",
       "nc_file": "D:\\Virtu模型\\production\\nc\\prod_5ax_siemens_840dsl\\AE-CI-258_OP2.nc",
       "lines": 1192,
-      "sha256": "5a48ec38e9c25b1e95a4cba8d00ae32bf9e33a21cc1ec30a552085b8b812e284",
+      "sha256": "8fab6db7c4ddd6e5e3119b959a59045189e0e8709ff4c0f368757294159d6b92",
       "lint": {
         "checks": [
           {
@@ -1248,7 +1252,8 @@
             "status": "PASS",
             "evidence": {
               "M05": true,
-              "M09": true
+              "M09": true,
+              "require_spindle": true
             },
             "rule": "结束前主轴停/冷却停/补偿取消"
           },
@@ -1447,7 +1452,8 @@
             "status": "PASS",
             "evidence": {
               "M05": true,
-              "M09": true
+              "M09": true,
+              "require_spindle": true
             },
             "rule": "结束前主轴停/冷却停/补偿取消"
           },
@@ -1638,7 +1644,8 @@
             "status": "PASS",
             "evidence": {
               "M05": true,
-              "M09": true
+              "M09": true,
+              "require_spindle": true
             },
             "rule": "结束前主轴停/冷却停/补偿取消"
           },
@@ -1828,7 +1835,8 @@
             "status": "PASS",
             "evidence": {
               "M05": true,
-              "M09": true
+              "M09": true,
+              "require_spindle": true
             },
             "rule": "结束前主轴停/冷却停/补偿取消"
           },
@@ -2053,7 +2061,8 @@
             "status": "PASS",
             "evidence": {
               "M05": true,
-              "M09": true
+              "M09": true,
+              "require_spindle": true
             },
             "rule": "结束前主轴停/冷却停/补偿取消"
           },
@@ -2498,7 +2507,7 @@
         "planned_min": 1.5
       }
     ],
-    "software_reconfig_s": 0.08,
+    "software_reconfig_s": 0.06,
     "on_site_planned_min": 14.5,
     "total_min": 14.5,
     "target_min": 15.0,
@@ -2659,7 +2668,7 @@
       },
       "prod_5ax_siemens_840dsl/OP2": {
         "file": "D:\\Virtu模型\\production\\nc\\prod_5ax_siemens_840dsl\\AE-CI-258_OP2.nc",
-        "sha256": "5a48ec38e9c25b1e95a4cba8d00ae32bf9e33a21cc1ec30a552085b8b812e284",
+        "sha256": "8fab6db7c4ddd6e5e3119b959a59045189e0e8709ff4c0f368757294159d6b92",
         "restart": {
           "OP2": 30
         }
@@ -2697,5 +2706,5 @@
     },
     "hashes": {}
   },
-  "elapsed_s": 79.0
+  "elapsed_s": 51.4
 }

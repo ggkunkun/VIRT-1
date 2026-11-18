@@ -1,6 +1,6 @@
 # V0 准备阶段执行记录 — AE-CI-258
 
-- 执行时间：2026-11-18 22:46:41
+- 执行时间：2026-11-18 22:51:33
 - 依据：`production/reports/UNMEASURED_VERIFICATION_PLAN.md`（VP-AE-CI-258-001）
 - 结论：**OPEN（软件侧就绪，待现场签字）**
 - 统计：PASS 22 / PENDING 8 / FAIL 0
@@ -20,7 +20,7 @@
 | B-prod_5ax_fanuc_0imf-OP2 | prod_5ax_fanuc_0imf/OP2 程序包 | PASS | `{"sha256_match": true, "ascii": true, "no_bom": true, "crlf": true, "size": 65442, "lint": "PASS", "program_id": "1002", "restart": {"OP2": 40}}` | 工艺 |  |
 | B-prod_5ax_fanuc_0imf-OP3 | prod_5ax_fanuc_0imf/OP3 程序包 | PASS | `{"sha256_match": true, "ascii": true, "no_bom": true, "crlf": true, "size": 2094, "lint": "PASS", "program_id": "1003", "restart": {"OP3-A": 40, "OP3-B": 420}}` | 工艺 |  |
 | B-prod_5ax_siemens_840dsl-OP1 | prod_5ax_siemens_840dsl/OP1 程序包 | PASS | `{"sha256_match": true, "ascii": true, "no_bom": true, "crlf": true, "size": 5238, "lint": "PASS", "program_id": "AE-CI-258_OP1", "restart": {"OP1": 30}}` | 工艺 |  |
-| B-prod_5ax_siemens_840dsl-OP2 | prod_5ax_siemens_840dsl/OP2 程序包 | PASS | `{"sha256_match": true, "ascii": true, "no_bom": true, "crlf": true, "size": 81373, "lint": "PASS", "program_id": "AE-CI-258_OP2", "restart": {"OP2": 30}}` | 工艺 |  |
+| B-prod_5ax_siemens_840dsl-OP2 | prod_5ax_siemens_840dsl/OP2 程序包 | PASS | `{"sha256_match": true, "ascii": true, "no_bom": true, "crlf": true, "size": 91493, "lint": "PASS", "program_id": "AE-CI-258_OP2", "restart": {"OP2": 30}}` | 工艺 |  |
 | B-prod_5ax_siemens_840dsl-OP3 | prod_5ax_siemens_840dsl/OP3 程序包 | PASS | `{"sha256_match": true, "ascii": true, "no_bom": true, "crlf": true, "size": 2025, "lint": "PASS", "program_id": "AE-CI-258_OP3", "restart": {"OP3-A": 30, "OP3-B": 390}}` | 工艺 |  |
 | B-prod_5ax_hnc8-OP1 | prod_5ax_hnc8/OP1 程序包 | PASS | `{"sha256_match": true, "ascii": true, "no_bom": true, "crlf": true, "size": 4805, "lint": "PASS", "program_id": "1001", "restart": {"OP1": 40}}` | 工艺 |  |
 | B-prod_5ax_hnc8-OP2 | prod_5ax_hnc8/OP2 程序包 | PASS | `{"sha256_match": true, "ascii": true, "no_bom": true, "crlf": true, "size": 65433, "lint": "PASS", "program_id": "1002", "restart": {"OP2": 40}}` | 工艺 |  |
@@ -39,7 +39,7 @@
 | D5 | 安全交底记录 | PENDING | `{"template": "D:\\Virtu模型\\production\\v0\\templates\\safety_briefing.md"}` | 质量/操作 | 现场填写并签字后改 PENDING→PASS |
 | D6 | RTCP 标定记录表（U-06） | PENDING | `{"template": "D:\\Virtu模型\\production\\v0\\templates\\U-06_rtcp_record.csv"}` | 质量/操作 | 现场填写并签字后改 PENDING→PASS |
 | D7 | 空运行记录表（U-10） | PENDING | `{"template": "D:\\Virtu模型\\production\\v0\\templates\\U-10_dryrun_record.csv"}` | 质量/操作 | 现场填写并签字后改 PENDING→PASS |
-| E1 | NC 传输包（ASCII/CRLF/无 BOM/总大小） | PASS | `{"files": 9, "bytes": 233309}` | 工艺 |  |
+| E1 | NC 传输包（ASCII/CRLF/无 BOM/总大小） | PASS | `{"files": 9, "bytes": 243429}` | 工艺 |  |
 | E2 | NC 归档副本与哈希 | PASS | `{"files": 9}` | 工艺 |  |
 
 ## 2. 生成的现场表单

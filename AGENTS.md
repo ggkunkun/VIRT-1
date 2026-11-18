@@ -213,37 +213,7 @@ python scripts/desktop_panic.py --clear    # 确认安全后解除急停
 
 ---
 
-### 4.6 工具链体检与修复（2026-11-16 实测，全量回归可用）
-
-诊断 `reports/toolchain_audit_2026-11-16.md` → 修复与证据 `reports/toolchain_repair_2026-11-16.md`。
-本轮修掉 4 处真实缺陷 + 4 项环境缺口：9 个多参 facet 在 REACT 下不可用（D1，已加签名绑定层与
-真实 inputSchema，契约破损 9/10→0/10，`tests/test_facet_call_contract.py` 19/19）；D1 修复自身引入
-的 AST 抽取回归（D1b，绑定层已抽成零依赖模块 `virtu_omni/agent/tool_binding.py`，被抽取方法改用
-函数内 import）；subprocess 未指定编码致 cp936 解码崩溃（D2）；v3 DPO 负样本语义正确致训练对失效（D3）；
-桥接层思维链契约矛盾（D4，见下）；NX 12.0 介质被清理致预检只 5/6（E1，已改动态发现并实测 NxOpen
-journal 端到端跑通，现 6/6）；缺 `virtu-ties-v1:latest`（E2）；一个用例挂死整仓 pytest（E3）；
-Auto-Diff 判分器把语义互换误报成语义缺失、且正语义不做否定识别造成假绿（E5，判分器哈希变更 ⇒
-旧 receipt 全部成「旧法判决」，需重出）；安全审计两类越界共用一条理由串（E6）。
-
-**D4 的契约裁决（重要，勿再改反）**：`test_deep_thinking.py` 与 `test_bridge_protocol.py`
-曾对同一个桥接方法要求相反（暴露 `reasoning_content` vs 私有）。权威契约 = **思维链私有、
-不得出现在客户端输出**（生产代码注释「Private model reasoning is never included in client
-output.」+ `_handle_streaming_response` 无生产调用点）。最终形态：正常 chat 路径**不转发**
-`backend.last_thought`；`_handle_json_response` 仅在调用方显式传入时序列化；legacy SSE 助手
-默认私有、需 `expose_reasoning=True` 显式 opt-in。
-
-**新增规矩（2026-11-16）**：① 多参 facet 必须广播真实 inputSchema——`deep_agent` 的
-`tool_brief`/`validate_plan` 直接消费它，不写真实形参规划器只能猜形状；② Windows 上
-`subprocess.run(capture_output=True)` 是管道死锁源——长任务改文件捕获或 `stdout=DEVNULL`，
-否则父进程被 timeout 杀掉会把整仓 pytest 一起拖死（无 summary、无 FAILED 列表）；
-③ 工业软件路径不要硬编码——用动态发现（注册表/快捷方式/已知容器目录），否则介质一搬家就静默失效；
-④ 会被 `ast.get_source_segment` 抽取后 exec 的方法**不能依赖模块级名字**，依赖一律走函数内 import；
-⑤ 测试红了先问**是不是过期**——两份测试冻结了不同时代的契约时，只满足一份必然打翻另一份，
-裁决要落到生产代码的行为与注释上。
-
----
-
-## 4.5 能力传授层（Capability Transfer，2026-11-17 落成）
+## 4.6 能力传授层（Capability Transfer，2026-11-17 落成）
 
 仓内 52 个技能几乎全是 CAD/CAM 领域校验（对刀台账、公差链、刀路策略、Auto-Diff 三色门）。
 通用能力层——**检索来源分级、代码改动纪律、数据分析口径、写作交付、工具编排、注入防护、
@@ -287,6 +257,36 @@ output.」+ `_handle_streaming_response` 无生产调用点）。最终形态：
 
 **注入阈值（实测标定，勿随意调）**：`min_score=7.0`。真实任务命中落在 8–50 分，
 噪声（"零件""diff""个报"这类泛词）落在 3–6.5 分。调低会让无关规范被当成硬约束执行。
+
+---
+
+### 4.7 工具链体检与修复（2026-11-16 实测，全量回归可用）
+
+诊断 `reports/toolchain_audit_2026-11-16.md` → 修复与证据 `reports/toolchain_repair_2026-11-16.md`。
+本轮修掉 4 处真实缺陷 + 4 项环境缺口：9 个多参 facet 在 REACT 下不可用（D1，已加签名绑定层与
+真实 inputSchema，契约破损 9/10→0/10，`tests/test_facet_call_contract.py` 19/19）；D1 修复自身引入
+的 AST 抽取回归（D1b，绑定层已抽成零依赖模块 `virtu_omni/agent/tool_binding.py`，被抽取方法改用
+函数内 import）；subprocess 未指定编码致 cp936 解码崩溃（D2）；v3 DPO 负样本语义正确致训练对失效（D3）；
+桥接层思维链契约矛盾（D4，见下）；NX 12.0 介质被清理致预检只 5/6（E1，已改动态发现并实测 NxOpen
+journal 端到端跑通，现 6/6）；缺 `virtu-ties-v1:latest`（E2）；一个用例挂死整仓 pytest（E3）；
+Auto-Diff 判分器把语义互换误报成语义缺失、且正语义不做否定识别造成假绿（E5，判分器哈希变更 ⇒
+旧 receipt 全部成「旧法判决」，需重出）；安全审计两类越界共用一条理由串（E6）。
+
+**D4 的契约裁决（重要，勿再改反）**：`test_deep_thinking.py` 与 `test_bridge_protocol.py`
+曾对同一个桥接方法要求相反（暴露 `reasoning_content` vs 私有）。权威契约 = **思维链私有、
+不得出现在客户端输出**（生产代码注释「Private model reasoning is never included in client
+output.」+ `_handle_streaming_response` 无生产调用点）。最终形态：正常 chat 路径**不转发**
+`backend.last_thought`；`_handle_json_response` 仅在调用方显式传入时序列化；legacy SSE 助手
+默认私有、需 `expose_reasoning=True` 显式 opt-in。
+
+**新增规矩（2026-11-16）**：① 多参 facet 必须广播真实 inputSchema——`deep_agent` 的
+`tool_brief`/`validate_plan` 直接消费它，不写真实形参规划器只能猜形状；② Windows 上
+`subprocess.run(capture_output=True)` 是管道死锁源——长任务改文件捕获或 `stdout=DEVNULL`，
+否则父进程被 timeout 杀掉会把整仓 pytest 一起拖死（无 summary、无 FAILED 列表）；
+③ 工业软件路径不要硬编码——用动态发现（注册表/快捷方式/已知容器目录），否则介质一搬家就静默失效；
+④ 会被 `ast.get_source_segment` 抽取后 exec 的方法**不能依赖模块级名字**，依赖一律走函数内 import；
+⑤ 测试红了先问**是不是过期**——两份测试冻结了不同时代的契约时，只满足一份必然打翻另一份，
+裁决要落到生产代码的行为与注释上。
 
 ---
 

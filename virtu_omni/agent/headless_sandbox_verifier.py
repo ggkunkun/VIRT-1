@@ -248,11 +248,23 @@ class HeadlessSandboxVerifier:
         elif "lisp" in lang or "autocad" in lang or "lsp" in lang:
             return self.verify_autolisp(code)
         else:
-            # Generic fallback
+            # Fail-closed: no registered sandbox means no execution evidence, so a
+            # non-empty unsupported program must never be asserted as a pass.
+            if not code.strip():
+                return {
+                    "sandbox": "Generic-Code-Auditor",
+                    "passed": False,
+                    "errors": ["Code is empty."],
+                    "warnings": [],
+                    "execution_status": "EMPTY_CODE"
+                }
             return {
                 "sandbox": "Generic-Code-Auditor",
-                "passed": len(code.strip()) > 0,
-                "errors": [] if len(code.strip()) > 0 else ["Code is empty."],
+                "passed": False,
+                "errors": [
+                    f"No headless sandbox verifier is registered for language '{language}'. "
+                    "Refusing to assert a pass without execution evidence (fail-closed)."
+                ],
                 "warnings": [],
-                "execution_status": "GENERIC_PASSED" if len(code.strip()) > 0 else "EMPTY_CODE"
+                "execution_status": "UNSUPPORTED_LANGUAGE"
             }

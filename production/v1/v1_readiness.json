@@ -1,0 +1,329 @@
+{
+  "generated_at": "2026-11-18T23:06:06",
+  "gate": "OPEN（软件侧就绪，待现场标定）",
+  "checks": [
+    {
+      "id": "V1-NC-fanuc",
+      "item": "fanuc 标定程序审查",
+      "status": "PASS",
+      "evidence": {
+        "file": "D:\\Virtu模型\\production\\v1\\nc\\RTCP_BALL_TEST_FANUC.nc",
+        "failed": []
+      }
+    },
+    {
+      "id": "V1-NC-hnc",
+      "item": "hnc 标定程序审查",
+      "status": "PASS",
+      "evidence": {
+        "file": "D:\\Virtu模型\\production\\v1\\nc\\RTCP_BALL_TEST_HNC.nc",
+        "failed": []
+      }
+    },
+    {
+      "id": "V1-NC-siemens",
+      "item": "siemens 标定程序审查",
+      "status": "PASS",
+      "evidence": {
+        "file": "D:\\Virtu模型\\production\\v1\\nc\\RTCP_BALL_TEST_SIEMENS.nc",
+        "failed": []
+      }
+    },
+    {
+      "id": "V1-ENVELOPE",
+      "item": "20 姿态球心在机床行程内",
+      "status": "PASS",
+      "evidence": {
+        "x": [
+          -111.6,
+          111.6
+        ],
+        "y": [
+          -100.0,
+          100.0
+        ],
+        "z": [
+          -6.7,
+          93.3
+        ],
+        "travel": {
+          "x": [
+            -365.0,
+            365.0
+          ],
+          "y": [
+            -255.0,
+            255.0
+          ],
+          "z": [
+            -300.0,
+            450.0
+          ]
+        }
+      }
+    },
+    {
+      "id": "V1-ORIENTATION",
+      "item": "Siemens A3/B3/C3 与 B/C 映射一致",
+      "status": "PASS",
+      "evidence": {
+        "mismatch": [],
+        "count": 0,
+        "orientations": 20
+      }
+    },
+    {
+      "id": "V1-U-06",
+      "item": "证据 U-06",
+      "status": "PENDING",
+      "evidence": {
+        "status": "PENDING",
+        "reason": "complete_rows=0/20",
+        "n": 0
+      }
+    },
+    {
+      "id": "V1-U-07",
+      "item": "证据 U-07",
+      "status": "PENDING",
+      "evidence": {
+        "status": "PENDING",
+        "reason": "orientation rows=0/20"
+      }
+    },
+    {
+      "id": "V1-U-08-repeat",
+      "item": "证据 U-08-repeat",
+      "status": "PENDING",
+      "evidence": {
+        "status": "PENDING",
+        "reason": "repeatability: insufficient values"
+      }
+    },
+    {
+      "id": "V1-U-08-thermal",
+      "item": "证据 U-08-thermal",
+      "status": "PENDING",
+      "evidence": {
+        "status": "PENDING",
+        "reason": "thermal: insufficient values"
+      }
+    },
+    {
+      "id": "V1-U-08-backlash",
+      "item": "证据 U-08-backlash",
+      "status": "PENDING",
+      "evidence": {
+        "status": "PENDING",
+        "reason": "insufficient forward/reverse pairs"
+      }
+    }
+  ],
+  "summary": {
+    "pass": 5,
+    "pending": 5,
+    "fail": 0
+  },
+  "sphere_positions": [
+    {
+      "idx": 1,
+      "b": 0.0,
+      "c": 0.0,
+      "machine": [
+        100.0,
+        0.0,
+        50.0
+      ]
+    },
+    {
+      "idx": 2,
+      "b": 0.0,
+      "c": 90.0,
+      "machine": [
+        0.0,
+        100.0,
+        50.0
+      ]
+    },
+    {
+      "idx": 3,
+      "b": 0.0,
+      "c": 180.0,
+      "machine": [
+        -100.0,
+        0.0,
+        50.0
+      ]
+    },
+    {
+      "idx": 4,
+      "b": 0.0,
+      "c": 270.0,
+      "machine": [
+        -0.0,
+        -100.0,
+        50.0
+      ]
+    },
+    {
+      "idx": 5,
+      "b": -15.0,
+      "c": 0.0,
+      "machine": [
+        83.652,
+        0.0,
+        74.178
+      ]
+    },
+    {
+      "idx": 6,
+      "b": -15.0,
+      "c": 90.0,
+      "machine": [
+        -12.941,
+        100.0,
+        48.296
+      ]
+    },
+    {
+      "idx": 7,
+      "b": -15.0,
+      "c": 180.0,
+      "machine": [
+        -109.534,
+        0.0,
+        22.414
+      ]
+    },
+    {
+      "idx": 8,
+      "b": -15.0,
+      "c": 270.0,
+      "machine": [
+        -12.941,
+        -100.0,
+        48.296
+      ]
+    },
+    {
+      "idx": 9,
+      "b": 15.0,
+      "c": 0.0,
+      "machine": [
+        109.534,
+        0.0,
+        22.414
+      ]
+    },
+    {
+      "idx": 10,
+      "b": 15.0,
+      "c": 90.0,
+      "machine": [
+        12.941,
+        100.0,
+        48.296
+      ]
+    },
+    {
+      "idx": 11,
+      "b": 15.0,
+      "c": 180.0,
+      "machine": [
+        -83.652,
+        0.0,
+        74.178
+      ]
+    },
+    {
+      "idx": 12,
+      "b": 15.0,
+      "c": 270.0,
+      "machine": [
+        12.941,
+        -100.0,
+        48.296
+      ]
+    },
+    {
+      "idx": 13,
+      "b": -30.0,
+      "c": 0.0,
+      "machine": [
+        61.603,
+        0.0,
+        93.301
+      ]
+    },
+    {
+      "idx": 14,
+      "b": -30.0,
+      "c": 90.0,
+      "machine": [
+        -25.0,
+        100.0,
+        43.301
+      ]
+    },
+    {
+      "idx": 15,
+      "b": -30.0,
+      "c": 180.0,
+      "machine": [
+        -111.603,
+        0.0,
+        -6.699
+      ]
+    },
+    {
+      "idx": 16,
+      "b": -30.0,
+      "c": 270.0,
+      "machine": [
+        -25.0,
+        -100.0,
+        43.301
+      ]
+    },
+    {
+      "idx": 17,
+      "b": 30.0,
+      "c": 0.0,
+      "machine": [
+        111.603,
+        0.0,
+        -6.699
+      ]
+    },
+    {
+      "idx": 18,
+      "b": 30.0,
+      "c": 90.0,
+      "machine": [
+        25.0,
+        100.0,
+        43.301
+      ]
+    },
+    {
+      "idx": 19,
+      "b": 30.0,
+      "c": 180.0,
+      "machine": [
+        -61.603,
+        0.0,
+        93.301
+      ]
+    },
+    {
+      "idx": 20,
+      "b": 30.0,
+      "c": 270.0,
+      "machine": [
+        25.0,
+        -100.0,
+        43.301
+      ]
+    }
+  ]
+}

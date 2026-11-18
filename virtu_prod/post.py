@@ -23,6 +23,11 @@ def _f(v: float) -> str:
     return "0" if s in ("-0", "", "-") else s
 
 
+def _f6(v: float) -> str:
+    s = f"{v:.6f}".rstrip("0").rstrip(".")
+    return "0" if s in ("-0", "", "-") else s
+
+
 def tool_axis(b: float, c: float) -> tuple:
     """工作坐标系下的刀轴矢量（转台式 B/C：work <- machine = Rz(-C)Ry(-B)）。"""
     br, cr = math.radians(b), math.radians(c)
@@ -73,7 +78,7 @@ def _motion_siemens(b: Block) -> str:
         words.append(f"F{_f(b.f)}")
     if b.b is not None or b.c is not None:
         ax, ay, az = tool_axis(b.b or 0.0, b.c or 0.0)
-        words.append(f"A3={_f(round(ax, 6))} B3={_f(round(ay, 6))} C3={_f(round(az, 6))}")
+        words.append(f"A3={_f6(ax)} B3={_f6(ay)} C3={_f6(az)}")
     return " ".join(words)
 
 
