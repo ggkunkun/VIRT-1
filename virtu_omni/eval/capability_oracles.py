@@ -153,16 +153,43 @@ def fea_cross_check_oracle() -> Dict[str, Any]:
 
 
 # ===========================================================================
-# 5. 汇总取证
+# 5. 多机床（三轴/四轴/五轴/车铣复合）代码能力可证伪 oracle
+# ===========================================================================
+def multi_axis_mill_turn_code_oracle() -> Dict[str, Any]:
+    """三轴/四轴/五轴/车削/车铣复合/副主轴接料多方言代码能力与坏样本反证 oracle。"""
+    from virtu_omni.manufacturing.capability_eval import run_agent_machining_capability_eval
+
+    res = run_agent_machining_capability_eval()
+    return {
+        "oracle": "multi_axis_mill_turn_code_and_selection",
+        "positive_passed": res["positive_passed_count"],
+        "positive_total": res["positive_case_count"],
+        "negative_rejected": res["negative_rejected_count"],
+        "negative_total": res["negative_gate_count"],
+        "pose_check_count": res["pose_check_count"],
+        "machine_feature_count": res["machine_feature_count"],
+        "passed": bool(res["all_passed"]),
+        "basis": "measured",
+    }
+
+
+# ===========================================================================
+# 6. 汇总取证
 # ===========================================================================
 def run_all_oracles(audit_path: Optional[str] = None) -> Dict[str, Any]:
     results = {
         "nesting": nesting_oracle(),
         "post_dialect": post_dialect_oracle(),
         "fea_cross_check": fea_cross_check_oracle(),
+        "multi_axis_mill_turn": multi_axis_mill_turn_code_oracle(),
         "gui_success_ledger": gui_success_ledger(audit_path),
     }
-    measurable = [results["nesting"], results["post_dialect"], results["fea_cross_check"]]
+    measurable = [
+        results["nesting"],
+        results["post_dialect"],
+        results["fea_cross_check"],
+        results["multi_axis_mill_turn"],
+    ]
     return {
         "oracles": results,
         "all_measurable_oracles_passed": all(r["passed"] for r in measurable),

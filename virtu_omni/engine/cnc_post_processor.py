@@ -544,7 +544,8 @@ def emit_fanuc(prog: CLProgram) -> str:
             lines.append("G98")
             lines.append("M269 (SUBSPINDLE UNCLAMP)")
             if op.sync_rpm > 0:
-                lines.append(f"M203 S{op.sync_rpm} (SYNC SPINDLES)")
+                lines.append(f"M03 S{op.sync_rpm} (SYNC SPINDLE CW)")
+                lines.append("M203 (MAIN-SUB SPINDLE SYNC)")
             lines.append(f"G00 W{_fmt(op.w_home_mm + 20.0)}")
             lines.append(f"G01 W{_fmt(op.w_pickup_mm)} F500")
             lines.append("M268 (SUBSPINDLE CLAMP)")
