@@ -27,8 +27,8 @@ def tool_wear(tool: dict, vc_m_min: float, used_min: float) -> Dict:
     return {"tool": tool["id"], "vc_m_min": round(vc_m_min, 1),
             "expected_life_min": round(life, 1), "used_min": round(used_min, 1),
             "wear_pct": round(ratio * 100.0, 1), "level": level,
-            "parts_per_tool": int(max(1, math.floor(life / max(used_min, 1e-6)))),
-            "basis": "derived (Taylor VT^n=C + measured cycle time)"}
+            "parts_per_tool": round(life / max(used_min, 1e-6), 2),
+            "basis": "derived (Taylor VT^n=C + measured cutting time)"}
 
 
 def collision_risk(min_clearance_mm: Optional[float], margin_mm: float = 1.0) -> Dict:
@@ -77,13 +77,13 @@ def simulated_spc_demo(usl: float, lsl: float, bias: float = 0.0,
 
 def batch_plan(batch_size: int, cycle_s: Dict[str, float], wear: List[Dict]) -> Dict:
     total_cycle = sum(cycle_s.values())
-    parts_per_tool = min([w["parts_per_tool"] for w in wear]) if wear else 0
-    tool_changes = math.ceil(batch_size / parts_per_tool) if parts_per_tool else 0
+    parts_per_tool = min([w["parts_per_tool"] for w in wear]) if wear else 0.0
+    tool_changes = math.ceil(batch_size / parts_per_tool) if parts_per_tool > 0 else 0
     machining_h = batch_size * total_cycle / 3600.0
     changeover_h = tool_changes * 0.15
     return {"batch_size": batch_size,
             "cycle_per_part_min": round(total_cycle / 60.0, 1),
-            "parts_per_tool_change": parts_per_tool,
+            "parts_per_tool_change": round(parts_per_tool, 2),
             "tool_changes": tool_changes,
             "machining_h": round(machining_h, 2),
             "tool_change_h": round(changeover_h, 2),

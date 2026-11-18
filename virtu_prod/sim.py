@@ -187,6 +187,7 @@ def sample_path(parsed: Parsed, step_mm: float = 1.0) -> Dict:
     pts: List[Tuple[float, float, float, float, float, float, int, str, str]] = []
     length_by_op: Dict[str, float] = {}
     time_by_op: Dict[str, float] = {}
+    cut_time_by_op: Dict[str, float] = {}
     total_len = 0.0
     prev: Optional[Move] = None
     for m in parsed.moves:
@@ -209,6 +210,8 @@ def sample_path(parsed: Parsed, step_mm: float = 1.0) -> Dict:
         f = m.f or 100.0
         rate = 20000.0 if m.kind == "rapid" else max(f, 1.0)
         time_by_op[op] = time_by_op.get(op, 0.0) + (seg_len / rate) * 60.0
+        if m.kind != "rapid":
+            cut_time_by_op[op] = cut_time_by_op.get(op, 0.0) + (seg_len / rate) * 60.0
         total_len += seg_len
         for k in range(0, len(arr), max(1, len(arr) // 400)):
             px, py, pz = arr[k]
@@ -219,6 +222,7 @@ def sample_path(parsed: Parsed, step_mm: float = 1.0) -> Dict:
         keep = len(pts) // 60000 + 1
         pts = pts[::keep]
     return {"points": pts, "length_by_op": length_by_op, "time_by_op": time_by_op,
+            "cut_time_by_op": cut_time_by_op,
             "total_length_mm": total_len, "basis": "measured (NC parse + polyline)"}
 
 
@@ -537,6 +541,7 @@ def cycle_time(parsed: Parsed, machine: Dict, stop_s: float = 5.0) -> Dict:
     total = sum(per_op.values()) + changes * machine["tool_change_s"] \
         + len(parsed.ops) * stop_s
     return {"per_op_s": {k: round(v, 1) for k, v in per_op.items()},
+            "cut_time_s": {k: round(v, 1) for k, v in sp["cut_time_by_op"].items()},
             "tool_changes": changes, "total_s": round(total, 1),
             "path_length_mm": round(sp["total_length_mm"], 1),
             "basis": "derived (length/feed + rapid + tool change + optional stop)"}

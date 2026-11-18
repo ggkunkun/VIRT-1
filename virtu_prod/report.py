@@ -57,8 +57,10 @@ def write_reports(res: Dict, outdir: Path) -> Dict[str, str]:
     for pr in res["programs"]:
         rows.append([pr["op"], pr["dialect"], pr["machine"], f"{pr['lines']}",
                      pr["sha256"][:12], _status(pr["lint"]["verdict"]),
-                     pr["cycle"]["total_s"], pr["roundtrip"]["max_err_mm"]])
-    md += [_tbl(rows, ["工序", "方言", "机床", "行数", "SHA256", "审查", "节拍(s)", "坐标回读误差"]), ""]
+                     pr["cycle"]["total_s"], sum(pr["cycle"]["cut_time_s"].values()),
+                     pr["roundtrip"]["max_err_mm"]])
+    md += [_tbl(rows, ["工序", "方言", "机床", "行数", "SHA256", "审查", "节拍(s)",
+                       "切削(s)", "坐标回读误差"]), ""]
 
     md += ["## 4. 扫掠碰撞 / 过切 / 超程（实测）", ""]
     rows = []
@@ -81,7 +83,8 @@ def write_reports(res: Dict, outdir: Path) -> Dict[str, str]:
     md += ["## 5. 量产一致性与预警", ""]
     rows = [[w["tool"], w["vc_m_min"], w["expected_life_min"], w["used_min"],
              f"{w['wear_pct']}%", w["level"], w["parts_per_tool"]] for w in res["wear"]]
-    md += [_tbl(rows, ["刀具", "Vc", "预计寿命(min)", "已用(min)", "磨损", "等级", "每刀件数"]), ""]
+    md += [_tbl(rows, ["刀具", "Vc", "预计寿命(min)", "已用切削(min)", "磨损", "等级",
+                       "每刀件数"]), ""]
     md += [f"- 撞机风险：**{res['risk']['level']}**（最小间隙 "
            f"{res['risk']['clearance_mm']} mm）",
            f"- SPC：{res['spc']['stats']['verdict']}，Cpk="
@@ -106,11 +109,16 @@ def write_reports(res: Dict, outdir: Path) -> Dict[str, str]:
            f"- 读写自检：{'PASS' if oc.get('read_back_ok') else 'FAIL'}"
            f"（basis={oc.get('basis')}）", ""]
 
-    md += ["## 7. 诚实边界（必须随报告一起交付）", ""]
+    md += ["## 7. 本轮实测发现与修复", ""]
+    for f in res.get("findings", []):
+        md.append(f"- {f}")
+    md += [""]
+
+    md += ["## 8. 诚实边界（必须随报告一起交付）", ""]
     md += res["limitations"]
     md += [""]
 
-    md += ["## 8. 结论", ""]
+    md += ["## 9. 结论", ""]
     md += [f"- 配置门：{res['config_summary']['verdict']}",
            f"- NC 审查：{res['verdicts']['lint']}",
            f"- 扫掠碰撞：{res['verdicts']['collision']}",

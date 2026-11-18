@@ -29,9 +29,13 @@ def tool_axis(b: float, c: float) -> tuple:
     return (-math.sin(br) * math.cos(cr), math.sin(br) * math.sin(cr), math.cos(br))
 
 
+def _tid(op: Operation) -> str:
+    return str(op.tool.tid).lstrip("Tt")
+
+
 def _op_comments(op: Operation) -> List[str]:
     return [f"=== {op.op_id}: {op.name} ===",
-            f"TOOL T{op.tool.tid} D{_f(op.tool.diameter_mm)} {op.tool.type.upper()} "
+            f"TOOL T{_tid(op)} D{_f(op.tool.diameter_mm)} {op.tool.type.upper()} "
             f"GAUGE {_f(op.tool.gauge_length_mm)}",
             f"MODE {op.mode} RPM {op.rpm} FEED {_f(op.feed_cut)}"]
 
@@ -128,7 +132,7 @@ class Emitter:
             self.line(f"G0 Z{_f(self.m['tc_z'])}")
             self.line("B0 C0")
             self.line(f"G0 X{_f(self.m['tc_x'])} Y{_f(self.m['tc_y'])}")
-            self.line(f"T{op.tool.tid} D1 M6")
+            self.line(f"T{_tid(op)} D1 M6")
             first = op.blocks[0]
             if first.x is not None and first.y is not None:
                 self.line(f"G0 X={_f(first.x)} Y={_f(first.y)} Z={_f(first.z or self.m['safe_z'])}")
@@ -140,9 +144,6 @@ class Emitter:
             skip = first.x is not None and first.y is not None
             for idx, b in enumerate(op.blocks):
                 if idx == 0 and skip:
-                    if b.z is None:
-                        continue
-                    self.line(f"G1 Z={_f(b.z)} F{_f(b.f or op.feed_plunge)}")
                     continue
                 self.line(_motion_siemens(b))
             if op.mode == "5axis_rtcp":
@@ -157,23 +158,20 @@ class Emitter:
         self.line(f"G00 G90 G49 Z{_f(self.m['tc_z'])}")
         self.line("G00 B0. C0.")
         self.line(f"G00 X{_f(self.m['tc_x'])} Y{_f(self.m['tc_y'])}")
-        self.line(f"T{op.tool.tid} M06")
+        self.line(f"T{_tid(op)} M06")
         first = op.blocks[0]
         if first.x is not None and first.y is not None:
             self.line(f"G00 X{_f(first.x)} Y{_f(first.y)} Z{_f(first.z or self.m['safe_z'])}")
         if op.mode == "5axis_rtcp":
-            self.line(f"G43.4 H{op.tool.tid} (TCPM ON / LENGTH COMP)")
+            self.line(f"G43.4 H{_tid(op)} (TCPM ON / LENGTH COMP)")
         else:
-            self.line(f"G43 H{op.tool.tid} Z{_f(self.m['safe_z'])}")
+            self.line(f"G43 H{_tid(op)} Z{_f(self.m['safe_z'])}")
         self.line(f"S{op.rpm} M03")
         if op.coolant:
             self.line("M08")
         skip = first.x is not None and first.y is not None
         for idx, b in enumerate(op.blocks):
             if idx == 0 and skip:
-                if b.z is None:
-                    continue
-                self.line(f"G01 Z{_f(b.z)} F{_f(b.f or op.feed_plunge)}")
                 continue
             self.line(_motion_fanuc(b))
         self.line("G49")

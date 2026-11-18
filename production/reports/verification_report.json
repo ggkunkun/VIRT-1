@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-18 22:20:00",
+  "generated_at": "2026-11-18 22:24:53",
   "part": {
     "id": "AE-CI-258",
     "name": "航空发动机封闭式叶轮",
@@ -328,8 +328,8 @@
       "dialect": "fanuc",
       "machine": "prod_5ax_fanuc_0imf",
       "nc_file": "D:\\Virtu模型\\production\\nc\\prod_5ax_fanuc_0imf\\AE-CI-258_OP1.nc",
-      "lines": 183,
-      "sha256": "144d42294d8850d0429df61c6ca9257c41bd323491159202b00a032d2dacf772",
+      "lines": 182,
+      "sha256": "fea69c49d32dbb24319d866b8ca1ef862b938ca60283675cbcb3b0d31f7ba3eb",
       "lint": {
         "checks": [
           {
@@ -469,7 +469,7 @@
             "gate": "RESTART-BLOCKS",
             "status": "PASS",
             "evidence": {
-              "n_lines": 173
+              "n_lines": 172
             },
             "rule": "FANUC/HNC 每块带 N 号，可按工序列断点"
           },
@@ -501,6 +501,9 @@
         "per_op_s": {
           "PROGRAM": 7328.5
         },
+        "cut_time_s": {
+          "PROGRAM": 7320.3
+        },
         "tool_changes": 1,
         "total_s": 7336.5,
         "path_length_mm": 37297.1,
@@ -515,8 +518,8 @@
       "dialect": "fanuc",
       "machine": "prod_5ax_fanuc_0imf",
       "nc_file": "D:\\Virtu模型\\production\\nc\\prod_5ax_fanuc_0imf\\AE-CI-258_OP2.nc",
-      "lines": 1199,
-      "sha256": "e5d75e7b5913c2c725545211d1f1127be2f9617f7282eb55c8b559e2da9a5bbe",
+      "lines": 1198,
+      "sha256": "75294f341801168b133d47c98618d361f45ff28f07baa02d067656d6c19a74f0",
       "lint": {
         "checks": [
           {
@@ -664,8 +667,8 @@
             "gate": "C-LIMIT",
             "status": "PASS",
             "evidence": {
-              "min": 0.325,
-              "max": 337.825
+              "min": 16.99,
+              "max": 354.49
             },
             "rule": "C 轴硬限位"
           },
@@ -682,7 +685,7 @@
             "gate": "RESTART-BLOCKS",
             "status": "PASS",
             "evidence": {
-              "n_lines": 1189
+              "n_lines": 1188
             },
             "rule": "FANUC/HNC 每块带 N 号，可按工序列断点"
           },
@@ -712,11 +715,14 @@
       },
       "cycle": {
         "per_op_s": {
-          "PROGRAM": 2071.5
+          "PROGRAM": 965.8
+        },
+        "cut_time_s": {
+          "PROGRAM": 962.5
         },
         "tool_changes": 1,
-        "total_s": 2079.5,
-        "path_length_mm": 6574.8,
+        "total_s": 973.8,
+        "path_length_mm": 3853.4,
         "basis": "derived (length/feed + rapid + tool change + optional stop)"
       },
       "restart": {
@@ -728,8 +734,8 @@
       "dialect": "fanuc",
       "machine": "prod_5ax_fanuc_0imf",
       "nc_file": "D:\\Virtu模型\\production\\nc\\prod_5ax_fanuc_0imf\\AE-CI-258_OP3.nc",
-      "lines": 86,
-      "sha256": "b158538d5c20083af6744a68daf20385e18314f459015f69c885ba68cd69e31a",
+      "lines": 84,
+      "sha256": "1e3632e8a293253a9fb27fd702a7a28d3d5749925325a185abde80d87f30213e",
       "lint": {
         "checks": [
           {
@@ -787,7 +793,7 @@
                 "ok": true
               },
               {
-                "line": 58,
+                "line": 57,
                 "pos": [
                   0.0,
                   0.0,
@@ -878,7 +884,7 @@
             "gate": "RESTART-BLOCKS",
             "status": "PASS",
             "evidence": {
-              "n_lines": 73
+              "n_lines": 71
             },
             "rule": "FANUC/HNC 每块带 N 号，可按工序列断点"
           },
@@ -910,6 +916,9 @@
         "per_op_s": {
           "PROGRAM": 3480.6
         },
+        "cut_time_s": {
+          "PROGRAM": 3477.4
+        },
         "tool_changes": 2,
         "total_s": 3496.6,
         "path_length_mm": 14081.2,
@@ -917,7 +926,7 @@
       },
       "restart": {
         "OP3-A": 40,
-        "OP3-B": 430
+        "OP3-B": 420
       }
     },
     {
@@ -925,8 +934,8 @@
       "dialect": "siemens",
       "machine": "prod_5ax_siemens_840dsl",
       "nc_file": "D:\\Virtu模型\\production\\nc\\prod_5ax_siemens_840dsl\\AE-CI-258_OP1.nc",
-      "lines": 175,
-      "sha256": "248325282129abd92d5ff0d3f6e384fad4f6e1bde27bbab86a2260978d73dd0e",
+      "lines": 174,
+      "sha256": "474abd7dc42b75bc21479b2780345bb5c07d189cb86de09f0d3a59643388c526",
       "lint": {
         "checks": [
           {
@@ -1066,7 +1075,7 @@
             "gate": "RESTART-BLOCKS",
             "status": "PASS",
             "evidence": {
-              "n_lines": 168
+              "n_lines": 167
             },
             "rule": "FANUC/HNC 每块带 N 号，可按工序列断点"
           },
@@ -1098,6 +1107,9 @@
         "per_op_s": {
           "PROGRAM": 7328.5
         },
+        "cut_time_s": {
+          "PROGRAM": 7320.3
+        },
         "tool_changes": 1,
         "total_s": 7336.5,
         "path_length_mm": 37297.1,
@@ -1112,8 +1124,8 @@
       "dialect": "siemens",
       "machine": "prod_5ax_siemens_840dsl",
       "nc_file": "D:\\Virtu模型\\production\\nc\\prod_5ax_siemens_840dsl\\AE-CI-258_OP2.nc",
-      "lines": 1193,
-      "sha256": "f464a949a78a2eb9c297924bfafa7ed4f1f41ec497dfaa71f49fd7de3d42a477",
+      "lines": 1192,
+      "sha256": "c2a30a88d93669131ce2e4bde91cc234f0f0ab3e02ac3eecf49c30bee19c4868",
       "lint": {
         "checks": [
           {
@@ -1253,7 +1265,7 @@
             "gate": "RESTART-BLOCKS",
             "status": "PASS",
             "evidence": {
-              "n_lines": 1186
+              "n_lines": 1185
             },
             "rule": "FANUC/HNC 每块带 N 号，可按工序列断点"
           },
@@ -1283,11 +1295,14 @@
       },
       "cycle": {
         "per_op_s": {
-          "PROGRAM": 2071.5
+          "PROGRAM": 965.8
+        },
+        "cut_time_s": {
+          "PROGRAM": 962.5
         },
         "tool_changes": 1,
-        "total_s": 2079.5,
-        "path_length_mm": 6574.8,
+        "total_s": 973.8,
+        "path_length_mm": 3853.4,
         "basis": "derived (length/feed + rapid + tool change + optional stop)"
       },
       "restart": {
@@ -1299,8 +1314,8 @@
       "dialect": "siemens",
       "machine": "prod_5ax_siemens_840dsl",
       "nc_file": "D:\\Virtu模型\\production\\nc\\prod_5ax_siemens_840dsl\\AE-CI-258_OP3.nc",
-      "lines": 76,
-      "sha256": "07d91bee6aad90d5b4bda481c599a456ba78bce215c680aefdf6592ff0fa1cf5",
+      "lines": 74,
+      "sha256": "d7b8a1f18a309c0396a843a54413de5ba940313c0a64838ccb36824222913c63",
       "lint": {
         "checks": [
           {
@@ -1352,7 +1367,7 @@
                 "ok": true
               },
               {
-                "line": 53,
+                "line": 52,
                 "pos": [
                   0.0,
                   0.0,
@@ -1449,7 +1464,7 @@
             "gate": "RESTART-BLOCKS",
             "status": "PASS",
             "evidence": {
-              "n_lines": 66
+              "n_lines": 64
             },
             "rule": "FANUC/HNC 每块带 N 号，可按工序列断点"
           },
@@ -1481,6 +1496,9 @@
         "per_op_s": {
           "PROGRAM": 3480.6
         },
+        "cut_time_s": {
+          "PROGRAM": 3477.4
+        },
         "tool_changes": 2,
         "total_s": 3496.6,
         "path_length_mm": 14081.2,
@@ -1488,7 +1506,7 @@
       },
       "restart": {
         "OP3-A": 30,
-        "OP3-B": 400
+        "OP3-B": 390
       }
     },
     {
@@ -1496,8 +1514,8 @@
       "dialect": "hnc",
       "machine": "prod_5ax_hnc8",
       "nc_file": "D:\\Virtu模型\\production\\nc\\prod_5ax_hnc8\\AE-CI-258_OP1.nc",
-      "lines": 183,
-      "sha256": "05f4f5b2911fa2e1212080d86ba2ff78778394b2d0fb0d7c32175d34e4111b82",
+      "lines": 182,
+      "sha256": "0159629509a696763b82f3fcdcc54795121e36e3b958800b2203bcce1b3af6ab",
       "lint": {
         "checks": [
           {
@@ -1637,7 +1655,7 @@
             "gate": "RESTART-BLOCKS",
             "status": "PASS",
             "evidence": {
-              "n_lines": 173
+              "n_lines": 172
             },
             "rule": "FANUC/HNC 每块带 N 号，可按工序列断点"
           },
@@ -1669,6 +1687,9 @@
         "per_op_s": {
           "PROGRAM": 7328.5
         },
+        "cut_time_s": {
+          "PROGRAM": 7320.3
+        },
         "tool_changes": 1,
         "total_s": 7336.5,
         "path_length_mm": 37297.1,
@@ -1683,8 +1704,8 @@
       "dialect": "hnc",
       "machine": "prod_5ax_hnc8",
       "nc_file": "D:\\Virtu模型\\production\\nc\\prod_5ax_hnc8\\AE-CI-258_OP2.nc",
-      "lines": 1199,
-      "sha256": "b17da082fac3b5dc9bb9725265f7c0b20c4ffd60c9bacf65b0a48a05be103bfc",
+      "lines": 1198,
+      "sha256": "2af7ca79663bc8d7c4992765ffb5e5b76675a964fef137b84ba13714a3a3e3e3",
       "lint": {
         "checks": [
           {
@@ -1832,8 +1853,8 @@
             "gate": "C-LIMIT",
             "status": "PASS",
             "evidence": {
-              "min": 0.325,
-              "max": 337.825
+              "min": 16.99,
+              "max": 354.49
             },
             "rule": "C 轴硬限位"
           },
@@ -1850,7 +1871,7 @@
             "gate": "RESTART-BLOCKS",
             "status": "PASS",
             "evidence": {
-              "n_lines": 1189
+              "n_lines": 1188
             },
             "rule": "FANUC/HNC 每块带 N 号，可按工序列断点"
           },
@@ -1880,11 +1901,14 @@
       },
       "cycle": {
         "per_op_s": {
-          "PROGRAM": 2071.5
+          "PROGRAM": 965.8
+        },
+        "cut_time_s": {
+          "PROGRAM": 962.5
         },
         "tool_changes": 1,
-        "total_s": 2079.5,
-        "path_length_mm": 6574.8,
+        "total_s": 973.8,
+        "path_length_mm": 3853.4,
         "basis": "derived (length/feed + rapid + tool change + optional stop)"
       },
       "restart": {
@@ -1896,8 +1920,8 @@
       "dialect": "hnc",
       "machine": "prod_5ax_hnc8",
       "nc_file": "D:\\Virtu模型\\production\\nc\\prod_5ax_hnc8\\AE-CI-258_OP3.nc",
-      "lines": 86,
-      "sha256": "b584fa3e818cdeb33b93d7ab54674841a491a1be180e6a8beeb1d29d2019556d",
+      "lines": 84,
+      "sha256": "8b505e15556d08d936a8b53e45a65aa8f862674a16c04ef2c84eddc98af905f2",
       "lint": {
         "checks": [
           {
@@ -1955,7 +1979,7 @@
                 "ok": true
               },
               {
-                "line": 58,
+                "line": 57,
                 "pos": [
                   0.0,
                   0.0,
@@ -2046,7 +2070,7 @@
             "gate": "RESTART-BLOCKS",
             "status": "PASS",
             "evidence": {
-              "n_lines": 73
+              "n_lines": 71
             },
             "rule": "FANUC/HNC 每块带 N 号，可按工序列断点"
           },
@@ -2078,6 +2102,9 @@
         "per_op_s": {
           "PROGRAM": 3480.6
         },
+        "cut_time_s": {
+          "PROGRAM": 3477.4
+        },
         "tool_changes": 2,
         "total_s": 3496.6,
         "path_length_mm": 14081.2,
@@ -2085,7 +2112,7 @@
       },
       "restart": {
         "OP3-A": 40,
-        "OP3-B": 430
+        "OP3-B": 420
       }
     }
   ],
@@ -2130,7 +2157,7 @@
           "status": "PASS",
           "evidence": 1.85,
           "where": {
-            "line": 170,
+            "line": 169,
             "op": "PROGRAM",
             "world": [
               138.53,
@@ -2144,7 +2171,7 @@
           "status": "PASS",
           "evidence": 9.5,
           "where": {
-            "line": 164,
+            "line": 163,
             "op": "PROGRAM",
             "world": [
               138.53,
@@ -2174,7 +2201,7 @@
     },
     {
       "op": "OP2",
-      "samples": 5456,
+      "samples": 4049,
       "checks": [
         {
           "gate": "MACHINE-TRAVEL",
@@ -2210,48 +2237,48 @@
         {
           "gate": "FIXTURE-CLEARANCE",
           "status": "PASS",
-          "evidence": 1.45,
+          "evidence": 9.968,
           "where": {
-            "line": 23,
+            "line": 56,
             "op": "PROGRAM",
             "world": [
-              140.0,
-              -0.79,
-              96.35
+              118.88,
+              -0.67,
+              97.93
             ]
           }
         },
         {
           "gate": "DESIGN-GOUGE",
-          "status": "FAIL",
-          "evidence": -0.48,
+          "status": "PASS",
+          "evidence": 6.019,
           "where": {
-            "line": 23,
+            "line": 647,
             "op": "PROGRAM",
             "world": [
-              122.72,
-              -0.7,
-              97.64
+              -107.82,
+              -3.61,
+              108.27
             ]
           }
         },
         {
           "gate": "DESIGN-SURFACE",
-          "status": "FAIL",
-          "evidence": -0.931
+          "status": "PASS",
+          "evidence": 0.307
         },
         {
           "gate": "HOLDER-STOCK",
           "status": "PASS",
-          "evidence": 27.032,
+          "evidence": 27.958,
           "required": 1.0
         }
       ],
       "min_clearance": {
-        "fixture": 1.45,
-        "design": -0.48,
-        "design_surface": -0.931,
-        "stock_holder": 27.032
+        "fixture": 9.968,
+        "design": 6.019,
+        "design_surface": 0.307,
+        "stock_holder": 27.958
       }
     },
     {
@@ -2294,7 +2321,7 @@
           "status": "PASS",
           "evidence": 27.85,
           "where": {
-            "line": 37,
+            "line": 36,
             "op": "PROGRAM",
             "world": [
               45.14,
@@ -2308,7 +2335,7 @@
           "status": "PASS",
           "evidence": -0.0,
           "where": {
-            "line": 68,
+            "line": 66,
             "op": "PROGRAM",
             "world": [
               -68.73,
@@ -2337,235 +2364,14 @@
       }
     }
   ],
-  "violations": [
-    {
-      "type": "DESIGN_GOUGE",
-      "line": 23,
-      "penetration_mm": -0.299,
-      "world": [
-        132.32,
-        -0.75,
-        96.92
-      ],
-      "op": "OP2"
-    },
-    {
-      "type": "DESIGN_GOUGE",
-      "line": 23,
-      "penetration_mm": -0.931,
-      "world": [
-        122.72,
-        -0.7,
-        97.64
-      ],
-      "op": "OP2"
-    },
-    {
-      "type": "DESIGN_GOUGE",
-      "line": 92,
-      "penetration_mm": -0.597,
-      "world": [
-        124.64,
-        -0.71,
-        97.5
-      ],
-      "op": "OP2"
-    },
-    {
-      "type": "DESIGN_GOUGE",
-      "line": 96,
-      "penetration_mm": -0.082,
-      "world": [
-        117.2,
-        47.77,
-        97.36
-      ],
-      "op": "OP2"
-    },
-    {
-      "type": "DESIGN_GOUGE",
-      "line": 238,
-      "penetration_mm": -0.771,
-      "world": [
-        90.0,
-        88.98,
-        97.36
-      ],
-      "op": "OP2"
-    },
-    {
-      "type": "DESIGN_GOUGE",
-      "line": 311,
-      "penetration_mm": -0.821,
-      "world": [
-        47.6,
-        113.11,
-        97.64
-      ],
-      "op": "OP2"
-    },
-    {
-      "type": "DESIGN_GOUGE",
-      "line": 315,
-      "penetration_mm": -0.48,
-      "world": [
-        0.73,
-        128.48,
-        97.21
-      ],
-      "op": "OP2"
-    },
-    {
-      "type": "DESIGN_GOUGE",
-      "line": 384,
-      "penetration_mm": -0.48,
-      "world": [
-        0.73,
-        128.48,
-        97.21
-      ],
-      "op": "OP2"
-    },
-    {
-      "type": "DESIGN_GOUGE",
-      "line": 388,
-      "penetration_mm": -0.299,
-      "world": [
-        -49.94,
-        122.53,
-        96.92
-      ],
-      "op": "OP2"
-    },
-    {
-      "type": "DESIGN_GOUGE",
-      "line": 388,
-      "penetration_mm": -0.931,
-      "world": [
-        -46.32,
-        113.64,
-        97.64
-      ],
-      "op": "OP2"
-    },
-    {
-      "type": "DESIGN_GOUGE",
-      "line": 457,
-      "penetration_mm": -0.886,
-      "world": [
-        -47.04,
-        115.42,
-        97.5
-      ],
-      "op": "OP2"
-    },
-    {
-      "type": "DESIGN_GOUGE",
-      "line": 461,
-      "penetration_mm": -0.082,
-      "world": [
-        -88.98,
-        90.0,
-        97.36
-      ],
-      "op": "OP2"
-    },
-    {
-      "type": "DESIGN_GOUGE",
-      "line": 530,
-      "penetration_mm": -0.059,
-      "world": [
-        -91.68,
-        92.73,
-        97.07
-      ],
-      "op": "OP2"
-    },
-    {
-      "type": "DESIGN_GOUGE",
-      "line": 603,
-      "penetration_mm": -0.505,
-      "world": [
-        -116.65,
-        49.09,
-        97.36
-      ],
-      "op": "OP2"
-    },
-    {
-      "type": "DESIGN_GOUGE",
-      "line": 676,
-      "penetration_mm": -0.804,
-      "world": [
-        -122.72,
-        0.7,
-        97.64
-      ],
-      "op": "OP2"
-    },
-    {
-      "type": "DESIGN_GOUGE",
-      "line": 676,
-      "penetration_mm": -0.058,
-      "world": [
-        -132.32,
-        0.75,
-        96.92
-      ],
-      "op": "OP2"
-    },
-    {
-      "type": "DESIGN_GOUGE",
-      "line": 680,
-      "penetration_mm": -0.48,
-      "world": [
-        -118.98,
-        -48.49,
-        97.21
-      ],
-      "op": "OP2"
-    },
-    {
-      "type": "DESIGN_GOUGE",
-      "line": 749,
-      "penetration_mm": -0.786,
-      "world": [
-        -118.98,
-        -48.49,
-        97.21
-      ],
-      "op": "OP2"
-    },
-    {
-      "type": "DESIGN_GOUGE",
-      "line": 753,
-      "penetration_mm": -0.299,
-      "world": [
-        -94.09,
-        -93.03,
-        96.92
-      ],
-      "op": "OP2"
-    },
-    {
-      "type": "DESIGN_GOUGE",
-      "line": 753,
-      "penetration_mm": -0.931,
-      "world": [
-        -87.27,
-        -86.28,
-        97.64
-      ],
-      "op": "OP2"
-    }
-  ],
+  "violations": [],
   "wear": [
     {
       "tool": "T1",
       "vc_m_min": 35.2,
       "expected_life_min": 37.0,
-      "used_min": 180.6,
-      "wear_pct": 488.6,
+      "used_min": 180.0,
+      "wear_pct": 487.0,
       "level": "ALARM",
       "parts_per_tool": 1,
       "basis": "derived (Taylor VT^n=C + measured cycle time)"
@@ -2574,18 +2380,28 @@
       "tool": "T2",
       "vc_m_min": 29.8,
       "expected_life_min": 35.1,
-      "used_min": 92.9,
-      "wear_pct": 264.9,
+      "used_min": 74.0,
+      "wear_pct": 210.9,
       "level": "ALARM",
       "parts_per_tool": 1,
       "basis": "derived (Taylor VT^n=C + measured cycle time)"
     }
   ],
   "risk": {
-    "level": "MEDIUM",
-    "clearance_mm": 1.45,
+    "level": "CRITICAL",
+    "clearance_mm": -0.003,
     "margin_mm": 1.0,
-    "action": "增加首件目视/探针确认"
+    "action": "停机，修正刀路/夹具后再试切"
+  },
+  "op_cycle_s": {
+    "OP1": 7336.5,
+    "OP2": 973.8,
+    "OP3": 3496.6
+  },
+  "op_cut_s": {
+    "OP1": 7320.3,
+    "OP2": 962.5,
+    "OP3": 3477.4
   },
   "spc": {
     "stats": {
@@ -2631,12 +2447,12 @@
   },
   "batch": {
     "batch_size": 50,
-    "cycle_per_part_min": 215.2,
+    "cycle_per_part_min": 196.8,
     "parts_per_tool_change": 1,
     "tool_changes": 50,
-    "machining_h": 179.34,
+    "machining_h": 163.98,
     "tool_change_h": 7.5,
-    "total_h": 186.84,
+    "total_h": 171.48,
     "consistency": "同程序哈希 + 同刀补/零点 + 首件与每 N 件抽检（Cpk≥1.33）",
     "basis": "derived (cycle + Taylor wear)"
   },
@@ -2663,7 +2479,7 @@
         "planned_min": 1.5
       }
     ],
-    "software_reconfig_s": 0.03,
+    "software_reconfig_s": 0.04,
     "on_site_planned_min": 14.5,
     "total_min": 14.5,
     "target_min": 15.0,
@@ -2676,13 +2492,18 @@
         "type": "TOOL_WEAR",
         "tool": "T1",
         "level": "ALARM",
-        "wear_pct": 488.6
+        "wear_pct": 487.0
       },
       {
         "type": "TOOL_WEAR",
         "tool": "T2",
         "level": "ALARM",
-        "wear_pct": 264.9
+        "wear_pct": 210.9
+      },
+      {
+        "type": "COLLISION_RISK",
+        "level": "CRITICAL",
+        "clearance_mm": -0.003
       },
       {
         "type": "CYCLE_TARGET",
@@ -2697,7 +2518,7 @@
         "target_s": 2400
       }
     ],
-    "count": 4,
+    "count": 5,
     "basis": "derived + measured"
   },
   "opcua": {
@@ -2769,9 +2590,9 @@
   "verdicts": {
     "lint": "PASS",
     "roundtrip": "PASS",
-    "collision": "FAIL",
+    "collision": "PASS",
     "travel": "PASS",
-    "overall": "FAIL"
+    "overall": "PASS"
   },
   "limitations": [
     "- 未执行 VERICUT 运行级仿真（batch 介质不执行仿真），碰撞/过切为自研扫掠几何实测（采样步长 2 mm），不是 VERICUT 逐帧布尔材料去除。",
@@ -2782,77 +2603,85 @@
     "- 换产的现场步骤时间为计划值，软件侧重构时间为实测。",
     "- VERICUT 培训模型 NMV1500 的 Y 行程仅 210 mm，无法覆盖本零件；见机床能力表。"
   ],
+  "findings": [
+    "OP1 原程序在切削深度处执行 G01 X125.5 横移，实测切入叶片 1.5 mm（过切）；本版已删除该横移，改为抬刀后回安全高度。",
+    "OP2 原路径基准角取自 camber_theta()（叶片中线），实测刀具走在叶片实体上（最深 22.6 mm）；本版加半个叶距（11.25°）偏置，流道采样点 0/35 落在实体外。",
+    "OP2 原程序只旋转 C 不旋转 XY；按转台式工作坐标系，16 条流道会重合成同一条；本版在零件坐标系内按 base 旋转刀路，并取 C=-(θ+base) 使流道正对主轴。",
+    "流道出口位于夹持带下方（工作 Z -71.85..-58.16，钳口顶 -58.85），从外圆进入会切穿盖板（实测过切 ≤0.93 mm）；本版改为从进气口进入，出口残留段留待 OP3。",
+    "VERICUT 工程的 G54 指向 Stock 组件坐标系（原点在世界 -100），与 NC 的 Z0=毛坯顶面不一致；建议按官方样例增加 NC_ZERO 组件（本版未改工程，因 batch 无法复验）。",
+    "OP1 为整圆空切策略，单件节拍 122 min 中大部分为空行程；建议量产改四角扇形或自适应开粗（本版保持已验几何，仅如实计量）。"
+  ],
   "manifest": {
     "part": "AE-CI-258",
     "programs": {
       "prod_5ax_fanuc_0imf/OP1": {
         "file": "D:\\Virtu模型\\production\\nc\\prod_5ax_fanuc_0imf\\AE-CI-258_OP1.nc",
-        "sha256": "144d42294d8850d0429df61c6ca9257c41bd323491159202b00a032d2dacf772",
+        "sha256": "fea69c49d32dbb24319d866b8ca1ef862b938ca60283675cbcb3b0d31f7ba3eb",
         "restart": {
           "OP1": 40
         }
       },
       "prod_5ax_fanuc_0imf/OP2": {
         "file": "D:\\Virtu模型\\production\\nc\\prod_5ax_fanuc_0imf\\AE-CI-258_OP2.nc",
-        "sha256": "e5d75e7b5913c2c725545211d1f1127be2f9617f7282eb55c8b559e2da9a5bbe",
+        "sha256": "75294f341801168b133d47c98618d361f45ff28f07baa02d067656d6c19a74f0",
         "restart": {
           "OP2": 40
         }
       },
       "prod_5ax_fanuc_0imf/OP3": {
         "file": "D:\\Virtu模型\\production\\nc\\prod_5ax_fanuc_0imf\\AE-CI-258_OP3.nc",
-        "sha256": "b158538d5c20083af6744a68daf20385e18314f459015f69c885ba68cd69e31a",
+        "sha256": "1e3632e8a293253a9fb27fd702a7a28d3d5749925325a185abde80d87f30213e",
         "restart": {
           "OP3-A": 40,
-          "OP3-B": 430
+          "OP3-B": 420
         }
       },
       "prod_5ax_siemens_840dsl/OP1": {
         "file": "D:\\Virtu模型\\production\\nc\\prod_5ax_siemens_840dsl\\AE-CI-258_OP1.nc",
-        "sha256": "248325282129abd92d5ff0d3f6e384fad4f6e1bde27bbab86a2260978d73dd0e",
+        "sha256": "474abd7dc42b75bc21479b2780345bb5c07d189cb86de09f0d3a59643388c526",
         "restart": {
           "OP1": 30
         }
       },
       "prod_5ax_siemens_840dsl/OP2": {
         "file": "D:\\Virtu模型\\production\\nc\\prod_5ax_siemens_840dsl\\AE-CI-258_OP2.nc",
-        "sha256": "f464a949a78a2eb9c297924bfafa7ed4f1f41ec497dfaa71f49fd7de3d42a477",
+        "sha256": "c2a30a88d93669131ce2e4bde91cc234f0f0ab3e02ac3eecf49c30bee19c4868",
         "restart": {
           "OP2": 30
         }
       },
       "prod_5ax_siemens_840dsl/OP3": {
         "file": "D:\\Virtu模型\\production\\nc\\prod_5ax_siemens_840dsl\\AE-CI-258_OP3.nc",
-        "sha256": "07d91bee6aad90d5b4bda481c599a456ba78bce215c680aefdf6592ff0fa1cf5",
+        "sha256": "d7b8a1f18a309c0396a843a54413de5ba940313c0a64838ccb36824222913c63",
         "restart": {
           "OP3-A": 30,
-          "OP3-B": 400
+          "OP3-B": 390
         }
       },
       "prod_5ax_hnc8/OP1": {
         "file": "D:\\Virtu模型\\production\\nc\\prod_5ax_hnc8\\AE-CI-258_OP1.nc",
-        "sha256": "05f4f5b2911fa2e1212080d86ba2ff78778394b2d0fb0d7c32175d34e4111b82",
+        "sha256": "0159629509a696763b82f3fcdcc54795121e36e3b958800b2203bcce1b3af6ab",
         "restart": {
           "OP1": 40
         }
       },
       "prod_5ax_hnc8/OP2": {
         "file": "D:\\Virtu模型\\production\\nc\\prod_5ax_hnc8\\AE-CI-258_OP2.nc",
-        "sha256": "b17da082fac3b5dc9bb9725265f7c0b20c4ffd60c9bacf65b0a48a05be103bfc",
+        "sha256": "2af7ca79663bc8d7c4992765ffb5e5b76675a964fef137b84ba13714a3a3e3e3",
         "restart": {
           "OP2": 40
         }
       },
       "prod_5ax_hnc8/OP3": {
         "file": "D:\\Virtu模型\\production\\nc\\prod_5ax_hnc8\\AE-CI-258_OP3.nc",
-        "sha256": "b584fa3e818cdeb33b93d7ab54674841a491a1be180e6a8beeb1d29d2019556d",
+        "sha256": "8b505e15556d08d936a8b53e45a65aa8f862674a16c04ef2c84eddc98af905f2",
         "restart": {
           "OP3-A": 40,
-          "OP3-B": 430
+          "OP3-B": 420
         }
       }
     },
     "hashes": {}
   },
-  "elapsed_s": 40.3
+  "elapsed_s": 41.7
 }

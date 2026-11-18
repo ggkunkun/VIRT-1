@@ -102,6 +102,7 @@ def main() -> int:
     NC_DIR.mkdir(parents=True, exist_ok=True)
     manifest = {"part": p.part["id"], "programs": {}, "hashes": {}}
     op_cycle: Dict[str, float] = {}
+    op_cut: Dict[str, float] = {}
 
     scenes = {"OP1": PROJ, "OP2": PROJ, "OP3": PROJ_OP3}
     scene_cache = {}
@@ -131,6 +132,7 @@ def main() -> int:
                 "file": str(path), "sha256": sha, "restart": emission["restart"]}
             if m.dialect == "fanuc":
                 op_cycle[prog.op_id] = cyc["total_s"]
+                op_cut[prog.op_id] = round(sum(cyc["cut_time_s"].values()), 1)
 
     if cfg_sum["verdict"] != "PASS":
         results_programs_for_report = results_programs
@@ -174,13 +176,18 @@ def main() -> int:
         for prog in built:
             for op in prog.operations:
                 if op.tool.tid == tid:
-                    used += op_cycle.get(prog.op_id, 0.0) / 60.0
+                    used += op_cut.get(prog.op_id, 0.0) / 60.0
         vc = 3.141592653589793 * t.diameter_mm * 700.0 / 1000.0 if tid == "T1" \
             else 3.141592653589793 * t.diameter_mm * 950.0 / 1000.0
         wear.append(assurance.tool_wear({"id": tid, "taylor_c": t.taylor_c,
                                          "taylor_n": t.taylor_n}, vc, used))
-    min_clear = min([a["min_clearance"]["fixture"] for a in audits
-                     if a["min_clearance"]["fixture"] is not None] or [None])
+    cands = []
+    for a in audits:
+        for k in ("fixture", "stock_holder"):
+            v = a["min_clearance"].get(k)
+            if v is not None:
+                cands.append(v)
+    min_clear = min(cands) if cands else None
     risk = assurance.collision_risk(min_clear, p.safety["holder_clearance_mm"])
     tol = float(p.quality["tolerance_mm"])
     spc_demo = assurance.simulated_spc_demo(tol, -tol)
@@ -254,6 +261,7 @@ def main() -> int:
         "programs": results_programs,
         "audits": audits, "violations": violations,
         "wear": wear, "risk": risk,
+        "op_cycle_s": op_cycle, "op_cut_s": op_cut,
         "spc": {"stats": spc_demo["stats"], "samples": spc_demo["samples"]},
         "batch": batch, "changeover": chg, "warnings": warns, "opcua": ocs,
         "op_params": op_params,
@@ -270,6 +278,14 @@ def main() -> int:
             "- 五轴 RTCP 的机床摆长/枢轴标定未纳入；Siemens 方向按 A3/B3/C3 向量发射，未在 840D sl 实机验证。",
             "- 换产的现场步骤时间为计划值，软件侧重构时间为实测。",
             "- VERICUT 培训模型 NMV1500 的 Y 行程仅 210 mm，无法覆盖本零件；见机床能力表。",
+        ],
+        "findings": [
+            "OP1 原程序在切削深度处执行 G01 X125.5 横移，实测切入叶片 1.5 mm（过切）；本版已删除该横移，改为抬刀后回安全高度。",
+            "OP2 原路径基准角取自 camber_theta()（叶片中线），实测刀具走在叶片实体上（最深 22.6 mm）；本版加半个叶距（11.25°）偏置，流道采样点 0/35 落在实体外。",
+            "OP2 原程序只旋转 C 不旋转 XY；按转台式工作坐标系，16 条流道会重合成同一条；本版在零件坐标系内按 base 旋转刀路，并取 C=-(θ+base) 使流道正对主轴。",
+            "流道出口位于夹持带下方（工作 Z -71.85..-58.16，钳口顶 -58.85），从外圆进入会切穿盖板（实测过切 ≤0.93 mm）；本版改为从进气口进入，出口残留段留待 OP3。",
+            "VERICUT 工程的 G54 指向 Stock 组件坐标系（原点在世界 -100），与 NC 的 Z0=毛坯顶面不一致；建议按官方样例增加 NC_ZERO 组件（本版未改工程，因 batch 无法复验）。",
+            "OP1 为整圆空切策略，单件节拍 122 min 中大部分为空行程；建议量产改四角扇形或自适应开粗（本版保持已验几何，仅如实计量）。",
         ],
         "manifest": manifest,
         "elapsed_s": round(time.perf_counter() - t_start, 1),

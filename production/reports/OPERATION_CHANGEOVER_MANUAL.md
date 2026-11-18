@@ -11,13 +11,13 @@
 |---|---|---|---|---|
 | OP1 | fanuc | prod_5ax_fanuc_0imf | D:\Virtu模型\production\nc\prod_5ax_fanuc_0imf\AE-CI-258_OP1.nc | {'OP1': 40} |
 | OP2 | fanuc | prod_5ax_fanuc_0imf | D:\Virtu模型\production\nc\prod_5ax_fanuc_0imf\AE-CI-258_OP2.nc | {'OP2': 40} |
-| OP3 | fanuc | prod_5ax_fanuc_0imf | D:\Virtu模型\production\nc\prod_5ax_fanuc_0imf\AE-CI-258_OP3.nc | {'OP3-A': 40, 'OP3-B': 430} |
+| OP3 | fanuc | prod_5ax_fanuc_0imf | D:\Virtu模型\production\nc\prod_5ax_fanuc_0imf\AE-CI-258_OP3.nc | {'OP3-A': 40, 'OP3-B': 420} |
 | OP1 | siemens | prod_5ax_siemens_840dsl | D:\Virtu模型\production\nc\prod_5ax_siemens_840dsl\AE-CI-258_OP1.nc | {'OP1': 30} |
 | OP2 | siemens | prod_5ax_siemens_840dsl | D:\Virtu模型\production\nc\prod_5ax_siemens_840dsl\AE-CI-258_OP2.nc | {'OP2': 30} |
-| OP3 | siemens | prod_5ax_siemens_840dsl | D:\Virtu模型\production\nc\prod_5ax_siemens_840dsl\AE-CI-258_OP3.nc | {'OP3-A': 30, 'OP3-B': 400} |
+| OP3 | siemens | prod_5ax_siemens_840dsl | D:\Virtu模型\production\nc\prod_5ax_siemens_840dsl\AE-CI-258_OP3.nc | {'OP3-A': 30, 'OP3-B': 390} |
 | OP1 | hnc | prod_5ax_hnc8 | D:\Virtu模型\production\nc\prod_5ax_hnc8\AE-CI-258_OP1.nc | {'OP1': 40} |
 | OP2 | hnc | prod_5ax_hnc8 | D:\Virtu模型\production\nc\prod_5ax_hnc8\AE-CI-258_OP2.nc | {'OP2': 40} |
-| OP3 | hnc | prod_5ax_hnc8 | D:\Virtu模型\production\nc\prod_5ax_hnc8\AE-CI-258_OP3.nc | {'OP3-A': 40, 'OP3-B': 430} |
+| OP3 | hnc | prod_5ax_hnc8 | D:\Virtu模型\production\nc\prod_5ax_hnc8\AE-CI-258_OP3.nc | {'OP3-A': 40, 'OP3-B': 420} |
 
 ## 2. 换产流程（目标 ≤15 min）
 
@@ -29,7 +29,7 @@
 | 空运行与首件试切（含 M01 检查） | 4.0 |
 | 首件三坐标/目视确认 | 1.5 |
 
-- 软件侧重构实测：0.03 s
+- 软件侧重构实测：0.04 s
 - 合计（现场计划 + 软件实测）：14.5 min → PASS
 
 ## 3. 断点接续
