@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-11-18 23:06:46",
+  "generated_at": "2026-11-18 23:29:24",
   "version": "1.0.0",
   "summary": {
     "total": 9,
     "passed": 9,
     "failed": 0,
-    "elapsed_s": 13.87
+    "elapsed_s": 17.47
   },
   "parameters": {
     "sample_step_mm": 1.0,
@@ -397,8 +397,8 @@
         "controller_id": "fanuc_0i_tf",
         "vericut_ctl_file": "fan0t.ctl",
         "line_count": 74,
-        "program_sha256": "9e083f1f3c8a980072c226e718c078e2a1795008ad1c47d97ec2f7b3b7ac0a64",
-        "code": "%\nO1001 (WP-SHAFT-3JAW - FANUC_0I_TF)\n( WORKPIECE: WP-SHAFT-3JAW 40Cr精密阶梯传动轴（三爪卡盘车削） )\n( CONTROLLER: FANUC Series 0i-TF Plus [G-Code System A Turning] | CTL: fan0t.ctl )\n( MATERIAL: 40Cr [GB/T 3077-2015 [40Cr合金结构钢调质态]] HB=245.0 )\n( CLAMPING: three_jaw_chuck | 三爪自定心液压卡盘（配硬爪/软爪轴向定位台） )\n( SAFETY: Z_SAFE=60.0 Z_R=2.5 DECEL=5.0 XY_CLR=13.0 )\n( BREAKPOINT_RESTART: Set #501=10/20/30/40 or Search N100/N200/N300/N400 [Q-TYPE Tool-Entry Restart + Sequence Number Search] )\nG21 G18 G40 G80 G99\nG54\n#501=10. (START OP: 10=ROUGH 20=FIN 30=GROOVE)\n#502=1. (PART COUNT ENABLED)\nIF [#501 EQ 20] GOTO 200\nIF [#501 EQ 30] GOTO 300\n\n(OP10 - FACE & G71 STEPPED OD ROUGHING)\nN100 G21 G18 G40 G80 G99 G54\nG28 U0. W0.\nT0101 M08\nG50 S2800\nG96 S135 M03\nG00 X100.0 Z60.0\nG00 X60.0 Z5.0 (RAPID APPROACH TO DECEL ZONE)\nG01 X58.0 Z0.0 F0.25 (FACING END STOCK TO Z0)\nG01 X-1.2 F0.18\nG00 Z2.5\nG00 X58.0\nG71 U2.50 R0.8\nG71 P110 Q190 U0.50 W0.15 F0.280\nN110 G00 G42 X26.0\nG01 X26.0 Z0.0 F0.15\nG01 X28.0 Z-1.0\nG01 Z-18.0\nG01 X38.0\nG01 X40.0 Z-19.0\nG01 Z-34.0\nG01 X48.0\nG01 X50.0 Z-35.0\nG01 Z-54.0\nN190 G01 G40 X58.0 Z-54.2\nG00 X100.0 Z60.0 M09\nG28 U0. W0.\nM05\nM01\n\n(OP20 - G70 PRECISION OD FINISH)\nN200 G21 G18 G40 G80 G99 G54\nG28 U0. W0.\nT0202 M08\nG50 S3200\nG96 S195 M03\nG00 X100.0 Z60.0\nG00 X58.0 Z2.5\nG70 P110 Q190 F0.105\nG00 X100.0 Z60.0 M09\nG28 U0. W0.\nM05\nM01\n\n(OP30 - PRECISION RELIEF GROOVE Z-17.0)\nN300 G21 G18 G40 G80 G99 G54\nG28 U0. W0.\nT0303 M08\nG97 S1052 M03\nG00 X100.0 Z60.0\nG00 X32.0 Z-17.0\nG01 X25.0 F0.075\nG04 X0.5\nG01 X32.0 F0.30\nG00 X100.0 Z60.0 M09\nG28 U0. W0.\nM05\nM30\n%\n",
+        "program_sha256": "8a8933a7e24921b8f6d1e545e259adbe2a6780634539a62c316a0cddf9838dcf",
+        "code": "%\nO1001 (WP-SHAFT-3JAW - FANUC_0I_TF)\n( WORKPIECE: WP-SHAFT-3JAW 40Cr精密阶梯传动轴（三爪卡盘车削） )\n( CONTROLLER: FANUC Series 0i-TF Plus [G-Code System A Turning] | CTL: fan0t.ctl )\n( MATERIAL: 40Cr [GB/T 3077-2015 [40Cr合金结构钢调质态]] HB=245.0 )\n( CLAMPING: three_jaw_chuck | 三爪自定心液压卡盘（配硬爪/软爪轴向定位台） )\n( SAFETY: Z_SAFE=60.0 Z_R=2.5 DECEL=5.0 XY_CLR=13.0 )\n( BREAKPOINT_RESTART: Set #501=10/20/30/40 or Search N100/N200/N300/N400 [Q-TYPE Tool-Entry Restart + Sequence Number Search] )\nG21 G18 G40 G80 G99\nG54\n#501=10. (START OP: 10=ROUGH 20=FIN 30=GROOVE)\n#502=1. (PART COUNT ENABLED)\nIF [#501 EQ 20] GOTO 200\nIF [#501 EQ 30] GOTO 300\n\n(OP10 - FACE & G71 STEPPED OD ROUGHING)\nN100 G21 G18 G40 G80 G99 G54\nG28 U0. W0.\nT0101 M08\nG50 S2800\nG96 S135 M03\nG00 X100.0 Z60.0\nG00 X60.0 Z5.0 (RAPID APPROACH TO DECEL ZONE)\nG01 X58.0 Z0.0 F0.25 (FACING END STOCK TO Z0)\nG01 X-1.2 F0.18\nG00 Z2.5\nG00 X58.0\nG71 U2.50 R0.8\nG71 P110 Q190 U0.50 W0.15 F0.280\nN110 G00 G42 X26.0\nG01 X26.0 Z0.0 F0.15\nG01 X27.997 Z-1.0\nG01 Z-18.0\nG01 X38.0\nG01 X40.010 Z-19.0\nG01 Z-34.0\nG01 X48.0\nG01 X49.985 Z-35.0\nG01 Z-54.0\nN190 G01 G40 X58.0 Z-54.2\nG00 X100.0 Z60.0 M09\nG28 U0. W0.\nM05\nM01\n\n(OP20 - G70 PRECISION OD FINISH)\nN200 G21 G18 G40 G80 G99 G54\nG28 U0. W0.\nT0202 M08\nG50 S3200\nG96 S195 M03\nG00 X100.0 Z60.0\nG00 X58.0 Z2.5\nG70 P110 Q190 F0.105\nG00 X100.0 Z60.0 M09\nG28 U0. W0.\nM05\nM01\n\n(OP30 - PRECISION RELIEF GROOVE Z-17.0)\nN300 G21 G18 G40 G80 G99 G54\nG28 U0. W0.\nT0303 M08\nG97 S1052 M03\nG00 X100.0 Z60.0\nG00 X32.0 Z-17.0\nG01 X25.0 F0.075\nG04 X0.5\nG01 X32.0 F0.30\nG00 X100.0 Z60.0 M09\nG28 U0. W0.\nM05\nM30\n%\n",
         "basis": "generated_from_handbook_grounded_archetype"
       },
       "instruction_set": {
@@ -480,7 +480,7 @@
         },
         "interference": {
           "summary": {
-            "frames": 1385,
+            "frames": 1384,
             "min_clearance_mm": 5.8,
             "min_clearance_non_exempt_mm": 5.8,
             "violations": 0,
@@ -490,7 +490,7 @@
           "min_clearance_mm": 5.8,
           "min_clearance_non_exempt_mm": 5.8,
           "min_clearance_where": {
-            "frame": 944,
+            "frame": 943,
             "line": 40,
             "op": 20,
             "keepout": "three_jaw_chuck_body",
@@ -505,7 +505,7 @@
             {
               "gate": "FRAME-SAMPLES",
               "status": "PASS",
-              "evidence": 1385,
+              "evidence": 1384,
               "rule": "逐帧采样数 > 0"
             },
             {
@@ -579,7 +579,7 @@
           "length_comp_activate": "T{t:02d}{h:02d}",
           "atc_retract_block": "G28 U0. W0."
         },
-        "frame_count": 1385,
+        "frame_count": 1384,
         "segment_count": 51,
         "basis": "measured_deterministic_emulator"
       },
@@ -1090,8 +1090,8 @@
         "controller_id": "siemens_840d_sl",
         "vericut_ctl_file": "sin840d.ctl",
         "line_count": 84,
-        "program_sha256": "49c9ac6bb222e4d7007704d30df3b0e6eb7cc90deb012942ece9225a70e3a296",
-        "code": ";%_N_WP_SHAFT_3JAW_MPF\n; WORKPIECE: WP-SHAFT-3JAW 40Cr精密阶梯传动轴（三爪卡盘车削）\n; CONTROLLER: SINUMERIK 840D sl [NCU 710.3B PN / Operate 4.95] | CTL: sin840d.ctl\n; MATERIAL: 40Cr [GB/T 3077-2015 [40Cr合金结构钢调质态]] HB=245.0\n; CLAMPING: three_jaw_chuck | 三爪自定心液压卡盘（配硬爪/软爪轴向定位台）\n; SAFETY: Z_SAFE=60.0 Z_R=2.5 DECEL=5.0 XY_CLR=13.0\n; BREAKPOINT_RESTART: Set R501=10/20/30/40 or Search N100/N200/N300/N400 [SERUPRO [Block Search Calculation at Contour + REPOSApproach]]\nN010 G18 G54 G71 G90 G40 G95\nN015 R10=10. ; ACTIVE_START_OP (10/20/30)\nN020 IF R10<=10 GOTOF N100\nN022 IF R10==20 GOTOF N200\nN024 IF R10>=30 GOTOF N300\n; --- OP10 FACE & ROUGH STEPPED SHAFT ---\nN100 G18 G54 G71 G90 G40 G95\nN105 SUPA G0 Z0 D0\nN110 T1 D1\nN112 M6\nN115 LIMS=2800\nN118 G96 S135 M3 M8\nN120 G0 X100.0 Z60.0\nN122 G0 X60.0 Z5.0\nN124 G1 X58.0 Z0.5 F0.30\nN126 G1 Z0.0 F0.25\nN128 G1 X-1.2 F0.18\nN130 G0 Z3.0\nN132 G0 X58.0\nN134 G0 X52.00 Z2.5\nN134_1 G1 Z-54.00 F0.280\nN134_2 G1 X54.00 Z-53.20\nN135 G0 X48.00 Z2.5\nN135_1 G1 Z-34.00 F0.280\nN135_2 G1 X50.00 Z-33.20\nN136 G0 X44.00 Z2.5\nN136_1 G1 Z-34.00 F0.280\nN136_2 G1 X46.00 Z-33.20\nN137 G0 X40.60 Z2.5\nN137_1 G1 Z-34.00 F0.280\nN137_2 G1 X42.60 Z-33.20\nN138 G0 X36.00 Z2.5\nN138_1 G1 Z-18.00 F0.280\nN138_2 G1 X38.00 Z-17.20\nN139 G0 X32.00 Z2.5\nN139_1 G1 Z-18.00 F0.280\nN139_2 G1 X34.00 Z-17.20\nN140 G0 X28.60 Z2.5\nN140_1 G1 Z-18.00 F0.280\nN140_2 G1 X30.60 Z-17.20\nN150 G0 X100.0 Z60.0 M9\nN152 M5\nN154 M1\n; --- OP20 FINISH SHAFT PROFILE ---\nN200 G18 G54 G71 G90 G40 G95\nN205 T2 D1\nN208 M6\nN210 LIMS=3200\nN212 G96 S195 M3 M8\nN215 G0 X60.0 Z5.0\nN218 G1 G42 X25.0 Z1.0 F0.20\nN220 G1 X26.0 Z0.0 F0.105\nN222 G1 X28.0 Z-1.0\nN224 G1 Z-18.0\nN226 G1 X38.0\nN228 G1 X40.0 Z-19.0\nN230 G1 Z-34.0\nN232 G1 X48.0\nN234 G1 X50.0 Z-35.0\nN236 G1 Z-54.0\nN238 G1 G40 X56.0 Z-54.2\nN240 G0 X100.0 Z60.0 M9\nN242 M5\nN244 M1\n; --- OP30 RELIEF GROOVE Z-17.0 ---\nN300 G18 G54 G71 G90 G40 G95\nN305 T3 D1\nN308 M6\nN310 G97 S1052 M3 M8\nN312 G0 X60.0 Z5.0\nN314 G0 X32.0 Z-17.0\nN316 G1 X25.0 F0.075\nN318 G4 F0.5\nN320 G1 X32.0 F0.30\nN322 G0 X100.0 Z60.0 M9\nN324 M5\nN326 M30\n",
+        "program_sha256": "4ca9ccab3ee02cbf1df41fc600e54f393fbed4e4849e22b5f02f21a601ac5fba",
+        "code": ";%_N_WP_SHAFT_3JAW_MPF\n; WORKPIECE: WP-SHAFT-3JAW 40Cr精密阶梯传动轴（三爪卡盘车削）\n; CONTROLLER: SINUMERIK 840D sl [NCU 710.3B PN / Operate 4.95] | CTL: sin840d.ctl\n; MATERIAL: 40Cr [GB/T 3077-2015 [40Cr合金结构钢调质态]] HB=245.0\n; CLAMPING: three_jaw_chuck | 三爪自定心液压卡盘（配硬爪/软爪轴向定位台）\n; SAFETY: Z_SAFE=60.0 Z_R=2.5 DECEL=5.0 XY_CLR=13.0\n; BREAKPOINT_RESTART: Set R501=10/20/30/40 or Search N100/N200/N300/N400 [SERUPRO [Block Search Calculation at Contour + REPOSApproach]]\nN010 G18 G54 G71 G90 G40 G95\nN015 R10=10. ; ACTIVE_START_OP (10/20/30)\nN020 IF R10<=10 GOTOF N100\nN022 IF R10==20 GOTOF N200\nN024 IF R10>=30 GOTOF N300\n; --- OP10 FACE & ROUGH STEPPED SHAFT ---\nN100 G18 G54 G71 G90 G40 G95\nN105 SUPA G0 Z0 D0\nN110 T1 D1\nN112 M6\nN115 LIMS=2800\nN118 G96 S135 M3 M8\nN120 G0 X100.0 Z60.0\nN122 G0 X60.0 Z5.0\nN124 G1 X58.0 Z0.5 F0.30\nN126 G1 Z0.0 F0.25\nN128 G1 X-1.2 F0.18\nN130 G0 Z3.0\nN132 G0 X58.0\nN134 G0 X52.00 Z2.5\nN134_1 G1 Z-54.00 F0.280\nN134_2 G1 X54.00 Z-53.20\nN135 G0 X48.00 Z2.5\nN135_1 G1 Z-34.00 F0.280\nN135_2 G1 X50.00 Z-33.20\nN136 G0 X44.00 Z2.5\nN136_1 G1 Z-34.00 F0.280\nN136_2 G1 X46.00 Z-33.20\nN137 G0 X40.60 Z2.5\nN137_1 G1 Z-34.00 F0.280\nN137_2 G1 X42.60 Z-33.20\nN138 G0 X36.00 Z2.5\nN138_1 G1 Z-18.00 F0.280\nN138_2 G1 X38.00 Z-17.20\nN139 G0 X32.00 Z2.5\nN139_1 G1 Z-18.00 F0.280\nN139_2 G1 X34.00 Z-17.20\nN140 G0 X28.60 Z2.5\nN140_1 G1 Z-18.00 F0.280\nN140_2 G1 X30.60 Z-17.20\nN150 G0 X100.0 Z60.0 M9\nN152 M5\nN154 M1\n; --- OP20 FINISH SHAFT PROFILE ---\nN200 G18 G54 G71 G90 G40 G95\nN205 T2 D1\nN208 M6\nN210 LIMS=3200\nN212 G96 S195 M3 M8\nN215 G0 X60.0 Z5.0\nN218 G1 G42 X25.0 Z1.0 F0.20\nN220 G1 X26.0 Z0.0 F0.105\nN222 G1 X27.997 Z-1.0\nN224 G1 Z-18.0\nN226 G1 X38.0\nN228 G1 X40.010 Z-19.0\nN230 G1 Z-34.0\nN232 G1 X48.0\nN234 G1 X49.985 Z-35.0\nN236 G1 Z-54.0\nN238 G1 G40 X56.0 Z-54.2\nN240 G0 X100.0 Z60.0 M9\nN242 M5\nN244 M1\n; --- OP30 RELIEF GROOVE Z-17.0 ---\nN300 G18 G54 G71 G90 G40 G95\nN305 T3 D1\nN308 M6\nN310 G97 S1052 M3 M8\nN312 G0 X60.0 Z5.0\nN314 G0 X32.0 Z-17.0\nN316 G1 X25.0 F0.075\nN318 G4 F0.5\nN320 G1 X32.0 F0.30\nN322 G0 X100.0 Z60.0 M9\nN324 M5\nN326 M30\n",
         "basis": "generated_from_handbook_grounded_archetype"
       },
       "instruction_set": {
@@ -1170,7 +1170,7 @@
         },
         "interference": {
           "summary": {
-            "frames": 1255,
+            "frames": 1254,
             "min_clearance_mm": 5.8,
             "min_clearance_non_exempt_mm": 5.8,
             "violations": 0,
@@ -1180,7 +1180,7 @@
           "min_clearance_mm": 5.8,
           "min_clearance_non_exempt_mm": 5.8,
           "min_clearance_where": {
-            "frame": 952,
+            "frame": 951,
             "line": 68,
             "op": 20,
             "keepout": "three_jaw_chuck_body",
@@ -1195,7 +1195,7 @@
             {
               "gate": "FRAME-SAMPLES",
               "status": "PASS",
-              "evidence": 1255,
+              "evidence": 1254,
               "rule": "逐帧采样数 > 0"
             },
             {
@@ -1268,7 +1268,7 @@
           "length_comp_activate": "D{h}",
           "atc_retract_block": "SUPA G0 Z0 D0"
         },
-        "frame_count": 1255,
+        "frame_count": 1254,
         "segment_count": 48,
         "basis": "measured_deterministic_emulator"
       },
@@ -1772,8 +1772,8 @@
         "controller_id": "hnc_8t",
         "vericut_ctl_file": "fan0t.ctl",
         "line_count": 74,
-        "program_sha256": "14658f916071c18bca9c34397bd6be46f578364dad22c49e68a1502067a51d6a",
-        "code": "%\nO1001 (WP-SHAFT-3JAW - HNC_8T)\n( WORKPIECE: WP-SHAFT-3JAW 40Cr精密阶梯传动轴（三爪卡盘车削） )\n( CONTROLLER: 华中数控 HNC-818T/808T Turning System | CTL: fan0t.ctl )\n( MATERIAL: 40Cr [GB/T 3077-2015 [40Cr合金结构钢调质态]] HB=245.0 )\n( CLAMPING: three_jaw_chuck | 三爪自定心液压卡盘（配硬爪/软爪轴向定位台） )\n( SAFETY: Z_SAFE=60.0 Z_R=2.5 DECEL=5.0 XY_CLR=13.0 )\n( BREAKPOINT_RESTART: Set #501=10/20/30/40 or Search N100/N200/N300/N400 [断点续切 + 对刀参数重构 [G96/S限速恢复]] )\nG21 G18 G40 G80 G95\nG54\n#501=10. (START OP: 10=ROUGH 20=FIN 30=GROOVE)\n#502=1. (PART COUNT ENABLED)\nIF [#501 EQ 20] GOTO 200\nIF [#501 EQ 30] GOTO 300\n\n(OP10 - FACE & G71 STEPPED OD ROUGHING)\nN100 G21 G18 G40 G80 G95 G54\nG28 U0. W0.\nT0101 M08\nG50 S2800\nG96 S135 M03\nG00 X100.0 Z60.0\nG00 X60.0 Z5.0 (RAPID APPROACH TO DECEL ZONE)\nG01 X58.0 Z0.0 F0.25 (FACING END STOCK TO Z0)\nG01 X-1.2 F0.18\nG00 Z2.5\nG00 X58.0\nG71 U2.50 R0.8\nG71 P110 Q190 U0.50 W0.15 F0.280\nN110 G00 G42 X26.0\nG01 X26.0 Z0.0 F0.15\nG01 X28.0 Z-1.0\nG01 Z-18.0\nG01 X38.0\nG01 X40.0 Z-19.0\nG01 Z-34.0\nG01 X48.0\nG01 X50.0 Z-35.0\nG01 Z-54.0\nN190 G01 G40 X58.0 Z-54.2\nG00 X100.0 Z60.0 M09\nG28 U0. W0.\nM05\nM01\n\n(OP20 - G70 PRECISION OD FINISH)\nN200 G21 G18 G40 G80 G95 G54\nG28 U0. W0.\nT0202 M08\nG50 S3200\nG96 S195 M03\nG00 X100.0 Z60.0\nG00 X58.0 Z2.5\nG70 P110 Q190 F0.105\nG00 X100.0 Z60.0 M09\nG28 U0. W0.\nM05\nM01\n\n(OP30 - PRECISION RELIEF GROOVE Z-17.0)\nN300 G21 G18 G40 G80 G95 G54\nG28 U0. W0.\nT0303 M08\nG97 S1052 M03\nG00 X100.0 Z60.0\nG00 X32.0 Z-17.0\nG01 X25.0 F0.075\nG04 X0.5\nG01 X32.0 F0.30\nG00 X100.0 Z60.0 M09\nG28 U0. W0.\nM05\nM30\n%\n",
+        "program_sha256": "f439970b6b6172dd5016a2eb520e313c5e7dfee78f29bf472a0df29b1b6600ea",
+        "code": "%\nO1001 (WP-SHAFT-3JAW - HNC_8T)\n( WORKPIECE: WP-SHAFT-3JAW 40Cr精密阶梯传动轴（三爪卡盘车削） )\n( CONTROLLER: 华中数控 HNC-818T/808T Turning System | CTL: fan0t.ctl )\n( MATERIAL: 40Cr [GB/T 3077-2015 [40Cr合金结构钢调质态]] HB=245.0 )\n( CLAMPING: three_jaw_chuck | 三爪自定心液压卡盘（配硬爪/软爪轴向定位台） )\n( SAFETY: Z_SAFE=60.0 Z_R=2.5 DECEL=5.0 XY_CLR=13.0 )\n( BREAKPOINT_RESTART: Set #501=10/20/30/40 or Search N100/N200/N300/N400 [断点续切 + 对刀参数重构 [G96/S限速恢复]] )\nG21 G18 G40 G80 G95\nG54\n#501=10. (START OP: 10=ROUGH 20=FIN 30=GROOVE)\n#502=1. (PART COUNT ENABLED)\nIF [#501 EQ 20] GOTO 200\nIF [#501 EQ 30] GOTO 300\n\n(OP10 - FACE & G71 STEPPED OD ROUGHING)\nN100 G21 G18 G40 G80 G95 G54\nG28 U0. W0.\nT0101 M08\nG50 S2800\nG96 S135 M03\nG00 X100.0 Z60.0\nG00 X60.0 Z5.0 (RAPID APPROACH TO DECEL ZONE)\nG01 X58.0 Z0.0 F0.25 (FACING END STOCK TO Z0)\nG01 X-1.2 F0.18\nG00 Z2.5\nG00 X58.0\nG71 U2.50 R0.8\nG71 P110 Q190 U0.50 W0.15 F0.280\nN110 G00 G42 X26.0\nG01 X26.0 Z0.0 F0.15\nG01 X27.997 Z-1.0\nG01 Z-18.0\nG01 X38.0\nG01 X40.010 Z-19.0\nG01 Z-34.0\nG01 X48.0\nG01 X49.985 Z-35.0\nG01 Z-54.0\nN190 G01 G40 X58.0 Z-54.2\nG00 X100.0 Z60.0 M09\nG28 U0. W0.\nM05\nM01\n\n(OP20 - G70 PRECISION OD FINISH)\nN200 G21 G18 G40 G80 G95 G54\nG28 U0. W0.\nT0202 M08\nG50 S3200\nG96 S195 M03\nG00 X100.0 Z60.0\nG00 X58.0 Z2.5\nG70 P110 Q190 F0.105\nG00 X100.0 Z60.0 M09\nG28 U0. W0.\nM05\nM01\n\n(OP30 - PRECISION RELIEF GROOVE Z-17.0)\nN300 G21 G18 G40 G80 G95 G54\nG28 U0. W0.\nT0303 M08\nG97 S1052 M03\nG00 X100.0 Z60.0\nG00 X32.0 Z-17.0\nG01 X25.0 F0.075\nG04 X0.5\nG01 X32.0 F0.30\nG00 X100.0 Z60.0 M09\nG28 U0. W0.\nM05\nM30\n%\n",
         "basis": "generated_from_handbook_grounded_archetype"
       },
       "instruction_set": {
@@ -1855,7 +1855,7 @@
         },
         "interference": {
           "summary": {
-            "frames": 1385,
+            "frames": 1384,
             "min_clearance_mm": 5.8,
             "min_clearance_non_exempt_mm": 5.8,
             "violations": 0,
@@ -1865,7 +1865,7 @@
           "min_clearance_mm": 5.8,
           "min_clearance_non_exempt_mm": 5.8,
           "min_clearance_where": {
-            "frame": 944,
+            "frame": 943,
             "line": 40,
             "op": 20,
             "keepout": "three_jaw_chuck_body",
@@ -1880,7 +1880,7 @@
             {
               "gate": "FRAME-SAMPLES",
               "status": "PASS",
-              "evidence": 1385,
+              "evidence": 1384,
               "rule": "逐帧采样数 > 0"
             },
             {
@@ -1953,7 +1953,7 @@
           "length_comp_activate": "T{t:02d}{h:02d}",
           "atc_retract_block": "G28 U0. W0."
         },
-        "frame_count": 1385,
+        "frame_count": 1384,
         "segment_count": 51,
         "basis": "measured_deterministic_emulator"
       },

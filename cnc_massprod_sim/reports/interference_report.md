@@ -1,15 +1,15 @@
 # 干涉检测报告（逐帧扫掠实测）
 
-生成：2026-11-18 23:06:46
+生成：2026-11-18 23:29:24
 口径：刀尖+刀轴+刀具/刀柄圆柱表面，对工件原型 KeepOut 盒体逐帧求有符号间隙；
 basis=measured（确定性几何实测，非 VERICUT 布尔材料去除）。
 现场仍需 VERICUT Auto-Diff 与首件试切确认。
 
 | 工件 | 方言 | 判定 | 帧数 | 最小间隙mm | 违规数 | 最危险夹具 |
 |---|---|---|---|---|---|---|
-| WP-SHAFT-3JAW | fanuc | PASS | 1385 | 5.8 | 0 | three_jaw_chuck_body |
-| WP-SHAFT-3JAW | siemens | PASS | 1255 | 5.8 | 0 | three_jaw_chuck_body |
-| WP-SHAFT-3JAW | hnc | PASS | 1385 | 5.8 | 0 | three_jaw_chuck_body |
+| WP-SHAFT-3JAW | fanuc | PASS | 1384 | 5.8 | 0 | three_jaw_chuck_body |
+| WP-SHAFT-3JAW | siemens | PASS | 1254 | 5.8 | 0 | three_jaw_chuck_body |
+| WP-SHAFT-3JAW | hnc | PASS | 1384 | 5.8 | 0 | three_jaw_chuck_body |
 | WP-MANIFOLD-VISE | fanuc | PASS | 6149 | 2.0 | 0 | vise_movable_jaw |
 | WP-MANIFOLD-VISE | siemens | PASS | 5653 | 2.0 | 0 | vise_movable_jaw |
 | WP-MANIFOLD-VISE | hnc | PASS | 6149 | 2.0 | 0 | vise_movable_jaw |
@@ -21,19 +21,19 @@ basis=measured（确定性几何实测，非 VERICUT 布尔材料去除）。
 
 | 工件 | 方言 | 判据 | 结果 | 证据 |
 |---|---|---|---|---|
-| WP-SHAFT-3JAW | fanuc | FRAME-SAMPLES | PASS | 1385 |
+| WP-SHAFT-3JAW | fanuc | FRAME-SAMPLES | PASS | 1384 |
 | WP-SHAFT-3JAW | fanuc | FIXTURE-COLLISION | PASS | 5.8 |
 | WP-SHAFT-3JAW | fanuc | HOLDER-CLEARANCE | PASS | 5.8 |
 | WP-SHAFT-3JAW | fanuc | MACHINE-OVERTRAVEL | PASS | {'violations': 0, 'limits': {'X': (-20.0, 220.0), 'Y': (-10.0, 10.0), 'Z': (-240 |
 | WP-SHAFT-3JAW | fanuc | RAPID-SAFE-HEIGHT | PASS | none |
 | WP-SHAFT-3JAW | fanuc | SPINDLE-ON-IN-CUT | PASS | {'cut_frames_spindle_off': 0} |
-| WP-SHAFT-3JAW | siemens | FRAME-SAMPLES | PASS | 1255 |
+| WP-SHAFT-3JAW | siemens | FRAME-SAMPLES | PASS | 1254 |
 | WP-SHAFT-3JAW | siemens | FIXTURE-COLLISION | PASS | 5.8 |
 | WP-SHAFT-3JAW | siemens | HOLDER-CLEARANCE | PASS | 5.8 |
 | WP-SHAFT-3JAW | siemens | MACHINE-OVERTRAVEL | PASS | {'violations': 0, 'limits': {'X': (-20.0, 220.0), 'Y': (-10.0, 10.0), 'Z': (-240 |
 | WP-SHAFT-3JAW | siemens | RAPID-SAFE-HEIGHT | PASS | none |
 | WP-SHAFT-3JAW | siemens | SPINDLE-ON-IN-CUT | PASS | {'cut_frames_spindle_off': 0} |
-| WP-SHAFT-3JAW | hnc | FRAME-SAMPLES | PASS | 1385 |
+| WP-SHAFT-3JAW | hnc | FRAME-SAMPLES | PASS | 1384 |
 | WP-SHAFT-3JAW | hnc | FIXTURE-COLLISION | PASS | 5.8 |
 | WP-SHAFT-3JAW | hnc | HOLDER-CLEARANCE | PASS | 5.8 |
 | WP-SHAFT-3JAW | hnc | MACHINE-OVERTRAVEL | PASS | {'violations': 0, 'limits': {'X': (-20.0, 220.0), 'Y': (-10.0, 10.0), 'Z': (-240 |
