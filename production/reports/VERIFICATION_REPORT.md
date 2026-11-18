@@ -1,6 +1,6 @@
 # 数控加工仿真系统验证报告 — AE-CI-258
 
-- 生成时间：2026-11-18 22:26:30
+- 生成时间：2026-11-18 22:35:46
 - 零件：航空发动机封闭式叶轮（TC11）
 - 毛坯：264.06×264.06×82.85 mm，包容块，唯一实例
 - 口径：所有结论标注 basis；未实测项写“未测”，不以估算冒充实测。
@@ -54,15 +54,15 @@
 
 | 工序 | 方言 | 机床 | 行数 | SHA256 | 审查 | 节拍(s) | 切削(s) | 坐标回读误差 |
 |---|---|---|---|---|---|---|---|---|
-| OP1 | fanuc | prod_5ax_fanuc_0imf | 182 | fea69c49d32d | PASS | 7336.5 | 7320.3 | 0.0 |
-| OP2 | fanuc | prod_5ax_fanuc_0imf | 1198 | 75294f341801 | PASS | 973.8 | 962.5 | 0.000494 |
-| OP3 | fanuc | prod_5ax_fanuc_0imf | 84 | 1e3632e8a293 | PASS | 3496.6 | 3477.4 | 0.0 |
-| OP1 | siemens | prod_5ax_siemens_840dsl | 174 | 474abd7dc42b | PASS | 7336.5 | 7320.3 | 0.0 |
-| OP2 | siemens | prod_5ax_siemens_840dsl | 1192 | c2a30a88d936 | PASS | 973.8 | 962.5 | 0.000494 |
-| OP3 | siemens | prod_5ax_siemens_840dsl | 74 | d7b8a1f18a30 | PASS | 3496.6 | 3477.4 | 0.0 |
-| OP1 | hnc | prod_5ax_hnc8 | 182 | 0159629509a6 | PASS | 7336.5 | 7320.3 | 0.0 |
-| OP2 | hnc | prod_5ax_hnc8 | 1198 | 2af7ca79663b | PASS | 973.8 | 962.5 | 0.000494 |
-| OP3 | hnc | prod_5ax_hnc8 | 84 | 8b505e15556d | PASS | 3496.6 | 3477.4 | 0.0 |
+| OP1 | fanuc | prod_5ax_fanuc_0imf | 182 | 5ce2857d0a01 | PASS | 7341.5 | 7320.3 | 0.0 |
+| OP2 | fanuc | prod_5ax_fanuc_0imf | 1198 | 44c438457d38 | PASS | 978.8 | 962.5 | 0.000494 |
+| OP3 | fanuc | prod_5ax_fanuc_0imf | 84 | d992e54c7312 | PASS | 3496.6 | 3477.4 | 0.0 |
+| OP1 | siemens | prod_5ax_siemens_840dsl | 174 | 71fd8106622e | PASS | 7336.5 | 7320.3 | 0.0 |
+| OP2 | siemens | prod_5ax_siemens_840dsl | 1192 | 7a3392fc5669 | PASS | 973.8 | 962.5 | 0.000494 |
+| OP3 | siemens | prod_5ax_siemens_840dsl | 74 | b7b849cff901 | PASS | 3496.6 | 3477.4 | 0.0 |
+| OP1 | hnc | prod_5ax_hnc8 | 182 | db360cd6f3d7 | PASS | 7341.5 | 7320.3 | 0.0 |
+| OP2 | hnc | prod_5ax_hnc8 | 1198 | 46aad6ed9d7e | PASS | 978.8 | 962.5 | 0.000494 |
+| OP3 | hnc | prod_5ax_hnc8 | 84 | 15a990b37c09 | PASS | 3496.6 | 3477.4 | 0.0 |
 
 ## 4. 扫掠碰撞 / 过切 / 超程（实测）
 
@@ -81,16 +81,16 @@
 
 - 撞机风险：**MEDIUM**（最小间隙 1.85 mm）
 - SPC：PASS，Cpk=1.8，超差 0 件（basis=simulated）
-- 批量：50 件，单件 196.8 min，预计 199.83 h，每刀 0.21 件
+- 批量：50 件，单件 196.9 min，预计 199.97 h，每刀 0.21 件（整批换刀 239 次）
 - 换产：14.5 min（目标 ≤15.0 min）→ PASS
 - 预警：4 条
 
-| 类型 | 等级 | 工序 | 数值 |
+| 类型 | 等级 | 对象 | 数值 |
 |---|---|---|---|
-| TOOL_WEAR | ALARM |  | 487.0 |
-| TOOL_WEAR | ALARM |  | 210.9 |
-| CYCLE_TARGET |  | OP1 |  |
-| CYCLE_TARGET |  | OP3 |  |
+| 刀具磨损 | ALARM | T1 | 487.0% |
+| 刀具磨损 | ALARM | T2 | 210.9% |
+| 节拍超目标 | WARN | OP1 | 7341.5s / 目标 7200s |
+| 节拍超目标 | WARN | OP3 | 3496.6s / 目标 2400s |
 
 ## 6. OPC UA
 

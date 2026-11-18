@@ -229,7 +229,8 @@ def _lower_od_blocks(p: Process, op: dict) -> List[Block]:
 def build_op1(p: Process) -> Program:
     op = p.op("OP1")
     return Program(p.part["id"], "OP1", 1001, "G54", [Operation(
-        "OP1", op["name"], p.tools[op["tool"]], int(op["rpm"]), op["mode"],
+        "OP1", "CIRCULAR PRE-FORM (CORNER REMOVAL, 1.5MM ALLOWANCE)",
+        p.tools[op["tool"]], int(op["rpm"]), op["mode"],
         float(op["feed_cut"]), float(op["feed_plunge"]), bool(op["coolant"]),
         _preform_blocks(p, op))])
 
@@ -237,7 +238,8 @@ def build_op1(p: Process) -> Program:
 def build_op2(p: Process) -> Program:
     op = p.op("OP2")
     return Program(p.part["id"], "OP2", 1002, "G54", [Operation(
-        "OP2", op["name"], p.tools[op["tool"]], int(op["rpm"]), op["mode"],
+        "OP2", "16 CLOSED PASSAGES 5-AXIS RTCP (D10 LOLLIPOP)",
+        p.tools[op["tool"]], int(op["rpm"]), op["mode"],
         float(op["feed_cut"]), float(op["feed_plunge"]), bool(op["coolant"]),
         _passage_blocks(p, op))])
 
@@ -248,10 +250,10 @@ def build_op3(p: Process) -> Program:
     t1 = p.tools[op["tool"]]
     t2 = p.tools[s["tool2"]]
     return Program(p.part["id"], "OP3", 1003, "G54", [
-        Operation("OP3-A", op["name"] + " / 背面面铣", t1, int(op["rpm"]), "3axis",
+        Operation("OP3-A", "BACK FACE 5MM", t1, int(op["rpm"]), "3axis",
                   float(op["feed_cut"]), float(op["feed_plunge"]), True,
                   _back_face_blocks(p, op)),
-        Operation("OP3-B", op["name"] + " / 下部外圆", t2, int(s["rpm2"]), "3axis",
+        Operation("OP3-B", "LOWER OD TO R129.03", t2, int(s["rpm2"]), "3axis",
                   float(s["feed_cut2"]), float(s["feed_plunge2"]), True,
                   _lower_od_blocks(p, op)),
     ])

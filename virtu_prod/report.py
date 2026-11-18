@@ -126,7 +126,8 @@ def write_reports(res: Dict, outdir: Path) -> Dict[str, str]:
 
     md += ["## 8. 诚实边界（必须随报告一起交付）", ""]
     md += res["limitations"]
-    md += [""]
+    md += ["", "> 未测项关闭计划（判据 / 器材 / 证据格式 / 回填映射）："
+              "`production/reports/UNMEASURED_VERIFICATION_PLAN.md`", ""]
 
     md += ["## 9. 结论", ""]
     md += [f"- 配置门：{res['config_summary']['verdict']}",
@@ -143,13 +144,17 @@ def write_reports(res: Dict, outdir: Path) -> Dict[str, str]:
           "> 每项均给出实测值与判据；未实测项明确标注。", ""]
     md += ["## A. 毛坯与余量", ""]
     st = res["stock"]
+    uniq = {c["check"]: c for c in res.get("stock_unique", [])}
+    uniq_ok = all(c["status"] == "PASS" for c in uniq.values()) if uniq else False
     md += [_tbl([["毛坯尺寸", "×".join(f"{v:g}" for v in st["size"]), "设计包络+侧3/顶3/底5", "PASS"],
                  ["毛坯形式", st["form"], "矩形包容块（禁止圆柱）", "PASS"],
                  ["底面倒角", f"{st['chamfer']}×45°", "SPEC §4.3", "PASS"],
                  ["粗加工余量", f"径向 {st['allow']['rough_radial']} / 轴向 {st['allow']['rough_axial']}", "0.8–2.5", "PASS"],
                  ["精加工余量", f"径向 {st['allow']['finish_radial']} / 轴向 {st['allow']['finish_axial']}", "0.15–0.5 / 0.1–0.4", "PASS"],
                  ["拐角余量", f"{st['allow']['corner']}", "0.3–1.5", "PASS"],
-                 ["毛坯唯一性", "1 组件 / 1 图元", "禁止多实例", "PASS"]],
+                 ["毛坯唯一性", "；".join(f"{k}:{v['status']}({v['evidence']})"
+                                        for k, v in uniq.items()) or "未测",
+                  "1 组件 / 1 图元", "PASS" if uniq_ok else "FAIL"]],
                 ["项", "值", "依据", "结果"]), ""]
     md += ["## B. 装夹与零点", ""]
     rows = []
@@ -166,7 +171,10 @@ def write_reports(res: Dict, outdir: Path) -> Dict[str, str]:
     md += ["## D. 安全与超程", ""]
     md += [_tbl([["安全高度 Z", f"{res['safety']['safe_z']} mm", "≥5", "PASS"],
                  ["快移减速区间", f"{res['safety']['rapid_reduction']} mm", "≥2", "PASS"],
-                 ["刀柄-毛坯最小间隙", f"{res['risk']['clearance_mm']} mm", "≥1", _status(res['verdicts']['collision'])],
+                 ["最小夹具间隙", f"{res.get('min_fixture')} mm", "≥0（无接触）",
+                  _status(res['verdicts']['collision'])],
+                 ["刀柄-毛坯最小间隙", f"{res.get('min_holder')} mm", "≥1",
+                  _status(res['verdicts']['collision'])],
                  ["机床行程", res["verdicts"]["travel"], "刀尖点全部在行程内", res["verdicts"]["travel"]],
                  ["B/C 限位", res["safety"]["rotary"], "硬限位", "PASS"]],
                 ["项", "值", "判据", "结果"]), ""]

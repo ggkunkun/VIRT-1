@@ -114,7 +114,7 @@ class Emitter:
             tag = "FANUC 0i" if self.d == "fanuc" else "HNC-8"
             self.lines.append("%")
             self.lines.append(f"O{self.prog.number:04d} ({self.prog.part_id} / {self.prog.op_id})")
-            self.comment(f"CONTROLLER {tag} MACHINE {self.m['label']}")
+            self.comment(f"CONTROLLER {tag} ({self.m.get('controller', '')})")
             self.comment(f"PART {self.prog.part_id} MATERIAL {self.stock['material']} "
                          f"STOCK {self.stock['size'][0]:g}X{self.stock['size'][1]:g}X"
                          f"{self.stock['size'][2]:g}")

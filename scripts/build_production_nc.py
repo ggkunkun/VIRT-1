@@ -28,7 +28,7 @@ RIG_NC = Path(r"E:\vericut_impeller_run\impeller.nc")
 
 def runtime(m) -> Dict:
     return {
-        "label": m.label, "dialect": m.dialect,
+        "label": m.label, "controller": m.controller, "dialect": m.dialect,
         "safe_z": 10.0, "tc_z": m.tool_change_point["z"],
         "tc_x": m.tool_change_point["x"], "tc_y": m.tool_change_point["y"],
         "travel_mm": {k: list(v) for k, v in m.travel_mm.items()},
@@ -193,6 +193,14 @@ def main() -> int:
     spc_demo = assurance.simulated_spc_demo(tol, -tol)
     batch = assurance.batch_plan(int(p.production["batch_size"]), op_cycle, wear)
 
+    # 毛坯唯一性（复用场景物理校验器的 G-UNIQUE）
+    import importlib.util
+    spec_v = importlib.util.spec_from_file_location(
+        "verify_scene_physics", ROOT / "scripts" / "verify_scene_physics.py")
+    vsp = importlib.util.module_from_spec(spec_v)
+    spec_v.loader.exec_module(vsp)
+    stock_unique = vsp.stock_uniqueness(PROJ)
+
     t0 = time.perf_counter()
     p2 = config.load()
     for pr in programs.build_all(p2):
@@ -261,6 +269,11 @@ def main() -> int:
         "programs": results_programs,
         "audits": audits, "violations": violations,
         "wear": wear, "risk": risk,
+        "stock_unique": stock_unique,
+        "min_fixture": min([v for v in (a["min_clearance"]["fixture"] for a in audits)
+                            if v is not None], default=None),
+        "min_holder": min([v for v in (a["min_clearance"]["stock_holder"] for a in audits)
+                           if v is not None], default=None),
         "op_cycle_s": op_cycle, "op_cut_s": op_cut,
         "spc": {"stats": spc_demo["stats"], "samples": spc_demo["samples"]},
         "batch": batch, "changeover": chg, "warnings": warns, "opcua": ocs,
