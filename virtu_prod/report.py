@@ -91,15 +91,25 @@ def write_reports(res: Dict, outdir: Path) -> Dict[str, str]:
            f"{res['spc']['stats'].get('cpk')}，超差 {res['spc']['stats'].get('out_of_tolerance')} 件"
            f"（basis={res['spc']['stats'].get('basis')}）",
            f"- 批量：{res['batch']['batch_size']} 件，单件 {res['batch']['cycle_per_part_min']} min，"
-           f"预计 {res['batch']['total_h']} h，每刀 {res['batch']['parts_per_tool_change']} 件",
+           f"预计 {res['batch']['total_h']} h，每刀 {res['batch']['parts_per_tool_change']} 件"
+           f"（整批换刀 {res['batch']['tool_changes']} 次）",
            f"- 换产：{res['changeover']['total_min']} min（目标 "
            f"≤{res['changeover']['target_min']} min）→ {res['changeover']['verdict']}",
            f"- 预警：{res['warnings']['count']} 条", ""]
     if res["warnings"]["alerts"]:
-        md += [_tbl([[a["type"], a.get("level", ""), a.get("op", ""),
-                      a.get("wear_pct", a.get("clearance_mm", a.get("cpk", "")))]
-                     for a in res["warnings"]["alerts"]],
-                    ["类型", "等级", "工序", "数值"]), ""]
+        rows = []
+        for a in res["warnings"]["alerts"]:
+            if a["type"] == "TOOL_WEAR":
+                rows.append(["刀具磨损", a.get("level"), a.get("tool"), f"{a.get('wear_pct')}%"])
+            elif a["type"] == "CYCLE_TARGET":
+                rows.append(["节拍超目标", "WARN", a.get("op"),
+                             f"{a.get('actual_s')}s / 目标 {a.get('target_s')}s"])
+            elif a["type"] == "COLLISION_RISK":
+                rows.append(["撞机风险", a.get("level"), "全部工序", f"{a.get('clearance_mm')} mm"])
+            else:
+                rows.append([a.get("type"), a.get("level", ""), a.get("op", ""),
+                             a.get("cpk", "")])
+        md += [_tbl(rows, ["类型", "等级", "对象", "数值"]), ""]
 
     md += ["## 6. OPC UA", ""]
     oc = res["opcua"]
