@@ -384,6 +384,7 @@ def select_machine_and_stock(
             "machine_id": machine.get("machine_id"),
             "machine_class": machine.get("machine_class"),
             "controller": machine.get("controller"),
+            "post_dialect": machine.get("post_dialect"),
             "feasible_for_planning": not hard_reasons,
             "production_ready": not hard_reasons and not production_blockers and evidence_ok,
             "reasons": sorted(set(reasons)),

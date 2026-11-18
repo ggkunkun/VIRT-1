@@ -12,7 +12,7 @@ from contextlib import contextmanager
 from pathlib import Path
 from typing import Any, Dict, Iterator, Optional
 
-DEFAULT_LOG_ROOT = Path(os.environ.get("CAM_AUTOGEN_LOG_ROOT", Path(__file__).resolve().parents[1] / "runs" / "cam_autogen"))
+DEFAULT_LOG_ROOT = Path(os.environ.get("CAM_AUTOGEN_LOG_ROOT", Path(__file__).resolve().parents[2] / "runs" / "cam_autogen"))
 
 
 def _jsonable(obj: Any) -> Any:

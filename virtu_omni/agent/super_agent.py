@@ -927,11 +927,16 @@ class VirtuSuperAgent:
             from virtu_omni.manufacturing.nc_audit import audit_nc_capability
 
             selected_machine = (machine_selection or {}).get("selected_machine") or {}
-            multi_axis_dialect = str(
-                ctx.get("dialect") or selected_machine.get("post_dialect") or "fanuc"
-            ).lower()
-            if multi_axis_dialect not in ("fanuc", "siemens", "heidenhain"):
-                multi_axis_dialect = "fanuc"
+            raw_dialect = str(ctx.get("dialect") or selected_machine.get("post_dialect") or "").lower()
+            if not raw_dialect:
+                ctrl = str(selected_machine.get("controller") or "").lower()
+                if "siemens" in ctrl or "sinumerik" in ctrl or "840d" in ctrl:
+                    raw_dialect = "siemens"
+                elif "heidenhain" in ctrl or "tnc" in ctrl:
+                    raw_dialect = "heidenhain"
+                else:
+                    raw_dialect = "fanuc"
+            multi_axis_dialect = raw_dialect if raw_dialect in ("fanuc", "siemens", "heidenhain") else "fanuc"
             rotary_axes = ctx.get("rotary_axes")
             variant = str(ctx.get("variant") or "default")
             gen_spec = ctx.get("spec") if isinstance(ctx.get("spec"), dict) else (spec_dict or {})
