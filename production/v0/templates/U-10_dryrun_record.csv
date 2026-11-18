@@ -1,0 +1,10 @@
+﻿程序,控制器,报警数,超程数,最大主轴负载(%),急停停止时间(s),门锁测试,结论(PASS/FAIL),签字
+AE-CI-258_OP1,fanuc,,,,,,,
+AE-CI-258_OP1,siemens,,,,,,,
+AE-CI-258_OP1,hnc,,,,,,,
+AE-CI-258_OP2,fanuc,,,,,,,
+AE-CI-258_OP2,siemens,,,,,,,
+AE-CI-258_OP2,hnc,,,,,,,
+AE-CI-258_OP3,fanuc,,,,,,,
+AE-CI-258_OP3,siemens,,,,,,,
+AE-CI-258_OP3,hnc,,,,,,,

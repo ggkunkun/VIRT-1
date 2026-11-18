@@ -1,6 +1,6 @@
 # 数控加工仿真系统验证报告 — AE-CI-258
 
-- 生成时间：2026-11-18 22:42:27
+- 生成时间：2026-11-18 22:46:04
 - 零件：航空发动机封闭式叶轮（TC11）
 - 毛坯：264.06×264.06×82.85 mm，包容块，唯一实例
 - 口径：所有结论标注 basis；未实测项写“未测”，不以估算冒充实测。
@@ -54,15 +54,15 @@
 
 | 工序 | 方言 | 机床 | 行数 | SHA256 | 审查 | 节拍(s) | 切削(s) | 坐标回读误差 |
 |---|---|---|---|---|---|---|---|---|
-| OP1 | fanuc | prod_5ax_fanuc_0imf | 182 | 5ce2857d0a01 | PASS | 7341.5 | 7320.3 | 0.0 |
-| OP2 | fanuc | prod_5ax_fanuc_0imf | 1198 | 44c438457d38 | PASS | 978.8 | 962.5 | 0.000494 |
-| OP3 | fanuc | prod_5ax_fanuc_0imf | 84 | d992e54c7312 | PASS | 3496.6 | 3477.4 | 0.0 |
-| OP1 | siemens | prod_5ax_siemens_840dsl | 174 | 71fd8106622e | PASS | 7336.5 | 7320.3 | 0.0 |
-| OP2 | siemens | prod_5ax_siemens_840dsl | 1192 | 7a3392fc5669 | PASS | 973.8 | 962.5 | 0.000494 |
-| OP3 | siemens | prod_5ax_siemens_840dsl | 74 | b7b849cff901 | PASS | 3496.6 | 3477.4 | 0.0 |
-| OP1 | hnc | prod_5ax_hnc8 | 182 | db360cd6f3d7 | PASS | 7341.5 | 7320.3 | 0.0 |
-| OP2 | hnc | prod_5ax_hnc8 | 1198 | 46aad6ed9d7e | PASS | 978.8 | 962.5 | 0.000494 |
-| OP3 | hnc | prod_5ax_hnc8 | 84 | 15a990b37c09 | PASS | 3496.6 | 3477.4 | 0.0 |
+| OP1 | fanuc | prod_5ax_fanuc_0imf | 182 | 2eb63a61be21 | PASS | 7341.5 | 7320.3 | 0.0 |
+| OP2 | fanuc | prod_5ax_fanuc_0imf | 1198 | 61cc29a9f652 | PASS | 978.8 | 962.5 | 0.000494 |
+| OP3 | fanuc | prod_5ax_fanuc_0imf | 84 | 662ecc225629 | PASS | 3496.6 | 3477.4 | 0.0 |
+| OP1 | siemens | prod_5ax_siemens_840dsl | 174 | f0a23e4d46c4 | PASS | 7336.5 | 7320.3 | 0.0 |
+| OP2 | siemens | prod_5ax_siemens_840dsl | 1192 | 5a48ec38e9c2 | PASS | 973.8 | 962.5 | 0.000494 |
+| OP3 | siemens | prod_5ax_siemens_840dsl | 74 | dfbd98bbcc86 | PASS | 3496.6 | 3477.4 | 0.0 |
+| OP1 | hnc | prod_5ax_hnc8 | 182 | 0a4b3e0517d5 | PASS | 7341.5 | 7320.3 | 0.0 |
+| OP2 | hnc | prod_5ax_hnc8 | 1198 | 2a89bceb9a23 | PASS | 978.8 | 962.5 | 0.000494 |
+| OP3 | hnc | prod_5ax_hnc8 | 84 | 8d00c7aef3a7 | PASS | 3496.6 | 3477.4 | 0.0 |
 
 ## 4. 扫掠碰撞 / 过切 / 超程（实测）
 

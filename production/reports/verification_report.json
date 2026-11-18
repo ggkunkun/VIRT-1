@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-18 22:42:27",
+  "generated_at": "2026-11-18 22:46:04",
   "part": {
     "id": "AE-CI-258",
     "name": "航空发动机封闭式叶轮",
@@ -329,7 +329,7 @@
       "machine": "prod_5ax_fanuc_0imf",
       "nc_file": "D:\\Virtu模型\\production\\nc\\prod_5ax_fanuc_0imf\\AE-CI-258_OP1.nc",
       "lines": 182,
-      "sha256": "5ce2857d0a0116be40a9d2b9146c302c47fa5b3c78e703959e39004829120585",
+      "sha256": "2eb63a61be21f3571bc44a165fbdb42a66f161a3e9c7b21578cf7446ad4d557d",
       "lint": {
         "checks": [
           {
@@ -519,7 +519,7 @@
       "machine": "prod_5ax_fanuc_0imf",
       "nc_file": "D:\\Virtu模型\\production\\nc\\prod_5ax_fanuc_0imf\\AE-CI-258_OP2.nc",
       "lines": 1198,
-      "sha256": "44c438457d38d8eac5dc6ab45597cd5fedfcb215181d985e215e065cc49857c0",
+      "sha256": "61cc29a9f6521d5cbc04bee8a133234a4e5da078b92af6aa4b06949d1a4110a7",
       "lint": {
         "checks": [
           {
@@ -735,7 +735,7 @@
       "machine": "prod_5ax_fanuc_0imf",
       "nc_file": "D:\\Virtu模型\\production\\nc\\prod_5ax_fanuc_0imf\\AE-CI-258_OP3.nc",
       "lines": 84,
-      "sha256": "d992e54c7312cd6fca4fcb0dce56dc2b7d7c3d6b58b60b278d6649bba42daa37",
+      "sha256": "662ecc225629ba5c6a8cdfe998d6f23d99384c98bf5a4060df8410d7ea44cf16",
       "lint": {
         "checks": [
           {
@@ -935,7 +935,7 @@
       "machine": "prod_5ax_siemens_840dsl",
       "nc_file": "D:\\Virtu模型\\production\\nc\\prod_5ax_siemens_840dsl\\AE-CI-258_OP1.nc",
       "lines": 174,
-      "sha256": "71fd8106622e4a00c1889023fd9d4f2434a661309f15899576d36b483c187bc1",
+      "sha256": "f0a23e4d46c4f69ce12ca5fbb2bf5fce64ff44976a87c00574980c3023b0b8bb",
       "lint": {
         "checks": [
           {
@@ -1125,7 +1125,7 @@
       "machine": "prod_5ax_siemens_840dsl",
       "nc_file": "D:\\Virtu模型\\production\\nc\\prod_5ax_siemens_840dsl\\AE-CI-258_OP2.nc",
       "lines": 1192,
-      "sha256": "7a3392fc5669f27b75f17f3c49a1950bd83de9913bc55af6e4220c234282c95c",
+      "sha256": "5a48ec38e9c25b1e95a4cba8d00ae32bf9e33a21cc1ec30a552085b8b812e284",
       "lint": {
         "checks": [
           {
@@ -1315,7 +1315,7 @@
       "machine": "prod_5ax_siemens_840dsl",
       "nc_file": "D:\\Virtu模型\\production\\nc\\prod_5ax_siemens_840dsl\\AE-CI-258_OP3.nc",
       "lines": 74,
-      "sha256": "b7b849cff901df5d10660ba2aba7361a32d588f28640259c75a333463db58e83",
+      "sha256": "dfbd98bbcc867e7b948d0157de8b68c876a5a5a7e9bbee1bc1b5835aa1f8feca",
       "lint": {
         "checks": [
           {
@@ -1515,7 +1515,7 @@
       "machine": "prod_5ax_hnc8",
       "nc_file": "D:\\Virtu模型\\production\\nc\\prod_5ax_hnc8\\AE-CI-258_OP1.nc",
       "lines": 182,
-      "sha256": "db360cd6f3d7398988eae6e9bcb66cc4068ef89a8704751836e872e5c142792b",
+      "sha256": "0a4b3e0517d54fdc6beb969e92315990116b8c8bbd5293a282789a4203bd2d3b",
       "lint": {
         "checks": [
           {
@@ -1705,7 +1705,7 @@
       "machine": "prod_5ax_hnc8",
       "nc_file": "D:\\Virtu模型\\production\\nc\\prod_5ax_hnc8\\AE-CI-258_OP2.nc",
       "lines": 1198,
-      "sha256": "46aad6ed9d7ed9bcc90a035b1ab9c3bf6f041f44b6abd9ef946482271b968dcd",
+      "sha256": "2a89bceb9a2348cca97208ede8a2053d8d70939b34e0f175a07565df89911ee3",
       "lint": {
         "checks": [
           {
@@ -1921,7 +1921,7 @@
       "machine": "prod_5ax_hnc8",
       "nc_file": "D:\\Virtu模型\\production\\nc\\prod_5ax_hnc8\\AE-CI-258_OP3.nc",
       "lines": 84,
-      "sha256": "15a990b37c0930f465ee36f9378b874c7712245c1de671b758633db022c74423",
+      "sha256": "8d00c7aef3a7a1b2f516aa49e00efcc01e10a68016eae6ee3ad1063f71857bca",
       "lint": {
         "checks": [
           {
@@ -2498,7 +2498,7 @@
         "planned_min": 1.5
       }
     ],
-    "software_reconfig_s": 0.06,
+    "software_reconfig_s": 0.08,
     "on_site_planned_min": 14.5,
     "total_min": 14.5,
     "target_min": 15.0,
@@ -2630,21 +2630,21 @@
     "programs": {
       "prod_5ax_fanuc_0imf/OP1": {
         "file": "D:\\Virtu模型\\production\\nc\\prod_5ax_fanuc_0imf\\AE-CI-258_OP1.nc",
-        "sha256": "5ce2857d0a0116be40a9d2b9146c302c47fa5b3c78e703959e39004829120585",
+        "sha256": "2eb63a61be21f3571bc44a165fbdb42a66f161a3e9c7b21578cf7446ad4d557d",
         "restart": {
           "OP1": 40
         }
       },
       "prod_5ax_fanuc_0imf/OP2": {
         "file": "D:\\Virtu模型\\production\\nc\\prod_5ax_fanuc_0imf\\AE-CI-258_OP2.nc",
-        "sha256": "44c438457d38d8eac5dc6ab45597cd5fedfcb215181d985e215e065cc49857c0",
+        "sha256": "61cc29a9f6521d5cbc04bee8a133234a4e5da078b92af6aa4b06949d1a4110a7",
         "restart": {
           "OP2": 40
         }
       },
       "prod_5ax_fanuc_0imf/OP3": {
         "file": "D:\\Virtu模型\\production\\nc\\prod_5ax_fanuc_0imf\\AE-CI-258_OP3.nc",
-        "sha256": "d992e54c7312cd6fca4fcb0dce56dc2b7d7c3d6b58b60b278d6649bba42daa37",
+        "sha256": "662ecc225629ba5c6a8cdfe998d6f23d99384c98bf5a4060df8410d7ea44cf16",
         "restart": {
           "OP3-A": 40,
           "OP3-B": 420
@@ -2652,21 +2652,21 @@
       },
       "prod_5ax_siemens_840dsl/OP1": {
         "file": "D:\\Virtu模型\\production\\nc\\prod_5ax_siemens_840dsl\\AE-CI-258_OP1.nc",
-        "sha256": "71fd8106622e4a00c1889023fd9d4f2434a661309f15899576d36b483c187bc1",
+        "sha256": "f0a23e4d46c4f69ce12ca5fbb2bf5fce64ff44976a87c00574980c3023b0b8bb",
         "restart": {
           "OP1": 30
         }
       },
       "prod_5ax_siemens_840dsl/OP2": {
         "file": "D:\\Virtu模型\\production\\nc\\prod_5ax_siemens_840dsl\\AE-CI-258_OP2.nc",
-        "sha256": "7a3392fc5669f27b75f17f3c49a1950bd83de9913bc55af6e4220c234282c95c",
+        "sha256": "5a48ec38e9c25b1e95a4cba8d00ae32bf9e33a21cc1ec30a552085b8b812e284",
         "restart": {
           "OP2": 30
         }
       },
       "prod_5ax_siemens_840dsl/OP3": {
         "file": "D:\\Virtu模型\\production\\nc\\prod_5ax_siemens_840dsl\\AE-CI-258_OP3.nc",
-        "sha256": "b7b849cff901df5d10660ba2aba7361a32d588f28640259c75a333463db58e83",
+        "sha256": "dfbd98bbcc867e7b948d0157de8b68c876a5a5a7e9bbee1bc1b5835aa1f8feca",
         "restart": {
           "OP3-A": 30,
           "OP3-B": 390
@@ -2674,21 +2674,21 @@
       },
       "prod_5ax_hnc8/OP1": {
         "file": "D:\\Virtu模型\\production\\nc\\prod_5ax_hnc8\\AE-CI-258_OP1.nc",
-        "sha256": "db360cd6f3d7398988eae6e9bcb66cc4068ef89a8704751836e872e5c142792b",
+        "sha256": "0a4b3e0517d54fdc6beb969e92315990116b8c8bbd5293a282789a4203bd2d3b",
         "restart": {
           "OP1": 40
         }
       },
       "prod_5ax_hnc8/OP2": {
         "file": "D:\\Virtu模型\\production\\nc\\prod_5ax_hnc8\\AE-CI-258_OP2.nc",
-        "sha256": "46aad6ed9d7ed9bcc90a035b1ab9c3bf6f041f44b6abd9ef946482271b968dcd",
+        "sha256": "2a89bceb9a2348cca97208ede8a2053d8d70939b34e0f175a07565df89911ee3",
         "restart": {
           "OP2": 40
         }
       },
       "prod_5ax_hnc8/OP3": {
         "file": "D:\\Virtu模型\\production\\nc\\prod_5ax_hnc8\\AE-CI-258_OP3.nc",
-        "sha256": "15a990b37c0930f465ee36f9378b874c7712245c1de671b758633db022c74423",
+        "sha256": "8d00c7aef3a7a1b2f516aa49e00efcc01e10a68016eae6ee3ad1063f71857bca",
         "restart": {
           "OP3-A": 40,
           "OP3-B": 420
@@ -2697,5 +2697,5 @@
     },
     "hashes": {}
   },
-  "elapsed_s": 81.8
+  "elapsed_s": 79.0
 }

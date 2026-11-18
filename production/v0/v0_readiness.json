@@ -1,0 +1,441 @@
+{
+  "generated_at": "2026-11-18T22:46:41",
+  "gate": "OPEN（软件侧就绪，待现场签字）",
+  "checks": [
+    {
+      "id": "A1",
+      "item": "文档：未测项验证计划",
+      "status": "PASS",
+      "evidence": {
+        "file": "D:\\Virtu模型\\production\\reports\\UNMEASURED_VERIFICATION_PLAN.md",
+        "bytes": 15330
+      },
+      "owner": "工艺",
+      "action": ""
+    },
+    {
+      "id": "A2",
+      "item": "文档：仿真验证报告",
+      "status": "PASS",
+      "evidence": {
+        "file": "D:\\Virtu模型\\production\\reports\\VERIFICATION_REPORT.md",
+        "bytes": 8169
+      },
+      "owner": "工艺",
+      "action": ""
+    },
+    {
+      "id": "A3",
+      "item": "文档：参数校验清单",
+      "status": "PASS",
+      "evidence": {
+        "file": "D:\\Virtu模型\\production\\reports\\PARAMETER_CHECKLIST.md",
+        "bytes": 2163
+      },
+      "owner": "工艺",
+      "action": ""
+    },
+    {
+      "id": "A4",
+      "item": "文档：操作与换产手册",
+      "status": "PASS",
+      "evidence": {
+        "file": "D:\\Virtu模型\\production\\reports\\OPERATION_CHANGEOVER_MANUAL.md",
+        "bytes": 3353
+      },
+      "owner": "工艺",
+      "action": ""
+    },
+    {
+      "id": "A5",
+      "item": "NC 清单 nc_manifest.json",
+      "status": "PASS",
+      "evidence": {
+        "entries": 9
+      },
+      "owner": "工艺",
+      "action": ""
+    },
+    {
+      "id": "B-prod_5ax_fanuc_0imf-OP1",
+      "item": "prod_5ax_fanuc_0imf/OP1 程序包",
+      "status": "PASS",
+      "evidence": {
+        "sha256_match": true,
+        "ascii": true,
+        "no_bom": true,
+        "crlf": true,
+        "size": 4814,
+        "lint": "PASS",
+        "program_id": "1001",
+        "restart": {
+          "OP1": 40
+        }
+      },
+      "owner": "工艺",
+      "action": ""
+    },
+    {
+      "id": "B-prod_5ax_fanuc_0imf-OP2",
+      "item": "prod_5ax_fanuc_0imf/OP2 程序包",
+      "status": "PASS",
+      "evidence": {
+        "sha256_match": true,
+        "ascii": true,
+        "no_bom": true,
+        "crlf": true,
+        "size": 65442,
+        "lint": "PASS",
+        "program_id": "1002",
+        "restart": {
+          "OP2": 40
+        }
+      },
+      "owner": "工艺",
+      "action": ""
+    },
+    {
+      "id": "B-prod_5ax_fanuc_0imf-OP3",
+      "item": "prod_5ax_fanuc_0imf/OP3 程序包",
+      "status": "PASS",
+      "evidence": {
+        "sha256_match": true,
+        "ascii": true,
+        "no_bom": true,
+        "crlf": true,
+        "size": 2094,
+        "lint": "PASS",
+        "program_id": "1003",
+        "restart": {
+          "OP3-A": 40,
+          "OP3-B": 420
+        }
+      },
+      "owner": "工艺",
+      "action": ""
+    },
+    {
+      "id": "B-prod_5ax_siemens_840dsl-OP1",
+      "item": "prod_5ax_siemens_840dsl/OP1 程序包",
+      "status": "PASS",
+      "evidence": {
+        "sha256_match": true,
+        "ascii": true,
+        "no_bom": true,
+        "crlf": true,
+        "size": 5238,
+        "lint": "PASS",
+        "program_id": "AE-CI-258_OP1",
+        "restart": {
+          "OP1": 30
+        }
+      },
+      "owner": "工艺",
+      "action": ""
+    },
+    {
+      "id": "B-prod_5ax_siemens_840dsl-OP2",
+      "item": "prod_5ax_siemens_840dsl/OP2 程序包",
+      "status": "PASS",
+      "evidence": {
+        "sha256_match": true,
+        "ascii": true,
+        "no_bom": true,
+        "crlf": true,
+        "size": 81373,
+        "lint": "PASS",
+        "program_id": "AE-CI-258_OP2",
+        "restart": {
+          "OP2": 30
+        }
+      },
+      "owner": "工艺",
+      "action": ""
+    },
+    {
+      "id": "B-prod_5ax_siemens_840dsl-OP3",
+      "item": "prod_5ax_siemens_840dsl/OP3 程序包",
+      "status": "PASS",
+      "evidence": {
+        "sha256_match": true,
+        "ascii": true,
+        "no_bom": true,
+        "crlf": true,
+        "size": 2025,
+        "lint": "PASS",
+        "program_id": "AE-CI-258_OP3",
+        "restart": {
+          "OP3-A": 30,
+          "OP3-B": 390
+        }
+      },
+      "owner": "工艺",
+      "action": ""
+    },
+    {
+      "id": "B-prod_5ax_hnc8-OP1",
+      "item": "prod_5ax_hnc8/OP1 程序包",
+      "status": "PASS",
+      "evidence": {
+        "sha256_match": true,
+        "ascii": true,
+        "no_bom": true,
+        "crlf": true,
+        "size": 4805,
+        "lint": "PASS",
+        "program_id": "1001",
+        "restart": {
+          "OP1": 40
+        }
+      },
+      "owner": "工艺",
+      "action": ""
+    },
+    {
+      "id": "B-prod_5ax_hnc8-OP2",
+      "item": "prod_5ax_hnc8/OP2 程序包",
+      "status": "PASS",
+      "evidence": {
+        "sha256_match": true,
+        "ascii": true,
+        "no_bom": true,
+        "crlf": true,
+        "size": 65433,
+        "lint": "PASS",
+        "program_id": "1002",
+        "restart": {
+          "OP2": 40
+        }
+      },
+      "owner": "工艺",
+      "action": ""
+    },
+    {
+      "id": "B-prod_5ax_hnc8-OP3",
+      "item": "prod_5ax_hnc8/OP3 程序包",
+      "status": "PASS",
+      "evidence": {
+        "sha256_match": true,
+        "ascii": true,
+        "no_bom": true,
+        "crlf": true,
+        "size": 2085,
+        "lint": "PASS",
+        "program_id": "1003",
+        "restart": {
+          "OP3-A": 40,
+          "OP3-B": 420
+        }
+      },
+      "owner": "工艺",
+      "action": ""
+    },
+    {
+      "id": "B-PROGNO-prod_5ax_fanuc_0imf",
+      "item": "prod_5ax_fanuc_0imf 程序标识唯一",
+      "status": "PASS",
+      "evidence": {
+        "program_ids": [
+          "1001",
+          "1002",
+          "1003"
+        ]
+      },
+      "owner": "工艺",
+      "action": ""
+    },
+    {
+      "id": "B-PROGNO-prod_5ax_siemens_840dsl",
+      "item": "prod_5ax_siemens_840dsl 程序标识唯一",
+      "status": "PASS",
+      "evidence": {
+        "program_ids": [
+          "AE-CI-258_OP1",
+          "AE-CI-258_OP2",
+          "AE-CI-258_OP3"
+        ]
+      },
+      "owner": "工艺",
+      "action": ""
+    },
+    {
+      "id": "B-PROGNO-prod_5ax_hnc8",
+      "item": "prod_5ax_hnc8 程序标识唯一",
+      "status": "PASS",
+      "evidence": {
+        "program_ids": [
+          "1001",
+          "1002",
+          "1003"
+        ]
+      },
+      "owner": "工艺",
+      "action": ""
+    },
+    {
+      "id": "B-TOOLSET",
+      "item": "NC 引用刀具 ⊆ 刀具清单",
+      "status": "PASS",
+      "evidence": {
+        "used": [
+          "T1",
+          "T2"
+        ],
+        "known": [
+          "T1",
+          "T2"
+        ]
+      },
+      "owner": "刀具库",
+      "action": ""
+    },
+    {
+      "id": "C1",
+      "item": "工艺配置标准区间",
+      "status": "PASS",
+      "evidence": {
+        "total": 29,
+        "failed": 0,
+        "verdict": "PASS",
+        "failed_gates": []
+      },
+      "owner": "工艺",
+      "action": ""
+    },
+    {
+      "id": "C2",
+      "item": "软件门复核（报告 overall）",
+      "status": "PASS",
+      "evidence": {
+        "lint": "PASS",
+        "roundtrip": "PASS",
+        "collision": "PASS",
+        "travel": "PASS",
+        "overall": "PASS"
+      },
+      "owner": "工艺",
+      "action": ""
+    },
+    {
+      "id": "C3",
+      "item": "刀具寿命前置条件（U-11）",
+      "status": "PENDING",
+      "evidence": {
+        "alarm_tools": [
+          "T1",
+          "T2"
+        ],
+        "note": "推导寿命 < 单件切削时间，必须在 V6/U-11 试验后重排换刀"
+      },
+      "owner": "工艺/刀具库",
+      "action": "先做 U-11 刀具寿命试验或按每件换刀执行首件"
+    },
+    {
+      "id": "D1",
+      "item": "量具/设备校准登记",
+      "status": "PENDING",
+      "evidence": {
+        "template": "D:\\Virtu模型\\production\\v0\\templates\\gauge_register.csv"
+      },
+      "owner": "质量/操作",
+      "action": "现场填写并签字后改 PENDING→PASS"
+    },
+    {
+      "id": "D2",
+      "item": "刀具预调与寿命登记",
+      "status": "PENDING",
+      "evidence": {
+        "template": "D:\\Virtu模型\\production\\v0\\templates\\tool_preset_sheet.md"
+      },
+      "owner": "质量/操作",
+      "action": "现场填写并签字后改 PENDING→PASS"
+    },
+    {
+      "id": "D3",
+      "item": "夹具与工件零点设置单",
+      "status": "PENDING",
+      "evidence": {
+        "template": "D:\\Virtu模型\\production\\v0\\templates\\fixture_zero_sheet.md"
+      },
+      "owner": "质量/操作",
+      "action": "现场填写并签字后改 PENDING→PASS"
+    },
+    {
+      "id": "D4",
+      "item": "毛坯入厂检验单",
+      "status": "PENDING",
+      "evidence": {
+        "template": "D:\\Virtu模型\\production\\v0\\templates\\stock_receipt_sheet.md"
+      },
+      "owner": "质量/操作",
+      "action": "现场填写并签字后改 PENDING→PASS"
+    },
+    {
+      "id": "D5",
+      "item": "安全交底记录",
+      "status": "PENDING",
+      "evidence": {
+        "template": "D:\\Virtu模型\\production\\v0\\templates\\safety_briefing.md"
+      },
+      "owner": "质量/操作",
+      "action": "现场填写并签字后改 PENDING→PASS"
+    },
+    {
+      "id": "D6",
+      "item": "RTCP 标定记录表（U-06）",
+      "status": "PENDING",
+      "evidence": {
+        "template": "D:\\Virtu模型\\production\\v0\\templates\\U-06_rtcp_record.csv"
+      },
+      "owner": "质量/操作",
+      "action": "现场填写并签字后改 PENDING→PASS"
+    },
+    {
+      "id": "D7",
+      "item": "空运行记录表（U-10）",
+      "status": "PENDING",
+      "evidence": {
+        "template": "D:\\Virtu模型\\production\\v0\\templates\\U-10_dryrun_record.csv"
+      },
+      "owner": "质量/操作",
+      "action": "现场填写并签字后改 PENDING→PASS"
+    },
+    {
+      "id": "E1",
+      "item": "NC 传输包（ASCII/CRLF/无 BOM/总大小）",
+      "status": "PASS",
+      "evidence": {
+        "files": 9,
+        "bytes": 233309
+      },
+      "owner": "工艺",
+      "action": ""
+    },
+    {
+      "id": "E2",
+      "item": "NC 归档副本与哈希",
+      "status": "PASS",
+      "evidence": {
+        "files": 9
+      },
+      "owner": "工艺",
+      "action": ""
+    }
+  ],
+  "summary": {
+    "pass": 22,
+    "pending": 8,
+    "fail": 0
+  },
+  "backup": {
+    "prod_5ax_fanuc_0imf\\AE-CI-258_OP1.nc": "2eb63a61be21f3571bc44a165fbdb42a66f161a3e9c7b21578cf7446ad4d557d",
+    "prod_5ax_fanuc_0imf\\AE-CI-258_OP2.nc": "61cc29a9f6521d5cbc04bee8a133234a4e5da078b92af6aa4b06949d1a4110a7",
+    "prod_5ax_fanuc_0imf\\AE-CI-258_OP3.nc": "662ecc225629ba5c6a8cdfe998d6f23d99384c98bf5a4060df8410d7ea44cf16",
+    "prod_5ax_hnc8\\AE-CI-258_OP1.nc": "0a4b3e0517d54fdc6beb969e92315990116b8c8bbd5293a282789a4203bd2d3b",
+    "prod_5ax_hnc8\\AE-CI-258_OP2.nc": "2a89bceb9a2348cca97208ede8a2053d8d70939b34e0f175a07565df89911ee3",
+    "prod_5ax_hnc8\\AE-CI-258_OP3.nc": "8d00c7aef3a7a1b2f516aa49e00efcc01e10a68016eae6ee3ad1063f71857bca",
+    "prod_5ax_siemens_840dsl\\AE-CI-258_OP1.nc": "f0a23e4d46c4f69ce12ca5fbb2bf5fce64ff44976a87c00574980c3023b0b8bb",
+    "prod_5ax_siemens_840dsl\\AE-CI-258_OP2.nc": "5a48ec38e9c25b1e95a4cba8d00ae32bf9e33a21cc1ec30a552085b8b812e284",
+    "prod_5ax_siemens_840dsl\\AE-CI-258_OP3.nc": "dfbd98bbcc867e7b948d0157de8b68c876a5a5a7e9bbee1bc1b5835aa1f8feca"
+  }
+}

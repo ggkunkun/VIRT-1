@@ -5,6 +5,7 @@
 """
 from __future__ import annotations
 
+import hashlib
 import json
 import sys
 import time
@@ -121,7 +122,7 @@ def main() -> int:
             path = NC_DIR / key / f"{prog.part_id}_{prog.op_id}.nc"
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_text(nc, encoding="utf-8", newline="\r\n")
-            sha = assurance.program_hash(nc)
+            sha = hashlib.sha256(path.read_bytes()).hexdigest()
             results_programs.append({
                 "op": prog.op_id, "dialect": m.dialect, "machine": key,
                 "nc_file": str(path), "lines": len(nc.splitlines()), "sha256": sha,
