@@ -1,0 +1,27 @@
+{
+  "corpus": "vericut96_v5_sft_repair",
+  "seed": 20261118,
+  "output_path": "cloud_train_pack\\dataset_v2\\vericut96_v5_sft_repair.jsonl",
+  "output_sha256": "5931dd5572c45a655a6b8c07418ddbcfbda88983690da1bfb8137be1527afa6e",
+  "rows": 565,
+  "max_tokens": 818,
+  "lame_rows": 72,
+  "coord_unit_rows": 44,
+  "preservation_rows": 84,
+  "replay_rows": 365,
+  "top_families": {
+    "lame_closed_form_v4": 72,
+    "pdf_curriculum_qa": 65,
+    "vericut_coord_unit_v4": 44,
+    "nc_safety_diagnosis": 40,
+    "setup_workoffset": 35,
+    "fanuc_g71_preserve_v4": 28,
+    "tool_assembly_calc": 25,
+    "tool_call_preserve_v5": 24,
+    "vericut_official_fact_v4": 20,
+    "tool_assembly_list": 20,
+    "nc_g49_bug_fix": 20,
+    "setup_unit_collision": 20
+  },
+  "generated_at": "2026-11-18 16:33:11"
+}

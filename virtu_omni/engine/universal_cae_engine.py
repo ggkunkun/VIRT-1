@@ -139,7 +139,15 @@ class UniversalCAEEngine:
         family = intent_data.get("family", PartFamily.ROTATIONAL_SHAFT.value)
         spec = dict(intent_data.get("spec", {}))
         mat_key = spec.get("material")
-        mat, known_keys = resolve_material(mat_key if mat_key is not None else DEFAULT_MATERIAL_KEY)
+        mat, known_keys = resolve_material(mat_key)
+        if mat_key is None or not str(mat_key).strip():
+            return {
+                "status": "blocked",
+                "verdict_code": "MATERIAL_REQUIRED",
+                "accepted_materials": known_keys,
+                "needs_reinforcement": False,
+                "verdict": "未提供材料；拒绝使用默认材料计算安全系数",
+            }
         if mat is None:
             return {
                 "status": "blocked",
@@ -152,8 +160,70 @@ class UniversalCAEEngine:
 
         load_params = self._normalize_loads(load_params or {})
 
+        if family == PartFamily.ROTATIONAL_SHAFT.value:
+            if spec.get("d_outer") is None:
+                return {
+                    "status": "blocked", "verdict_code": "GEOMETRY_REQUIRED",
+                    "missing_inputs": ["d_outer_mm"], "needs_reinforcement": False,
+                    "verdict": "回转轴缺少外径，拒绝用默认尺寸计算",
+                }
+            try:
+                d_outer = float(spec["d_outer"])
+                d_inner = float(spec.get("d_inner", 0.0))
+            except (TypeError, ValueError):
+                d_outer = d_inner = float("nan")
+            if (not math.isfinite(d_outer) or not math.isfinite(d_inner)
+                    or d_outer <= 0 or d_inner < 0 or d_inner >= d_outer):
+                return {
+                    "status": "blocked", "verdict_code": "GEOMETRY_INVALID",
+                    "needs_reinforcement": False,
+                    "verdict": "回转轴直径必须有限且满足 0 <= d_inner < d_outer",
+                }
+            pressure_given = ("internal_pressure_mpa" in load_params
+                              or "external_pressure_mpa" in load_params)
+            torque_given = "torque_nm" in load_params
+            if not (pressure_given or torque_given):
+                return {
+                    "status": "blocked", "verdict_code": "LOAD_REQUIRED",
+                    "missing_inputs": ["internal_pressure_mpa or torque_nm"],
+                    "needs_reinforcement": False,
+                    "verdict": "回转轴缺少载荷；拒绝套用默认压力或零载荷放行",
+                }
+            unsupported = {
+                key: value for key, value in load_params.items()
+                if key not in {"internal_pressure_mpa", "external_pressure_mpa", "torque_nm"}
+                and value is not None and value != 0
+            }
+            if unsupported:
+                return {
+                    "status": "blocked", "verdict_code": "LOAD_UNSUPPORTED",
+                    "unsupported_loads": sorted(unsupported), "needs_reinforcement": False,
+                    "verdict": "解析回转轴模型未覆盖载荷 %s，拒绝忽略后继续" % sorted(unsupported),
+                }
+            try:
+                p_inner = float(load_params.get("internal_pressure_mpa", 0.0))
+                p_outer = float(load_params.get("external_pressure_mpa", 0.0))
+                torque = float(load_params.get("torque_nm", 0.0))
+            except (TypeError, ValueError):
+                p_inner = p_outer = torque = float("nan")
+            if (not all(math.isfinite(value) for value in (p_inner, p_outer, torque))
+                    or p_inner < 0 or p_outer < 0):
+                return {
+                    "status": "blocked", "verdict_code": "LOAD_INVALID",
+                    "needs_reinforcement": False,
+                    "verdict": "压力必须为有限非负数，扭矩必须为有限数",
+                }
+            if p_inner == 0 and p_outer == 0 and torque == 0:
+                return {
+                    "status": "blocked", "verdict_code": "LOAD_ZERO",
+                    "needs_reinforcement": False,
+                    "verdict": "载荷全为零，无法据此判定承载安全系数",
+                }
+
         # 1. 初始工况应力求解
         initial_res = self._compute_stress_and_fos(family, spec, mat, load_params)
+        if initial_res.get("status") == "blocked":
+            return initial_res
         fos = initial_res["factor_of_safety"]
 
         # 2. 安全闭环核验：如果 FOS >= 1.5，直接合格
@@ -168,6 +238,12 @@ class UniversalCAEEngine:
                 "required_fos": self.TARGET_FOS,
                 "needs_reinforcement": False,
                 "optimized_spec": spec,
+                "evidence_basis": initial_res.get("evidence_basis", "inferred"),
+                "formula_source": initial_res.get("formula_source"),
+                "load_assumptions": initial_res.get("load_assumptions", []),
+                "torsional_shear_mpa": initial_res.get("torsional_shear_mpa"),
+                "stress_components": {key: value for key, value in initial_res.items()
+                                      if key.startswith("lame_") or key.startswith("von_mises_")},
                 "verdict": f"CAE 力学仿真合格：von Mises 应力 {initial_res['von_mises_stress_mpa']:.1f} MPa, FOS = {fos:.2f} >= 1.5"
             }
 
@@ -203,6 +279,12 @@ class UniversalCAEEngine:
             "healed_to_target": healed,
             "reinforcement_applied": healed_res["reinforcement_action"],
             "optimized_spec": reinforced_spec,
+            "evidence_basis": healed_res.get("evidence_basis", "inferred"),
+            "formula_source": healed_res.get("formula_source"),
+            "load_assumptions": healed_res.get("load_assumptions", []),
+            "torsional_shear_mpa": healed_res.get("torsional_shear_mpa"),
+            "stress_components": {key: value for key, value in healed_res.items()
+                                  if key.startswith("lame_") or key.startswith("von_mises_")},
             "verdict": (f"已触发闭环自愈强化：FOS 从 {fos:.2f} 强化至 {healed_fos:.2f} (>= {self.TARGET_FOS:.2f})") if healed else (f"自愈后 FOS = {healed_fos:.2f} 仍低于 {self.TARGET_FOS:.2f}，几何自愈无法达标，需改材料/工艺或重新设计，禁止放行")
         }
 
@@ -228,7 +310,12 @@ class UniversalCAEEngine:
 
         spec = dict(intent_data.get("spec", {}))
         mat_key = spec.get("material")
-        mat, known = resolve_material(mat_key if mat_key is not None else DEFAULT_MATERIAL_KEY)
+        mat, known = resolve_material(mat_key)
+        if mat_key is None or not str(mat_key).strip():
+            return {"status": "blocked", "verdict_code": "MATERIAL_REQUIRED",
+                    "accepted_materials": known, "solver": "pynite",
+                    "needs_reinforcement": False, "basis": "unmeasured",
+                    "verdict": "未提供材料；拒绝使用默认材料代算"}
         if mat is None:
             return {"status": "blocked", "verdict_code": "MATERIAL_UNRESOLVED",
                     "material_arg": mat_key, "accepted_materials": known,
@@ -244,13 +331,25 @@ class UniversalCAEEngine:
                     "verdict": "PyNite 不可用，FEA 未执行；不得以解析解冒充 FEA 实测"}
 
         loads = self._normalize_loads(load_params or {})
-        L = float(spec.get("overall_len", 45.0))
-        do = float(spec.get("d_outer", 53.0))
+        unsupported = {
+            key: value for key, value in loads.items()
+            if key not in {"radial_load_n", "load_n"} and value is not None and value != 0
+        }
+        if unsupported:
+            return {"status": "blocked", "verdict_code": "FEM_LOAD_UNSUPPORTED",
+                    "solver": "pynite", "needs_reinforcement": False, "basis": "unmeasured",
+                    "unsupported_loads": sorted(unsupported),
+                    "verdict": "当前梁单元模型不覆盖载荷 %s，拒绝忽略后继续" % sorted(unsupported)}
+        if spec.get("overall_len") is None or spec.get("d_outer") is None:
+            return {"status": "blocked", "verdict_code": "FEM_GEOMETRY_REQUIRED",
+                    "solver": "pynite", "needs_reinforcement": False, "basis": "unmeasured",
+                    "missing_inputs": [key for key in ("overall_len", "d_outer") if spec.get(key) is None],
+                    "verdict": "梁单元 FEA 缺少梁长或外径，拒绝套用默认尺寸"}
+        L = float(spec["overall_len"])
+        do = float(spec["d_outer"])
         di = float(spec.get("d_inner", 0.0) or 0.0)
-        if di >= do:
-            di = 0.0
-        P = float(loads.get("radial_load_n", loads.get("load_n", 12000.0)))
-        if L <= 0 or do <= 0 or P <= 0:
+        P = float(loads.get("radial_load_n", loads.get("load_n", 0.0)))
+        if L <= 0 or do <= 0 or di < 0 or di >= do or P <= 0:
             return {"status": "blocked", "verdict_code": "FEM_BAD_INPUT",
                     "solver": "pynite", "needs_reinforcement": False, "basis": "unmeasured",
                     "verdict": "梁长/外径/载荷必须为正，拒绝非物理 FEA 输入"}
@@ -323,32 +422,77 @@ class UniversalCAEEngine:
             return self._analyze_cylindrical_shaft(spec, mat, loads)
 
     def _analyze_cylindrical_shaft(self, spec: Dict[str, Any], mat: MaterialProperties, loads: Dict[str, float]) -> Dict[str, Any]:
-        """厚壁套筒 Lamé 公式分析。"""
-        d_out = float(spec.get("d_outer", 53.0))
-        d_in = float(spec.get("d_inner", 14.0))
-        p_in = loads.get("internal_pressure_mpa", 45.0)  # 默认 45 MPa 高压工况
+        """用注册的 Lamé、扭转、von Mises 与 FOS 定律完成回转轴解析核验。"""
+        from scripts.wm_verifier import recompute
 
-        r_o = d_out / 2.0
-        r_i = d_in / 2.0
-        if r_i >= r_o:
-            r_i = r_o * 0.5
+        d_out = float(spec["d_outer"])
+        d_in = float(spec.get("d_inner", 0.0) or 0.0)
+        r_outer, r_inner = d_out / 2.0, d_in / 2.0
+        p_inner = float(loads.get("internal_pressure_mpa", 0.0))
+        p_outer = float(loads.get("external_pressure_mpa", 0.0))
+        torque_nm = float(loads.get("torque_nm", 0.0))
 
-        # Lamé 内壁最大环向应力与径向压应力
-        sigma_t = p_in * (r_o**2 + r_i**2) / (r_o**2 - r_i**2)
-        sigma_r = -p_in
-        # 扭矩引入剪应力：T 由 N·m 转 N·mm，空心轴 J = pi/2*(ro^4-ri^4)
-        t_nm = float(loads.get("torque_nm", 0.0))
-        tau = 0.0
-        if t_nm:
-            j_pol = math.pi * (r_o**4 - r_i**4) / 2.0
-            tau = (t_nm * 1000.0) * r_o / max(1.0, j_pol)
-        sigma_vm = math.sqrt(sigma_t**2 - sigma_t * sigma_r + sigma_r**2 + 3.0 * tau**2)
-        fos = mat.yield_strength_mpa / max(1.0, sigma_vm)
+        pressure = {}
+        if p_inner or p_outer:
+            pressure = recompute({
+                "task": "lame_cylinder_stress",
+                "inputs": {"pressure_inner_mpa": p_inner, "pressure_outer_mpa": p_outer,
+                           "r_outer_mm": r_outer, "r_inner_mm": r_inner},
+            })
+            if not pressure:
+                return {"status": "blocked", "verdict_code": "CAE_LAME_INPUT_REJECTED",
+                        "needs_reinforcement": False, "basis": "unmeasured",
+                        "verdict": "Lamé 定律拒绝该压力/几何输入，未计算安全系数"}
+        base_vm = pressure.get("peak_von_mises_mpa", 0.0)
 
-        return {
+        torsion = {"torsional_shear_mpa": 0.0}
+        if torque_nm:
+            torsion = recompute({
+                "task": "shaft_torsion",
+                "inputs": {"torque_nm": torque_nm, "r_outer_mm": r_outer,
+                           "r_inner_mm": r_inner},
+            })
+            if not torsion:
+                return {"status": "blocked", "verdict_code": "CAE_TORSION_INPUT_REJECTED",
+                        "needs_reinforcement": False, "basis": "unmeasured",
+                        "verdict": "扭转定律拒绝该几何/载荷输入，未计算安全系数"}
+
+        combined = recompute({
+            "task": "combined_vm_torsion",
+            "inputs": {"base_von_mises_mpa": base_vm,
+                       "torsional_shear_mpa": torsion["torsional_shear_mpa"]},
+        })
+        sigma_vm = combined.get("combined_von_mises_mpa") if combined else None
+        if sigma_vm is None or not math.isfinite(sigma_vm) or sigma_vm <= 0:
+            return {"status": "blocked", "verdict_code": "CAE_ZERO_EQUIVALENT_STRESS",
+                    "needs_reinforcement": False, "basis": "inferred",
+                    "verdict": "该工况没有可用于屈服安全系数的非零 von Mises 应力"}
+
+        fos_result = recompute({"task": "fea_fos", "inputs": {
+            "Sy": mat.yield_strength_mpa, "sigma": sigma_vm,
+        }})
+        if not fos_result:
+            return {"status": "blocked", "verdict_code": "CAE_FOS_INPUT_REJECTED",
+                    "needs_reinforcement": False, "basis": "unmeasured",
+                    "verdict": "FOS 定律拒绝该应力/材料输入，未计算安全系数"}
+
+        result = {
             "von_mises_stress_mpa": round(sigma_vm, 2),
-            "factor_of_safety": round(fos, 2)
+            "factor_of_safety": round(fos_result["safety_factor"], 2),
+            "torsional_shear_mpa": round(torsion["torsional_shear_mpa"], 6),
+            "evidence_basis": "inferred",
+            "formula_source": "virtu_eval.derivation.LAWS",
+            "load_assumptions": [],
         }
+        if "internal_pressure_mpa" not in loads:
+            result["load_assumptions"].append("internal_pressure_mpa=0")
+        if "external_pressure_mpa" not in loads:
+            result["load_assumptions"].append("external_pressure_mpa=0")
+        if "torque_nm" not in loads:
+            result["load_assumptions"].append("torque_nm=0")
+        for key, value in pressure.items():
+            result[key] = value
+        return result
 
     def _analyze_flange_plate(self, spec: Dict[str, Any], mat: MaterialProperties, loads: Dict[str, float]) -> Dict[str, Any]:
         """Timoshenko 环形法兰板螺栓弯曲应力分析。"""

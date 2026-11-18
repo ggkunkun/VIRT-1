@@ -48,30 +48,36 @@ def _strip_think(text: str) -> str:
 # ============================================================================
 
 def lame_thick_cylinder(di_mm: float, do_mm: float, pi_mpa: float, po_mpa: float = 0.0) -> dict:
-    """Lamé 闭式解（受拉为正）。返回内/外壁环向、径向应力与内壁 von Mises，单位 MPa。
-
-    σr(r) = A − B/r²，σθ(r) = A + B/r²，
-    A = (pi·ri² − po·ro²)/(ro² − ri²)，B = (pi − po)·ri²·ro²/(ro² − ri²)。
-    """
+    """通过统一物理定律重算 Lamé 厚壁筒应力，单位 MPa。"""
     di, do, pi, po = float(di_mm), float(do_mm), float(pi_mpa), float(po_mpa)
-    if not (di > 0 and do > di):
-        raise ValueError(f"invalid geometry: Di={di}, Do={do} (need 0 < Di < Do)")
-    if pi < 0 or po < 0:
-        raise ValueError("pressures must be non-negative")
+    from scripts.wm_verifier import recompute
+
     ri, ro = di / 2.0, do / 2.0
-    den = ro ** 2 - ri ** 2
-    a = (pi * ri ** 2 - po * ro ** 2) / den
-    b = (pi - po) * ri ** 2 * ro ** 2 / den
-    st_i, sr_i = a + b / ri ** 2, a - b / ri ** 2
-    st_o, sr_o = a + b / ro ** 2, a - b / ro ** 2
-    vm_i = math.sqrt(st_i ** 2 - st_i * sr_i + sr_i ** 2)
+    stress = recompute({
+        "task": "lame_cylinder_stress",
+        "inputs": {
+            "pressure_inner_mpa": pi,
+            "pressure_outer_mpa": po,
+            "r_inner_mm": ri,
+            "r_outer_mm": ro,
+        },
+    })
+    if not stress:
+        raise ValueError(
+            f"invalid Lamé input: Di={di}, Do={do}, Pi={pi}, Po={po}; "
+            "see wm_verifier fail-closed diagnostics"
+        )
     return {
         "ri_mm": ri, "ro_mm": ro,
-        "sigma_theta_inner_mpa": st_i, "sigma_r_inner_mpa": sr_i,
-        "sigma_theta_outer_mpa": st_o, "sigma_r_outer_mpa": sr_o,
-        "von_mises_inner_mpa": vm_i,
-        "law": "Lame thick-walled cylinder, tension positive",
-        "basis": "closed_form",
+        "sigma_theta_inner_mpa": stress["lame_hoop_inner_mpa"],
+        "sigma_r_inner_mpa": stress["lame_radial_inner_mpa"],
+        "sigma_theta_outer_mpa": stress["lame_hoop_outer_mpa"],
+        "sigma_r_outer_mpa": stress["lame_radial_outer_mpa"],
+        "von_mises_inner_mpa": stress["von_mises_inner_mpa"],
+        "von_mises_outer_mpa": stress["von_mises_outer_mpa"],
+        "peak_von_mises_mpa": stress["peak_von_mises_mpa"],
+        "law": "closed-end Lamé thick-walled cylinder",
+        "basis": "virtu_eval.derivation.LAWS",
     }
 
 

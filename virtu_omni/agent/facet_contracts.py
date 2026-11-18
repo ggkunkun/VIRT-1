@@ -51,6 +51,9 @@ TOOL_ROLE = {
     "generate_parametric_cad": "modeling",
     "generate_standards_drawing": "standards",
     "generate_cam_toolpath": "machining",
+    "select_machine_and_stock": "machining",
+    "coordinate_contract": "auditor",
+    "audit_nc_capability": "auditor",
     "generate_validated_g71": "machining",
     "verify_cae_stress": "cae",
     "solve_lame_cylinder": "cae",
@@ -78,7 +81,12 @@ REQUIRED_RESULT_KEYS = {
     "generate_parametric_cad": ("feature_tree", "solidworks_vba"),
     "generate_standards_drawing": ("drawing_spec",),
     "generate_cam_toolpath": ("macro_b_code",),
-    "verify_cae_stress": ("safety_factor_fos", "fos_passed"),
+    "select_machine_and_stock": ("status", "requirements", "stock"),
+    "coordinate_contract": ("status",),
+    "audit_nc_capability": ("status", "program_release_allowed"),
+    "verify_cae_stress": (
+        "safety_factor_fos", "fos_passed", "calculation_verified", "evidence_basis"
+    ),
     "audit_sandbox_simulation": ("passed",),
     "verify_product_integrity": ("passed", "verified"),
     "inspect_step_artifact": ("passed", "verified"),

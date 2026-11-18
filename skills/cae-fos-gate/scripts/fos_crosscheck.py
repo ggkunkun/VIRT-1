@@ -15,9 +15,14 @@ YIELD_MPA = {"Steel45": 355.0, "45": 355.0, "45hao": 355.0, "SS304": 205.0,
 
 def lame(di, d_outer, p):
     ri, ro = di / 2.0, d_outer / 2.0
-    st = p * (ro ** 2 + ri ** 2) / (ro ** 2 - ri ** 2)
+    denom = ro ** 2 - ri ** 2
+    # Independent closed-end Lamé reference: include the longitudinal principal
+    # stress from the end-cap pressure resultant before calculating 3D von Mises.
+    sz = p * ri ** 2 / denom
+    st = p * (ro ** 2 + ri ** 2) / denom
     sr = -p
-    return math.sqrt(st ** 2 - st * sr + sr ** 2), st
+    vm = math.sqrt(((st - sr) ** 2 + (sr - sz) ** 2 + (sz - st) ** 2) / 2.0)
+    return vm, st
 
 
 def flange_ring_bend(di, d_outer, t, pcd, n_bolts, p):

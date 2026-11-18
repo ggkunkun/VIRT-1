@@ -68,7 +68,9 @@ def test_02_super_agent_autonomous_solve(tmp_path):
     res = agent.solve(prompt, mode=SuperAgentMode.AUTONOMOUS, output_dir=out_dir, memory_safe=True)
 
     assert isinstance(res, SuperAgentExecutionResult)
-    assert res.success is True
+    # The agent emits reviewable draft artifacts but must not report an engineering
+    # pass when the load case and verified CAD/STEP-to-spec evidence are absent.
+    assert res.success is False
     assert res.runtime_seconds > 0.0
     assert len(res.facets_engaged) >= 6
     assert len(res.trace_log) >= 7
@@ -88,13 +90,14 @@ def test_02_super_agent_autonomous_solve(tmp_path):
     assert "machining_cnc" in arts
     assert "G71" in arts["machining_cnc"]["macro_b_code"]
 
-    # CAE stress and safety factor check (FOS >= 1.5)
+    # CAE is explicitly blocked because this prompt supplies no pressure/load case.
     assert "cae_simulation" in arts
     cae = arts["cae_simulation"]
-    assert cae["fos_passed"] is True
-    assert cae["safety_factor_fos"] >= 1.5
-    assert cae["theoretical_volume_mm3"] > 0.0
-    assert cae["estimated_weight_grams"] > 0.0
+    assert cae["status"] == "BLOCKED"
+    assert cae["safety_factor_fos"] is None
+    assert "pressure_inner_mpa" in cae["missing_inputs"]
+    assert res.metrics["engineering_gates"]["passed"] is False
+    assert "cad_geometry_matches_spec" in res.metrics["engineering_gates"]["unmet"]
 
     # Auditor and memory check
     assert "sandbox_audit" in arts
@@ -105,8 +108,9 @@ def test_02_super_agent_autonomous_solve(tmp_path):
 
     # Verify summary report markdown
     md = res.summary_markdown()
-    assert "[PASS]" in md
+    assert "[FAIL]" in md
     assert "安全系数 FOS" in md
+    assert "未满足" in md
 
 
 def test_03_super_agent_react_mode():
@@ -188,7 +192,7 @@ def test_05_circuit_breaker_axiom():
 
 
 def test_06_cae_stress_analytical_lame():
-    """Verify Lamé thick cylinder stress analysis and safety factor formula."""
+    """Verify shared Lamé von Mises result and safety factor formula."""
     agent = VirtuSuperAgent()
 
     # Spec with AL7075-T6 (yield 503 MPa), d_outer=60, d_inner=20, P=10 MPa
@@ -200,14 +204,11 @@ def test_06_cae_stress_analytical_lame():
     }
     cae = agent.facet_verify_cae(spec, internal_pressure_mpa=10.0)
 
-    # Analytical calculation:
-    # r_out = 30, r_in = 10
-    # denom = 900 - 100 = 800
-    # numer = 900 + 100 = 1000
-    # sigma_t = 10 * (1000 / 800) = 12.5 MPa
-    # FOS = 503 / 12.5 = 40.24 >= 1.5
+    # Closed-end three-principal-stress von Mises result, not hoop stress relabeled as VM.
     assert cae["status"] == "COMPLETED"
-    assert cae["max_von_mises_stress_mpa"] == 12.5
+    assert cae["sigma_theta_inner_mpa"] == 12.5
+    assert cae["max_von_mises_stress_mpa"] == pytest.approx(19.4855715851)
+    assert cae["max_von_mises_stress_mpa"] != cae["sigma_theta_inner_mpa"]
     assert cae["safety_factor_fos"] >= 1.5
     assert cae["fos_passed"] is True
     assert cae["theoretical_volume_mm3"] > 0.0

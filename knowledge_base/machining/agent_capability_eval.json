@@ -1,0 +1,64 @@
+{
+  "schema_version": "1.0.0",
+  "objective": "Check feature classification, machine-class selection, setup-envelope fit, stock derivation, code-release blocking, and evidence integrity across turning, 3/4/5-axis milling, and mill-turn work.",
+  "decision_basis": "typed_feature_rules_and_hash_verified_artifacts",
+  "required_feature_cases": [
+    {"id": "mill_3axis", "features": ["milling_3axis"], "expect": "milling_3axis"},
+    {"id": "mill_4axis_indexed", "features": ["milling_4axis_indexed"], "expect": "rotary_axis_and_indexing_proof"},
+    {"id": "mill_4axis_simultaneous", "features": ["milling_4axis_simultaneous"], "expect": "four_simultaneous_axes"},
+    {"id": "mill_5axis_3plus2", "features": ["milling_5axis_3plus2"], "expect": "two_rotary_axes_and_indexing_proof"},
+    {"id": "mill_5axis_simultaneous", "features": ["milling_5axis_simultaneous"], "expect": "five_simultaneous_axes"},
+    {"id": "lathe_turning", "features": ["turning"], "expect": "lathe_with_xz_and_turning_spindle"},
+    {"id": "mill_turn_c_axis", "features": ["turning", "mill_turn_off_axis_milling"], "expect": "turning_spindle_live_tooling_and_c_axis"},
+    {"id": "mill_turn_y_axis", "features": ["mill_turn_y_axis_milling"], "expect": "turning_spindle_live_tooling_and_xyz_c_axis"},
+    {"id": "mill_turn_subspindle", "features": ["mill_turn_y_axis_milling", "subspindle_transfer"], "expect": "subspindle_and_transfer_evidence"}
+  ],
+  "required_negative_gates": [
+    "three_axis_machine_rejected_for_five_axis_simultaneous_work",
+    "unknown_simultaneous_axis_count_blocks_production_nc",
+    "unverified_indexing_blocks_3plus2_production_nc",
+    "missing_live_tooling_or_c_axis_rejects_mill_turn",
+    "travel_shorter_than_derived_stock_blocks_machine",
+    "missing_or_negative_stock_allowance_rejects_stock",
+    "missing_material_or_typed_features_returns_needs_input",
+    "missing_machine_control_post_or_simulation_hash_blocks_production_nc",
+    "post_hash_mismatch_blocks_production_nc",
+    "post_feature_mismatch_blocks_controller_code_generation",
+    "collision_or_autodiff_not_exact_true_blocks_production_nc",
+    "unknown_machine_dialect_never_claims_controller_code_generated"
+  ],
+  "stock_cases": [
+    {"id": "box_blank", "shape": "box", "expected": "finished_bbox_plus_side_allowance"},
+    {"id": "round_blank_z_axis", "shape": "cylinder", "axis": "Z", "expected": "diameter_plus_radial_and_end_allowance"},
+    {"id": "round_blank_x_axis", "shape": "cylinder", "axis": "X", "expected": "height_maps_to_x_travel"}
+  ],
+  "training_case_source": {
+    "root": "E:/training",
+    "case_count": 80,
+    "reference_cases": 68,
+    "error_demo_cases": 12,
+    "machine_models": 49,
+    "verified_source_artifacts": 237,
+    "source_artifact_count": 244,
+    "missing_references": {
+      "force_turning_fanuc_sample.nc": 4,
+      "vericutm.eia": 3
+    },
+    "static_nc_parse_case_program_observations": {
+      "milling_3axis_candidate": 28,
+      "turning_cycle_observed": 16,
+      "milling_4axis_indexing_candidate": 6,
+      "milling_5axis_positioning_candidate": 18,
+      "multiple_rotary_axes_observed_without_simultaneous_proof": 8,
+      "milling_4axis_simultaneous_candidate": 0,
+      "milling_5axis_simultaneous_candidate": 0,
+      "basis": "static_program_parse_over_verified_case_program_references; duplicate references counted; not a simulation result"
+    },
+    "limitations": [
+      "Case labels are inherited from the local index and do not independently prove a safe operation.",
+      "The indexed machine files support simulator class planning; simultaneous-axis limits and production posts remain unverified.",
+      "No inspected standalone feed block proved simultaneous cutting on two rotary axes plus XYZ; do not claim five-axis simultaneous code mastery from these samples."
+    ]
+  },
+  "release_rule": "Only a hash-verified exact machine/controller/post/simulation candidate with known axes and travel, collision_free=true, and autodiff_passed=true may set controller_code_generation_allowed=true. A downstream NC program still requires controller-specific post validation and simulation."
+}

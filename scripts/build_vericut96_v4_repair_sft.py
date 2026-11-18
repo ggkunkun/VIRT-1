@@ -29,7 +29,7 @@ import sys
 import time
 from collections import Counter
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 
 ROOT = Path(__file__).resolve().parent.parent
 for p in (str(ROOT), str(ROOT / "scripts"), str(ROOT / "cloud_train_pack")):
@@ -115,7 +115,7 @@ def _strip_think(text: str) -> str:
 
 
 def build_lame_numerical_rows() -> List[Dict[str, Any]]:
-    """56 diverse step-by-step Lamé closed-form SFT pairs (never touching probe 60/120/20)."""
+    """72 diverse step-by-step Lamé closed-form SFT pairs (never touching probe 60/120/20)."""
     tuples = [
         (40, 80, 16),
         (50, 100, 18),
@@ -131,6 +131,10 @@ def build_lame_numerical_rows() -> List[Dict[str, Any]]:
         (84, 168, 22),
         (36, 108, 18),
         (48, 144, 28),
+        (52, 104, 15),
+        (76, 152, 27),
+        (66, 132, 18),
+        (54, 108, 21),
     ]
     out: List[Dict[str, Any]] = []
     for di, do, pi in tuples:
@@ -141,21 +145,26 @@ def build_lame_numerical_rows() -> List[Dict[str, Any]]:
         sig_r = -float(pi)
         prompts = [
             f"按 Lamé 厚壁圆筒理论：内径 Di={di} mm，外径 Do={do} mm，内压 Pi={pi} MPa。计算内壁环向应力 σ_θ（保留 2 位小数）与径向应力 σ_r，单位 MPa。",
-            f"按 Lamé 厚壁圆筒理论（内径 Di={di} mm，外径 Do={do} mm，内压 Pi={pi} MPa），严禁使用薄壁公式，求内壁环向应力 σ_θ（保留 2 位小数）与径向应力 σ_r（MPa）。",
-            f"已知厚壁压力圆筒 Di={di} mm、Do={do} mm、内压 Pi={pi} MPa，请代入 Lamé 闭式解分步计算 σ_θ 与 σ_r（MPa）。",
-            f"校核厚壁液压缸内壁应力：Di={di} mm，Do={do} mm，Pi={pi} MPa。使用 Lamé 厚壁理论给出 σ_θ（两位小数）及 σ_r 数值与正负符号。",
+            f"按 Lamé 厚壁圆筒理论（内径 Di={di} mm，外径 Do={do} mm，内压 Pi={pi} MPa），严禁使用薄壁公式，计算内壁环向应力 σ_θ（保留 2 位小数）与径向应力 σ_r（单位 MPa）。",
+            f"已知厚壁压力圆筒 Di={di} mm、Do={do} mm、内压 Pi={pi} MPa，请代入 Lamé 闭式解 $\\sigma_\\theta = P_i \\frac{{k+1}}{{k-1}}$（$k=(D_o/D_i)^2$）分步计算 σ_θ 与 σ_r（MPa）。",
+            f"校核厚壁液压缸内壁应力：Di={di} mm，Do={do} mm，Pi={pi} MPa。使用 Lamé 厚壁闭式解给出 σ_θ（两位小数）及 σ_r 数值与正负符号。",
         ]
         k_str = f"{ratio:g}"
         k2_str = f"{k_sq:g}"
-        ans = (
-            "根据 **Lamé 厚壁圆筒闭式解**（严禁使用薄壁公式 $P_i D_i / (2t)$，亦非 $P_i(D_o+D_i)/(D_o-D_i)$）：\n"
-            f"- **直径比** $K = \\frac{{D_o}}{{D_i}} = \\frac{{{do}}}{{{di}}} = {k_str}$（无量纲比值）\n"
-            f"- **平方比** $k = K^2 = \\left(\\frac{{D_o}}{{D_i}}\\right)^2 = {k_str}^2 = {k2_str}$（无量纲）\n"
+        ans_full = (
+            "根据 **Lamé 厚壁圆筒闭式解**（使用平方直径比 $k = (D_o / D_i)^2$）：\n"
+            f"- **直径比** $K = \\frac{{D_o}}{{D_i}} = \\frac{{{do}}}{{{di}}} = {k_str}$（无量纲）\n"
+            f"- **平方比** $k = K^2 = {k_str}^2 = {k2_str}$（无量纲）\n"
             f"- **内壁环向拉应力** $\\sigma_\\theta = P_i \\cdot \\frac{{k + 1}}{{k - 1}} = {pi} \\times \\frac{{{k2_str} + 1}}{{{k2_str} - 1}} = {sig_t:.2f}\\ \\text{{MPa}}$\n"
             f"- **内壁径向压应力** $\\sigma_r = -P_i = {sig_r:.0f}\\ \\text{{MPa}}$（受压为负）"
         )
-        for q in prompts:
-            out.append(_sft_row(q, ans, "lame_closed_form_v4"))
+        ans_short = (
+            f"按 Lamé 厚壁圆筒闭式解：$k = (D_o / D_i)^2 = ({do} / {di})^2 = {k2_str}$；\n"
+            f"- 内壁环向应力 $\\sigma_\\theta = P_i \\frac{{k + 1}}{{k - 1}} = {pi} \\times \\frac{{{k2_str} + 1}}{{{k2_str} - 1}} = {sig_t:.2f}\\ \\text{{MPa}}$；\n"
+            f"- 内壁径向应力 $\\sigma_r = -P_i = {sig_r:.0f}\\ \\text{{MPa}}$。"
+        )
+        for idx_q, q in enumerate(prompts):
+            out.append(_sft_row(q, ans_full if idx_q != 1 else ans_short, "lame_closed_form_v4"))
     return out
 
 
@@ -251,7 +260,7 @@ def build_preservation_anchors() -> List[Dict[str, Any]]:
     for i in range(16):
         out.append(_sft_row(ad_qs[i % len(ad_qs)], ad_ans, "vericut_autodiff_preserve_v4"))
 
-    # 12 compact FANUC G71/G70/M30 rows verified by BOTH graders
+    # 28 compact FANUC G71/G70/M30 rows verified by BOTH graders (positive Z retract always)
     progs = [
         ("O1000", "1.5", "0.5", "0.4", "0.1", "0.25", 10, 20, "0.15"),
         ("O1002", "1.5", "0.75", "0.4", "0.1", "0.25", 10, 20, "0.12"),
@@ -263,8 +272,8 @@ def build_preservation_anchors() -> List[Dict[str, Any]]:
         "Ø60 圆钢车台阶轴（第一台阶 Ø38×20 mm，总长 45 mm），按 FANUC G71 粗车 + G70 精车格式输出简洁 NC 程序，包含 G50 S1800、G96 S150 M03、T0101、F0.25、M30。",
         "编写 FANUC 车床 G71/G70 复合循环程序：毛坯 Ø60，台阶 Ø38×20，总长 45，含 T0101、G50 S1800、G96 S150 M03、F0.25、M30，仅输出 G 代码。",
     ]
-    for rep in range(3):
-        for o_no, u, r, uw, ww, fr, n1, n2, ff in progs:
+    for rep in range(7):
+        for p_idx, (o_no, u, r, uw, ww, fr, n1, n2, ff) in enumerate(progs):
             code = "\n".join([
                 "%",
                 o_no,
@@ -288,17 +297,136 @@ def build_preservation_anchors() -> List[Dict[str, Any]]:
             ])
             assert grader.evaluate_fanuc_g71_safety_probe(code).get("passed") is True
             assert check_g71_step_shaft(code).get("passed") is True
-            out.append(_sft_row(g71_qs[(rep + progs.index((o_no, u, r, uw, ww, fr, n1, n2, ff))) % len(g71_qs)], code, "fanuc_g71_preserve_v4"))
+            out.append(_sft_row(g71_qs[(rep + p_idx) % len(g71_qs)], code, "fanuc_g71_preserve_v4"))
+
+    # 24 canonical <tool_call> preservation rows (strict OpenAI tool_calls schema -> <tool_call> XML tags)
+    tool_schemas = {
+        "cadcam_universal_geometry": {
+            "type": "function",
+            "function": {
+                "name": "cadcam_universal_geometry",
+                "description": "生成或导出通用参数化几何体（圆柱/方盒/圆锥/齿轮）",
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "shape": {"type": "string", "enum": ["cylinder", "box", "cone"]},
+                        "diameter_mm": {"type": "number"},
+                        "length_mm": {"type": "number"},
+                    },
+                    "required": ["shape"],
+                },
+            },
+        },
+        "cadcam_vericut_simulate": {
+            "type": "function",
+            "function": {
+                "name": "cadcam_vericut_simulate",
+                "description": "打开 VERICUT 9.6 工程、执行 Auto-Diff 比对或解析仿真日志",
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "action": {"type": "string", "enum": ["autodiff_check", "parse_log", "open_project"]},
+                        "project_path": {"type": "string"},
+                    },
+                    "required": ["action", "project_path"],
+                },
+            },
+        },
+        "cadcam_cimco_validate": {
+            "type": "function",
+            "function": {
+                "name": "cadcam_cimco_validate",
+                "description": "CIMCO Edit 2026 校验 G 代码与 Macro B 宏逻辑",
+                "parameters": {
+                    "type": "object",
+                    "properties": {
+                        "action": {"type": "string", "enum": ["validate_macro"]},
+                        "nc_file_path": {"type": "string"},
+                    },
+                    "required": ["action"],
+                },
+            },
+        },
+    }
+    tc_specs = [
+        ("生成一个直径 45 mm、高 90 mm 的标准圆柱体毛坯模型。", "cadcam_universal_geometry", {"shape": "cylinder", "diameter_mm": 45, "length_mm": 90}),
+        ("调用几何工具建立 Ø110 mm × 65 mm 的实心圆柱毛坯。", "cadcam_universal_geometry", {"shape": "cylinder", "diameter_mm": 110, "length_mm": 65}),
+        ("创建直径 56 mm、长度 140 mm 的轴类圆柱几何体。", "cadcam_universal_geometry", {"shape": "cylinder", "diameter_mm": 56, "length_mm": 140}),
+        ("需要创建一个 Ø32 mm、长 75 mm 的圆棒几何体用于夹具干涉校核。", "cadcam_universal_geometry", {"shape": "cylinder", "diameter_mm": 32, "length_mm": 75}),
+        ("对 VERICUT 工程 D:/work/mill_session_04.vcproject 执行 Auto-Diff 偏差检查。", "cadcam_vericut_simulate", {"action": "autodiff_check", "project_path": "D:/work/mill_session_04.vcproject"}),
+        ("检查 VERICUT 项目 E:/training/lathe_session_16l.vcproject 的 Auto-Diff 过切与残料状态。", "cadcam_vericut_simulate", {"action": "autodiff_check", "project_path": "E:/training/lathe_session_16l.vcproject"}),
+        ("调用 VERICUT 工具打开并解析 D:/sim/bracket_5axis.vcproject 的仿真日志。", "cadcam_vericut_simulate", {"action": "parse_log", "project_path": "D:/sim/bracket_5axis.vcproject"}),
+        ("使用 VERICUT 仿真工具对 E:/training/mill_session_15m.vcproject 进行 Auto-Diff 核验。", "cadcam_vericut_simulate", {"action": "autodiff_check", "project_path": "E:/training/mill_session_15m.vcproject"}),
+    ]
+    all_tdefs = list(tool_schemas.values())
+    for rep in range(3):
+        for q, tname, targs in tc_specs:
+            out.append({
+                "tools": all_tdefs,
+                "messages": [
+                    {"role": "system", "content": SYS_MSG},
+                    {"role": "user", "content": q},
+                    {
+                        "role": "assistant",
+                        "content": "",
+                        "tool_calls": [
+                            {
+                                "type": "function",
+                                "function": {
+                                    "name": tname,
+                                    "arguments": json.dumps(targs, ensure_ascii=False),
+                                },
+                            }
+                        ],
+                    },
+                ],
+                "meta": {"family": "tool_call_preserve_v5", "version": "vericut96_v5", "basis": "verified_repair"},
+            })
 
     return out
 
 
-def _slim_tools_row(r: Dict[str, Any], rng: random.Random, max_tools: int = 3) -> Dict[str, Any]:
+def _slim_tools_row(r: Dict[str, Any], rng: random.Random, max_tools: int = 3) -> Optional[Dict[str, Any]]:
     tools = r.get("tools")
+    msgs = [dict(m) for m in (r.get("messages") or [])]
+    # Convert bare-JSON tool call content (`{"tool": ..., "arguments": ...}`) into real OpenAI `tool_calls`
+    # so ChatML always renders `<tool_call>` XML tags, and drop non-tool bare JSON rows with `tools` headers.
+    for i, m in enumerate(msgs):
+        if m.get("role") == "assistant" and not m.get("tool_calls"):
+            s = str(m.get("content") or "").strip()
+            if s.startswith("{") and s.endswith("}"):
+                try:
+                    obj = json.loads(s)
+                except Exception:
+                    obj = None
+                if isinstance(obj, dict) and ("tool" in obj or "name" in obj) and "arguments" in obj:
+                    tname = str(obj.get("tool") or obj.get("name") or "").strip()
+                    targs = obj.get("arguments")
+                    if tname and isinstance(targs, dict):
+                        msgs[i] = {
+                            "role": "assistant",
+                            "content": "",
+                            "tool_calls": [
+                                {
+                                    "type": "function",
+                                    "function": {
+                                        "name": tname,
+                                        "arguments": json.dumps(targs, ensure_ascii=False),
+                                    },
+                                }
+                            ],
+                        }
+                elif tools:
+                    # Drop clarify/bare-JSON refusal inside `tools` rows so it never confuses tool_call format
+                    return None
+        elif m.get("role") == "tool" and len(str(m.get("content") or "")) > 240:
+            msgs[i] = {**m, "content": str(m.get("content") or "")[:240] + "..."}
+
+    out = dict(r, messages=msgs)
     if not isinstance(tools, list) or len(tools) <= max_tools:
-        return r
+        return out
     called = set()
-    for m in r.get("messages") or []:
+    for m in msgs:
         for tc in m.get("tool_calls") or []:
             nm = str((tc.get("function") or tc).get("name") or "").strip()
             if nm:
@@ -306,7 +434,6 @@ def _slim_tools_row(r: Dict[str, Any], rng: random.Random, max_tools: int = 3) -
     kept = [t for t in tools if str((t.get("function") or t).get("name") or "").strip() in called]
     others = [t for t in tools if t not in kept]
     rng.shuffle(others)
-    out = dict(r)
     out["tools"] = kept + others[: max(0, max_tools - len(kept))]
     return out
 
@@ -318,12 +445,16 @@ def build_replay_rows(tokenizer: Any, seed: int = 20261118) -> List[Dict[str, An
     buckets: Dict[str, List[Dict[str, Any]]] = {}
     for raw_r in pure_rows:
         r = _slim_tools_row(raw_r, rng, max_tools=3)
+        if r is None:
+            continue
         tt = str((r.get("meta") or {}).get("task_type") or "unknown")
-        # Normalize out any corrupted G71 programs from replay
+        # Normalize out any corrupted G71 or G00 Z- examples from replay
         ans = _strip_think(str((r.get("messages") or [{}])[-1].get("content") or ""))
         if "G71" in ans and sum(1 for ln in ans.splitlines() if re.match(r"^\s*(?:N\d+\s*)?(?:G|M|T|S|F|X|Z|%)", ln)) >= 5:
             if not grader.evaluate_fanuc_g71_safety_probe(ans).get("passed"):
                 continue
+        if any(re.search(r"\bG0?0\b", ln) and re.search(r"\bZ-\d", ln) for ln in ans.upper().splitlines()):
+            continue
         enc = format_chatml_sample(r, tokenizer, max_length=832)
         if not enc or sum(1 for x in enc["labels"] if x != -100) < 2:
             continue
@@ -392,10 +523,19 @@ def build_dataset(out_path: Path = DEFAULT_OUT, seed: int = 20261118) -> Dict[st
 
     # Verify every single sample tokenizes cleanly within 6GB VRAM length cap
     max_tok = 0
+    tool_call_rendered = 0
     for idx, row in enumerate(combined):
         enc = format_chatml_sample(row, tok, max_length=832)
         if not enc or sum(1 for x in enc["labels"] if x != -100) < 2:
             raise SystemExit(f"[FATAL] Row {idx} failed ChatML formatting / truncated assistant!")
+        if row.get("tools"):
+            meta_tt = str((row.get("meta") or {}).get("task_type") or "")
+            if meta_tt != "boundary_refusal":
+                # Ensure assistant loss tokens actually include rendered <tool_call> tag on all tool-calling rows
+                asst_txt = tok.decode([tid for tid, lab in zip(enc["input_ids"], enc["labels"]) if lab != -100])
+                if "<tool_call>" not in asst_txt:
+                    raise SystemExit(f"[FATAL] Row {idx} has tools header but assistant labels lack <tool_call>: {asst_txt[:120]!r}")
+            tool_call_rendered += 1
         max_tok = max(max_tok, len(enc["input_ids"]))
 
     out_path.parent.mkdir(parents=True, exist_ok=True)

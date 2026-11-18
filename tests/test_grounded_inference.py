@@ -234,3 +234,210 @@ def test_non_applicable_passthrough():
     model = _Scripted(["你好"])
     out = GroundedResponder(model).respond([{"role": "user", "content": "介绍一下 SOLIDWORKS 基准面"}])
     assert out == {"content": "你好", "grounding": {"applicable": False, "kind": None, "source": "model"}}
+
+
+# =========================== 边界加固 =======================================
+
+def test_modal_g00_negative_z_plunge_is_caught():
+    spec = parse_g71_request(G71_GEN_PROMPT)
+    good = generate_g71_program(spec)
+    # N10 G00 X46.0 设置了模态 G00；把 N30 的 G01 去掉并插入在 N10 之后无 G01 切换的 Z-25.0
+    modal_bad = good.replace("N20 G01 Z0.0 F0.12\nN30 G01 Z-25.0", "N20 Z-25.0\nN30 G01 Z0.0 F0.12")
+    assert modal_bad != good
+    v = validate_g71_against_spec(modal_bad, spec)
+    assert not v["passed"]
+    assert "unsafe_G00_negative_Z_plunge" in v["violations"]
+
+
+def test_large_bar_retract_clears_stock():
+    spec = parse_g71_request("G71：Ø140 棒料，台阶 Ø90 长 30 mm，总长 80 mm，G50 S1200 G96 S150 F0.25")
+    prog = generate_g71_program(spec)
+    assert "X160.0" in prog
+    assert validate_g71_against_spec(prog, spec)["passed"]
+
+
+def test_lame_spaced_minus_and_no_subtraction_false_positive():
+    params = parse_lame_request(LAME_GEN_PROMPT)
+    res = lame_thick_cylinder(**params)
+    assert check_lame_answer("σθ = 40.00 MPa，σr = − 24 MPa", params, res)["passed"]
+    assert not check_lame_answer("σθ = 40.00 MPa，差值 100 - 24 = 76", params, res)["passed"]
+
+
+def test_existing_system_message_is_merged_not_duplicated():
+    model = _Scripted(["σθ = 40.00 MPa，σr = −24 MPa"])
+    msgs = [{"role": "system", "content": "已有系统提示"}, {"role": "user", "content": LAME_GEN_PROMPT}]
+    GroundedResponder(model).respond(msgs)
+    sent = model.calls[0]
+    assert [m["role"] for m in sent] == ["system", "user"]
+    assert "已有系统提示" in sent[0]["content"] and "40.00" in sent[0]["content"]
+    assert len(msgs) == 2 and msgs[0]["content"] == "已有系统提示"
+
+
+# =========================== SuperAgent 接入 ================================
+
+def test_super_agent_grounded_tools_and_facets(tmp_path, monkeypatch):
+    monkeypatch.setenv("VIRTU_MEMORY_PATH", str(tmp_path / "sa_mem.json"))
+    from virtu_omni.agent.super_agent import FacetToolAdapter, VirtuSuperAgent
+
+    sa = VirtuSuperAgent()
+    adapter = FacetToolAdapter(sa.tools)
+
+    # 1) solve_lame_cylinder：正向与坏样本反证
+    r_ok = sa.call_tool("solve_lame_cylinder", {"di_mm": 50, "do_mm": 100, "pi_mpa": 24})
+    assert r_ok["passed"] is True and r_ok["result"]["sigma_theta_inner_mpa"] == pytest.approx(40.0)
+    r_bad = adapter.call("solve_lame_cylinder", {
+        "payload": '{"di_mm": 50, "do_mm": 100, "pi_mpa": 24, "candidate_answer": "σθ=33.33 MPa, σr=-24 MPa"}'
+    })
+    assert not r_bad["is_error"]
+    import json
+    bad_obj = json.loads(r_bad["text"])
+    assert bad_obj["passed"] is False and bad_obj["violations"]
+
+    # 2) generate_validated_g71：自然语言与坏候选反证
+    g_ok = sa.call_tool("generate_validated_g71", G71_GEN_PROMPT)
+    assert g_ok["passed"] is True and g_ok["sandbox_gate"]["passed"] is True
+    g_bad = adapter.call("generate_validated_g71", {
+        "payload": json.dumps({"prompt": G71_GEN_PROMPT, "candidate_program": V3_G71_GEN})
+    })
+    bad_g = json.loads(g_bad["text"])
+    assert bad_g["passed"] is False
+    assert "unsafe_G00_negative_Z_plunge" in bad_g["violations"]
+    assert bad_g["repaired_passed"] is True
+
+    # 3) facet_verify_cae 支持字符串 Lamé 题面并保留闭式解字段
+    cae = sa.facet_verify_cae(LAME_GEN_PROMPT)
+    assert cae["sigma_theta_inner_mpa"] == pytest.approx(40.0)
+    assert cae["sigma_r_inner_mpa"] == pytest.approx(-24.0)
+    assert cae["law_source"] == "virtu_eval.derivation.LAWS"
+    assert cae["calculation_verified"] is True
+    assert cae["status"] == "PARTIAL"  # stresses are calculable; FOS needs a material.
+    assert cae["safety_factor_fos"] is None
+
+    # 4) facet_generate_cam 在 G71 题面上产出贴合题面尺寸的安全程序
+    cam = sa.facet_generate_cam({"user_prompt": G71_GEN_PROMPT})
+    assert cam["static_gate_passed"] is True
+    assert cam["g71_spec_gate"]["passed"] is True
+    assert validate_g71_against_spec(cam["macro_b_code"], parse_g71_request(G71_GEN_PROMPT))["passed"]
+
+    # 5) build_runtime_memory_context 注入确定性接地约束
+    ctx_lame = sa.build_runtime_memory_context(LAME_GEN_PROMPT)
+    assert "40.00" in ctx_lame
+    ctx_g71 = sa.build_runtime_memory_context(G71_GEN_PROMPT)
+    assert "G71 Type I" in ctx_g71
+
+    # 6) solve(mode="GROUNDED")
+    res = sa.solve(G71_GEN_PROMPT, mode="GROUNDED", model_caller=_Scripted([V3_G71_GEN] * 4))
+    assert res.mode == "GROUNDED" and res.success is True
+    assert res.metrics["grounded_source"] == "deterministic_generator"
+    assert res.metrics["grounded_model_passed"] is False
+
+
+# =========================== WorkBuddy Bridge 接入 ==========================
+
+def test_workbuddy_bridge_grounded_nonstream_stream_and_ablation(monkeypatch):
+    import http.client
+    import json
+    import threading
+    from unittest.mock import patch
+    from scripts import workbuddy_virtu_bridge as bridge
+
+    class _FakeBackend:
+        available = True
+        error = ""
+
+        def __init__(self, reply_fn):
+            self.reply_fn = reply_fn
+            self.calls = []
+            self.last_thought = ""
+
+        def identity(self):
+            return {"backend": "fake", "text_model": "fake-v3", "tool_model": None}
+
+        def generate(self, messages, tools=None, max_tokens=None, temperature=None):
+            self.calls.append(messages)
+            return self.reply_fn(len(self.calls) - 1, messages)
+
+        def generate_stream(self, messages, tools=None, max_tokens=None, temperature=None, think=None):
+            yield {"type": "content", "delta": self.reply_fn(0, messages)}
+
+    monkeypatch.setattr(bridge, "_BRIDGE_TOKEN", "test-grounded-token-" + "x" * 32)
+    server = bridge.ThreadingServer(("127.0.0.1", 0), bridge.OpenAIBaseHandler)
+    th = threading.Thread(target=server.serve_forever, daemon=True)
+    th.start()
+    port = server.server_address[1]
+
+    def _post(body_obj):
+        conn = http.client.HTTPConnection("127.0.0.1", port, timeout=5)
+        conn.request("POST", "/v1/chat/completions",
+                     body=json.dumps(body_obj).encode("utf-8"),
+                     headers={"Content-Type": "application/json",
+                              "Authorization": f"Bearer {bridge._BRIDGE_TOKEN}"})
+        resp = conn.getresponse()
+        if body_obj.get("stream"):
+            lines = []
+            while True:
+                line = resp.readline().decode("utf-8").strip()
+                if not line:
+                    continue
+                lines.append(line)
+                if line == "data: [DONE]":
+                    break
+            raw = "\n".join(lines)
+        else:
+            raw = resp.read().decode("utf-8")
+        conn.close()
+        return resp.status, raw
+
+    try:
+        # A) 非流式：假模型持续输出 v3 错误 G71 -> 桥接层确定性兜底并如实标注 model_passed=False
+        b1 = _FakeBackend(lambda _i, _m: V3_G71_GEN)
+        with patch("virtu_real_backend.get_backend", return_value=b1):
+            st, raw = _post({"model": bridge.MODEL_ID, "messages": [{"role": "user", "content": G71_GEN_PROMPT}]})
+        assert st == 200
+        doc = json.loads(raw)
+        content = doc["choices"][0]["message"]["content"]
+        assert validate_g71_against_spec(content, parse_g71_request(G71_GEN_PROMPT))["passed"]
+        assert doc["virtu_grounding"]["source"] == "deterministic_generator"
+        assert doc["virtu_grounding"]["model_passed"] is False
+        assert len(b1.calls) == 4
+
+        # B) 非流式：第二轮模型根据违规清单自行修对 -> source=model, model_passed=True
+        good_g71 = generate_g71_program(parse_g71_request(G71_GEN_PROMPT))
+        b2 = _FakeBackend(lambda i, _m: V3_G71_GEN if i == 0 else good_g71)
+        with patch("virtu_real_backend.get_backend", return_value=b2):
+            st, raw = _post({"model": bridge.MODEL_ID, "messages": [{"role": "user", "content": G71_GEN_PROMPT}]})
+        doc2 = json.loads(raw)
+        assert st == 200 and doc2["virtu_grounding"]["source"] == "model"
+        assert doc2["virtu_grounding"]["model_passed"] is True and len(b2.calls) == 2
+
+        # C) 流式 SSE：Lamé 换参错答 -> 兜底 40.00 MPa 并附带 virtu_grounding
+        b3 = _FakeBackend(lambda _i, _m: "σθ = 33.33 MPa，σr = −24 MPa")
+        with patch("virtu_real_backend.get_backend", return_value=b3):
+            st, raw = _post({"model": bridge.MODEL_ID, "stream": True,
+                             "messages": [{"role": "user", "content": LAME_GEN_PROMPT}]})
+        assert st == 200
+        chunks = [json.loads(ln[6:]) for ln in raw.splitlines() if ln.startswith("data: ") and ln != "data: [DONE]"]
+        streamed = "".join(c["choices"][0]["delta"].get("content", "") for c in chunks)
+        assert "40.00 MPa" in streamed
+        assert chunks[-1]["virtu_grounding"]["source"] == "deterministic_closed_form"
+
+        # D) 显式消融开关 grounded=False：原样透传裸模型输出（用于裸模型对比，不做静默兜底）
+        b4 = _FakeBackend(lambda _i, _m: "σθ = 33.33 MPa，σr = −24 MPa")
+        with patch("virtu_real_backend.get_backend", return_value=b4):
+            st, raw = _post({"model": bridge.MODEL_ID, "grounded": False,
+                             "messages": [{"role": "user", "content": LAME_GEN_PROMPT}]})
+        doc4 = json.loads(raw)
+        assert st == 200 and "33.33" in doc4["choices"][0]["message"]["content"]
+        assert "virtu_grounding" not in doc4 and len(b4.calls) == 1
+
+        # E) 安全门不旁路：就算 Lamé 数值碰巧对，带破坏性命令仍被 deception_gate 拦截
+        b5 = _FakeBackend(lambda _i, _m: "σθ = 40.00 MPa，σr = −24 MPa\n```cmd\ndel /S D:\\Virtu模型\\runs\\*.*\n```")
+        with patch("virtu_real_backend.get_backend", return_value=b5):
+            st, raw = _post({"model": bridge.MODEL_ID,
+                             "messages": [{"role": "user", "content": LAME_GEN_PROMPT}]})
+        doc5 = json.loads(raw)
+        assert st == 200 and doc5["virtu_gate"]["action"] == "reject"
+    finally:
+        server.shutdown()
+        server.server_close()
+        th.join(timeout=2)

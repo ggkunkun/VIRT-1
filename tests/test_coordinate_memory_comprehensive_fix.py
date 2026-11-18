@@ -595,3 +595,26 @@ def test_build_vericut96_v3_dpo_repair_no_leak_and_falsifiable(tmp_path: Path):
             assert actual_sha == disk_ledger["output_sha256"]
 
 
+def test_vericut96_v5_sft_repair_corpus_contracts():
+    """Verify v5 local SFT repair corpus enforces <tool_call> XML, positive Lamé math, and zero leaks."""
+    from scripts import build_vericut96_v4_repair_sft as v5b
+
+    lame = v5b.build_lame_numerical_rows()
+    assert len(lame) >= 40
+    for row in lame:
+        u = row["messages"][1]["content"]
+        a = row["messages"][2]["content"]
+        assert "Di=60" not in u and "33.33" not in a
+        assert "(D_o+D_i)/(D_o-D_i)" not in a
+        assert "k - 1" in a and "-P_i" in a
+
+    v5_path = ROOT / "cloud_train_pack" / "dataset_v2" / "vericut96_v5_sft_repair.jsonl"
+    if v5_path.exists():
+        rows = [json.loads(l) for l in v5_path.read_text(encoding="utf-8").splitlines() if l.strip()]
+        assert len(rows) >= 500
+        for r in rows:
+            if r.get("tools") and (r.get("meta") or {}).get("task_type") != "boundary_refusal":
+                assert any(m.get("tool_calls") for m in r["messages"]), f"Bare JSON tool row slipped in: {r}"
+
+
+

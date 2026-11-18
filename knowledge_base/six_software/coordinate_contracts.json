@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "canonical_length_unit": "mm",
+  "snapshot_transform_unit_field": "transform_unit",
+  "required_transform_unit": "mm",
+  "matrix_convention": "column vectors; T_parent_from_child maps child coordinates into parent; transforms store translation in mm",
+  "evidence_levels": ["measured", "documented", "asserted", "inferred", "unverified"],
+  "runtime_observation_required_for_success": true,
+  "software": {
+    "solidworks_2021": {
+      "software_key": "solidworks",
+      "version": "2021",
+      "frames": [
+        {"name": "model_default", "role": "part or assembly model frame", "basis": "asserted", "source": "AGENTS.md §2.A: Y up; Front=XY, Top=XZ, Right=YZ"},
+        {"name": "named_coordinate_system", "role": "document-defined frame", "basis": "documented", "source": "SOLIDWORKS API: IModelDoc2.GetCurrentCoordinateSystemName / IModelDocExtension coordinate transforms"}
+      ],
+      "native_length_unit": "API length values commonly use meters; bridge must convert explicitly to mm",
+      "probe": {"method": "COM read-only document and coordinate-system API", "required_fields": ["active_document_path", "document_units", "active_coordinate_system", "transform_to_model"], "live_status": "not_run_no_application_session", "desktop_input_required": false},
+      "traps": ["Do not infer part axes from the camera view", "Imported parts and assemblies can have transforms different from the default template", "Localized plane names are not stable identifiers"]
+    },
+    "autocad_2026": {
+      "software_key": "autocad",
+      "version": "2026",
+      "frames": [
+        {"name": "WCS", "role": "fixed drawing reference frame", "basis": "documented", "source_url": "https://help.autodesk.com/view/ACD/2026/ENU/?caas=caas%2Fdocumentation%2FACD%2F2014%2FENU%2Ffiles%2FGUID-E658D5E7-EE5C-4A06-BF34-F71CDB363A71-htm.html"},
+        {"name": "UCS", "role": "movable active working frame", "basis": "documented", "source_url": "https://help.autodesk.com/cloudhelp/2026/ENU/AutoCAD-AutoLISP/files/GUID-0F0B833D-78ED-4491-9918-9481793ED10B.htm"},
+        {"name": "OCS_DCS", "role": "entity-local and display coordinate frames", "basis": "documented", "source_url": "https://help.autodesk.com/cloudhelp/2026/ENU/AutoCAD-AutoLISP/files/GUID-0F0B833D-78ED-4491-9918-9481793ED10B.htm"}
+      ],
+      "native_length_unit": "drawing units are configured per drawing; read INSUNITS and do not assume mm",
+      "probe": {"method": "ActiveX GetVariable plus AutoLISP trans round-trip", "required_fields": ["drawing_path", "INSUNITS", "UCSNAME", "UCSORG", "UCSXDIR", "UCSYDIR", "active_viewport"], "live_status": "not_run_no_application_session", "desktop_input_required": false},
+      "traps": ["Command points normally use the current UCS", "Entity data can use OCS", "Viewport-specific UCS must be read for the active viewport"]
+    },
+    "siemens_nx_12": {
+      "software_key": "nx",
+      "version": "12.0",
+      "frames": [
+        {"name": "absolute", "role": "fixed part-model reference frame", "basis": "documented", "source_url": "https://www.plm.automation.siemens.com/media/global/zh/NX12%20For%20Engineering%20Design_tcm60-79256.pdf"},
+        {"name": "WCS", "role": "movable modeling work frame", "basis": "documented", "source_url": "https://www.plm.automation.siemens.com/media/global/zh/NX12%20For%20Engineering%20Design_tcm60-79256.pdf"},
+        {"name": "CAM_MCS", "role": "setup-specific machine coordinate system", "basis": "documented", "source": "NX 12 CAM setup must be read from the active operation/setup; do not substitute modeling WCS"}
+      ],
+      "native_length_unit": "part unit is per-part; convert to canonical mm at the API boundary",
+      "probe": {"method": "NXOpen journal read-only session/work-part/WCS/CAM setup interrogation", "required_fields": ["part_path", "part_units", "absolute_frame", "WCS_origin", "WCS_orientation", "CAM_MCS", "workpiece_frame"], "live_status": "not_run_no_application_session", "desktop_input_required": false},
+      "traps": ["A moved WCS does not move absolute model coordinates", "CAM MCS is setup-specific", "Assembly occurrence transforms must be composed before comparing parts"]
+    },
+    "cimco_edit_2026": {
+      "software_key": "cimco",
+      "version": "2026",
+      "frames": [
+        {"name": "NC_program_position", "role": "modal controller position after interpreting the NC program", "basis": "documented", "source_url": "https://docs.cimco.com/en/docs/edit/2026/program-tabs/backplot/filetype/"},
+        {"name": "machine_setup", "role": "selected controller and machine definition", "basis": "documented", "source_url": "https://docs.cimco.com/en/docs/edit/2026/program-tabs/backplot/filetype/"},
+        {"name": "stock_work_origin", "role": "simulation stock and work origin", "basis": "documented", "source_url": "https://docs.cimco.com/en/docs/edit/2026/simulation/geometry-manager/"}
+      ],
+      "native_length_unit": "controller/file-type specific; parse G20/G21 and active modal state",
+      "probe": {"method": "parse NC modal state and selected Backplot file type/machine setup; no generic live API currently proven", "required_fields": ["nc_sha256", "control_type", "machine_setup", "units", "G90_G91", "plane", "work_offset", "stock_origin"], "live_status": "documented_not_live_probed", "desktop_input_required": true},
+      "traps": ["A displayed plot is not proof of controller semantics", "Backplot requires a matching control type and machine setup", "G54 and relative/incremental modes must be interpreted from modal state"]
+    },
+    "vericut_9_6": {
+      "software_key": "vericut",
+      "version": "9.6",
+      "frames": [
+        {"name": "machine_root", "role": "root of the configured machine component hierarchy", "basis": "documented", "source_url": "https://help95.cgtech.com/hhelp/release_notes.pdf"},
+        {"name": "stock_design_fixture_tool", "role": "component frames attached within a specific machine/setup", "basis": "documented", "source_url": "https://help95.cgtech.com/hhelp/release_notes.pdf"},
+        {"name": "NC_work_offset", "role": "program and work-coordinate transform for the selected control/project", "basis": "asserted", "source": "Workspace VERICUT 9.6 project and training-case contracts; verify against active .vcproject/.mch/.ctl and NC"}
+      ],
+      "native_length_unit": "read project and machine XML units; normalize to mm",
+      "probe": {"method": "hash-verified .vcproject/.mch/.ctl/NC parse plus simulation transaction/log readback", "required_fields": ["project_sha256", "machine_file_sha256", "control_file_sha256", "component_transforms", "work_offset", "simulation_log_sha256", "collision_count", "autodiff_verdict"], "live_status": "documented_not_live_probed", "desktop_input_required": true},
+      "traps": ["Machine axis names alone do not prove continuous simultaneous control", "A project reference is not proof that linked files still match", "Blank or unrendered Auto-Diff is insufficient evidence"]
+    },
+    "sscnc_7_2": {
+      "software_key": "sscnc",
+      "version": "7.2",
+      "frames": [
+        {"name": "MACHINE", "role": "controller machine-coordinate display", "basis": "asserted", "source": "Workspace SSCNC 7.2 FANUC 0i procedure; must be observed on the selected controller"},
+        {"name": "RELATIVE", "role": "controller-relative position display", "basis": "asserted", "source": "Workspace SSCNC 7.2 FANUC 0i procedure; controller-specific"},
+        {"name": "ABSOLUTE_G54", "role": "active work-coordinate position after work offset", "basis": "documented", "source_url": "https://www.fanucamerica.com/support/cnc/options"},
+        {"name": "tool_geometry_wear", "role": "controller tool compensation separate from work offset", "basis": "asserted", "source": "Workspace SSCNC touch-off ledger and selected FANUC controller manual"}
+      ],
+      "native_length_unit": "controller and machine model specific; read CRT and controller configuration",
+      "probe": {"method": "observe selected controller panel, mode, CRT coordinate pages, G54 table and tool offsets", "required_fields": ["controller_model", "machine_model", "mode", "MACHINE", "RELATIVE", "ABSOLUTE", "G54", "tool_offset", "program_sha256"], "live_status": "not_run_no_application_session", "desktop_input_required": true},
+      "traps": ["FANUC 0iT and 0iM screens and axis sets differ", "MACHINE/RELATIVE/ABSOLUTE are not interchangeable", "Do not start a cycle while offsets or mode are unverified"]
+    }
+  }
+}

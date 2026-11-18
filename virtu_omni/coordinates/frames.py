@@ -20,6 +20,15 @@ _UNIT_TO_MM = {
     "cm": 10.0, "m": 1000.0, "meter": 1000.0, "meters": 1000.0,
     "um": 0.001, "µm": 0.001,
     "in": 25.4, "inch": 25.4, "inches": 25.4,
+    "ft": 304.8, "foot": 304.8, "feet": 304.8,
+    "yd": 914.4, "yard": 914.4, "yards": 914.4,
+    "mi": 1609344.0, "mile": 1609344.0, "miles": 1609344.0,
+    "mil": 0.0254, "uin": 0.0000254,
+    "nm": 0.000001, "angstrom": 0.0000001,
+    "dm": 100.0, "dam": 10000.0, "hm": 100000.0,
+    "au": 149597870700000.0,
+    "ly": 9460730472580800000.0,
+    "pc": 30856775814913673000.0,
 }
 _EVIDENCE_BASES = {"measured", "documented", "asserted", "inferred", "unverified"}
 _EPS = 1e-7
@@ -236,6 +245,11 @@ class FrameGraph:
 
     def transform(self, point_mm: Sequence[float], source: str, target: str) -> Vector3:
         """Transform a point in mm from ``source`` frame to ``target`` frame."""
+        roots = {frame.frame_id for frame in self._frames.values()
+                 if frame.parent_frame is None}
+        if len(roots) != 1:
+            raise CoordinateContractError(
+                "coordinate transform requires one connected root frame")
         target_from_global = inverse_rigid(self.global_from(target))
         target_from_source = multiply4(target_from_global, self.global_from(source))
         return apply_point(target_from_source, point_mm)
@@ -248,6 +262,9 @@ class FrameGraph:
 
     def validate(self) -> Dict[str, object]:
         issues: List[str] = []
+        roots = [frame.frame_id for frame in self._frames.values() if frame.parent_frame is None]
+        if self._frames and len(roots) != 1:
+            issues.append(f"frame_graph_requires_one_root:found_{len(roots)}")
         for frame_id in self._frames:
             try:
                 self.global_from(frame_id)

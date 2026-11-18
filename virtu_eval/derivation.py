@@ -39,13 +39,39 @@ LAWS = {
         ("peak_von_mises_mpa", "sigma"),
         ("safety_factor", "Sy/sigma"),
     ],
-    "lame_cylinder_closed_end": [
-        ("yield_strength_mpa", "yield_strength_mpa"),
-        # Closed-end thick cylinder, maximum von Mises stress at the bore.
-        # Radial, hoop, and axial Lamé stresses are combined before comparing yield.
+    "lame_cylinder_stress": [
+        ("lame_axial_stress_mpa",
+         "(pressure_inner_mpa*r_inner_mm^2-pressure_outer_mpa*r_outer_mm^2)/"
+         "(r_outer_mm^2-r_inner_mm^2)"),
+        ("lame_hoop_inner_mpa",
+         "lame_axial_stress_mpa+(pressure_inner_mpa-pressure_outer_mpa)*"
+         "r_outer_mm^2/(r_outer_mm^2-r_inner_mm^2)"),
+        ("lame_radial_inner_mpa", "-pressure_inner_mpa"),
+        ("lame_hoop_outer_mpa",
+         "lame_axial_stress_mpa+(pressure_inner_mpa-pressure_outer_mpa)*"
+         "r_inner_mm^2/(r_outer_mm^2-r_inner_mm^2)"),
+        ("lame_radial_outer_mpa", "-pressure_outer_mpa"),
+        ("von_mises_inner_mpa",
+         "sqrt(((lame_hoop_inner_mpa-lame_radial_inner_mpa)^2+"
+         "(lame_radial_inner_mpa-lame_axial_stress_mpa)^2+"
+         "(lame_axial_stress_mpa-lame_hoop_inner_mpa)^2)/2)"),
+        ("von_mises_outer_mpa",
+         "sqrt(((lame_hoop_outer_mpa-lame_radial_outer_mpa)^2+"
+         "(lame_radial_outer_mpa-lame_axial_stress_mpa)^2+"
+         "(lame_axial_stress_mpa-lame_hoop_outer_mpa)^2)/2)"),
+        # Closed-end thick cylinder: combine the three principal stresses at both
+        # boundaries; the larger equivalent stress controls the safety factor.
         ("peak_von_mises_mpa",
-         "sqrt(3)*pressure_mpa*r_outer_mm^2/(r_outer_mm^2-r_inner_mm^2)"),
-        ("safety_factor", "yield_strength_mpa/peak_von_mises_mpa"),
+         "max(von_mises_inner_mpa,von_mises_outer_mpa)"),
+    ],
+    "shaft_torsion": [
+        ("torsional_shear_mpa",
+         "abs(torque_nm*1000*r_outer_mm/"
+         "(pi/2*(r_outer_mm^4-r_inner_mm^4)))"),
+    ],
+    "combined_vm_torsion": [
+        ("combined_von_mises_mpa",
+         "sqrt(base_von_mises_mpa^2+3*torsional_shear_mpa^2)"),
     ],
     "collision": [
         ("safe_plane_z_mm", "z_safe"),

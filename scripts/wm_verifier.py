@@ -117,22 +117,47 @@ def _recompute_unsafe(scenario):
             "fos_gate": "pass" if fos >= 1.5 else "fail",
         }
 
-    if task == "lame_cylinder_closed_end":
-        pressure = float(s["pressure_mpa"])
+    if task == "lame_cylinder_stress":
+        pressure_inner = float(s["pressure_inner_mpa"])
+        pressure_outer = float(s["pressure_outer_mpa"])
         r_outer = float(s["r_outer_mm"])
         r_inner = float(s["r_inner_mm"])
-        yield_strength = float(s["yield_strength_mpa"])
         denom = r_outer ** 2 - r_inner ** 2
-        # Closed-end Lamé cylinder: combine radial, hoop, and axial principal stresses
-        # into von Mises stress at the bore; hoop stress alone is not von Mises stress.
-        peak_vm = math.sqrt(3.0) * pressure * r_outer ** 2 / denom
-        fos = yield_strength / peak_vm
+        axial = (pressure_inner * r_inner ** 2 - pressure_outer * r_outer ** 2) / denom
+        hoop_inner = axial + (pressure_inner - pressure_outer) * r_outer ** 2 / denom
+        radial_inner = -pressure_inner
+        hoop_outer = axial + (pressure_inner - pressure_outer) * r_inner ** 2 / denom
+        radial_outer = -pressure_outer
+
+        def _von_mises(hoop, radial):
+            return math.sqrt(((hoop - radial) ** 2 + (radial - axial) ** 2
+                              + (axial - hoop) ** 2) / 2.0)
+
+        vm_inner = _von_mises(hoop_inner, radial_inner)
+        vm_outer = _von_mises(hoop_outer, radial_outer)
+        peak_vm = max(vm_inner, vm_outer)
         return {
-            "yield_strength_mpa": yield_strength,
+            "lame_axial_stress_mpa": axial,
+            "lame_hoop_inner_mpa": hoop_inner,
+            "lame_radial_inner_mpa": radial_inner,
+            "lame_hoop_outer_mpa": hoop_outer,
+            "lame_radial_outer_mpa": radial_outer,
+            "von_mises_inner_mpa": vm_inner,
+            "von_mises_outer_mpa": vm_outer,
             "peak_von_mises_mpa": peak_vm,
-            "safety_factor": fos,
-            "fos_gate": "pass" if fos >= 1.5 else "fail",
         }
+
+    if task == "shaft_torsion":
+        torque_nm = float(s["torque_nm"])
+        r_outer = float(s["r_outer_mm"])
+        r_inner = float(s["r_inner_mm"])
+        polar_moment = math.pi * (r_outer ** 4 - r_inner ** 4) / 2.0
+        return {"torsional_shear_mpa": abs(torque_nm * 1000.0 * r_outer / polar_moment)}
+
+    if task == "combined_vm_torsion":
+        base_vm = float(s["base_von_mises_mpa"])
+        shear = float(s["torsional_shear_mpa"])
+        return {"combined_von_mises_mpa": math.sqrt(base_vm ** 2 + 3.0 * shear ** 2)}
 
     if task == "collision":
         z_safe, z_min, stock_top = s["z_safe"], s["z_min_rapid"], s["stock_top"]
@@ -257,9 +282,11 @@ def _recompute_unsafe(scenario):
 REQUIRED_INPUTS = {
     "roughness": ["f", "r_eps"],
     "fea_fos": ["Sy", "sigma"],
-    "lame_cylinder_closed_end": [
-        "pressure_mpa", "r_outer_mm", "r_inner_mm", "yield_strength_mpa"
+    "lame_cylinder_stress": [
+        "pressure_inner_mpa", "pressure_outer_mpa", "r_outer_mm", "r_inner_mm"
     ],
+    "shaft_torsion": ["torque_nm", "r_outer_mm", "r_inner_mm"],
+    "combined_vm_torsion": ["base_von_mises_mpa", "torsional_shear_mpa"],
     "collision": ["z_safe", "z_min_rapid", "stock_top"],
     "tolerance": ["tols", "upper_dev", "lower_dev"],
     "geom_delta": ["feature_vol", "before"],
@@ -274,9 +301,8 @@ NONPOSITIVE_INPUTS = {
     "roughness": ["r_eps"],
     "process": ["D", "r_eps"],
     "adapt_machine": ["D"],
-    "lame_cylinder_closed_end": [
-        "pressure_mpa", "r_outer_mm", "r_inner_mm", "yield_strength_mpa"
-    ],
+    "lame_cylinder_stress": ["r_outer_mm", "r_inner_mm"],
+    "shaft_torsion": ["r_outer_mm"],
 }
 
 
@@ -293,7 +319,7 @@ def _input_defects(scenario):
     s = _scn_inputs(scenario)
     missing = [k for k in REQUIRED_INPUTS.get(task, []) if s.get(k) is None]
     nonpos = []
-    if task == "lame_cylinder_closed_end":
+    if task in {"lame_cylinder_stress", "shaft_torsion", "combined_vm_torsion"}:
         for key in REQUIRED_INPUTS[task]:
             value = s.get(key)
             if value is not None and (
@@ -302,16 +328,35 @@ def _input_defects(scenario):
                 or not math.isfinite(float(value))
             ):
                 nonpos.append((key, value))
+        for key in ("pressure_inner_mpa", "pressure_outer_mpa"):
+            value = s.get(key)
+            if (isinstance(value, (int, float)) and not isinstance(value, bool)
+                    and value < 0):
+                nonpos.append((f"{key} must be nonnegative", value))
     for k in NONPOSITIVE_INPUTS.get(task, []):
         v = s.get(k)
         if isinstance(v, (int, float)) and not isinstance(v, bool) and v <= 0:
             nonpos.append((k, v))
-    if task == "lame_cylinder_closed_end":
+    if task == "lame_cylinder_stress":
         r_outer, r_inner = s.get("r_outer_mm"), s.get("r_inner_mm")
         if (isinstance(r_outer, (int, float)) and not isinstance(r_outer, bool)
                 and isinstance(r_inner, (int, float)) and not isinstance(r_inner, bool)
                 and r_inner >= r_outer):
             nonpos.append(("r_inner_mm must be less than r_outer_mm", r_inner))
+    elif task == "shaft_torsion":
+        r_outer, r_inner = s.get("r_outer_mm"), s.get("r_inner_mm")
+        if (isinstance(r_inner, (int, float)) and not isinstance(r_inner, bool)
+                and r_inner < 0):
+            nonpos.append(("r_inner_mm must be nonnegative", r_inner))
+        if (isinstance(r_outer, (int, float)) and not isinstance(r_outer, bool)
+                and isinstance(r_inner, (int, float)) and not isinstance(r_inner, bool)
+                and r_inner >= r_outer):
+            nonpos.append(("r_inner_mm must be less than r_outer_mm", r_inner))
+    elif task == "combined_vm_torsion":
+        for key in REQUIRED_INPUTS[task]:
+            value = s.get(key)
+            if isinstance(value, (int, float)) and not isinstance(value, bool) and value < 0:
+                nonpos.append((f"{key} must be nonnegative", value))
     return missing, nonpos
 
 
@@ -358,7 +403,9 @@ REQUIRED = {
     "removal": ["material_removed_mm3", "mrr_mm3_per_min", "delta_volume_mm3"],
     "roughness": ["surface_roughness_ra_um"],
     "fea_fos": ["safety_factor"],
-    "lame_cylinder_closed_end": ["peak_von_mises_mpa", "safety_factor"],
+    "lame_cylinder_stress": ["peak_von_mises_mpa"],
+    "shaft_torsion": ["torsional_shear_mpa"],
+    "combined_vm_torsion": ["combined_von_mises_mpa"],
     "collision": ["collision_risk", "gouge", "autodiff"],
     "tolerance": ["closed_loop_worstcase_halfwidth_mm", "closed_loop_rss_halfwidth_mm"],
     "geom_delta": ["delta_volume_mm3", "after_volume_mm3"],
@@ -371,7 +418,8 @@ REQUIRED = {
 
 POSITIVE = {
     "mrr_mm3_per_min", "removed_mass_g", "resulting_mass_g", "surface_roughness_ra_um",
-    "safety_factor", "peak_von_mises_mpa", "volume_mm3", "mass_g", "mass_kg", "spindle_rpm",
+    "safety_factor", "peak_von_mises_mpa", "von_mises_inner_mpa", "von_mises_outer_mpa",
+    "volume_mm3", "mass_g", "mass_kg", "spindle_rpm",
     "feed_rate_mm_per_min", "cut_time_min", "required_spindle_rpm",
 }
 

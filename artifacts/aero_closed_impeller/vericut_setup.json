@@ -19,7 +19,7 @@
     "ok": true,
     "reason": ""
   },
-  "stock_source": "generated_stock_stl",
+  "stock_source": "reused_existing_stock_stl_verified_against_spec",
   "stock_basis": "measured_from_sample_inverse_derivation",
   "part_type": "我想制造一款外径60mm，内孔22mm，长度80mm，材质为AL7075-T6的高强连杆衬套",
   "stock_hint": "",

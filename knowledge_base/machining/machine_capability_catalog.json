@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "catalog_role": "verified physical production machine inventory",
+  "canonical_units": "mm",
+  "machine_records": [],
+  "empty_catalog_behavior": "return machine-class recommendation only; never invent a machine, travel range, controller, or postprocessor",
+  "required_record_fields": [
+    "machine_id", "machine_class", "linear_axes", "rotary_axes", "max_simultaneous_axes",
+    "indexing_supported", "travel_mm", "controller", "post_dialect", "verified_features",
+    "production_evidence.machine", "production_evidence.control", "production_evidence.post",
+    "production_evidence.simulation"
+  ],
+  "production_evidence_requirements": {
+    "every_artifact_requires": ["absolute_path", "sha256"],
+    "machine": "exact machine kinematics/configuration file",
+    "control": "exact controller/control definition and version",
+    "post": "exact postprocessor file and matching controller/machine target",
+    "simulation": "successful simulation report for the candidate program and stock",
+    "safety_gates": ["collision_free=true", "autodiff_passed=true"]
+  },
+  "training_source": {
+    "path": "E:/training/",
+    "index": "knowledge_base/training_case_index.json",
+    "expected_machine_models": 49,
+    "expected_project_cases": 80,
+    "use": "simulator class discovery and evidence-backed evaluation; not a physical shop inventory",
+    "source_files_are_read_only": true
+  },
+  "feature_classes": {
+    "turning": {"requires": ["X", "Z", "turning_spindle"], "avoid": "milling machine without a turning spindle"},
+    "milling_3axis": {"requires": ["X", "Y", "Z", "3 simultaneous axes"]},
+    "milling_4axis_indexed": {"requires": ["X", "Y", "Z", "1 rotary axis", "indexing verified"]},
+    "milling_4axis_simultaneous": {"requires": ["X", "Y", "Z", "1 rotary axis", "4 simultaneous axes verified"]},
+    "milling_5axis_3plus2": {"requires": ["X", "Y", "Z", "2 rotary axes", "indexing verified"], "simultaneous_axes": 3},
+    "milling_5axis_simultaneous": {"requires": ["X", "Y", "Z", "2 rotary axes", "5 simultaneous axes verified"]},
+    "mill_turn_off_axis_milling": {"requires": ["turning spindle", "live tooling", "C axis"]},
+    "mill_turn_y_axis_milling": {"requires": ["turning spindle", "live tooling", "C axis", "Y axis"]},
+    "subspindle_transfer": {"requires": ["turning spindle", "subspindle", "transfer sequence verified"]}
+  },
+  "ranking_policy": {
+    "hard_constraints_first": true,
+    "default_objective": "minimum verified setups, then least excess axis capability; minimum cycle time is available only when explicitly requested and measured",
+    "do_not_assume": ["machine purchase cost", "cycle time without measured estimate", "5-axis simultaneous from rotary-axis count", "post compatibility from controller name alone"]
+  }
+}

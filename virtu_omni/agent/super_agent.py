@@ -391,13 +391,19 @@ class SuperAgentExecutionResult:
     def summary_markdown(self) -> str:
         icon = "[PASS]" if self.success else "[CIRCUIT_BREAKER_ABORT]" if self.circuit_breaker_tripped else "[FAIL]"
         facets_str = ", ".join(self.facets_engaged) or "全域统筹"
+        gates = self.metrics.get("engineering_gates") or {}
+        gate_state = "通过" if gates.get("passed") else "未通过"
+        unmet_gates = ", ".join(gates.get("unmet") or []) or "无"
+        volume = self.metrics.get("theoretical_volume_mm3")
+        volume_text = f"{volume} mm³（解析估算）" if volume is not None else "未计算"
         lines = [
             f"### {icon} Virtu Super Agent 执行报告",
             f"- **任务意图**: `{self.task_prompt}`",
             f"- **运行模式**: `{self.mode}`",
             f"- **调动专业面 (Facets)**: `{facets_str}`",
             f"- **执行总耗时**: `{self.runtime_seconds:.4f}s`",
-            f"- **核心物理指标**: `体积守恒: {self.metrics.get('volume_conservation', 'N/A')}`, `安全系数 FOS: {self.metrics.get('safety_factor', 'N/A')}`",
+            f"- **物理指标**: `理论体积: {volume_text}`, `安全系数 FOS: {self.metrics.get('safety_factor', 'N/A')}`",
+            f"- **工程验收门**: `{gate_state}`；未满足：`{unmet_gates}`",
         ]
         if self.output_dir:
             lines.append(f"- **工件落盘目录**: `{self.output_dir}`")
@@ -509,8 +515,23 @@ class VirtuSuperAgent:
         )
         self.register_tool(
             "generate_cam_toolpath",
-            "Generate multi-controller CNC Macro B program with cutting feeds and speeds.",
+            "Generate a CNC program draft. Before production use, first call select_machine_and_stock with typed features, explicit finished-part envelope, material, stock form and allowance. Keep the result attached; unresolved machine/controller/post/simulation evidence blocks production release.",
             self.facet_generate_cam,
+        )
+        self.register_tool(
+            "select_machine_and_stock",
+            "Select a machine class from typed machining features, rank local simulator machine profiles, derive stock from the finished-part envelope, and block production NC until controller/post/simulation evidence is verified.",
+            self.facet_select_machine_and_stock,
+        )
+        self.register_tool(
+            "coordinate_contract",
+            "Read the six-software coordinate contract or validate a measured native-state snapshot and its hashed evidence before transforming points.",
+            self.facet_coordinate_contract,
+        )
+        self.register_tool(
+            "audit_nc_capability",
+            "Statically inspect NC motion blocks for rotary-axis cutting, indexed positioning, turning cycles, and mill-turn candidates; never treat text parsing as machine or simulation proof.",
+            self.facet_audit_nc_capability,
         )
         self.register_tool(
             "verify_cae_stress",
@@ -803,6 +824,46 @@ class VirtuSuperAgent:
                 ev["overall_len_mm"] = {"value": g71.total_len, "source": "grounded_g71_spec"}
         return res
 
+    def facet_select_machine_and_stock(self, context: Union[str, Dict[str, Any]]) -> Dict[str, Any]:
+        """Machining Facet: resolve typed machine needs and derive a safe blank."""
+        from virtu_omni.manufacturing.machine_selection import select_machine_and_stock
+
+        ctx = self._spec_context(context)
+        request = ctx.get("manufacturing_request")
+        if not isinstance(request, dict):
+            request = ctx.get("machine_selection_request")
+        if not isinstance(request, dict):
+            return {
+                "status": "needs_input", "issues": ["typed manufacturing_request required"],
+                "requirements": {},
+                "stock": {"passed": False, "status": "not_evaluated"},
+                "controller_code_generation_allowed": False,
+                "basis": "insufficient",
+            }
+        return select_machine_and_stock(
+            request,
+            objective=str(ctx.get("machine_objective") or "min_setups_then_axis_excess"),
+        )
+
+    def facet_coordinate_contract(self, context: Union[str, Dict[str, Any]]) -> Dict[str, Any]:
+        """Auditor Facet: provide documented profile or validate measured frame evidence."""
+        from virtu_omni.coordinates.runtime import get_coordinate_profile, validate_coordinate_snapshot
+
+        ctx = self._spec_context(context)
+        software = str(ctx.get("software") or ctx.get("application") or "")
+        snapshot = ctx.get("snapshot")
+        if snapshot is None:
+            return get_coordinate_profile(software)
+        return validate_coordinate_snapshot(software, snapshot)
+
+    def facet_audit_nc_capability(self, context: Union[str, Dict[str, Any]]) -> Dict[str, Any]:
+        """Auditor Facet: inspect literal NC axis words without claiming simulation."""
+        from virtu_omni.manufacturing.nc_audit import audit_nc_capability
+
+        ctx = self._spec_context(context)
+        program = ctx.get("program") or ctx.get("nc_program") or ""
+        return audit_nc_capability(program, ctx.get("required_features"))
+
     def facet_generate_cad(self, context: Union[str, Dict[str, Any]]) -> Dict[str, Any]:
         """Modeling Facet: 3D Parametric CAD FeatureTree and equations."""
         return self._delegate_modeler.run(self._spec_context(context))
@@ -814,6 +875,22 @@ class VirtuSuperAgent:
     def facet_generate_cam(self, context: Union[str, Dict[str, Any]]) -> Dict[str, Any]:
         """Machining Facet: CAM toolpaths, cutting feeds & speeds, CNC Macro B."""
         ctx = self._spec_context(context)
+        machine_selection = None
+        machine_request = ctx.get("manufacturing_request") or ctx.get("machine_selection_request")
+        if isinstance(machine_request, dict):
+            machine_selection = self.facet_select_machine_and_stock({
+                "manufacturing_request": machine_request,
+                "machine_objective": ctx.get("machine_objective"),
+            })
+            if not machine_selection.get("controller_code_generation_allowed"):
+                return {
+                    "status": "BLOCKED",
+                    "passed": False,
+                    "verdict_code": "MACHINE_OR_STOCK_GATE_BLOCKED",
+                    "machine_selection": machine_selection,
+                    "engineering_verified": False,
+                    "production_nc_allowed": False,
+                }
         arch = ctx.get("architecture") or {}
         spec_dict = arch.get("parsed_spec") if isinstance(arch, dict) else {}
         user_prompt = str(ctx.get("user_prompt") or (spec_dict or {}).get("wish") or "")
@@ -886,15 +963,29 @@ class VirtuSuperAgent:
         result["static_gate_passed"] = gate_ok
         # Static validation cannot establish that the NC was simulated on the target machine.
         result["engineering_verified"] = False
+        result["machine_selection"] = machine_selection or {
+            "status": "not_run",
+            "issues": ["typed_manufacturing_request_required_for_machine_selection"],
+            "controller_code_generation_allowed": False,
+        }
+        result["production_nc_allowed"] = False
         result["evidence_status"] = "static_checks_passed" if gate_ok else "rejected"
         if not gate_ok:
             result.update({"status": "FAILED", "passed": False,
                            "verdict_code": "CNC_STATIC_GATE_FAILED"})
         return result
 
-    def facet_verify_cae(self, spec: Union[str, Dict[str, Any]], internal_pressure_mpa: float = 10.0) -> Dict[str, Any]:
-        """CAE Facet: Thick cylinder elasticity (Lamé theory) & Safety Factor (FOS >= 1.5)."""
-        po_mpa = 0.0
+    def facet_verify_cae(
+        self,
+        spec: Union[str, Dict[str, Any]],
+        internal_pressure_mpa: Optional[float] = None,
+    ) -> Dict[str, Any]:
+        """Calculate a closed-end Lamé stress case through the shared reference laws.
+
+        Missing load, material, or dimensions block the calculation. The result is an
+        analytical check, not a finite-element solve or a measured physical test.
+        """
+        po_mpa: Optional[float] = None
         if isinstance(spec, str):
             try:
                 from virtu_omni.agent.grounded_inference import parse_lame_request
@@ -907,7 +998,7 @@ class VirtuSuperAgent:
                     "d_outer": lame_req["do_mm"],
                 }
                 internal_pressure_mpa = lame_req["pi_mpa"]
-                po_mpa = lame_req.get("po_mpa", 0.0)
+                po_mpa = lame_req.get("po_mpa")
             else:
                 spec_dict = self._spec_context(spec).get("architecture", {}).get("parsed_spec", {})
         elif isinstance(spec, dict):
@@ -915,70 +1006,129 @@ class VirtuSuperAgent:
         else:
             spec_dict = {}
 
-        material_name = spec_dict.get("material", "AL6061-T6")
-        mat_prop = self.MATERIAL_PROPERTIES.get(material_name, self.MATERIAL_PROPERTIES["AL6061-T6"])
-        d_outer = float(spec_dict.get("d_outer", 53.0))
-        d_inner = float(spec_dict.get("d_inner", 14.0))
-        total_len = float(spec_dict.get("overall_len") or spec_dict.get("total_len") or 45.0)
-        if spec_dict.get("internal_pressure_mpa") is not None:
-            internal_pressure_mpa = float(spec_dict["internal_pressure_mpa"])
+        def blocked(code: str, missing: List[str], detail: str) -> Dict[str, Any]:
+            return {
+                "status": "BLOCKED", "passed": False, "verified": False,
+                "calculation_verified": False, "engineering_verified": False,
+                "evidence_basis": "insufficient", "verdict_code": code,
+                "missing_inputs": missing, "safety_factor_fos": None,
+                "fos_passed": False, "summary": detail,
+            }
 
-        r_outer = d_outer / 2.0
-        r_inner = d_inner / 2.0
-        r_inner_eff = max(r_inner, 0.1)
-        yield_strength = mat_prop["yield_strength_mpa"]
+        d_outer_raw = next((spec_dict.get(key) for key in
+                            ("d_outer", "d_outer_mm", "outer_diameter_mm", "outer_diameter")
+                            if spec_dict.get(key) is not None), None)
+        d_inner_raw = next((spec_dict.get(key) for key in
+                            ("d_inner", "d_inner_mm", "bore_diameter_mm", "bore_diameter")
+                            if spec_dict.get(key) is not None), None)
+        if internal_pressure_mpa is None:
+            internal_pressure_mpa = spec_dict.get(
+                "pressure_inner_mpa", spec_dict.get("internal_pressure_mpa")
+            )
+        if po_mpa is None:
+            po_mpa = spec_dict.get("pressure_outer_mpa", spec_dict.get("external_pressure_mpa", 0.0))
+        material_name = spec_dict.get("material")
 
-        # Lamé thick cylinder closed-form solution (shared grounded_inference kernel)
-        lame_out: Optional[Dict[str, Any]] = None
-        if 0.0 < d_inner < d_outer and internal_pressure_mpa >= 0.0 and po_mpa >= 0.0:
+        missing = [name for name, value in (
+            ("d_outer_mm", d_outer_raw), ("d_inner_mm", d_inner_raw),
+            ("pressure_inner_mpa", internal_pressure_mpa),
+        ) if value is None or (isinstance(value, str) and not value.strip())]
+        if missing:
+            return blocked("CAE_INPUTS_REQUIRED", missing,
+                           "CAE 未运行：需要明确的外径、内径和内压。")
+
+        def finite_number(value: Any) -> Optional[float]:
+            if isinstance(value, bool):
+                return None
             try:
-                from virtu_omni.agent.grounded_inference import lame_thick_cylinder
-                lame_out = lame_thick_cylinder(d_inner, d_outer, internal_pressure_mpa, po_mpa)
-            except Exception:
-                lame_out = None
+                number = float(value)
+            except (TypeError, ValueError):
+                return None
+            return number if math.isfinite(number) else None
 
-        if lame_out is not None:
-            sigma_t_max = lame_out["sigma_theta_inner_mpa"]
-            fos = round(yield_strength / max(sigma_t_max, 1e-6), 2)
-        elif r_outer <= r_inner_eff:
-            sigma_t_max = 9999.0
-            fos = 0.01
-        else:
-            denom = (r_outer ** 2) - (r_inner_eff ** 2)
-            numer = (r_outer ** 2) + (r_inner_eff ** 2)
-            sigma_t_max = internal_pressure_mpa * (numer / denom)
-            fos = round(yield_strength / max(sigma_t_max, 1e-6), 2)
+        d_outer = finite_number(d_outer_raw)
+        d_inner = finite_number(d_inner_raw)
+        pressure_inner = finite_number(internal_pressure_mpa)
+        pressure_outer = finite_number(po_mpa)
+        if None in (d_outer, d_inner, pressure_inner, pressure_outer):
+            return blocked("CAE_INPUT_INVALID", ["finite_numeric_dimensions_and_pressures"],
+                           "CAE 未运行：尺寸和压力必须是有限数值。")
 
-        theoretical_volume_mm3 = round(math.pi * (r_outer ** 2 - r_inner ** 2) * total_len, 2)
-        weight_grams = round(theoretical_volume_mm3 * 1e-3 * mat_prop["density_g_cm3"], 2)
-        fos_passed = fos >= 1.5
-
-        out: Dict[str, Any] = {
-            "status": "COMPLETED",
-            "material": material_name,
-            "material_name_cn": mat_prop["name_cn"],
-            "yield_strength_mpa": yield_strength,
-            "internal_pressure_mpa": internal_pressure_mpa,
-            "max_von_mises_stress_mpa": round(sigma_t_max, 2),
-            "safety_factor_fos": fos,
-            "fos_passed": fos_passed,
-            "theoretical_volume_mm3": theoretical_volume_mm3,
-            "estimated_weight_grams": weight_grams,
-            "summary": (
-                f"CAE 物理力学验算：材料【{mat_prop['name_cn']}】在 {internal_pressure_mpa} MPa 载荷下，"
-                f"最大环向应力 {round(sigma_t_max, 2)} MPa，屈服强度 {yield_strength} MPa，"
-                f"计算安全系数 FOS = {fos} ({'合规 >= 1.5' if fos_passed else '危险 < 1.5'})。"
-            ),
+        material = (self.MATERIAL_PROPERTIES.get(material_name)
+                    if isinstance(material_name, str) else None)
+        stress_inputs = {
+            "pressure_inner_mpa": pressure_inner,
+            "pressure_outer_mpa": pressure_outer,
+            "r_inner_mm": d_inner / 2.0,
+            "r_outer_mm": d_outer / 2.0,
         }
-        if lame_out is not None:
-            out.update({
-                "sigma_theta_inner_mpa": round(lame_out["sigma_theta_inner_mpa"], 4),
-                "sigma_r_inner_mpa": round(lame_out["sigma_r_inner_mpa"], 4),
-                "sigma_theta_outer_mpa": round(lame_out["sigma_theta_outer_mpa"], 4),
-                "sigma_r_outer_mpa": round(lame_out["sigma_r_outer_mpa"], 4),
-                "true_von_mises_inner_mpa": round(lame_out["von_mises_inner_mpa"], 4),
-                "lame_basis": lame_out["basis"],
-            })
+        from scripts.wm_verifier import recompute
+
+        stress = recompute({"task": "lame_cylinder_stress", "inputs": stress_inputs})
+        if not stress:
+            return blocked("CAE_STRESS_REFERENCE_UNAVAILABLE", [],
+                           "CAE 未运行：几何或压差未通过 Lamé 解析器的 fail-closed 校验。")
+        fos = recompute({"task": "fea_fos", "inputs": {
+            "Sy": material["yield_strength_mpa"],
+            "sigma": stress["peak_von_mises_mpa"],
+        }}) if material else {}
+        if material and not fos:
+            return blocked("CAE_FOS_REFERENCE_UNAVAILABLE", [],
+                           "CAE 未运行：安全系数参考值无法复算。")
+
+        fos_value = fos.get("safety_factor")
+        fos_passed = bool(fos_value is not None and fos_value >= 1.5)
+        material_status = (
+            "registered" if material else
+            "unknown" if material_name else "missing"
+        )
+        summary = (
+            f"Lamé 闭式解析：内压 {pressure_inner:g} MPa，外压 {pressure_outer:g} MPa；"
+            f"最大 von Mises 应力 {stress['peak_von_mises_mpa']:.2f} MPa。"
+        )
+        if material:
+            summary += (
+                f"材料【{material['name_cn']}】屈服强度 {fos['yield_strength_mpa']:g} MPa，"
+                f"FOS={fos_value:.2f}，{'达到' if fos_passed else '低于'} 1.5 门槛。"
+            )
+        else:
+            summary += f"材料 {material_name!r} 无已登记屈服强度，FOS 未计算。"
+        summary += "此结果是闭式解析，不是有限元或实物试验。"
+        out: Dict[str, Any] = {
+            "status": "COMPLETED" if material else "PARTIAL",
+            "passed": fos_passed, "verified": True,
+            "calculation_verified": True, "engineering_verified": False,
+            "evidence_basis": "inferred", "verification_basis": "analytic_closed_form",
+            "law_source": "virtu_eval.derivation.LAWS",
+            "solver": "scripts.wm_verifier.recompute",
+            "material": material_name, "material_status": material_status,
+            "material_name_cn": material["name_cn"] if material else None,
+            "yield_strength_mpa": fos.get("yield_strength_mpa"),
+            "pressure_inner_mpa": pressure_inner,
+            "pressure_outer_mpa": pressure_outer,
+            "max_von_mises_stress_mpa": stress["peak_von_mises_mpa"],
+            "von_mises_inner_mpa": stress["von_mises_inner_mpa"],
+            "von_mises_outer_mpa": stress["von_mises_outer_mpa"],
+            "sigma_theta_inner_mpa": stress["lame_hoop_inner_mpa"],
+            "sigma_r_inner_mpa": stress["lame_radial_inner_mpa"],
+            "sigma_theta_outer_mpa": stress["lame_hoop_outer_mpa"],
+            "sigma_r_outer_mpa": stress["lame_radial_outer_mpa"],
+            "safety_factor_fos": fos_value, "fos_passed": fos_passed,
+            "assumptions": ["closed-end cylinder", "linear-elastic material"]
+                + ([] if "pressure_outer_mpa" in spec_dict or "external_pressure_mpa" in spec_dict
+                   or po_mpa not in (None, 0.0) else ["outer gauge pressure assumed 0 MPa"]),
+            "summary": summary,
+        }
+        length = finite_number(spec_dict.get("overall_len", spec_dict.get("total_len")))
+        if material and length is not None and length > 0:
+            mass_props = recompute({"task": "design", "inputs": {
+                "r_out": d_outer / 2.0, "r_bore": d_inner / 2.0,
+                "t": length, "n_holes": 0, "r_hole": 0,
+                "rho": material["density_g_cm3"] / 1000.0,
+            }})
+            if mass_props:
+                out["theoretical_volume_mm3"] = mass_props["volume_mm3"]
+                out["estimated_weight_grams"] = mass_props["mass_g"]
         return out
 
     def facet_solve_lame_cylinder(self, params: Union[str, Dict[str, Any]]) -> Dict[str, Any]:
@@ -2780,7 +2930,7 @@ class VirtuSuperAgent:
                             key=_fk,
                             value=spec.get(_fk),
                             source="parse_intent",
-                            verified=True,
+                            verified=False,
                             basis="asserted",
                         )
             _persist(2, "Architecture Spec", {"02_architecture_spec.json": arch_res})
@@ -2844,23 +2994,33 @@ class VirtuSuperAgent:
 
             # 6. CAE Stress Analysis & Safety Factor
             def step_6(att):
-                return self.facet_verify_cae(spec, internal_pressure_mpa=10.0)
+                return self.facet_verify_cae(spec)
 
             cae_res = self.execute_with_circuit_breaker(
                 "CAE_Stress_Simulation",
                 step_6,
-                verify_fn=lambda r: (r.get("fos_passed", False), f"安全系数 FOS={r.get('safety_factor_fos')} 需 >= 1.5"),
+                verify_fn=lambda r: (
+                    bool(r.get("calculation_verified")) or r.get("status") == "BLOCKED",
+                    "Lamé/材料参考计算必须成功，或明确返回缺参阻断",
+                ),
             )
-            if self.working_memory is not None and isinstance(cae_res, dict) and cae_res.get("safety_factor_fos") is not None:
+            if (self.working_memory is not None and isinstance(cae_res, dict)
+                    and cae_res.get("calculation_verified")
+                    and cae_res.get("safety_factor_fos") is not None):
                 self.working_memory.record_fact(
                     key="safety_factor_fos",
                     value=cae_res.get("safety_factor_fos"),
                     source="facet_verify_cae",
                     verified=True,
-                    basis="measured",
+                    basis="inferred",
                 )
             _persist(6, "CAE Simulation", {"06_cae_stress_simulation.json": cae_res})
-            trace_log.append({"stage": "6. 有限元与弹性力学安全系数分析 (CAE)", "status": "COMPLETED", "summary": cae_res["summary"]})
+            trace_log.append({
+                "stage": "6. 厚壁筒解析应力与安全系数",
+                "status": "COMPLETED" if cae_res.get("calculation_verified") else "BLOCKED",
+                "gate_passed": bool(cae_res.get("fos_passed")),
+                "summary": cae_res["summary"],
+            })
 
             # 7. Sandbox Simulation & Auditor
             def step_7(att):
@@ -2875,11 +3035,29 @@ class VirtuSuperAgent:
             _persist(7, "Sandbox Simulation", {"07_sandbox_simulation_audit.json": audit_res}, soft_key="vericut")
             trace_log.append({"stage": "7. 虚拟无头沙箱仿真与零碰撞复核", "status": "COMPLETED", "summary": audit_res["summary"]})
 
+            geometry_evidence = model_res.get("geometry_evidence") or {}
+            geometry_gate = bool(
+                geometry_evidence.get("verified")
+                and geometry_evidence.get("matches_spec")
+            )
+            engineering_gates = {
+                "cad_geometry_matches_spec": geometry_gate,
+                "cae_calculation_verified": bool(cae_res.get("calculation_verified")),
+                "safety_factor_at_least_1_5": bool(cae_res.get("fos_passed")),
+                "cnc_static_semantics_passed": bool(mach_res.get("static_gate_passed")),
+                "headless_audit_passed": bool(audit_res.get("passed")),
+            }
+            pipeline_success = all(engineering_gates.values())
+            engineering_gates["passed"] = pipeline_success
+            engineering_gates["unmet"] = [name for name, passed in engineering_gates.items()
+                                           if name != "passed" and not passed]
+
             # 8. Memory Commit
             mem_commit = self.facet_commit_memory({
                 "user_prompt": user_prompt,
                 "architecture": arch_res,
                 "auditor": audit_res,
+                "engineering_gates": engineering_gates,
             })
             _persist(8, "Memory Commit", {"08_memory_commit_receipt.json": mem_commit})
             trace_log.append({"stage": "8. 高阶制造经验与心智模型固化至 Hindsight", "status": "COMPLETED"})
@@ -2892,25 +3070,32 @@ class VirtuSuperAgent:
             try:
                 self.sleep_framework.record_wake_step(
                     prompt=user_prompt,
-                    completion=f"Autonomous solve completed: {arch_res.get('summary', '')}; FOS={cae_res.get('safety_factor_fos')}",
-                    verified_facts={
-                        "safety_factor_fos": cae_res.get("safety_factor_fos"),
-                        "theoretical_volume_mm3": cae_res.get("theoretical_volume_mm3"),
-                        "architecture": arch_res.get("summary", ""),
-                    },
-                    tool_calls=[{"tool": "solve_autonomous", "status": "COMPLETED"}],
+                    completion=(
+                        f"Autonomous solve {'completed' if pipeline_success else 'incomplete'}; "
+                        f"unmet gates={engineering_gates['unmet']}"
+                    ),
+                    verified_facts=(
+                        {"safety_factor_fos": cae_res.get("safety_factor_fos"),
+                         "basis": cae_res.get("evidence_basis")}
+                        if cae_res.get("calculation_verified") else {}
+                    ),
+                    tool_calls=[{"tool": "solve_autonomous",
+                                 "status": "COMPLETED" if pipeline_success else "INCOMPLETE"}],
                     tokens_prompt=_tok_prompt,
                     tokens_completion=_tok_completion,
                 )
             except Exception as e_wake:
                 logger.warning(f"Could not record wake step: {e_wake}")
 
-            # Physical volume conservation assertion
-            volume_theor = cae_res.get("theoretical_volume_mm3", 0.0)
             metrics = {
-                "volume_conservation": f"{volume_theor} mm³ (ΔV != 0, 守恒)",
-                "safety_factor": f"{cae_res.get('safety_factor_fos')} ({'合格' if cae_res.get('fos_passed') else '不合格'})",
+                "engineering_gates": engineering_gates,
+                "evidence_basis": cae_res.get("evidence_basis", "insufficient"),
+                "safety_factor": (
+                    f"{cae_res.get('safety_factor_fos')} ({'合格' if cae_res.get('fos_passed') else '不合格'})"
+                    if cae_res.get("calculation_verified") else "未计算：输入或材料证据不足"
+                ),
                 "fos_val": cae_res.get("safety_factor_fos"),
+                "theoretical_volume_mm3": cae_res.get("theoretical_volume_mm3"),
                 "ram_status": self.reclaimer.get_system_memory(),
                 "run_id": run_id,
                 "memory_context_injected": bool(runtime_ctx),
@@ -2928,7 +3113,7 @@ class VirtuSuperAgent:
             return SuperAgentExecutionResult(
                 task_prompt=user_prompt,
                 mode=SuperAgentMode.AUTONOMOUS.value,
-                success=True,
+                success=pipeline_success,
                 runtime_seconds=runtime,
                 facets_engaged=facets_engaged,
                 artifacts={

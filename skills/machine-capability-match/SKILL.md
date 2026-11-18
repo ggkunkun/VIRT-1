@@ -10,7 +10,7 @@ metadata:
 
 # Machine Capability Match
 
-Use this skill when a CNC milling job must be assessed against a named, sourced machine profile.
+Use this skill only for a three-axis milling job assessed against a named, sourced machine profile. For indexed or simultaneous rotary milling, turning, or mill-turn work, use `multi-axis-machine-selection`.
 
 ## Review
 

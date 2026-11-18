@@ -56,6 +56,61 @@ CADCAM_TOOLS_DEFINITION = [
     {
         "type": "function",
         "function": {
+            "name": "cadcam_coordinate_contract",
+            "description": "查询六大软件的坐标系契约，或严格校验软件 API/界面采集的实测坐标快照。转换统一使用 mm、明确父子坐标系；文档资料不能伪装成现场实测。",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "software": {"type": "string", "enum": ["solidworks", "autocad", "nx", "cimco", "vericut", "sscnc"]},
+                    "snapshot": {"type": "object", "description": "可选的原生状态快照；必须包含版本、采集时间、来源、哈希证据、活动坐标系、transform_unit='mm' 及每个 frame 的 4x4 T_parent_from_frame（平移已换算为 mm）"},
+                },
+                "required": ["software"],
+            },
+        },
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "cadcam_select_machine_and_stock",
+            "description": "依据结构化特征要求选择车床、三轴/四轴/五轴铣床或车铣复合，并从成品包络和明确余量推导毛坯。返回精确机床、控制器、后处理或碰撞/Auto-Diff 证据不足时只给类别建议并禁止生成可下机 NC。",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "request": {
+                        "type": "object",
+                        "properties": {
+                            "features": {"type": "array", "items": {"type": "string", "enum": ["turning", "milling_3axis", "milling_4axis_indexed", "milling_4axis_simultaneous", "milling_5axis_3plus2", "milling_5axis_simultaneous", "mill_turn_off_axis_milling", "mill_turn_y_axis_milling", "subspindle_transfer"]}},
+                            "material": {"type": "string"},
+                            "part_envelope_mm": {"type": "object"},
+                            "product_bbox_mm": {"type": "object", "properties": {"xmin": {"type": "number"}, "xmax": {"type": "number"}, "ymin": {"type": "number"}, "ymax": {"type": "number"}, "zmin": {"type": "number"}, "zmax": {"type": "number"}}, "required": ["xmin", "xmax", "ymin", "ymax", "zmin", "zmax"]},
+                            "stock": {"type": "object", "properties": {"shape": {"type": "string", "enum": ["box", "cylinder"]}, "axis": {"type": "string", "enum": ["X", "Y", "Z"]}, "allowance_mm": {"type": "object", "properties": {"side": {"type": "number"}, "radial": {"type": "number"}, "end": {"type": "number"}}}}, "required": ["shape", "allowance_mm"]}
+                        },
+                        "required": ["features", "material", "product_bbox_mm", "stock"]
+                    },
+                    "objective": {"type": "string", "enum": ["min_setups_then_axis_excess", "min_cycle_time"]}
+                },
+                "required": ["request"]
+            },
+        },
+    },
+    {
+        "type": "function",
+        "function": {
+            "name": "cadcam_nc_capability_audit",
+            "description": "只读解析 NC 运动块，核对三轴、四轴定位/联动、五轴 3+2/联动及车铣复合候选；结果只是静态文本证据，不能代替后处理、机床运动学或 VERICUT 仿真，也绝不授权直接下机。",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "program": {"type": "string", "description": "NC 程序文本"},
+                    "required_features": {"type": "array", "items": {"type": "string", "enum": ["turning", "milling_3axis", "milling_4axis_indexed", "milling_4axis_simultaneous", "milling_5axis_3plus2", "milling_5axis_simultaneous", "mill_turn_off_axis_milling", "mill_turn_y_axis_milling", "subspindle_transfer"]}},
+                },
+                "required": ["program"],
+            },
+        },
+    },
+    {
+        "type": "function",
+        "function": {
             "name": "cadcam_solidworks_model",
             "description": "SOLIDWORKS 2021 三维参数化特征建模：通过 COM Automation / VBA 宏驱动特征树、方程式管理器 (EquationMgr) 生成零件，并导出 STEP 实体或工程图。",
             "parameters": {
@@ -684,6 +739,7 @@ RISK_SYSTEM = "system"  # 执行任意代码（VBA/宏/journal）或操作桌面
 #: 只读工具白名单（其余一律视为 write，除非显式列为 system）
 READ_ONLY_TOOLS = frozenset({
     "ontology.lookup_plugin", "cadcam_preflight", "cadcam_cimco_validate",
+    "cadcam_coordinate_contract", "cadcam_select_machine_and_stock", "cadcam_nc_capability_audit",
     "cadcam_sscnc_control", "cadcam_web_search", "web_search",
     "cadcam_knowledge_lookup", "web.search_technical_knowledge",
     "cadcam_fetch_web_content", "fetch_web_content",
@@ -1605,6 +1661,25 @@ def _execute_tool_call_impl(tool_name: str, arguments: Dict[str, Any],
 
     if tool_name == "cadcam_preflight":
         return orch.preflight()
+
+    elif tool_name == "cadcam_coordinate_contract":
+        from virtu_omni.coordinates.runtime import get_coordinate_profile, validate_coordinate_snapshot
+        software = str(args.get("software") or "")
+        snapshot = args.get("snapshot")
+        if snapshot is None:
+            return get_coordinate_profile(software)
+        return validate_coordinate_snapshot(software, snapshot)
+
+    elif tool_name == "cadcam_select_machine_and_stock":
+        from virtu_omni.manufacturing.machine_selection import select_machine_and_stock
+        return select_machine_and_stock(
+            args.get("request") or {},
+            objective=str(args.get("objective") or "min_setups_then_axis_excess"),
+        )
+
+    elif tool_name == "cadcam_nc_capability_audit":
+        from virtu_omni.manufacturing.nc_audit import audit_nc_capability
+        return audit_nc_capability(args.get("program") or "", args.get("required_features"))
 
     elif tool_name == "cadcam_feature_ops":
         from bridges.feature_ops import feature_ops as _fops

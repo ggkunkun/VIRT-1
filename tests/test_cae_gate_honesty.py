@@ -30,6 +30,45 @@ def test_unknown_material_is_blocked_not_guessed():
     assert "factor_of_safety" not in r
 
 
+def test_missing_material_is_blocked_instead_of_using_default():
+    r = UniversalCAEEngine().analyze_and_optimize(
+        {"family": "ROTATIONAL_SHAFT", "spec": {"d_outer": 53.0, "d_inner": 14.0}},
+        {"internal_pressure_mpa": 10.0})
+    assert r["status"] == "blocked"
+    assert r["verdict_code"] == "MATERIAL_REQUIRED"
+    assert "factor_of_safety" not in r
+
+
+def test_shaft_missing_geometry_or_load_is_blocked_without_defaults():
+    engine = UniversalCAEEngine()
+    missing_geometry = engine.analyze_and_optimize(
+        {"family": "ROTATIONAL_SHAFT", "spec": {"material": MAT_45}},
+        {"internal_pressure_mpa": 10.0})
+    assert missing_geometry["verdict_code"] == "GEOMETRY_REQUIRED"
+    missing_load = engine.analyze_and_optimize(
+        {"family": "ROTATIONAL_SHAFT",
+         "spec": {"material": MAT_45, "d_outer": 53.0, "d_inner": 14.0}}, {})
+    assert missing_load["verdict_code"] == "LOAD_REQUIRED"
+
+
+def test_shaft_reports_shared_law_and_zero_load_assumptions():
+    result = _shaft({"d_outer": 53.0, "d_inner": 14.0},
+                    {"internal_pressure_mpa": 10.0})
+    assert result["status"] == "passed"
+    assert result["formula_source"] == "virtu_eval.derivation.LAWS"
+    assert result["evidence_basis"] == "inferred"
+    assert "external_pressure_mpa=0" in result["load_assumptions"]
+    assert "torque_nm=0" in result["load_assumptions"]
+
+
+def test_shaft_rejects_loads_outside_the_selected_solver_model():
+    result = _shaft({"d_outer": 53.0, "d_inner": 14.0},
+                    {"torque_nm": 100.0, "radial_load_n": 500.0})
+    assert result["status"] == "blocked"
+    assert result["verdict_code"] == "LOAD_UNSUPPORTED"
+    assert "radial_load_n" in result["unsupported_loads"]
+
+
 def test_material_alias_changes_fos_instead_of_silently_defaulting():
     spec = {"d_outer": 53.0, "d_inner": 14.0}
     with45 = _shaft(spec, {"internal_pressure_mpa": 45.0})

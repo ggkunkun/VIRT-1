@@ -32,6 +32,28 @@ def _crit(case):
 
 SCENARIOS = [_crit(c)["scenario"] for c in _cases()]
 
+# Domain-specific law families need a deterministic registry contract probe, but are
+# intentionally kept out of the sealed benchmark case pool.
+REGISTRY_ONLY_SCENARIOS = {
+    "lame_cylinder_stress": {
+        "task": "lame_cylinder_stress",
+        "inputs": {
+            "pressure_inner_mpa": 10.0,
+            "pressure_outer_mpa": 0.0,
+            "r_outer_mm": 30.0,
+            "r_inner_mm": 10.0,
+        },
+    },
+    "shaft_torsion": {
+        "task": "shaft_torsion",
+        "inputs": {"torque_nm": 100.0, "r_outer_mm": 10.0, "r_inner_mm": 4.0},
+    },
+    "combined_vm_torsion": {
+        "task": "combined_vm_torsion",
+        "inputs": {"base_von_mises_mpa": 12.0, "torsional_shear_mpa": 5.0},
+    },
+}
+
 
 def _perturbed(scenario, rng):
     inputs = {}
@@ -48,7 +70,8 @@ def _perturbed(scenario, rng):
 def test_registry_covers_every_numeric_reference_field():
     """A field the solver produces but the registry cannot express would be silently ungraded."""
     for task in LAWS:
-        scenario = next((s for s in SCENARIOS if s["task"] == task), None)
+        scenario = next((s for s in SCENARIOS if s["task"] == task),
+                        REGISTRY_ONLY_SCENARIOS.get(task))
         assert scenario, f"no shipped case exercises task {task}"
         ref = wm.recompute(scenario)
         assert ref, f"solver returns no reference for {task}"

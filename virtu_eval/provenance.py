@@ -51,10 +51,18 @@ def sha256_file(path) -> str:
 def _store_manifest_path(model_id: str):
     home = Path(os.path.expanduser("~"))
     name, _, revision = model_id.partition(":")
-    for base in (home / ".ollama" / "models" / "manifests", Path(r"E:\ollama\models\manifests")):
-        candidate = base / "registry.ollama.ai" / "library" / name / (revision or "latest")
-        if candidate.exists():
-            return candidate
+    rev = revision or "latest"
+    roots = []
+    env_dir = os.environ.get("OLLAMA_MODELS")
+    if env_dir:
+        roots.append(Path(env_dir))
+    roots.extend([home / ".ollama" / "models", Path(r"E:\ollama\models")])
+    for root in roots:
+        for sub in ("manifests", "manifests-v2"):
+            for host in ("registry.ollama.ai", "ollama.com"):
+                candidate = root / sub / host / "library" / name / rev
+                if candidate.exists():
+                    return candidate
     return None
 
 

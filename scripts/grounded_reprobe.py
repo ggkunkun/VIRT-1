@@ -31,6 +31,8 @@ from virtu_omni.agent.grounded_inference import (  # noqa: E402
     GroundedResponder, check_lame_answer, lame_thick_cylinder, parse_g71_request,
     parse_lame_request, validate_g71_against_spec,
 )
+import deploy_trained_adapter as official_grader  # noqa: E402
+from g71_semantic_check import check_g71_step_shaft  # noqa: E402
 
 CASES = [
     ("lame_official", "按 Lamé 厚壁圆筒理论：内径 Di=60 mm，外径 Do=120 mm，内压 Pi=20 MPa。计算内壁环向应力 σ_θ（保留 2 位小数）与径向应力 σ_r，单位 MPa。"),
@@ -109,6 +111,35 @@ def bare_verdict(case_prompt: str, text: str | None) -> dict:
     return {"passed": v["passed"], "violations": v["violations"]}
 
 
+def _ollama_tag_digest(tag: str) -> str | None:
+    try:
+        for m in _ollama("/api/tags", timeout=15).get("models", []):
+            if m.get("name") == tag:
+                return m.get("digest")
+    except Exception:
+        return None
+    return None
+
+
+def _official_cross_check(cid: str, text: str | None) -> dict | None:
+    if not text:
+        return None
+    if cid == "lame_official":
+        r = official_grader.evaluate_lame_stress_probe(text)
+        return {"probe": "lame_stress_probe", "passed": bool(r.get("passed")), "reason": r.get("reason")}
+    if cid == "g71_official":
+        tok = official_grader.evaluate_fanuc_g71_safety_probe(text)
+        sem = check_g71_step_shaft(text)
+        return {
+            "probe": "fanuc_g71_safety_probe+g71_semantic_check",
+            "token_passed": bool(tok.get("passed")),
+            "token_reason": tok.get("reason"),
+            "semantic_passed": bool(sem.get("passed")),
+            "semantic_violations": sem.get("violations"),
+        }
+    return None
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--tag", default="virtu-six-software:v3")
@@ -124,6 +155,7 @@ def main() -> int:
         return 2
 
     out_dir = ROOT / "runs" / "grounded_reprobe" / time.strftime("%Y%m%d_%H%M%S")
+    tag_digest_before = _ollama_tag_digest(args.tag)
     ident = RunIdentity.capture(model_ids=[args.tag], ruler_files=RULER,
                                 extra={"cases": [c[0] for c in CASES], "max_repairs": args.max_repairs})
     ident.write(out_dir / "identity.json")
@@ -138,13 +170,24 @@ def main() -> int:
         g = grounded["grounding"]
         final_ok = bool(grounded["content"]) and (
             g.get("model_passed") or (g.get("fallback_gate") or {}).get("passed", False))
-        rows.append({"id": cid, "bare": bare_verdict(prompt, bare_txt), "bare_text": bare_txt,
-                     "grounded_source": g.get("source"), "grounded_model_passed": g.get("model_passed"),
-                     "grounded_final_passed": final_ok, "attempts": g.get("attempts"),
-                     "grounded_content": grounded["content"]})
+        rows.append({
+            "id": cid,
+            "bare": bare_verdict(prompt, bare_txt),
+            "bare_official": _official_cross_check(cid, bare_txt),
+            "bare_text": bare_txt,
+            "grounded_source": g.get("source"),
+            "grounded_model_passed": g.get("model_passed"),
+            "grounded_final_passed": final_ok,
+            "grounded_official": _official_cross_check(cid, grounded["content"]),
+            "attempts": g.get("attempts"),
+            "grounded_content": grounded["content"],
+        })
         print(f"{cid:22s} bare={rows[-1]['bare'].get('passed')} grounded={g.get('source')} final={final_ok}")
 
     drift = ident.drift()
+    tag_digest_after = _ollama_tag_digest(args.tag)
+    if tag_digest_before and tag_digest_after and tag_digest_before != tag_digest_after:
+        drift.append(f"/api/tags digest moved: {tag_digest_before[:12]} -> {tag_digest_after[:12]}")
     n = len(rows)
     n_valid_bare = sum(1 for r in rows if r["bare"]["passed"] is not None)
     basis = "measured"
@@ -155,9 +198,19 @@ def main() -> int:
     if n_valid_bare < n or len(transport) > 0.05 * max(1, n * (args.max_repairs + 2)):
         basis = "partial" if basis == "measured" else basis
     report = {
-        "generated_at": time.strftime("%Y-%m-%d %H:%M:%S"), "run_id": ident.run_id, "tag": args.tag,
-        "artifact": ident.artifacts.get(args.tag), "ruler": ident.ruler, "basis": basis,
-        "chain_busy_at_start": busy, "drift": drift, "transport_errors": transport, "n": n,
+        "generated_at": time.strftime("%Y-%m-%d %H:%M:%S"),
+        "run_id": ident.run_id,
+        "tag": args.tag,
+        "ollama_tags_digest": tag_digest_after,
+        "official_grader_sha256": getattr(official_grader, "GRADER_SHA256", None),
+        "official_measurement_version": getattr(official_grader, "MEASUREMENT_VERSION", None),
+        "artifact": ident.artifacts.get(args.tag),
+        "ruler": ident.ruler,
+        "basis": basis,
+        "chain_busy_at_start": busy,
+        "drift": drift,
+        "transport_errors": transport,
+        "n": n,
         "summary": {
             "bare_model_passed": sum(1 for r in rows if r["bare"]["passed"]),
             "bare_n_valid": n_valid_bare,

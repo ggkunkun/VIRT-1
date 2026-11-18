@@ -102,6 +102,56 @@ def _inject_hindsight_anchor(conv: list, user_prompt: str, max_chars: int = 1400
         updated.insert(0, {"role": "system", "content": block})
     return updated
 
+
+def _grounded_inference_enabled(request_flag=None) -> bool:
+    """Return whether grounded closed-form/G71 inference is active."""
+    if request_flag is not None:
+        return bool(request_flag)
+    raw = os.environ.get("VIRTU_GROUNDED_INFERENCE", "1").strip().lower()
+    return raw not in ("0", "false", "off", "no")
+
+
+def _grounded_max_repairs() -> int:
+    try:
+        return max(0, min(5, int(os.environ.get("VIRTU_GROUNDED_MAX_REPAIRS", "3"))))
+    except (TypeError, ValueError):
+        return 3
+
+
+def _grounded_evidence(grounding: Any) -> Any:
+    if not isinstance(grounding, dict) or not grounding.get("applicable"):
+        return None
+    if grounding.get("model_passed") or (grounding.get("fallback_gate") or {}).get("passed"):
+        return [{"ok": True, "source": grounding.get("source"), "kind": grounding.get("kind")}]
+    return None
+
+
+def _run_grounded_chat(backend, conv: list, user_prompt: str, *,
+                       max_tokens=None, temperature=None, think_param=None,
+                       request_flag=None):
+    """Run GroundedResponder when the prompt hits Lamé/G71; otherwise return None."""
+    if not _grounded_inference_enabled(request_flag):
+        return None
+    try:
+        from virtu_omni.agent.grounded_inference import (
+            GroundedResponder,
+            is_grounded_applicable,
+        )
+    except Exception:
+        return None
+    if not is_grounded_applicable(user_prompt):
+        return None
+
+    def _caller(msgs):
+        if think_param is not None:
+            out = backend.generate(msgs, max_tokens=max_tokens, temperature=temperature, think=think_param)
+        else:
+            out = backend.generate(msgs, max_tokens=max_tokens, temperature=temperature)
+        return out[0] if isinstance(out, tuple) else out
+
+    return GroundedResponder(_caller, max_repairs=_grounded_max_repairs()).respond(conv)
+
+
 # Bridge authentication and app-exclusive execution guards
 _BRIDGE_TOKEN = None
 _MAX_REQUEST_BYTES = 16 * 1024 * 1024
