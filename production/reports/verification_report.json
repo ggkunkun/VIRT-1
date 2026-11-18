@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-18 22:24:53",
+  "generated_at": "2026-11-18 22:26:30",
   "part": {
     "id": "AE-CI-258",
     "name": "航空发动机封闭式叶轮",
@@ -2373,8 +2373,8 @@
       "used_min": 180.0,
       "wear_pct": 487.0,
       "level": "ALARM",
-      "parts_per_tool": 1,
-      "basis": "derived (Taylor VT^n=C + measured cycle time)"
+      "parts_per_tool": 0.21,
+      "basis": "derived (Taylor VT^n=C + measured cutting time)"
     },
     {
       "tool": "T2",
@@ -2383,15 +2383,15 @@
       "used_min": 74.0,
       "wear_pct": 210.9,
       "level": "ALARM",
-      "parts_per_tool": 1,
-      "basis": "derived (Taylor VT^n=C + measured cycle time)"
+      "parts_per_tool": 0.47,
+      "basis": "derived (Taylor VT^n=C + measured cutting time)"
     }
   ],
   "risk": {
-    "level": "CRITICAL",
-    "clearance_mm": -0.003,
+    "level": "MEDIUM",
+    "clearance_mm": 1.85,
     "margin_mm": 1.0,
-    "action": "停机，修正刀路/夹具后再试切"
+    "action": "增加首件目视/探针确认"
   },
   "op_cycle_s": {
     "OP1": 7336.5,
@@ -2448,11 +2448,11 @@
   "batch": {
     "batch_size": 50,
     "cycle_per_part_min": 196.8,
-    "parts_per_tool_change": 1,
-    "tool_changes": 50,
+    "parts_per_tool_change": 0.21,
+    "tool_changes": 239,
     "machining_h": 163.98,
-    "tool_change_h": 7.5,
-    "total_h": 171.48,
+    "tool_change_h": 35.85,
+    "total_h": 199.83,
     "consistency": "同程序哈希 + 同刀补/零点 + 首件与每 N 件抽检（Cpk≥1.33）",
     "basis": "derived (cycle + Taylor wear)"
   },
@@ -2479,7 +2479,7 @@
         "planned_min": 1.5
       }
     ],
-    "software_reconfig_s": 0.04,
+    "software_reconfig_s": 0.14,
     "on_site_planned_min": 14.5,
     "total_min": 14.5,
     "target_min": 15.0,
@@ -2501,11 +2501,6 @@
         "wear_pct": 210.9
       },
       {
-        "type": "COLLISION_RISK",
-        "level": "CRITICAL",
-        "clearance_mm": -0.003
-      },
-      {
         "type": "CYCLE_TARGET",
         "op": "OP1",
         "actual_s": 7336.5,
@@ -2518,7 +2513,7 @@
         "target_s": 2400
       }
     ],
-    "count": 5,
+    "count": 4,
     "basis": "derived + measured"
   },
   "opcua": {
@@ -2683,5 +2678,5 @@
     },
     "hashes": {}
   },
-  "elapsed_s": 41.7
+  "elapsed_s": 42.1
 }
