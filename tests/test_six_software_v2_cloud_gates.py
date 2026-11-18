@@ -211,3 +211,37 @@ def test_controlled_dpo_sft_ref_and_shell_flags() -> None:
     assert 'adapter_name="sft_ref"' in dpo_txt
     assert 'delete_adapter("sft_ref")' in dpo_txt
     assert 'default="sft"' in dpo_txt
+
+
+def test_run_six_software_real_fg_precedence_and_repair_gates() -> None:
+    """Verify --fg beats trailing --bg during self-daemonize, and local repair commit/semantic gates hold."""
+    sh_txt = (ROOT / "cloud_train_pack" / "run_six_software_real.sh").read_text(encoding="utf-8")
+    assert "EXPLICIT_FG=0" in sh_txt
+    assert "EXPLICIT_FG=1" in sh_txt
+    assert 'if [[ "${EXPLICIT_FG}" -eq 0 ]]; then' in sh_txt
+
+    import sys
+    sys.path.insert(0, str(ROOT / "scripts"))
+    import run_full_repair_v9 as r9
+    import g71_semantic_check as g71sem
+
+    assert r9.free_commit_mb() > 0
+    r9_src = (ROOT / "scripts" / "run_full_repair_v9.py").read_text(encoding="utf-8")
+    assert "HF_DEACTIVATE_ASYNC_LOAD" in r9_src
+    assert "ProxyHandler({})" in r9_src
+    assert "free_commit_mb" in r9_src
+
+    # Falsification check on G71 semantic checker: good stepped shaft passes; wrong shoulder/depth fails
+    good_nc = "\n".join([
+        "%", "O0001", "G50 S1800", "G96 S150 M03", "T0101", "G00 X62.0 Z2.0",
+        "G71 U1.5 R0.75", "G71 P10 Q20 U0.4 W0.1 F0.25",
+        "N10 G00 X38.0", "G01 Z0.0 F0.2", "Z-20.0", "X60.0", "Z-45.0",
+        "N20 X62.0", "G00 X100.0 Z80.0", "G70 P10 Q20 F0.15", "G00 X100.0 Z80.0", "M30", "%",
+    ])
+    assert g71sem.check_g71_step_shaft(good_nc)["passed"] is True
+
+    bad_nc = good_nc.replace("Z-45.0", "Z-25.0").replace("G71 U1.5 R0.75", "G71 U-1.5 R0.75")
+    bad_res = g71sem.check_g71_step_shaft(bad_nc)
+    assert bad_res["passed"] is False
+    assert "G71_first_block_negative_U" in bad_res["violations"]
+    assert "profile_total_too_short(need Z~-45)" in bad_res["violations"]

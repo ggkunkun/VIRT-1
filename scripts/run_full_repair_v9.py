@@ -47,16 +47,37 @@ def log(msg: str):
 def run(cmd: list, logfile: str, timeout: int, cwd=None) -> bool:
     log(f"RUN {logfile}: {' '.join(str(c) for c in cmd)[:220]}")
     t0 = time.time()
+    env = dict(os.environ)
+    env.setdefault("HF_DEACTIVATE_ASYNC_LOAD", "1")
     with (LOG / logfile).open("w", encoding="utf-8") as lf:
         try:
             p = subprocess.run([str(c) for c in cmd], stdout=lf, stderr=subprocess.STDOUT,
-                               timeout=timeout, cwd=str(cwd or ROOT))
+                               timeout=timeout, cwd=str(cwd or ROOT), env=env)
             rc = p.returncode
         except subprocess.TimeoutExpired:
             rc = -99
             lf.write(f"\n[ORCH] TIMEOUT {timeout}s\n")
     log(f"END {logfile}: rc={rc} elapsed={time.time()-t0:.1f}s")
     return rc == 0
+
+
+def free_commit_mb() -> int:
+    try:
+        import ctypes
+        class _MEM(ctypes.Structure):
+            _fields_ = [
+                ("dwLength", ctypes.c_ulong), ("dwMemoryLoad", ctypes.c_ulong),
+                ("ullTotalPhys", ctypes.c_ulonglong), ("ullAvailPhys", ctypes.c_ulonglong),
+                ("ullTotalPageFile", ctypes.c_ulonglong), ("ullAvailPageFile", ctypes.c_ulonglong),
+                ("ullTotalVirtual", ctypes.c_ulonglong), ("ullAvailVirtual", ctypes.c_ulonglong),
+                ("sullAvailExtendedVirtual", ctypes.c_ulonglong),
+            ]
+        m = _MEM(dwLength=ctypes.sizeof(_MEM))
+        if ctypes.windll.kernel32.GlobalMemoryStatusEx(ctypes.byref(m)):
+            return int(m.ullAvailPageFile // (1024 * 1024))
+    except Exception:
+        pass
+    return 0
 
 
 def gpu_free_mb() -> int:
@@ -91,6 +112,11 @@ def other_busy() -> list[str]:
             args = [a for a in (p.info["cmdline"] or [])[1:] if a]
             # 主体必须是 python.exe / pythonw.exe，且脚本参数命中目标
             if "python" not in name:
+                continue
+            if any(a == "pytest" or a.endswith("pytest.exe") for a in args) or (
+                "-m" in args and "pytest" in args
+            ):
+                busy.append(f"{p.info['pid']}:pytest")
                 continue
             for a in args:
                 if a.endswith(".py") and any(t in a for t in targets):
@@ -159,23 +185,24 @@ def free_ollama_ram(opener=None) -> bool:
 
 
 def wait_exclusive():
-    log("等待 GPU 独占（连续 3 次：无其它训练/评测进程 + ollama 空 + free>=5000MB）")
+    log("等待 GPU 与宿主机提交内存独占（连续 3 次：无其它训练/评测/pytest + ollama 空 + free>=5000MB + commit>=13200MB）")
     hits = 0
     while True:
         busy = other_busy()
         loaded = ollama_loaded()
         free = gpu_free_mb()
-        if not busy and not loaded and free >= 5000:
+        commit_mb = free_commit_mb()
+        if not busy and not loaded and free >= 5000 and commit_mb >= 13200:
             hits += 1
-            log(f"idle candidate {hits}/3: free={free}MB")
+            log(f"idle candidate {hits}/3: free={free}MB commit={commit_mb}MB")
             if hits >= 3:
-                log("GPU 独占确认 -> 开始串行流程")
+                log("GPU 与提交内存独占确认 -> 开始串行流程")
                 return True
         else:
             if hits:
                 log("独占中断，重新计数")
             hits = 0
-            log(f"busy: procs={len(busy)} ollama={loaded[:2]} free={free}MB")
+            log(f"busy: procs={len(busy)} ollama={loaded[:2]} free={free}MB commit={commit_mb}MB")
         time.sleep(20)
 
 
@@ -306,7 +333,7 @@ def main() -> int:
     if not run([str(PY), "scripts/train_vericut_local_qlora.py",
                 "--base", str(BASE), "--data", str(DATA), "--out", str(OUT_LORA),
                 "--epochs", "1", "--max-length", "640", "--grad-accum", "4",
-                "--lr", "8e-5", "--save-every", "10", "--dev-max-items", "24"],
+                "--lr", "8e-5", "--save-every", "10", "--dev-max-items", "24", "--resume"],
                "train_v5.log", 7200):
         log("[FATAL] v5 training failed")
         return 3

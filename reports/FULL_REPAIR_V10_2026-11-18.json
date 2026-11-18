@@ -1,0 +1,86 @@
+{
+  "generated_at": "2026-11-18 18:01:36",
+  "tag": "virtu-six-software:v10-repair",
+  "digest": "ae89ca9156723b3af7c253751ae171285f80ab7fef077bafada23e572d172b2e",
+  "basis": "measured",
+  "corpus_sha256": "1c7c4434ff8b72ad9a723a011a1e710608826f3882dffcb1d5fb249e2480dc71",
+  "rounds": [
+    {
+      "tag": "virtu-six-software:v10-repair",
+      "round": 1,
+      "passed": 9,
+      "total": 10,
+      "failed": {
+        "lame_stress_probe": "missing_sigma_theta_33.33"
+      },
+      "g71_semantic_passed": false,
+      "g71_semantic_violations": [
+        "profile_step_too_short(need Z~-20)",
+        "profile_shoulder_at_wrong_Z(0,need~-20)"
+      ]
+    },
+    {
+      "tag": "virtu-six-software:v10-repair",
+      "round": 2,
+      "passed": 8,
+      "total": 10,
+      "failed": {
+        "lame_stress_probe": "missing_sigma_theta_33.33",
+        "vericut_autodiff_probe": "swapped_meaning:red"
+      },
+      "g71_semantic_passed": false,
+      "g71_semantic_violations": [
+        "profile_too_short(3<5)",
+        "profile_missing_shoulder_X60",
+        "profile_total_too_short(need Z~-45)"
+      ]
+    },
+    {
+      "tag": "virtu-six-software:v10-repair",
+      "round": 3,
+      "passed": 8,
+      "total": 10,
+      "failed": {
+        "lame_stress_probe": "missing_sigma_theta_33.33",
+        "vericut_autodiff_probe": "swapped_meaning:red"
+      },
+      "g71_semantic_passed": false,
+      "g71_semantic_violations": [
+        "profile_too_short(3<5)",
+        "profile_missing_shoulder_X60",
+        "profile_total_too_short(need Z~-45)"
+      ]
+    }
+  ],
+  "gate": {
+    "rule": "连测最差值做门禁 (project §8.2) + G71 语义门",
+    "v10_rounds_passed": [
+      9,
+      8,
+      8
+    ],
+    "v10_g71_semantic_passed": [
+      false,
+      false,
+      false
+    ],
+    "worst_passed": 8,
+    "worst_total": 10,
+    "worst_round": 2,
+    "worst_failed": {
+      "lame_stress_probe": "missing_sigma_theta_33.33",
+      "vericut_autodiff_probe": "swapped_meaning:red"
+    }
+  },
+  "generalization": {
+    "gen_lame_Di50_Do100_Pi24": {
+      "passed": false,
+      "sample": "- 内壁环向拉应力 σ_θ = Pi*(Do^2 + Di^2)/(Di^2*Do^2) = 24*(100^2 + 50^2)/(50^2*100^2) = 26.67 MPa  \n- 内壁径向压应力 σ_r = -Pi = -24 MPa"
+    },
+    "gen_g71_D80_d46_L25_T60": {
+      "passed": false,
+      "token_gate": true,
+      "sample": "%;\r\nO1004 (FANUC_G71_G70_ISO_G)\r\nG50 S1800 ;\r\nG96 S150 M03 ;\r\nT0101 ;\nG00 X82.0 Z2.0 ;\nG71 U1.5 W0.15 R0.35 ;\nG71 P1 Q2 U0.4 W0.05 R0.15 ;\nN1 G00 X46.0 ;\nG01 Z0.0 F0.25 ;\nX82.0 Z-2.0 ;\nN2 G01 Z-60.0 ;\nG00 X100.0 Z80.0 ;\nT0202 ;\nG00 X82.0 Z2.0 ;\nG70 P1 Q2 U0.1 W0.05 ;\nG00 X100.0 Z"
+    }
+  }
+}

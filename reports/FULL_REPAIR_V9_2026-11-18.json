@@ -1,0 +1,124 @@
+{
+  "generated_at": "2026-11-18 17:32:26",
+  "tag": "virtu-six-software:v9-repair",
+  "basis": "measured",
+  "corpus_sha256": "d7d372d8b08155832597f305d4e707e0e9b9642b856a3987538b869efa8add05",
+  "rounds": [
+    {
+      "tag": "virtu-six-software:v3",
+      "round": 1,
+      "passed": 7,
+      "total": 10,
+      "failed": {
+        "sw_coordinate_probe": "missing_normal:front",
+        "lame_stress_probe": "missing_sigma_theta_33.33",
+        "fanuc_g71_safety_probe": "valid_F>0,unsafe_G00_negative_Z_plunge"
+      },
+      "g71_semantic_passed": false,
+      "g71_semantic_violations": [
+        "G71_first_block_has_W_invalid",
+        "profile_too_short(2<5)",
+        "profile_missing_shoulder_X60",
+        "profile_total_too_short(need Z~-45)",
+        "unsafe_G00_negative_Z_plunge"
+      ]
+    },
+    {
+      "tag": "virtu-six-software:v7-repair",
+      "round": 1,
+      "passed": 10,
+      "total": 10,
+      "failed": {},
+      "g71_semantic_passed": false,
+      "g71_semantic_violations": [
+        "profile_step_too_short(need Z~-20)",
+        "profile_shoulder_at_wrong_Z(0,need~-20)",
+        "profile_total_too_short(need Z~-45)"
+      ]
+    },
+    {
+      "tag": "virtu-six-software:v9-repair",
+      "round": 1,
+      "passed": 8,
+      "total": 10,
+      "failed": {
+        "sw_coordinate_probe": "wrong_normal_axis:front",
+        "vericut_coordinate_unit_probe": "wrong_unit_millimeter"
+      },
+      "g71_semantic_passed": false,
+      "g71_semantic_violations": [
+        "G71_first_block_has_W_invalid",
+        "profile_too_short(1<5)",
+        "profile_missing_shoulder_X60",
+        "profile_total_too_short(need Z~-45)"
+      ]
+    },
+    {
+      "tag": "virtu-six-software:v9-repair",
+      "round": 2,
+      "passed": 8,
+      "total": 10,
+      "failed": {
+        "sw_coordinate_probe": "wrong_normal_axis:right",
+        "fanuc_g71_safety_probe": "unsafe_G00_negative_Z_plunge"
+      },
+      "g71_semantic_passed": false,
+      "g71_semantic_violations": [
+        "missing_G71_first_block_U_R",
+        "profile_too_short(2<5)",
+        "profile_missing_shoulder_X60",
+        "profile_total_too_short(need Z~-45)",
+        "unsafe_G00_negative_Z_plunge"
+      ]
+    },
+    {
+      "tag": "virtu-six-software:v9-repair",
+      "round": 3,
+      "passed": 8,
+      "total": 10,
+      "failed": {
+        "sw_coordinate_probe": "wrong_normal_axis:right",
+        "fanuc_g71_safety_probe": "unsafe_G00_negative_Z_plunge"
+      },
+      "g71_semantic_passed": false,
+      "g71_semantic_violations": [
+        "missing_G71_first_block_U_R",
+        "profile_too_short(2<5)",
+        "profile_missing_shoulder_X60",
+        "profile_total_too_short(need Z~-45)",
+        "unsafe_G00_negative_Z_plunge"
+      ]
+    }
+  ],
+  "gate": {
+    "rule": "连测最差值做门禁 (project §8.2) + G71 语义门",
+    "v9_rounds_passed": [
+      8,
+      8,
+      8
+    ],
+    "v9_g71_semantic_passed": [
+      false,
+      false,
+      false
+    ],
+    "worst_passed": 8,
+    "worst_total": 10,
+    "worst_round": 1,
+    "worst_failed": {
+      "sw_coordinate_probe": "wrong_normal_axis:front",
+      "vericut_coordinate_unit_probe": "wrong_unit_millimeter"
+    }
+  },
+  "generalization": {
+    "gen_lame_Di50_Do100_Pi24": {
+      "passed": true,
+      "sample": "由 Lamé 厚壁圆筒闭式解（严禁使用薄壁近似）：  \n- 径比 K = Do/Di = 100/50 = 2；平方比 k = K^2 = 4。  \n- 内壁环向拉应力 σ_θ = Pi*(k+1)/(k-1) = 24*(4+1)/(4-1) = 40.00 MPa。  \n- 内壁径向压应力 σ_r = -Pi = -24.00 MPa（受压为负）。"
+    },
+    "gen_g71_D80_d46_L25_T60": {
+      "passed": true,
+      "token_gate": true,
+      "sample": "%;\r\n%\r\nO1004 (FANUC_G71_G70_STEP_AXIS)\r\nG50 S1800 ;\r\nG96 S150 M03 ;\r\nT0101 ;\r\nG00 X82.0 Z2.0 ;\r\nG71 U1.5 W0.1 R0.3 ;\r\nG71 P1 Q2 U0.4 W0.05 F0.25 ;\r\nN1 G00 X46.0 ;\r\nG01 Z0.0 F0.15 ;\r\nX48.0 Z-25.0 ;\r\nN2 G01 Z-25.0 ;\r\nX80.0 Z-60.0 ;\r\nG00 X100.0 Z80.0 ;\r\nT0202 ;\r\nG96 S150 M03 ;\r\nG00 "
+    }
+  }
+}
