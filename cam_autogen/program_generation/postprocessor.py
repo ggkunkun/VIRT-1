@@ -143,7 +143,7 @@ def render(moves: List[Move], profile: PostProfile) -> str:
                     emit("G90")
             motion_modal = "G00"
         elif k in ("rapid", "linear", "arc_cw", "arc_ccw", "thread"):
-            # 刚性攻丝周期渲染（保留标准循环可读性）
+            # 刚性攻丝周期渲染（保留标准循环可读性，之后清除模态确保下一条快速移动必带 G00）
             if m.extra.get("tap_cycle"):
                 r_val = m.extra.get("r", 3.0)
                 pending_tap_pitch = float(m.extra.get("pitch", 1.0))
@@ -153,12 +153,14 @@ def render(moves: List[Move], profile: PostProfile) -> str:
                     if d == "FANUC":
                         emit(f"M29 S{int(m.extra.get('rpm', 500))}")
                     emit(f"G84 X{_fmt(m.x or 0, dec)} Y{_fmt(m.y or 0, dec)} Z{_fmt(m.z or 0, dec)} R{_fmt(r_val, dec)} F{_fmt(m.f or 100, 1)}")
+                motion_modal = ""
                 continue
             if m.extra.get("tap_retract"):
                 if d == "SIEMENS":
                     emit(f"G332 Z{_fmt(m.z or 3, dec)} K{_fmt(pending_tap_pitch, 3)}")
                 else:
                     emit("G80")
+                motion_modal = ""
                 continue
 
             if k == "rapid":

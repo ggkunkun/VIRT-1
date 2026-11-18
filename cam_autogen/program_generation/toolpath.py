@@ -346,9 +346,7 @@ def _emit_milling_op(op: Operation, moves: List[Move], z_top: float, z_clear: fl
                 moves.append(Move(kind="linear", x=hx, y=hy, z=r3(-depth), f=f_tap,
                                   extra={"tap_cycle": True, "r": z_app, "pitch": pitch, "rpm": op.params.rpm},
                                   op_id=op.op_id))
-                moves.append(Move(kind="spindle", s=op.params.rpm, text="CCW", op_id=op.op_id))
                 moves.append(Move(kind="linear", x=hx, y=hy, z=z_app, f=f_tap, extra={"tap_retract": True}, op_id=op.op_id))
-                moves.append(Move(kind="spindle", s=op.params.rpm, text="CW", op_id=op.op_id))
             moves.append(Move(kind="rapid", z=z_clear, op_id=op.op_id))
         return
 

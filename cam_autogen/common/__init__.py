@@ -98,6 +98,38 @@ def load_trace(path: str | Path) -> list[Dict[str, Any]]:
     return out
 
 
+def summarize_trace(source: str | Path | list[Dict[str, Any]]) -> Dict[str, Any]:
+    """问题回溯与性能分析：汇总各环节耗时、占比、瓶颈环节及失败阶段。"""
+    records = load_trace(source) if isinstance(source, (str, Path)) else list(source)
+    stages: Dict[str, Dict[str, Any]] = {}
+    errors: list[Dict[str, Any]] = []
+    for rec in records:
+        st = rec.get("stage", "")
+        status = rec.get("status", "")
+        if status in ("OK", "ERROR"):
+            stages[st] = {
+                "status": status,
+                "elapsed_ms": round(float(rec.get("elapsed_ms", 0.0)), 3),
+                "input_digest": rec.get("input_digest"),
+                "output_digest": rec.get("output_digest"),
+            }
+        if status == "ERROR":
+            errors.append({"stage": st, "error": rec.get("error")})
+    total_ms = round(sum(s["elapsed_ms"] for s in stages.values()), 3)
+    bottleneck = max(stages.items(), key=lambda kv: kv[1]["elapsed_ms"])[0] if stages else None
+    for s in stages.values():
+        s["share_pct"] = round(100.0 * s["elapsed_ms"] / total_ms, 2) if total_ms > 0 else 0.0
+    return {
+        "trace_id": records[0].get("trace_id") if records else None,
+        "event_count": len(records),
+        "stage_count": len(stages),
+        "total_stage_ms": total_ms,
+        "bottleneck_stage": bottleneck,
+        "errors": errors,
+        "stages": stages,
+    }
+
+
 def make_app(title: str, version: str, description: str = ""):
     """统一 FastAPI 工厂：/health 与 /v1/info 由此提供，业务路由由各模块自行挂载。"""
     from fastapi import FastAPI
