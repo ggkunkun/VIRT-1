@@ -1,0 +1,14 @@
+{
+  "nc_file": "E:\\vericut_impeller_run\\impeller.nc",
+  "nc_lines": 1368,
+  "validation": {
+    "valid": true,
+    "errors": [],
+    "warnings": [],
+    "passages": 16,
+    "rtcp_enabled": true,
+    "min_cut_z": -56.5,
+    "jaw_top_work_z": -57.85,
+    "basis": "measured (static parse of generated NC)"
+  }
+}

@@ -221,9 +221,9 @@ def main(
                 "force-impeller_fixture3.ply": str(FIXTURE),
                 "<Library>force-impeller.tls</Library>": f"<Library>{TOOL_LIB}</Library>",
                 # 与正确案例对齐：夹具 PLY 自身 z=145..170、MatrixOrigin Z=0 →
-                # 夹具顶 world=170；毛坯 STL 自身 z=-5..77.85，MatrixOrigin Z=175
+                # 夹具顶 world=170；毛坯 STL 自身 z=-5..77.85，MatrixOrigin Z=150
                 # → 毛坯底面 world=170，正好贴合夹具顶（gap=0），Design 随动。
-                # 注：原注释"world 70"是把案例 Attach=-100 的局部坐标误套到本件，
+                # 注：原注释"world 45"是把案例 Attach=-100 的局部坐标误套到本件，
                 # 本件 Attach 链无 -100 偏移，真实接触面是 world 170。
                 '<MatrixOrigin X="0" Y="0" Z="200"/>': '<MatrixOrigin X="0" Y="0" Z="175"/>',
                 # G57 坐标系是 Stock 的子节点，随毛坯一起下移，保持案例中的相对层级。
@@ -338,3 +338,6 @@ def main(
 
 if __name__ == "__main__":
     main()
+
+
+

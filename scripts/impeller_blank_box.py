@@ -79,9 +79,11 @@ def main() -> dict:
         "machine_placement": {
             "stock_component_matrix_origin_z": 175.0,
             "attach_component_position_z": -100.0,
+            "fixture_pedestal_height_mm": 170.0,
+            "fixture_top_world_z": 70.0,
             "world_z_bottom": round(float(zmin) + 75.0, 2),
             "world_z_top": round(float(zmax) + 75.0, 2),
-            "fixture_top_world_z": 70.0,
+            "table_surface_world_z": -100.0,
             "seats_on_fixture": bool(abs((float(zmin) + 75.0) - 70.0) < 1e-6),
             "case_reference": "force_impeller_dmg_mori_nmv1500_fan30im_mm.vcproject",
         },
@@ -112,3 +114,6 @@ def main() -> dict:
 
 if __name__ == "__main__":
     main()
+
+
+
