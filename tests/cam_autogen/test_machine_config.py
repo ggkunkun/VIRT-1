@@ -93,9 +93,36 @@ def test_m4_rest_api():
     machines = client.get("/v1/machines").json()
     assert machines["count"] >= 20
 
+    # 通过 REST API 注册一台自定义机床并校验返回数量递增
+    custom_payload = {
+        "machine": {
+            "model": "API-CUSTOM-MILL-900",
+            "vendor": "ApiVendor",
+            "kind": "mill",
+            "controller": "FANUC 0i-MF",
+            "dialect": "FANUC",
+            "travel": {"x": 900, "y": 550, "z": 500},
+            "max_rpm": 12000,
+            "spindle_power_kw": 15.0,
+            "max_feed_mm_min": 15000,
+            "rapid_mm_min": 36000,
+            "tool_capacity": 24,
+            "max_tool_diameter": 90,
+            "max_tool_length": 250,
+            "has_y_axis": True,
+        },
+        "overwrite": True,
+    }
+    reg_resp = client.post("/v1/machines", json=custom_payload)
+    assert reg_resp.status_code == 200 and reg_resp.json()["registered"]["model"] == "API-CUSTOM-MILL-900"
+
     wp = WorkpieceSpec.model_validate(EXAMPLES["shaft"])
     rec = recognize(wp)
     prog = generate(optimize(OptimizationRequest(workpiece=wp, process_type=rec.process_type)),
                     compute_stock_setup(wp, rec.process_type))
     r = client.post("/v1/configure", json={"program": prog.model_dump(mode="json")})
     assert r.status_code == 200 and r.json()["travel_check"]["within_limits"] is True
+
+    # 清理注册表中的测试临时机床
+    from cam_autogen.machine_config.library import DEFAULT_REGISTRY
+    DEFAULT_REGISTRY.remove_custom("API-CUSTOM-MILL-900")

@@ -8,7 +8,7 @@ from typing import List, Tuple
 import pytest
 from fastapi.testclient import TestClient
 
-from cam_autogen.common import TraceLogger, digest, load_trace, make_app
+from cam_autogen.common import TraceLogger, digest, load_trace, make_app, summarize_trace
 
 PKG_ROOT = Path(__file__).resolve().parents[2] / "cam_autogen"
 CORE_MODULES = ("process_recognition", "optimization", "program_generation", "machine_config")
@@ -66,6 +66,10 @@ def test_trace_logger_and_common_app(tmp_path):
     records = load_trace(logger.path)
     statuses = [(r["stage"], r["status"]) for r in records]
     assert statuses == [("stage_a", "START"), ("stage_a", "OK"), ("stage_b", "START"), ("stage_b", "ERROR")]
+    summary = summarize_trace(logger.path)
+    assert summary["stage_count"] == 2
+    assert summary["bottleneck_stage"] in ("stage_a", "stage_b")
+    assert len(summary["errors"]) == 1 and summary["errors"][0]["stage"] == "stage_b"
     assert digest({"a": 1, "b": 2}) == digest({"b": 2, "a": 1})
 
     app = make_app("demo", "0.1.0")

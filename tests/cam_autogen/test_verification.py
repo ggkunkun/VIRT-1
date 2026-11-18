@@ -123,6 +123,46 @@ def test_compat_falsification_overtravel_rpm_and_unsupported_code():
     ax_codes = {r.code for r in rep_ax.risks}
     assert {"AXIS_CAPABILITY_MISSING", "LIVE_TOOL_MISSING"}.issubset(ax_codes)
 
+    # 5. 覆盖铣削多维度过切 / 换刀安全 / 空IR / 缺失M30 / 西门子与华中语法校验 / 铣削超行程
+    _, ss_b, plan_b, prog_b, setup_b = _build_bundle("block")
+    # 铣削 XYZ 超行程
+    bad_mill_ot = list(prog_b.ir)
+    idx_b = next(i for i, m in enumerate(bad_mill_ot) if m.kind == "linear" and m.op_id == "OP030")
+    bad_mill_ot.insert(idx_b, Move(kind="linear", x=5000.0, y=5000.0, z=-5000.0, f=500.0, op_id="OP030"))
+    rep_mot = verify_all(prog_b.model_copy(update={"ir": bad_mill_ot}), setup_b, plan=plan_b, stock_setup=ss_b)
+    assert any(r.code == "OVER_TRAVEL" for r in rep_mot.risks)
+
+    # 面铣/槽/钻孔过切 + 换刀时主轴未停 + 缺少 M30
+    idx_face = next(i for i, m in enumerate(prog_b.ir) if m.kind == "linear" and m.op_id == "OP010")
+    bad_g = list(prog_b.ir)
+    bad_g.insert(idx_face + 1, Move(kind="linear", x=20.0, y=20.0, z=-5.0, f=500.0, op_id="OP010"))  # 面铣过深
+    idx_slot = next(i for i, m in enumerate(bad_g) if m.kind == "linear" and m.op_id == "OP050")
+    bad_g.insert(idx_slot + 1, Move(kind="linear", x=85.0, y=40.0, z=-30.0, f=500.0, op_id="OP050"))  # 槽过深
+    idx_drill = next(i for i, m in enumerate(bad_g) if m.kind == "linear" and m.op_id == "OP080")
+    bad_g.insert(idx_drill + 1, Move(kind="linear", x=99.0, y=99.0, z=-50.0, f=500.0, op_id="OP080"))  # 错孔位+过深
+    bad_g.insert(idx_face + 2, Move(kind="tool_change", tool=2))  # 主轴未停即换刀
+    bad_g = [m for m in bad_g if m.kind != "program_end"]
+    rep_multi = verify_all(prog_b.model_copy(update={"ir": bad_g}), setup_b, plan=plan_b, stock_setup=ss_b)
+    mcodes = {r.code for r in rep_multi.risks}
+    assert {"GOUGE", "UNSAFE_TOOL_CHANGE", "MISSING_PROGRAM_END"}.issubset(mcodes)
+
+    # 空 IR 校验
+    rep_empty = verify_all(prog_b.model_copy(update={"ir": []}), setup_b)
+    assert rep_empty.passed is False and any(r.code == "EMPTY_IR" for r in rep_empty.risks)
+
+    # 方言冲突与机种冲突 + 动力刀超转速
+    bad_live = list(prog_km.ir)
+    idx_live = next(i for i, m in enumerate(bad_live) if m.kind == "live_spindle")
+    bad_live.insert(idx_live + 1, Move(kind="live_spindle", s=99999.0))
+    rep_live = verify_all(prog_km.model_copy(update={"ir": bad_live, "dialect": "SIEMENS"}), setup_km, plan=plan_km, stock_setup=ss_km)
+    assert any(r.code == "DIALECT_MISMATCH" for r in rep_live.risks)
+    assert any(r.code == "RPM_EXCEEDED" for r in rep_live.risks)
+
+    _, ss_bs, plan_bs, prog_bs, setup_bs = _build_bundle("block", dialect="SIEMENS")
+    rep_siem = verify_all(prog_bs.model_copy(update={"program_text": prog_bs.program_text + "\n(bad paren comment)\n"}),
+                          setup_bs, plan=plan_bs, stock_setup=ss_bs)
+    assert any(r.code == "DIALECT_SYNTAX_ERROR" for r in rep_siem.risks)
+
 
 def test_verification_rest_api(tmp_path):
     _, ss, plan, prog, setup = _build_bundle("shaft")

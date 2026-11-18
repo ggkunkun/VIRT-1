@@ -840,8 +840,10 @@ class VirtuSuperAgent:
                 "controller_code_generation_allowed": False,
                 "basis": "insufficient",
             }
+        catalog = ctx.get("machine_catalog")
         return select_machine_and_stock(
             request,
+            machine_catalog=catalog if isinstance(catalog, (list, tuple)) else None,
             objective=str(ctx.get("machine_objective") or "min_setups_then_axis_excess"),
         )
 
@@ -862,7 +864,11 @@ class VirtuSuperAgent:
 
         ctx = self._spec_context(context)
         program = ctx.get("program") or ctx.get("nc_program") or ""
-        return audit_nc_capability(program, ctx.get("required_features"))
+        return audit_nc_capability(
+            program,
+            ctx.get("required_features"),
+            strict_feature_check=bool(ctx.get("strict_feature_check", False)),
+        )
 
     def facet_generate_cad(self, context: Union[str, Dict[str, Any]]) -> Dict[str, Any]:
         """Modeling Facet: 3D Parametric CAD FeatureTree and equations."""
@@ -881,6 +887,7 @@ class VirtuSuperAgent:
             machine_selection = self.facet_select_machine_and_stock({
                 "manufacturing_request": machine_request,
                 "machine_objective": ctx.get("machine_objective"),
+                "machine_catalog": ctx.get("machine_catalog"),
             })
             if not machine_selection.get("controller_code_generation_allowed"):
                 return {
@@ -894,52 +901,112 @@ class VirtuSuperAgent:
         arch = ctx.get("architecture") or {}
         spec_dict = arch.get("parsed_spec") if isinstance(arch, dict) else {}
         user_prompt = str(ctx.get("user_prompt") or (spec_dict or {}).get("wish") or "")
+
+        machining_cap = ctx.get("machining_capability")
+        if not machining_cap and isinstance(machine_selection, dict):
+            req_feats = list((machine_selection.get("requirements") or {}).get("features") or [])
+            priority = (
+                "subspindle_transfer",
+                "mill_turn_y_axis_milling",
+                "mill_turn_off_axis_milling",
+                "milling_5axis_simultaneous",
+                "milling_5axis_3plus2",
+                "milling_4axis_simultaneous",
+                "milling_4axis_indexed",
+                "milling_3axis",
+                "turning",
+            )
+            machining_cap = next((f for f in priority if f in req_feats), None)
+
         g71_spec = None
         g71_gate = None
-        try:
-            from virtu_omni.agent.grounded_inference import (
-                generate_g71_program,
-                parse_g71_request,
-                validate_g71_against_spec,
-            )
-            g71_spec = parse_g71_request(user_prompt)
-        except Exception:
-            g71_spec = None
+        multi_axis_dialect = "fanuc"
+        multi_axis_mode = bool(machining_cap)
+        if multi_axis_mode:
+            from virtu_omni.engine.cnc_post_processor import generate_capability_nc
+            from virtu_omni.manufacturing.nc_audit import audit_nc_capability
 
-        if g71_spec is not None:
-            prog = generate_g71_program(g71_spec)
-            g71_gate = validate_g71_against_spec(prog, g71_spec)
+            selected_machine = (machine_selection or {}).get("selected_machine") or {}
+            multi_axis_dialect = str(
+                ctx.get("dialect") or selected_machine.get("post_dialect") or "fanuc"
+            ).lower()
+            if multi_axis_dialect not in ("fanuc", "siemens", "heidenhain"):
+                multi_axis_dialect = "fanuc"
+            rotary_axes = ctx.get("rotary_axes")
+            variant = str(ctx.get("variant") or "default")
+            gen_spec = ctx.get("spec") if isinstance(ctx.get("spec"), dict) else (spec_dict or {})
+            post_res = generate_capability_nc(
+                str(machining_cap),
+                dialect=multi_axis_dialect,
+                spec=gen_spec,
+                rotary_axes=rotary_axes,
+                variant=variant,
+            )
+            nc_code = post_res.get("nc") or ""
+            nc_audit = audit_nc_capability(nc_code, [str(machining_cap)], strict_feature_check=True)
+            multi_ok = bool(post_res.get("status") == "passed" and nc_audit.get("passed"))
             result: Dict[str, Any] = {
-                "agent": "Virtu-Grounded-G71-Generator",
-                "status": "COMPLETED" if g71_gate.get("passed") else "FAILED",
-                "cutting_params": {
-                    "material": (spec_dict or {}).get("material", "Cr12MoV"),
-                    "diameter_mm": g71_spec.stock_d,
-                    "surface_speed_m_min": g71_spec.vc or 150.0,
-                    "spindle_clamp_rpm": g71_spec.s_clamp or 2000.0,
-                    "feed_rate": g71_spec.feed or 0.25,
-                    "tool": g71_spec.tool,
-                    "basis": "grounded_g71_spec",
-                },
-                "macro_b_code": prog,
-                "g71_spec": {
-                    "stock_d": g71_spec.stock_d,
-                    "steps": list(g71_spec.steps),
-                    "total_len": g71_spec.total_len,
-                    "s_clamp": g71_spec.s_clamp,
-                    "vc": g71_spec.vc,
-                    "feed": g71_spec.feed,
-                    "tool": g71_spec.tool,
-                },
-                "g71_spec_gate": g71_gate,
-                "basis": "deterministic_generator",
+                "agent": "Virtu-MultiAxis-CAM-PostProcessor",
+                "status": "COMPLETED" if multi_ok else "FAILED",
+                "machining_capability": str(machining_cap),
+                "dialect": multi_axis_dialect,
+                "rotary_axes": post_res.get("rotary_axes", []),
+                "variant": variant,
+                "macro_b_code": nc_code,
+                "nc_code": nc_code,
+                "post_process_result": post_res,
+                "nc_capability_audit": nc_audit,
+                "basis": "deterministic_cl_postprocessor",
                 "summary": (
-                    f"按题面几何参数生成 G71 Type I/G70 台阶轴程序（毛坯 Ø{g71_spec.stock_d:g}，"
-                    f"总长 {g71_spec.total_len:g} mm，语义门={'PASS' if g71_gate.get('passed') else 'FAIL'}）。"
+                    f"生成 {machining_cap} ({multi_axis_dialect}) 数控程序草案，"
+                    f"CL/方言/位姿及静态能力审计={'PASS' if multi_ok else 'FAIL'}。"
                 ),
             }
         else:
-            result = self._delegate_machining.run(ctx)
+            try:
+                from virtu_omni.agent.grounded_inference import (
+                    generate_g71_program,
+                    parse_g71_request,
+                    validate_g71_against_spec,
+                )
+                g71_spec = parse_g71_request(user_prompt)
+            except Exception:
+                g71_spec = None
+
+            if g71_spec is not None:
+                prog = generate_g71_program(g71_spec)
+                g71_gate = validate_g71_against_spec(prog, g71_spec)
+                result = {
+                    "agent": "Virtu-Grounded-G71-Generator",
+                    "status": "COMPLETED" if g71_gate.get("passed") else "FAILED",
+                    "cutting_params": {
+                        "material": (spec_dict or {}).get("material", "Cr12MoV"),
+                        "diameter_mm": g71_spec.stock_d,
+                        "surface_speed_m_min": g71_spec.vc or 150.0,
+                        "spindle_clamp_rpm": g71_spec.s_clamp or 2000.0,
+                        "feed_rate": g71_spec.feed or 0.25,
+                        "tool": g71_spec.tool,
+                        "basis": "grounded_g71_spec",
+                    },
+                    "macro_b_code": prog,
+                    "g71_spec": {
+                        "stock_d": g71_spec.stock_d,
+                        "steps": list(g71_spec.steps),
+                        "total_len": g71_spec.total_len,
+                        "s_clamp": g71_spec.s_clamp,
+                        "vc": g71_spec.vc,
+                        "feed": g71_spec.feed,
+                        "tool": g71_spec.tool,
+                    },
+                    "g71_spec_gate": g71_gate,
+                    "basis": "deterministic_generator",
+                    "summary": (
+                        f"按题面几何参数生成 G71 Type I/G70 台阶轴程序（毛坯 Ø{g71_spec.stock_d:g}，"
+                        f"总长 {g71_spec.total_len:g} mm，语义门={'PASS' if g71_gate.get('passed') else 'FAIL'}）。"
+                    ),
+                }
+            else:
+                result = self._delegate_machining.run(ctx)
 
         if not isinstance(result, dict):
             return {"status": "FAILED", "passed": False,
@@ -952,14 +1019,39 @@ class VirtuSuperAgent:
                            "engineering_verified": False})
             return result
 
-        sandbox = self.sandbox_verifier.verify_cimco_macro_b(code)
+        if multi_axis_mode and multi_axis_dialect != "fanuc":
+            post_ok = bool((result.get("post_process_result") or {}).get("status") == "passed")
+            audit_ok = bool((result.get("nc_capability_audit") or {}).get("passed"))
+            sandbox = {
+                "sandbox": f"{multi_axis_dialect}-cl-post-gate",
+                "passed": post_ok and audit_ok,
+                "collision_detected": False,
+                "g71_semantic_gate": {
+                    "applicable": False, "passed": True, "basis": "static_semantic",
+                    "violations": [], "evidence": {},
+                },
+                "errors": list((result.get("nc_capability_audit") or {}).get("issues") or []),
+                "warnings": [],
+                "execution_status": "STATIC_POST_AUDIT_VERIFIED" if (post_ok and audit_ok) else "STATIC_POST_AUDIT_FAILED",
+            }
+        else:
+            sandbox = self.sandbox_verifier.verify_cimco_macro_b(code)
+            if multi_axis_mode and "nc_capability_audit" in result:
+                audit_res = result["nc_capability_audit"]
+                if not audit_res.get("passed"):
+                    sandbox["passed"] = False
+                    sandbox["errors"] = list(sandbox.get("errors") or []) + list(audit_res.get("issues") or [])
         result["sandbox_verification"] = sandbox
         result["cnc_semantic_gate"] = sandbox.get("g71_semantic_gate", {
             "applicable": False, "passed": True, "basis": "static_semantic",
             "violations": [], "evidence": {},
         })
         spec_ok = True if g71_gate is None else bool(g71_gate.get("passed"))
-        gate_ok = bool(sandbox.get("passed")) and spec_ok
+        multi_gate_ok = True if not multi_axis_mode else (
+            bool((result.get("post_process_result") or {}).get("status") == "passed")
+            and bool((result.get("nc_capability_audit") or {}).get("passed"))
+        )
+        gate_ok = bool(sandbox.get("passed")) and spec_ok and multi_gate_ok
         result["static_gate_passed"] = gate_ok
         # Static validation cannot establish that the NC was simulated on the target machine.
         result["engineering_verified"] = False

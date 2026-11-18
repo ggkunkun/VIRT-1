@@ -1284,22 +1284,25 @@ class CNCPanelController:
     ) -> None:
         cid = resolve_controller_id(controller_id, process_family)
         self.profile = CONTROLLER_PROFILES[cid]
+        eff_family: Literal["milling", "turning"] = (
+            "turning" if (cid == "siemens_840d_sl" and process_family == "turning") else self.profile.process_family
+        )
         self.tool_table = tool_table or {}
         default_travel = (
             {"X": (-20.0, 220.0), "Y": (-10.0, 10.0), "Z": (-240.0, 120.0)}
-            if self.profile.process_family == "turning"
+            if eff_family == "turning"
             else {"X": (-500.0, 500.0), "Y": (-500.0, 500.0), "Z": (-600.0, 0.0)}
         )
         self.soft_limit_1 = soft_limit_1 or default_travel
         self.soft_limit_2 = soft_limit_2 or default_travel
         self.wcs_offset = wcs_offset
         self.rapid_rate_mm_min = rapid_rate_mm_min
-        init_plane = "G18" if self.profile.process_family == "turning" else "G17"
-        init_feed = self.profile.feed_per_rev_g if self.profile.process_family == "turning" else "G94"
-        init_pos = (100.0, 0.0, 60.0) if self.profile.process_family == "turning" else (0.0, 0.0, 65.0)
+        init_plane = "G18" if eff_family == "turning" else "G17"
+        init_feed = self.profile.feed_per_rev_g if eff_family == "turning" else "G94"
+        init_pos = (100.0, 0.0, 60.0) if eff_family == "turning" else (0.0, 0.0, 65.0)
         self.state = ControllerState(
             controller_id=cid,
-            process_family=self.profile.process_family,
+            process_family=eff_family,
             plane=init_plane,
             feed_mode=init_feed,
             wcs_xyz=init_pos,
@@ -1321,7 +1324,7 @@ class CNCPanelController:
         self.state.mode = "REF"
         self.state.referenced = True
         self.state.machine_xyz = (0.0, 0.0, 0.0)
-        if self.profile.process_family == "turning":
+        if self.state.process_family == "turning":
             self.state.wcs_xyz = (100.0, 0.0, 60.0)
         else:
             self.state.wcs_xyz = (0.0, 0.0, 250.0)
@@ -1369,7 +1372,7 @@ class CNCPanelController:
     def _check_soft_limits(self, wcs_xyz: Tuple[float, float, float], line_no: int) -> None:
         # Turning X in diameter coordinates [0..220], milling X/Y/Z in WCS + wcs_offset -> machine
         x, y, z = wcs_xyz
-        if self.profile.process_family == "milling":
+        if self.state.process_family == "milling":
             mx = x + self.wcs_offset[0]
             my = y + self.wcs_offset[1]
             mz = z + self.wcs_offset[2]
@@ -1425,7 +1428,7 @@ class CNCPanelController:
         st = self.state
         sx, sy, sz = st.wcs_xyz
         ex, ey, ez = target
-        if self.profile.process_family == "turning":
+        if self.state.process_family == "turning":
             # X is diameter -> radial distance is (ex - sx) / 2
             dist = math.sqrt(((ex - sx) * 0.5) ** 2 + (ey - sy) ** 2 + (ez - sz) ** 2)
         else:
@@ -1445,8 +1448,8 @@ class CNCPanelController:
 
         # Identify whether tool enters stock envelope
         in_cut = (not is_rapid) and (
-            (self.profile.process_family == "milling" and ez <= 0.1)
-            or (self.profile.process_family == "turning" and ez <= 0.5 and ex <= 57.0)
+            (self.state.process_family == "milling" and ez <= 0.1)
+            or (self.state.process_family == "turning" and ez <= 0.5 and ex <= 57.0)
         )
         # Safety check: non-rapid feed cut with spindle stopped!
         if in_cut and dist > 0.5 and st.spindle_dir == "M05":
@@ -1457,7 +1460,7 @@ class CNCPanelController:
                 "message": f"Feed cutting at line {line_no} with spindle stopped (M05)!",
             })
         # Check cutter comp activation: if G41/G42 active in milling without D offset id
-        if st.comp_radius in ("G41", "G42") and self.profile.process_family == "milling" and st.d_offset_id <= 0:
+        if st.comp_radius in ("G41", "G42") and self.state.process_family == "milling" and st.d_offset_id <= 0:
             st.alarms.append({
                 "code": "COMP-NO-D",
                 "severity": "HIGH",
@@ -1653,7 +1656,11 @@ class CNCPanelController:
                     continue
 
             # Turning G71 / G70 area clearance & finishing simulation
-            if re.search(r"\bG71\b", clean) and self.profile.process_family == "turning":
+            if (
+                re.search(r"\bG71\b", clean)
+                and self.state.process_family == "turning"
+                and self.profile.controller_id != "siemens_840d_sl"
+            ):
                 m_u = re.search(r"\bU([+-]?\d+(?:\.\d*)?)", clean)
                 m_pq = re.search(r"P(\d+)\s+Q(\d+)", clean)
                 if m_u and not m_pq:
@@ -1672,7 +1679,11 @@ class CNCPanelController:
                     if q_lbl in self._n_labels:
                         pc = self._n_labels[q_lbl] + 1
                     continue
-            if re.search(r"\bG70\b", clean) and self.profile.process_family == "turning":
+            if (
+                re.search(r"\bG70\b", clean)
+                and self.state.process_family == "turning"
+                and self.profile.controller_id != "siemens_840d_sl"
+            ):
                 m_pq = re.search(r"P(\d+)\s+Q(\d+)", clean)
                 m_f = re.search(r"\bF([+-]?\d+(?:\.\d*)?)", clean)
                 if m_f:
@@ -1689,6 +1700,33 @@ class CNCPanelController:
             g_codes = [f"G{int(v):02d}" if float(v).is_integer() else f"G{v}" for w, v in words_list if w == "G"]
             m_codes = [f"M{int(v):02d}" for w, v in words_list if w == "M"]
             word_map = {w: v for w, v in words_list}
+
+            # Apply modal G updates BEFORE S/F/T/motion evaluation (essential for G96 S.. / G50 S..)
+            g28_flag = ("G28" in g_codes) or ("SUPA" in clean)
+            for gc in g_codes:
+                if gc in ("G00", "G01", "G02", "G03"):
+                    self.state.motion_mode = gc
+                elif gc in ("G17", "G18", "G19"):
+                    self.state.plane = gc
+                elif gc in ("G90", "G91"):
+                    self.state.abs_inc = gc
+                elif gc in ("G20", "G21", "G71") and not (gc == "G71" and self.state.process_family == "turning" and self.profile.controller_id != "siemens_840d_sl"):
+                    self.state.units = "G21"
+                elif gc in ("G94", "G95", "G98", "G99"):
+                    if gc in ("G98", "G99") and self.state.process_family == "milling":
+                        self.state.canned_return = gc
+                    else:
+                        self.state.feed_mode = gc
+                elif gc in ("G96", "G97"):
+                    self.state.speed_mode = gc
+                elif gc in ("G40", "G41", "G42"):
+                    self.state.comp_radius = gc
+                elif gc in ("G43", "G44", "G49"):
+                    self.state.comp_length = gc
+                elif gc in ("G54", "G55", "G56", "G57", "G58", "G59"):
+                    self.state.wcs = gc
+                elif gc in ("G80", "G81", "G82", "G83", "G84"):
+                    self.state.canned_mode = gc
 
             # Apply M codes
             halt = False
@@ -1710,7 +1748,7 @@ class CNCPanelController:
             # Apply Tool / Spindle / Feed / Comp words
             if "T" in word_map:
                 t_raw = int(word_map["T"])
-                if self.profile.process_family == "turning" and t_raw >= 100:
+                if self.state.process_family == "turning" and t_raw >= 100:
                     self.state.tool_id = t_raw // 100
                     self.state.h_offset_id = t_raw % 100
                     self.state.d_offset_id = t_raw % 100
@@ -1745,33 +1783,6 @@ class CNCPanelController:
             if "F" in word_map and "G04" not in g_codes:
                 self.state.feed_programmed = float(word_map["F"])
 
-            # Apply modal G updates
-            g28_flag = ("G28" in g_codes) or ("SUPA" in clean)
-            for gc in g_codes:
-                if gc in ("G00", "G01", "G02", "G03"):
-                    self.state.motion_mode = gc
-                elif gc in ("G17", "G18", "G19"):
-                    self.state.plane = gc
-                elif gc in ("G90", "G91"):
-                    self.state.abs_inc = gc
-                elif gc in ("G20", "G21", "G71") and not (gc == "G71" and self.profile.process_family == "turning"):
-                    self.state.units = "G21"
-                elif gc in ("G94", "G95", "G98", "G99"):
-                    if gc in ("G98", "G99") and self.profile.process_family == "milling":
-                        self.state.canned_return = gc
-                    else:
-                        self.state.feed_mode = gc
-                elif gc in ("G96", "G97"):
-                    self.state.speed_mode = gc
-                elif gc in ("G40", "G41", "G42"):
-                    self.state.comp_radius = gc
-                elif gc in ("G43", "G44", "G49"):
-                    self.state.comp_length = gc
-                elif gc in ("G54", "G55", "G56", "G57", "G58", "G59"):
-                    self.state.wcs = gc
-                elif gc in ("G80", "G81", "G82", "G83", "G84"):
-                    self.state.canned_mode = gc
-
             # Dwell
             if "G04" in g_codes:
                 continue
@@ -1779,12 +1790,11 @@ class CNCPanelController:
             # ATC Home / Retract (G91 G28 Z0. / G28 U0. W0. / SUPA G0 Z0 D0)
             if g28_flag:
                 cur_x, cur_y, cur_z = self.state.wcs_xyz
-                if self.profile.process_family == "turning":
+                if self.state.process_family == "turning":
                     target = (140.0, 0.0, 100.0)
                 else:
                     target = (cur_x, cur_y, abs(self.wcs_offset[2]))
                 self._record_move(line_no, raw_line, target, is_rapid=True)
-                # G28 line leaves G90 if G91 was single-purpose retract; keep state faithful
                 continue
 
             # Standard Drilling/Tapping canned cycles G81 / G83 / G84

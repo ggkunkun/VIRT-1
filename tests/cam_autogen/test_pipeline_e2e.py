@@ -8,7 +8,7 @@ from pathlib import Path
 import pytest
 from fastapi.testclient import TestClient
 
-from cam_autogen.common import load_trace
+from cam_autogen.common import load_trace, summarize_trace
 from cam_autogen.contracts import WorkpieceSpec
 from cam_autogen.examples import EXAMPLES
 from cam_autogen.machine_config.api import app as m4_app
@@ -44,6 +44,8 @@ def test_e2e_inprocess_produces_all_deliverables_and_trace(key, dialect, tmp_pat
     assert {"M1_process_recognition", "stock_positioning", "M2_optimization",
             "M3_program_generation_draft", "M4_machine_config", "M3_program_generation_final",
             "dual_verification"}.issubset(stages)
+    perf = summarize_trace(trace)
+    assert perf["stage_count"] == 7 and perf["bottleneck_stage"] in stages and perf["errors"] == []
 
 
 def test_e2e_low_confidence_blocked_and_fallback(tmp_path):
@@ -60,6 +62,14 @@ def test_e2e_low_confidence_blocked_and_fallback(tmp_path):
     )
     assert res.status == "BLOCKED"
     assert any("M1" in e for e in res.errors)
+
+    # M4 指定不兼容机床阻断测试
+    res_m4_fail = run_pipeline(
+        PipelineRequest(workpiece=WorkpieceSpec.model_validate(EXAMPLES["keyed_shaft"]),
+                        preferred_machine="SMTCL-CAK5085"),
+        log_root=tmp_path / "logs2",
+    )
+    assert res_m4_fail.status == "BLOCKED" and any("M4" in e for e in res_m4_fail.errors)
 
 
 def test_e2e_http_microservice_mode(monkeypatch, tmp_path):
