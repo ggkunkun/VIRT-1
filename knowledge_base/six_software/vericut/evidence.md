@@ -30,3 +30,14 @@
 | E-V11 | 桌面 5 个 VERICUT 快捷方式存在（主程序/Single Platform/Reviewer/ToolMan/Assembly Manager） | 桌面快捷方式 Glob | `C:\Users\Public\Desktop\Vericut*.lnk`（5 个） | 高（存在性） | 是 |
 | E-V12 | 各独立程序主类（toolman=com.cgtech.toolman.ToolManager、reviewer=com.cgtech.VericutReviewer、assembly_manager=com.cgtech.assemblyman.AssemblyManager、vdaf=com.cgtech.AutoFastener、bwizard=com.cgtech.BWizard、cad2v=AcisConv、iges2v=Iges2v、dxf2sor=DxfSorConverter、dxf2sweep=DxfConverter、sur2stk=Sur2stk、bincl2v=Bincl2v、polyfix=PolyFix、delprefs=WipePrefs、vda=Vda、console=com.cgtech.Vericut java 版） | bat 主类 Grep 提取 | `E:\windows64\commands\*.bat`（`com.cgtech.*` 行） | 高 | 是（Grep + 4 份 bat 全文 Read） |
 | E-V13 | 官方编程接口文档：CME-API（cmeapi_register_modify_output_str）、Optimization API（CGTECH_OPAPI=DLL 触发 API 模式）、VDAF help 站 | 官方在线文档（真实 URL） | https://help.vericut.com/vericut_development_tools/05_cme_api_help ；https://help.vericut.com/vericut_development_tools/06_optimization_api ；https://help.vericut.com/vdaf_help/ | 高（官方） | 是（在线搜索） |
+
+---
+
+## 体系扩充追加证据（2026-11-18，版本一致性交叉校验）
+
+| E-ID | 声明摘要 | 证据类型 | 证据位置 | 置信度 | 版本校验处理 |
+| :-- | :-- | :-- | :-- | :-- | :-- |
+| E-V14 | 全量文件类型定义（`.VcProject/.usr/.mch/.ctl/.tls/.ip/.vct/.sor/.swp/.rpt/.olb/.VcPost/.VcInspect/.cme/.ops/.prefs/.sub/.pts/.VcTemplate` 等）、默认启动/初始化文件、引用查找顺序、`CGTECH_VCPROJECT`、`vcp=/ip=/auto-diff=/optimize` batch 语法、多产品工程不互通 | 官方在线帮助（滚动文档，web_fetch 实际返回） | https://help.vericut.com/4_vericut_help/2.3_vericut_file_descriptions ；https://help.vericut.com/4_vericut_help/2.2_working_with_vericut_files | 高（官方通用）/ 版本相关项以 9.6 本机为准 | `CGTECH_VCPROJECT` 命中 E-V06 升 `[高]`；prefs 命名样本含非 9.x 示例→不采信，用 E-V01 的 `cgtech_96_`；batch 语法本机未复现→`[中]` + E-V02 判死并列 |
+| E-V15 | Analysis 选项卡功能（Perform Syntax Check / NC Program Preview·Review / AUTO-DIFF / Comparator / Display Tool to Stock Collisions）；AUTO-DIFF 参数（Gouge/Excess Tolerance、Check Distance、Default Normal IJK `0 0 1`、Normal Direction、Comparison Type=Both 优先报过切、Profile/Solid 公差独立存 `.VcProject`、Design Consistency Check、Keep Design Solid、Include Tool to Stock Collisions） | 官方在线帮助（滚动文档，web_search/web_fetch 实际返回） | https://help.vericut.com/4_vericut_help/7.0_analysis_tab ；https://help.vericut.com/4_vericut_help/7.01_auto_diff_window | 高（官方原文参数语义） | 参数语义 `[高]`；本机未现场跑 Auto-Diff→运行态 `documented-not-probed`，三色判定以 AGENTS §2.E + skill `vericut-autodiff-triage` 为准；`/4_vericut_help/` 目录页 404 未采信 |
+
+> 追加文档（`ui_reference.md`/`sop_library.md`/`error_handbook.md`/`advanced_scenarios.md`/`problem_kb.md`/`version_consistency.md`）全部引用本表 E-ID；版本一致性处理见 `version_consistency.md`。

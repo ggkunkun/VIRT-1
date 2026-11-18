@@ -31,6 +31,15 @@
 | `config.md` | 配置/环境变量/事务日志/prefs 位置 |
 | `module_inventory.json` | 机器可读模块清单（供模型训练，与 markdown 严格一致） |
 | `evidence.md` | 证据链逐条声明 |
+| `ui_reference.md` | **全模块界面·操作路径·参数含义·默认值参考手册**（端到端覆盖，逐条标证据等级） |
+| `sop_library.md` | **标准化操作流程库**（新建→配置→仿真→排查，每步含操作节点/校验标准/注意事项） |
+| `error_handbook.md` | **报错·故障处理手册**（现象→触发场景→排查路径→标准化解决→结果验证） |
+| `advanced_scenarios.md` | **高级应用场景手册**（自定义运动链/后处理匹配优化/多工序联动/CAD-CAM 接口对接） |
+| `problem_kb.md` | **分类问题知识库**（操作/配置/仿真异常/结果异常/接口对接五类，四段式应答协议） |
+| `version_consistency.md` | **版本一致性校验**（9.6 身份锚点/跨版本差异排除/双源交叉校验记录/输出前自检） |
+| `knowledge_index.json` | 机器可读检索索引（问题/场景→文档→章节→证据 ID 映射，供 Agent 路由） |
+
+> **完整知识体系入口**：Agent 回答 VERICUT 9.6 问题时，先经 `knowledge_index.json` 路由到上述文档；输出前必过 `version_consistency.md §4` 自检清单（版本门/证据门/安全门/许可门/通道门）。可直接通过技能 `skills/vericut-96-knowledge/SKILL.md` 调用。
 
 ## 3. 模块树与自动化入口摘要
 

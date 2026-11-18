@@ -13,6 +13,178 @@ import ast
 from typing import Dict, Any, List, Optional
 
 
+class _MacroEvalError(Exception):
+    """Raised internally when a Macro B expression cannot be safely evaluated."""
+
+
+# --- G-code word parsing -----------------------------------------------------
+# Z target may be a literal (Z-15.0 / Z-.5), a variable (Z#100) or a bracketed
+# expression (Z-[#102] / Z[#101 + 5.0]). Capture the whole operand for eval.
+_Z_WORD = re.compile(r"\bZ\s*([+-]?(?:\[[^\]]*\]|#\d+|\d*\.?\d+))", re.IGNORECASE)
+_AXIS_WORD = re.compile(r"\b[XYZUVWABC]\s*[+-]?(?:\[|#|\d|\.)", re.IGNORECASE)
+_G_WORD = re.compile(r"\bG(\d+(?:\.\d+)?)\b", re.IGNORECASE)
+_M_ON = re.compile(r"\bM0?[34]\b", re.IGNORECASE)
+_M_OFF = re.compile(r"\bM0?5\b", re.IGNORECASE)
+_S_WORD = re.compile(r"\bS(\d+)\b", re.IGNORECASE)
+_F_WORD = re.compile(r"\bF\s*[.\d]", re.IGNORECASE)
+_VAR_ASSIGN = re.compile(r"^#(\d+)\s*=\s*(.+)$")
+
+
+def _strip_gcode_comments(line: str) -> str:
+    """Remove FANUC ``(...)`` comments and ``;`` end-of-line comments.
+
+    A spindle start written only inside a comment must never satisfy the
+    spindle-on safety check, so comments are stripped before any word parsing.
+    """
+    prev = None
+    s = line
+    while prev != s:
+        prev = s
+        s = re.sub(r"\([^)]*\)", "", s)
+    s = s.split(";", 1)[0]
+    return s.strip()
+
+
+def _strip_vba_comments(code: str) -> str:
+    """Remove VBA ``'`` comments (outside string literals) and ``Rem`` lines."""
+    out_lines: List[str] = []
+    for line in code.splitlines():
+        res: List[str] = []
+        in_str = False
+        i = 0
+        n = len(line)
+        while i < n:
+            ch = line[i]
+            if in_str:
+                res.append(ch)
+                if ch == '"':
+                    if i + 1 < n and line[i + 1] == '"':
+                        res.append(line[i + 1])
+                        i += 2
+                        continue
+                    in_str = False
+                i += 1
+                continue
+            if ch == '"':
+                in_str = True
+                res.append(ch)
+                i += 1
+                continue
+            if ch == "'":
+                break
+            res.append(ch)
+            i += 1
+        cleaned = "".join(res)
+        if re.match(r"^\s*Rem\b", cleaned, re.IGNORECASE):
+            cleaned = ""
+        out_lines.append(cleaned)
+    return "\n".join(out_lines)
+
+
+def _strip_lisp(code: str) -> str:
+    """Remove AutoLISP ``;`` comments, ``"..."`` strings and ``|...|`` symbols.
+
+    Parentheses inside string/symbol literals are not S-expression structure and
+    must not be counted toward balance.
+    """
+    out: List[str] = []
+    i = 0
+    n = len(code)
+    while i < n:
+        ch = code[i]
+        if ch == ";":
+            j = code.find("\n", i)
+            if j == -1:
+                break
+            out.append("\n")
+            i = j + 1
+            continue
+        if ch == '"':
+            i += 1
+            while i < n:
+                if code[i] == "\\" and i + 1 < n:
+                    i += 2
+                    continue
+                if code[i] == '"':
+                    i += 1
+                    break
+                i += 1
+            out.append('""')
+            continue
+        if ch == "|":
+            i += 1
+            while i < n and code[i] != "|":
+                if code[i] == "\\" and i + 1 < n:
+                    i += 2
+                    continue
+                i += 1
+            i += 1
+            out.append("||")
+            continue
+        out.append(ch)
+        i += 1
+    return "".join(out)
+
+
+def _eval_macro_expr(expr: Optional[str], variables: Dict[int, float]) -> Optional[float]:
+    """Safely evaluate a FANUC Macro B arithmetic expression to a float.
+
+    Substitutes ``#NNN`` from known variables, maps ``[ ]`` to ``( )``, then
+    evaluates a whitelisted numeric AST (constants, unary +/-, binary + - * /).
+    Never calls eval/exec. Returns None when unevaluable (unknown variable,
+    unsupported construct, divide-by-zero, syntax error).
+    """
+    if expr is None:
+        return None
+    s = expr.strip()
+    if not s:
+        return None
+
+    def _repl(m: "re.Match") -> str:
+        idx = int(m.group(1))
+        if idx in variables:
+            return repr(float(variables[idx]))
+        raise _MacroEvalError()
+
+    try:
+        s = re.sub(r"#(\d+)", _repl, s)
+    except _MacroEvalError:
+        return None
+    s = s.replace("[", "(").replace("]", ")")
+    try:
+        tree = ast.parse(s, mode="eval")
+    except SyntaxError:
+        return None
+
+    def _ev(node: ast.AST) -> float:
+        if isinstance(node, ast.Expression):
+            return _ev(node.body)
+        if isinstance(node, ast.Constant) and isinstance(node.value, (int, float)) \
+                and not isinstance(node.value, bool):
+            return float(node.value)
+        if isinstance(node, ast.UnaryOp) and isinstance(node.op, (ast.USub, ast.UAdd)):
+            v = _ev(node.operand)
+            return -v if isinstance(node.op, ast.USub) else v
+        if isinstance(node, ast.BinOp) and isinstance(node.op, (ast.Add, ast.Sub, ast.Mult, ast.Div)):
+            a = _ev(node.left)
+            b = _ev(node.right)
+            if isinstance(node.op, ast.Add):
+                return a + b
+            if isinstance(node.op, ast.Sub):
+                return a - b
+            if isinstance(node.op, ast.Mult):
+                return a * b
+            if b == 0:
+                raise _MacroEvalError()
+            return a / b
+        raise _MacroEvalError()
+
+    try:
+        return float(_ev(tree))
+    except (_MacroEvalError, ZeroDivisionError, TypeError, ValueError, RecursionError):
+        return None
+
+
 class HeadlessSandboxVerifier:
     """Simulates CAD/CAM execution environments and catches runtime defects."""
 
