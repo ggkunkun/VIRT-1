@@ -1,0 +1,52 @@
+{
+  "mode": "blank",
+  "design_file": "E:\\vericut_impeller_run\\design.stl",
+  "design_bbox_mm": {
+    "x": [
+      -129.03,
+      129.03
+    ],
+    "y": [
+      -129.03,
+      129.03
+    ],
+    "z": [
+      0.0,
+      74.85
+    ],
+    "size": [
+      258.06,
+      258.06,
+      74.85
+    ]
+  },
+  "stock_box_mm": {
+    "size": [
+      264.06,
+      264.06,
+      82.85
+    ],
+    "local_z": [
+      0.0,
+      82.8499984741211
+    ]
+  },
+  "world": {
+    "z_bottom": 70.0,
+    "z_top": 152.85,
+    "attach_z": -100.0,
+    "stock_matrix_origin_z": 170.0
+  },
+  "allowance_mm": {
+    "side": 3.0,
+    "top": 3.0,
+    "bottom": 5.0
+  },
+  "containment": {
+    "samples": 20000,
+    "outside": 0,
+    "min_margin_mm": 3.001
+  },
+  "stock_file": "d:\\Virtu模型\\artifacts\\aero_closed_impeller\\stock_auto_blank.stl",
+  "basis": "measured (mesh bounds + surface sampling)"
+}

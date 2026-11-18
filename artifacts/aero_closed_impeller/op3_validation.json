@@ -1,0 +1,12 @@
+{
+  "nc_file": "E:\\vericut_impeller_run\\OP3_FLIP.nc",
+  "nc_lines": 73,
+  "validation": {
+    "valid": true,
+    "errors": [],
+    "min_cut_z": -25.5,
+    "fixture_top_z": -32.85,
+    "clearance_mm": 7.35,
+    "basis": "measured (static parse of generated NC)"
+  }
+}

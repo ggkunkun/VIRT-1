@@ -1,0 +1,83 @@
+{
+  "design_file": "E:\\vericut_impeller_run\\design.stl",
+  "metrics": {
+    "bbox_mm": [
+      258.06,
+      258.06,
+      74.85
+    ],
+    "max_radius_mm": 129.04,
+    "rotationality": 0.28,
+    "radius_spread": 0.36,
+    "blade_count_fft": 32,
+    "flat_face_ratio": 0.481,
+    "height_over_diameter": 0.29,
+    "watertight": true
+  },
+  "decision": {
+    "scores": {
+      "turning": -12.0,
+      "3axis_milling": 30.0,
+      "5axis_milling": 90.4
+    },
+    "recommended": "5axis_milling",
+    "reasons": [
+      "回转度仅 0.28：半径随角度变化大，车刀无法成形",
+      "FFT 主频 32 阶：存在周期叶片/流道，需要多轴联动",
+      "网格封闭：可作为实体毛坯/设计基准"
+    ]
+  },
+  "task_dag": [
+    {
+      "id": "T1",
+      "task": "零件识别与工艺判定",
+      "acceptance": "process_selector.py 输出 recommended + 指标；回转度/叶片数/深宽比全部实测"
+    },
+    {
+      "id": "T2",
+      "task": "机床与控制系统选择",
+      "acceptance": "按工艺选机型：五轴铣选 B/C 摆头转台（NMV1500 + FANUC 30iM），确认行程覆盖包络"
+    },
+    {
+      "id": "T3",
+      "task": "毛坯自动识别",
+      "acceptance": "auto_stock_recognition.py 生成包容块（余量 3/5/3），20000 点包容性必须 outside=0"
+    },
+    {
+      "id": "T4",
+      "task": "夹具与工件坐标系",
+      "acceptance": "夹具底面贴台面，毛坯底面贴夹具顶面；WCS 放毛坯上表面中心，Z0=顶面"
+    },
+    {
+      "id": "T5",
+      "task": "刀具库",
+      "acceptance": "按最小圆角/流道宽度选刀：粗 D16、半精 D10 棒棒糖、伸出 ≥ 流道深度"
+    },
+    {
+      "id": "T6",
+      "task": "刀路与 NC",
+      "acceptance": "粗→半精→精；封闭流道只从 OD 槽口进入；G43.4 RTCP 开，结束 G49"
+    },
+    {
+      "id": "T7",
+      "task": "NC 静态校验",
+      "acceptance": "禁止车削代码；G00 不下扎；主轴先开；M30 收尾；FANUC 语法校验 0 错"
+    },
+    {
+      "id": "T8",
+      "task": "VERICUT 工位装配",
+      "acceptance": "机床/控制/夹具/毛坯/设计/NC/刀具/偏置逐项落位，XML 可解析"
+    },
+    {
+      "id": "T9",
+      "task": "仿真与偏差",
+      "acceptance": "仿真日志 0 error/0 collision；Auto-Diff 红=过切必须停"
+    },
+    {
+      "id": "T10",
+      "task": "交付",
+      "acceptance": "模型 + 仿真报告 + 参数校验清单，全部带实测证据"
+    }
+  ],
+  "basis": "measured (mesh sampling + FFT)"
+}

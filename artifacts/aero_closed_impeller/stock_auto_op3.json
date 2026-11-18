@@ -1,0 +1,53 @@
+{
+  "mode": "residual",
+  "design_file": "E:\\vericut_impeller_run\\design_flip.stl",
+  "design_bbox_mm": {
+    "x": [
+      -129.03,
+      129.03
+    ],
+    "y": [
+      -129.03,
+      129.03
+    ],
+    "z": [
+      -74.85,
+      0.0
+    ],
+    "size": [
+      258.06,
+      258.06,
+      74.85
+    ]
+  },
+  "stock_box_mm": {
+    "size": [
+      264.06,
+      264.06,
+      25.85
+    ],
+    "local_z": [
+      0.0,
+      25.849999999999994
+    ]
+  },
+  "world": {
+    "z_bottom": 127.0,
+    "z_top": 152.85,
+    "attach_z": -100.0,
+    "stock_matrix_origin_z": 227.0
+  },
+  "allowance_mm": {
+    "side": 3.0,
+    "top": 3.0,
+    "bottom": 5.0
+  },
+  "containment": {
+    "samples": 0,
+    "outside": null,
+    "min_margin_mm": null,
+    "note": "residual band: containment is bounded by the OP1 cut plane"
+  },
+  "stock_file": "d:\\Virtu模型\\artifacts\\aero_closed_impeller\\stock_auto_op3.stl",
+  "basis": "measured (mesh bounds + surface sampling)"
+}

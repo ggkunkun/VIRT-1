@@ -1,0 +1,48 @@
+# 工艺参数标准区间（用于配置合法性审查）
+# 说明：range 为行业通用推荐区间；source 给出可核查依据。配置必须落在区间内，越界即判红。
+materials:
+  TC11:
+    name: "Ti-6.5Al-3.5Mo-1.5Zr-0.3Si（近 α 钛合金）"
+    density_g_cm3: 4.48
+    tensile_mpa: 1030
+    yield_mpa: 900
+    hardness_hb: 320
+    thermal_conductivity_w_mk: 7.5
+    machining:
+      vc_m_min:
+        rough: [20.0, 45.0]
+        finish: [30.0, 60.0]
+        source: "TC11 曲面铣削实验推荐 20–45 m/min；钛合金硬质合金铣削通用上限 60 m/min"
+      fz_mm_z:
+        rough: [0.03, 0.12]
+        finish: [0.02, 0.08]
+        source: "钛合金立铣刀每齿进给通用区间（0.02–0.12 mm/z）"
+      ap_mm:
+        rough: [0.3, 3.0]
+        finish: [0.1, 0.5]
+        source: "钛合金顺铣轴向切深通用区间；深腔建议 ≤0.5D"
+      coolant: "高压内冷，禁止干切"
+      tool_life_min: [30.0, 60.0]
+
+process_rules:
+  safe_z_mm: {min: 5.0, typical: [10.0, 50.0]}
+  rapid_reduction_mm: {min: 2.0, typical: [5.0, 10.0]}
+  clamp_band_mm: {min: 20.0}
+  stock_margin_mm: {side: [2.0, 5.0], top: [2.0, 5.0], bottom: [3.0, 8.0]}
+  allowance_mm:
+    rough_radial: [0.8, 2.5]
+    rough_axial: [0.8, 2.5]
+    finish_radial: [0.15, 0.5]
+    finish_axial: [0.1, 0.4]
+    corner: [0.3, 1.5]
+  cpk_min: 1.33
+  changeover_min: 15
+
+sources:
+  - "《金属切削加工工艺手册》钛合金铣削推荐切削速度与每齿进给区间"
+  - "《数控加工工艺规范》刀具半径/长度补偿、安全高度与快移减速区间要求"
+  - "TC11 钛合金曲面铣削实验（切削参数对铣削性能的影响），Vc 20–45 m/min"
+  - "DMG MORI NMV 系列公开行程参数（X730 / Y510 / Z510）"
+  - "FANUC 0i-MF / 30i 系列 G43.4 TCP、G49 取消（FANUC 5 轴功能说明）"
+  - "华中 8 型数控系统编程说明书 V2.4：G43.4 Hxx 启用 RTCP，G49 关闭"
+  - "SINUMERIK 840D sl 五轴应用调试手册：TRAORI 五轴转换；Job Planning 手册：A3/B3/C3 方向编程"

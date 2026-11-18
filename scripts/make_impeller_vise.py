@@ -47,9 +47,9 @@ def normal(t):
 
 def main() -> None:
     parts = [
-        box_tris(-160.0, 160.0, -160.0, 160.0, 0.0, 170.0),      # pedestal to table
-        box_tris(-172.0, -132.05, -170.0, 170.0, 170.0, 195.0),  # fixed jaw
-        box_tris(132.05, 172.0, -170.0, 170.0, 170.0, 195.0),    # moving jaw
+        box_tris(-180.0, 180.0, -180.0, 180.0, 0.0, 170.0),      # pedestal to table
+        box_tris(-172.0, -132.05, -170.0, 170.0, 170.0, 194.0),  # fixed jaw
+        box_tris(132.05, 172.0, -170.0, 170.0, 170.0, 194.0),    # moving jaw
     ]
     with open(DST, "w", encoding="ascii", newline="\r\n") as f:
         f.write("VERICUT-model\nVersion-3.0\n1\n1 1 1\n")
@@ -66,3 +66,4 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
+

@@ -1,0 +1,99 @@
+{
+  "project": "E:\\vericut_impeller_run\\OP3.vcproject",
+  "steps_total": 10,
+  "passed": 8,
+  "failed": 0,
+  "steps": [
+    {
+      "step": "XML 解析",
+      "status": "PASS",
+      "evidence": "ElementTree parse OK"
+    },
+    {
+      "step": "机床模型",
+      "status": "PASS",
+      "evidence": {
+        "file": "dmg_mori_nmv1500.mch",
+        "resolved": "E:\\library\\dmg_mori_nmv1500.mch"
+      }
+    },
+    {
+      "step": "控制系统",
+      "status": "PASS",
+      "evidence": {
+        "file": "fan30im.ctl",
+        "resolved": "E:\\library\\fan30im.ctl"
+      }
+    },
+    {
+      "step": "Attach 链",
+      "status": "WARN",
+      "evidence": {
+        "attach_z": null,
+        "attached": false
+      }
+    },
+    {
+      "step": "Fixture 落位",
+      "status": "PASS",
+      "evidence": {
+        "name": "Fixture",
+        "visible": "all",
+        "enabled": "on",
+        "file": "E:\\vericut_impeller_run\\mandrel.ply",
+        "matrix_z": 160.0,
+        "file_exists": true
+      }
+    },
+    {
+      "step": "Stock 落位",
+      "status": "PASS",
+      "evidence": {
+        "name": "Stock",
+        "visible": "all",
+        "enabled": "on",
+        "file": "E:\\vericut_impeller_run\\op3_stock.stl",
+        "matrix_z": 227.0,
+        "file_exists": true
+      }
+    },
+    {
+      "step": "Design 落位",
+      "status": "PASS",
+      "evidence": {
+        "name": "Design",
+        "visible": "none",
+        "enabled": "on",
+        "file": "E:\\vericut_impeller_run\\design_flip.stl",
+        "matrix_z": 247.85,
+        "file_exists": true
+      }
+    },
+    {
+      "step": "NC 程序",
+      "status": "PASS",
+      "evidence": {
+        "file": "E:\\vericut_impeller_run\\OP3_FLIP.nc",
+        "use": "on",
+        "exists": true
+      }
+    },
+    {
+      "step": "刀具库",
+      "status": "PASS",
+      "evidence": {
+        "file": "E:\\vericut_impeller_run\\tools.tls",
+        "resolved": "E:\\vericut_impeller_run\\tools.tls"
+      }
+    },
+    {
+      "step": "工件偏置",
+      "status": "WARN",
+      "evidence": {
+        "work_offset": null
+      }
+    }
+  ],
+  "verdict": "PASS",
+  "basis": "measured (project XML + file existence)"
+}

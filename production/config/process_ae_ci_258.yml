@@ -1,0 +1,121 @@
+# AE-CI-258 封闭式叶轮 —— 量产工艺配置（五轴联动铣削，全流程无车削工序）
+# 余量与装夹参数口径见 reports/STOCK_SPEC_5AXIS_MILLING.md（SPEC-STOCK-5AX-001）
+part:
+  id: AE-CI-258
+  name: "航空发动机封闭式叶轮"
+  material: TC11
+  design_file: "E:/vericut_impeller_run/design.stl"
+  design_file_op3: "E:/vericut_impeller_run/design_flip.stl"
+  stock_file: "E:/vericut_impeller_run/stock.stl"
+  stock_file_op3: "E:/vericut_impeller_run/op3_stock.stl"
+
+stock:
+  form: rectangular_block
+  size_mm: [264.06, 264.06, 82.85]
+  world_z_mm: [70.0, 152.85]
+  margins_mm: {side: 3.0, top: 3.0, bottom: 5.0}
+  allowances_mm: {rough_radial: 1.5, rough_axial: 1.5, finish_radial: 0.3, finish_axial: 0.2, corner: 0.8}
+  chamfer_bottom_mm: 2.0
+  unique_instance: true
+  material_state: "去应力退火"
+  traceability: "炉号/批次/二维码 + 基准符号 A/B/C"
+
+stations:
+  op1:
+    fixture: "虎钳 + 垫高座（面接触）"
+    clamp_band_mm: 24.0
+    jaw_top_world_z: 94.0
+    stock_top_world_z: 152.85
+    work_zero: "毛坯上表面中心（X0Y0Z0）"
+  op2:
+    fixture: "同 OP1（不松钳）"
+    clamp_band_mm: 24.0
+    jaw_top_world_z: 94.0
+    stock_top_world_z: 152.85
+    work_zero: "同 OP1"
+  op3:
+    fixture: "D76.2 内胀芯轴（径向撑紧 + 端面贴合）"
+    mandrel_top_world_z: 120.0
+    stock_top_world_z: 152.85
+    work_zero: "翻面后上表面中心（X0Y0Z0）"
+    precondition: "OP1/OP2 完成，翻面 180°（绕 X 轴）"
+
+safety:
+  safe_z_work_mm: 10.0
+  retract_z_work_mm: 20.0
+  rapid_reduction_mm: 5.0
+  lateral_clearance_mm: 5.0
+  holder_clearance_mm: 1.0
+  gouge_tolerance_mm: 0.05
+  coolant: "高压内冷（M08）"
+  optional_stop_between_ops: true
+
+operations:
+  - id: OP1
+    name: "圆周三向预成形（去四角，留 1.5 mm 粗加工余量）"
+    tool: T1
+    cut_type: rough
+    mode: 3axis
+    rpm: 700
+    feed_cut: 320.0
+    feed_plunge: 80.0
+    coolant: true
+    strategy:
+      type: circular_preform
+      radius_mm: 138.53
+      z_start_mm: -1.5
+      z_end_mm: -57.0
+      step_z_mm: 1.5
+      inner_x_mm: 125.5
+  - id: OP2
+    name: "16 条封闭流道五轴联动铣削（D10 棒棒糖刀，RTCP）"
+    tool: T2
+    cut_type: rough
+    mode: 5axis_rtcp
+    rpm: 950
+    feed_cut: 220.0
+    feed_return: 260.0
+    feed_plunge: 50.0
+    coolant: true
+    strategy:
+      type: closed_passage_sweep
+      entry_radius_mm: 140.0
+      lateral_z_mm: -56.5
+      b_min_deg: 12.0
+      b_span_deg: 10.0
+      points: 41
+      precondition: "OP1 预成形完成（r>129.5 区域已去料至 -57）"
+  - id: OP3
+    name: "翻面：背面 5 mm 面铣 + 下部外圆铣削至 r129.03"
+    tool: T1
+    cut_type: finish
+    mode: 3axis
+    rpm: 800
+    feed_cut: 240.0
+    feed_plunge: 80.0
+    coolant: true
+    strategy:
+      type: back_face_and_od
+      face_z_mm: -5.0
+      face_radius_mm: 124.0
+      face_step_mm: 12.0
+      od_bottom_mm: -25.5
+      od_radius_mm: 129.03
+      od_step_z_mm: 2.5
+      tool2: T2
+      rpm2: 1100
+      feed_cut2: 220.0
+      feed_plunge2: 60.0
+
+quality:
+  tolerance_mm: 0.05
+  ra_um: 1.6
+  cpk_min: 1.33
+  subgroup_size: 5
+  first_article: true
+
+production:
+  batch_size: 50
+  cycle_target_s: {OP1: 7200, OP2: 3600, OP3: 2400}
+  changeover_target_min: 15
+  tool_life_target_min: {T1: 45, T2: 40}

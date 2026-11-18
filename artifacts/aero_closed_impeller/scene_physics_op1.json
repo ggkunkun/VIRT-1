@@ -1,0 +1,220 @@
+{
+  "station": "OP1",
+  "project": "E:\\vericut_impeller_run\\proj.vcproject",
+  "checks_total": 17,
+  "failed": 0,
+  "verdict": "PASS",
+  "checks": [
+    {
+      "check": "毛坯组件唯一",
+      "status": "PASS",
+      "evidence": "stock_components=1"
+    },
+    {
+      "check": "毛坯模型唯一",
+      "status": "PASS",
+      "evidence": "primitives=['Poly']"
+    },
+    {
+      "check": "毛坯模型文件存在",
+      "status": "PASS",
+      "evidence": "E:\\vericut_impeller_run\\stock.stl"
+    },
+    {
+      "check": "pedestal 底面贴台面",
+      "status": "PASS",
+      "evidence": "bottom=-100.0 table=-100.0"
+    },
+    {
+      "check": "fixed_jaw 底面贴 pedestal 顶面",
+      "status": "PASS",
+      "evidence": "bottom=70.0 support_top=70.0"
+    },
+    {
+      "check": "moving_jaw 底面贴 pedestal 顶面",
+      "status": "PASS",
+      "evidence": "bottom=70.0 support_top=70.0"
+    },
+    {
+      "check": "stock 底面贴 pedestal 顶面",
+      "status": "PASS",
+      "evidence": "bottom=70.0 support_top=70.0"
+    },
+    {
+      "check": "工件无径向夹持、必须轴向支撑",
+      "status": "PASS",
+      "evidence": "stock bottom on pedestal"
+    },
+    {
+      "check": "pedestal × fixed_jaw 无穿模",
+      "status": "PASS",
+      "evidence": "overlap=0.0 mm3"
+    },
+    {
+      "check": "pedestal × moving_jaw 无穿模",
+      "status": "PASS",
+      "evidence": "overlap=0.0 mm3"
+    },
+    {
+      "check": "pedestal × stock 无穿模",
+      "status": "PASS",
+      "evidence": "overlap=0.0 mm3"
+    },
+    {
+      "check": "fixed_jaw × moving_jaw 无穿模",
+      "status": "PASS",
+      "evidence": "overlap=0.0 mm3"
+    },
+    {
+      "check": "fixed_jaw × stock 无穿模",
+      "status": "PASS",
+      "evidence": "overlap=0.0 mm3"
+    },
+    {
+      "check": "moving_jaw × stock 无穿模",
+      "status": "PASS",
+      "evidence": "overlap=0.0 mm3"
+    },
+    {
+      "check": "钳口夹持间隙 0..1mm",
+      "status": "PASS",
+      "evidence": {
+        "left": 0.02,
+        "right": 0.02
+      }
+    },
+    {
+      "check": "毛坯包络在机床行程内",
+      "status": "PASS",
+      "evidence": {
+        "stock": [
+          264.1,
+          264.1,
+          82.8
+        ],
+        "envelope": [
+          600,
+          600,
+          500
+        ]
+      }
+    },
+    {
+      "check": "材质密度齐全",
+      "status": "PASS",
+      "evidence": {
+        "missing": [],
+        "density_g_cm3": {
+          "TC11": 4.48,
+          "steel": 7.85,
+          "cast_iron": 7.2
+        }
+      }
+    }
+  ],
+  "parts": [
+    {
+      "name": "pedestal",
+      "role": "fixture",
+      "shape": "box",
+      "bbox": {
+        "x": [
+          -180,
+          180
+        ],
+        "y": [
+          -180,
+          180
+        ],
+        "z": [
+          -100.0,
+          70.0
+        ]
+      },
+      "material": "cast_iron"
+    },
+    {
+      "name": "fixed_jaw",
+      "role": "clamp",
+      "shape": "box",
+      "bbox": {
+        "x": [
+          -172,
+          -132.05
+        ],
+        "y": [
+          -170,
+          170
+        ],
+        "z": [
+          70.0,
+          94.0
+        ]
+      },
+      "material": "steel"
+    },
+    {
+      "name": "moving_jaw",
+      "role": "clamp",
+      "shape": "box",
+      "bbox": {
+        "x": [
+          132.05,
+          172
+        ],
+        "y": [
+          -170,
+          170
+        ],
+        "z": [
+          70.0,
+          94.0
+        ]
+      },
+      "material": "steel"
+    },
+    {
+      "name": "stock",
+      "role": "workpiece",
+      "shape": "box",
+      "bbox": {
+        "file": "E:\\vericut_impeller_run\\stock.stl",
+        "x": [
+          -132.03,
+          132.03
+        ],
+        "y": [
+          -132.03,
+          132.03
+        ],
+        "z": [
+          70.0,
+          152.85
+        ]
+      },
+      "material": "TC11"
+    },
+    {
+      "name": "design",
+      "role": "design",
+      "shape": "mesh",
+      "bbox": {
+        "file": "E:\\vericut_impeller_run\\design.stl",
+        "x": [
+          -129.03,
+          129.03
+        ],
+        "y": [
+          -129.03,
+          129.03
+        ],
+        "z": [
+          75.0,
+          149.85
+        ]
+      },
+      "material": "TC11"
+    }
+  ],
+  "basis": "measured (project meshes + fixture definition)"
+}

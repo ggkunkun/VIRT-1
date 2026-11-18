@@ -1,0 +1,2858 @@
+{
+  "generated_at": "2026-11-18 21:50:04",
+  "part": {
+    "id": "AE-CI-258",
+    "name": "航空发动机封闭式叶轮",
+    "material": "TC11",
+    "design_file": "E:/vericut_impeller_run/design.stl",
+    "design_file_op3": "E:/vericut_impeller_run/design_flip.stl",
+    "stock_file": "E:/vericut_impeller_run/stock.stl",
+    "stock_file_op3": "E:/vericut_impeller_run/op3_stock.stl"
+  },
+  "stock": {
+    "size": [
+      264.06,
+      264.06,
+      82.85
+    ],
+    "form": "rectangular_block",
+    "chamfer": 2.0,
+    "allow": {
+      "rough_radial": 1.5,
+      "rough_axial": 1.5,
+      "finish_radial": 0.3,
+      "finish_axial": 0.2,
+      "corner": 0.8
+    }
+  },
+  "stations": {
+    "op1": {
+      "fixture": "虎钳 + 垫高座（面接触）",
+      "work_zero": "毛坯上表面中心（X0Y0Z0）",
+      "stock_top": 152.85
+    },
+    "op2": {
+      "fixture": "同 OP1（不松钳）",
+      "work_zero": "同 OP1",
+      "stock_top": 152.85
+    },
+    "op3": {
+      "fixture": "D76.2 内胀芯轴（径向撑紧 + 端面贴合）",
+      "work_zero": "翻面后上表面中心（X0Y0Z0）",
+      "stock_top": 152.85
+    }
+  },
+  "safety": {
+    "safe_z": 10.0,
+    "rapid_reduction": 5.0,
+    "rotary": "B -180..160 / C 0..360"
+  },
+  "config_checks": [
+    {
+      "gate": "SAFE-Z",
+      "status": "PASS",
+      "evidence": "safe_z=10.0 mm",
+      "rule": "≥5.0 mm"
+    },
+    {
+      "gate": "RAPID-REDUCTION",
+      "status": "PASS",
+      "evidence": "rapid_reduction=5.0 mm",
+      "rule": "≥2.0 mm"
+    },
+    {
+      "gate": "CLAMP-BAND",
+      "status": "PASS",
+      "evidence": "clamp_band=24.0 mm",
+      "rule": "≥20.0 mm"
+    },
+    {
+      "gate": "STOCK-MARGIN-SIDE",
+      "status": "PASS",
+      "evidence": "side=3.0 mm",
+      "rule": "2.0..5.0 mm"
+    },
+    {
+      "gate": "STOCK-MARGIN-TOP",
+      "status": "PASS",
+      "evidence": "top=3.0 mm",
+      "rule": "2.0..5.0 mm"
+    },
+    {
+      "gate": "STOCK-MARGIN-BOTTOM",
+      "status": "PASS",
+      "evidence": "bottom=5.0 mm",
+      "rule": "3.0..8.0 mm"
+    },
+    {
+      "gate": "STOCK-SIZE",
+      "status": "PASS",
+      "evidence": {
+        "stock": [
+          264.06,
+          264.06,
+          82.85
+        ],
+        "design": [
+          258.06,
+          258.06,
+          74.85
+        ]
+      },
+      "rule": "毛坯 = 设计包络 + 侧 3 / 顶 3 / 底 5"
+    },
+    {
+      "gate": "STOCK-CHAMFER-CLEARANCE",
+      "status": "PASS",
+      "evidence": "chamfer=2.0 < bottom_margin=5.0",
+      "rule": "底倒角不得侵入设计包络（否则包容性失效）"
+    },
+    {
+      "gate": "ALLOW-ROUGH_RADIAL",
+      "status": "PASS",
+      "evidence": "rough_radial=1.5 mm",
+      "rule": "0.8..2.5 mm"
+    },
+    {
+      "gate": "ALLOW-ROUGH_AXIAL",
+      "status": "PASS",
+      "evidence": "rough_axial=1.5 mm",
+      "rule": "0.8..2.5 mm"
+    },
+    {
+      "gate": "ALLOW-FINISH_RADIAL",
+      "status": "PASS",
+      "evidence": "finish_radial=0.3 mm",
+      "rule": "0.15..0.5 mm"
+    },
+    {
+      "gate": "ALLOW-FINISH_AXIAL",
+      "status": "PASS",
+      "evidence": "finish_axial=0.2 mm",
+      "rule": "0.1..0.4 mm"
+    },
+    {
+      "gate": "ALLOW-CORNER",
+      "status": "PASS",
+      "evidence": "corner=0.8 mm",
+      "rule": "0.3..1.5 mm"
+    },
+    {
+      "gate": "OP1-VC",
+      "status": "PASS",
+      "evidence": "Vc=35.2 m/min (D16 @ 700 rpm)",
+      "rule": "rough 区间 20.0..45.0 m/min"
+    },
+    {
+      "gate": "OP1-FZ",
+      "status": "PASS",
+      "evidence": "fz=0.114 mm/z (F320 / 700 / 4刃)",
+      "rule": "rough 区间 0.03..0.12 mm/z"
+    },
+    {
+      "gate": "OP1-RPM-LIMIT",
+      "status": "PASS",
+      "evidence": "700 ≤ 12000.0",
+      "rule": "主轴上限"
+    },
+    {
+      "gate": "OP2-VC",
+      "status": "PASS",
+      "evidence": "Vc=29.8 m/min (D10 @ 950 rpm)",
+      "rule": "rough 区间 20.0..45.0 m/min"
+    },
+    {
+      "gate": "OP2-FZ",
+      "status": "PASS",
+      "evidence": "fz=0.058 mm/z (F220 / 950 / 4刃)",
+      "rule": "rough 区间 0.03..0.12 mm/z"
+    },
+    {
+      "gate": "OP2-RPM-LIMIT",
+      "status": "PASS",
+      "evidence": "950 ≤ 12000.0",
+      "rule": "主轴上限"
+    },
+    {
+      "gate": "OP3-VC",
+      "status": "PASS",
+      "evidence": "Vc=40.2 m/min (D16 @ 800 rpm)",
+      "rule": "finish 区间 30.0..60.0 m/min"
+    },
+    {
+      "gate": "OP3-FZ",
+      "status": "PASS",
+      "evidence": "fz=0.075 mm/z (F240 / 800 / 4刃)",
+      "rule": "finish 区间 0.02..0.08 mm/z"
+    },
+    {
+      "gate": "OP3-RPM-LIMIT",
+      "status": "PASS",
+      "evidence": "800 ≤ 12000.0",
+      "rule": "主轴上限"
+    },
+    {
+      "gate": "CPK-MIN",
+      "status": "PASS",
+      "evidence": "Cpk_min=1.33",
+      "rule": "≥1.33（PPAP 量产下限）"
+    },
+    {
+      "gate": "CHANGEOVER-TARGET",
+      "status": "PASS",
+      "evidence": "target=15.0 min",
+      "rule": "≤15 min"
+    },
+    {
+      "gate": "T1-LIFE",
+      "status": "PASS",
+      "evidence": "config=45.0 / tool=45.0",
+      "rule": "刀具寿命目标差 ≤15 min（避免换刀策略冲突）"
+    },
+    {
+      "gate": "T2-LIFE",
+      "status": "PASS",
+      "evidence": "config=40.0 / tool=40.0",
+      "rule": "刀具寿命目标差 ≤15 min（避免换刀策略冲突）"
+    },
+    {
+      "gate": "MACHINE-prod_5ax_fanuc_0imf-RTCP",
+      "status": "PASS",
+      "evidence": "supports_rtcp=True",
+      "rule": "五轴工序要求 RTCP"
+    },
+    {
+      "gate": "MACHINE-prod_5ax_siemens_840dsl-RTCP",
+      "status": "PASS",
+      "evidence": "supports_rtcp=True",
+      "rule": "五轴工序要求 RTCP"
+    },
+    {
+      "gate": "MACHINE-prod_5ax_hnc8-RTCP",
+      "status": "PASS",
+      "evidence": "supports_rtcp=True",
+      "rule": "五轴工序要求 RTCP"
+    }
+  ],
+  "config_summary": {
+    "total": 29,
+    "failed": 0,
+    "verdict": "PASS",
+    "failed_gates": []
+  },
+  "machines": [
+    {
+      "key": "prod_5ax_fanuc_0imf",
+      "controller": "FANUC 0i-MF",
+      "production_ready": true,
+      "travel": {
+        "x": [
+          -365.0,
+          365.0
+        ],
+        "y": [
+          -255.0,
+          255.0
+        ],
+        "z": [
+          -300.0,
+          450.0
+        ]
+      },
+      "note": "量产可用"
+    },
+    {
+      "key": "prod_5ax_siemens_840dsl",
+      "controller": "SINUMERIK 840D sl",
+      "production_ready": true,
+      "travel": {
+        "x": [
+          -365.0,
+          365.0
+        ],
+        "y": [
+          -255.0,
+          255.0
+        ],
+        "z": [
+          -300.0,
+          450.0
+        ]
+      },
+      "note": "量产可用"
+    },
+    {
+      "key": "prod_5ax_hnc8",
+      "controller": "HNC-8",
+      "production_ready": true,
+      "travel": {
+        "x": [
+          -365.0,
+          365.0
+        ],
+        "y": [
+          -255.0,
+          255.0
+        ],
+        "z": [
+          -300.0,
+          450.0
+        ]
+      },
+      "note": "量产可用"
+    },
+    {
+      "key": "training_rig_nmv1500",
+      "controller": "FANUC 30iM（培训介质）",
+      "production_ready": false,
+      "travel": {
+        "x": [
+          -210.0,
+          210.0
+        ],
+        "y": [
+          -105.0,
+          105.0
+        ],
+        "z": [
+          -75.0,
+          390.0
+        ]
+      },
+      "note": "Y 行程 [-105.0, 105.0] 覆盖不足（需 ±145），禁止用于 Ø264 毛坯；行程门=FAIL，违规 3040 点"
+    }
+  ],
+  "programs": [
+    {
+      "op": "OP1",
+      "dialect": "fanuc",
+      "machine": "prod_5ax_fanuc_0imf",
+      "nc_file": "D:\\Virtu模型\\production\\nc\\prod_5ax_fanuc_0imf\\AE-CI-258_OP1.nc",
+      "lines": 183,
+      "sha256": "144d42294d8850d0429df61c6ca9257c41bd323491159202b00a032d2dacf772",
+      "lint": {
+        "checks": [
+          {
+            "gate": "STRUCT-HEADER",
+            "status": "PASS",
+            "evidence": {
+              "first": "%"
+            },
+            "rule": "以 % 开头且含 O#### 程序号"
+          },
+          {
+            "gate": "STRUCT-FOOTER",
+            "status": "PASS",
+            "evidence": {
+              "last": "%"
+            },
+            "rule": "以 % 结束且含 M30"
+          },
+          {
+            "gate": "SAFETY-BLOCK",
+            "status": "PASS",
+            "evidence": {
+              "G17": true,
+              "G40": true,
+              "G90": true,
+              "G21": true,
+              "G49": true,
+              "G80": true
+            },
+            "rule": "安全块必须含 G17/G40/G90/G21/G49/G80"
+          },
+          {
+            "gate": "WORK-OFFSET",
+            "status": "PASS",
+            "evidence": "G54",
+            "rule": "工件零点调用"
+          },
+          {
+            "gate": "TOOL-CHANGE-SEQUENCE",
+            "status": "PASS",
+            "evidence": "tool_changes=1 ops=1",
+            "rule": "每工序一次换刀"
+          },
+          {
+            "gate": "TOOL-CHANGE-POINT",
+            "status": "PASS",
+            "evidence": [
+              {
+                "line": 16,
+                "pos": [
+                  0.0,
+                  0.0,
+                  240.0
+                ],
+                "ok": true
+              }
+            ],
+            "rule": "换刀前必须位于换刀点 (X/Y/Z)"
+          },
+          {
+            "gate": "TOOL-LENGTH-COMP",
+            "status": "PASS",
+            "evidence": {
+              "first_feed_line": 21,
+              "comp": true
+            },
+            "rule": "首次切削前刀长补偿生效"
+          },
+          {
+            "gate": "SPINDLE-BEFORE-FEED",
+            "status": "PASS",
+            "evidence": {
+              "line": 21
+            },
+            "rule": "首次切削前主轴已启动"
+          },
+          {
+            "gate": "COOLANT-BEFORE-FEED",
+            "status": "PASS",
+            "evidence": {
+              "line": 21
+            },
+            "rule": "首次切削前冷却开启"
+          },
+          {
+            "gate": "RAPID-SAFE-HEIGHT",
+            "status": "PASS",
+            "evidence": "none",
+            "rule": "G00 横向移动不得低于安全高度 10.0"
+          },
+          {
+            "gate": "RAPID-PLUNGE",
+            "status": "PASS",
+            "evidence": "none",
+            "rule": "禁止 G00 快速下刀进入材料"
+          },
+          {
+            "gate": "FEED-RATE",
+            "status": "PASS",
+            "evidence": "none",
+            "rule": "切削进给必须有 F（模态或显式）"
+          },
+          {
+            "gate": "MILL-ONLY",
+            "status": "PASS",
+            "evidence": "none",
+            "rule": "禁止车削/螺纹/主轴定向代码 G96/G97/G99/G70/G71/G72/G76/G32/G33/M19"
+          },
+          {
+            "gate": "OPTIONAL-STOP",
+            "status": "PASS",
+            "evidence": {
+              "M01": 2,
+              "ops": 1
+            },
+            "rule": "工序间 M01"
+          },
+          {
+            "gate": "END-STATE",
+            "status": "PASS",
+            "evidence": {
+              "M05": true,
+              "M09": true
+            },
+            "rule": "结束前主轴停/冷却停/补偿取消"
+          },
+          {
+            "gate": "RADIUS-COMP-PAIR",
+            "status": "PASS",
+            "evidence": {
+              "open_comp": 0,
+              "D_word": false
+            },
+            "rule": "G41/G42 必须有 D 且以 G40 关闭"
+          },
+          {
+            "gate": "RESTART-BLOCKS",
+            "status": "PASS",
+            "evidence": {
+              "n_lines": 173
+            },
+            "rule": "FANUC/HNC 每块带 N 号，可按工序列断点"
+          },
+          {
+            "gate": "PAREN-BALANCE",
+            "status": "PASS",
+            "evidence": "none",
+            "rule": "注释括号配平"
+          },
+          {
+            "gate": "TOOL-LIST",
+            "status": "PASS",
+            "evidence": "all known",
+            "rule": "刀具号必须在刀具清单中"
+          }
+        ],
+        "failed": 0,
+        "verdict": "PASS",
+        "failed_gates": [],
+        "basis": "measured (static NC parse)"
+      },
+      "roundtrip": {
+        "matched": 76,
+        "expected": 76,
+        "max_err_mm": 0.0,
+        "verdict": "PASS"
+      },
+      "cycle": {
+        "per_op_s": {
+          "PROGRAM": 7328.5
+        },
+        "tool_changes": 1,
+        "total_s": 7336.5,
+        "path_length_mm": 37297.1,
+        "basis": "derived (length/feed + rapid + tool change + optional stop)"
+      },
+      "restart": {
+        "OP1": 40
+      }
+    },
+    {
+      "op": "OP2",
+      "dialect": "fanuc",
+      "machine": "prod_5ax_fanuc_0imf",
+      "nc_file": "D:\\Virtu模型\\production\\nc\\prod_5ax_fanuc_0imf\\AE-CI-258_OP2.nc",
+      "lines": 1199,
+      "sha256": "db525900ff4d0da17fc66e6aabf6d7effa38a6707f1faf1460b64d3d4c699efe",
+      "lint": {
+        "checks": [
+          {
+            "gate": "STRUCT-HEADER",
+            "status": "PASS",
+            "evidence": {
+              "first": "%"
+            },
+            "rule": "以 % 开头且含 O#### 程序号"
+          },
+          {
+            "gate": "STRUCT-FOOTER",
+            "status": "PASS",
+            "evidence": {
+              "last": "%"
+            },
+            "rule": "以 % 结束且含 M30"
+          },
+          {
+            "gate": "SAFETY-BLOCK",
+            "status": "PASS",
+            "evidence": {
+              "G17": true,
+              "G40": true,
+              "G90": true,
+              "G21": true,
+              "G49": true,
+              "G80": true
+            },
+            "rule": "安全块必须含 G17/G40/G90/G21/G49/G80"
+          },
+          {
+            "gate": "WORK-OFFSET",
+            "status": "PASS",
+            "evidence": "G54",
+            "rule": "工件零点调用"
+          },
+          {
+            "gate": "TOOL-CHANGE-SEQUENCE",
+            "status": "PASS",
+            "evidence": "tool_changes=1 ops=1",
+            "rule": "每工序一次换刀"
+          },
+          {
+            "gate": "TOOL-CHANGE-POINT",
+            "status": "PASS",
+            "evidence": [
+              {
+                "line": 16,
+                "pos": [
+                  0.0,
+                  0.0,
+                  240.0
+                ],
+                "ok": true
+              }
+            ],
+            "rule": "换刀前必须位于换刀点 (X/Y/Z)"
+          },
+          {
+            "gate": "TOOL-LENGTH-COMP",
+            "status": "PASS",
+            "evidence": {
+              "first_feed_line": 21,
+              "comp": true
+            },
+            "rule": "首次切削前刀长补偿生效"
+          },
+          {
+            "gate": "SPINDLE-BEFORE-FEED",
+            "status": "PASS",
+            "evidence": {
+              "line": 21
+            },
+            "rule": "首次切削前主轴已启动"
+          },
+          {
+            "gate": "COOLANT-BEFORE-FEED",
+            "status": "PASS",
+            "evidence": {
+              "line": 21
+            },
+            "rule": "首次切削前冷却开启"
+          },
+          {
+            "gate": "RAPID-SAFE-HEIGHT",
+            "status": "PASS",
+            "evidence": "none",
+            "rule": "G00 横向移动不得低于安全高度 10.0"
+          },
+          {
+            "gate": "RAPID-PLUNGE",
+            "status": "PASS",
+            "evidence": "none",
+            "rule": "禁止 G00 快速下刀进入材料"
+          },
+          {
+            "gate": "FEED-RATE",
+            "status": "PASS",
+            "evidence": "none",
+            "rule": "切削进给必须有 F（模态或显式）"
+          },
+          {
+            "gate": "MILL-ONLY",
+            "status": "PASS",
+            "evidence": "none",
+            "rule": "禁止车削/螺纹/主轴定向代码 G96/G97/G99/G70/G71/G72/G76/G32/G33/M19"
+          },
+          {
+            "gate": "OPTIONAL-STOP",
+            "status": "PASS",
+            "evidence": {
+              "M01": 2,
+              "ops": 1
+            },
+            "rule": "工序间 M01"
+          },
+          {
+            "gate": "END-STATE",
+            "status": "PASS",
+            "evidence": {
+              "M05": true,
+              "M09": true
+            },
+            "rule": "结束前主轴停/冷却停/补偿取消"
+          },
+          {
+            "gate": "RTCP",
+            "status": "PASS",
+            "evidence": {
+              "rtcp_seen": true
+            },
+            "rule": "五轴刀路必须启用 RTCP"
+          },
+          {
+            "gate": "B-LIMIT",
+            "status": "PASS",
+            "evidence": {
+              "min": 0.0,
+              "max": 22.0
+            },
+            "rule": "B 轴硬限位"
+          },
+          {
+            "gate": "C-LIMIT",
+            "status": "PASS",
+            "evidence": {
+              "min": 0.022,
+              "max": 359.675
+            },
+            "rule": "C 轴硬限位"
+          },
+          {
+            "gate": "RADIUS-COMP-PAIR",
+            "status": "PASS",
+            "evidence": {
+              "open_comp": 0,
+              "D_word": false
+            },
+            "rule": "G41/G42 必须有 D 且以 G40 关闭"
+          },
+          {
+            "gate": "RESTART-BLOCKS",
+            "status": "PASS",
+            "evidence": {
+              "n_lines": 1189
+            },
+            "rule": "FANUC/HNC 每块带 N 号，可按工序列断点"
+          },
+          {
+            "gate": "PAREN-BALANCE",
+            "status": "PASS",
+            "evidence": "none",
+            "rule": "注释括号配平"
+          },
+          {
+            "gate": "TOOL-LIST",
+            "status": "PASS",
+            "evidence": "all known",
+            "rule": "刀具号必须在刀具清单中"
+          }
+        ],
+        "failed": 0,
+        "verdict": "PASS",
+        "failed_gates": [],
+        "basis": "measured (static NC parse)"
+      },
+      "roundtrip": {
+        "matched": 1136,
+        "expected": 1136,
+        "max_err_mm": 0.000494,
+        "verdict": "PASS"
+      },
+      "cycle": {
+        "per_op_s": {
+          "PROGRAM": 3243.2
+        },
+        "tool_changes": 1,
+        "total_s": 3251.2,
+        "path_length_mm": 11229.1,
+        "basis": "derived (length/feed + rapid + tool change + optional stop)"
+      },
+      "restart": {
+        "OP2": 40
+      }
+    },
+    {
+      "op": "OP3",
+      "dialect": "fanuc",
+      "machine": "prod_5ax_fanuc_0imf",
+      "nc_file": "D:\\Virtu模型\\production\\nc\\prod_5ax_fanuc_0imf\\AE-CI-258_OP3.nc",
+      "lines": 86,
+      "sha256": "b158538d5c20083af6744a68daf20385e18314f459015f69c885ba68cd69e31a",
+      "lint": {
+        "checks": [
+          {
+            "gate": "STRUCT-HEADER",
+            "status": "PASS",
+            "evidence": {
+              "first": "%"
+            },
+            "rule": "以 % 开头且含 O#### 程序号"
+          },
+          {
+            "gate": "STRUCT-FOOTER",
+            "status": "PASS",
+            "evidence": {
+              "last": "%"
+            },
+            "rule": "以 % 结束且含 M30"
+          },
+          {
+            "gate": "SAFETY-BLOCK",
+            "status": "PASS",
+            "evidence": {
+              "G17": true,
+              "G40": true,
+              "G90": true,
+              "G21": true,
+              "G49": true,
+              "G80": true
+            },
+            "rule": "安全块必须含 G17/G40/G90/G21/G49/G80"
+          },
+          {
+            "gate": "WORK-OFFSET",
+            "status": "PASS",
+            "evidence": "G54",
+            "rule": "工件零点调用"
+          },
+          {
+            "gate": "TOOL-CHANGE-SEQUENCE",
+            "status": "PASS",
+            "evidence": "tool_changes=2 ops=2",
+            "rule": "每工序一次换刀"
+          },
+          {
+            "gate": "TOOL-CHANGE-POINT",
+            "status": "PASS",
+            "evidence": [
+              {
+                "line": 16,
+                "pos": [
+                  0.0,
+                  0.0,
+                  240.0
+                ],
+                "ok": true
+              },
+              {
+                "line": 58,
+                "pos": [
+                  0.0,
+                  0.0,
+                  240.0
+                ],
+                "ok": true
+              }
+            ],
+            "rule": "换刀前必须位于换刀点 (X/Y/Z)"
+          },
+          {
+            "gate": "TOOL-LENGTH-COMP",
+            "status": "PASS",
+            "evidence": {
+              "first_feed_line": 21,
+              "comp": true
+            },
+            "rule": "首次切削前刀长补偿生效"
+          },
+          {
+            "gate": "SPINDLE-BEFORE-FEED",
+            "status": "PASS",
+            "evidence": {
+              "line": 21
+            },
+            "rule": "首次切削前主轴已启动"
+          },
+          {
+            "gate": "COOLANT-BEFORE-FEED",
+            "status": "PASS",
+            "evidence": {
+              "line": 21
+            },
+            "rule": "首次切削前冷却开启"
+          },
+          {
+            "gate": "RAPID-SAFE-HEIGHT",
+            "status": "PASS",
+            "evidence": "none",
+            "rule": "G00 横向移动不得低于安全高度 10.0"
+          },
+          {
+            "gate": "RAPID-PLUNGE",
+            "status": "PASS",
+            "evidence": "none",
+            "rule": "禁止 G00 快速下刀进入材料"
+          },
+          {
+            "gate": "FEED-RATE",
+            "status": "PASS",
+            "evidence": "none",
+            "rule": "切削进给必须有 F（模态或显式）"
+          },
+          {
+            "gate": "MILL-ONLY",
+            "status": "PASS",
+            "evidence": "none",
+            "rule": "禁止车削/螺纹/主轴定向代码 G96/G97/G99/G70/G71/G72/G76/G32/G33/M19"
+          },
+          {
+            "gate": "OPTIONAL-STOP",
+            "status": "PASS",
+            "evidence": {
+              "M01": 3,
+              "ops": 2
+            },
+            "rule": "工序间 M01"
+          },
+          {
+            "gate": "END-STATE",
+            "status": "PASS",
+            "evidence": {
+              "M05": true,
+              "M09": true
+            },
+            "rule": "结束前主轴停/冷却停/补偿取消"
+          },
+          {
+            "gate": "RADIUS-COMP-PAIR",
+            "status": "PASS",
+            "evidence": {
+              "open_comp": 0,
+              "D_word": false
+            },
+            "rule": "G41/G42 必须有 D 且以 G40 关闭"
+          },
+          {
+            "gate": "RESTART-BLOCKS",
+            "status": "PASS",
+            "evidence": {
+              "n_lines": 73
+            },
+            "rule": "FANUC/HNC 每块带 N 号，可按工序列断点"
+          },
+          {
+            "gate": "PAREN-BALANCE",
+            "status": "PASS",
+            "evidence": "none",
+            "rule": "注释括号配平"
+          },
+          {
+            "gate": "TOOL-LIST",
+            "status": "PASS",
+            "evidence": "all known",
+            "rule": "刀具号必须在刀具清单中"
+          }
+        ],
+        "failed": 0,
+        "verdict": "PASS",
+        "failed_gates": [],
+        "basis": "measured (static NC parse)"
+      },
+      "roundtrip": {
+        "matched": 35,
+        "expected": 35,
+        "max_err_mm": 0.0,
+        "verdict": "PASS"
+      },
+      "cycle": {
+        "per_op_s": {
+          "PROGRAM": 3480.6
+        },
+        "tool_changes": 2,
+        "total_s": 3496.6,
+        "path_length_mm": 14081.2,
+        "basis": "derived (length/feed + rapid + tool change + optional stop)"
+      },
+      "restart": {
+        "OP3-A": 40,
+        "OP3-B": 430
+      }
+    },
+    {
+      "op": "OP1",
+      "dialect": "siemens",
+      "machine": "prod_5ax_siemens_840dsl",
+      "nc_file": "D:\\Virtu模型\\production\\nc\\prod_5ax_siemens_840dsl\\AE-CI-258_OP1.nc",
+      "lines": 175,
+      "sha256": "248325282129abd92d5ff0d3f6e384fad4f6e1bde27bbab86a2260978d73dd0e",
+      "lint": {
+        "checks": [
+          {
+            "gate": "STRUCT-HEADER",
+            "status": "PASS",
+            "evidence": "G71/G54",
+            "rule": "Siemens 公制 + G54"
+          },
+          {
+            "gate": "STRUCT-FOOTER",
+            "status": "PASS",
+            "evidence": "M30",
+            "rule": "M30 程序结束"
+          },
+          {
+            "gate": "SAFETY-BLOCK",
+            "status": "PASS",
+            "evidence": {
+              "G17": true,
+              "G40": true,
+              "G90": true,
+              "G71": true
+            },
+            "rule": "安全块必须含 G17/G40/G90/G71"
+          },
+          {
+            "gate": "WORK-OFFSET",
+            "status": "PASS",
+            "evidence": "G54",
+            "rule": "工件零点调用"
+          },
+          {
+            "gate": "TOOL-CHANGE-SEQUENCE",
+            "status": "PASS",
+            "evidence": "tool_changes=1 ops=1",
+            "rule": "每工序一次换刀"
+          },
+          {
+            "gate": "TOOL-CHANGE-POINT",
+            "status": "PASS",
+            "evidence": [
+              {
+                "line": 13,
+                "pos": [
+                  0.0,
+                  0.0,
+                  240.0
+                ],
+                "ok": true
+              }
+            ],
+            "rule": "换刀前必须位于换刀点 (X/Y/Z)"
+          },
+          {
+            "gate": "TOOL-LENGTH-COMP",
+            "status": "PASS",
+            "evidence": {
+              "first_feed_line": 17,
+              "comp": true
+            },
+            "rule": "首次切削前刀长补偿生效"
+          },
+          {
+            "gate": "TOOL-D-WORD",
+            "status": "PASS",
+            "evidence": "D1",
+            "rule": "Siemens 刀沿号 D 必须出现"
+          },
+          {
+            "gate": "SPINDLE-BEFORE-FEED",
+            "status": "PASS",
+            "evidence": {
+              "line": 17
+            },
+            "rule": "首次切削前主轴已启动"
+          },
+          {
+            "gate": "COOLANT-BEFORE-FEED",
+            "status": "PASS",
+            "evidence": {
+              "line": 17
+            },
+            "rule": "首次切削前冷却开启"
+          },
+          {
+            "gate": "RAPID-SAFE-HEIGHT",
+            "status": "PASS",
+            "evidence": "none",
+            "rule": "G00 横向移动不得低于安全高度 10.0"
+          },
+          {
+            "gate": "RAPID-PLUNGE",
+            "status": "PASS",
+            "evidence": "none",
+            "rule": "禁止 G00 快速下刀进入材料"
+          },
+          {
+            "gate": "FEED-RATE",
+            "status": "PASS",
+            "evidence": "none",
+            "rule": "切削进给必须有 F（模态或显式）"
+          },
+          {
+            "gate": "MILL-ONLY",
+            "status": "PASS",
+            "evidence": "none",
+            "rule": "禁止车削/螺纹/主轴定向代码 G96/G97/G99/G33/G331/G332/M19"
+          },
+          {
+            "gate": "OPTIONAL-STOP",
+            "status": "PASS",
+            "evidence": {
+              "M01": 2,
+              "ops": 1
+            },
+            "rule": "工序间 M01"
+          },
+          {
+            "gate": "END-STATE",
+            "status": "PASS",
+            "evidence": {
+              "M05": true,
+              "M09": true
+            },
+            "rule": "结束前主轴停/冷却停/补偿取消"
+          },
+          {
+            "gate": "RADIUS-COMP-PAIR",
+            "status": "PASS",
+            "evidence": {
+              "open_comp": 0,
+              "D_word": true
+            },
+            "rule": "G41/G42 必须有 D 且以 G40 关闭"
+          },
+          {
+            "gate": "RESTART-BLOCKS",
+            "status": "PASS",
+            "evidence": {
+              "n_lines": 168
+            },
+            "rule": "FANUC/HNC 每块带 N 号，可按工序列断点"
+          },
+          {
+            "gate": "PAREN-BALANCE",
+            "status": "PASS",
+            "evidence": "none",
+            "rule": "注释括号配平"
+          },
+          {
+            "gate": "TOOL-LIST",
+            "status": "PASS",
+            "evidence": "all known",
+            "rule": "刀具号必须在刀具清单中"
+          }
+        ],
+        "failed": 0,
+        "verdict": "PASS",
+        "failed_gates": [],
+        "basis": "measured (static NC parse)"
+      },
+      "roundtrip": {
+        "matched": 76,
+        "expected": 76,
+        "max_err_mm": 0.0,
+        "verdict": "PASS"
+      },
+      "cycle": {
+        "per_op_s": {
+          "PROGRAM": 7328.5
+        },
+        "tool_changes": 1,
+        "total_s": 7336.5,
+        "path_length_mm": 37297.1,
+        "basis": "derived (length/feed + rapid + tool change + optional stop)"
+      },
+      "restart": {
+        "OP1": 30
+      }
+    },
+    {
+      "op": "OP2",
+      "dialect": "siemens",
+      "machine": "prod_5ax_siemens_840dsl",
+      "nc_file": "D:\\Virtu模型\\production\\nc\\prod_5ax_siemens_840dsl\\AE-CI-258_OP2.nc",
+      "lines": 1193,
+      "sha256": "7806d05e9ce728ff255f9001fd5ece702084c5c7ad9a2ecfb7be407067cfc1f1",
+      "lint": {
+        "checks": [
+          {
+            "gate": "STRUCT-HEADER",
+            "status": "PASS",
+            "evidence": "G71/G54",
+            "rule": "Siemens 公制 + G54"
+          },
+          {
+            "gate": "STRUCT-FOOTER",
+            "status": "PASS",
+            "evidence": "M30",
+            "rule": "M30 程序结束"
+          },
+          {
+            "gate": "SAFETY-BLOCK",
+            "status": "PASS",
+            "evidence": {
+              "G17": true,
+              "G40": true,
+              "G90": true,
+              "G71": true
+            },
+            "rule": "安全块必须含 G17/G40/G90/G71"
+          },
+          {
+            "gate": "WORK-OFFSET",
+            "status": "PASS",
+            "evidence": "G54",
+            "rule": "工件零点调用"
+          },
+          {
+            "gate": "TOOL-CHANGE-SEQUENCE",
+            "status": "PASS",
+            "evidence": "tool_changes=1 ops=1",
+            "rule": "每工序一次换刀"
+          },
+          {
+            "gate": "TOOL-CHANGE-POINT",
+            "status": "PASS",
+            "evidence": [
+              {
+                "line": 13,
+                "pos": [
+                  0.0,
+                  0.0,
+                  240.0
+                ],
+                "ok": true
+              }
+            ],
+            "rule": "换刀前必须位于换刀点 (X/Y/Z)"
+          },
+          {
+            "gate": "TOOL-LENGTH-COMP",
+            "status": "PASS",
+            "evidence": {
+              "first_feed_line": 18,
+              "comp": true
+            },
+            "rule": "首次切削前刀长补偿生效"
+          },
+          {
+            "gate": "TOOL-D-WORD",
+            "status": "PASS",
+            "evidence": "D1",
+            "rule": "Siemens 刀沿号 D 必须出现"
+          },
+          {
+            "gate": "SPINDLE-BEFORE-FEED",
+            "status": "PASS",
+            "evidence": {
+              "line": 18
+            },
+            "rule": "首次切削前主轴已启动"
+          },
+          {
+            "gate": "COOLANT-BEFORE-FEED",
+            "status": "PASS",
+            "evidence": {
+              "line": 18
+            },
+            "rule": "首次切削前冷却开启"
+          },
+          {
+            "gate": "RAPID-SAFE-HEIGHT",
+            "status": "PASS",
+            "evidence": "none",
+            "rule": "G00 横向移动不得低于安全高度 10.0"
+          },
+          {
+            "gate": "RAPID-PLUNGE",
+            "status": "PASS",
+            "evidence": "none",
+            "rule": "禁止 G00 快速下刀进入材料"
+          },
+          {
+            "gate": "FEED-RATE",
+            "status": "PASS",
+            "evidence": "none",
+            "rule": "切削进给必须有 F（模态或显式）"
+          },
+          {
+            "gate": "MILL-ONLY",
+            "status": "PASS",
+            "evidence": "none",
+            "rule": "禁止车削/螺纹/主轴定向代码 G96/G97/G99/G33/G331/G332/M19"
+          },
+          {
+            "gate": "OPTIONAL-STOP",
+            "status": "PASS",
+            "evidence": {
+              "M01": 2,
+              "ops": 1
+            },
+            "rule": "工序间 M01"
+          },
+          {
+            "gate": "END-STATE",
+            "status": "PASS",
+            "evidence": {
+              "M05": true,
+              "M09": true
+            },
+            "rule": "结束前主轴停/冷却停/补偿取消"
+          },
+          {
+            "gate": "RADIUS-COMP-PAIR",
+            "status": "PASS",
+            "evidence": {
+              "open_comp": 0,
+              "D_word": true
+            },
+            "rule": "G41/G42 必须有 D 且以 G40 关闭"
+          },
+          {
+            "gate": "RESTART-BLOCKS",
+            "status": "PASS",
+            "evidence": {
+              "n_lines": 1186
+            },
+            "rule": "FANUC/HNC 每块带 N 号，可按工序列断点"
+          },
+          {
+            "gate": "PAREN-BALANCE",
+            "status": "PASS",
+            "evidence": "none",
+            "rule": "注释括号配平"
+          },
+          {
+            "gate": "TOOL-LIST",
+            "status": "PASS",
+            "evidence": "all known",
+            "rule": "刀具号必须在刀具清单中"
+          }
+        ],
+        "failed": 0,
+        "verdict": "PASS",
+        "failed_gates": [],
+        "basis": "measured (static NC parse)"
+      },
+      "roundtrip": {
+        "matched": 1136,
+        "expected": 1136,
+        "max_err_mm": 0.000494,
+        "verdict": "PASS"
+      },
+      "cycle": {
+        "per_op_s": {
+          "PROGRAM": 3243.2
+        },
+        "tool_changes": 1,
+        "total_s": 3251.2,
+        "path_length_mm": 11229.1,
+        "basis": "derived (length/feed + rapid + tool change + optional stop)"
+      },
+      "restart": {
+        "OP2": 30
+      }
+    },
+    {
+      "op": "OP3",
+      "dialect": "siemens",
+      "machine": "prod_5ax_siemens_840dsl",
+      "nc_file": "D:\\Virtu模型\\production\\nc\\prod_5ax_siemens_840dsl\\AE-CI-258_OP3.nc",
+      "lines": 76,
+      "sha256": "07d91bee6aad90d5b4bda481c599a456ba78bce215c680aefdf6592ff0fa1cf5",
+      "lint": {
+        "checks": [
+          {
+            "gate": "STRUCT-HEADER",
+            "status": "PASS",
+            "evidence": "G71/G54",
+            "rule": "Siemens 公制 + G54"
+          },
+          {
+            "gate": "STRUCT-FOOTER",
+            "status": "PASS",
+            "evidence": "M30",
+            "rule": "M30 程序结束"
+          },
+          {
+            "gate": "SAFETY-BLOCK",
+            "status": "PASS",
+            "evidence": {
+              "G17": true,
+              "G40": true,
+              "G90": true,
+              "G71": true
+            },
+            "rule": "安全块必须含 G17/G40/G90/G71"
+          },
+          {
+            "gate": "WORK-OFFSET",
+            "status": "PASS",
+            "evidence": "G54",
+            "rule": "工件零点调用"
+          },
+          {
+            "gate": "TOOL-CHANGE-SEQUENCE",
+            "status": "PASS",
+            "evidence": "tool_changes=2 ops=2",
+            "rule": "每工序一次换刀"
+          },
+          {
+            "gate": "TOOL-CHANGE-POINT",
+            "status": "PASS",
+            "evidence": [
+              {
+                "line": 13,
+                "pos": [
+                  0.0,
+                  0.0,
+                  240.0
+                ],
+                "ok": true
+              },
+              {
+                "line": 53,
+                "pos": [
+                  0.0,
+                  0.0,
+                  240.0
+                ],
+                "ok": true
+              }
+            ],
+            "rule": "换刀前必须位于换刀点 (X/Y/Z)"
+          },
+          {
+            "gate": "TOOL-LENGTH-COMP",
+            "status": "PASS",
+            "evidence": {
+              "first_feed_line": 17,
+              "comp": true
+            },
+            "rule": "首次切削前刀长补偿生效"
+          },
+          {
+            "gate": "TOOL-D-WORD",
+            "status": "PASS",
+            "evidence": "D1",
+            "rule": "Siemens 刀沿号 D 必须出现"
+          },
+          {
+            "gate": "SPINDLE-BEFORE-FEED",
+            "status": "PASS",
+            "evidence": {
+              "line": 17
+            },
+            "rule": "首次切削前主轴已启动"
+          },
+          {
+            "gate": "COOLANT-BEFORE-FEED",
+            "status": "PASS",
+            "evidence": {
+              "line": 17
+            },
+            "rule": "首次切削前冷却开启"
+          },
+          {
+            "gate": "RAPID-SAFE-HEIGHT",
+            "status": "PASS",
+            "evidence": "none",
+            "rule": "G00 横向移动不得低于安全高度 10.0"
+          },
+          {
+            "gate": "RAPID-PLUNGE",
+            "status": "PASS",
+            "evidence": "none",
+            "rule": "禁止 G00 快速下刀进入材料"
+          },
+          {
+            "gate": "FEED-RATE",
+            "status": "PASS",
+            "evidence": "none",
+            "rule": "切削进给必须有 F（模态或显式）"
+          },
+          {
+            "gate": "MILL-ONLY",
+            "status": "PASS",
+            "evidence": "none",
+            "rule": "禁止车削/螺纹/主轴定向代码 G96/G97/G99/G33/G331/G332/M19"
+          },
+          {
+            "gate": "OPTIONAL-STOP",
+            "status": "PASS",
+            "evidence": {
+              "M01": 3,
+              "ops": 2
+            },
+            "rule": "工序间 M01"
+          },
+          {
+            "gate": "END-STATE",
+            "status": "PASS",
+            "evidence": {
+              "M05": true,
+              "M09": true
+            },
+            "rule": "结束前主轴停/冷却停/补偿取消"
+          },
+          {
+            "gate": "RADIUS-COMP-PAIR",
+            "status": "PASS",
+            "evidence": {
+              "open_comp": 0,
+              "D_word": true
+            },
+            "rule": "G41/G42 必须有 D 且以 G40 关闭"
+          },
+          {
+            "gate": "RESTART-BLOCKS",
+            "status": "PASS",
+            "evidence": {
+              "n_lines": 66
+            },
+            "rule": "FANUC/HNC 每块带 N 号，可按工序列断点"
+          },
+          {
+            "gate": "PAREN-BALANCE",
+            "status": "PASS",
+            "evidence": "none",
+            "rule": "注释括号配平"
+          },
+          {
+            "gate": "TOOL-LIST",
+            "status": "PASS",
+            "evidence": "all known",
+            "rule": "刀具号必须在刀具清单中"
+          }
+        ],
+        "failed": 0,
+        "verdict": "PASS",
+        "failed_gates": [],
+        "basis": "measured (static NC parse)"
+      },
+      "roundtrip": {
+        "matched": 35,
+        "expected": 35,
+        "max_err_mm": 0.0,
+        "verdict": "PASS"
+      },
+      "cycle": {
+        "per_op_s": {
+          "PROGRAM": 3480.6
+        },
+        "tool_changes": 2,
+        "total_s": 3496.6,
+        "path_length_mm": 14081.2,
+        "basis": "derived (length/feed + rapid + tool change + optional stop)"
+      },
+      "restart": {
+        "OP3-A": 30,
+        "OP3-B": 400
+      }
+    },
+    {
+      "op": "OP1",
+      "dialect": "hnc",
+      "machine": "prod_5ax_hnc8",
+      "nc_file": "D:\\Virtu模型\\production\\nc\\prod_5ax_hnc8\\AE-CI-258_OP1.nc",
+      "lines": 183,
+      "sha256": "05f4f5b2911fa2e1212080d86ba2ff78778394b2d0fb0d7c32175d34e4111b82",
+      "lint": {
+        "checks": [
+          {
+            "gate": "STRUCT-HEADER",
+            "status": "PASS",
+            "evidence": {
+              "first": "%"
+            },
+            "rule": "以 % 开头且含 O#### 程序号"
+          },
+          {
+            "gate": "STRUCT-FOOTER",
+            "status": "PASS",
+            "evidence": {
+              "last": "%"
+            },
+            "rule": "以 % 结束且含 M30"
+          },
+          {
+            "gate": "SAFETY-BLOCK",
+            "status": "PASS",
+            "evidence": {
+              "G17": true,
+              "G40": true,
+              "G90": true,
+              "G21": true,
+              "G49": true,
+              "G80": true
+            },
+            "rule": "安全块必须含 G17/G40/G90/G21/G49/G80"
+          },
+          {
+            "gate": "WORK-OFFSET",
+            "status": "PASS",
+            "evidence": "G54",
+            "rule": "工件零点调用"
+          },
+          {
+            "gate": "TOOL-CHANGE-SEQUENCE",
+            "status": "PASS",
+            "evidence": "tool_changes=1 ops=1",
+            "rule": "每工序一次换刀"
+          },
+          {
+            "gate": "TOOL-CHANGE-POINT",
+            "status": "PASS",
+            "evidence": [
+              {
+                "line": 16,
+                "pos": [
+                  0.0,
+                  0.0,
+                  240.0
+                ],
+                "ok": true
+              }
+            ],
+            "rule": "换刀前必须位于换刀点 (X/Y/Z)"
+          },
+          {
+            "gate": "TOOL-LENGTH-COMP",
+            "status": "PASS",
+            "evidence": {
+              "first_feed_line": 21,
+              "comp": true
+            },
+            "rule": "首次切削前刀长补偿生效"
+          },
+          {
+            "gate": "SPINDLE-BEFORE-FEED",
+            "status": "PASS",
+            "evidence": {
+              "line": 21
+            },
+            "rule": "首次切削前主轴已启动"
+          },
+          {
+            "gate": "COOLANT-BEFORE-FEED",
+            "status": "PASS",
+            "evidence": {
+              "line": 21
+            },
+            "rule": "首次切削前冷却开启"
+          },
+          {
+            "gate": "RAPID-SAFE-HEIGHT",
+            "status": "PASS",
+            "evidence": "none",
+            "rule": "G00 横向移动不得低于安全高度 10.0"
+          },
+          {
+            "gate": "RAPID-PLUNGE",
+            "status": "PASS",
+            "evidence": "none",
+            "rule": "禁止 G00 快速下刀进入材料"
+          },
+          {
+            "gate": "FEED-RATE",
+            "status": "PASS",
+            "evidence": "none",
+            "rule": "切削进给必须有 F（模态或显式）"
+          },
+          {
+            "gate": "MILL-ONLY",
+            "status": "PASS",
+            "evidence": "none",
+            "rule": "禁止车削/螺纹/主轴定向代码 G96/G97/G99/G70/G71/G72/G76/G32/G33/M19"
+          },
+          {
+            "gate": "OPTIONAL-STOP",
+            "status": "PASS",
+            "evidence": {
+              "M01": 2,
+              "ops": 1
+            },
+            "rule": "工序间 M01"
+          },
+          {
+            "gate": "END-STATE",
+            "status": "PASS",
+            "evidence": {
+              "M05": true,
+              "M09": true
+            },
+            "rule": "结束前主轴停/冷却停/补偿取消"
+          },
+          {
+            "gate": "RADIUS-COMP-PAIR",
+            "status": "PASS",
+            "evidence": {
+              "open_comp": 0,
+              "D_word": false
+            },
+            "rule": "G41/G42 必须有 D 且以 G40 关闭"
+          },
+          {
+            "gate": "RESTART-BLOCKS",
+            "status": "PASS",
+            "evidence": {
+              "n_lines": 173
+            },
+            "rule": "FANUC/HNC 每块带 N 号，可按工序列断点"
+          },
+          {
+            "gate": "PAREN-BALANCE",
+            "status": "PASS",
+            "evidence": "none",
+            "rule": "注释括号配平"
+          },
+          {
+            "gate": "TOOL-LIST",
+            "status": "PASS",
+            "evidence": "all known",
+            "rule": "刀具号必须在刀具清单中"
+          }
+        ],
+        "failed": 0,
+        "verdict": "PASS",
+        "failed_gates": [],
+        "basis": "measured (static NC parse)"
+      },
+      "roundtrip": {
+        "matched": 76,
+        "expected": 76,
+        "max_err_mm": 0.0,
+        "verdict": "PASS"
+      },
+      "cycle": {
+        "per_op_s": {
+          "PROGRAM": 7328.5
+        },
+        "tool_changes": 1,
+        "total_s": 7336.5,
+        "path_length_mm": 37297.1,
+        "basis": "derived (length/feed + rapid + tool change + optional stop)"
+      },
+      "restart": {
+        "OP1": 40
+      }
+    },
+    {
+      "op": "OP2",
+      "dialect": "hnc",
+      "machine": "prod_5ax_hnc8",
+      "nc_file": "D:\\Virtu模型\\production\\nc\\prod_5ax_hnc8\\AE-CI-258_OP2.nc",
+      "lines": 1199,
+      "sha256": "8767b09e5ab06e26de86f663674617cb1383e54f9c3d1b2a55eefb7d50b02c92",
+      "lint": {
+        "checks": [
+          {
+            "gate": "STRUCT-HEADER",
+            "status": "PASS",
+            "evidence": {
+              "first": "%"
+            },
+            "rule": "以 % 开头且含 O#### 程序号"
+          },
+          {
+            "gate": "STRUCT-FOOTER",
+            "status": "PASS",
+            "evidence": {
+              "last": "%"
+            },
+            "rule": "以 % 结束且含 M30"
+          },
+          {
+            "gate": "SAFETY-BLOCK",
+            "status": "PASS",
+            "evidence": {
+              "G17": true,
+              "G40": true,
+              "G90": true,
+              "G21": true,
+              "G49": true,
+              "G80": true
+            },
+            "rule": "安全块必须含 G17/G40/G90/G21/G49/G80"
+          },
+          {
+            "gate": "WORK-OFFSET",
+            "status": "PASS",
+            "evidence": "G54",
+            "rule": "工件零点调用"
+          },
+          {
+            "gate": "TOOL-CHANGE-SEQUENCE",
+            "status": "PASS",
+            "evidence": "tool_changes=1 ops=1",
+            "rule": "每工序一次换刀"
+          },
+          {
+            "gate": "TOOL-CHANGE-POINT",
+            "status": "PASS",
+            "evidence": [
+              {
+                "line": 16,
+                "pos": [
+                  0.0,
+                  0.0,
+                  240.0
+                ],
+                "ok": true
+              }
+            ],
+            "rule": "换刀前必须位于换刀点 (X/Y/Z)"
+          },
+          {
+            "gate": "TOOL-LENGTH-COMP",
+            "status": "PASS",
+            "evidence": {
+              "first_feed_line": 21,
+              "comp": true
+            },
+            "rule": "首次切削前刀长补偿生效"
+          },
+          {
+            "gate": "SPINDLE-BEFORE-FEED",
+            "status": "PASS",
+            "evidence": {
+              "line": 21
+            },
+            "rule": "首次切削前主轴已启动"
+          },
+          {
+            "gate": "COOLANT-BEFORE-FEED",
+            "status": "PASS",
+            "evidence": {
+              "line": 21
+            },
+            "rule": "首次切削前冷却开启"
+          },
+          {
+            "gate": "RAPID-SAFE-HEIGHT",
+            "status": "PASS",
+            "evidence": "none",
+            "rule": "G00 横向移动不得低于安全高度 10.0"
+          },
+          {
+            "gate": "RAPID-PLUNGE",
+            "status": "PASS",
+            "evidence": "none",
+            "rule": "禁止 G00 快速下刀进入材料"
+          },
+          {
+            "gate": "FEED-RATE",
+            "status": "PASS",
+            "evidence": "none",
+            "rule": "切削进给必须有 F（模态或显式）"
+          },
+          {
+            "gate": "MILL-ONLY",
+            "status": "PASS",
+            "evidence": "none",
+            "rule": "禁止车削/螺纹/主轴定向代码 G96/G97/G99/G70/G71/G72/G76/G32/G33/M19"
+          },
+          {
+            "gate": "OPTIONAL-STOP",
+            "status": "PASS",
+            "evidence": {
+              "M01": 2,
+              "ops": 1
+            },
+            "rule": "工序间 M01"
+          },
+          {
+            "gate": "END-STATE",
+            "status": "PASS",
+            "evidence": {
+              "M05": true,
+              "M09": true
+            },
+            "rule": "结束前主轴停/冷却停/补偿取消"
+          },
+          {
+            "gate": "RTCP",
+            "status": "PASS",
+            "evidence": {
+              "rtcp_seen": true
+            },
+            "rule": "五轴刀路必须启用 RTCP"
+          },
+          {
+            "gate": "B-LIMIT",
+            "status": "PASS",
+            "evidence": {
+              "min": 0.0,
+              "max": 22.0
+            },
+            "rule": "B 轴硬限位"
+          },
+          {
+            "gate": "C-LIMIT",
+            "status": "PASS",
+            "evidence": {
+              "min": 0.022,
+              "max": 359.675
+            },
+            "rule": "C 轴硬限位"
+          },
+          {
+            "gate": "RADIUS-COMP-PAIR",
+            "status": "PASS",
+            "evidence": {
+              "open_comp": 0,
+              "D_word": false
+            },
+            "rule": "G41/G42 必须有 D 且以 G40 关闭"
+          },
+          {
+            "gate": "RESTART-BLOCKS",
+            "status": "PASS",
+            "evidence": {
+              "n_lines": 1189
+            },
+            "rule": "FANUC/HNC 每块带 N 号，可按工序列断点"
+          },
+          {
+            "gate": "PAREN-BALANCE",
+            "status": "PASS",
+            "evidence": "none",
+            "rule": "注释括号配平"
+          },
+          {
+            "gate": "TOOL-LIST",
+            "status": "PASS",
+            "evidence": "all known",
+            "rule": "刀具号必须在刀具清单中"
+          }
+        ],
+        "failed": 0,
+        "verdict": "PASS",
+        "failed_gates": [],
+        "basis": "measured (static NC parse)"
+      },
+      "roundtrip": {
+        "matched": 1136,
+        "expected": 1136,
+        "max_err_mm": 0.000494,
+        "verdict": "PASS"
+      },
+      "cycle": {
+        "per_op_s": {
+          "PROGRAM": 3243.2
+        },
+        "tool_changes": 1,
+        "total_s": 3251.2,
+        "path_length_mm": 11229.1,
+        "basis": "derived (length/feed + rapid + tool change + optional stop)"
+      },
+      "restart": {
+        "OP2": 40
+      }
+    },
+    {
+      "op": "OP3",
+      "dialect": "hnc",
+      "machine": "prod_5ax_hnc8",
+      "nc_file": "D:\\Virtu模型\\production\\nc\\prod_5ax_hnc8\\AE-CI-258_OP3.nc",
+      "lines": 86,
+      "sha256": "b584fa3e818cdeb33b93d7ab54674841a491a1be180e6a8beeb1d29d2019556d",
+      "lint": {
+        "checks": [
+          {
+            "gate": "STRUCT-HEADER",
+            "status": "PASS",
+            "evidence": {
+              "first": "%"
+            },
+            "rule": "以 % 开头且含 O#### 程序号"
+          },
+          {
+            "gate": "STRUCT-FOOTER",
+            "status": "PASS",
+            "evidence": {
+              "last": "%"
+            },
+            "rule": "以 % 结束且含 M30"
+          },
+          {
+            "gate": "SAFETY-BLOCK",
+            "status": "PASS",
+            "evidence": {
+              "G17": true,
+              "G40": true,
+              "G90": true,
+              "G21": true,
+              "G49": true,
+              "G80": true
+            },
+            "rule": "安全块必须含 G17/G40/G90/G21/G49/G80"
+          },
+          {
+            "gate": "WORK-OFFSET",
+            "status": "PASS",
+            "evidence": "G54",
+            "rule": "工件零点调用"
+          },
+          {
+            "gate": "TOOL-CHANGE-SEQUENCE",
+            "status": "PASS",
+            "evidence": "tool_changes=2 ops=2",
+            "rule": "每工序一次换刀"
+          },
+          {
+            "gate": "TOOL-CHANGE-POINT",
+            "status": "PASS",
+            "evidence": [
+              {
+                "line": 16,
+                "pos": [
+                  0.0,
+                  0.0,
+                  240.0
+                ],
+                "ok": true
+              },
+              {
+                "line": 58,
+                "pos": [
+                  0.0,
+                  0.0,
+                  240.0
+                ],
+                "ok": true
+              }
+            ],
+            "rule": "换刀前必须位于换刀点 (X/Y/Z)"
+          },
+          {
+            "gate": "TOOL-LENGTH-COMP",
+            "status": "PASS",
+            "evidence": {
+              "first_feed_line": 21,
+              "comp": true
+            },
+            "rule": "首次切削前刀长补偿生效"
+          },
+          {
+            "gate": "SPINDLE-BEFORE-FEED",
+            "status": "PASS",
+            "evidence": {
+              "line": 21
+            },
+            "rule": "首次切削前主轴已启动"
+          },
+          {
+            "gate": "COOLANT-BEFORE-FEED",
+            "status": "PASS",
+            "evidence": {
+              "line": 21
+            },
+            "rule": "首次切削前冷却开启"
+          },
+          {
+            "gate": "RAPID-SAFE-HEIGHT",
+            "status": "PASS",
+            "evidence": "none",
+            "rule": "G00 横向移动不得低于安全高度 10.0"
+          },
+          {
+            "gate": "RAPID-PLUNGE",
+            "status": "PASS",
+            "evidence": "none",
+            "rule": "禁止 G00 快速下刀进入材料"
+          },
+          {
+            "gate": "FEED-RATE",
+            "status": "PASS",
+            "evidence": "none",
+            "rule": "切削进给必须有 F（模态或显式）"
+          },
+          {
+            "gate": "MILL-ONLY",
+            "status": "PASS",
+            "evidence": "none",
+            "rule": "禁止车削/螺纹/主轴定向代码 G96/G97/G99/G70/G71/G72/G76/G32/G33/M19"
+          },
+          {
+            "gate": "OPTIONAL-STOP",
+            "status": "PASS",
+            "evidence": {
+              "M01": 3,
+              "ops": 2
+            },
+            "rule": "工序间 M01"
+          },
+          {
+            "gate": "END-STATE",
+            "status": "PASS",
+            "evidence": {
+              "M05": true,
+              "M09": true
+            },
+            "rule": "结束前主轴停/冷却停/补偿取消"
+          },
+          {
+            "gate": "RADIUS-COMP-PAIR",
+            "status": "PASS",
+            "evidence": {
+              "open_comp": 0,
+              "D_word": false
+            },
+            "rule": "G41/G42 必须有 D 且以 G40 关闭"
+          },
+          {
+            "gate": "RESTART-BLOCKS",
+            "status": "PASS",
+            "evidence": {
+              "n_lines": 73
+            },
+            "rule": "FANUC/HNC 每块带 N 号，可按工序列断点"
+          },
+          {
+            "gate": "PAREN-BALANCE",
+            "status": "PASS",
+            "evidence": "none",
+            "rule": "注释括号配平"
+          },
+          {
+            "gate": "TOOL-LIST",
+            "status": "PASS",
+            "evidence": "all known",
+            "rule": "刀具号必须在刀具清单中"
+          }
+        ],
+        "failed": 0,
+        "verdict": "PASS",
+        "failed_gates": [],
+        "basis": "measured (static NC parse)"
+      },
+      "roundtrip": {
+        "matched": 35,
+        "expected": 35,
+        "max_err_mm": 0.0,
+        "verdict": "PASS"
+      },
+      "cycle": {
+        "per_op_s": {
+          "PROGRAM": 3480.6
+        },
+        "tool_changes": 2,
+        "total_s": 3496.6,
+        "path_length_mm": 14081.2,
+        "basis": "derived (length/feed + rapid + tool change + optional stop)"
+      },
+      "restart": {
+        "OP3-A": 40,
+        "OP3-B": 430
+      }
+    }
+  ],
+  "audits": [
+    {
+      "op": "OP1",
+      "samples": 18917,
+      "checks": [
+        {
+          "gate": "MACHINE-TRAVEL",
+          "status": "PASS",
+          "evidence": {
+            "violations": 0,
+            "travel": {
+              "x": [
+                -365.0,
+                365.0
+              ],
+              "y": [
+                -255.0,
+                255.0
+              ],
+              "z": [
+                -300.0,
+                450.0
+              ]
+            },
+            "rotary": {
+              "b": [
+                -180.0,
+                160.0
+              ],
+              "c": [
+                0.0,
+                360.0
+              ]
+            }
+          }
+        },
+        {
+          "gate": "FIXTURE-CLEARANCE",
+          "status": "PASS",
+          "evidence": 1.85,
+          "where": {
+            "line": 170,
+            "op": "PROGRAM",
+            "world": [
+              138.53,
+              0.0,
+              95.85
+            ]
+          }
+        },
+        {
+          "gate": "DESIGN-GOUGE",
+          "status": "PASS",
+          "evidence": 9.5,
+          "where": {
+            "line": 164,
+            "op": "PROGRAM",
+            "world": [
+              138.53,
+              0.0,
+              98.85
+            ]
+          }
+        },
+        {
+          "gate": "DESIGN-SURFACE",
+          "status": "PASS",
+          "evidence": 1.5
+        },
+        {
+          "gate": "HOLDER-STOCK",
+          "status": "PASS",
+          "evidence": 18.0,
+          "required": 1.0
+        }
+      ],
+      "min_clearance": {
+        "fixture": 1.85,
+        "design": 9.5,
+        "design_surface": 1.5,
+        "stock_holder": 18.0
+      }
+    },
+    {
+      "op": "OP2",
+      "samples": 7782,
+      "checks": [
+        {
+          "gate": "MACHINE-TRAVEL",
+          "status": "PASS",
+          "evidence": {
+            "violations": 0,
+            "travel": {
+              "x": [
+                -365.0,
+                365.0
+              ],
+              "y": [
+                -255.0,
+                255.0
+              ],
+              "z": [
+                -300.0,
+                450.0
+              ]
+            },
+            "rotary": {
+              "b": [
+                -180.0,
+                160.0
+              ],
+              "c": [
+                0.0,
+                360.0
+              ]
+            }
+          }
+        },
+        {
+          "gate": "FIXTURE-CLEARANCE",
+          "status": "PASS",
+          "evidence": 1.45,
+          "where": {
+            "line": 23,
+            "op": "PROGRAM",
+            "world": [
+              140.0,
+              -0.79,
+              96.35
+            ]
+          }
+        },
+        {
+          "gate": "DESIGN-GOUGE",
+          "status": "FAIL",
+          "evidence": -22.626,
+          "where": {
+            "line": 607,
+            "op": "PROGRAM",
+            "world": [
+              67.1,
+              -0.38,
+              97.61
+            ]
+          }
+        },
+        {
+          "gate": "DESIGN-SURFACE",
+          "status": "FAIL",
+          "evidence": -23.514
+        },
+        {
+          "gate": "HOLDER-STOCK",
+          "status": "PASS",
+          "evidence": 27.032,
+          "required": 1.0
+        }
+      ],
+      "min_clearance": {
+        "fixture": 1.45,
+        "design": -22.626,
+        "design_surface": -23.514,
+        "stock_holder": 27.032
+      }
+    },
+    {
+      "op": "OP3",
+      "samples": 7111,
+      "checks": [
+        {
+          "gate": "MACHINE-TRAVEL",
+          "status": "PASS",
+          "evidence": {
+            "violations": 0,
+            "travel": {
+              "x": [
+                -365.0,
+                365.0
+              ],
+              "y": [
+                -255.0,
+                255.0
+              ],
+              "z": [
+                -300.0,
+                450.0
+              ]
+            },
+            "rotary": {
+              "b": [
+                -180.0,
+                160.0
+              ],
+              "c": [
+                0.0,
+                360.0
+              ]
+            }
+          }
+        },
+        {
+          "gate": "FIXTURE-CLEARANCE",
+          "status": "PASS",
+          "evidence": 27.85,
+          "where": {
+            "line": 37,
+            "op": "PROGRAM",
+            "world": [
+              45.14,
+              0.0,
+              147.85
+            ]
+          }
+        },
+        {
+          "gate": "DESIGN-GOUGE",
+          "status": "PASS",
+          "evidence": -0.0,
+          "where": {
+            "line": 68,
+            "op": "PROGRAM",
+            "world": [
+              -68.73,
+              -115.07,
+              138.69
+            ]
+          }
+        },
+        {
+          "gate": "DESIGN-SURFACE",
+          "status": "PASS",
+          "evidence": -0.003
+        },
+        {
+          "gate": "HOLDER-STOCK",
+          "status": "PASS",
+          "evidence": 64.5,
+          "required": 1.0
+        }
+      ],
+      "min_clearance": {
+        "fixture": 27.85,
+        "design": -0.0,
+        "design_surface": -0.003,
+        "stock_holder": 64.5
+      }
+    }
+  ],
+  "violations": [
+    {
+      "type": "DESIGN_GOUGE",
+      "line": 23,
+      "penetration_mm": -0.325,
+      "world": [
+        132.32,
+        -0.75,
+        96.92
+      ],
+      "op": "OP2"
+    },
+    {
+      "type": "DESIGN_GOUGE",
+      "line": 23,
+      "penetration_mm": -0.95,
+      "world": [
+        122.72,
+        -0.7,
+        97.64
+      ],
+      "op": "OP2"
+    },
+    {
+      "type": "DESIGN_GOUGE",
+      "line": 92,
+      "penetration_mm": -0.597,
+      "world": [
+        124.64,
+        -0.71,
+        97.5
+      ],
+      "op": "OP2"
+    },
+    {
+      "type": "DESIGN_GOUGE",
+      "line": 96,
+      "penetration_mm": -0.332,
+      "world": [
+        126.95,
+        39.46,
+        96.74
+      ],
+      "op": "OP2"
+    },
+    {
+      "type": "DESIGN_GOUGE",
+      "line": 96,
+      "penetration_mm": -0.082,
+      "world": [
+        125.03,
+        29.91,
+        97.03
+      ],
+      "op": "OP2"
+    },
+    {
+      "type": "DESIGN_GOUGE",
+      "line": 96,
+      "penetration_mm": -1.084,
+      "world": [
+        123.11,
+        20.35,
+        97.31
+      ],
+      "op": "OP2"
+    },
+    {
+      "type": "DESIGN_GOUGE",
+      "line": 96,
+      "penetration_mm": -0.843,
+      "world": [
+        121.18,
+        10.79,
+        97.59
+      ],
+      "op": "OP2"
+    },
+    {
+      "type": "DESIGN_GOUGE",
+      "line": 165,
+      "penetration_mm": -0.065,
+      "world": [
+        122.34,
+        16.53,
+        97.42
+      ],
+      "op": "OP2"
+    },
+    {
+      "type": "DESIGN_GOUGE",
+      "line": 165,
+      "penetration_mm": -0.652,
+      "world": [
+        124.26,
+        26.08,
+        97.14
+      ],
+      "op": "OP2"
+    },
+    {
+      "type": "DESIGN_GOUGE",
+      "line": 165,
+      "penetration_mm": -0.549,
+      "world": [
+        126.18,
+        35.64,
+        96.86
+      ],
+      "op": "OP2"
+    },
+    {
+      "type": "DESIGN_GOUGE",
+      "line": 169,
+      "penetration_mm": -0.651,
+      "world": [
+        103.72,
+        77.06,
+        96.69
+      ],
+      "op": "OP2"
+    },
+    {
+      "type": "DESIGN_GOUGE",
+      "line": 169,
+      "penetration_mm": -0.148,
+      "world": [
+        105.62,
+        67.34,
+        96.85
+      ],
+      "op": "OP2"
+    },
+    {
+      "type": "DESIGN_GOUGE",
+      "line": 169,
+      "penetration_mm": -0.087,
+      "world": [
+        107.51,
+        57.62,
+        97.0
+      ],
+      "op": "OP2"
+    },
+    {
+      "type": "DESIGN_GOUGE",
+      "line": 169,
+      "penetration_mm": -1.029,
+      "world": [
+        115.09,
+        18.76,
+        97.62
+      ],
+      "op": "OP2"
+    },
+    {
+      "type": "DESIGN_GOUGE",
+      "line": 238,
+      "penetration_mm": -0.73,
+      "world": [
+        115.09,
+        18.76,
+        97.62
+      ],
+      "op": "OP2"
+    },
+    {
+      "type": "DESIGN_GOUGE",
+      "line": 238,
+      "penetration_mm": -0.148,
+      "world": [
+        105.62,
+        67.34,
+        96.85
+      ],
+      "op": "OP2"
+    },
+    {
+      "type": "DESIGN_GOUGE",
+      "line": 238,
+      "penetration_mm": -0.161,
+      "world": [
+        103.72,
+        77.06,
+        96.69
+      ],
+      "op": "OP2"
+    },
+    {
+      "type": "DESIGN_GOUGE",
+      "line": 242,
+      "penetration_mm": -0.085,
+      "world": [
+        62.27,
+        113.05,
+        96.54
+      ],
+      "op": "OP2"
+    },
+    {
+      "type": "DESIGN_GOUGE",
+      "line": 242,
+      "penetration_mm": -0.452,
+      "world": [
+        66.69,
+        104.16,
+        96.65
+      ],
+      "op": "OP2"
+    },
+    {
+      "type": "DESIGN_GOUGE",
+      "line": 242,
+      "penetration_mm": -0.943,
+      "world": [
+        71.11,
+        95.28,
+        96.76
+      ],
+      "op": "OP2"
+    }
+  ],
+  "wear": [
+    {
+      "tool": "T1",
+      "vc_m_min": 35.2,
+      "expected_life_min": 37.0,
+      "used_min": 180.6,
+      "wear_pct": 488.6,
+      "level": "ALARM",
+      "parts_per_tool": 1,
+      "basis": "derived (Taylor VT^n=C + measured cycle time)"
+    },
+    {
+      "tool": "T2",
+      "vc_m_min": 29.8,
+      "expected_life_min": 35.1,
+      "used_min": 112.5,
+      "wear_pct": 320.6,
+      "level": "ALARM",
+      "parts_per_tool": 1,
+      "basis": "derived (Taylor VT^n=C + measured cycle time)"
+    }
+  ],
+  "risk": {
+    "level": "MEDIUM",
+    "clearance_mm": 1.45,
+    "margin_mm": 1.0,
+    "action": "增加首件目视/探针确认"
+  },
+  "spc": {
+    "stats": {
+      "n": 25,
+      "mean": -0.0033,
+      "sigma": 0.0087,
+      "cp": 1.92,
+      "cpk": 1.8,
+      "out_of_tolerance": 0,
+      "usl": 0.05,
+      "lsl": -0.05,
+      "subgroup": 5,
+      "verdict": "PASS",
+      "basis": "simulated"
+    },
+    "samples": [
+      -0.0206,
+      -0.004,
+      0.0005,
+      0.0048,
+      -0.0013,
+      0.0007,
+      -0.001,
+      -0.0062,
+      0.0074,
+      -0.0171,
+      -0.0037,
+      -0.0055,
+      -0.0001,
+      -0.0088,
+      -0.008,
+      0.0065,
+      -0.0132,
+      -0.0078,
+      0.0044,
+      0.0073,
+      0.0113,
+      -0.0155,
+      -0.0072,
+      -0.0139,
+      0.0085
+    ]
+  },
+  "batch": {
+    "batch_size": 50,
+    "cycle_per_part_min": 234.7,
+    "parts_per_tool_change": 1,
+    "tool_changes": 50,
+    "machining_h": 195.62,
+    "tool_change_h": 7.5,
+    "total_h": 203.12,
+    "consistency": "同程序哈希 + 同刀补/零点 + 首件与每 N 件抽检（Cpk≥1.33）",
+    "basis": "derived (cycle + Taylor wear)"
+  },
+  "changeover": {
+    "steps": [
+      {
+        "step": "夹具/软爪更换与找正",
+        "planned_min": 4.0
+      },
+      {
+        "step": "刀具装载与对刀（T1/T2）",
+        "planned_min": 3.0
+      },
+      {
+        "step": "程序调用与刀补/零点写入",
+        "planned_min": 2.0
+      },
+      {
+        "step": "空运行与首件试切（含 M01 检查）",
+        "planned_min": 4.0
+      },
+      {
+        "step": "首件三坐标/目视确认",
+        "planned_min": 1.5
+      }
+    ],
+    "software_reconfig_s": 0.04,
+    "on_site_planned_min": 14.5,
+    "total_min": 14.5,
+    "target_min": 15.0,
+    "verdict": "PASS",
+    "basis": "on-site=planned (需车间实测), software=measured"
+  },
+  "warnings": {
+    "alerts": [
+      {
+        "type": "TOOL_WEAR",
+        "tool": "T1",
+        "level": "ALARM",
+        "wear_pct": 488.6
+      },
+      {
+        "type": "TOOL_WEAR",
+        "tool": "T2",
+        "level": "ALARM",
+        "wear_pct": 320.6
+      },
+      {
+        "type": "CYCLE_TARGET",
+        "op": "OP1",
+        "actual_s": 7336.5,
+        "target_s": 7200
+      },
+      {
+        "type": "CYCLE_TARGET",
+        "op": "OP3",
+        "actual_s": 3496.6,
+        "target_s": 2400
+      }
+    ],
+    "count": 4,
+    "basis": "derived + measured"
+  },
+  "opcua": {
+    "available": true,
+    "url": "opc.tcp://127.0.0.1:4840/virtu/",
+    "nodes": [
+      "State",
+      "Part",
+      "ProgramHash",
+      "BatchCount",
+      "CycleTime_s",
+      "MinClearance_mm",
+      "Cpk",
+      "ToolWear_pct",
+      "AlarmCode",
+      "AlarmText"
+    ],
+    "read": {
+      "State": "READY",
+      "Part": "AE-CI-258",
+      "ProgramHash": "",
+      "BatchCount": 0,
+      "CycleTime_s": 0.0,
+      "MinClearance_mm": 1.85,
+      "Cpk": 0.0,
+      "ToolWear_pct": 0.0,
+      "AlarmCode": 0,
+      "AlarmText": ""
+    },
+    "write_back": 1,
+    "basis": "measured",
+    "read_back_ok": true
+  },
+  "op_params": [
+    {
+      "op": "OP1",
+      "tool": "T1",
+      "rpm": 700,
+      "vc": 35.2,
+      "feed": 320.0,
+      "fz": 0.1143,
+      "ap": "1.5",
+      "cut_type": "rough",
+      "status": "PASS"
+    },
+    {
+      "op": "OP2",
+      "tool": "T2",
+      "rpm": 950,
+      "vc": 29.8,
+      "feed": 220.0,
+      "fz": 0.0579,
+      "ap": "—",
+      "cut_type": "rough",
+      "status": "PASS"
+    },
+    {
+      "op": "OP3",
+      "tool": "T1",
+      "rpm": 800,
+      "vc": 40.2,
+      "feed": 240.0,
+      "fz": 0.075,
+      "ap": "12.0",
+      "cut_type": "finish",
+      "status": "PASS"
+    }
+  ],
+  "verdicts": {
+    "lint": "PASS",
+    "roundtrip": "PASS",
+    "collision": "FAIL",
+    "travel": "PASS",
+    "overall": "FAIL"
+  },
+  "limitations": [
+    "- 未执行 VERICUT 运行级仿真（batch 介质不执行仿真），碰撞/过切为自研扫掠几何实测（采样步长 2 mm），不是 VERICUT 逐帧布尔材料去除。",
+    "- 未做实机首件：三坐标叶型、超声壁厚、动平衡、表面粗糙度均未测。",
+    "- 刀具寿命为 Taylor 模型推导，非刀具寿命试验；每刀件数为推导值。",
+    "- SPC 为模拟样本演示（basis=simulated），Cpk 不代表真实批次；量产须用首件与抽检实测替换。",
+    "- 五轴 RTCP 的机床摆长/枢轴标定未纳入；Siemens 方向按 A3/B3/C3 向量发射，未在 840D sl 实机验证。",
+    "- 换产的现场步骤时间为计划值，软件侧重构时间为实测。",
+    "- VERICUT 培训模型 NMV1500 的 Y 行程仅 210 mm，无法覆盖本零件；见机床能力表。"
+  ],
+  "manifest": {
+    "part": "AE-CI-258",
+    "programs": {
+      "prod_5ax_fanuc_0imf/OP1": {
+        "file": "D:\\Virtu模型\\production\\nc\\prod_5ax_fanuc_0imf\\AE-CI-258_OP1.nc",
+        "sha256": "144d42294d8850d0429df61c6ca9257c41bd323491159202b00a032d2dacf772",
+        "restart": {
+          "OP1": 40
+        }
+      },
+      "prod_5ax_fanuc_0imf/OP2": {
+        "file": "D:\\Virtu模型\\production\\nc\\prod_5ax_fanuc_0imf\\AE-CI-258_OP2.nc",
+        "sha256": "db525900ff4d0da17fc66e6aabf6d7effa38a6707f1faf1460b64d3d4c699efe",
+        "restart": {
+          "OP2": 40
+        }
+      },
+      "prod_5ax_fanuc_0imf/OP3": {
+        "file": "D:\\Virtu模型\\production\\nc\\prod_5ax_fanuc_0imf\\AE-CI-258_OP3.nc",
+        "sha256": "b158538d5c20083af6744a68daf20385e18314f459015f69c885ba68cd69e31a",
+        "restart": {
+          "OP3-A": 40,
+          "OP3-B": 430
+        }
+      },
+      "prod_5ax_siemens_840dsl/OP1": {
+        "file": "D:\\Virtu模型\\production\\nc\\prod_5ax_siemens_840dsl\\AE-CI-258_OP1.nc",
+        "sha256": "248325282129abd92d5ff0d3f6e384fad4f6e1bde27bbab86a2260978d73dd0e",
+        "restart": {
+          "OP1": 30
+        }
+      },
+      "prod_5ax_siemens_840dsl/OP2": {
+        "file": "D:\\Virtu模型\\production\\nc\\prod_5ax_siemens_840dsl\\AE-CI-258_OP2.nc",
+        "sha256": "7806d05e9ce728ff255f9001fd5ece702084c5c7ad9a2ecfb7be407067cfc1f1",
+        "restart": {
+          "OP2": 30
+        }
+      },
+      "prod_5ax_siemens_840dsl/OP3": {
+        "file": "D:\\Virtu模型\\production\\nc\\prod_5ax_siemens_840dsl\\AE-CI-258_OP3.nc",
+        "sha256": "07d91bee6aad90d5b4bda481c599a456ba78bce215c680aefdf6592ff0fa1cf5",
+        "restart": {
+          "OP3-A": 30,
+          "OP3-B": 400
+        }
+      },
+      "prod_5ax_hnc8/OP1": {
+        "file": "D:\\Virtu模型\\production\\nc\\prod_5ax_hnc8\\AE-CI-258_OP1.nc",
+        "sha256": "05f4f5b2911fa2e1212080d86ba2ff78778394b2d0fb0d7c32175d34e4111b82",
+        "restart": {
+          "OP1": 40
+        }
+      },
+      "prod_5ax_hnc8/OP2": {
+        "file": "D:\\Virtu模型\\production\\nc\\prod_5ax_hnc8\\AE-CI-258_OP2.nc",
+        "sha256": "8767b09e5ab06e26de86f663674617cb1383e54f9c3d1b2a55eefb7d50b02c92",
+        "restart": {
+          "OP2": 40
+        }
+      },
+      "prod_5ax_hnc8/OP3": {
+        "file": "D:\\Virtu模型\\production\\nc\\prod_5ax_hnc8\\AE-CI-258_OP3.nc",
+        "sha256": "b584fa3e818cdeb33b93d7ab54674841a491a1be180e6a8beeb1d29d2019556d",
+        "restart": {
+          "OP3-A": 40,
+          "OP3-B": 430
+        }
+      }
+    },
+    "hashes": {}
+  },
+  "elapsed_s": 49.8
+}

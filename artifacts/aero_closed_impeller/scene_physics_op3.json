@@ -1,0 +1,252 @@
+{
+  "station": "OP3",
+  "project": "E:\\vericut_impeller_run\\OP3.vcproject",
+  "checks_total": 20,
+  "failed": 0,
+  "verdict": "PASS",
+  "checks": [
+    {
+      "check": "毛坯组件唯一",
+      "status": "PASS",
+      "evidence": "stock_components=1"
+    },
+    {
+      "check": "毛坯模型唯一",
+      "status": "PASS",
+      "evidence": "primitives=['Poly']"
+    },
+    {
+      "check": "毛坯模型文件存在",
+      "status": "PASS",
+      "evidence": "E:\\vericut_impeller_run\\op3_stock.stl"
+    },
+    {
+      "check": "base_plate 底面贴台面",
+      "status": "PASS",
+      "evidence": "bottom=-100.0 table=-100.0"
+    },
+    {
+      "check": "column 底面贴 base_plate 顶面",
+      "status": "PASS",
+      "evidence": "bottom=-88.0 support_top=-88.0"
+    },
+    {
+      "check": "flange 底面贴 column 顶面",
+      "status": "PASS",
+      "evidence": "bottom=48.0 support_top=48.0"
+    },
+    {
+      "check": "mandrel_shaft 底面贴 flange 顶面",
+      "status": "PASS",
+      "evidence": "bottom=60.0 support_top=60.0"
+    },
+    {
+      "check": "工件径向夹持（内胀芯轴）",
+      "status": "PASS",
+      "evidence": "shaft r38.0 <= bore r38.1, z [73.0, 120.0]"
+    },
+    {
+      "check": "base_plate × column 无穿模",
+      "status": "PASS",
+      "evidence": "overlap=0.0 mm3"
+    },
+    {
+      "check": "base_plate × flange 无穿模",
+      "status": "PASS",
+      "evidence": "overlap=0.0 mm3"
+    },
+    {
+      "check": "base_plate × mandrel_shaft 无穿模",
+      "status": "PASS",
+      "evidence": "overlap=0.0 mm3"
+    },
+    {
+      "check": "base_plate × stock 无穿模",
+      "status": "PASS",
+      "evidence": "overlap=0.0 mm3"
+    },
+    {
+      "check": "column × flange 无穿模",
+      "status": "PASS",
+      "evidence": "overlap=0.0 mm3"
+    },
+    {
+      "check": "column × mandrel_shaft 无穿模",
+      "status": "PASS",
+      "evidence": "overlap=0.0 mm3"
+    },
+    {
+      "check": "column × stock 无穿模",
+      "status": "PASS",
+      "evidence": "overlap=0.0 mm3"
+    },
+    {
+      "check": "flange × mandrel_shaft 无穿模",
+      "status": "PASS",
+      "evidence": "overlap=0.0 mm3"
+    },
+    {
+      "check": "flange × stock 无穿模",
+      "status": "PASS",
+      "evidence": "overlap=0.0 mm3"
+    },
+    {
+      "check": "mandrel_shaft × stock 无穿模",
+      "status": "PASS",
+      "evidence": "overlap=0.0 mm3"
+    },
+    {
+      "check": "毛坯包络在机床行程内",
+      "status": "PASS",
+      "evidence": {
+        "stock": [
+          264.1,
+          264.1,
+          25.8
+        ],
+        "envelope": [
+          600,
+          600,
+          500
+        ]
+      }
+    },
+    {
+      "check": "材质密度齐全",
+      "status": "PASS",
+      "evidence": {
+        "missing": [],
+        "density_g_cm3": {
+          "TC11": 4.48,
+          "steel": 7.85,
+          "cast_iron": 7.2
+        }
+      }
+    }
+  ],
+  "parts": [
+    {
+      "name": "base_plate",
+      "role": "fixture",
+      "shape": "cyl",
+      "bbox": {
+        "x": [
+          -150,
+          150
+        ],
+        "y": [
+          -150,
+          150
+        ],
+        "z": [
+          -100.0,
+          -88.0
+        ]
+      },
+      "material": "cast_iron"
+    },
+    {
+      "name": "column",
+      "role": "fixture",
+      "shape": "cyl",
+      "bbox": {
+        "x": [
+          -60,
+          60
+        ],
+        "y": [
+          -60,
+          60
+        ],
+        "z": [
+          -88.0,
+          48.0
+        ]
+      },
+      "material": "steel"
+    },
+    {
+      "name": "flange",
+      "role": "fixture",
+      "shape": "cyl",
+      "bbox": {
+        "x": [
+          -100,
+          100
+        ],
+        "y": [
+          -100,
+          100
+        ],
+        "z": [
+          48.0,
+          60.0
+        ]
+      },
+      "material": "steel"
+    },
+    {
+      "name": "mandrel_shaft",
+      "role": "clamp",
+      "shape": "cyl",
+      "bbox": {
+        "x": [
+          -38,
+          38
+        ],
+        "y": [
+          -38,
+          38
+        ],
+        "z": [
+          60.0,
+          120.0
+        ]
+      },
+      "material": "steel"
+    },
+    {
+      "name": "stock",
+      "role": "workpiece",
+      "shape": "box",
+      "bbox": {
+        "file": "E:\\vericut_impeller_run\\op3_stock.stl",
+        "x": [
+          -132.03,
+          132.03
+        ],
+        "y": [
+          -132.03,
+          132.03
+        ],
+        "z": [
+          127.0,
+          152.85
+        ]
+      },
+      "material": "TC11"
+    },
+    {
+      "name": "design",
+      "role": "design",
+      "shape": "mesh",
+      "bbox": {
+        "file": "E:\\vericut_impeller_run\\design_flip.stl",
+        "x": [
+          -129.03,
+          129.03
+        ],
+        "y": [
+          -129.03,
+          129.03
+        ],
+        "z": [
+          73.0,
+          147.85
+        ]
+      },
+      "material": "TC11"
+    }
+  ],
+  "basis": "measured (project meshes + fixture definition)"
+}

@@ -1,0 +1,72 @@
+{
+  "part": "AE-CI-258",
+  "programs": {
+    "prod_5ax_fanuc_0imf/OP1": {
+      "file": "D:\\Virtu模型\\production\\nc\\prod_5ax_fanuc_0imf\\AE-CI-258_OP1.nc",
+      "sha256": "144d42294d8850d0429df61c6ca9257c41bd323491159202b00a032d2dacf772",
+      "restart": {
+        "OP1": 40
+      }
+    },
+    "prod_5ax_fanuc_0imf/OP2": {
+      "file": "D:\\Virtu模型\\production\\nc\\prod_5ax_fanuc_0imf\\AE-CI-258_OP2.nc",
+      "sha256": "db525900ff4d0da17fc66e6aabf6d7effa38a6707f1faf1460b64d3d4c699efe",
+      "restart": {
+        "OP2": 40
+      }
+    },
+    "prod_5ax_fanuc_0imf/OP3": {
+      "file": "D:\\Virtu模型\\production\\nc\\prod_5ax_fanuc_0imf\\AE-CI-258_OP3.nc",
+      "sha256": "b158538d5c20083af6744a68daf20385e18314f459015f69c885ba68cd69e31a",
+      "restart": {
+        "OP3-A": 40,
+        "OP3-B": 430
+      }
+    },
+    "prod_5ax_siemens_840dsl/OP1": {
+      "file": "D:\\Virtu模型\\production\\nc\\prod_5ax_siemens_840dsl\\AE-CI-258_OP1.nc",
+      "sha256": "248325282129abd92d5ff0d3f6e384fad4f6e1bde27bbab86a2260978d73dd0e",
+      "restart": {
+        "OP1": 30
+      }
+    },
+    "prod_5ax_siemens_840dsl/OP2": {
+      "file": "D:\\Virtu模型\\production\\nc\\prod_5ax_siemens_840dsl\\AE-CI-258_OP2.nc",
+      "sha256": "7806d05e9ce728ff255f9001fd5ece702084c5c7ad9a2ecfb7be407067cfc1f1",
+      "restart": {
+        "OP2": 30
+      }
+    },
+    "prod_5ax_siemens_840dsl/OP3": {
+      "file": "D:\\Virtu模型\\production\\nc\\prod_5ax_siemens_840dsl\\AE-CI-258_OP3.nc",
+      "sha256": "07d91bee6aad90d5b4bda481c599a456ba78bce215c680aefdf6592ff0fa1cf5",
+      "restart": {
+        "OP3-A": 30,
+        "OP3-B": 400
+      }
+    },
+    "prod_5ax_hnc8/OP1": {
+      "file": "D:\\Virtu模型\\production\\nc\\prod_5ax_hnc8\\AE-CI-258_OP1.nc",
+      "sha256": "05f4f5b2911fa2e1212080d86ba2ff78778394b2d0fb0d7c32175d34e4111b82",
+      "restart": {
+        "OP1": 40
+      }
+    },
+    "prod_5ax_hnc8/OP2": {
+      "file": "D:\\Virtu模型\\production\\nc\\prod_5ax_hnc8\\AE-CI-258_OP2.nc",
+      "sha256": "8767b09e5ab06e26de86f663674617cb1383e54f9c3d1b2a55eefb7d50b02c92",
+      "restart": {
+        "OP2": 40
+      }
+    },
+    "prod_5ax_hnc8/OP3": {
+      "file": "D:\\Virtu模型\\production\\nc\\prod_5ax_hnc8\\AE-CI-258_OP3.nc",
+      "sha256": "b584fa3e818cdeb33b93d7ab54674841a491a1be180e6a8beeb1d29d2019556d",
+      "restart": {
+        "OP3-A": 40,
+        "OP3-B": 430
+      }
+    }
+  },
+  "hashes": {}
+}

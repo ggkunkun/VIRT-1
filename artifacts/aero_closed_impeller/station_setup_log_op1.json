@@ -1,0 +1,99 @@
+{
+  "project": "E:\\vericut_impeller_run\\proj.vcproject",
+  "steps_total": 10,
+  "passed": 7,
+  "failed": 1,
+  "steps": [
+    {
+      "step": "XML 解析",
+      "status": "PASS",
+      "evidence": "ElementTree parse OK"
+    },
+    {
+      "step": "机床模型",
+      "status": "PASS",
+      "evidence": {
+        "file": "dmg_mori_nmv1500.mch",
+        "resolved": "E:\\library\\dmg_mori_nmv1500.mch"
+      }
+    },
+    {
+      "step": "控制系统",
+      "status": "PASS",
+      "evidence": {
+        "file": "fan30im.ctl",
+        "resolved": "E:\\library\\fan30im.ctl"
+      }
+    },
+    {
+      "step": "Attach 链",
+      "status": "WARN",
+      "evidence": {
+        "attach_z": null,
+        "attached": false
+      }
+    },
+    {
+      "step": "Fixture 落位",
+      "status": "PASS",
+      "evidence": {
+        "name": "Fixture",
+        "visible": "all",
+        "enabled": "on",
+        "file": "E:\\vericut_impeller_run\\vise.ply",
+        "matrix_z": 0.0,
+        "file_exists": true
+      }
+    },
+    {
+      "step": "Stock 落位",
+      "status": "PASS",
+      "evidence": {
+        "name": "Stock",
+        "visible": "all",
+        "enabled": "on",
+        "file": "E:\\vericut_impeller_run\\stock.stl",
+        "matrix_z": 175.0,
+        "file_exists": true
+      }
+    },
+    {
+      "step": "Design 落位",
+      "status": "PASS",
+      "evidence": {
+        "name": "Design",
+        "visible": "none",
+        "enabled": "on",
+        "file": "E:\\vericut_impeller_run\\design.stl",
+        "matrix_z": 175.0,
+        "file_exists": true
+      }
+    },
+    {
+      "step": "NC 程序",
+      "status": "PASS",
+      "evidence": {
+        "file": "E:\\vericut_impeller_run\\impeller.nc",
+        "use": "on",
+        "exists": true
+      }
+    },
+    {
+      "step": "刀具库",
+      "status": "FAIL",
+      "evidence": {
+        "file": null,
+        "resolved": null
+      }
+    },
+    {
+      "step": "工件偏置",
+      "status": "WARN",
+      "evidence": {
+        "work_offset": null
+      }
+    }
+  ],
+  "verdict": "FAIL",
+  "basis": "measured (project XML + file existence)"
+}

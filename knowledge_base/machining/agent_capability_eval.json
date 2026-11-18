@@ -60,5 +60,54 @@
       "No inspected standalone feed block proved simultaneous cutting on two rotary axes plus XYZ; do not claim five-axis simultaneous code mastery from these samples."
     ]
   },
-  "release_rule": "Only a hash-verified exact machine/controller/post/simulation candidate with known axes and travel, collision_free=true, and autodiff_passed=true may set controller_code_generation_allowed=true. A downstream NC program still requires controller-specific post validation and simulation."
+  "release_rule": "Only a hash-verified exact machine/controller/post/simulation candidate with known axes and travel, collision_free=true, and autodiff_passed=true may set controller_code_generation_allowed=true. A downstream NC program still requires controller-specific post validation and simulation.",
+  "evaluation_entrypoint": "virtu_omni.manufacturing.capability_eval.run_agent_machining_capability_eval",
+  "controller_dialects": ["fanuc", "siemens", "heidenhain"],
+  "kinematic_configurations": {
+    "milling_3axis": {"linear_axes": ["X", "Y", "Z"], "rotary_axes": [], "dialects": ["fanuc", "siemens", "heidenhain"]},
+    "milling_4axis_indexed": {"linear_axes": ["X", "Y", "Z"], "rotary_axes": ["A", "B", "C"], "indexing_clamp": ["M11", "M10"]},
+    "milling_4axis_simultaneous": {"linear_axes": ["X", "Y", "Z"], "rotary_axes": ["A", "B", "C"], "min_simultaneous_axes": 4},
+    "milling_5axis_3plus2": {"linear_axes": ["X", "Y", "Z"], "rotary_pairs": ["AC", "BC", "AB"], "workplane_tokens": {"fanuc": ["G68.2", "G53.1", "G69"], "siemens": ["CYCLE800(", "CYCLE800()"], "heidenhain": ["PLANE SPATIAL", "PLANE RESET"]}},
+    "milling_5axis_simultaneous": {"linear_axes": ["X", "Y", "Z"], "rotary_pairs": ["AC", "BC", "AB"], "rtcp_tokens": {"fanuc": ["G43.4", "G43.5", "G49"], "siemens": ["TRAORI", "TRAFOOF"], "heidenhain": ["FUNCTION TCPM", "M128", "FUNCTION RESET TCPM", "M129"]}},
+    "turning": {"linear_axes": ["X", "Z"], "cycles": {"fanuc": ["G71", "G70"], "siemens": ["CYCLE95("], "heidenhain": ["FUNCTION MODE TURN", "CYCL DEF 810"]}},
+    "mill_turn_off_axis_milling": {"linear_axes": ["X", "Z"], "rotary_axes": ["C"], "interpolations": {"polar": ["G12.1/G13.1", "TRANSMIT/TRAFOOF"], "cylindrical": ["G07.1 C/C0", "TRACYL/TRAFOOF"]}},
+    "mill_turn_y_axis_milling": {"linear_axes": ["X", "Y", "Z"], "rotary_axes": ["C", "B"], "variants": ["y_axis_live_tool", "b_axis_swivel_head"]},
+    "subspindle_transfer": {"linear_axes": ["X", "Y", "Z", "W"], "rotary_axes": ["C"], "sequence": ["M269", "W_pickup", "M268", "M69", "W_home", "G55"]}
+  },
+  "code_capability_cases": [
+    {"id": "code_mill_3axis_fanuc", "capability": "milling_3axis", "dialect": "fanuc", "expect_tokens": ["G21", "G90", "G83", "M30"]},
+    {"id": "code_mill_3axis_siemens", "capability": "milling_3axis", "dialect": "siemens", "expect_tokens": ["G71", "G90", "CYCLE83(", "M30"]},
+    {"id": "code_mill_3axis_heidenhain", "capability": "milling_3axis", "dialect": "heidenhain", "expect_tokens": ["BEGIN PGM", "CYCL DEF 203", "END PGM"]},
+    {"id": "code_mill_4axis_indexed_a", "capability": "milling_4axis_indexed", "dialect": "fanuc", "rotary_axes": ["A"], "expect_tokens": ["M11", "M10", "A90", "M30"]},
+    {"id": "code_mill_4axis_sim_a_fanuc", "capability": "milling_4axis_simultaneous", "dialect": "fanuc", "rotary_axes": ["A"], "expect_tokens": ["G01", "A30", "A90", "M30"]},
+    {"id": "code_mill_4axis_sim_b_siemens", "capability": "milling_4axis_simultaneous", "dialect": "siemens", "rotary_axes": ["B"], "expect_tokens": ["G1", "B=30", "B=90", "M30"]},
+    {"id": "code_mill_5axis_3plus2_fanuc_ac", "capability": "milling_5axis_3plus2", "dialect": "fanuc", "rotary_axes": ["A", "C"], "expect_tokens": ["G68.2", "G53.1", "G69", "G81"]},
+    {"id": "code_mill_5axis_3plus2_siemens_bc", "capability": "milling_5axis_3plus2", "dialect": "siemens", "rotary_axes": ["B", "C"], "expect_tokens": ["CYCLE800(", "CYCLE800()", "CYCLE81("]},
+    {"id": "code_mill_5axis_3plus2_heidenhain_ac", "capability": "milling_5axis_3plus2", "dialect": "heidenhain", "rotary_axes": ["A", "C"], "expect_tokens": ["PLANE SPATIAL", "PLANE RESET STAY", "CYCL DEF 200"]},
+    {"id": "code_mill_5axis_sim_fanuc_ac", "capability": "milling_5axis_simultaneous", "dialect": "fanuc", "rotary_axes": ["A", "C"], "expect_tokens": ["G43.4", "G49", "A15", "C45"]},
+    {"id": "code_mill_5axis_sim_fanuc_bc", "capability": "milling_5axis_simultaneous", "dialect": "fanuc", "rotary_axes": ["B", "C"], "expect_tokens": ["G43.4", "G49", "B15", "C45"]},
+    {"id": "code_mill_5axis_sim_siemens_traori", "capability": "milling_5axis_simultaneous", "dialect": "siemens", "rotary_axes": ["A", "C"], "expect_tokens": ["TRAORI", "TRAFOOF", "A=15", "C=45"]},
+    {"id": "code_mill_5axis_sim_heidenhain_tcpm", "capability": "milling_5axis_simultaneous", "dialect": "heidenhain", "rotary_axes": ["A", "C"], "expect_tokens": ["FUNCTION TCPM", "FUNCTION RESET TCPM", "A+15.000", "C+45.000"]},
+    {"id": "code_lathe_turning_fanuc", "capability": "turning", "dialect": "fanuc", "expect_tokens": ["G99", "G71", "G70", "M30"]},
+    {"id": "code_mill_turn_c_polar_fanuc", "capability": "mill_turn_off_axis_milling", "dialect": "fanuc", "rotary_axes": ["C"], "variant": "polar", "expect_tokens": ["G71", "M200", "G12.1", "G13.1"]},
+    {"id": "code_mill_turn_c_polar_siemens", "capability": "mill_turn_off_axis_milling", "dialect": "siemens", "rotary_axes": ["C"], "variant": "polar", "expect_tokens": ["CYCLE95(", "SETMS(2)", "TRANSMIT", "TRAFOOF"]},
+    {"id": "code_mill_turn_c_cylindrical_fanuc", "capability": "mill_turn_off_axis_milling", "dialect": "fanuc", "rotary_axes": ["C"], "variant": "cylindrical", "expect_tokens": ["G71", "G07.1 C", "G07.1 C0"]},
+    {"id": "code_mill_turn_y_axis_fanuc", "capability": "mill_turn_y_axis_milling", "dialect": "fanuc", "rotary_axes": ["C"], "expect_tokens": ["G71", "M200", "Y12", "C45"]},
+    {"id": "code_mill_turn_b_axis_head_siemens", "capability": "mill_turn_y_axis_milling", "dialect": "siemens", "rotary_axes": ["B", "C"], "variant": "b_head", "expect_tokens": ["CYCLE95(", "B=45", "SETMS(2)", "Y=12"]},
+    {"id": "code_mill_turn_subspindle_transfer", "capability": "subspindle_transfer", "dialect": "fanuc", "rotary_axes": ["C"], "expect_tokens": ["M269", "W-140", "M268", "M69", "G55"]}
+  ],
+  "required_code_negative_gates": [
+    "five_axis_sim_missing_rtcp",
+    "five_axis_rtcp_uncanceled",
+    "three_axis_misusing_traori",
+    "split_rotary_axes_not_5axis_simultaneous",
+    "five_axis_3plus2_uncanceled_tilt",
+    "four_axis_clamped_rotary_feed",
+    "macro_variable_axes_not_verified",
+    "mill_turn_spindle_mode_conflict",
+    "polar_interpolation_uncanceled",
+    "mill_turn_y_axis_missing_y_axis",
+    "subspindle_unclamp_before_clamp",
+    "rapid_negative_z_plunge"
+  ]
 }

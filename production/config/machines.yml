@@ -1,0 +1,73 @@
+# 量产机床配置 —— AE-CI-258 五轴联动铣削
+# 口径：travel_mm 为“G54 工件坐标系下刀尖可达包络”（由机床行程 + 刀长 + 工件零点换算），
+#       rotary_limits_deg 为机床旋转轴硬限位。
+# 注意：training_rig_nmv1500 是 VERICUT 培训介质里的简化模型，Y 行程仅 210 mm，
+#       不足以覆盖 Ø264 毛坯的圆周三向预成形（需要 ±145 mm），故标记 production_ready=false。
+machines:
+  prod_5ax_fanuc_0imf:
+    label: "量产五轴立式加工中心（FANUC 0i-MF）"
+    controller: "FANUC 0i-MF"
+    dialect: fanuc
+    production_ready: true
+    supports_rtcp: true
+    rtcp_enable: "G43.4"
+    rtcp_cancel: "G49"
+    work_offset: "G54"
+    travel_mm: {x: [-365, 365], y: [-255, 255], z: [-300, 450]}
+    rotary_limits_deg: {b: [-180, 160], c: [0, 360]}
+    spindle_rpm: [0, 12000]
+    rapid_mm_min: 30000
+    tool_change_s: 8.0
+    tool_change_point: {x: 0.0, y: 0.0, z: 240.0}
+    travel_source: "DMG MORI NMV 系列公开行程 X730 / Y510 / Z510；按台面中心对称折算 ±365 / ±255；Z 以 G54 顶面为基准保守取 -260..250"
+
+  prod_5ax_siemens_840dsl:
+    label: "量产五轴立式加工中心（SINUMERIK 840D sl）"
+    controller: "SINUMERIK 840D sl"
+    dialect: siemens
+    production_ready: true
+    supports_rtcp: true
+    rtcp_enable: "TRAORI"
+    rtcp_cancel: "TRAFOOF"
+    work_offset: "G54"
+    travel_mm: {x: [-365, 365], y: [-255, 255], z: [-300, 450]}
+    rotary_limits_deg: {b: [-180, 160], c: [0, 360]}
+    spindle_rpm: [0, 12000]
+    rapid_mm_min: 30000
+    tool_change_s: 8.0
+    tool_change_point: {x: 0.0, y: 0.0, z: 240.0}
+    travel_source: "与 prod_5ax_fanuc_0imf 同一机械本体，控制与伺服标识不同"
+
+  prod_5ax_hnc8:
+    label: "量产五轴立式加工中心（华中 HNC-8）"
+    controller: "HNC-8"
+    dialect: hnc
+    production_ready: true
+    supports_rtcp: true
+    rtcp_enable: "G43.4"
+    rtcp_cancel: "G49"
+    work_offset: "G54"
+    travel_mm: {x: [-365, 365], y: [-255, 255], z: [-300, 450]}
+    rotary_limits_deg: {b: [-180, 160], c: [0, 360]}
+    spindle_rpm: [0, 12000]
+    rapid_mm_min: 30000
+    tool_change_s: 8.0
+    tool_change_point: {x: 0.0, y: 0.0, z: 240.0}
+    travel_source: "与 prod_5ax_fanuc_0imf 同一机械本体，控制系统为华中 8 型"
+
+  training_rig_nmv1500:
+    label: "VERICUT 培训用 NMV1500 简化模型（非量产机型）"
+    controller: "FANUC 30iM（培训介质）"
+    dialect: fanuc
+    production_ready: false
+    supports_rtcp: true
+    rtcp_enable: "G43.4"
+    rtcp_cancel: "G49"
+    work_offset: "G54"
+    travel_mm: {x: [-210, 210], y: [-105, 105], z: [-75, 390]}
+    rotary_limits_deg: {b: [-180, 160], c: [0, 360]}
+    spindle_rpm: [0, 12000]
+    rapid_mm_min: 20000
+    tool_change_s: 8.0
+    tool_change_point: {x: 0.0, y: 0.0, z: 30.0}
+    travel_source: "E:/library/dmg_mori_nmv1500.mch 实测：X 0..420 @X=-210、Y -210..0 @Y=105、Z -400..0 @Z=400；刀尖可达 Z 由 75 mm 刀长换算"

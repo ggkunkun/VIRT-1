@@ -410,7 +410,14 @@ def main(argv=None) -> int:
         p.requires_grad = False
 
     embed_tokens_cpu = model.model.embed_tokens
-    lm_head_w_cpu = model.lm_head.weight.data.pin_memory()
+    # Windows WDDM 下 .pin_memory() 会额外通过 cudaHostAlloc 复制一份 1.25GB 页锁定内存，
+    # 与 model.lm_head.weight 并存导致 ~1.5GB 额外 Commit Charge 峰值，触发 eval/train OOM。
+    # _PinnedVocabChunkedCE 使用 non_blocking=False 同步切片拷贝，直接复用原 CPU 张量即可零冗余运行。
+    if os.environ.get("VIRTU_PIN_LM_HEAD", "0") == "1":
+        lm_head_w_cpu = model.lm_head.weight.data.pin_memory()
+    else:
+        lm_head_w_cpu = model.lm_head.weight.data
+    gc.collect()
     torch.cuda.empty_cache()
     print(
         f"[Model] Loaded GPU alloc={torch.cuda.memory_allocated()/1024**2:.1f}MB | "
@@ -615,7 +622,10 @@ def main(argv=None) -> int:
                 is_oom = isinstance(exc, torch.OutOfMemoryError) or "out of memory" in str(exc).lower()
                 del ids, mask, lab, loss
                 gc.collect()
-                torch.cuda.empty_cache()
+                try:
+                    torch.cuda.empty_cache()
+                except Exception:
+                    pass
                 if is_oom and attempt == 0:
                     print(f"[OOM-Retry] idx={idx} seq_len={seq_len} retrying after empty_cache() ...", flush=True)
                     continue
@@ -638,8 +648,8 @@ def main(argv=None) -> int:
         if loss_val is None:
             micro = idx + 1
             continue
-        if seq_len > 640:
-            torch.cuda.empty_cache()
+        # 6GB WDDM 防爆：若不逐微步回收缓存块，变长序列会让 reserved 膨胀至 >10GB 并透支宿主机 Commit
+        torch.cuda.empty_cache()
         # 微步心跳：原生崩溃（如 0xC0000005）无 Python 栈，靠它定位最后一条成功样本
         if micro % 8 == 0:
             print(
