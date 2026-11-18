@@ -417,6 +417,18 @@ def _build_shaft_archetype() -> WorkpieceArchetype:
     p_rough = compute_cutting_params(mat, "turning_rough", 56.0, flutes=1, spindle_max_rpm=2800)
     p_fin = compute_cutting_params(mat, "turning_finish", 40.0, flutes=1, spindle_max_rpm=3200)
     p_grv = compute_cutting_params(mat, "grooving", 28.0, flutes=1, spindle_max_rpm=2000)
+    # 节拍优化：进给率由手册区间中值上探至 80% 分位（仍在标准取值范围内），
+    # 同步重算 feed_mm_min = n * f_rev，满足轴类 takt<=95s 目标。
+    def _uplift_feed(p: Dict[str, Any], op: str) -> Dict[str, Any]:
+        lo, hi = get_material_spec(mat).cutting_ranges[op]["f_rev"]
+        target = round(lo + 0.8 * (hi - lo), 4)
+        p = dict(p)
+        p["f_rev_mm"] = target
+        p["feed_mm_min"] = round(p["spindle_rpm"] * target, 1)
+        return p
+    p_rough = _uplift_feed(p_rough, "turning_rough")
+    p_fin = _uplift_feed(p_fin, "turning_finish")
+    p_grv = _uplift_feed(p_grv, "grooving")
 
     tools = {
         1: ToolSpec(1, "CNMG120408", "turn_rough", "80°菱形外圆粗车刀(CNMG120408-PM)", 16.0, 18.0, 105.0, 25.0, 42.0, 1, 0.8, 1, 1, 105.0, 0.8, p_rough["taylor_tool_life_min"], p_rough["spindle_rpm"], "turning_rough"),

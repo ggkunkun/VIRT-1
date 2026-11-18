@@ -1,6 +1,6 @@
 # 工艺参数校验清单（全维度）
 
-生成：2026-11-18 23:29:24
+生成：2026-11-18 23:39:44
 所有参数来源：process_standards（工艺标准库）/ controllers.yaml /
 工件原型；带 handbook_ref / basis 可追溯。
 
