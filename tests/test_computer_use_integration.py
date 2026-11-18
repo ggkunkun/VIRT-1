@@ -29,6 +29,27 @@ class TestComputerUseIntegration(unittest.TestCase):
         cls.perception = cls.computer_use.perception
         cls.action = cls.computer_use.action
 
+    def setUp(self):
+        from unittest.mock import patch
+
+        p = patch("virtu_omni.computer_use.input_guard.cursor_pos", return_value=(960, 540))
+        p.start()
+        self.addCleanup(p.stop)
+
+    def test_action_blocks_when_cursor_in_failsafe_corner(self):
+        from unittest.mock import patch
+        from virtu_omni.computer_use import input_guard
+
+        stop = input_guard.stop_file()
+        try:
+            with patch("virtu_omni.computer_use.input_guard.cursor_pos", return_value=(0, 0)):
+                with self.assertRaises(input_guard.InputDenied) as ctx:
+                    self.action.mouse_move(100, 100)
+            self.assertEqual(ctx.exception.code, "DESKTOP_FAILSAFE")
+        finally:
+            if stop.exists():
+                stop.unlink()
+
     def test_computer_use_status(self):
         status = self.computer_use.get_status()
         self.assertEqual(status["status"], "READY")
@@ -52,30 +73,43 @@ class TestComputerUseIntegration(unittest.TestCase):
         self.assertIn("sha256", res)
 
     def test_discrete_actions_mouse_and_keyboard(self):
+        """验证指令构造，不许碰真实输入总线。
+
+        这条用例曾经对真机执行 ``move(400,300)`` + ``click`` + ``ctrl+s`` +
+        ``drag(10,10→50,50)``：跑一次就把操作者的光标拽走、点一下、再拖一段，
+        是"智能体突然失控抢鼠标"最稳定的复现源。conftest 的
+        ``_isolate_desktop_input`` 现在强制演练，这里把它固化成断言。
+        """
         # 1. Mouse move
         m_res = self.computer_use.execute_action("move", x=400, y=300)
         self.assertTrue(m_res.get("ok"))
         self.assertEqual(m_res.get("x"), 400)
+        self.assertFalse(m_res.get("input_sent"), "单元测试不得向真实鼠标总线写事件")
 
         # 2. Click
         c_res = self.computer_use.execute_action("click", x=400, y=300, button="left")
         self.assertTrue(c_res.get("ok"))
+        self.assertFalse(c_res.get("input_sent"))
 
         # 3. Type text
         t_res = self.computer_use.execute_action("type", text="OK", delay_ms=1)
         self.assertTrue(t_res.get("ok"))
+        self.assertFalse(t_res.get("input_sent"))
 
         # 4. Hotkey
         h_res = self.computer_use.execute_action("hotkey", keys=["ctrl", "s"])
         self.assertTrue(h_res.get("ok"))
+        self.assertFalse(h_res.get("input_sent"))
 
         # 5. Scroll
         s_res = self.computer_use.execute_action("scroll", clicks=1)
         self.assertTrue(s_res.get("ok"))
+        self.assertFalse(s_res.get("input_sent"))
 
         # 6. Drag
         d_res = self.computer_use.execute_action("drag", start_x=10, start_y=10, end_x=50, end_y=50, steps=2)
         self.assertTrue(d_res.get("ok"))
+        self.assertFalse(d_res.get("input_sent"))
 
     def test_structured_see_think_act_loop(self):
         goal = "Test coordinate drag and save sequence"
@@ -86,7 +120,10 @@ class TestComputerUseIntegration(unittest.TestCase):
         ]
         res = self.computer_use.run_see_think_act_loop(goal=goal, actions=actions, capture_screenshots=False)
         self.assertTrue(res.get("ok"))
-        self.assertEqual(res.get("status"), "COMPLETED")
+        # 演练会话必须如实标注，不能把"一次都没发"说成"完成"
+        self.assertIn(res.get("status"), ("COMPLETED", "COMPLETED_SIMULATED"))
+        self.assertTrue(res.get("simulated"), "测试内全部动作应被闸门抑制")
+        self.assertEqual(res.get("input_sent_steps"), 0)
         self.assertEqual(res.get("total_steps"), 3)
         self.assertEqual(len(res.get("steps", [])), 3)
 

@@ -1,0 +1,292 @@
+{
+  "basis": "measured",
+  "scope": "stratified_subset_not_full_holdout",
+  "note": "全量 105 题腿因外部 Ollama 并发占用显存出现超时而中止；此处只发布分层子集配对结果，全量 105 题结论标未测",
+  "run_id": "2093131bc66865df",
+  "generated_at": "2026-11-15T22:04:31+0800",
+  "model": "virtu-vericut96:v2",
+  "baseline": "virtu-master-fixed:latest",
+  "model_digest": "cc70716d5f09c35fd668b55b88aa5ddff51c82935aaf577415c5a6683fc7e4cc",
+  "baseline_digest": "cffbe5db49462c0519be44fc0ba233b669b081ca4c1fb0ff9d55861be08e6faa",
+  "cases_file": "data/sft/vericut_e_training/vericut_e_holdout.jsonl",
+  "cases_sha256": "5299db23542034c933384bfdf7321916d4501cf392efb7bd718b66d209350669",
+  "grader_sha256": "5024fe5cfc85b6ac1792256fdc22b5ecfa66e3bf72698c48feea8399cfd7224c",
+  "params": {
+    "seed": 42,
+    "max_tokens": 512,
+    "num_ctx": 4096,
+    "temperature": 0.0,
+    "think": false
+  },
+  "evidence": {
+    "candidate_new": "reports\\handover_20261115\\holdout_subset\\holdout_subset_raw.jsonl",
+    "candidate_full_partial": "reports\\handover_20261115\\holdout_subset\\raw_candidate_holdout.jsonl",
+    "baseline_full": "reports\\handover_20261115\\holdout_subset\\raw_baseline_holdout.jsonl"
+  },
+  "n_selected": 32,
+  "n_valid": 31,
+  "coverage_pct": 96.9,
+  "target_per_dimension": {
+    "nc_safety_diagnosis": 7,
+    "setup_workoffset": 6,
+    "tool_assembly": 6,
+    "runtime_toolcall": 5,
+    "pdf_curriculum_qa": 4,
+    "machine_kinematics": 2,
+    "boundary": 1,
+    "vericut_setup_facts": 1
+  },
+  "n_by_dimension": {
+    "nc_safety_diagnosis": 7,
+    "vericut_setup_facts": 1,
+    "machine_kinematics": 2,
+    "pdf_curriculum_qa": 4,
+    "runtime_toolcall": 5,
+    "tool_assembly": 6,
+    "setup_workoffset": 6
+  },
+  "baseline_mean": 34.25,
+  "candidate_mean": 36.81,
+  "delta_mean": 2.55,
+  "baseline_pass_pct": 22.58,
+  "candidate_pass_pct": 25.81,
+  "by_dimension": {
+    "nc_safety_diagnosis": {
+      "n": 7,
+      "baseline_mean": 14.8,
+      "candidate_mean": 9.44,
+      "delta_mean": -5.36
+    },
+    "setup_workoffset": {
+      "n": 6,
+      "baseline_mean": 37.5,
+      "candidate_mean": 37.5,
+      "delta_mean": 0.0
+    },
+    "tool_assembly": {
+      "n": 6,
+      "baseline_mean": 33.33,
+      "candidate_mean": 33.33,
+      "delta_mean": 0.0
+    },
+    "runtime_toolcall": {
+      "n": 5,
+      "baseline_mean": 100.0,
+      "candidate_mean": 100.0,
+      "delta_mean": 0.0
+    },
+    "pdf_curriculum_qa": {
+      "n": 4,
+      "baseline_mean": 0.0,
+      "candidate_mean": 25.0,
+      "delta_mean": 25.0
+    },
+    "machine_kinematics": {
+      "n": 2,
+      "baseline_mean": 0.0,
+      "candidate_mean": 0.0,
+      "delta_mean": 0.0
+    },
+    "vericut_setup_facts": {
+      "n": 1,
+      "baseline_mean": 33.33,
+      "candidate_mean": 50.0,
+      "delta_mean": 16.67
+    }
+  },
+  "rows": [
+    {
+      "id": "bnd_clarify_img",
+      "dimension": "boundary",
+      "baseline_score": 100.0,
+      "candidate_score": null
+    },
+    {
+      "id": "ctl_1ec960_session_20_additive_",
+      "dimension": "nc_safety_diagnosis",
+      "baseline_score": 0.0,
+      "candidate_score": 0.0
+    },
+    {
+      "id": "ctl_2ceebe_robot_tool",
+      "dimension": "nc_safety_diagnosis",
+      "baseline_score": 0.0,
+      "candidate_score": 0.0
+    },
+    {
+      "id": "ctl_65eefe_debug",
+      "dimension": "nc_safety_diagnosis",
+      "baseline_score": 0.0,
+      "candidate_score": 0.0
+    },
+    {
+      "id": "inv_stock_ae_ci_060_box",
+      "dimension": "vericut_setup_facts",
+      "baseline_score": 33.33,
+      "candidate_score": 50.0
+    },
+    {
+      "id": "inv_stock_force_impeller_zclamp",
+      "dimension": "nc_safety_diagnosis",
+      "baseline_score": 75.0,
+      "candidate_score": 37.5
+    },
+    {
+      "id": "mch_115a58_mill_session_105m_machin",
+      "dimension": "machine_kinematics",
+      "baseline_score": 0.0,
+      "candidate_score": 0.0
+    },
+    {
+      "id": "mch_201c68_Kuka1000-titan_vdaf_sync",
+      "dimension": "machine_kinematics",
+      "baseline_score": 0.0,
+      "candidate_score": 0.0
+    },
+    {
+      "id": "nc_1ff278_mc_mill_machine_5ax_",
+      "dimension": "nc_safety_diagnosis",
+      "baseline_score": 0.0,
+      "candidate_score": 0.0
+    },
+    {
+      "id": "nc_26c538_additive_gear_sample",
+      "dimension": "nc_safety_diagnosis",
+      "baseline_score": 0.0,
+      "candidate_score": 0.0
+    },
+    {
+      "id": "nc_338990_multiple_setups_simu",
+      "dimension": "nc_safety_diagnosis",
+      "baseline_score": 28.57,
+      "candidate_score": 28.57
+    },
+    {
+      "id": "pdf_0e03f3_Session 254FM-Force ",
+      "dimension": "pdf_curriculum_qa",
+      "baseline_score": 0.0,
+      "candidate_score": 0.0
+    },
+    {
+      "id": "pdf_268cda_Session 20-Additive ",
+      "dimension": "pdf_curriculum_qa",
+      "baseline_score": 0.0,
+      "candidate_score": 0.0
+    },
+    {
+      "id": "pdf_32c76a_Session 16L-Day 2 Re",
+      "dimension": "pdf_curriculum_qa",
+      "baseline_score": 0.0,
+      "candidate_score": 0.0
+    },
+    {
+      "id": "pdf_5aa26c_Session 15M-Cut Stoc",
+      "dimension": "pdf_curriculum_qa",
+      "baseline_score": 0.0,
+      "candidate_score": 100.0
+    },
+    {
+      "id": "tc_log_3f11f4_lathe_session_16l_da",
+      "dimension": "runtime_toolcall",
+      "baseline_score": 100.0,
+      "candidate_score": 100.0
+    },
+    {
+      "id": "tc_log_4260fe_mill_session_10m_ncp",
+      "dimension": "runtime_toolcall",
+      "baseline_score": 100.0,
+      "candidate_score": 100.0
+    },
+    {
+      "id": "tc_log_4bcaa8_mill_session_105m_ma",
+      "dimension": "runtime_toolcall",
+      "baseline_score": 100.0,
+      "candidate_score": 100.0
+    },
+    {
+      "id": "tc_log_7836f7_lathe_session_7l_imp",
+      "dimension": "runtime_toolcall",
+      "baseline_score": 100.0,
+      "candidate_score": 100.0
+    },
+    {
+      "id": "tc_log_f17653_lathe_session_16l_da",
+      "dimension": "runtime_toolcall",
+      "baseline_score": 100.0,
+      "candidate_score": 100.0
+    },
+    {
+      "id": "tls_calc_7577d1_debug_tools_T4",
+      "dimension": "tool_assembly",
+      "baseline_score": 100.0,
+      "candidate_score": 100.0
+    },
+    {
+      "id": "tls_calc_84b5dd_mazak_qtn300_650_T2",
+      "dimension": "tool_assembly",
+      "baseline_score": 100.0,
+      "candidate_score": 100.0
+    },
+    {
+      "id": "tls_list_4fccc0_configure_tailstock",
+      "dimension": "tool_assembly",
+      "baseline_score": 0.0,
+      "candidate_score": 0.0
+    },
+    {
+      "id": "tls_list_60a9a4_millturn_session_11m",
+      "dimension": "tool_assembly",
+      "baseline_score": 0.0,
+      "candidate_score": 0.0
+    },
+    {
+      "id": "tls_list_7577d1_debug_tools",
+      "dimension": "tool_assembly",
+      "baseline_score": 0.0,
+      "candidate_score": 0.0
+    },
+    {
+      "id": "tls_list_84b5dd_mazak_qtn300_650u",
+      "dimension": "tool_assembly",
+      "baseline_score": 0.0,
+      "candidate_score": 0.0
+    },
+    {
+      "id": "vc_setup_39e2ed_millturn_session_11mt_cr",
+      "dimension": "setup_workoffset",
+      "baseline_score": 50.0,
+      "candidate_score": 50.0
+    },
+    {
+      "id": "vc_setup_3f11f4_lathe_session_16l_day_2_",
+      "dimension": "setup_workoffset",
+      "baseline_score": 66.67,
+      "candidate_score": 66.67
+    },
+    {
+      "id": "vc_setup_41c1fb_session_112_setting_up_a",
+      "dimension": "setup_workoffset",
+      "baseline_score": 25.0,
+      "candidate_score": 25.0
+    },
+    {
+      "id": "vc_setup_4260fe_mill_session_10m_ncprogr",
+      "dimension": "setup_workoffset",
+      "baseline_score": 33.33,
+      "candidate_score": 33.33
+    },
+    {
+      "id": "vc_setup_4bcaa8_mill_session_105m_machin",
+      "dimension": "setup_workoffset",
+      "baseline_score": 25.0,
+      "candidate_score": 25.0
+    },
+    {
+      "id": "vc_setup_7836f7_lathe_session_7l_importi",
+      "dimension": "setup_workoffset",
+      "baseline_score": 25.0,
+      "candidate_score": 25.0
+    }
+  ],
+  "full_105_leg": "未完成，未测；历史同题板全量对照见 runs/eval_vericut_e_training_r2/comparison_report.json (run_id 3dcc89b28e586675)"
+}

@@ -33,13 +33,18 @@ from virtu_omni.training.rlvr_grpo_engine import VirtuGRPOEngine, TrajectoryCand
 from virtu_omni.models.task_arithmetic_merger import VirtuTaskArithmeticEngine, TaskVector, MergeProvenance
 from virtu_omni.reasoning.process_reward_model import ProcessSupervisedRewardModel, PRMTrajectoryAudit
 from virtu_omni.reasoning.brep_grammar_dsl import DeepCADBRepGrammarEngine, CADCommand, TopologyValidationReport
+from virtu_omni.reasoning.chain_of_thought import (
+    StructuredCoTEngine,
+    CoTTrajectory,
+    CoTVerificationReport,
+)
 
 logger = logging.getLogger("virtu_omni.model_evolution_suite")
 
 
 @dataclass
 class FrontierProbesReport:
-    """Consolidated health report for all 4 frontier model frameworks."""
+    """Consolidated health report for all frontier model frameworks."""
     run_id: str
     timestamp: float
     rlvr_probe_passed: bool
@@ -47,6 +52,7 @@ class FrontierProbesReport:
     prm_probe_passed: bool
     brep_probe_passed: bool
     all_probes_passed: bool
+    cot_probe_passed: bool = True
     basis: str = "measured"
 
     def to_dict(self) -> Dict[str, Any]:
@@ -63,6 +69,7 @@ class VirtuFrontierModelSuite:
         self.ties_engine = VirtuTaskArithmeticEngine()
         self.prm_model = ProcessSupervisedRewardModel
         self.brep_engine = DeepCADBRepGrammarEngine
+        self.cot_engine = StructuredCoTEngine
 
     @classmethod
     def get_instance(cls) -> VirtuFrontierModelSuite:
@@ -71,15 +78,16 @@ class VirtuFrontierModelSuite:
         return cls._instance
 
     def run_all_frontier_probes(self) -> FrontierProbesReport:
-        """Rule 4: Execute mutation probes across all four frontier model components."""
+        """Rule 4: Execute mutation probes across all frontier model components."""
         t0 = time.time()
         p1 = self.grpo_engine.falsifiable_rlvr_probe()
         p2 = self.ties_engine.falsifiable_ties_probe()
         p3 = self.prm_model.falsifiable_prm_probe()
         p4 = self.brep_engine.falsifiable_brep_probe()
+        p5 = self.cot_engine.falsifiable_cot_probe()
 
-        all_ok = p1 and p2 and p3 and p4
-        h = hashlib.sha256(f"{p1}_{p2}_{p3}_{p4}_{t0}".encode()).hexdigest()[:8]
+        all_ok = p1 and p2 and p3 and p4 and p5
+        h = hashlib.sha256(f"{p1}_{p2}_{p3}_{p4}_{p5}_{t0}".encode()).hexdigest()[:8]
         run_id = f"FMERS_PROBE_{time.strftime('%Y%m%d_%H%M%S')}_{h}"
 
         return FrontierProbesReport(
@@ -89,6 +97,7 @@ class VirtuFrontierModelSuite:
             ties_probe_passed=p2,
             prm_probe_passed=p3,
             brep_probe_passed=p4,
+            cot_probe_passed=p5,
             all_probes_passed=all_ok,
             basis="measured",
         )
@@ -111,6 +120,22 @@ class VirtuFrontierModelSuite:
         stock_top_z: float = 0.0,
     ) -> PRMTrajectoryAudit:
         return self.prm_model.audit_gcode_steps(gcode, safe_plane_z=safe_plane_z, stock_top_z=stock_top_z)
+
+    def audit_cot_prm(
+        self,
+        raw_output: str,
+        prompt: str = "",
+        scenario: Optional[Dict[str, Any]] = None,
+    ) -> PRMTrajectoryAudit:
+        return self.prm_model.audit_cot_steps(raw_output, prompt=prompt, scenario=scenario)
+
+    def synthesize_verified_cot(
+        self,
+        scenario: Dict[str, Any],
+        prompt: str = "",
+        include_json_answer: bool = True,
+    ) -> CoTTrajectory:
+        return self.cot_engine.synthesize_cot(scenario, prompt=prompt, include_json_answer=include_json_answer)
 
     def validate_and_compile_brep(
         self,

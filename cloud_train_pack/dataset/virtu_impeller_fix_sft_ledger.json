@@ -1,0 +1,14 @@
+{
+  "T1": 50,
+  "T2": 50,
+  "T3": 50,
+  "T4": 50,
+  "rejects": 0,
+  "total": 202,
+  "repair_demos": 2,
+  "spot_checked": 20,
+  "spot_fail": 0,
+  "label_anchor": "closed_impeller_proctor.ruler + probes (non-model)",
+  "t2_invariant": "preserves non-violating D2_mm/Z_blades/beta2b_deg from bad input",
+  "format": "messages chatml, train_turnkey --data compatible"
+}

@@ -1,0 +1,21 @@
+{
+  "records": 420,
+  "per_family": {
+    "direct_design": 120,
+    "repair_loop": 180,
+    "stage_b_cad": 30,
+    "stage_c_analysis": 30,
+    "stage_d_drawing": 30,
+    "workbench_traj": 30
+  },
+  "repair_modes": {
+    "near_miss_pr": 36,
+    "short_axial": 36,
+    "diameter_order": 36,
+    "thin_b2": 36,
+    "claim_mismatch": 36
+  },
+  "certifier": "closed_impeller_proctor.ruler (non-model)",
+  "bad_turn_loss_masked": true,
+  "note": "全链路 8.2B 修复语料：direct_design + 多故障模式 repair_loop(首轮坏解 loss=False) + Stage B/C/D 代码生成 + Workbench 协议"
+}

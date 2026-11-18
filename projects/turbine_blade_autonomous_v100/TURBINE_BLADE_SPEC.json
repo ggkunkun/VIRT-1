@@ -1,0 +1,43 @@
+{
+  "project_name": "Aero-Engine High-Pressure Turbine Blade Autonomous Lifecycle",
+  "project_id": "TURBINE-BLADE-V100",
+  "part_type": "High-Pressure Turbine Rotor Blade (高压涡轮转子工作叶片)",
+  "application": "Civil/Military Turbofan Engine HP Turbine Stage 1",
+  "geometry": {
+    "total_height_mm": 95.0,
+    "airfoil_height_mm": 65.0,
+    "root_height_mm": 30.0,
+    "chord_root_mm": 38.0,
+    "chord_tip_mm": 26.0,
+    "twist_angle_deg": 28.5,
+    "leading_edge_radius_mm": 1.2,
+    "trailing_edge_thickness_mm": 0.8,
+    "root_type": "3-Lobe Fir-Tree Root (三齿圣诞树型高承载榫头)",
+    "platform_dimensions_mm": [
+      42.0,
+      24.0,
+      6.0
+    ]
+  },
+  "material": {
+    "name": "Inconel 718 (高强度沉淀硬化镍基高温合金)",
+    "density_kg_mm3": 8.19e-06,
+    "density_kg_m3": 8190.0,
+    "yield_strength_rt_mpa": 1030.0,
+    "yield_strength_high_temp_mpa": 880.0,
+    "ultimate_tensile_strength_mpa": 1240.0,
+    "poisson_ratio": 0.294,
+    "youngs_modulus_gpa": 205.0
+  },
+  "operating_conditions": {
+    "rated_speed_rpm": 14000,
+    "angular_velocity_rad_s": 1466.1,
+    "operating_temperature_c": 650.0,
+    "minimum_safety_factor_fos": 1.5
+  },
+  "machining_processes": [
+    "Operation 1: Fir-Tree Root Precision Broaching / Wire-EDM (圣诞树榫头精密成型加工)",
+    "Operation 2: 5-Axis Simultaneous Freeform Airfoil Milling (五轴联动空间变截面扭曲叶身铣削)",
+    "Operation 3: Leading & Trailing Edge Finishing (进排气边精密抛光与轮廓精修)"
+  ]
+}

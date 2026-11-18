@@ -10,6 +10,7 @@ import json
 import os
 import subprocess
 import sys
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -62,7 +63,9 @@ class _StubArm:
 
 class TestRepeatsMechanics(unittest.TestCase):
     def setUp(self):
-        self.tmp = Path(ROOT / "runs" / "eval" / "_test_repeats")
+        # 输出目录放系统 TEMP：_run 复用同名 out 目录时会 rmtree，仓库内路径
+        # 会被宿主 safe-delete 垫片的批量删除阈值拦成 SystemExit（全仓假红）。
+        self.tmp = Path(tempfile.gettempdir()) / "virtu_test_repeats"
         self.tmp.mkdir(parents=True, exist_ok=True)
 
     def _run(self, seq, repeats=1, case_ids_file=None, dims="toolcall"):

@@ -57,7 +57,7 @@ MOE_KEEP_ALIVE = os.environ.get("ROUTER_MOE_KEEP_ALIVE", "0")
 # 显式 pin num_gpu 会关掉 llama.cpp 的 auto-fit，超配不是降级而是直接打崩服务
 # （2026-11-07 实测：ctx4096 pin 30 需 6580 MiB 对 5080 MiB 空闲 -> 服务崩；22 也超安全位）。
 # 故 GEN_OPTS_HARD 不再钉 num_gpu，由 _hard_num_gpu() 运行时推导。
-GEN_OPTS_FAST = {"temperature": 0.1, "num_ctx": 4096, "num_gpu": 99,
+GEN_OPTS_FAST = {"temperature": 0.1, "num_ctx": 8192, "num_gpu": 99,
                  "repeat_penalty": 1.15, "presence_penalty": 0.3, "min_p": 0.05}
 GEN_OPTS_HARD = {"temperature": 0.1, "num_ctx": 4096}
 

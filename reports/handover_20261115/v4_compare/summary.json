@@ -1,0 +1,65 @@
+{
+  "grader_sha256_imported": "48c8230eaafb29bb25f1687e05417ffd5b29f03db2a9c9a1a2103b97eece871d",
+  "measurement_version": "probes-2026-11-15-v2",
+  "generated_at": "2026-11-16 19:07:38",
+  "runs": [
+    {
+      "tag": "virtu-six-software:v3",
+      "round": 1,
+      "started_at": "2026-11-16 19:07:38",
+      "runtime_s": 235.1,
+      "tags_digest_before": "35cd9e06c40e6a4faf4bd567da68d0ecdb58058f432cf543492bc9ff2b7ca69b",
+      "tags_digest_after": "35cd9e06c40e6a4faf4bd567da68d0ecdb58058f432cf543492bc9ff2b7ca69b",
+      "drifted": false,
+      "error": null,
+      "total": 10,
+      "passed": 10,
+      "failed": {}
+    },
+    {
+      "tag": "virtu-six-software:v3",
+      "round": 2,
+      "started_at": "2026-11-16 19:11:36",
+      "runtime_s": 230.7,
+      "tags_digest_before": "35cd9e06c40e6a4faf4bd567da68d0ecdb58058f432cf543492bc9ff2b7ca69b",
+      "tags_digest_after": "35cd9e06c40e6a4faf4bd567da68d0ecdb58058f432cf543492bc9ff2b7ca69b",
+      "drifted": false,
+      "error": null,
+      "total": 10,
+      "passed": 10,
+      "failed": {}
+    },
+    {
+      "tag": "virtu-six-software:v4-local-repair",
+      "round": 1,
+      "started_at": "2026-11-16 19:15:30",
+      "runtime_s": 337.6,
+      "tags_digest_before": "9654750663184e4c932f8c5909b31d67a790e88ea20f1c620b7e8d8b8277241d",
+      "tags_digest_after": "9654750663184e4c932f8c5909b31d67a790e88ea20f1c620b7e8d8b8277241d",
+      "drifted": false,
+      "error": null,
+      "total": 10,
+      "passed": 8,
+      "failed": {
+        "lame_stress_probe": "missing_sigma_theta_33.33",
+        "vericut_autodiff_probe": "missing_color:blue"
+      }
+    },
+    {
+      "tag": "virtu-six-software:v4-local-repair",
+      "round": 2,
+      "started_at": "2026-11-16 19:21:10",
+      "runtime_s": 257.1,
+      "tags_digest_before": "9654750663184e4c932f8c5909b31d67a790e88ea20f1c620b7e8d8b8277241d",
+      "tags_digest_after": "9654750663184e4c932f8c5909b31d67a790e88ea20f1c620b7e8d8b8277241d",
+      "drifted": false,
+      "error": null,
+      "total": 10,
+      "passed": 8,
+      "failed": {
+        "lame_stress_probe": "missing_sigma_theta_33.33",
+        "vericut_autodiff_probe": "missing_color:blue"
+      }
+    }
+  ]
+}

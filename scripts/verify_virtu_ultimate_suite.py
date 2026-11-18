@@ -240,7 +240,7 @@ final_mass = scaling_factor * 7.85
 ## 5. NVIDIA Modulus PINN 力学代理与 SIMP 拓扑优化实测
 - **连续介质弹性力学求解耗时**: `{pinn_res.computation_time_ms:.2f} ms` (远低于 10ms 上限，比传统 FEA 快 1000 倍)
 - **等效应力 / 最大形变**: `{pinn_res.peak_von_mises_mpa:.2f} MPa` / `{pinn_res.max_displacement_mm:.5f} mm`
-- **安全系数 (FOS)**: `{pinn_res.safety_factor_fos:.2f}` (严格满足 $FOS \ge 1.5$)
+- **安全系数 (FOS)**: `{pinn_res.safety_factor_fos:.2f}` (严格满足 $FOS \\ge 1.5$)
 - **SIMP 拓扑轻量化减重潜力**: 建议优化壁厚与中间卸荷槽，**实现 {pinn_res.topology_mass_reduction_pct:.1f}% 结构减重**。
 
 ---

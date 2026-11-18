@@ -1,0 +1,921 @@
+{
+  "summary_meta": {
+    "generated_by": "scripts/eval_all_models_live.py",
+    "case_dir": "data/benchmark/virtu_eval_v1",
+    "case_file_sha256": {
+      "boundary.jsonl": "d0171f2c012609f9ba205c8c070392229a94be40089c5377bb9d980c93a06d7f",
+      "generalization.jsonl": "4f5c114b9b047446b7158e8c7b78586001988a3bd95f9144dc6c09f5fa357f41",
+      "generation.jsonl": "3ac2ff57f2eb52a7ac77d7fc0878135fdd5bb9a9e5b7e12ec7c9e727eadefa5c",
+      "instruction.jsonl": "88aa16f29a2a1b592d8bc7c8c5ee6a2204957d8336d73a02743b81f645505285",
+      "knowledge.jsonl": "3546c40f3ce82a75369e119d61caab2f3373b7fec6613cede70fa5b11d819b5f",
+      "multimodal.jsonl": "baa7fd372ee49868d5bbdc4d67c73a3f77d43200d35db8d501f3b6cf9744b543",
+      "reasoning.jsonl": "3f84a8ca2fb6f5500cd4ce1f31766533d08e13ebf781360b7ee9990d12ff237b",
+      "toolcall.jsonl": "f758f28420f3baed1e3914192ebced6c6a48055ce2d70a1e8748957cd0b52a1a"
+    },
+    "grader_sha256": "5024fe5cfc85b6ac1792256fdc22b5ecfa66e3bf72698c48feea8399cfd7224c",
+    "runner_sha256": "22adde814c9d41427cce6723657aee2db53fbb5cb68ed2ba4f5e329ab1f3f88a",
+    "dims": [
+      "reasoning",
+      "knowledge",
+      "instruction",
+      "generation",
+      "generalization",
+      "boundary",
+      "toolcall"
+    ],
+    "unmeasured_dims": [
+      "multimodal"
+    ],
+    "scoring_contract": "case=命中权重/总权重x100; dim=有效用例得分算术平均; overall=sum(维度分x维度权重)/sum(权重); transport_error/dry_run 不计入均值，其余判据照实计分",
+    "params": {
+      "per_dim": 1,
+      "tiers": "easy,medium",
+      "sample": {
+        "easy": 1,
+        "medium": 1
+      },
+      "max_tokens": 128,
+      "num_ctx": 1024,
+      "temperature": 0.0,
+      "seed": 1234,
+      "timeout": 90
+    },
+    "started": "2026-11-07T18:52:02+0800",
+    "ollama_endpoint": "http://127.0.0.1:11434",
+    "last_update": "2026-11-07T18:57:46+0800"
+  },
+  "accepted": {
+    "qwen2.5:1.5b": {
+      "run_id": "99194b6efdf95fe3",
+      "model_digest": "65ec06548149b04c096a120e4a6da9d4017ea809c91734ea5631e89f96ddc57b",
+      "model_tag": "qwen2.5:1.5b",
+      "dimensions": {
+        "toolcall": {
+          "score": 33.34,
+          "n": 2,
+          "n_truncated": 1
+        },
+        "reasoning": {
+          "score": 20.0,
+          "n": 2,
+          "n_truncated": 2
+        },
+        "knowledge": {
+          "score": 50.0,
+          "n": 2,
+          "n_truncated": 1
+        },
+        "instruction": {
+          "score": 83.34,
+          "n": 2,
+          "n_truncated": 0
+        },
+        "boundary": {
+          "score": 66.67,
+          "n": 2,
+          "n_truncated": 2
+        },
+        "generation": {
+          "score": 12.5,
+          "n": 2,
+          "n_truncated": 1
+        },
+        "generalization": {
+          "score": 24.29,
+          "n": 2,
+          "n_truncated": 0
+        }
+      },
+      "overall_weighted": 42.3,
+      "gate": {
+        "expected_cases": 14,
+        "recorded_cases": 14,
+        "malformed_lines": 0,
+        "transport_errors": 0,
+        "transport_rate": 0.0,
+        "valid": true,
+        "problems": []
+      },
+      "rows": 14,
+      "raw_sha256": "788c8205ea1c8b94aab70651851271b70c04ccca74f57f5d25b28e2e2e56f63b",
+      "raw_path": "runs/eval/all_models_live_v2_20261107/qwen2.5_1.5b/raw.jsonl",
+      "leg_dir": "runs/eval/all_models_live_v2_20261107/qwen2.5_1.5b",
+      "seal": {
+        "raw_sha256": "788c8205ea1c8b94aab70651851271b70c04ccca74f57f5d25b28e2e2e56f63b",
+        "rows": 14,
+        "sealed_at": "2026-11-07T18:52:22",
+        "owner": "eval_all_models_live"
+      },
+      "case_file_sha256": {
+        "boundary.jsonl": "d0171f2c012609f9ba205c8c070392229a94be40089c5377bb9d980c93a06d7f",
+        "generalization.jsonl": "4f5c114b9b047446b7158e8c7b78586001988a3bd95f9144dc6c09f5fa357f41",
+        "generation.jsonl": "3ac2ff57f2eb52a7ac77d7fc0878135fdd5bb9a9e5b7e12ec7c9e727eadefa5c",
+        "instruction.jsonl": "88aa16f29a2a1b592d8bc7c8c5ee6a2204957d8336d73a02743b81f645505285",
+        "knowledge.jsonl": "3546c40f3ce82a75369e119d61caab2f3373b7fec6613cede70fa5b11d819b5f",
+        "multimodal.jsonl": "baa7fd372ee49868d5bbdc4d67c73a3f77d43200d35db8d501f3b6cf9744b543",
+        "reasoning.jsonl": "3f84a8ca2fb6f5500cd4ce1f31766533d08e13ebf781360b7ee9990d12ff237b",
+        "toolcall.jsonl": "f758f28420f3baed1e3914192ebced6c6a48055ce2d70a1e8748957cd0b52a1a"
+      },
+      "grader_sha256": "5024fe5cfc85b6ac1792256fdc22b5ecfa66e3bf72698c48feea8399cfd7224c",
+      "tools_gate": {
+        "applicable": true,
+        "schema_exposed": false,
+        "verdict": "waived_text_json_protocol",
+        "note": "toolcall 用例的判分锚定响应文本中的 JSON 字面量；本轮未注入工具 schema，分数不得当作原生 tool-calling 能力、也不得与历史 16 工具腿比较"
+      },
+      "served_layers": {
+        "model": "sha256:183715c435899236895da3869489cc30ac241476b4971a20285b1a462818a5b4",
+        "model_bytes": 986048512,
+        "system": "sha256:66b9ea09bd5b7099cbb4fc820f31b575c0366fa439b08245566692c6784e281e",
+        "system_bytes": 68,
+        "template": "sha256:eb4402837c7829a690fa845de4d7f3fd842c2adee476d5341da8a46ea9255175",
+        "template_bytes": 1482,
+        "manifest_digest": "sha256:377ac4d7aeefd5b870c9fccff9a6d4df36901d99fe3277c2f755bc401601ba1c"
+      },
+      "verdicts": {
+        "partial_truncated": 4,
+        "partial": 4,
+        "fail_all_criteria": 4,
+        "pass": 2
+      },
+      "aliases": [
+        "qwen2.5:1.5b"
+      ],
+      "family": "基座对照",
+      "wall_s": 19.9
+    },
+    "virtu-v3-all90-q4_0:latest": {
+      "run_id": "1a358422440b40c2",
+      "model_digest": "02eb58a03b3208485629d234f22af888920533d6202bd9904b91fca908a112c3",
+      "model_tag": "virtu-v3-all90-q4_0:latest",
+      "dimensions": {
+        "toolcall": {
+          "score": 50.0,
+          "n": 2,
+          "n_truncated": 0
+        },
+        "reasoning": {
+          "score": 70.0,
+          "n": 2,
+          "n_truncated": 0
+        },
+        "knowledge": {
+          "score": 75.0,
+          "n": 2,
+          "n_truncated": 0
+        },
+        "instruction": {
+          "score": 100.0,
+          "n": 2,
+          "n_truncated": 0
+        },
+        "boundary": {
+          "score": 83.34,
+          "n": 2,
+          "n_truncated": 0
+        },
+        "generation": {
+          "score": 65.0,
+          "n": 2,
+          "n_truncated": 1
+        },
+        "generalization": {
+          "score": 71.43,
+          "n": 2,
+          "n_truncated": 0
+        }
+      },
+      "overall_weighted": 72.73,
+      "gate": {
+        "expected_cases": 14,
+        "recorded_cases": 14,
+        "malformed_lines": 0,
+        "transport_errors": 0,
+        "transport_rate": 0.0,
+        "valid": true,
+        "problems": []
+      },
+      "rows": 14,
+      "raw_sha256": "14af6d3b40f4afc063da087a1c2acf654151ab68a3bfc01aef9e7c204618d0f2",
+      "raw_path": "runs/eval/all_models_live_v2_20261107/virtu-v3-all90-q4_0_latest/raw.jsonl",
+      "leg_dir": "runs/eval/all_models_live_v2_20261107/virtu-v3-all90-q4_0_latest",
+      "seal": {
+        "raw_sha256": "14af6d3b40f4afc063da087a1c2acf654151ab68a3bfc01aef9e7c204618d0f2",
+        "rows": 14,
+        "sealed_at": "2026-11-07T18:58:26",
+        "owner": "eval_all_models_live"
+      },
+      "case_file_sha256": {
+        "boundary.jsonl": "d0171f2c012609f9ba205c8c070392229a94be40089c5377bb9d980c93a06d7f",
+        "generalization.jsonl": "4f5c114b9b047446b7158e8c7b78586001988a3bd95f9144dc6c09f5fa357f41",
+        "generation.jsonl": "3ac2ff57f2eb52a7ac77d7fc0878135fdd5bb9a9e5b7e12ec7c9e727eadefa5c",
+        "instruction.jsonl": "88aa16f29a2a1b592d8bc7c8c5ee6a2204957d8336d73a02743b81f645505285",
+        "knowledge.jsonl": "3546c40f3ce82a75369e119d61caab2f3373b7fec6613cede70fa5b11d819b5f",
+        "multimodal.jsonl": "baa7fd372ee49868d5bbdc4d67c73a3f77d43200d35db8d501f3b6cf9744b543",
+        "reasoning.jsonl": "3f84a8ca2fb6f5500cd4ce1f31766533d08e13ebf781360b7ee9990d12ff237b",
+        "toolcall.jsonl": "f758f28420f3baed1e3914192ebced6c6a48055ce2d70a1e8748957cd0b52a1a"
+      },
+      "grader_sha256": "5024fe5cfc85b6ac1792256fdc22b5ecfa66e3bf72698c48feea8399cfd7224c",
+      "tools_gate": {
+        "applicable": true,
+        "schema_exposed": false,
+        "verdict": "waived_text_json_protocol",
+        "note": "toolcall 用例的判分锚定响应文本中的 JSON 字面量；本轮未注入工具 schema，分数不得当作原生 tool-calling 能力、也不得与历史 16 工具腿比较"
+      },
+      "served_layers": {
+        "model": "sha256:293cdac3e52f6340208967b743ee4a1d67684a24f8a8f011849423e34c1ed9c2",
+        "model_bytes": 4614301760,
+        "system": "sha256:7f997deb7e1bee7ec81225655fc1e91dbc416beaf9c571ae4d9ac654d19107fb",
+        "system_bytes": 702,
+        "parameters": "sha256:1a0bb166630ea1b00cf83f991351b2aa299934d93903f1fcabd2b907bf7edfc9",
+        "parameters_bytes": 81,
+        "manifest_digest": "sha256:6553c1ef955b37c76202f8b233b7225d4dbd799042ea03145995181af69ad32f"
+      },
+      "verdicts": {
+        "pass": 6,
+        "partial": 7,
+        "partial_truncated": 1
+      },
+      "aliases": [
+        "virtu-v3-all90-q4_0:latest"
+      ],
+      "family": "其它/实验",
+      "wall_s": 39.8
+    },
+    "virtu-13.63b-q4_0:latest": {
+      "run_id": "057a86c0d4cc737c",
+      "model_digest": "a3daaed3182cd43b5d5b64b3c808e92c01ade4d19ed9d93b5b1e3ed39939db5e",
+      "model_tag": "virtu-13.63b-q4_0:latest",
+      "dimensions": {
+        "toolcall": {
+          "score": 33.34,
+          "n": 2,
+          "n_truncated": 0
+        },
+        "reasoning": {
+          "score": 50.0,
+          "n": 2,
+          "n_truncated": 1
+        },
+        "knowledge": {
+          "score": 75.0,
+          "n": 2,
+          "n_truncated": 1
+        },
+        "instruction": {
+          "score": 100.0,
+          "n": 2,
+          "n_truncated": 0
+        },
+        "boundary": {
+          "score": 66.67,
+          "n": 2,
+          "n_truncated": 1
+        },
+        "generation": {
+          "score": 55.0,
+          "n": 2,
+          "n_truncated": 0
+        },
+        "generalization": {
+          "score": 31.43,
+          "n": 2,
+          "n_truncated": 0
+        }
+      },
+      "overall_weighted": 59.33,
+      "gate": {
+        "expected_cases": 14,
+        "recorded_cases": 14,
+        "malformed_lines": 0,
+        "transport_errors": 0,
+        "transport_rate": 0.0,
+        "valid": true,
+        "problems": []
+      },
+      "rows": 14,
+      "raw_sha256": "32867038c9badf99c3b0ad6fe2ca9e25346f95dc0a578bb65ce5574fbecf89a5",
+      "raw_path": "runs/eval/all_models_live_v2_20261107/virtu-13.63b-q4_0_latest/raw.jsonl",
+      "leg_dir": "runs/eval/all_models_live_v2_20261107/virtu-13.63b-q4_0_latest",
+      "seal": {
+        "raw_sha256": "32867038c9badf99c3b0ad6fe2ca9e25346f95dc0a578bb65ce5574fbecf89a5",
+        "rows": 14,
+        "sealed_at": "2026-11-07T19:03:22",
+        "owner": "eval_all_models_live"
+      },
+      "case_file_sha256": {
+        "boundary.jsonl": "d0171f2c012609f9ba205c8c070392229a94be40089c5377bb9d980c93a06d7f",
+        "generalization.jsonl": "4f5c114b9b047446b7158e8c7b78586001988a3bd95f9144dc6c09f5fa357f41",
+        "generation.jsonl": "3ac2ff57f2eb52a7ac77d7fc0878135fdd5bb9a9e5b7e12ec7c9e727eadefa5c",
+        "instruction.jsonl": "88aa16f29a2a1b592d8bc7c8c5ee6a2204957d8336d73a02743b81f645505285",
+        "knowledge.jsonl": "3546c40f3ce82a75369e119d61caab2f3373b7fec6613cede70fa5b11d819b5f",
+        "multimodal.jsonl": "baa7fd372ee49868d5bbdc4d67c73a3f77d43200d35db8d501f3b6cf9744b543",
+        "reasoning.jsonl": "3f84a8ca2fb6f5500cd4ce1f31766533d08e13ebf781360b7ee9990d12ff237b",
+        "toolcall.jsonl": "f758f28420f3baed1e3914192ebced6c6a48055ce2d70a1e8748957cd0b52a1a"
+      },
+      "grader_sha256": "5024fe5cfc85b6ac1792256fdc22b5ecfa66e3bf72698c48feea8399cfd7224c",
+      "tools_gate": {
+        "applicable": true,
+        "schema_exposed": false,
+        "verdict": "waived_text_json_protocol",
+        "note": "toolcall 用例的判分锚定响应文本中的 JSON 字面量；本轮未注入工具 schema，分数不得当作原生 tool-calling 能力、也不得与历史 16 工具腿比较"
+      },
+      "served_layers": {
+        "model": "sha256:8610e63361db3280d28f656e48ba996db26a6459ca15c2401daa99ee7ccdeed7",
+        "model_bytes": 8314589728,
+        "template": "sha256:0b12fdcb170ac680dec4aaa3aedf5fa9463b1bc2b6c017025472de44194724ef",
+        "template_bytes": 1724,
+        "system": "sha256:01160343b486d7898cd76edd95bc2db20f0bfc8d81d61848f6b9150535c6df2c",
+        "system_bytes": 184,
+        "parameters": "sha256:da61d30177175753e7c4aae6a42cbad2dce46d015de564e5a5e777d35953b606",
+        "parameters_bytes": 149,
+        "manifest_digest": "sha256:3232ec12031cf98d0e1f55a460b266fbb86c5e56c4f2866f4b8931d14b7a6e78"
+      },
+      "verdicts": {
+        "partial": 7,
+        "partial_truncated": 1,
+        "pass": 4,
+        "fail_all_criteria": 2
+      },
+      "aliases": [
+        "virtu-13.63b-q4_0:latest"
+      ],
+      "family": "13B 家族",
+      "wall_s": 296.7
+    },
+    "virtu-13.63b:latest": {
+      "run_id": "9a2a9157070b17ec",
+      "model_digest": "0638c84b93d0f647269bf47397fea4ab4fa085751c9df2dfceeeb5ae39cc5f49",
+      "model_tag": "virtu-13.63b:latest",
+      "dimensions": {
+        "toolcall": {
+          "score": 33.34,
+          "n": 2,
+          "n_truncated": 0
+        },
+        "reasoning": {
+          "score": 26.66,
+          "n": 2,
+          "n_truncated": 1
+        },
+        "knowledge": {
+          "score": 50.0,
+          "n": 2,
+          "n_truncated": 1
+        },
+        "instruction": {
+          "score": 100.0,
+          "n": 2,
+          "n_truncated": 0
+        },
+        "boundary": {
+          "score": 83.34,
+          "n": 2,
+          "n_truncated": 0
+        },
+        "generation": {
+          "score": 32.5,
+          "n": 2,
+          "n_truncated": 0
+        },
+        "generalization": {
+          "score": 24.29,
+          "n": 2,
+          "n_truncated": 0
+        }
+      },
+      "overall_weighted": 50.24,
+      "gate": {
+        "expected_cases": 14,
+        "recorded_cases": 14,
+        "malformed_lines": 0,
+        "transport_errors": 0,
+        "transport_rate": 0.0,
+        "valid": true,
+        "problems": []
+      },
+      "rows": 14,
+      "raw_sha256": "070c5216598639df7b7bf2ad8e4a7e2adf5d9cdf3672379588d5393f599a0775",
+      "raw_path": "runs/eval/all_models_live_v2_20261107/virtu-13.63b_latest/raw.jsonl",
+      "leg_dir": "runs/eval/all_models_live_v2_20261107/virtu-13.63b_latest",
+      "seal": {
+        "raw_sha256": "070c5216598639df7b7bf2ad8e4a7e2adf5d9cdf3672379588d5393f599a0775",
+        "rows": 14,
+        "sealed_at": "2026-11-07T19:04:26",
+        "owner": "eval_all_models_live"
+      },
+      "case_file_sha256": {
+        "boundary.jsonl": "d0171f2c012609f9ba205c8c070392229a94be40089c5377bb9d980c93a06d7f",
+        "generalization.jsonl": "4f5c114b9b047446b7158e8c7b78586001988a3bd95f9144dc6c09f5fa357f41",
+        "generation.jsonl": "3ac2ff57f2eb52a7ac77d7fc0878135fdd5bb9a9e5b7e12ec7c9e727eadefa5c",
+        "instruction.jsonl": "88aa16f29a2a1b592d8bc7c8c5ee6a2204957d8336d73a02743b81f645505285",
+        "knowledge.jsonl": "3546c40f3ce82a75369e119d61caab2f3373b7fec6613cede70fa5b11d819b5f",
+        "multimodal.jsonl": "baa7fd372ee49868d5bbdc4d67c73a3f77d43200d35db8d501f3b6cf9744b543",
+        "reasoning.jsonl": "3f84a8ca2fb6f5500cd4ce1f31766533d08e13ebf781360b7ee9990d12ff237b",
+        "toolcall.jsonl": "f758f28420f3baed1e3914192ebced6c6a48055ce2d70a1e8748957cd0b52a1a"
+      },
+      "grader_sha256": "5024fe5cfc85b6ac1792256fdc22b5ecfa66e3bf72698c48feea8399cfd7224c",
+      "tools_gate": {
+        "applicable": true,
+        "schema_exposed": false,
+        "verdict": "waived_text_json_protocol",
+        "note": "toolcall 用例的判分锚定响应文本中的 JSON 字面量；本轮未注入工具 schema，分数不得当作原生 tool-calling 能力、也不得与历史 16 工具腿比较"
+      },
+      "served_layers": {
+        "model": "sha256:154d486ae5d87675f032f1792fd9a88c8ff6255457c18f309edb5b9b2cd65dbd",
+        "model_bytes": 6318050848,
+        "template": "sha256:0b12fdcb170ac680dec4aaa3aedf5fa9463b1bc2b6c017025472de44194724ef",
+        "template_bytes": 1724,
+        "system": "sha256:01160343b486d7898cd76edd95bc2db20f0bfc8d81d61848f6b9150535c6df2c",
+        "system_bytes": 184,
+        "parameters": "sha256:292bb9ff26483daf1eed79dea7fa78939efd551d87be5d364f22d0bd4c69b756",
+        "parameters_bytes": 177,
+        "manifest_digest": "sha256:dcd917c0113eab492112586a7d3de22c2f440618856b664445904c3eac69c914"
+      },
+      "verdicts": {
+        "pass": 4,
+        "partial": 7,
+        "fail_all_criteria": 2,
+        "partial_truncated": 1
+      },
+      "aliases": [
+        "virtu-13.63b:latest",
+        "virtu-13.63b:asym"
+      ],
+      "family": "13B 家族",
+      "wall_s": 55.0
+    },
+    "virtu-13.63b:wm-v1": {
+      "run_id": "22c8d15a8aadb087",
+      "model_digest": "99a7e0c73151e9b19b793ab43a01c557cdab690851a1eb5c6f5f7b06a3fb64d5",
+      "model_tag": "virtu-13.63b:wm-v1",
+      "dimensions": {
+        "toolcall": {
+          "score": 16.66,
+          "n": 2,
+          "n_truncated": 1
+        },
+        "reasoning": {
+          "score": 26.66,
+          "n": 2,
+          "n_truncated": 1
+        },
+        "knowledge": {
+          "score": 75.0,
+          "n": 2,
+          "n_truncated": 0
+        },
+        "instruction": {
+          "score": 100.0,
+          "n": 2,
+          "n_truncated": 0
+        },
+        "boundary": {
+          "score": 83.34,
+          "n": 2,
+          "n_truncated": 0
+        },
+        "generation": {
+          "score": 12.5,
+          "n": 2,
+          "n_truncated": 2
+        },
+        "generalization": {
+          "score": 21.43,
+          "n": 2,
+          "n_truncated": 1
+        }
+      },
+      "overall_weighted": 48.67,
+      "gate": {
+        "expected_cases": 14,
+        "recorded_cases": 14,
+        "malformed_lines": 0,
+        "transport_errors": 0,
+        "transport_rate": 0.0,
+        "valid": true,
+        "problems": []
+      },
+      "rows": 14,
+      "raw_sha256": "149e0129ecd61d1b4fb9b90cef9d62c1f8d67bfbc0df29c676ea3cba87645555",
+      "raw_path": "runs/eval/all_models_live_v2_20261107/virtu-13.63b_wm-v1/raw.jsonl",
+      "leg_dir": "runs/eval/all_models_live_v2_20261107/virtu-13.63b_wm-v1",
+      "seal": {
+        "raw_sha256": "149e0129ecd61d1b4fb9b90cef9d62c1f8d67bfbc0df29c676ea3cba87645555",
+        "rows": 14,
+        "sealed_at": "2026-11-07T19:13:23",
+        "owner": "eval_all_models_live"
+      },
+      "case_file_sha256": {
+        "boundary.jsonl": "d0171f2c012609f9ba205c8c070392229a94be40089c5377bb9d980c93a06d7f",
+        "generalization.jsonl": "4f5c114b9b047446b7158e8c7b78586001988a3bd95f9144dc6c09f5fa357f41",
+        "generation.jsonl": "3ac2ff57f2eb52a7ac77d7fc0878135fdd5bb9a9e5b7e12ec7c9e727eadefa5c",
+        "instruction.jsonl": "88aa16f29a2a1b592d8bc7c8c5ee6a2204957d8336d73a02743b81f645505285",
+        "knowledge.jsonl": "3546c40f3ce82a75369e119d61caab2f3373b7fec6613cede70fa5b11d819b5f",
+        "multimodal.jsonl": "baa7fd372ee49868d5bbdc4d67c73a3f77d43200d35db8d501f3b6cf9744b543",
+        "reasoning.jsonl": "3f84a8ca2fb6f5500cd4ce1f31766533d08e13ebf781360b7ee9990d12ff237b",
+        "toolcall.jsonl": "f758f28420f3baed1e3914192ebced6c6a48055ce2d70a1e8748957cd0b52a1a"
+      },
+      "grader_sha256": "5024fe5cfc85b6ac1792256fdc22b5ecfa66e3bf72698c48feea8399cfd7224c",
+      "tools_gate": {
+        "applicable": true,
+        "schema_exposed": false,
+        "verdict": "waived_text_json_protocol",
+        "note": "toolcall 用例的判分锚定响应文本中的 JSON 字面量；本轮未注入工具 schema，分数不得当作原生 tool-calling 能力、也不得与历史 16 工具腿比较"
+      },
+      "served_layers": {
+        "model": "sha256:8610e63361db3280d28f656e48ba996db26a6459ca15c2401daa99ee7ccdeed7",
+        "model_bytes": 8314589728,
+        "template": "sha256:0b12fdcb170ac680dec4aaa3aedf5fa9463b1bc2b6c017025472de44194724ef",
+        "template_bytes": 1724,
+        "system": "sha256:64753969e519313e851824b5183d18d1208f0fd9c584a44af823e904131ec4ef",
+        "system_bytes": 304,
+        "parameters": "sha256:ee8bb9cfc24b4babde78357e34b8fb29964248c12b7dd90960df3034fa7bc009",
+        "parameters_bytes": 159,
+        "manifest_digest": "sha256:3232ec12031cf98d0e1f55a460b266fbb86c5e56c4f2866f4b8931d14b7a6e78"
+      },
+      "verdicts": {
+        "partial": 3,
+        "pass": 4,
+        "fail_all_criteria": 3,
+        "partial_truncated": 4
+      },
+      "aliases": [
+        "virtu-13.63b:wm-v1"
+      ],
+      "family": "13B 家族",
+      "wall_s": 265.1
+    },
+    "virtu-13.63b:hardened": {
+      "run_id": "fdd614d988ffc9df",
+      "model_digest": "16888647dd4aa01982568d8324a27518493bd43b2b047c24ecb0493f63d5662f",
+      "model_tag": "virtu-13.63b:hardened",
+      "dimensions": {
+        "toolcall": {
+          "score": 33.34,
+          "n": 2,
+          "n_truncated": 0
+        },
+        "reasoning": {
+          "score": 20.0,
+          "n": 2,
+          "n_truncated": 1
+        },
+        "knowledge": {
+          "score": 58.34,
+          "n": 2,
+          "n_truncated": 2
+        },
+        "instruction": {
+          "score": 100.0,
+          "n": 2,
+          "n_truncated": 0
+        },
+        "boundary": {
+          "score": 66.67,
+          "n": 2,
+          "n_truncated": 2
+        },
+        "generation": {
+          "score": 45.0,
+          "n": 2,
+          "n_truncated": 1
+        },
+        "generalization": {
+          "score": 31.43,
+          "n": 2,
+          "n_truncated": 0
+        }
+      },
+      "overall_weighted": 50.18,
+      "gate": {
+        "expected_cases": 14,
+        "recorded_cases": 14,
+        "malformed_lines": 0,
+        "transport_errors": 0,
+        "transport_rate": 0.0,
+        "valid": true,
+        "problems": []
+      },
+      "rows": 14,
+      "raw_sha256": "6fd16ee370be20a44840b91a4ed9dbd9d5b87fc8ffc3e812c060128723b03c78",
+      "raw_path": "runs/eval/all_models_live_v2_20261107/virtu-13.63b_hardened/raw.jsonl",
+      "leg_dir": "runs/eval/all_models_live_v2_20261107/virtu-13.63b_hardened",
+      "seal": {
+        "raw_sha256": "6fd16ee370be20a44840b91a4ed9dbd9d5b87fc8ffc3e812c060128723b03c78",
+        "rows": 14,
+        "sealed_at": "2026-11-07T19:18:50",
+        "owner": "eval_all_models_live"
+      },
+      "case_file_sha256": {
+        "boundary.jsonl": "d0171f2c012609f9ba205c8c070392229a94be40089c5377bb9d980c93a06d7f",
+        "generalization.jsonl": "4f5c114b9b047446b7158e8c7b78586001988a3bd95f9144dc6c09f5fa357f41",
+        "generation.jsonl": "3ac2ff57f2eb52a7ac77d7fc0878135fdd5bb9a9e5b7e12ec7c9e727eadefa5c",
+        "instruction.jsonl": "88aa16f29a2a1b592d8bc7c8c5ee6a2204957d8336d73a02743b81f645505285",
+        "knowledge.jsonl": "3546c40f3ce82a75369e119d61caab2f3373b7fec6613cede70fa5b11d819b5f",
+        "multimodal.jsonl": "baa7fd372ee49868d5bbdc4d67c73a3f77d43200d35db8d501f3b6cf9744b543",
+        "reasoning.jsonl": "3f84a8ca2fb6f5500cd4ce1f31766533d08e13ebf781360b7ee9990d12ff237b",
+        "toolcall.jsonl": "f758f28420f3baed1e3914192ebced6c6a48055ce2d70a1e8748957cd0b52a1a"
+      },
+      "grader_sha256": "5024fe5cfc85b6ac1792256fdc22b5ecfa66e3bf72698c48feea8399cfd7224c",
+      "tools_gate": {
+        "applicable": true,
+        "schema_exposed": false,
+        "verdict": "waived_text_json_protocol",
+        "note": "toolcall 用例的判分锚定响应文本中的 JSON 字面量；本轮未注入工具 schema，分数不得当作原生 tool-calling 能力、也不得与历史 16 工具腿比较"
+      },
+      "served_layers": {
+        "model": "sha256:8610e63361db3280d28f656e48ba996db26a6459ca15c2401daa99ee7ccdeed7",
+        "model_bytes": 8314589728,
+        "template": "sha256:0b12fdcb170ac680dec4aaa3aedf5fa9463b1bc2b6c017025472de44194724ef",
+        "template_bytes": 1724,
+        "parameters": "sha256:1c8d77e15efd157631e086b46e6f23f6e41474133ac6b70a1839bdf4b94d1717",
+        "parameters_bytes": 196,
+        "manifest_digest": "sha256:3232ec12031cf98d0e1f55a460b266fbb86c5e56c4f2866f4b8931d14b7a6e78"
+      },
+      "verdicts": {
+        "partial_truncated": 4,
+        "partial": 5,
+        "pass": 3,
+        "fail_all_criteria": 2
+      },
+      "aliases": [
+        "virtu-13.63b:hardened"
+      ],
+      "family": "13B 家族",
+      "wall_s": 327.1
+    },
+    "virtu-moe-14b:hardened": {
+      "run_id": "c407c80da18b4f16",
+      "model_digest": "e71e5f7b669c6ea2215bfe6dbbde7ef8348a37f894f478a9ee7760e6e036a833",
+      "model_tag": "virtu-moe-14b:hardened",
+      "dimensions": {
+        "toolcall": {
+          "score": 33.34,
+          "n": 2,
+          "n_truncated": 0
+        },
+        "reasoning": {
+          "score": 10.0,
+          "n": 2,
+          "n_truncated": 1
+        },
+        "knowledge": {
+          "score": 75.0,
+          "n": 2,
+          "n_truncated": 1
+        },
+        "instruction": {
+          "score": 100.0,
+          "n": 2,
+          "n_truncated": 0
+        },
+        "boundary": {
+          "score": 66.67,
+          "n": 2,
+          "n_truncated": 2
+        },
+        "generation": {
+          "score": 12.5,
+          "n": 2,
+          "n_truncated": 1
+        },
+        "generalization": {
+          "score": 31.43,
+          "n": 2,
+          "n_truncated": 0
+        }
+      },
+      "overall_weighted": 47.57,
+      "gate": {
+        "expected_cases": 14,
+        "recorded_cases": 14,
+        "malformed_lines": 0,
+        "transport_errors": 0,
+        "transport_rate": 0.0,
+        "valid": true,
+        "problems": []
+      },
+      "rows": 14,
+      "raw_sha256": "87df15b39cab797d705b43fcf938f57a2b75ec3cbe38c88fc408aadbc3591137",
+      "raw_path": "runs/eval/all_models_live_v2_20261107/virtu-moe-14b_hardened/raw.jsonl",
+      "leg_dir": "runs/eval/all_models_live_v2_20261107/virtu-moe-14b_hardened",
+      "seal": {
+        "raw_sha256": "87df15b39cab797d705b43fcf938f57a2b75ec3cbe38c88fc408aadbc3591137",
+        "rows": 14,
+        "sealed_at": "2026-11-07T19:21:17",
+        "owner": "eval_all_models_live"
+      },
+      "case_file_sha256": {
+        "boundary.jsonl": "d0171f2c012609f9ba205c8c070392229a94be40089c5377bb9d980c93a06d7f",
+        "generalization.jsonl": "4f5c114b9b047446b7158e8c7b78586001988a3bd95f9144dc6c09f5fa357f41",
+        "generation.jsonl": "3ac2ff57f2eb52a7ac77d7fc0878135fdd5bb9a9e5b7e12ec7c9e727eadefa5c",
+        "instruction.jsonl": "88aa16f29a2a1b592d8bc7c8c5ee6a2204957d8336d73a02743b81f645505285",
+        "knowledge.jsonl": "3546c40f3ce82a75369e119d61caab2f3373b7fec6613cede70fa5b11d819b5f",
+        "multimodal.jsonl": "baa7fd372ee49868d5bbdc4d67c73a3f77d43200d35db8d501f3b6cf9744b543",
+        "reasoning.jsonl": "3f84a8ca2fb6f5500cd4ce1f31766533d08e13ebf781360b7ee9990d12ff237b",
+        "toolcall.jsonl": "f758f28420f3baed1e3914192ebced6c6a48055ce2d70a1e8748957cd0b52a1a"
+      },
+      "grader_sha256": "5024fe5cfc85b6ac1792256fdc22b5ecfa66e3bf72698c48feea8399cfd7224c",
+      "tools_gate": {
+        "applicable": true,
+        "schema_exposed": false,
+        "verdict": "waived_text_json_protocol",
+        "note": "toolcall 用例的判分锚定响应文本中的 JSON 字面量；本轮未注入工具 schema，分数不得当作原生 tool-calling 能力、也不得与历史 16 工具腿比较"
+      },
+      "served_layers": {
+        "model": "sha256:0106872590e5b4fbf7a5a7c08452e9109faec91ebfce612af15906b216233ef5",
+        "model_bytes": 8320185248,
+        "template": "sha256:5752c8aeb42d47e9a1ee2a103e4fe837773d5fc4e16a968e632e122a819e8df7",
+        "template_bytes": 1720,
+        "parameters": "sha256:1c8d77e15efd157631e086b46e6f23f6e41474133ac6b70a1839bdf4b94d1717",
+        "parameters_bytes": 196,
+        "manifest_digest": "sha256:e73f09f5ed63e96c7732ee8d6ac1baaec9d4e229384adbfc0aa5b1b65593e047"
+      },
+      "verdicts": {
+        "partial_truncated": 3,
+        "partial": 5,
+        "fail_all_criteria": 3,
+        "pass": 3
+      },
+      "aliases": [
+        "virtu-moe-14b:hardened"
+      ],
+      "family": "MoE-14B",
+      "wall_s": 146.5
+    }
+  },
+  "rejected": {
+    "virtu-wm-v3:latest": {
+      "reason": "gate_invalid: {'expected_cases': 14, 'recorded_cases': 2, 'malformed_lines': 0, 'transport_errors': 2, 'transport_rate': 1.0, 'valid': False, 'problems': ['记录数 2 < 计划用例数 14（覆盖不全）', 'transport_error 占比 100.0% > 5%，本轮分数无效，需重跑', '全部记录均为传输失败，模型从未被真正问到']}",
+      "status": "failed"
+    },
+    "virtu-13b:gold": {
+      "reason": "gate_invalid: {'expected_cases': 14, 'recorded_cases': 14, 'malformed_lines': 0, 'transport_errors': 1, 'transport_rate': 0.0714, 'valid': False, 'problems': ['transport_error 占比 7.1% > 5%，本轮分数无效，需重跑']}",
+      "status": "failed"
+    }
+  },
+  "self_test": [
+    {
+      "name": "篡改单题分数（重封缄+伪摘要）",
+      "caught": true,
+      "reason": "维度 boundary 现场复算 83.34 != 记录 66.67"
+    },
+    {
+      "name": "删除一行（覆盖不全）",
+      "caught": true,
+      "reason": "完整性闸门判红: ['记录数 13 < 计划用例数 14（覆盖不全）']"
+    },
+    {
+      "name": "删除封缄",
+      "caught": true,
+      "reason": "封缄校验失败: leg: 未封缄，不得发布（谁写的、写完有没有人动过，都无从证明）"
+    },
+    {
+      "name": "植入 3 条 transport_error",
+      "caught": true,
+      "reason": "完整性闸门判红: ['transport_error 占比 21.4% > 5%，本轮分数无效，需重跑']"
+    },
+    {
+      "name": "抹掉一行 served_layers 身份",
+      "caught": true,
+      "reason": "存在无 served_layers 身份指纹的记录"
+    }
+  ],
+  "snapshots": [
+    {
+      "at": "2026-11-07T18:52:02+0800",
+      "phase": "start",
+      "tags": {
+        "virtu-wm-v3:latest": "be171996744bb5fe0e9fc79b2df5968e6f937af64a6be4b97bb30ac74c48c7bd",
+        "virtu-13.63b:latest": "0638c84b93d0f647269bf47397fea4ab4fa085751c9df2dfceeeb5ae39cc5f49",
+        "virtu-13.63b:asym": "0638c84b93d0f647269bf47397fea4ab4fa085751c9df2dfceeeb5ae39cc5f49",
+        "virtu-13b:gold": "15d834e00569054efa60677ab8e41bd26d28d8295d8030bae83d982fd8f803ef",
+        "virtu-13.63b:wm-v1": "99a7e0c73151e9b19b793ab43a01c557cdab690851a1eb5c6f5f7b06a3fb64d5",
+        "virtu-13.63b:hardened": "16888647dd4aa01982568d8324a27518493bd43b2b047c24ecb0493f63d5662f",
+        "virtu-moe-14b:hardened": "e71e5f7b669c6ea2215bfe6dbbde7ef8348a37f894f478a9ee7760e6e036a833",
+        "virtu-moe-14b:fast": "729abf24bddd49c3cf1ad3ca1ac9b1189404d99d62e050a66980884fc2e59ef4",
+        "virtu-moe-14b:latest": "729abf24bddd49c3cf1ad3ca1ac9b1189404d99d62e050a66980884fc2e59ef4",
+        "virtu-moe-14b:out-opt-sys": "887af3f474c3b9a888967efd418b57757b040f02f51dfd9f89c6f70d8d694de8",
+        "virtu-moe-14b:out-opt": "c3236d86ed3661d728f53a7854d5ac80002e5bef6789bc390e59df9276039b6a",
+        "virtu-moe-14b:q3km": "13fbf5e1232fa3056d813a28aa030eecc3e83886bf8148ed2224ca04a8348429",
+        "virtu-moe-14b:01068725": "ea0a6ea9f89d6885422826228192b1bfb5167ee4677fedcef263be2632efcd09",
+        "virtu-moe-14b:a2103c68": "4007223565e967063b8e01fdcb6333e9ff87235a5d2d600db82357e619b31e5e",
+        "bge-m3:latest": "7907646426070047a77226ac3e684fbbe8410524f7b4a74d02837e43f2146bab",
+        "virtu-production:latest": "b48811aea3be8f4b294e39a5a43c211ecc5f315ac240e5238d49b8556c4e5d24",
+        "virtu-dense-ties:q4": "5696d873631ab37f47898331b5fac5417e480dc3ac45640079047ed596b85c6c",
+        "virtu-dense-merged-v2:q4_0": "71550bf3eb84001646aaa53d6598547742a49308331494e709734c2f171c0037",
+        "virtu-dense-merged:q4_0": "c25d5fae9362a259378a8dc75e00219c9e49c5362764839d12deb7685800b127",
+        "virtu-moe-14b:semantic": "729abf24bddd49c3cf1ad3ca1ac9b1189404d99d62e050a66980884fc2e59ef4",
+        "virtu-comprehensive:fast": "e1b4a21e537e2244cd4a6aa4b3e446a7082a9b83752045065681ae1d98530c69",
+        "virtu-moe-14b:bf16": "7ed8dac6c7f45776d23da7c5d168b6312095da778a9a998442b1f73964473622",
+        "virtu-comprehensive:q3": "860f8e1e751d221bfd676f751222af39b937d530820833b2a394ff2bdc9a4ad9",
+        "virtu-comprehensive:think": "6b7c94f1dd648b3e107a461fd416b7322c1a4c99b0b0ae8c282d045f065f6cb5",
+        "virtu-disciplined:v1": "9fff19a2101ae7dec7277a1864c6a6815adaf14c1b01a517cda544be382c9818",
+        "virtu-comprehensive:latest": "aba2c916368bd16bc4fa26facbb05e74c5a9baebc5e3d1c37ba0780f8fd16d4e",
+        "virtu-master:latest": "a46aaae54d32593b8506c020a00dc23dbf2ad59d5b530668396633484129031f",
+        "virtu-test-nothink:latest": "fe5186854600c9cd4cd1de3ffb303850e7a879402c3d81ff795280996ed3f896",
+        "virtu-frozen:comp_v5": "33c12ba1b892f478b327739ce967b1daf6584aede1619df429b2484879cbabce",
+        "virtu-ties-v1:latest": "e6d1b8a8ecb5c03ad59c527c854125cd7ec25a868836805950f1b7501f6da08b",
+        "virtu-test-tool:latest": "4965ffe4770f9f7a77f96cfeb5ddbdcc96cc53d60f9219375a963ef8c7868b8d",
+        "virtu-extreme-256k:latest": "cbfcb551915a72b34e932bc01f5fc0771a95f383d63995ec14e02983ea31e8d1",
+        "qwen2.5:1.5b": "65ec06548149b04c096a120e4a6da9d4017ea809c91734ea5631e89f96ddc57b",
+        "virtu-longctx:latest": "e5412ad249b7c1ec8b6b734868f795430526a0c8d83a3dc274aed6756a404b94",
+        "qwen2.5:3b": "357c53fb659c5076de1d65ccb0b397446227b71a42be9d1603d46168015c9e4b",
+        "qwen2.5:7b-instruct-q4_K_M": "845dbda0ea48ed749caafd9e6037047aa19acfcfd82e704d7ca97d631a0b697e",
+        "qwen3:8b": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41",
+        "nomic-embed-text:latest": "0a109f422b47e3a30ba2b10eca18548e944e8a23073ee3f3e947efcf3c45e59f"
+      }
+    },
+    {
+      "at": "2026-11-07T18:52:22+0800",
+      "phase": "end",
+      "tags": {
+        "virtu-wm-v3:latest": "be171996744bb5fe0e9fc79b2df5968e6f937af64a6be4b97bb30ac74c48c7bd",
+        "virtu-13.63b:latest": "0638c84b93d0f647269bf47397fea4ab4fa085751c9df2dfceeeb5ae39cc5f49",
+        "virtu-13.63b:asym": "0638c84b93d0f647269bf47397fea4ab4fa085751c9df2dfceeeb5ae39cc5f49",
+        "virtu-13b:gold": "15d834e00569054efa60677ab8e41bd26d28d8295d8030bae83d982fd8f803ef",
+        "virtu-13.63b:wm-v1": "99a7e0c73151e9b19b793ab43a01c557cdab690851a1eb5c6f5f7b06a3fb64d5",
+        "virtu-13.63b:hardened": "16888647dd4aa01982568d8324a27518493bd43b2b047c24ecb0493f63d5662f",
+        "virtu-moe-14b:hardened": "e71e5f7b669c6ea2215bfe6dbbde7ef8348a37f894f478a9ee7760e6e036a833",
+        "virtu-moe-14b:fast": "729abf24bddd49c3cf1ad3ca1ac9b1189404d99d62e050a66980884fc2e59ef4",
+        "virtu-moe-14b:latest": "729abf24bddd49c3cf1ad3ca1ac9b1189404d99d62e050a66980884fc2e59ef4",
+        "virtu-moe-14b:out-opt-sys": "887af3f474c3b9a888967efd418b57757b040f02f51dfd9f89c6f70d8d694de8",
+        "virtu-moe-14b:out-opt": "c3236d86ed3661d728f53a7854d5ac80002e5bef6789bc390e59df9276039b6a",
+        "virtu-moe-14b:q3km": "13fbf5e1232fa3056d813a28aa030eecc3e83886bf8148ed2224ca04a8348429",
+        "virtu-moe-14b:01068725": "ea0a6ea9f89d6885422826228192b1bfb5167ee4677fedcef263be2632efcd09",
+        "virtu-moe-14b:a2103c68": "4007223565e967063b8e01fdcb6333e9ff87235a5d2d600db82357e619b31e5e",
+        "bge-m3:latest": "7907646426070047a77226ac3e684fbbe8410524f7b4a74d02837e43f2146bab",
+        "virtu-production:latest": "b48811aea3be8f4b294e39a5a43c211ecc5f315ac240e5238d49b8556c4e5d24",
+        "virtu-dense-ties:q4": "5696d873631ab37f47898331b5fac5417e480dc3ac45640079047ed596b85c6c",
+        "virtu-dense-merged-v2:q4_0": "71550bf3eb84001646aaa53d6598547742a49308331494e709734c2f171c0037",
+        "virtu-dense-merged:q4_0": "c25d5fae9362a259378a8dc75e00219c9e49c5362764839d12deb7685800b127",
+        "virtu-moe-14b:semantic": "729abf24bddd49c3cf1ad3ca1ac9b1189404d99d62e050a66980884fc2e59ef4",
+        "virtu-comprehensive:fast": "e1b4a21e537e2244cd4a6aa4b3e446a7082a9b83752045065681ae1d98530c69",
+        "virtu-moe-14b:bf16": "7ed8dac6c7f45776d23da7c5d168b6312095da778a9a998442b1f73964473622",
+        "virtu-comprehensive:q3": "860f8e1e751d221bfd676f751222af39b937d530820833b2a394ff2bdc9a4ad9",
+        "virtu-comprehensive:think": "6b7c94f1dd648b3e107a461fd416b7322c1a4c99b0b0ae8c282d045f065f6cb5",
+        "virtu-disciplined:v1": "9fff19a2101ae7dec7277a1864c6a6815adaf14c1b01a517cda544be382c9818",
+        "virtu-comprehensive:latest": "aba2c916368bd16bc4fa26facbb05e74c5a9baebc5e3d1c37ba0780f8fd16d4e",
+        "virtu-master:latest": "a46aaae54d32593b8506c020a00dc23dbf2ad59d5b530668396633484129031f",
+        "virtu-test-nothink:latest": "fe5186854600c9cd4cd1de3ffb303850e7a879402c3d81ff795280996ed3f896",
+        "virtu-frozen:comp_v5": "33c12ba1b892f478b327739ce967b1daf6584aede1619df429b2484879cbabce",
+        "virtu-ties-v1:latest": "e6d1b8a8ecb5c03ad59c527c854125cd7ec25a868836805950f1b7501f6da08b",
+        "virtu-test-tool:latest": "4965ffe4770f9f7a77f96cfeb5ddbdcc96cc53d60f9219375a963ef8c7868b8d",
+        "virtu-extreme-256k:latest": "cbfcb551915a72b34e932bc01f5fc0771a95f383d63995ec14e02983ea31e8d1",
+        "qwen2.5:1.5b": "65ec06548149b04c096a120e4a6da9d4017ea809c91734ea5631e89f96ddc57b",
+        "virtu-longctx:latest": "e5412ad249b7c1ec8b6b734868f795430526a0c8d83a3dc274aed6756a404b94",
+        "qwen2.5:3b": "357c53fb659c5076de1d65ccb0b397446227b71a42be9d1603d46168015c9e4b",
+        "qwen2.5:7b-instruct-q4_K_M": "845dbda0ea48ed749caafd9e6037047aa19acfcfd82e704d7ca97d631a0b697e",
+        "qwen3:8b": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41",
+        "nomic-embed-text:latest": "0a109f422b47e3a30ba2b10eca18548e944e8a23073ee3f3e947efcf3c45e59f"
+      }
+    },
+    {
+      "at": "2026-11-07T18:57:46+0800",
+      "phase": "start",
+      "tags": {
+        "virtu-v3-all90-q4_0:latest": "02eb58a03b3208485629d234f22af888920533d6202bd9904b91fca908a112c3",
+        "virtu-13.63b-q4_0:latest": "a3daaed3182cd43b5d5b64b3c808e92c01ade4d19ed9d93b5b1e3ed39939db5e",
+        "virtu-wm-v3:latest": "be171996744bb5fe0e9fc79b2df5968e6f937af64a6be4b97bb30ac74c48c7bd",
+        "virtu-13.63b:latest": "0638c84b93d0f647269bf47397fea4ab4fa085751c9df2dfceeeb5ae39cc5f49",
+        "virtu-13.63b:asym": "0638c84b93d0f647269bf47397fea4ab4fa085751c9df2dfceeeb5ae39cc5f49",
+        "virtu-13b:gold": "15d834e00569054efa60677ab8e41bd26d28d8295d8030bae83d982fd8f803ef",
+        "virtu-13.63b:wm-v1": "99a7e0c73151e9b19b793ab43a01c557cdab690851a1eb5c6f5f7b06a3fb64d5",
+        "virtu-13.63b:hardened": "16888647dd4aa01982568d8324a27518493bd43b2b047c24ecb0493f63d5662f",
+        "virtu-moe-14b:hardened": "e71e5f7b669c6ea2215bfe6dbbde7ef8348a37f894f478a9ee7760e6e036a833",
+        "virtu-moe-14b:fast": "729abf24bddd49c3cf1ad3ca1ac9b1189404d99d62e050a66980884fc2e59ef4",
+        "virtu-moe-14b:latest": "729abf24bddd49c3cf1ad3ca1ac9b1189404d99d62e050a66980884fc2e59ef4",
+        "virtu-moe-14b:out-opt-sys": "887af3f474c3b9a888967efd418b57757b040f02f51dfd9f89c6f70d8d694de8",
+        "virtu-moe-14b:out-opt": "c3236d86ed3661d728f53a7854d5ac80002e5bef6789bc390e59df9276039b6a",
+        "virtu-moe-14b:q3km": "13fbf5e1232fa3056d813a28aa030eecc3e83886bf8148ed2224ca04a8348429",
+        "virtu-moe-14b:01068725": "ea0a6ea9f89d6885422826228192b1bfb5167ee4677fedcef263be2632efcd09",
+        "virtu-moe-14b:a2103c68": "4007223565e967063b8e01fdcb6333e9ff87235a5d2d600db82357e619b31e5e",
+        "bge-m3:latest": "7907646426070047a77226ac3e684fbbe8410524f7b4a74d02837e43f2146bab",
+        "virtu-production:latest": "b48811aea3be8f4b294e39a5a43c211ecc5f315ac240e5238d49b8556c4e5d24",
+        "virtu-dense-ties:q4": "5696d873631ab37f47898331b5fac5417e480dc3ac45640079047ed596b85c6c",
+        "virtu-dense-merged-v2:q4_0": "71550bf3eb84001646aaa53d6598547742a49308331494e709734c2f171c0037",
+        "virtu-dense-merged:q4_0": "c25d5fae9362a259378a8dc75e00219c9e49c5362764839d12deb7685800b127",
+        "virtu-moe-14b:semantic": "729abf24bddd49c3cf1ad3ca1ac9b1189404d99d62e050a66980884fc2e59ef4",
+        "virtu-comprehensive:fast": "e1b4a21e537e2244cd4a6aa4b3e446a7082a9b83752045065681ae1d98530c69",
+        "virtu-moe-14b:bf16": "7ed8dac6c7f45776d23da7c5d168b6312095da778a9a998442b1f73964473622",
+        "virtu-comprehensive:q3": "860f8e1e751d221bfd676f751222af39b937d530820833b2a394ff2bdc9a4ad9",
+        "virtu-comprehensive:think": "6b7c94f1dd648b3e107a461fd416b7322c1a4c99b0b0ae8c282d045f065f6cb5",
+        "virtu-disciplined:v1": "9fff19a2101ae7dec7277a1864c6a6815adaf14c1b01a517cda544be382c9818",
+        "virtu-comprehensive:latest": "aba2c916368bd16bc4fa26facbb05e74c5a9baebc5e3d1c37ba0780f8fd16d4e",
+        "virtu-master:latest": "a46aaae54d32593b8506c020a00dc23dbf2ad59d5b530668396633484129031f",
+        "virtu-test-nothink:latest": "fe5186854600c9cd4cd1de3ffb303850e7a879402c3d81ff795280996ed3f896",
+        "virtu-frozen:comp_v5": "33c12ba1b892f478b327739ce967b1daf6584aede1619df429b2484879cbabce",
+        "virtu-ties-v1:latest": "e6d1b8a8ecb5c03ad59c527c854125cd7ec25a868836805950f1b7501f6da08b",
+        "virtu-test-tool:latest": "4965ffe4770f9f7a77f96cfeb5ddbdcc96cc53d60f9219375a963ef8c7868b8d",
+        "virtu-extreme-256k:latest": "cbfcb551915a72b34e932bc01f5fc0771a95f383d63995ec14e02983ea31e8d1",
+        "qwen2.5:1.5b": "65ec06548149b04c096a120e4a6da9d4017ea809c91734ea5631e89f96ddc57b",
+        "virtu-longctx:latest": "e5412ad249b7c1ec8b6b734868f795430526a0c8d83a3dc274aed6756a404b94",
+        "qwen2.5:3b": "357c53fb659c5076de1d65ccb0b397446227b71a42be9d1603d46168015c9e4b",
+        "qwen2.5:7b-instruct-q4_K_M": "845dbda0ea48ed749caafd9e6037047aa19acfcfd82e704d7ca97d631a0b697e",
+        "qwen3:8b": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41",
+        "nomic-embed-text:latest": "0a109f422b47e3a30ba2b10eca18548e944e8a23073ee3f3e947efcf3c45e59f"
+      }
+    }
+  ]
+}

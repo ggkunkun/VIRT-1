@@ -1,0 +1,5 @@
+sld_pids= [12852]
+ps_cmd= Get-CimInstance Win32_Process -Filter 'ProcessId=12852' | ForEach-Object { "$($_.ProcessId)|$($_.CommandLine)" }
+elapsed=5.52s rc=0 stdout='12852|"D:\\SOLIDWORKS (2)\\SLDWORKS.exe" \n'
+stderr=''
+DONE

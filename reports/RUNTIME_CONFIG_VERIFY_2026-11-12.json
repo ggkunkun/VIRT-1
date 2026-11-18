@@ -1,0 +1,38 @@
+{
+  "generated_at": "2026-11-12T23:57:44+0800",
+  "basis": "measured (server.log command lines + ollama show + filesystem)",
+  "server_log": "C:\\Users\\Administrator\\AppData\\Local\\Ollama\\server.log",
+  "active_llama_server_cmd": "E:\\\\OllamaApp\\\\lib\\\\ollama\\\\llama-server.exe --model C:\\\\Users\\\\Administrator\\\\.ollama\\\\models\\\\blobs\\\\sha256-293cdac3e52f6340208967b743ee4a1d67684a24f8a8f011849423e34c1ed9c2 --port 64937 --host 127.0.0.1 --no-webui --offline -c 8192 -np 1 --log-verbosity 4 --no-log-prefix --no-log-timestamps --load-mode none --cache-type-k q8_0 --cache-type-v q8_0 --flash-attn on -b 512 -ub 512 --context-shift --keep 4",
+  "recent_server_cmd_count": 94,
+  "checks": {
+    "flash_attention_in_active_server": true,
+    "q8_0_kv_in_active_server": true,
+    "context_shift_in_active_server": true,
+    "process_env_flash_attention": "1",
+    "process_env_kv_cache_type": "q8_0",
+    "longctx_manifest": {
+      "exists": true,
+      "num_ctx": 32768,
+      "num_gpu": 16,
+      "system_contract_preserved": true
+    },
+    "deliverables_present": {
+      "virtu_omni\\context\\long_context.py": true,
+      "virtu_omni\\memory\\remory_adapter.py": true,
+      "Modelfile_longctx": true,
+      "scripts\\run_long_context_live.py": true,
+      "scripts\\run_long_context_stress.py": true,
+      "scripts\\probe_yarn_server.py": true,
+      "scripts\\probe_ollama_context.py": true
+    },
+    "ollama_context_length_env": "<unset>"
+  },
+  "all_green": true,
+  "recommended_commands_if_missing": [
+    "setx OLLAMA_FLASH_ATTENTION 1",
+    "setx OLLAMA_KV_CACHE_TYPE q8_0",
+    "# restart the Ollama service for the above to take effect",
+    "ollama create virtu-wm-v3:longctx -f Modelfile_longctx"
+  ],
+  "note": "This script is read-only; it does not change environment variables or restart the service. num_ctx above 40960 requires engine-level YaRN (see YARN_SERVER_PROBE report)."
+}

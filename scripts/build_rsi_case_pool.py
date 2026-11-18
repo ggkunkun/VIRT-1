@@ -96,11 +96,14 @@ GOAL = {
 # Predicates are contract verdicts, not arithmetic: they must be spelled out in the
 # statement, otherwise the grader charges the model for a rule it was never given.
 PREDICATE_RULE = {
-    "fea_fos": "fos_gate：safety_factor>=1.5 记 PASS，否则 FAIL。",
-    "collision": ("collision_risk：快速段最低点既低于安全平面又低于毛坯顶面+1mm 记 high，否则 none；"
+    "fea_fos": "fos_gate：safety_factor>=1.5 记 pass，否则 fail（契约短字面）。",
+    "collision": ("collision_risk：【rapid_min 低于 safe_plane 且低于 stock_top+1mm】或【gouge 为真】记 high，"
+                  "两者都不满足才记 none（已切进毛坯必然高风险，禁止 gouge=true 却 risk=none）；"
                   "gouge：最低点低于毛坯顶面记 true；autodiff：过切记 red，有风险但未过切记 yellow，安全记 green。"),
     "adapt_machine": "within_limit：需求转速不超过 n_max 记 true，否则 false。",
-    "adapt_material": "只要求 safety_factor=Sy/sigma，Sy 取新材料屈服强度。",
+    "adapt_material": ("safety_factor=Sy/sigma，Sy 取新材料屈服强度；"
+                       "fos_gate：safety_factor>=1.5 记 pass，否则 fail。"),
+    "tolerance": "tolerance_pass：fit_clearance_mm（上偏差-下偏差）>=0 记 true，否则 false。",
 }
 
 # The board's boilerplate is deliberately not copied: shared instruction text would make the

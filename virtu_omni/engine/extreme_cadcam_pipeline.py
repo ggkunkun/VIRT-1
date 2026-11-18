@@ -166,6 +166,15 @@ class ExtremeCADCAMPipeline:
         if v_theoretical <= 0:
             raise ValueError(f"3D 几何特征体积非正：理论体积 {v_theoretical:.2f} mm³")
 
+        # ΔV 符号核验：审计 §4-7 前这里只打印 "ΔV > 0 Verified" 却从未算过 ΔV。
+        # 现按「毛坯等体积圆柱 − 去槽后成品体积」真实求差；该值为解析几何量，
+        # 不等于 SolidWorks COM 回读的质量属性，故单独标注 volume_basis。
+        delta_v = raw_cyl_vol - v_theoretical
+        if delta_v <= 0:
+            raise ValueError(
+                f"体积守恒校验失败：ΔV={delta_v:.4f} mm³ 非正，去材料特征未产生有效体积变化"
+            )
+
         theoretical_mass_g = v_theoretical * mat_info["density"]
 
         # 生成 SOLIDWORKS 2021 原生宏代码
@@ -189,9 +198,16 @@ class ExtremeCADCAMPipeline:
             "theoretical_mass_g": round(theoretical_mass_g, 2),
             "sw_macro_path": sw_macro_path,
             "nx_script_path": nx_script_path,
-            "volume_assertion": "ΔV > 0 Verified (Volume Conservation Law)",
+            "volume_assertion": (
+                f"ΔV > 0 PASSED (ΔV={delta_v:.2f} mm³, 解析几何求差)"
+                if delta_v > 0
+                else f"ΔV > 0 FAILED (ΔV={delta_v:.2f} mm³)"
+            ),
+            "delta_v_mm3": round(delta_v, 4),
+            "volume_basis": "analytic_geometry (非 CAD 质量属性回读)",
+            "cad_mass_property_verified": False,
             "execution_ms": round(dt_ms, 2),
-            "verdict": f"3D 参数化解析几何与特征树守恒核验通过，体积: {v_theoretical:.1f} mm³，耗时: {dt_ms:.2f}ms"
+            "verdict": f"解析几何体积核算通过（非 CAD 质量属性回读），体积: {v_theoretical:.1f} mm³，ΔV: {delta_v:.1f} mm³，耗时: {dt_ms:.2f}ms"
         }
 
     # =========================================================================
@@ -284,8 +300,13 @@ class ExtremeCADCAMPipeline:
     # =========================================================================
     # 阶段 4：加工 (Machining / CAM & CNC Execution) 极限语法与机床参数
     # =========================================================================
-    def execute_machining_stage(self, spec: Dict[str, Any], gcode_text: str, out_dir: str, attempt: int = 1) -> Dict[str, Any]:
-        """Tier 0/1 FANUC Macro B 语法词法树、主轴/冷却模态安全与数控程序落盘 (< 5ms)"""
+    def execute_machining_stage(self, spec: Dict[str, Any], gcode_text: str, out_dir: str,
+                                attempt: int = 1, dialect: str = "fanuc") -> Dict[str, Any]:
+        """Tier 0/1 FANUC Macro B 语法词法树、主轴/冷却模态安全与数控程序落盘 (< 5ms)。
+
+        另按 dialect 把规格派生的 CL 刀路编译成真实控制器方言 NC（FANUC/Siemens 840D/
+        Heidenhain TNC），跑 CL 安全门 + 方言结构门 + 坐标一致性门后落盘。
+        """
         t0 = time.perf_counter()
         lines = gcode_text.splitlines()
 
@@ -330,6 +351,22 @@ class ExtremeCADCAMPipeline:
         with open(guide_path, "w", encoding="utf-8") as f:
             f.write(sscnc_guide)
 
+        # 多控制器后处理：规格 -> CL -> 方言 NC（真实发射器 + 三道可证伪门）
+        from virtu_omni.engine.cnc_post_processor import (
+            build_cl_from_spec, post_process, SUPPORTED_DIALECTS,
+        )
+        if dialect not in SUPPORTED_DIALECTS:
+            raise ValueError(f"未知控制器方言 {dialect!r}，支持 {SUPPORTED_DIALECTS}")
+        cl_prog = build_cl_from_spec(spec, name=str(spec.get("part_name", "VIRTU")))
+        post_res = post_process(cl_prog, dialect=dialect)
+        if post_res["status"] != "passed":
+            raise ValueError(f"多控制器后处理门未通过 ({dialect}): "
+                             f"{post_res.get('error') or post_res.get('dialect_gate') or post_res.get('coord_gate')}")
+        ext = {"fanuc": "nc", "siemens": "mpf", "heidenhain": "h"}[dialect]
+        dialect_nc_path = os.path.join(out_dir, f"{spec.get('part_name')}_{dialect.upper()}.{ext}")
+        with open(dialect_nc_path, "w", encoding="utf-8") as f:
+            f.write(post_res["nc"])
+
         dt_ms = (time.perf_counter() - t0) * 1000.0
         return {
             "status": "passed",
@@ -341,15 +378,29 @@ class ExtremeCADCAMPipeline:
             "macro_variables": sorted(list(macro_variables)),
             "line_count": len(lines),
             "guide_path": guide_path,
+            "dialect": dialect,
+            "dialect_nc_path": dialect_nc_path,
+            "post_process": {
+                "status": post_res["status"],
+                "dialect_gate_passed": post_res["dialect_gate"]["passed"],
+                "coord_gate_passed": post_res["coord_gate"]["passed"],
+                "coord_max_err_mm": {d: v.get("max_err_mm") for d, v in
+                                     post_res["coord_gate"]["per_dialect"].items()},
+                "basis": post_res["basis"],
+            },
             "execution_ms": round(dt_ms, 2),
-            "verdict": f"CAM 宏程序与控制器指令安全验证通过，行数: {len(lines)}，主轴: {spindle_speed} rpm，变量数: {len(macro_variables)}，耗时: {dt_ms:.2f}ms"
+            "verdict": f"CAM 宏程序与控制器指令安全验证通过，行数: {len(lines)}，主轴: {spindle_speed} rpm，变量数: {len(macro_variables)}，方言: {dialect}，耗时: {dt_ms:.2f}ms"
         }
 
     # =========================================================================
     # 核心统御：全生命周期极速串行与自适应熔断循环 (Adaptive Circuit Breaker)
     # =========================================================================
-    def run_full_lifecycle(self, wish: str, out_root: Optional[str] = None, max_attempts: int = 3) -> Dict[str, Any]:
-        """运行绘图、建模、仿真、加工全流程，速度和质量压缩到极限，未到极限自愈，到了极限熔断。"""
+    def run_full_lifecycle(self, wish: str, out_root: Optional[str] = None, max_attempts: int = 3,
+                           dialect: str = "fanuc") -> Dict[str, Any]:
+        """运行绘图、建模、仿真、加工全流程，速度和质量压缩到极限，未到极限自愈，到了极限熔断。
+
+        dialect: 加工阶段额外发射的控制器方言（fanuc/siemens/heidenhain），默认 fanuc。
+        """
         t_global_0 = time.perf_counter()
         out_root = out_root or os.path.join(_ROOT, "runs", "extreme_chain")
         ts = time.strftime("%Y%m%d_%H%M%S")
@@ -371,7 +422,7 @@ class ExtremeCADCAMPipeline:
             ("drafting", lambda s, a: self.execute_drafting_stage(s, out_dir, attempt=a)),
             ("modeling", lambda s, a: self.execute_modeling_stage(s, out_dir, attempt=a)),
             ("simulation", lambda s, a: self.execute_simulation_stage(s, gcode_text, out_dir, attempt=a)),
-            ("machining", lambda s, a: self.execute_machining_stage(s, gcode_text, out_dir, attempt=a))
+            ("machining", lambda s, a: self.execute_machining_stage(s, gcode_text, out_dir, attempt=a, dialect=dialect))
         ]
 
         for stage_name, stage_fn in stages:

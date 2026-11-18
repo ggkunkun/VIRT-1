@@ -1,0 +1,21 @@
+{
+  "nc_file": "D:\\Virtu模型\\artifacts\\aero_closed_impeller\\AE_CLOSED_IMPELLER_NASA1975_5AXIS.nc",
+  "nc_lines": 460,
+  "validation": {
+    "valid": true,
+    "errors": [],
+    "warnings": [],
+    "gbnf_ok": true,
+    "channels": 16,
+    "expected_channels": 16,
+    "feedrate_seen": true,
+    "spindle_started": true,
+    "min_z_mm": 12.85,
+    "max_z_mm": 80.0,
+    "rapid_min_z_mm": 95.0,
+    "safe_plane_z_mm": 90.0,
+    "stock_top_z_mm": 82.0,
+    "g00_below_safe_lines": [],
+    "basis": "measured (static parse of generated NC)"
+  }
+}

@@ -133,7 +133,7 @@ def quantize():
 
 
 def register():
-    r = subprocess.run("ollama list", shell=True, capture_output=True, text=True)
+    r = subprocess.run(["ollama", "list"], shell=False, capture_output=True, text=True)
     if MODEL_ID in r.stdout:
         print("[4] ollama 模型已存在，跳过 create")
     else:

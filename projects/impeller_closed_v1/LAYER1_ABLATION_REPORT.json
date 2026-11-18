@@ -1,0 +1,75 @@
+{
+  "title": "Layer1 scaffold ablation — closed impeller design",
+  "model": "virtu-ties-v1:latest (8.2B Q4_0, blob c3b78c77)",
+  "arms": {
+    "bare": {
+      "verdict": "FAIL",
+      "attempt_hashes": [
+        "8fe87b652efc",
+        "144fa475764b",
+        "8fe87b652efc"
+      ],
+      "stuck_repetition": true,
+      "fabrication_u2": [
+        {
+          "claimed_u2": 350.0,
+          "recomputed_u2": 282.74,
+          "delta_pct": 23.8
+        },
+        {
+          "claimed_u2": 350.0,
+          "recomputed_u2": 282.74,
+          "delta_pct": 23.8
+        }
+      ],
+      "geometry": {
+        "D1t": 130.0,
+        "D2": 120.0,
+        "D1t_gt_D2": true
+      },
+      "format_defect": "JSON_unparseable"
+    },
+    "contract_fewshot": {
+      "verdict": "FAIL",
+      "attempt_hashes": [
+        "20296350e1ca",
+        "20296350e1ca",
+        "20296350e1ca"
+      ],
+      "stuck_repetition": true,
+      "fabrication_u2": [],
+      "geometry": null,
+      "format_defect": "string_typed_values"
+    },
+    "contract_only": {
+      "verdict": "FAIL",
+      "attempt_hashes": [
+        "bd4cd951cebb",
+        "7a72d526516c",
+        "7a72d526516c"
+      ],
+      "stuck_repetition": true,
+      "fabrication_u2": [
+        {
+          "claimed_u2": 310,
+          "recomputed_u2": 94.25,
+          "delta_pct": 228.9
+        },
+        {
+          "claimed_u2": 310,
+          "recomputed_u2": 94.25,
+          "delta_pct": 228.9
+        }
+      ],
+      "geometry": {
+        "D1t": 100,
+        "D2": 150,
+        "D1t_gt_D2": false
+      },
+      "format_defect": "corrupted_key"
+    }
+  },
+  "conclusion": "接口/契约/掩码少样本三种脚手架均 FAIL。复读与叶尖速编造在所有臂稳健出现⇒缺陷在权重而非接口；法兰盘验证过的脚手架机制不迁移到此航空设计任务。掩码少样本额外诱导字符串类型缺陷。",
+  "weight_fix_required": true,
+  "weight_fix_gated": "cloud 8B QLoRA authorization (local 8B disproven, 3B cap)"
+}

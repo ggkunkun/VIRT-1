@@ -1,6 +1,0 @@
-{
-  "status": "isolated_inference",
-  "weights_updated": false,
-  "production_changed": false,
-  "parent_run": "runs/rsi/20261107T023018Z_533010e309b6"
-}

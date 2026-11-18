@@ -34,13 +34,20 @@ from dataclasses import asdict, dataclass, field
 from pathlib import Path
 from typing import Any, Callable, Dict, List, Optional, Tuple, Union
 
-import torch
+try:  # PyTorch is an optional heavy dependency of this workspace (training only).
+    import torch  # type: ignore[import-not-found]
+
+    TORCH_AVAILABLE = True
+except ModuleNotFoundError:  # pragma: no cover - exercised on inference-only hosts
+    torch = None  # type: ignore[assignment]
+    TORCH_AVAILABLE = False
 
 WORKSPACE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 if WORKSPACE_DIR not in sys.path:
     sys.path.insert(0, WORKSPACE_DIR)
 
 from virtu_eval.derivation import LAWS
+from virtu_omni.reasoning.chain_of_thought import StructuredCoTEngine
 
 logger = logging.getLogger("virtu_omni.training.rlvr_grpo")
 
@@ -57,7 +64,8 @@ class TrajectoryCandidate:
     r_physics: float = 0.0              # [0.0, 1.0] Lamé FOS / stress compliance
     r_geometry: float = 0.0             # [0.0, 1.0] Volume conservation compliance
     r_collision: float = 0.0            # [0.0, 1.0] Rapid plunge collision clearance
-    r_format: float = 0.0               # [0.0, 1.0] Structural think tag compliance
+    r_format: float = 0.0               # [0.0, 1.0] Structural think tag & CoT faithfulness compliance
+    r_cot: float = 0.0                  # [0.0, 1.0] Stepwise CoT derivation & faithfulness reward
     composite_reward: float = 0.0       # Weighted total reward [0.0, 1.0]
     advantage: float = 0.0              # Group-normalized relative advantage A_i
 
@@ -83,10 +91,29 @@ class PhysicalRewardEnvironment:
         metrics: Dict[str, Any] = {}
         ctx = context or {}
 
-        # 1. Format Reward: Presence and substance of <think> reasoning
+        # 1. Format & Chain-of-Thought Faithfulness Reward
         has_think = len(thinking.strip()) >= 30
         has_code = len(solution.strip()) >= 20
         r_fmt = 1.0 if (has_think and has_code) else (0.5 if has_code else 0.0)
+
+        full_raw = f"<think>\n{thinking}\n</think>\n{solution}" if thinking.strip() else solution
+        cot_rep = StructuredCoTEngine.verify_cot_faithfulness(
+            raw_output=full_raw,
+            prompt=prompt,
+            scenario=ctx.get("scenario") if isinstance(ctx.get("scenario"), dict) else None,
+            require_think=bool(thinking.strip()),
+        )
+        metrics["cot_stages_covered"] = cot_rep.stages_covered
+        metrics["r_cot"] = round(cot_rep.overall_cot_score * r_fmt, 4)
+
+        if cot_rep.arithmetic_errors:
+            metrics["cot_arithmetic_errors"] = cot_rep.arithmetic_errors
+            r_fmt = 0.0
+            metrics["r_cot"] = 0.0
+        if cot_rep.faithfulness_conflicts:
+            metrics["cot_faithfulness_conflict"] = cot_rep.faithfulness_conflicts
+            r_fmt = 0.0
+            metrics["r_cot"] = 0.0
 
         # 2. Physics Reward (Lamé FOS / Material Strength)
         r_phys = 1.0
@@ -115,6 +142,9 @@ class PhysicalRewardEnvironment:
         elif "MPa" in prompt or "压力" in prompt:
             # Physics task missing FOS calculation
             r_phys = 0.2
+
+        if cot_rep.arithmetic_errors or cot_rep.faithfulness_conflicts:
+            r_phys = 0.0
 
         # 3. Geometry Reward (Volume Conservation)
         r_geom = 1.0
@@ -199,9 +229,10 @@ class VirtuGRPOEngine:
             )
 
             # Composite weighted reward:
-            # Physics (0.35) + Geometry (0.25) + Collision (0.25) + Format (0.15)
-            # Fatal veto: if collision == 0 or physics == 0, composite drops heavily
-            if r_coll == 0.0 or r_geom == 0.0:
+            # Physics (0.35) + Geometry (0.25) + Collision (0.25) + Format/CoT (0.15)
+            # Fatal veto: if collision == 0, geometry == 0, or CoT is unfaithful/arithmetically broken, composite drops to 0.0
+            cot_veto = bool(metrics.get("cot_faithfulness_conflict") or metrics.get("cot_arithmetic_errors"))
+            if r_coll == 0.0 or r_geom == 0.0 or cot_veto:
                 composite = 0.0
             else:
                 composite = r_phys * 0.35 + r_geom * 0.25 + r_coll * 0.25 + r_fmt * 0.15
@@ -217,6 +248,7 @@ class VirtuGRPOEngine:
                 r_geometry=r_geom,
                 r_collision=r_coll,
                 r_format=r_fmt,
+                r_cot=float(metrics.get("r_cot", r_fmt)),
                 composite_reward=round(composite, 4),
             )
             candidates.append(cand)
@@ -255,6 +287,12 @@ class VirtuGRPOEngine:
         advantages: torch.Tensor,
     ) -> Tuple[torch.Tensor, Dict[str, float]]:
         """Calculates exact GRPO clipped surrogate objective + KL penalty."""
+        if not TORCH_AVAILABLE:
+            raise RuntimeError(
+                "compute_grpo_loss requires PyTorch, which is not installed in this "
+                "interpreter. The oracle-only GRPO paths (sample/score/select/export) "
+                "still work without torch."
+            )
         # Ratio r_i(theta) = exp(logpi_theta - logpi_old)
         ratio = torch.exp(policy_logprobs - old_logprobs)
         surr1 = ratio * advantages
@@ -289,22 +327,37 @@ class VirtuGRPOEngine:
 
     @classmethod
     def falsifiable_rlvr_probe(cls) -> bool:
-        """Rule 4: Injects a trajectory with G00 plunge collision; asserts composite reward == 0 and negative advantage."""
-        engine = VirtuGRPOEngine(group_size=2)
+        """Rule 4:
+        1) Injects a trajectory with G00 plunge collision -> composite_reward == 0.0 and advantage < 0.0.
+        2) Injects an unfaithful CoT trajectory (<think> derives FOS = 1.15 != solution FOS = 1.97)
+           -> composite_reward == 0.0 and advantage < 0.0.
+        """
+        engine = VirtuGRPOEngine(group_size=3)
         valid_traj = (
-            "<think>\n核算 Lamé 公式：屈服强度 355MPa，峰值应力 180MPa，计算安全系数 FOS = 1.97 >= 1.5 合规。\n</think>\n"
+            "<think>\n核算 Lamé 公式：屈服强度 355MPa，峰值应力 180MPa，计算安全系数 FOS = 355 / 180 = 1.97 >= 1.5 合规。\n</think>\n"
             "G90 G54 G00 Z50.0\nG01 Z-2.0 F150.0\n# FOS = 1.97"
         )
         colliding_traj = (
             "<think>\n未抬刀直接快速进给\n</think>\n"
             "G90 G54 G00 Z-10.0\n# 致命快速下扎撞刀"
         )
+        unfaithful_cot_traj = (
+            "<think>\n核算公式：屈服强度 355MPa，峰值应力 180MPa，计算安全系数 FOS = 1.15 < 1.5 不合规。\n</think>\n"
+            "G90 G54 G00 Z50.0\nG01 Z-2.0 F150.0\n# FOS = 1.97"
+        )
         group = engine.evaluate_group(
             prompt="切削工序",
-            candidate_outputs=[valid_traj, colliding_traj],
+            candidate_outputs=[valid_traj, colliding_traj, unfaithful_cot_traj],
             context={"yield_strength_mpa": 355.0, "peak_stress_mpa": 180.0, "stock_top_z_mm": 0.0},
         )
-        # Colliding traj must have composite_reward == 0.0 and advantage < 0.0
-        coll_cand = group[1]
         valid_cand = group[0]
-        return coll_cand.composite_reward == 0.0 and coll_cand.advantage < 0.0 and valid_cand.composite_reward > 0.8
+        coll_cand = group[1]
+        unfaithful_cand = group[2]
+        return (
+            coll_cand.composite_reward == 0.0
+            and coll_cand.advantage < 0.0
+            and unfaithful_cand.composite_reward == 0.0
+            and unfaithful_cand.advantage < 0.0
+            and valid_cand.composite_reward > 0.8
+            and valid_cand.advantage > 0.0
+        )

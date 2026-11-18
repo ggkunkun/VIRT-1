@@ -187,11 +187,17 @@ class DialogAutoDismissal:
     @staticmethod
     def dismiss_dialog(action: str = "accept", window_title: Optional[str] = None) -> Dict[str, Any]:
         """Dismiss active modal dialog via Enter (accept) or Escape (cancel)."""
-        HUMANOID_SCRIPTS = r"C:\Users\Administrator\.gemini\config\skills\humanoid-computer-control\scripts"
-        if HUMANOID_SCRIPTS not in sys.path:
-            sys.path.insert(0, HUMANOID_SCRIPTS)
         try:
-            import humanoid_controller as hc
+            try:  # 包内同源副本优先（与私有副本 SHA-256 完全一致）
+                from . import humanoid_controller as hc
+            except ImportError:  # 脚本直跑回退历史私有 skill 目录
+                HUMANOID_SCRIPTS = os.environ.get(
+                    "VIRTU_HUMANOID_SCRIPTS",
+                    r"C:\Users\Administrator\.gemini\config\skills\humanoid-computer-control\scripts",
+                )
+                if HUMANOID_SCRIPTS not in sys.path:
+                    sys.path.insert(0, HUMANOID_SCRIPTS)
+                import humanoid_controller as hc
             kb = hc.HumanoidKeyboard(mode="human")
             key = "enter" if action == "accept" else "esc"
             kb.press(key)

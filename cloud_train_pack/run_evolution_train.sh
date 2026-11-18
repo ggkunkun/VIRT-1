@@ -74,12 +74,12 @@ if ! "$PY" -c "import torch, transformers, peft, trl, bitsandbytes, datasets, mo
     echo "  正在通过镜像安装核心训练库 (transformers, peft, trl, bitsandbytes, datasets, modelscope)..."
     "$PIP" install \
         "torch" \
-        "peft>=0.10.0" \
-        "bitsandbytes>=0.43.0" \
-        "transformers>=4.45.0" \
-        "datasets" \
-        "accelerate" \
-        "trl>=0.12.0" \
+        "peft>=0.13.0,<0.16.0" \
+        "bitsandbytes>=0.43.0,<0.47.0" \
+        "transformers>=4.51.0,<5.0.0" \
+        "datasets>=2.18.0,<4.0.0" \
+        "accelerate>=0.33.0,<2.0.0" \
+        "trl>=0.12.0,<0.18.0" \
         "modelscope" \
         -i "$PIP_INDEX" -q
 else

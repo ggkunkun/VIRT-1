@@ -168,6 +168,42 @@ class TargetDetector:
         return SOFTWARE_TOOL.get(software, "cadcam_preflight")
 
 
+_FAILURE_STATUSES = {
+    "error", "failed", "failure", "blocked", "rejected", "denied",
+    "unauthorized", "forbidden", "timeout", "timed_out", "aborted",
+    "invalid_arguments", "not_supported", "unsupported", "skipped",
+}
+_SUCCESS_STATUSES = {"success", "ok", "completed", "done"}
+
+
+def _result_is_failure(result) -> bool:
+    """结果是否为失败态。
+
+    旧实现只认 "error"/"failed"，把 "blocked"（审批缺失、schema 违规、路径越界、
+    审计拦截）当成成功，是典型的假成功态：闸门确实拦住了，报表却写 SUCCESS。
+    """
+    if not isinstance(result, dict):
+        return True
+    st = str(result.get("status") or "").strip().lower()
+    if st in _FAILURE_STATUSES:
+        return True
+    if result.get("verdict_code") and st not in _SUCCESS_STATUSES:
+        return True
+    return False
+
+
+def _result_is_policy_block(result) -> bool:
+    """是否为策略性拒绝（应终止级联、不换通道重试）。"""
+    if not isinstance(result, dict):
+        return False
+    if str(result.get("status") or "").strip().lower() in ("blocked", "rejected", "denied", "forbidden"):
+        return True
+    verdict = str(result.get("verdict_code") or "")
+    return bool(verdict) and any(
+        k in verdict for k in ("BLOCKED", "VIOLATION", "APPROVAL", "TRAVERSAL",
+                               "SCHEMA", "DENIED", "FORBIDDEN", "UNAUTHORIZED"))
+
+
 class AgentDispatcher:
     """按显式接入方式执行工业任务，失败时沿固定容灾链降级。
 
@@ -236,20 +272,26 @@ class AgentDispatcher:
         attempts: List[Dict[str, Any]] = []
         final_result = None
         executed_modality = None
+        last_failure_result = None
 
         for mod in [plan.modality] + plan.fallback_modalities:
             sub_t0 = time.time()
             try:
                 result = self._execute_under_modality(mod, sw, act, plan.tool_name, prompt, params)
+                is_fail = _result_is_failure(result)
+                is_block = _result_is_policy_block(result)
                 attempts.append({
                     "modality": mod.value,
-                    "status": "SUCCESS" if result.get("status") not in ("error", "failed") else "FAILED",
+                    "status": "BLOCKED" if is_block else ("FAILED" if is_fail else "SUCCESS"),
                     "latency_sec": round(time.time() - sub_t0, 4),
                     "result_summary": str(result)[:180],
                 })
-                if result.get("status") not in ("error", "failed"):
+                if not is_fail:
                     final_result = result
                     executed_modality = mod
+                    break
+                last_failure_result = result
+                if is_block:
                     break
             except Exception as e:
                 attempts.append({
@@ -273,8 +315,10 @@ class AgentDispatcher:
             "complexity_score": 0.0,
             "latency_sec": latency,
             "attempts": attempts,
-            "data": final_result or {"status": "error",
-                                     "message": "All execution modalities in cascade failed."},
+            "data": final_result or last_failure_result or {
+                "status": "error",
+                "message": "All execution modalities in cascade failed.",
+            },
         }
 
     def _execute_under_modality(self, modality: AccessModality,
@@ -335,12 +379,18 @@ class AgentDispatcher:
                 elif "#" in prompt or "G0" in prompt:
                     cmd.extend(["--code", prompt])
 
-            res = subprocess.run(cmd, capture_output=True, text=True, timeout=120, cwd=ROOT)
+            res = subprocess.run(cmd, capture_output=True, text=True, timeout=120, cwd=ROOT,
+                                 encoding="utf-8", errors="replace")
             if res.returncode == 0:
                 try:
                     return json.loads(res.stdout)
-                except Exception:
-                    return {"status": "success", "raw_output": res.stdout}
+                except Exception as exc:  # noqa: BLE001
+                    # 退出码 0 只说明进程没崩，不等于输出是可解析的结果。
+                    # 原实现把它记成 status=success + raw_output，调用方会把一段
+                    # 非 JSON 的 stdout 当成成功结果继续用。
+                    return {"status": "error", "verdict_code": "CLI_OUTPUT_NOT_JSON",
+                            "message": f"{type(exc).__name__}: {exc}"[:160],
+                            "raw_output": res.stdout, "returncode": res.returncode}
             else:
                 return {"status": "failed", "stderr": res.stderr, "returncode": res.returncode}
 
@@ -368,8 +418,11 @@ class AgentDispatcher:
                 content = resp["result"].get("content", [{}])[0].get("text", "{}")
                 try:
                     return json.loads(content)
-                except Exception:
-                    return {"status": "success", "text": content}
+                except Exception as exc:  # noqa: BLE001
+                    # 同 CLI 分支：MCP 返回了文本不等于返回了结果对象。
+                    return {"status": "error", "verdict_code": "MCP_RESULT_NOT_JSON",
+                            "message": f"{type(exc).__name__}: {exc}"[:160],
+                            "text": content}
             return {"status": "error", "message": "MCP call failed"}
 
         # 5. REST_API (HTTP Web Service)

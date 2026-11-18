@@ -23,6 +23,10 @@ import torch.nn as nn
 import yaml
 
 # Ensure imports from Virtu codebase
+_REPO_ROOT = Path(__file__).resolve().parents[1]
+if str(_REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(_REPO_ROOT))
+
 VIRTU_SRC_ROOT = Path(r"D:\智能制造Agent\Virtu")
 if str(VIRTU_SRC_ROOT) not in sys.path:
     sys.path.insert(0, str(VIRTU_SRC_ROOT))
@@ -30,6 +34,7 @@ if str(VIRTU_SRC_ROOT) not in sys.path:
 from virtu import config as C
 from virtu.constants import SUBSYSTEM_NAMES, SUBSYSTEM_KEYS
 from virtu.model import Virtu
+from virtu_omni.security.weights import safe_torch_load as _safe_torch_load
 
 
 def compute_sha256(filepath: str | Path) -> str:
@@ -176,7 +181,7 @@ class SmeltFolderTransformer:
         self.logger.log("WEIGHTS_LOAD", f"Loading raw checkpoint: {ckpt_path} ({ckpt_path.stat().st_size:,} bytes)")
 
         try:
-            raw_ckpt = torch.load(ckpt_path, map_location="cpu", weights_only=False)
+            raw_ckpt = _safe_torch_load(ckpt_path, map_location="cpu")
         except Exception as e:
             self.logger.error("WEIGHTS_LOAD", f"Failed to load checkpoint {ckpt_path}", e)
             raise

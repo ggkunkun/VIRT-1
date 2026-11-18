@@ -1,0 +1,101 @@
+{
+  "stock_stl": "D:\\Virtu模型\\artifacts\\aero_closed_impeller\\AE_CLOSED_IMPELLER_stock.stl",
+  "stock_bytes": 25684,
+  "stock_shape": "cylinder",
+  "stock_dims": {
+    "diameter": 258.06,
+    "height": 79.85
+  },
+  "stock_origin": [
+    0.0,
+    0.0,
+    -5.0
+  ],
+  "stock_sanity": {
+    "ratio": 0.838,
+    "aspect": 0.309,
+    "threshold_ratio": 5.0,
+    "threshold_aspect": 10.0,
+    "ok": true,
+    "reason": ""
+  },
+  "stock_source": "generated_stock_stl",
+  "stock_basis": "measured_from_sample_inverse_derivation",
+  "part_type": "我想制造一款外径60mm，内孔22mm，长度80mm，材质为AL7075-T6的高强连杆衬套",
+  "stock_hint": "",
+  "inferred_is_revolution": true,
+  "inverse_sample_evidence": {
+    "spec": {
+      "shape": "cylinder",
+      "dims": {
+        "diameter": 258.06,
+        "height": 79.85
+      },
+      "origin": [
+        0.0,
+        0.0,
+        -5.0
+      ],
+      "sanity": {
+        "ratio": 0.838,
+        "aspect": 0.309,
+        "threshold_ratio": 5.0,
+        "threshold_aspect": 10.0,
+        "ok": true,
+        "reason": ""
+      },
+      "describe": "CYL Ø258.1 x 79.8mm @ (0.0, 0.0, -5.0)"
+    },
+    "design_mesh": "D:\\Virtu模型\\artifacts\\aero_closed_impeller\\AE_CLOSED_IMPELLER_NASA1975.stl",
+    "product_bbox": {
+      "xmin": -129.02999877929688,
+      "xmax": 129.02999877929688,
+      "ymin": -129.02999877929688,
+      "ymax": 129.02999877929688,
+      "zmin": 0.0,
+      "zmax": 74.8499984741211
+    },
+    "product_size_mm": [
+      258.06,
+      258.06,
+      74.85
+    ],
+    "semantic_is_revolution": true,
+    "inference_reason": "bbox_radial_symmetry",
+    "basis": "measured_from_sample",
+    "sample_stock_mesh": "E:\\samples\\Support_files\\force-impeller_stock.ply",
+    "sample_design_mesh": "E:\\samples\\Support_files\\force-impeller_design.ply",
+    "sample_stock_bbox": {
+      "xmin": -24.0,
+      "xmax": 24.0,
+      "ymin": -23.993766,
+      "ymax": 24.0,
+      "zmin": -30.0,
+      "zmax": -0.0
+    },
+    "sample_stock_size_mm": [
+      48.0,
+      47.9938,
+      30.0
+    ],
+    "sample_stock_shape": "freeform",
+    "sample_allowances_mm": {
+      "x_minus": 0.0,
+      "x_plus": 0.0,
+      "y_minus": 0.0209,
+      "y_plus": 0.0035,
+      "z_bottom_clamp": 5.0,
+      "z_top": 0.0
+    },
+    "sample_stock_encloses_design": true,
+    "derivation": "product_bbox + per-face sample allowances",
+    "inferred_is_revolution": true
+  },
+  "design_stl": "D:\\Virtu模型\\artifacts\\aero_closed_impeller\\AE_CLOSED_IMPELLER_NASA1975.stl",
+  "nc_file": "D:\\Virtu模型\\artifacts\\aero_closed_impeller\\AE_CLOSED_IMPELLER_5AXIS_FIXED.nc",
+  "project": "D:\\Virtu模型\\artifacts\\aero_closed_impeller\\AE_CLOSED_IMPELLER_VERICUT.vcproject",
+  "project_template": "E:\\samples\\All\\force_impeller_dmg_mori_nmv1500_fan30im_mm.vcproject",
+  "sample_vcproject": null,
+  "replacements_not_found": [],
+  "basis": "measured (product/sample-derived stock / files written) / asserted (sample machine reused)"
+}

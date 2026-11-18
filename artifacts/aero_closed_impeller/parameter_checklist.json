@@ -1,0 +1,131 @@
+{
+  "task": "航空发动机闭式叶轮 · 五轴联动铣削配置核验",
+  "machine": "DMG Mori NMV1500 (X/Y/Z/B/C 双转台) + FANUC 30iM",
+  "process": "5-axis simultaneous milling（非车削）",
+  "checks": [
+    {
+      "item": "毛坯几何类型",
+      "expected": "block（12 三角形长方体）",
+      "actual": "faces=12 watertight=True",
+      "passed": true,
+      "note": ""
+    },
+    {
+      "item": "毛坯尺寸 X×Y×Z (mm)",
+      "expected": "264.06×264.06×82.85（产品 bbox + 3/3/5/3）",
+      "actual": "264.06×264.06×82.85",
+      "passed": true,
+      "note": ""
+    },
+    {
+      "item": "毛坯包容性（20000 点）",
+      "expected": "0 点在毛坯外",
+      "actual": "0 点在外",
+      "passed": true,
+      "note": "含顶部/底部/孔壁/叶片表面"
+    },
+    {
+      "item": "毛坯与机床坐标系对齐",
+      "expected": "X/Y 中心=0，Z 轴=主轴方向",
+      "actual": "x=[-132.03,132.03] y=[-132.03,132.03]",
+      "passed": true,
+      "note": ""
+    },
+    {
+      "item": "毛坯世界 Z 范围 (mm)",
+      "expected": "70.00 .. 152.85（案例：毛坯底面=夹具顶=world 70）",
+      "actual": "70.00 .. 152.85",
+      "passed": true,
+      "note": ""
+    },
+    {
+      "item": "夹具底板顶面 world z (mm)",
+      "expected": "70.00（夹具模型 z=170, Attach=-100）",
+      "actual": "model_z=[145.0,170.0] → world=[45.0,70.0]",
+      "passed": true,
+      "note": "plate 320×320，36 verts"
+    },
+    {
+      "item": "机床",
+      "expected": "dmg_mori_nmv1500.mch（五轴立式加工中心）",
+      "actual": "found",
+      "passed": true,
+      "note": ""
+    },
+    {
+      "item": "控制系统",
+      "expected": "fan30im.ctl（FANUC 30iM，铣削）",
+      "actual": "found",
+      "passed": true,
+      "note": ""
+    },
+    {
+      "item": "工作偏置",
+      "expected": "G54 + Spindle to Stock（From=Spindle）",
+      "actual": "found",
+      "passed": true,
+      "note": ""
+    },
+    {
+      "item": "工程毛坯/夹具引用",
+      "expected": "stock.stl(block) + fixture.ply(320×320 plate)",
+      "actual": "True/True",
+      "passed": true,
+      "note": ""
+    },
+    {
+      "item": "五轴联动 RTCP",
+      "expected": "G43.4 出现 ≥1 次",
+      "actual": "2 次",
+      "passed": true,
+      "note": ""
+    },
+    {
+      "item": "旋转轴联动",
+      "expected": "B/C 坐标参与插补",
+      "actual": "B=5525 行, C=5317 行",
+      "passed": true,
+      "note": ""
+    },
+    {
+      "item": "无车削/螺纹指令",
+      "expected": "不得出现 G96/G97/G99/G70/G71/G72/G76/G32/G33",
+      "actual": "命中: 无",
+      "passed": true,
+      "note": ""
+    },
+    {
+      "item": "单位/平面/刀补",
+      "expected": "G21 G90 G17 + G43/G43.4",
+      "actual": "G21=True G90=True G17=True G43=True",
+      "passed": true,
+      "note": ""
+    },
+    {
+      "item": "主轴与进给",
+      "expected": "S>0 且 F>0（铣削 G94 mm/min）",
+      "actual": "S 行 3, F 行 5387",
+      "passed": true,
+      "note": ""
+    },
+    {
+      "item": "刀具库",
+      "expected": "T1 D16 平刀 + T2 D8 球头(D5 颈, 70 伸出)",
+      "actual": "Tool IDs=['1', '2']",
+      "passed": true,
+      "note": ""
+    }
+  ],
+  "passed": true,
+  "failed_items": [],
+  "artifacts": {
+    "design_step": "D:\\Virtu模型\\artifacts\\aero_closed_impeller\\AE_CLOSED_IMPELLER_NASA1975.step",
+    "design_stl": "D:\\Virtu模型\\artifacts\\aero_closed_impeller\\AE_CLOSED_IMPELLER_NASA1975.stl",
+    "stock_stl": "D:\\Virtu模型\\artifacts\\aero_closed_impeller\\AE_CLOSED_IMPELLER_stock.stl",
+    "nc": "D:\\Virtu模型\\artifacts\\aero_closed_impeller\\AE_CLOSED_IMPELLER_5AXIS_FIXED.nc",
+    "project": "D:\\Virtu模型\\artifacts\\aero_closed_impeller\\AE_CLOSED_IMPELLER_VERICUT.vcproject",
+    "fixture": "D:\\Virtu模型\\artifacts\\aero_closed_impeller\\impeller_fixture.ply",
+    "tool_library": "D:\\Virtu模型\\artifacts\\aero_closed_impeller\\impeller_tools.tls"
+  },
+  "basis": "measured（trimesh 实测 + 文本实测 + XML 实测）"
+}

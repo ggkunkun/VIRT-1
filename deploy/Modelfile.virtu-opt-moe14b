@@ -1,0 +1,14 @@
+# 本机适配版：virtu-opt-moe14b
+# 基线模型：virtu-moe-14b:q3km
+# 实测：21.4 tok/s（RTX 4050 Laptop 6GB / i5-12450H / 16GB RAM）
+# num_gpu=34  num_ctx=4096  —— 由参数扫描定位的最优点，请勿随意增大 num_gpu
+FROM virtu-moe-14b:q3km
+
+PARAMETER num_gpu 34
+PARAMETER num_ctx 4096
+PARAMETER num_batch 256
+PARAMETER num_thread 10
+PARAMETER temperature 0.1
+PARAMETER top_p 0.85
+PARAMETER top_k 40
+PARAMETER repeat_penalty 1.15

@@ -1,0 +1,120 @@
+{
+  "timestamp": 1794650072.6893556,
+  "elapsed_s": 15.97,
+  "root": "E:\\training",
+  "dry_run": false,
+  "scan": {
+    "files_seen": 1186,
+    "by_extension": {
+      ".stl": 286,
+      ".ply": 193,
+      ".igs": 6,
+      ".mcd": 40,
+      ".swp": 76,
+      ".tls": 65,
+      ".stp": 3,
+      ".mch": 45,
+      ".nc": 11,
+      ".vcfm": 4,
+      ".sor": 19,
+      ".xmch": 4,
+      ".ctl": 31,
+      ".def": 2,
+      ".vcpost": 2,
+      ".xml": 2,
+      ".png": 1,
+      ".sub": 17,
+      ".vctemplate": 7,
+      ".jpg": 6,
+      ".fxt": 12,
+      ".stk": 3,
+      ".tp": 1,
+      ".xply": 25,
+      ".ini": 3,
+      ".ctladd": 2,
+      ".ctlcus": 2,
+      ".vcproject": 78,
+      ".eia": 9,
+      ".xctl": 2,
+      ".dsn": 2,
+      ".tap": 1,
+      ".x_t": 1,
+      ".min": 1,
+      ".skn": 1,
+      ".str": 122,
+      ".mpf": 1,
+      ".spf": 2,
+      ".txt": 1,
+      ".vcassembly": 1,
+      ".pdf": 90,
+      ".tbl": 2,
+      ".vdafproject": 2,
+      ".vfm": 2
+    },
+    "records_by_type": {
+      "nc_program": 74,
+      "tool_library": 65,
+      "vericut_xml_config": 40,
+      "vericut_text_config": 7,
+      "vericut_project": 78,
+      "official_session_pdf": 265,
+      "geometry_assets": 1
+    },
+    "pdf_pages": 902,
+    "pdf_unavailable_reason": "",
+    "geometry_bbox_samples": 277,
+    "skipped": {
+      "unsupported_binary": 7,
+      "other": 24
+    },
+    "errors": []
+  },
+  "ingest": {
+    "success": true,
+    "scanned": 530,
+    "accepted": 530,
+    "duplicates": 0,
+    "rejected_count": 0,
+    "rejected": [],
+    "sft_pairs": 1060,
+    "store_entries_total": 548,
+    "sft_file": "D:\\Virtu模型\\data\\sft\\vericut_official_training.jsonl",
+    "embedding_basis": "deterministic_bigram_hash_128",
+    "dry_run": false
+  },
+  "retrieval_selfcheck": [
+    {
+      "query": "VERICUT Auto-Diff 过切 Gouge 与残料 Excess 的容差配置",
+      "top_topic": "VERICUT 官方培训 Session 110-Configure Control to Output Messages p1-4",
+      "similarity": 0.5008,
+      "source_path": "E:/training/training_sessions/machine_and_control/Session 110-Configure Control to Output Messages.pdf"
+    },
+    {
+      "query": "Session 101L Introduction to VMC Building 机床与控制配置",
+      "top_topic": "VERICUT 官方培训 Session 106-Introduction to the Control p1-4",
+      "similarity": 0.6644,
+      "source_path": "E:/training/training_sessions/machine_and_control/Session 106-Introduction to the Control.pdf"
+    },
+    {
+      "query": "刀具库 Tool Library GagePoint 与刀具规格",
+      "top_topic": "VERICUT 官方培训 Session 11L-Create a Tool Library p17-18",
+      "similarity": 0.5236,
+      "source_path": "E:/training/training_sessions/verification/Session 11L-Create a Tool Library.pdf"
+    },
+    {
+      "query": "Force optimization 与 Learn From NC Program 优化课程",
+      "top_topic": "VERICUT 官方培训 Session 253L-Learn From NC Program p1-4",
+      "similarity": 0.7326,
+      "source_path": "E:/training/training_sessions/optimization/Session 253L-Learn From NC Program.pdf"
+    },
+    {
+      "query": "NC 程序 G43 G81 G83 钻孔与刀长补偿",
+      "top_topic": "NC 程序 multiple_setups_simulation_setup_2.mcd",
+      "similarity": 0.5335,
+      "source_path": "E:/training/multiple_setups_simulation_setup_2.mcd"
+    }
+  ],
+  "knowledge_store": "D:\\Virtu模型\\knowledge_base\\web_knowledge_store.json",
+  "sft_file": "D:\\Virtu模型\\data\\sft\\vericut_official_training.jsonl",
+  "source_mode": "read_only"
+}

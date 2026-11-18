@@ -1,0 +1,47 @@
+[
+ {
+  "tag": "virtu-opt-8b",
+  "ok": true,
+  "tok_s": 36.87,
+  "load_s": 7.2,
+  "prefill_s": 0.2,
+  "wall_s": 8.3
+ },
+ {
+  "tag": "virtu-opt-8b-ties",
+  "ok": true,
+  "tok_s": 36.85,
+  "load_s": 9.9,
+  "prefill_s": 0.2,
+  "wall_s": 11.2
+ },
+ {
+  "tag": "virtu-opt-8b-v3",
+  "ok": true,
+  "tok_s": 33.13,
+  "load_s": 10.0,
+  "prefill_s": 2.7,
+  "wall_s": 14.0
+ },
+ {
+  "tag": "virtu-opt-13b",
+  "ok": true,
+  "tok_s": 19.29,
+  "load_s": 18.2,
+  "prefill_s": 1.5,
+  "wall_s": 24.7
+ },
+ {
+  "tag": "virtu-opt-moe14b",
+  "ok": true,
+  "tok_s": 19.99,
+  "load_s": 16.2,
+  "prefill_s": 0.8,
+  "wall_s": 21.9
+ },
+ {
+  "tag": "virtu-opt-13b-q4",
+  "ok": false,
+  "err": "HTTP Error 500: Internal Server Error"
+ }
+]

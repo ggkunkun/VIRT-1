@@ -1,0 +1,37 @@
+{
+  "dataset": "data\\sft\\vericut_e_training\\vericut_e_train_mix.jsonl",
+  "base": "checkpoints\\virtu_cad_cam_merged_v3",
+  "total": 1001,
+  "passed": 1001,
+  "failed": 0,
+  "pass_rate": 1.0,
+  "failures_by_stage": {},
+  "failure_samples": [],
+  "token_stats": {
+    "min": 117,
+    "p50": 467,
+    "p90": 1484,
+    "p95": 1492,
+    "p99": 1782,
+    "max": 1792,
+    "mean": 588.1,
+    "total_tokens": 588650,
+    "total_loss_tokens": 126458,
+    "truncated_at_max_length": 5,
+    "truncated_ratio": 0.005,
+    "max_length": 1792
+  },
+  "role_stats": {
+    "assistant": 1073,
+    "total_rounds": 3147
+  },
+  "loss_ratio_mean": 0.2773,
+  "elapsed_sec": 12.4,
+  "checks": {
+    "C1_json_structure": "PASS",
+    "C2_template_render": "PASS",
+    "C3_mask_construction": "PASS",
+    "C4_loss_mask_scope": "PASS",
+    "C5_tool_call_integrity": "PASS"
+  }
+}

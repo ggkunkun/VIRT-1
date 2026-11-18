@@ -31,9 +31,34 @@ try:
     import pyautogui
     pyautogui.FAILSAFE = True
     pyautogui.PAUSE = 0.05
-    HAS_PYAUTOGUI = True
+    _PYAUTOGUI_IMPORTED = True
 except ImportError:
-    HAS_PYAUTOGUI = False
+    _PYAUTOGUI_IMPORTED = False
+
+
+def _pyautogui_authorized() -> bool:
+    """pyautogui 是一条绕过 ActionEngine 闸门的裸通道，必须自己再过一次仲裁。
+
+    授权/急停/演练三态任一不满足就不允许它接手，让调用方明确失败，而不是
+    静默地把光标拖走。
+    """
+    if not _PYAUTOGUI_IMPORTED:
+        return False
+    try:
+        from virtu_omni.computer_use import input_guard
+    except Exception:
+        return False
+    killed, _ = input_guard.kill_switch_active()
+    if killed:
+        return False
+    allowed, _ = input_guard.authorized()
+    dry, _ = input_guard.is_dry_run()
+    return bool(allowed) and not dry
+
+
+# CLI 是一次性进程，环境在启动时已定，这里求值一次即可。
+# 未授权时该常量为 False，所有 `elif HAS_PYAUTOGUI:` 回退分支自动失效。
+HAS_PYAUTOGUI = _pyautogui_authorized()
 
 user32 = ctypes.windll.user32
 

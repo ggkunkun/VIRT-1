@@ -22,12 +22,6 @@ import sys
 import json
 import traceback
 
-# Force UTF-8 on Windows stdio
-if sys.platform == "win32":
-    import io
-    sys.stdin = io.TextIOWrapper(sys.stdin.buffer, encoding="utf-8")
-    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
-
 WORKSPACE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if WORKSPACE_DIR not in sys.path:
     sys.path.insert(0, WORKSPACE_DIR)
@@ -123,6 +117,12 @@ def handle_request(req: dict) -> dict:
 
 def run_stdio_server():
     """Main loop reading JSON-RPC lines from stdin and outputting to stdout."""
+    if sys.platform == "win32":
+        import io
+        if hasattr(sys.stdin, "buffer"):
+            sys.stdin = io.TextIOWrapper(sys.stdin.buffer, encoding="utf-8")
+        if hasattr(sys.stdout, "buffer"):
+            sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
     while True:
         try:
             line = sys.stdin.readline()

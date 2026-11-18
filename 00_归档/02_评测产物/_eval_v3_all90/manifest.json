@@ -1,0 +1,574 @@
+{
+  "git_sha": "3bd431a",
+  "harness_source_sha256": {
+    "runner.py": "1f2e66a16da88d787390c46f8b9388456c6e132a7f5688659184d475593a5354",
+    "arms.py": "867b21cd982ad3e7cf0f40aca588683651c1ed73a30db8567a42aa18aafa3acb",
+    "graders.py": "426ee3db4aae07ad0b0618217985faf6f5cf4b321d94dacf58b1aa3c9d09848d"
+  },
+  "arm": {
+    "kind": "ollama_native",
+    "base_url": "http://127.0.0.1:11434",
+    "model_id": "virtu-v3-all90",
+    "num_ctx": 4096,
+    "timeout": 600,
+    "retries": 1,
+    "note": "v3 定向精修产物：virtu-v3-all90-q4_0.gguf 导入（基于 v2 弱点定向 854 条）",
+    "expect_identity": {
+      "family": "qwen3"
+    },
+    "tools": [
+      {
+        "type": "function",
+        "function": {
+          "name": "cadcam_preflight",
+          "description": "系统预检诊断：全面探测 SOLIDWORKS 2021、斯沃数控仿真 7.2、CIMCO Edit 2026、AutoCAD 2026、VERICUT 9.6 与 NX 12.0 六大工业软件的桌面快捷方式、可执行文件路径、运行进程 PID 与 COM 注册状态。",
+          "parameters": {
+            "type": "object",
+            "properties": {},
+            "required": []
+          }
+        }
+      },
+      {
+        "type": "function",
+        "function": {
+          "name": "cadcam_solidworks_model",
+          "description": "SOLIDWORKS 2021 三维参数化特征建模：通过 COM Automation / VBA 宏驱动特征树、方程式管理器 (EquationMgr) 生成零件，并导出 STEP 实体或工程图。",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "action": {
+                "type": "string",
+                "enum": [
+                  "model_flange",
+                  "create_parametric_part",
+                  "execute_vba",
+                  "connect"
+                ],
+                "description": "执行动作：model_flange（带颈法兰盘参数化建模）、create_parametric_part（基础参数化建模）或 execute_vba（直接执行VBA代码）"
+              },
+              "part_name": {
+                "type": "string",
+                "description": "零件名称，如 wheel_mold、bearing_flange"
+              },
+              "dimensions": {
+                "type": "object",
+                "description": "关键几何尺寸字典，如 {'d_outer': 53.0, 'd_inner': 14.0, 'overall_len': 45.0, 'material': 'Cr12MoV'}"
+              },
+              "vba_code": {
+                "type": "string",
+                "description": "原生 SolidWorks VBA 宏代码（当 action 为 execute_vba 时必填）"
+              }
+            },
+            "required": [
+              "action"
+            ]
+          }
+        }
+      },
+      {
+        "type": "function",
+        "function": {
+          "name": "cadcam_nx_journal",
+          "description": "Siemens NX 12.0 无头日志运行与参数化建模：调用 NXBIN/run_journal.exe 运行 Python NXOpen 脚本，或构建包含表达式集合的 .prt 零件。",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "action": {
+                "type": "string",
+                "enum": [
+                  "run_journal",
+                  "create_parametric_model"
+                ],
+                "description": "执行动作：run_journal（执行现有脚本）或 create_parametric_model（生成NXOpen参数化脚本）"
+              },
+              "script_path": {
+                "type": "string",
+                "description": "需执行的 Python NXOpen 脚本绝对路径"
+              },
+              "part_name": {
+                "type": "string",
+                "description": "NX 零件名称"
+              },
+              "expressions": {
+                "type": "object",
+                "description": "NX ExpressionCollection 参数表达式字典，如 {'D_OUTER': 53.0, 'LENGTH': 45.0}"
+              }
+            },
+            "required": [
+              "action"
+            ]
+          }
+        }
+      },
+      {
+        "type": "function",
+        "function": {
+          "name": "cadcam_autocad_draw",
+          "description": "AutoCAD 2026 二维工程制图与无头 DXF 生成：通过 ActiveX COM 发送 AutoLISP 代码、通过 accoreconsole 执行无头批处理，或利用 ezdxf 生成分层几何/公差图纸。",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "action": {
+                "type": "string",
+                "enum": [
+                  "send_lisp",
+                  "create_dxf",
+                  "run_headless_script"
+                ],
+                "description": "执行动作：send_lisp（向活跃AutoCAD发LISP命令）、create_dxf（无头生成DXF图纸）、run_headless_script（accoreconsole无头执行）"
+              },
+              "code": {
+                "type": "string",
+                "description": "AutoLISP 表达式代码"
+              },
+              "drawing_name": {
+                "type": "string",
+                "description": "图纸名称"
+              },
+              "entities": {
+                "type": "array",
+                "description": "几何图元列表（line, circle, text, dimension 等）"
+              },
+              "script_path": {
+                "type": "string",
+                "description": "AutoLISP/SCR 脚本路径（供 accoreconsole 无头执行）"
+              }
+            },
+            "required": [
+              "action"
+            ]
+          }
+        }
+      },
+      {
+        "type": "function",
+        "function": {
+          "name": "cadcam_cimco_validate",
+          "description": "CIMCO Edit 2026 数控程序校验与外送准备：解析 FANUC Macro B 变量逻辑（#100、#500、WHILE/DO/END 括号配对）、模态 G 代码一致性，并拉起 CIMCO 视窗。",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "action": {
+                "type": "string",
+                "enum": [
+                  "validate_macro",
+                  "launch"
+                ],
+                "description": "执行动作：validate_macro（深度静态语法与逻辑校验）或 launch（在CIMCO Edit中打开NC文件）"
+              },
+              "code": {
+                "type": "string",
+                "description": "G代码 / FANUC Macro B 代码文本"
+              },
+              "nc_file_path": {
+                "type": "string",
+                "description": "待打开的 NC 文件路径"
+              }
+            },
+            "required": [
+              "action"
+            ]
+          }
+        }
+      },
+      {
+        "type": "function",
+        "function": {
+          "name": "cadcam_vericut_simulate",
+          "description": "VERICUT 9.6 机床动力学仿真与防碰撞检验：调用 vericut.bat -b 启动无头批处理仿真，执行 Auto-Diff 过切/欠切检查与干涉报警日志解析。",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "action": {
+                "type": "string",
+                "enum": [
+                  "run_simulation",
+                  "check_collision"
+                ],
+                "description": "执行动作：run_simulation（无头批处理仿真）或 check_collision（解析仿真碰撞日志）"
+              },
+              "project_path": {
+                "type": "string",
+                "description": "VERICUT 项目工程文件 (.vcproject) 路径"
+              },
+              "log_path": {
+                "type": "string",
+                "description": "仿真输出日志路径（用于干涉过切分析）"
+              }
+            },
+            "required": [
+              "action"
+            ]
+          }
+        }
+      },
+      {
+        "type": "function",
+        "function": {
+          "name": "cadcam_sscnc_control",
+          "description": "斯沃数控仿真软件 7.2 (SSCNC) 虚拟加工配置：拉起数控系统、设置 G54 工件坐标系、计算刀具几何补偿与刀尖象限 (T1-T9)，触发循环启动加工走刀。",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "action": {
+                "type": "string",
+                "enum": [
+                  "launch",
+                  "find_window",
+                  "calculate_offsets"
+                ],
+                "description": "执行动作：launch（启动斯沃）、find_window（检测主窗句柄）、calculate_offsets（计算车铣刀偏与象限）"
+              },
+              "tools": {
+                "type": "array",
+                "description": "刀具规格列表，包含 tool_num, type, x, z, r, quadrant"
+              }
+            },
+            "required": [
+              "action"
+            ]
+          }
+        }
+      },
+      {
+        "type": "function",
+        "function": {
+          "name": "cadcam_run_full_chain",
+          "description": "六大软件全流水线串行驱动：将制造意图（愿望）按识图→AutoCAD工程图→SOLIDWORKS三维建模→NX多轴CAM→CIMCO宏程序→VERICUT仿真→斯沃加工的全流程执行并汇总实测取证。",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "wish": {
+                "type": "string",
+                "description": "非标零件或模具制造意图描述，包含材质、主要直径、孔径、长度、特殊形状要求"
+              },
+              "out_root": {
+                "type": "string",
+                "description": "输出工程产物根目录（默认 runs/full_chain）"
+              },
+              "skip": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "跳过阶段列表，可选 sw2021, nx12, acad2026, cimco2026, vericut96, sscnc72"
+              }
+            },
+            "required": [
+              "wish"
+            ]
+          }
+        }
+      },
+      {
+        "type": "function",
+        "function": {
+          "name": "cadcam_desktop_gui",
+          "description": "桌面视觉感知与窗口控制：截取桌面或指定工业软件窗口、自动点掉遮挡弹窗，或发送键鼠交互指令。",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "action": {
+                "type": "string",
+                "enum": [
+                  "capture",
+                  "focus",
+                  "click",
+                  "dismiss_dialogs"
+                ],
+                "description": "动作类型"
+              },
+              "software": {
+                "type": "string",
+                "description": "目标软件名称，如 solidworks, autocad, sscnc, cimco, vericut, nx"
+              },
+              "x": {
+                "type": "integer",
+                "description": "屏幕或窗口内横坐标"
+              },
+              "y": {
+                "type": "integer",
+                "description": "屏幕或窗口内纵坐标"
+              },
+              "output_path": {
+                "type": "string",
+                "description": "截图保存路径"
+              }
+            },
+            "required": [
+              "action"
+            ]
+          }
+        }
+      },
+      {
+        "type": "function",
+        "function": {
+          "name": "cadcam_visual_inspect",
+          "description": "工业视觉与图纸智能检测：对 VERICUT 仿真过切/欠切频谱、工程图图纸标题栏/视图区域、CNC 机床面板报警与屏幕进行计算机视觉分析。",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "enum": [
+                  "autodiff_inspection",
+                  "blueprint_analysis",
+                  "cnc_screen_perception"
+                ],
+                "description": "视觉分析任务类型：autodiff_inspection（VERICUT色谱过切欠切分析）、blueprint_analysis（工程图纸分块与标题栏识别）、cnc_screen_perception（CNC机床屏幕与报警感知）"
+              },
+              "image_path": {
+                "type": "string",
+                "description": "待分析的图像或截图绝对路径"
+              }
+            },
+            "required": [
+              "task",
+              "image_path"
+            ]
+          }
+        }
+      }
+    ],
+    "tools_dimensions": [
+      "toolcall"
+    ]
+  },
+  "sampling": {
+    "temperature": 0.0,
+    "seed": 1234,
+    "max_tokens_cap": null,
+    "cap_by_tier": null,
+    "token_floor": null,
+    "sample_per_tier": null
+  },
+  "case_dir": "D:\\Virtu模型\\data/benchmark/virtu_eval_v1",
+  "case_file_sha256": {
+    "boundary.jsonl": "d0171f2c012609f9ba205c8c070392229a94be40089c5377bb9d980c93a06d7f",
+    "generalization.jsonl": "4f5c114b9b047446b7158e8c7b78586001988a3bd95f9144dc6c09f5fa357f41",
+    "generation.jsonl": "3ac2ff57f2eb52a7ac77d7fc0878135fdd5bb9a9e5b7e12ec7c9e727eadefa5c",
+    "instruction.jsonl": "88aa16f29a2a1b592d8bc7c8c5ee6a2204957d8336d73a02743b81f645505285",
+    "knowledge.jsonl": "3546c40f3ce82a75369e119d61caab2f3373b7fec6613cede70fa5b11d819b5f",
+    "multimodal.jsonl": "baa7fd372ee49868d5bbdc4d67c73a3f77d43200d35db8d501f3b6cf9744b543",
+    "reasoning.jsonl": "3f84a8ca2fb6f5500cd4ce1f31766533d08e13ebf781360b7ee9990d12ff237b",
+    "toolcall.jsonl": "f758f28420f3baed1e3914192ebced6c6a48055ce2d70a1e8748957cd0b52a1a"
+  },
+  "n_cases_selected": 210,
+  "selected_case_ids": [
+    "boundary-e01",
+    "boundary-e02",
+    "boundary-e03",
+    "boundary-e04",
+    "boundary-e05",
+    "boundary-e06",
+    "boundary-e07",
+    "boundary-e08",
+    "boundary-e09",
+    "boundary-m01",
+    "boundary-m02",
+    "boundary-m03",
+    "boundary-m04",
+    "boundary-m05",
+    "boundary-m06",
+    "boundary-m07",
+    "boundary-m08",
+    "boundary-m09",
+    "boundary-m10",
+    "boundary-m11",
+    "boundary-m12",
+    "boundary-m13",
+    "boundary-m14",
+    "boundary-m15",
+    "boundary-h01",
+    "boundary-h02",
+    "boundary-h03",
+    "boundary-h04",
+    "boundary-h05",
+    "boundary-h06",
+    "generalization-e01",
+    "generalization-e02",
+    "generalization-e03",
+    "generalization-e04",
+    "generalization-e05",
+    "generalization-e06",
+    "generalization-e07",
+    "generalization-e08",
+    "generalization-e09",
+    "generalization-m01",
+    "generalization-m02",
+    "generalization-m03",
+    "generalization-m04",
+    "generalization-m05",
+    "generalization-m06",
+    "generalization-m07",
+    "generalization-m08",
+    "generalization-m09",
+    "generalization-m10",
+    "generalization-m11",
+    "generalization-m12",
+    "generalization-m13",
+    "generalization-m14",
+    "generalization-m15",
+    "generalization-h01",
+    "generalization-h02",
+    "generalization-h03",
+    "generalization-h04",
+    "generalization-h05",
+    "generalization-h06",
+    "generation-e01",
+    "generation-e02",
+    "generation-e03",
+    "generation-e04",
+    "generation-e05",
+    "generation-e06",
+    "generation-e07",
+    "generation-e08",
+    "generation-e09",
+    "generation-m01",
+    "generation-m02",
+    "generation-m03",
+    "generation-m04",
+    "generation-m05",
+    "generation-m06",
+    "generation-m07",
+    "generation-m08",
+    "generation-m09",
+    "generation-m10",
+    "generation-m11",
+    "generation-m12",
+    "generation-m13",
+    "generation-m14",
+    "generation-m15",
+    "generation-h01",
+    "generation-h02",
+    "generation-h03",
+    "generation-h04",
+    "generation-h05",
+    "generation-h06",
+    "instruction-e01",
+    "instruction-e02",
+    "instruction-e03",
+    "instruction-e04",
+    "instruction-e05",
+    "instruction-e06",
+    "instruction-e07",
+    "instruction-e08",
+    "instruction-e09",
+    "instruction-m01",
+    "instruction-m02",
+    "instruction-m03",
+    "instruction-m04",
+    "instruction-m05",
+    "instruction-m06",
+    "instruction-m07",
+    "instruction-m08",
+    "instruction-m09",
+    "instruction-m10",
+    "instruction-m11",
+    "instruction-m12",
+    "instruction-m13",
+    "instruction-m14",
+    "instruction-m15",
+    "instruction-h01",
+    "instruction-h02",
+    "instruction-h03",
+    "instruction-h04",
+    "instruction-h05",
+    "instruction-h06",
+    "knowledge-e01",
+    "knowledge-e02",
+    "knowledge-e03",
+    "knowledge-e04",
+    "knowledge-e05",
+    "knowledge-e06",
+    "knowledge-e07",
+    "knowledge-e08",
+    "knowledge-e09",
+    "knowledge-m01",
+    "knowledge-m02",
+    "knowledge-m03",
+    "knowledge-m04",
+    "knowledge-m05",
+    "knowledge-m06",
+    "knowledge-m07",
+    "knowledge-m08",
+    "knowledge-m09",
+    "knowledge-m10",
+    "knowledge-m11",
+    "knowledge-m12",
+    "knowledge-m13",
+    "knowledge-m14",
+    "knowledge-m15",
+    "knowledge-h01",
+    "knowledge-h02",
+    "knowledge-h03",
+    "knowledge-h04",
+    "knowledge-h05",
+    "knowledge-h06",
+    "reasoning-e01",
+    "reasoning-e02",
+    "reasoning-e03",
+    "reasoning-e04",
+    "reasoning-e05",
+    "reasoning-e06",
+    "reasoning-e07",
+    "reasoning-e08",
+    "reasoning-e09",
+    "reasoning-m01",
+    "reasoning-m02",
+    "reasoning-m03",
+    "reasoning-m04",
+    "reasoning-m05",
+    "reasoning-m06",
+    "reasoning-m07",
+    "reasoning-m08",
+    "reasoning-m09",
+    "reasoning-m10",
+    "reasoning-m11",
+    "reasoning-m12",
+    "reasoning-m13",
+    "reasoning-m14",
+    "reasoning-m15",
+    "reasoning-h01",
+    "reasoning-h02",
+    "reasoning-h03",
+    "reasoning-h04",
+    "reasoning-h05",
+    "reasoning-h06",
+    "toolcall-e01",
+    "toolcall-e02",
+    "toolcall-e03",
+    "toolcall-e04",
+    "toolcall-e05",
+    "toolcall-e06",
+    "toolcall-e07",
+    "toolcall-e08",
+    "toolcall-e09",
+    "toolcall-m01",
+    "toolcall-m02",
+    "toolcall-m03",
+    "toolcall-m04",
+    "toolcall-m05",
+    "toolcall-m06",
+    "toolcall-m07",
+    "toolcall-m08",
+    "toolcall-m09",
+    "toolcall-m10",
+    "toolcall-m11",
+    "toolcall-m12",
+    "toolcall-m13",
+    "toolcall-m14",
+    "toolcall-m15",
+    "toolcall-h01",
+    "toolcall-h02",
+    "toolcall-h03",
+    "toolcall-h04",
+    "toolcall-h05",
+    "toolcall-h06"
+  ],
+  "harness": "virtu_eval v1",
+  "started": "2026-11-03 08:35:17",
+  "n_already_done": 0
+}

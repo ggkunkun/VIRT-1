@@ -18,6 +18,7 @@ import tempfile
 import threading
 import time
 import unittest
+from unittest.mock import patch
 import urllib.request
 from pathlib import Path
 
@@ -25,17 +26,22 @@ WORKSPACE_DIR = Path(__file__).resolve().parent.parent
 if str(WORKSPACE_DIR) not in sys.path:
     sys.path.insert(0, str(WORKSPACE_DIR))
 
+from scripts import workbuddy_virtu_bridge as bridge
 from scripts.workbuddy_virtu_bridge import ThreadingServer, OpenAIBaseHandler, working_memory
 
 
 class TestWorkingMemoryBridge(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.port = 18001
-        cls.server = ThreadingServer(("127.0.0.1", cls.port), OpenAIBaseHandler)
+        # 走 patch.object：假 token 不得留在模块全局里污染后续「无 token 必须 401」的用例
+        cls.token_patch = patch.object(bridge, "_BRIDGE_TOKEN", "test-wm-token-" + "x" * 48)
+        cls.token_patch.start()
+        cls.addClassCleanup(cls.token_patch.stop)
+        cls.server = ThreadingServer(("127.0.0.1", 0), OpenAIBaseHandler)
+        cls.port = cls.server.server_address[1]
         cls.thread = threading.Thread(target=cls.server.serve_forever, daemon=True)
         cls.thread.start()
-        time.sleep(0.3)
+        time.sleep(0.1)
 
     @classmethod
     def tearDownClass(cls):
@@ -47,14 +53,19 @@ class TestWorkingMemoryBridge(unittest.TestCase):
 
     def _get(self, path: str):
         url = f"http://127.0.0.1:{self.port}{path}"
-        req = urllib.request.Request(url)
+        req = urllib.request.Request(url, headers={
+            "Authorization": f"Bearer {bridge._BRIDGE_TOKEN}",
+        })
         with urllib.request.urlopen(req) as resp:
             return resp.status, json.loads(resp.read().decode("utf-8"))
 
     def _post(self, path: str, data: dict):
         url = f"http://127.0.0.1:{self.port}{path}"
         payload = json.dumps(data).encode("utf-8")
-        req = urllib.request.Request(url, data=payload, headers={"Content-Type": "application/json"})
+        req = urllib.request.Request(url, data=payload, headers={
+            "Content-Type": "application/json",
+            "Authorization": f"Bearer {bridge._BRIDGE_TOKEN}",
+        })
         with urllib.request.urlopen(req) as resp:
             return resp.status, json.loads(resp.read().decode("utf-8"))
 

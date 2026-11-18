@@ -72,6 +72,12 @@ PEAK_KEY: Dict[str, str] = {
 # 1. Measured hardware characterisation
 # ---------------------------------------------------------------------------
 
+#: 设备内 copy 带宽的物理下限。现代独显（含入门级）的 device-to-device copy 都在
+#: 100 GB/s 以上；低于这个数只可能是 copy 路径掉到了主机内存往返（显存被占满时
+#: 实测 RTX 4050 从 174 掉到 7.8）。这种读数不许标 ``measured``。
+_MIN_DEVICE_COPY_GBS = 50.0
+
+
 @dataclass
 class HardwareLimits:
     device_name: str
@@ -104,7 +110,17 @@ def _event_time_ms(fn: Callable[[], Any], repeats: int = 7) -> float:
 
 
 def characterize_hardware(device: str = "cuda", repeats: int = 7) -> HardwareLimits:
-    """Measure achievable bandwidth and GEMM throughput on the live device."""
+    """Measure achievable bandwidth and GEMM throughput on the live device.
+
+    2026-11-13 实测到一个会让「measured」说谎的边界：显存被占满时 `dst.copy_(src)`
+    会退化成主机内存往返，同一张 RTX 4050 从 174 GB/s 掉到 **7.8 GB/s**（同时
+    `gemm` 的峰值也一起崩）。这不是「显卡慢」，若把它当 measured 喂给
+    `theoretical_bound()`，整套 roofline 下界会被放大约 20 倍。
+
+    所以这里加了物理下限：设备内 copy 不可能低于 50 GB/s（再老的独显也在 100 以上），
+    低于该值的测量结果一律标 `basis="contended"`——数字照给，但不许当成可达带宽用。
+    调用方要的是「这块卡的能力」，就得先腾出显存、在干净上下文里重测。
+    """
     props = torch.cuda.get_device_properties(0)
     mb = 64
     n = mb * 1024 * 1024
@@ -143,6 +159,7 @@ def characterize_hardware(device: str = "cuda", repeats: int = 7) -> HardwareLim
         copy_probe_mb=mb,
         gemm_probe_n=N,
         event_repeats=repeats,
+        basis="measured" if bw >= _MIN_DEVICE_COPY_GBS else "contended",
     )
 
 

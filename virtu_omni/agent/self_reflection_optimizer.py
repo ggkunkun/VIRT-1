@@ -52,23 +52,31 @@ class SelfReflectionOptimizer:
                 active_rules.extend(r_list)
 
         detected_issues = []
-        # Inject sandbox errors first
+        # 严重度分层：沙箱模拟出的错误才是致命项（语法/碰撞/主轴未转就切削）；
+        # 静态规则未命中多为风格与完整性建议（少写 ViewZoomtofit2、宏未用 #100 变量），
+        # 不应把"合法且无碰撞的程序"判成失败 —— 否则任务门会被风格项挡死。
         for err in sandbox_errors:
-            detected_issues.append({"issue_id": "sandbox_error", "description": f"【沙箱模拟异常】{err}"})
+            detected_issues.append({"issue_id": "sandbox_error",
+                                    "description": f"【沙箱模拟异常】{err}",
+                                    "severity": "fatal"})
 
         for issue_id, pattern, desc in active_rules:
             if not re.search(pattern, code, re.IGNORECASE):
                 # Avoid duplicate report if already covered by sandbox
                 if not any(desc[:8] in item["description"] for item in detected_issues):
-                    detected_issues.append({"issue_id": issue_id, "description": desc})
+                    detected_issues.append({"issue_id": issue_id, "description": desc,
+                                            "severity": "style"})
 
-        is_passed = len(detected_issues) == 0 and sandbox_res.get("passed", True)
+        fatal_issues = [i for i in detected_issues if i.get("severity") == "fatal"]
+        is_passed = len(fatal_issues) == 0 and bool(sandbox_res.get("passed", True))
         quality_score = max(0, 100 - len(detected_issues) * 20 - len(sandbox_warnings) * 5)
 
         return {
             "passed": is_passed,
             "score": quality_score,
             "issues": detected_issues,
+            "fatal_issues": fatal_issues,
+            "style_issues": [i for i in detected_issues if i.get("severity") == "style"],
             "warnings": sandbox_warnings,
             "sandbox_telemetry": sandbox_res,
             "language": language

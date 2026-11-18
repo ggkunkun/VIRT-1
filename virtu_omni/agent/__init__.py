@@ -29,6 +29,13 @@ _LAZY_EXPORTS = {
     "AuditorAndSandboxAgent": ".agent_team",
     "EvolutionAndMemoryAgent": ".agent_team",
     "IndustrialAgentTeam": ".agent_team",
+    "REAL_ENGINEERING_RUNTIME": ".agent_team",
+    "LEGACY_RUNTIME_TAG": ".agent_team",
+    # 真实工程运行时（AGENTS.md §4 四项契约的落地实现）
+    "SwarmCommander": ".swarm_orchestrator",
+    "Blackboard": ".swarm_orchestrator",
+    "AdversarialCritic": ".swarm_orchestrator",
+    "META_SOP_STAGES": ".swarm_orchestrator",
     "AccessModality": ".adaptive_router",
     "AgentDispatcher": ".adaptive_router",
     "DispatchPlan": ".adaptive_router",

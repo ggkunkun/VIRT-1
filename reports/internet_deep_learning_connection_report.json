@@ -1,0 +1,41 @@
+{
+  "status": "success",
+  "timestamp": 1794485133.460722,
+  "total_models_connected": 75,
+  "models_summary": {
+    "ollama": 71,
+    "local_weights": 2,
+    "gguf_checkpoint": 2
+  },
+  "safety_gate": {
+    "probe_name": "HarmfulContentFilterFalsifiableProbe",
+    "falsifiable_ok": true,
+    "bad_samples_total": 5,
+    "bad_samples_blocked": 5,
+    "pii_masking_verified": true,
+    "clean_sample_passed": true,
+    "basis": "measured"
+  },
+  "web_search": {
+    "query": "ISO 286 IT7 公差",
+    "is_safe": true,
+    "verdict": "ALLOW",
+    "total_found": 2,
+    "engines_used": [
+      "local_cache"
+    ]
+  },
+  "deep_learning": {
+    "entries_ingested": 2,
+    "vector_store_entries_total": 82,
+    "sft_output_file": "data/sft/continual_web_learning.jsonl"
+  },
+  "live_inference_verification": {
+    "model_tested": "qwen2.5:3b",
+    "success": true,
+    "response_preview": "GB/T 1800.1 标准中，公差等级 IT7 是一个较为常见的标准，它适用于机械制造中的许多场合，尤其是精密机械和精密设备。IT7 是一个中等精度的公差等级，通常用于中等精度的机械零件。其配合代号 H7/g6 也广泛应用于机械制造领域，特别是在精密机械和精密设备的制造过程中。\n\n配合代号 H7/g6 中的 H7 和 g6 分别代表孔和轴的公差带。H7 表示孔的公差带，g6 表示轴的公差带。H7",
+    "citations_count": 2
+  },
+  "basis": "measured",
+  "total_runtime_seconds": 34.75
+}

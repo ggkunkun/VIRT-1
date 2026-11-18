@@ -137,7 +137,9 @@ class BridgeDeepThinkingProtocolTests(unittest.TestCase):
 
         thought = "深度推导：1+1=2"
         content = "答案是2"
-        handler._handle_streaming_response(content, reasoning_text=thought)
+        # 思维链默认不外泄；显式展示需要 opt-in（与生产路径的默认行为一致）。
+        handler._handle_streaming_response(content, reasoning_text=thought,
+                                           expose_reasoning=True)
         
         raw_events = out_buf.getvalue().decode("utf-8").split("\n\n")
         reasoning_chunks = []

@@ -1,0 +1,20 @@
+{
+  "daemon_status": "RUNNING",
+  "last_heartbeat": 1794898664.721802,
+  "last_heartbeat_human": "2026-11-17 14:57:44",
+  "queue_stats": {
+    "total_topics": 118,
+    "pending": 36,
+    "completed": 39,
+    "rejected": 40
+  },
+  "knowledge_stats": {
+    "vector_store_entries": 647,
+    "sft_pairs_file": "D:\\Virtu模型\\data\\sft\\continual_web_learning.jsonl",
+    "sft_file_exists": true,
+    "sft_file_size_bytes": 931404
+  },
+  "last_cycle": {
+    "stub": true
+  }
+}

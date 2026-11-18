@@ -1,0 +1,32 @@
+{
+  "method": "NC-driven voxel sweep + EDT distance Auto-Diff",
+  "grid_pitch_mm": 1.0,
+  "nc_moves": 8337,
+  "gouge_voxels": 7784,
+  "gouge_pct_of_design": 0.3734,
+  "gouge_depth_mm": {
+    "mean": 1.248,
+    "max": 2.828
+  },
+  "residual_voxels": 1023916,
+  "residual_distance_to_design_mm": {
+    "mean": 2.821,
+    "median": 2.236,
+    "p90": 5.0,
+    "min": 1.0,
+    "max": 14.036
+  },
+  "residual_distance_histogram_pct": {
+    "0-0.5mm": 0.0,
+    "0.5-1.0mm": 0.0,
+    "1.0-1.5mm": 30.96,
+    "1.5-2.0mm": 4.26,
+    "2.0-3.0mm": 23.39,
+    "3.0-4.0mm": 15.64,
+    "4.0-6.0mm": 20.48,
+    "6.0-10.0mm": 4.87,
+    "10.0-100.0mm": 0.39
+  },
+  "intended_semi_finish_allowance_mm": 0.4,
+  "verdict": "REVIEW"
+}

@@ -1,0 +1,109 @@
+{
+  "project": "Autonomous Aero-Engine Turbine Blade Full Lifecycle",
+  "timestamp": "2026-11-08T01:31:44",
+  "model_autonomous_solver": "virtu-v3-all90:perfect",
+  "supervisor": "Antigravity Super Agent",
+  "physical_verification_verdict": "PASS (FOS >= 1.50, Volume Conservation True, G-Code Collision Zero)",
+  "manifest": {
+    "demo_frame_01.png": {
+      "sha256": "d386431f4832ff0628dc36e7115707b2bd3ebe24f2edc41b5a49122953e90873",
+      "size_bytes": 1201045,
+      "last_modified": "2026-11-08T01:31:42"
+    },
+    "demo_frame_02.png": {
+      "sha256": "a0ff3285df78f11e16507af9507c494506c547089aa3876cb8bf7cf120b5425b",
+      "size_bytes": 1199162,
+      "last_modified": "2026-11-08T01:31:43"
+    },
+    "demo_frame_03.png": {
+      "sha256": "0de837fbd35c6a079c4361dacb4b18d5aa01e6c05c65002c250614239018ba41",
+      "size_bytes": 1199135,
+      "last_modified": "2026-11-08T01:31:43"
+    },
+    "demo_frame_04.png": {
+      "sha256": "0c769ce18620ad350ed078ada8d6b7e63c6eb32ea224235f5d15a28f9db6a3b3",
+      "size_bytes": 1196501,
+      "last_modified": "2026-11-08T01:31:43"
+    },
+    "make_2d_drawing.py": {
+      "sha256": "e15de944ff33d91e05d265fc8318753cd201703c0eb97a5edb5cc9b6af02417f",
+      "size_bytes": 3675,
+      "last_modified": "2026-11-08T00:57:24"
+    },
+    "make_3d_cad.py": {
+      "sha256": "3b284220cf9036f5b952040d2b20b6960c46b53dc4d1fc81768d0ffd536b3847",
+      "size_bytes": 1540,
+      "last_modified": "2026-11-08T01:12:29"
+    },
+    "make_cam_toolpaths.py": {
+      "sha256": "c0c10867892a7313102c5642fc79991d4f161cec9ac8aad3020ab66ad6769f94",
+      "size_bytes": 2405,
+      "last_modified": "2026-11-08T01:31:42"
+    },
+    "MODEL_MOUSE_CONTROL_LOG.jsonl": {
+      "sha256": "483c1ace3e692bf8478ab9b6717e50673ad5bb59aa978229f75f08490b493625",
+      "size_bytes": 1504,
+      "last_modified": "2026-11-08T01:31:42"
+    },
+    "robo_output.json": {
+      "sha256": "70fd9d8da48e58539a89ffdaf1def7d1cd464ccad8bb8fc819a0ec90675048c7",
+      "size_bytes": 21,
+      "last_modified": "2026-11-08T01:27:30"
+    },
+    "run_cae_analysis.py": {
+      "sha256": "558f7a05086ddfd20af6181a7e4f76151da6e87a17c70ea04a9df31a1836fcbb",
+      "size_bytes": 1482,
+      "last_modified": "2026-11-08T01:31:10"
+    },
+    "SUPERVISOR_AUDIT_LOG.jsonl": {
+      "sha256": "512ba1a3beccce774477d5e5d3ac4ccab36254fd150f91b5557f296e682d4391",
+      "size_bytes": 26112,
+      "last_modified": "2026-11-08T01:31:44"
+    },
+    "turbine_5axis_airfoil.nc": {
+      "sha256": "36c01caaf1db6263b0f774836ef8c78fcfb3034cad07163484b71e677e074a2d",
+      "size_bytes": 865,
+      "last_modified": "2026-11-08T01:31:42"
+    },
+    "turbine_blade_2d_drawing.dxf": {
+      "sha256": "7a42fd23e441ac4dffcf7018b526b46a1a536d874a8511848dbb5f06d0bc02b8",
+      "size_bytes": 20592,
+      "last_modified": "2026-11-08T00:57:27"
+    },
+    "turbine_blade_3d_cad.step": {
+      "sha256": "9005f859930f5c143c17a7e74b5237a7af8d5a7a34b2ab8408eece0e8a932b0b",
+      "size_bytes": 171897,
+      "last_modified": "2026-11-08T01:12:44"
+    },
+    "turbine_blade_3d_cad.stl": {
+      "sha256": "a5a63ffc05ed8d91cbc49357e15c2f10700161019d28a220e02fa2de085e9ee6",
+      "size_bytes": 1007784,
+      "last_modified": "2026-11-08T01:12:44"
+    },
+    "turbine_blade_full_demonstration.gif": {
+      "sha256": "0926b28a4ba565f4e268718ea2b871b6847e43ab309205d3b0cbc8ac66ce022a",
+      "size_bytes": 1289889,
+      "last_modified": "2026-11-08T01:31:44"
+    },
+    "TURBINE_BLADE_SPEC.json": {
+      "sha256": "51ce73a0fc6c3588def8e006f142600adde3ca31b8a4047dc5b2b7df352bbad2",
+      "size_bytes": 1586,
+      "last_modified": "2026-11-08T00:42:59"
+    },
+    "turbine_cae_report.json": {
+      "sha256": "c9a7a132e8c0b18e33829d1f56a89f0bddec9943d72135b8ff71a7f4c829f5f7",
+      "size_bytes": 154,
+      "last_modified": "2026-11-08T01:31:12"
+    },
+    "turbine_cae_stress.png": {
+      "sha256": "181476c6c88ffa4724051db17e9f5b6f089d11096c04332d38f4465cc8c6858e",
+      "size_bytes": 38403,
+      "last_modified": "2026-11-08T01:31:12"
+    },
+    "turbine_firtree_root.nc": {
+      "sha256": "e6de11aa028d71cf000a308dadc0f08421bfff4b1fe00aabbef1f30452da721a",
+      "size_bytes": 272,
+      "last_modified": "2026-11-08T01:31:42"
+    }
+  }
+}

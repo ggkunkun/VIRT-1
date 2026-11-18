@@ -1,0 +1,76 @@
+{
+  "round": 1,
+  "tag": "virtu-six-software:v3",
+  "started_at": "2026-11-15 21:52:58",
+  "runtime_s": 71.7,
+  "basis": "measured",
+  "run_id": "93f3f6ea73e1e1ae",
+  "measurement_version": "probes-2026-11-15-v2",
+  "grader_sha256_imported": "48c8230eaafb29bb25f1687e05417ffd5b29f03db2a9c9a1a2103b97eece871d",
+  "grader_sha256_disk_start": "48c8230eaafb29bb25f1687e05417ffd5b29f03db2a9c9a1a2103b97eece871d",
+  "grader_sha256_disk_end": "48c8230eaafb29bb25f1687e05417ffd5b29f03db2a9c9a1a2103b97eece871d",
+  "tags_digest_before": "ed409a5e45d807ec188369bcd92c26fe8e8be3e7338ee60104404f282c8edd92",
+  "tags_digest_after": "ed409a5e45d807ec188369bcd92c26fe8e8be3e7338ee60104404f282c8edd92",
+  "drifted": false,
+  "error": null,
+  "probes_total": 7,
+  "probes_passed": 5,
+  "passed_names": [
+    "show_template_gate",
+    "chat_liveness_probe",
+    "native_tool_call_probe",
+    "anti_degenerate_sanity_probe",
+    "fanuc_g71_safety_probe"
+  ],
+  "failed": {
+    "sw_coordinate_probe": "missing_normal:front",
+    "lame_stress_probe": "missing_sigma_theta_33.33"
+  },
+  "probes_detail": {
+    "show_template_gate": {
+      "passed": true,
+      "has_tools_and_tool_call": true,
+      "no_hardcoded_num_gpu": true
+    },
+    "chat_liveness_probe": {
+      "passed": true,
+      "response_len": 150,
+      "sample": "薄壁圆筒（r/t >= 10）环向应力（hoop stress）：  \n$$ \\sigma_{\\theta} = \\frac{p \\cdot r}{t} $$  \n- $ p $：内压，MPa；$ r $：半径，mm；$ t $：壁厚，mm；$ \\sigma_{\\theta} $：环向应力，MPa。"
+    },
+    "native_tool_call_probe": {
+      "passed": true,
+      "tool_calls_count": 1,
+      "called_names": [
+        "cadcam_universal_geometry"
+      ],
+      "parsed_args": {
+        "diameter_mm": 80,
+        "length_mm": 120,
+        "shape": "cylinder"
+      },
+      "reason": "ok",
+      "raw_snippet": ""
+    },
+    "anti_degenerate_sanity_probe": {
+      "passed": true,
+      "response_len": 203,
+      "unique_ngram_ratio": 0.803,
+      "sample": "SOLIDWORKS 2021 默认基准面法向（未旋转坐标系）：\r\n- **Front Plane (前视基准面)**：`Normal = [0, 1, 0]`（+Y 轴，面向屏幕）\r\n- **Top Plane (上视基准面)**：`Normal = [0, 0, 1]`（+Z 轴，向上）\r\n- **Right Pl"
+    },
+    "sw_coordinate_probe": {
+      "passed": false,
+      "reason": "missing_normal:front",
+      "segment": "front plane (前视基准面)**：`normal = [0, 1, 0]`（+y 轴，面向屏幕）\r"
+    },
+    "lame_stress_probe": {
+      "passed": false,
+      "reason": "missing_sigma_theta_33.33",
+      "sample": "根据 Lamé 厚壁圆筒理论：\r\n\r\n- 内半径 $ r_i = \\frac{Di}{2} = 30\\,\\text{mm} $，外半径 $ r_o = \\frac{Do}{2} = 60\\,\\text{mm} $；\r\n- 压力比平方项：$ \\frac{Pi}{Pi} \\cdot \\left(\\frac{r_i}{r_o"
+    },
+    "fanuc_g71_safety_probe": {
+      "passed": true,
+      "reason": "ok",
+      "sample": "G50 S1800\r\nG96 S150 M03\r\nT0101\r\nG71 U1.5 R0.4\r\nG71 P1 Q2 U0.75 W0.1 F0.25\r\nN1 G00 X28.0 Z2.0\r\nN2 G01 Z0.0 F0.12\nG00 X68.0\nG70 P1 Q2\nM30"
+    }
+  }
+}

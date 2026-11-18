@@ -1,6 +1,12 @@
 {
   "_purpose": "闭环阶段的可测性账本。AGENTS.md 把这条链写成宪法级流程，但能测不等于测了；这里逐阶段声明用的是哪把尺，或为什么本机给不出尺子。tests/test_closed_loop_coverage.py 会要求每个阶段都在本表里出现，静默缺口即红。",
   "_measured_at": "2026-11-05",
+  "_surface_2026_11_13": {
+    "declared": 17,
+    "graded": 17,
+    "injected_by_arms": 17,
+    "note": "审计 P1-1 方案 A：cadcam_feature_ops 补 4 条 toolrouting 用例（题板 n 30→34）后留在宣告面；cadcam_web_search / cadcam_fetch_web_content / cadcam_internet_deep_learning 移入 bridges/tool_calling_specs.py 的 INTERNAL_TOOL_DEFINITIONS —— 检索命中、正文长度与抓取时刻都由外部决定，没有确定性 oracle，按「判分面只放可复现调用」的纪律不得计能力分。三者仍可 execute_tool_call 调用（含旧语料名映射），只是不再由模型自主选择。"
+  },
   "stages": {
     "blueprint_ocr_2d": {
       "status": "partial",
@@ -9,8 +15,8 @@
     },
     "cad_parametric_modeling": {
       "status": "measured",
-      "ruler": "virtu_eval_v1/toolcall + virtu_eval_cl_v1/toolrouting + scripts/sw_flange_demo.py 的 ΔV 体积闸（planted_defects 判分器直接 import 它）",
-      "caveat": "板内 solidworks/nx/autocad 提及各 11/14/9 条，逐软件能力要靠 SW-in-the-loop 套件"
+      "ruler": "virtu_eval_v1/toolcall + virtu_eval_cl_v1/toolrouting（含 cadcam_feature_ops 4 条：measure / execute_plan 的 op 顺序 / method_reason / 缺参不得补齐）+ scripts/sw_flange_demo.py 的 ΔV 体积闸（planted_defects 判分器直接 import 它）",
+      "caveat": "板内 solidworks/nx/autocad 提及各 11/14/9 条，逐软件能力要靠 SW-in-the-loop 套件；feature_ops 只判「路由与方案保真」，op 的真实几何结果仍需 ΔV 闸复核"
     },
     "cae_fos_strength_check": {
       "status": "measured",

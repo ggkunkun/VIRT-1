@@ -174,27 +174,30 @@ def import_assembly(sw, step_path: str, out_dir: str) -> Dict[str, Any]:
     time.sleep(1.2)
     dtype = doc.GetType
     comps = []
+    read_errors = []
     if dtype == 2:
         try:
             for c in (doc.GetComponents(False) or []):
                 comps.append(c.Name2)
-        except Exception:
-            pass
+        except Exception as e:  # noqa: BLE001
+            # 读不到组件时 component_count=0 与"真的没有组件"不可区分。
+            # 不改变 status（保存成功仍是成功），但把"没读到"显式写出来。
+            read_errors.append("components: " + type(e).__name__ + ": " + str(e)[:70])
     bbox = None
     try:
         bodies = doc.GetBodies2(0, True) or []
         if bodies:
             box = bodies[0].GetBodyBox()
             bbox = [round((box[i + 3] - box[i]) * 1000, 3) for i in range(3)]
-    except Exception:
-        pass
+    except Exception as e:  # noqa: BLE001
+        read_errors.append("bbox: " + type(e).__name__ + ": " + str(e)[:70])
     out = os.path.join(out_dir, "wheel_mold_assembly.SLDASM")
     saved = _save(doc, out)
     return {"status": "ok" if saved["saved"] else "partial",
             "action": "assemble", "opened_by": opened_by,
             "doc_type": dtype, "doc_type_note": "2=assembly, 1=part",
             "component_count": len(comps), "components": comps[:12],
-            "first_body_bbox_mm": bbox,
+            "first_body_bbox_mm": bbox, "read_errors": read_errors,
             "mass_properties": _mass(doc), "file": saved}
 
 
@@ -319,6 +322,11 @@ def build(step_path: str = "", out_dir: str = "", action: str = "full",
     result["artifacts"] = [k for k, v in result["steps"].items()
                            if isinstance(v, dict) and v.get("file", {}).get("saved")]
     result["all_ok"] = len(result["artifacts"]) == len(result["steps"]) and bool(result["artifacts"])
+    # 顶层 status 原来恒为 "ok"，即使每个 step 都抛异常；只有 all_ok 是诚实的。
+    # 调用方只读 status 时会把「全挂」读成成功，故由 all_ok 反推：
+    #   全成 -> ok；部分成 -> partial；一个产物都没有 -> error。
+    result["status"] = ("ok" if result["all_ok"]
+                        else ("partial" if result["artifacts"] else "error"))
     return result
 
 

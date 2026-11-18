@@ -1,0 +1,42 @@
+{
+  "generated_at": "2026-11-16 23:48:43",
+  "tag": "virtu-six-software:v7-repair",
+  "basis": "measured",
+  "corpus_sha256": "cec2543f6f69322531f6f3ad52d25ed26d2785cffda4eeee21897816b5576280",
+  "corpus_rows": 595,
+  "rounds": [
+    {
+      "tag": "virtu-six-software:v7-repair",
+      "round": 1,
+      "passed": 10,
+      "total": 10,
+      "failed": {}
+    },
+    {
+      "tag": "virtu-six-software:v7-repair",
+      "round": 2,
+      "passed": 10,
+      "total": 10,
+      "failed": {}
+    },
+    {
+      "tag": "virtu-six-software:v7-repair",
+      "round": 3,
+      "passed": 10,
+      "total": 10,
+      "failed": {}
+    }
+  ],
+  "gate": {
+    "rule": "连测最差值做门禁 (project §8.2)",
+    "v7_rounds_passed": [
+      10,
+      10,
+      10
+    ],
+    "worst_passed": 10,
+    "worst_total": 10,
+    "worst_round": 1,
+    "worst_failed": {}
+  }
+}

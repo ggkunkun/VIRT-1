@@ -1,0 +1,42 @@
+[PASS] selftest/wm_schema: rc=0 CROSS-CHECK ALL PASS=True
+[PASS] selftest/wm_contract: rc=0 CROSS-CHECK OK=True
+[PASS] selftest/wm_verifier: rc=0 ALL PASS=True
+[PASS] selftest/wm_gate: rc=0 PASS=True
+[PASS] selftest/wm_eval: rc=0 PASS=True
+[PASS] selftest/guard: rc=0 ALL PASS=True
+[PASS] selftest/guard_hooks: rc=0 PASS=True
+[PASS] contract/schema 同源: 12 families, 58 keys aligned
+[PASS] recompute 字段均在契约内: 10 families: every solver field is contract-registered
+[PASS] 闸门字面与语义同源: fos_gate / volume_conservation / collision_risk aligned
+[PASS] L1 不可被 invalid 键绕过: normal=2 issues, with invalid:1=2 issues
+[PASS] recompute 缺参/除零不抛异常: 10 malformed scenarios handled without exception
+[PASS] verify 缺参时 fail-closed 且不崩: action=escalate_solver
+[PASS] wm_eval 隐式乘法: 3 implicit-multiplication forms OK
+[PASS] wm_derivation 惯性矩与求解器同源: derivation Iz=15707.963267948966 solver Iz=15707.963267948966, centroid_key=True
+[PASS] judge 数组键不假失败: self-judge passes for array-bearing families
+[PASS] 护栏保留 design 子树: guard_action=accept judge_miss=[]
+[PASS] 护栏交付分可归因（不冒充模型能力）: action=corrected judge_pass_after_guard=True evaluation_annotated=True layers=['L1_GROUND', 'L2_SOLVER']
+[PASS] wm_probe 判分口径与官方同源: self=True() long_literal_alias=True()
+[PASS] wm_step_test invalid 族可判分: scn=None present=False, invalid family present=True
+[PASS] worldmodel_infer 与评测入口同参: missing=[] type_hints=True
+[PASS] SFT 语料落盘审计: virtu_worldmodel.jsonl:n=610 dup=0 scen=610 deriv=607 badtop=0 badws=0; virtu_worldmodel_autocad.jsonl:n=1 dup=0 scen=0 deriv=0 badtop=0 badws=0; virtu_worldmodel_collision_patch.jsonl:n=600 dup=0 scen=600 deriv=0 badtop=0 badws=0; virtu_worldmodel_distilled.jsonl:n=395 dup=0 scen=0 deriv=0 badtop=0 badws=0; virtu_worldmodel_train.jsonl:n=396 dup=0 scen=0 deriv=0 badtop=0 badws=0; virtu_worldmodel_v2.jsonl:n=2025 dup=0 scen=1629 deriv=1626 badtop=0 badws=0
+[PASS] collision 标签自洽: 0 contradictory labels / 600 generated
+[PASS] tolerance 族覆盖多类: tolerance_fit=['过渡配合', '过盈配合', '间隙配合'] tolerance_pass=['False', 'True']
+[PASS] Modelfile 契约新鲜度: 两份 Modelfile 均与当前契约/文档同源
+[PASS] build_wm_modelfile --check 覆盖 12 族: rc=0 out=[check] ALL PASS: 12 族数值/闸门/文本/布尔键名、枚举、定律卡与 invalid 规则齐全，契约↔解码同源，闸门归一一致
+[PASS] 端到端评测链路标准答案回放: expectation replay 27/27 raw, 27/27 delivery; no false failures
+
+=== AUDIT 27/27 PASS ===
+
+[STDERR]
+[wm_verifier][WARN] recompute(task=roughness) 输入不完整或非法，本次不给参考值: KeyError: 'r_eps'
+[wm_verifier][WARN] recompute(task=roughness) 输入不完整或非法，本次不给参考值: ZeroDivisionError: float division by zero
+[wm_verifier][WARN] recompute(task=process) 输入不完整或非法，本次不给参考值: ZeroDivisionError: float division by zero
+[wm_verifier][WARN] recompute(task=tolerance) 输入不完整或非法，本次不给参考值: KeyError: 'upper_dev'
+[wm_verifier][WARN] recompute(task=fea_fos) 输入不完整或非法，本次不给参考值: KeyError: 'sigma'
+[wm_verifier][WARN] recompute(task=collision) 输入不完整或非法，本次不给参考值: KeyError: 'z_min_rapid'
+[wm_verifier][WARN] recompute(task=adapt_machine) 输入不完整或非法，本次不给参考值: KeyError: 'n_max'
+[wm_verifier][WARN] recompute(task=design) 输入不完整或非法，本次不给参考值: KeyError: 'r_bore'
+[wm_verifier][WARN] recompute(task=geom_delta) 输入不完整或非法，本次不给参考值: KeyError: 'before'
+[wm_verifier][WARN] recompute(task=mass_props) 输入不完整或非法，本次不给参考值: KeyError: 'l'
+[wm_verifier][WARN] recompute(task=roughness) 输入不完整或非法，本次不给参考值: KeyError: 'r_eps'

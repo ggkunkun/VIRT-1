@@ -14,12 +14,15 @@ from __future__ import annotations
 
 import json
 import os
+import secrets
 import sys
+import tempfile
 import unittest
 from pathlib import Path
-from http.server import HTTPServer
 import threading
+import urllib.error
 import urllib.request
+from unittest.mock import patch
 
 WORKSPACE_ROOT = Path(__file__).resolve().parent.parent
 if str(WORKSPACE_ROOT) not in sys.path:
@@ -32,24 +35,72 @@ from virtu_omni.paperclip import (
     ApprovalStatus,
 )
 from virtu_omni.agent.skill_writer_and_memory import SkillWriterAndMemory
-from scripts.workbuddy_virtu_bridge import OpenAIBaseHandler
+from scripts import workbuddy_virtu_bridge as bridge
 
 
 class TestPaperclipIntegration(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.paperclip = VirtuPaperclipAdapter.get_instance()
-        # Start Bridge HTTP Server on temporary port
-        cls.test_port = 8014
-        cls.server = HTTPServer(("127.0.0.1", cls.test_port), OpenAIBaseHandler)
-        cls.server_thread = threading.Thread(target=cls.server.serve_forever, daemon=True)
+        temp_dir = tempfile.TemporaryDirectory(prefix="virtu_paperclip_test_")
+        cls.addClassCleanup(temp_dir.cleanup)
+        env_patch = patch.dict(os.environ, {
+            "VIRTU_MEMORY_PATH": str(Path(temp_dir.name) / "skill_memory.json"),
+            "VIRTU_SKILLS_ROOT": str(Path(temp_dir.name) / "skills"),
+        })
+        cls.addClassCleanup(env_patch.stop)
+        env_patch.start()
+
+        # Fresh control plane: test tasks must not leak into the shared singleton.
+        cls.paperclip = VirtuPaperclipAdapter()
+        for p in (
+            patch.object(VirtuPaperclipAdapter, "_instance", cls.paperclip),
+            patch.object(bridge, "paperclip_adapter", cls.paperclip),
+        ):
+            cls.addClassCleanup(p.stop)
+            p.start()
+
+        cls.test_token = secrets.token_urlsafe(32)
+        token_patch = patch.object(bridge, "_BRIDGE_TOKEN", cls.test_token)
+        cls.addClassCleanup(token_patch.stop)
+        token_patch.start()
+
+        cls.opener = urllib.request.build_opener(urllib.request.ProxyHandler({}))
+        cls.server = bridge.ThreadingServer(("127.0.0.1", 0), bridge.OpenAIBaseHandler)
+        cls.addClassCleanup(cls.server.server_close)
+        cls.base_url = f"http://127.0.0.1:{cls.server.server_address[1]}"
+        cls.server_thread = threading.Thread(
+            target=cls.server.serve_forever, kwargs={"poll_interval": 0.05}, daemon=True
+        )
         cls.server_thread.start()
-        cls.base_url = f"http://127.0.0.1:{cls.test_port}"
+        cls.addClassCleanup(cls._stop_server)
 
     @classmethod
-    def tearDownClass(cls):
+    def _stop_server(cls):
         cls.server.shutdown()
-        cls.server.server_close()
+        cls.server_thread.join(timeout=5)
+        if cls.server_thread.is_alive():
+            raise AssertionError("Test bridge thread did not stop")
+
+    def _open(self, request, *, authenticate=True):
+        self.assertTrue(request.full_url.startswith(f"{self.base_url}/"))
+        if authenticate:
+            request.add_unredirected_header("Authorization", f"Bearer {self.test_token}")
+        return self.opener.open(request, timeout=30)
+
+    def test_00_bridge_requires_authentication(self):
+        """Missing and invalid credentials must still fail for GET and POST."""
+        for path, payload in (("/v1/paperclip/dashboard", None), ("/v1/paperclip/task/dispatch", b"{}")):
+            for authorization in (None, f"Bearer {self.test_token}-invalid"):
+                with self.subTest(path=path, credentials="missing" if authorization is None else "invalid"):
+                    headers = {"Content-Type": "application/json"}
+                    if authorization is not None:
+                        headers["Authorization"] = authorization
+                    req = urllib.request.Request(f"{self.base_url}{path}", data=payload, headers=headers)
+                    with self.assertRaises(urllib.error.HTTPError) as caught:
+                        with self._open(req, authenticate=False):
+                            pass
+                    with caught.exception as response:
+                        self.assertEqual(response.code, 401)
 
     def test_01_org_chart_and_agent_profiles(self):
         """Verify 5 Virtu industrial agents are properly registered with reporting lines."""
@@ -158,7 +209,7 @@ class TestPaperclipIntegration(unittest.TestCase):
         """Verify Bridge HTTP REST API endpoints (/v1/paperclip/*)."""
         # 1. GET /v1/paperclip/dashboard
         req = urllib.request.Request(f"{self.base_url}/v1/paperclip/dashboard")
-        with urllib.request.urlopen(req) as resp:
+        with self._open(req) as resp:
             self.assertEqual(resp.status, 200)
             data = json.loads(resp.read().decode("utf-8"))
             self.assertTrue(data.get("ok"))
@@ -166,7 +217,7 @@ class TestPaperclipIntegration(unittest.TestCase):
 
         # 2. GET /v1/paperclip/org
         req = urllib.request.Request(f"{self.base_url}/v1/paperclip/org")
-        with urllib.request.urlopen(req) as resp:
+        with self._open(req) as resp:
             self.assertEqual(resp.status, 200)
             data = json.loads(resp.read().decode("utf-8"))
             self.assertTrue(data.get("ok"))
@@ -187,7 +238,7 @@ class TestPaperclipIntegration(unittest.TestCase):
             data=post_data,
             headers={"Content-Type": "application/json"},
         )
-        with urllib.request.urlopen(req) as resp:
+        with self._open(req) as resp:
             self.assertEqual(resp.status, 200)
             data = json.loads(resp.read().decode("utf-8"))
             self.assertTrue(data.get("ok"))
@@ -200,7 +251,7 @@ class TestPaperclipIntegration(unittest.TestCase):
             data=hb_data,
             headers={"Content-Type": "application/json"},
         )
-        with urllib.request.urlopen(req) as resp:
+        with self._open(req) as resp:
             self.assertEqual(resp.status, 200)
             data = json.loads(resp.read().decode("utf-8"))
             self.assertTrue(data.get("ok"))

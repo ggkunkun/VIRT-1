@@ -78,9 +78,29 @@ def test_router_hard_opts_no_longer_pin_num_gpu():
 def test_router_derives_safe_ceiling_on_healthy_box(monkeypatch):
     monkeypatch.setattr(mb, "sample", _healthy)
     r = _load_router()
+    try:
+        mb.facts_for_tag(r.HARD_MODEL)
+    except mb.BudgetError as exc:
+        # HARD_MODEL is a mutable tag (§8.2); without its real facts the exact
+        # ceiling cannot be derived. The conservative fallback is locked
+        # separately by test_router_falls_back_to_conservative_ceiling below.
+        pytest.skip("hard-model facts unavailable: %s" % exc)
     assert r._hard_num_gpu(4096) == 21
     assert r._hard_num_gpu(8192) == 20
     assert r._hard_num_gpu(1536) == 22
+
+
+def test_router_falls_back_to_conservative_ceiling(monkeypatch):
+    """When model facts cannot be read, derive a safe ceiling, never the crash-prone 22."""
+    monkeypatch.setattr(mb, "sample", _healthy)
+
+    def _no_facts(tag):
+        raise mb.BudgetError("tag %r absent (synthetic)" % tag)
+
+    monkeypatch.setattr(mb, "facts_for_tag", _no_facts)
+    r = _load_router()
+    assert r._hard_num_gpu(4096) == 20
+    assert r._hard_num_gpu(8192) == 20
 
 
 def test_router_falls_back_to_cpu_when_no_vram_headroom(monkeypatch):

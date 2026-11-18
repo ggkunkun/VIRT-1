@@ -1,0 +1,59 @@
+{
+  "model": "AE_CLOSED_IMPELLER_NASA1975",
+  "source": "NASA NTRS 19750003125 sample impeller (converted to mm)",
+  "parameters_from_source": {
+    "r1h_mm": 38.1,
+    "r1s_mm": 84.58,
+    "r2_mm": 129.03,
+    "D2_mm": 258.06,
+    "b2_mm": 13.69,
+    "axial_length_mm": 69.85,
+    "blade_count": 16,
+    "blade_thickness_hub_mm": 3.81,
+    "blade_thickness_shroud_mm": 1.27,
+    "beta2_deg": -25.0
+  },
+  "assumptions": {
+    "bore_radius_mm": 12.5,
+    "hub_base_thickness_mm": 6.0,
+    "cover_wall_mm": 5.0,
+    "beta1_deg": -12.0,
+    "fillets": "not modeled"
+  },
+  "derived": {
+    "typical_wrap_deg": -13.7,
+    "blade_pitch_deg": 22.5,
+    "channel_height_inlet_radial_mm": 46.48,
+    "channel_height_exit_mm": 13.69,
+    "overall_height_mm": 74.85
+  },
+  "measured": {
+    "volume_mm3": 2139178.5,
+    "step_roundtrip_volume_mm3": 2139317.6,
+    "volume_delta_pct": 0.0065,
+    "bbox_min_mm": [
+      -129.03,
+      -129.03,
+      0.0
+    ],
+    "bbox_max_mm": [
+      129.03,
+      129.03,
+      74.85
+    ],
+    "solid_count": 1,
+    "is_valid": true,
+    "stl_export_ok": true,
+    "step_bytes": 11381310,
+    "stl_bytes": 107284,
+    "preview_png": "D:\\Virtu模型\\artifacts\\aero_closed_impeller\\AE_CLOSED_IMPELLER_NASA1975_preview.png",
+    "elapsed_s": 37.6
+  },
+  "outputs": {
+    "step": "D:\\Virtu模型\\artifacts\\aero_closed_impeller\\AE_CLOSED_IMPELLER_NASA1975.step",
+    "stl": "D:\\Virtu模型\\artifacts\\aero_closed_impeller\\AE_CLOSED_IMPELLER_NASA1975.stl",
+    "preview": "D:\\Virtu模型\\artifacts\\aero_closed_impeller\\AE_CLOSED_IMPELLER_NASA1975_preview.png"
+  },
+  "stl_note": "STL 为分件网格拼装的多体网格（hub+cover+16 blades）；STEP 为单一融合实体",
+  "basis": "measured (geometry) / asserted (NASA source parameters)"
+}

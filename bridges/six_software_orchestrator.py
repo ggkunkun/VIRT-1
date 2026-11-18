@@ -76,8 +76,32 @@ class SixSoftwareOrchestrator:
         # 1. SolidWorks 2021
         if s_norm == "solidworks":
             if act in ("execute_vba", "vba"):
-                return self.sw.execute_vba_code(params.get("code", ""))
-            elif act in ("model_flange", "flange") or "flange" in params.get("part_name", "").lower():
+                return self.sw.execute_vba_code(
+                    params.get("code", ""),
+                    allow_freeform=params.get("allow_freeform"),
+                )
+            elif act in ("annotate_drawing", "drawing", "annotate"):
+                # 审计修复：此前 annotate_drawing 没有编排层实现，且会被下面
+                # 「part_name 含 flange 就建模」的子串判断劫持成建法兰（静默错动作）。
+                # 真正的标注执行器在 scripts/model_drives_solidworks.py::execute_call
+                # （sw_drawing_annotate + 图面回读核验），本层不重复造一个弱化版本，
+                # 只如实指路，避免出现「看起来成功、其实只建了个零件」的假执行。
+                return {
+                    "status": "unsupported_in_orchestrator",
+                    "verdict_code": "DISPATCH_LAYER_MISMATCH",
+                    "action": act,
+                    "message": (
+                        "annotate_drawing 由监督执行器执行："
+                        "scripts/model_drives_solidworks.py 的 execute_call"
+                        "（--anno-spec + sw_drawing_annotate 图面回读核验）。"
+                        "本编排层不具备标注能力，不做降级替代。"
+                    ),
+                    "executor": "scripts/model_drives_solidworks.py::execute_call",
+                    "input_sent": False,
+                }
+            elif act in ("model_flange", "flange") or (
+                not act and "flange" in str(params.get("part_name", "")).lower()
+            ):
                 return self.sw.model_flange(
                     dimensions=params.get("dimensions", {}),
                     out_path=params.get("out_path")
@@ -90,6 +114,8 @@ class SixSoftwareOrchestrator:
                 )
             elif act in ("connect", "ping"):
                 return self.sw.connect()
+            elif act in ("mass_properties", "mass_props", "volume"):
+                return self.sw.active_mass_properties()
             elif act in ("health", "status"):
                 return get_software_health("solidworks")
 
@@ -111,7 +137,15 @@ class SixSoftwareOrchestrator:
         # 3. AutoCAD 2026
         elif s_norm == "autocad":
             if act in ("send_lisp", "lisp"):
-                return self.cad.send_lisp_command(params.get("code", ""))
+                return self.cad.send_lisp_command(
+                    params.get("code", ""),
+                    # 阶段二 B 组收尾：此处原为 params.get("allow_freeform", True)，
+                    # 等于在编排层把 send_lisp_command 的 deny-by-default 整体旁路
+                    # （工具层审计 §4.1 要求"自由文本执行默认关闭"）。
+                    # 改为跟随策略默认：None → VIRTU_LISP_ALLOW_FREEFORM 未设置即拒绝，
+                    # 需要放行时由调用方显式传入 allow_freeform=True 或设置该环境变量。
+                    allow_freeform=params.get("allow_freeform"),
+                )
             elif act in ("run_headless_script", "run_script", "accoreconsole"):
                 return self.cad.run_headless_script(
                     params.get("script_path", ""),
@@ -157,6 +191,10 @@ class SixSoftwareOrchestrator:
                 return self.sscnc.find_window()
             elif act in ("calculate_offsets", "offsets"):
                 return self.sscnc.calculate_tool_offsets(params.get("tools", []))
+            elif act in ("panel_capability", "panel_probe"):
+                return self.sscnc.panel_capability()
+            elif act in ("press_panel_key", "panel_key"):
+                return self.sscnc.press_panel_key(params.get("key_label", ""))
             elif act in ("health", "status"):
                 return get_software_health("sscnc")
 
@@ -203,15 +241,17 @@ class SixSoftwareOrchestrator:
             "supported_software": list(SOFTWARE_SPECS.keys()) + ["full_chain", "universal_geometry", "cae_stress", "sheetmetal_nest", "step_reverse"],
         }
 
-    def run_extreme_chain(self, wish: str, out_root: str = None, max_attempts: int = 3, tier2_native: bool = False) -> dict:
+    def run_extreme_chain(self, wish: str, out_root: str = None, max_attempts: int = 3,
+                          tier2_native: bool = False, dialect: str = "fanuc") -> dict:
         """Run extreme-speed closed-loop CAD/CAE/CAM lifecycle with circuit breaker.
-        
+
         Axiom: “又快又准到极限，未到极限则继续，到了极限则放弃”
         """
         try:
             from virtu_omni.engine.extreme_cadcam_pipeline import ExtremeCADCAMPipeline
             pipeline = ExtremeCADCAMPipeline()
-            res = pipeline.run_full_lifecycle(wish, out_root=out_root, max_attempts=max_attempts)
+            res = pipeline.run_full_lifecycle(wish, out_root=out_root, max_attempts=max_attempts,
+                                              dialect=dialect)
             if res.get("status") == "success" and tier2_native:
                 # Optionally run Tier 2 desktop execution
                 chain_res = self.run_full_chain(wish, out_root=out_root)
@@ -230,8 +270,14 @@ class SixSoftwareOrchestrator:
         try:
             import agent_chain_executor as chain_exec
             bundle = chain_exec.run_chain(wish, out_root=out_root, skip=skip)
+            from virtu_omni.agent.six_software_evidence import adjudicate_chain_bundle
+            evidence_gate = adjudicate_chain_bundle(bundle)
             return {
-                "status": "success",
+                "status": "success" if evidence_gate["passed"] else "failed",
+                "engineering_verified": evidence_gate["passed"],
+                "evidence_basis": evidence_gate["basis"],
+                "verdict_code": evidence_gate["verdict_code"],
+                "evidence_gate": evidence_gate,
                 "run_id": bundle.get("run_id"),
                 "out_dir": bundle.get("out_dir"),
                 "verdicts": bundle.get("verdicts"),
@@ -310,8 +356,12 @@ class SixSoftwareOrchestrator:
             }
 
     def cae_stress_analysis(self, spec: dict, material: str = "45号钢", pressure_mpa: float = 0.0,
-                            force_n: float = 0.0, torque_nm: float = 0.0, target_fos: float = 1.5) -> dict:
-        """Perform analytical stress verification and closed-loop geometry self-healing."""
+                            force_n: float = 0.0, torque_nm: float = 0.0, target_fos: float = 1.5,
+                            solver: str = "analytic") -> dict:
+        """Perform analytical stress verification and closed-loop geometry self-healing.
+
+        solver="pynite" 走真实梁单元 FEA（仅回转轴/梁族，带解析交叉核验）。
+        """
         try:
             from virtu_omni.engine.universal_cae_engine import UniversalCAEEngine
             from virtu_omni.engine.universal_geometry_engine import PartFamily
@@ -334,9 +384,9 @@ class SixSoftwareOrchestrator:
             if material:
                 intent_data["spec"]["material"] = material
 
-            res = cae.analyze_and_optimize(intent_data=intent_data, load_params=loads)
+            res = cae.analyze_and_optimize(intent_data=intent_data, load_params=loads, solver=solver)
             return {
-                "status": "success",
+                "status": "success" if res.get("status") not in ("blocked", "unavailable") else res.get("status"),
                 "cae_result": res,
             }
         except Exception as e:
@@ -365,6 +415,7 @@ class SixSoftwareOrchestrator:
                     length=float(p.get("width", p.get("length", 50.0))),
                     width=float(p.get("height", p.get("width", 50.0))),
                     quantity=int(p.get("quantity", 1)),
+                    contour=p.get("contour"),
                 ))
             engine = SheetMetalNestingEngine(stock=stock)
             layout = engine.optimize_nesting(nest_parts, allow_rotation=True)

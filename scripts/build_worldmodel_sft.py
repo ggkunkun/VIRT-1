@@ -33,6 +33,9 @@ import random
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT_DEFAULT = os.path.join(ROOT, "data", "sft", "virtu_worldmodel.jsonl")
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import wm_derivation  # noqa: E402  (契约要求 derivation，历史语料缺这一段)
+
 try:
     from distill_local_solver import mass_props_csg  # 解析 CSG 质量属性
 except Exception:
@@ -63,8 +66,13 @@ def round_sig(x, n=4):
     return round(x, -int(math.floor(math.log10(abs(x)))) + (n - 1))
 
 
-def make_messages(user_text, ws_json):
-    return {
+def make_messages(user_text, ws_json, scenario=None):
+    # 契约规则 F：world_state 每个数值字段都要在顶层 derivation 给代入算式。
+    # 历史语料 derivation 覆盖率为 0，模型从未被教过这段结构，导致护栏 L2
+    # 复算通道在真实题上经常无源可用；这里按 wm_verifier.recompute 同口径补齐。
+    if scenario is not None:
+        wm_derivation.enrich(ws_json, scenario)
+    rec = {
         "messages": [
             {"role": "system", "content": SYSTEM},
             {"role": "user", "content": user_text},
@@ -72,6 +80,9 @@ def make_messages(user_text, ws_json):
         ],
         "meta": {"stage": "WM"},
     }
+    if scenario is not None:
+        rec["scenario"] = scenario
+    return rec
 
 
 def gen_removal_mrr(rng):
@@ -95,7 +106,7 @@ def gen_removal_mrr(rng):
             "removed_mass_g": round_sig(removed_mass, 3),
             "resulting_mass_g": round_sig(remaining_mass, 3),
             "delta_volume_mm3": round_sig(-removed),
-            "volume_conservation": "pass_cut_negative",
+            "volume_conservation": "pass",
         },
         "verification": {
             "formula": "MRR=DOC*WOC*vf; V_removed=DOC*WOC*L; m=rho*V",
@@ -105,7 +116,7 @@ def gen_removal_mrr(rng):
     u = (f"毛坯体积 {stock_vol:.0f} mm^3，材料 {mat}，密度 {rho*1000:.1f} g/cm^3。"
          f"用端铣刀单刀路：切削深度 DOC={doc} mm，切削宽度 WOC={woc} mm，"
          f"进给速度 vf={vf:.0f} mm/min，刀路长度 L={L} mm。预测去除量与余下质量。")
-    return make_messages(u, ws)
+    return make_messages(u, ws, {"task": "removal", "inputs": {"doc": doc, "woc": woc, "vf": vf, "L": L, "rho": rho, "stock_vol": stock_vol}})
 
 
 def gen_roughness(rng):
@@ -127,7 +138,7 @@ def gen_roughness(rng):
     }
     u = (f"车削外圆，每转进给 f={f} mm/rev，刀尖圆弧半径 r_ε={r_eps} mm。"
          f"预测加工表面粗糙度 Ra（μm）与对应粗糙度等级。")
-    return make_messages(u, ws)
+    return make_messages(u, ws, {"task": "roughness", "inputs": {"f": f, "r_eps": r_eps}})
 
 
 def gen_fea_fos(rng):
@@ -142,7 +153,7 @@ def gen_fea_fos(rng):
             "yield_strength_mpa": Sy,
             "peak_von_mises_mpa": sigma,
             "safety_factor": round_sig(fos, 3),
-            "fos_gate": "FOS>=1.5_pass" if fos >= 1.5 else "FOS<1.5_FAIL",
+            "fos_gate": "pass" if fos >= 1.5 else "fail",
         },
         "verification": {
             "formula": "FOS=Sy/sigma_vm",
@@ -151,17 +162,49 @@ def gen_fea_fos(rng):
     }
     u = (f"{mat}构件，屈服强度 Sy={Sy:.0f} MPa，FEA 算得峰值 von Mises 应力 "
          f"σ_vm={sigma} MPa。预测安全系数并判定 FOS≥1.5 是否通过。")
-    return make_messages(u, ws)
+    return make_messages(u, ws, {"task": "fea_fos", "inputs": {"Sy": Sy, "sigma": sigma}})
 
 
 def gen_collision_gcode(rng):
-    """刀轨碰撞/过切风险（基于 G00 快速移动与安全平面）"""
-    z_safe = round(rng.uniform(2.0, 30.0), 1)
-    z_min_rapid = round(rng.uniform(-5.0, z_safe + 5.0), 1)  # 某段 G00 的最低 Z
+    """刀轨碰撞/过切风险（基于 G00 快速移动与安全平面）
+
+    A-2 修复两处：
+    1) 判据不一致：原实现 gouge = 双真 AND (rapid < stock_top)，而 wm_verifier 与
+       定律卡都是 gouge = (rapid < stock_top)。已切入毛坯时即使高于安全平面也算过切，
+       旧式会漏判成 green。此处与 verifier 对齐。
+    2) 覆盖不均：原 z_min_rapid / stock_top 独立均匀采样，四象限严重失衡，模型只见过
+       "高毛坯 + 中等 rapid"，学不到 AND 判据方向（评测里 5 例 collision 全错在方向）。
+       改为按 6 种构造轮转，强制覆盖 ①真②假、①假②真、双真非 gouge、gouge、
+       全安全、贴判定临界 的边界带。
+    """
     stock_top = round(rng.uniform(0.0, 20.0), 1)
-    has_rapid_over_stock = (z_min_rapid < z_safe) and (z_min_rapid < stock_top + 1.0)
-    risk = "high" if has_rapid_over_stock else "none"
-    gouge = has_rapid_over_stock and (z_min_rapid < stock_top)
+    mode = rng.randrange(6)
+    if mode == 0:      # 全安全：两个条件皆假
+        base = stock_top + 1.0 + rng.uniform(0.5, 8.0)
+        z_safe = round(base + rng.uniform(-4.0, 8.0), 1)
+        z_min_rapid = round(max(z_safe, stock_top + 1.0) + rng.uniform(0.0, 6.0), 1)
+    elif mode == 1:    # ①真②假：低于安全平面，但未到毛坯顶面+1
+        z_safe = round(stock_top + rng.uniform(2.0, 10.0), 1)
+        z_min_rapid = round(rng.uniform(stock_top + 1.0, max(stock_top + 1.2, z_safe - 0.2)), 1)
+    elif mode == 2:    # ①假②真：高于安全平面，但低于毛坯顶面+1（最易误判为风险）
+        z_safe = round(stock_top - rng.uniform(1.0, 6.0), 1)
+        z_min_rapid = round(rng.uniform(z_safe, stock_top + 0.9), 1)
+    elif mode == 3:    # 双真非 gouge：进入风险带但没切进毛坯
+        z_safe = round(stock_top + rng.uniform(2.0, 8.0), 1)
+        z_min_rapid = round(rng.uniform(stock_top, stock_top + 0.9), 1)
+    elif mode == 4:    # gouge：切进毛坯
+        z_safe = round(stock_top + rng.uniform(-6.0, 3.0), 1)
+        z_min_rapid = round(stock_top - rng.uniform(0.5, 12.0), 1)
+    else:              # 边界带：贴着 stock_top+1 与 z_safe 的判定临界
+        z_safe = round(stock_top + rng.uniform(-2.5, 2.5), 1)
+        z_min_rapid = round(stock_top + 1.0 + rng.uniform(-0.4, 0.4), 1)
+
+    gouge = z_min_rapid < stock_top          # 与 wm_verifier / 定律卡同源
+    # 与 wm_verifier.recompute 同源：已过切(gouge) 本身就是碰撞高风险。
+    # 旧式只做 AND 判定，mode 2 会产出「gouge=True + collision_risk=none +
+    # autodiff=red」的自相矛盾标签（600 条抽样 81 条），模型学到的是坏物理。
+    has_rapid_over_stock = ((z_min_rapid < z_safe) and (z_min_rapid < stock_top + 1.0))
+    risk = "high" if has_rapid_over_stock or gouge else "none"
     ws = {
         "world_state": {
             "safe_plane_z_mm": z_safe,
@@ -172,14 +215,14 @@ def gen_collision_gcode(rng):
             "autodiff": "red" if gouge else ("yellow" if risk == "high" else "green"),
         },
         "verification": {
-            "formula": "risk = (Z_rapid_min < Z_safe) AND (Z_rapid_min < Z_stock_top+1)",
+            "formula": "risk = ((Z_rapid_min < Z_safe) AND (Z_rapid_min < Z_stock_top+1)) OR (Z_rapid_min < Z_stock_top)；gouge = (Z_rapid_min < Z_stock_top)",
             "checks": ["no_gouge"],
         },
     }
     u = (f"分析一段 FANUC 加工程序：安全平面 Z={z_safe} mm，某 G00 快速移动段最低 "
          f"Z={z_min_rapid} mm，毛坯顶面 Z={stock_top} mm。预测碰撞/过切风险与 "
          f"VERICUT Auto-Diff 颜色（红=过切，黄=风险，绿=合格）。")
-    return make_messages(u, ws)
+    return make_messages(u, ws, {"task": "collision", "inputs": {"z_safe": z_safe, "z_min_rapid": z_min_rapid, "stock_top": stock_top}})
 
 
 def gen_tolerance(rng):
@@ -190,11 +233,28 @@ def gen_tolerance(rng):
     rss = math.sqrt(sum(t * t for t in tols))       # 统计法半宽
     # 间隙/干涉：基本尺寸偏差
     basic = round(rng.uniform(20, 100), 1)
-    upper_dev = round(rng.uniform(0.0, 0.05), 3)
-    lower_dev = round(rng.uniform(-0.05, 0.0), 3)
+    # 覆盖三类配合（旧采样 upper∈[0,.05] / lower∈[-.05,0] 使 clearance 恒 ≥0，
+    # 过盈、过渡、tolerance_pass=False 三个分支在落盘语料里一次都没出现过）。
+    fit_mode = rng.randrange(3)
+    if fit_mode == 0:      # 间隙
+        upper_dev = round(rng.uniform(0.015, 0.06), 3)
+        lower_dev = round(rng.uniform(-0.06, -0.005), 3)
+    elif fit_mode == 1:    # 过渡：|clearance| <= 0.01
+        base = round(rng.uniform(-0.04, 0.04), 3)
+        upper_dev = base
+        lower_dev = round(base + rng.uniform(-0.008, 0.008), 3)
+    else:                  # 过盈
+        upper_dev = round(rng.uniform(-0.06, -0.005), 3)
+        lower_dev = round(rng.uniform(0.005, 0.06), 3)
     clearance = upper_dev - lower_dev
-    fit = "间隙配合" if clearance > 0 else ("过盈配合" if clearance < 0 else "过渡配合")
-    fit_class = ("H7/g6" if clearance > 0.01 else ("H7/p6" if clearance < -0.01 else "H7/js6"))
+    # 与 wm_gate.normalize 同一套 ±0.01 阈值，禁止「fit=间隙配合 但 fit_class=H7/js6」
+    # 这种自相矛盾的标签（旧实现两个字段用了不同阈值）。
+    if clearance > 0.01:
+        fit, fit_class = "间隙配合", "H7/g6"
+    elif clearance < -0.01:
+        fit, fit_class = "过盈配合", "H7/p6"
+    else:
+        fit, fit_class = "过渡配合", "H7/js6"
     ws = {
         "world_state": {
             "component_tolerances_mm": tols,
@@ -204,7 +264,8 @@ def gen_tolerance(rng):
             "fit_clearance_mm": round_sig(clearance, 4),
             "tolerance_fit": fit,
             "fit_class": fit_class,
-            "tolerance_pass": bool(clearance >= -0.005),
+            # 与 wm_verifier.recompute 同口径（>=0）；旧 -0.005 是第二套阈值
+            "tolerance_pass": bool(clearance >= 0.0),
         },
         "verification": {
             "formula": "WC=sum(ti); RSS=sqrt(sum(ti^2))",
@@ -212,9 +273,9 @@ def gen_tolerance(rng):
         },
     }
     u = (f"尺寸链含 {n} 个组成环，半公差分别为 {tols} mm（基本尺寸 {basic} mm）。"
-         f"孔轴偏差：上偏差 +{upper_dev} mm，下偏差 {lower_dev} mm。"
+         f"孔轴偏差：上偏差 {upper_dev} mm，下偏差 {lower_dev} mm。"
          f"用极值法与统计法（RSS）给出封闭环公差带半宽，并判定配合性质与等级。")
-    return make_messages(u, ws)
+    return make_messages(u, ws, {"task": "tolerance", "inputs": {"tols": tols, "upper_dev": upper_dev, "lower_dev": lower_dev, "basic": basic}})
 
 
 def gen_geometric_delta(rng):
@@ -230,7 +291,7 @@ def gen_geometric_delta(rng):
             "delta_volume_mm3": dv,
             "before_volume_mm3": before,
             "after_volume_mm3": before + dv,
-            "volume_conservation": "pass_cut_negative" if dv < 0 else "FAIL",
+            "volume_conservation": "pass" if dv < 0 else "fail",
         },
         "verification": {
             "formula": "dV = -V_feature (切除为负)",
@@ -239,7 +300,7 @@ def gen_geometric_delta(rng):
     }
     u = (f"在工件上切除一个{feat}，特征体积 {vol} mm^3，切除前工件体积 {before} mm^3。"
          f"预测切除后几何体积变化 ΔV 与切除后体积，并校验体积守恒。")
-    return make_messages(u, ws)
+    return make_messages(u, ws, {"task": "geom_delta", "inputs": {"feature_vol": vol, "before": before}})
 
 
 def gen_mass_props(rng):
@@ -281,24 +342,33 @@ def gen_mass_props(rng):
     else:
         u = (f"预测{shape}（半径 r={params['r']} mm，高 h={params['h']} mm）的"
              f"质量属性：体积、质量、质心坐标、绕质心惯性矩 Ixx 与 Izz。材料 {mat}。")
-    return make_messages(u, ws)
+    return make_messages(u, ws, {"task": "mass_props", "inputs": {"shape": shape, "params": params, "rho": rho}})
 
 
 def gen_invalid(rng):
     """鲁棒性：非法/矛盾输入 → 结构化 invalid 世界状态"""
+    # 契约形态（wm_contract.INVALID_BLOCK）：顶层仅 world_state/invalid/reason 三键，
+    # reason="<code>: <中文说明>"。旧样本带第四键 expected_action（wide_schema
+    # additionalProperties:false 禁止）且 reason 只有裸 code，训练形态与契约冲突。
     cases = [
-        ("切削深度 DOC=-2 mm，其余参数正常。", "negative_cut_depth"),
-        ("未提供材料类型，要求预测去除质量。", "missing_material"),
-        ("给定 FEA 应力 σ_vm=NaN MPa。", "nan_stress"),
+        ("切削深度 DOC=-2 mm，其余参数正常。", "negative_cut_depth", "负切削是非法输入，不是零去除"),
+        ("未提供材料类型，要求预测去除质量。", "missing_material", "缺少材料/密度，禁止用默认物性补缺"),
+        ("给定 FEA 应力 σ_vm=NaN MPa。", "nan_stress", "NaN 不可参与运算，不得输出任何数值"),
     ]
-    u, reason = rng.choice(cases)
+    u, reason, explain = rng.choice(cases)
     ws = {
         "world_state": None,
         "invalid": True,
-        "reason": reason,
-        "expected_action": "拒绝并列出缺失/非法项，不输出臆测数值",
+        "reason": f"{reason}: {explain}",
     }
-    return make_messages(u, ws)
+    # invalid 族同样必须带 scenario：契约要求每条样本都有可复算场景，
+    # 缺失时 Guard 只能靠 infer 兜底，_invalid_reason 也无从给出缺失项名单。
+    _inv_inputs = {
+        "negative_cut_depth": {"doc": -2.0},
+        "missing_material": {"material": None, "rho": None},
+        "nan_stress": {"sigma": None},
+    }[reason]
+    return make_messages(u, ws, {"task": "invalid", "inputs": _inv_inputs})
 
 
 GENERATORS = [
@@ -357,11 +427,23 @@ def main():
         recs = recs[:args.n]
         print(f"[first-principles] generated {len(recs)} records")
 
+    # 落盘前确定性去重：随机生成器会撞出同题同答的重复行（实测旧语料 670 行
+    # 里 69 行重复），重复样本会虚增训练权重、也让评测的 --exclude-train 失真。
+    seen, uniq = set(), []
+    for r in recs:
+        key = r["messages"][2]["content"]
+        if key in seen:
+            continue
+        seen.add(key)
+        uniq.append(r)
+    dropped = len(recs) - len(uniq)
+    recs = uniq
+
     os.makedirs(os.path.dirname(args.out), exist_ok=True)
     with open(args.out, "w", encoding="utf-8") as f:
         for r in recs:
             f.write(json.dumps(r, ensure_ascii=False) + "\n")
-    print(f"[ok] wrote {len(recs)} -> {args.out}")
+    print(f"[ok] wrote {len(recs)} -> {args.out} (dedup dropped {dropped})")
 
 
 if __name__ == "__main__":

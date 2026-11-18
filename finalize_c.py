@@ -61,8 +61,8 @@ def main():
         print(f"  {d:<14} pass={100*b['p']/b['n']:5.1f}%  score={statistics.mean(b['s']):5.1f}  tok_med={tm:.0f}")
 
     # 基线（报告 §2 已记录）
-    BASE = dict(pass=0.422, score=69.9, tok=166)
-    OLD = dict(pass=0.439, score=69.0, tok=85)
+    BASE = {"pass": 0.422, "score": 69.9, "tok": 166}
+    OLD = {"pass": 0.439, "score": 69.0, "tok": 85}
     verdict_pass = m["pass"] >= OLD["pass"] - 0.03   # 允许 3pp 抖动
     verdict_tok = m["tok_med"] <= OLD["tok"] + 10     # token 不显著增
     print("\nC 判定: 能力不降=%s (disciplined %.1f%% vs 旧生产 %.1f%%) | token不增=%s (中位 %d vs 85)"

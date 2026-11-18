@@ -18,13 +18,13 @@ import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-TMP_ROOT = ROOT / "runs" / "eval" / "_test_tmp"
+# 见 tests/test_eval_in_situ_gate.py：仓库内临时目录会被宿主 safe-delete 垫片
+# 的批量删除阈值误伤，统一放系统 TEMP。
+TMP_ROOT = Path(tempfile.gettempdir()) / "virtu_eval_test_tmp"
 
 
 def _tmp_root():
-    # scratch/ is a shared sweep target on this box (emptied 2026-11-05, taking
-    # probe scripts with it); test temporaries live under runs/eval and are created
-    # on demand so a cleaned directory cannot turn into a fake red.
+    # 按需创建，目录被清理也不会变成假红。
     TMP_ROOT.mkdir(parents=True, exist_ok=True)
     return str(TMP_ROOT)
 
@@ -88,19 +88,25 @@ class TestAssertNoLeak(unittest.TestCase):
                      "assert_no_leak(r'%s', r'%s')" % (ROOT, train, CASE_DIR))
             proc = subprocess.run([sys.executable, "-c", probe],
                                   capture_output=True, text=True,
+                                  encoding="utf-8", errors="replace",
                                   env={**os.environ, "PYTHONUTF8": "1"})
         self.assertEqual(proc.returncode, 2, proc.stdout + proc.stderr)
         self.assertIn("拒绝开训", proc.stdout)
 
     def test_trainers_call_the_gate_before_touching_weights(self):
-        for rel in ("scripts/train_qwen3_8b_qlora.py", "cloud_train_pack/train_turnkey.py"):
+        for rel in (
+            "scripts/train_qwen3_8b_qlora.py",
+            "scripts/train_world_model_final.py",
+            "cloud_train_pack/train_turnkey.py",
+            "cloud_train_pack/train_turnkey_worldmodel.py",
+        ):
             text = io.open(ROOT / rel, encoding="utf-8", errors="ignore").read()
             self.assertIn("assert_no_leak", text, f"{rel} 未接泄漏闸")
             body = text[text.index("parse_args("):]  # everything after the CLI is read
             self.assertIn("assert_no_leak", body, f"{rel} 的闸不在 main 里")
             load_at = min((body.index(marker) for marker in
                            ("AutoTokenizer.from_pretrained", "find_or_download_base",
-                            "load_dataset") if marker in body), default=None)
+                            "load_dataset", "load_wm_dataset") if marker in body), default=None)
             self.assertIsNotNone(load_at, f"{rel} 找不到可比较的加载点")
             self.assertLess(body.index("assert_no_leak"), load_at,
                             f"{rel} 的闸在载权重/读语料之后，等于没有闸")
@@ -108,10 +114,10 @@ class TestAssertNoLeak(unittest.TestCase):
     def test_turnkey_refuses_silent_data_fallback(self):
         """A missing --data used to fall back to a different corpus and still label the
         artifact with the requested one."""
-        text = io.open(ROOT / "cloud_train_pack" / "train_turnkey.py",
-                       encoding="utf-8", errors="ignore").read()
-        self.assertIn("拒绝自动回退", text)
-        self.assertNotIn("自动回退探测到数据集", text)
+        for rel in ("cloud_train_pack/train_turnkey.py", "cloud_train_pack/train_turnkey_worldmodel.py"):
+            text = io.open(ROOT / rel, encoding="utf-8", errors="ignore").read()
+            self.assertIn("拒绝自动回退", text)
+            self.assertNotIn("自动回退探测到数据集", text)
 
 
 if __name__ == "__main__":

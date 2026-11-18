@@ -14,6 +14,8 @@ import io
 import json
 
 import pytest
+# torch 是可选训练依赖：无 torch 的推理主机上跳过本模块，而不是让收集阶段中断。
+pytest.importorskip("torch")
 import torch
 from PIL import Image
 
@@ -418,11 +420,15 @@ from fastapi import HTTPException  # noqa: E402
 
 import virtu_omni.serving.server as server_module  # noqa: E402
 
+SERVING_TEST_TOKEN = "serving-hardening-test-" + "x" * 48
+SERVING_TEST_AUTH = {"Authorization": f"Bearer {SERVING_TEST_TOKEN}"}
+
 
 @pytest.fixture(scope="module")
 def client() -> TestClient:
     cfg = VirtuOmniConfig(model=_tiny_model_config())
-    return TestClient(server_module.create_app(cfg))
+    return TestClient(server_module.create_app(cfg, bearer_token=SERVING_TEST_TOKEN),
+                      headers=SERVING_TEST_AUTH)
 
 
 def _png_b64(size: int = 28) -> str:
@@ -516,7 +522,8 @@ def test_metrics_single_sample_does_not_crash(client):
 
 def test_metrics_without_samples_reports_zero_compliance():
     cfg = VirtuOmniConfig(model=_tiny_model_config())
-    fresh = TestClient(server_module.create_app(cfg))
+    fresh = TestClient(server_module.create_app(cfg, bearer_token=SERVING_TEST_TOKEN),
+                       headers=SERVING_TEST_AUTH)
     data = fresh.get("/v1/metrics").json()
     assert data["total_requests"] == 0
     assert data["slo_compliance_rate"] == 0.0

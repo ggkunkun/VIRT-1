@@ -1,0 +1,40 @@
+{
+  "method": "offline NC-driven voxel sweep + Auto-Diff (VERICUT-independent)",
+  "grid_pitch_mm": 1.0,
+  "grid_shape": [
+    270,
+    270,
+    88
+  ],
+  "tools": {
+    "1": {
+      "name": "D16 flat endmill",
+      "R": 8.0,
+      "type": "flat"
+    },
+    "2": {
+      "name": "D8 ball / D5 neck / reach70",
+      "R": 4.0,
+      "type": "ball"
+    }
+  },
+  "nc_moves_total": 8337,
+  "nc_moves_in_stock": 8337,
+  "nc_moves_by_tool": {
+    "1": 3025,
+    "2": 5312
+  },
+  "volumes_mm3": {
+    "stock": 3630428,
+    "design": 2084573,
+    "machined": 3100477,
+    "removed_total": 529951,
+    "gouge": 7784,
+    "excess": 1023916,
+    "ok_design_retained": 2076561
+  },
+  "gouge_pct_of_design": 0.373,
+  "excess_pct_of_design": 49.119,
+  "stock_removal_ratio": 0.4004,
+  "verdict": "PASS"
+}

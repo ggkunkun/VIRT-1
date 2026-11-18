@@ -1,0 +1,1284 @@
+{
+ "ollama_models": [
+  {
+   "name": "virtu-max:183715c4",
+   "id": "0bc5ac09dc1d",
+   "size": "986 MB",
+   "from": [
+    "C:\\Users\\Administrator\\.ollama\\models\\blobs\\sha256-183715c435899236895da3869489cc30ac241476b4971a20285b1a462818a5b4"
+   ],
+   "params": [
+    "PARAMETER num_ctx 8192",
+    "PARAMETER num_predict 512",
+    "PARAMETER repeat_penalty 1.15",
+    "PARAMETER seed 1234",
+    "PARAMETER temperature 0",
+    "PARAMETER top_p 1"
+   ],
+   "supports_tools": true
+  },
+  {
+   "name": "virtu-max:36f5d7bd",
+   "id": "1c1f0ba2c2ed",
+   "size": "4.6 GB",
+   "from": [
+    "C:\\Users\\Administrator\\.ollama\\models\\blobs\\sha256-36f5d7bd63578bbfb41d8cb0d46c4eda615cb29d0795bbc5f1cd5665c100828a"
+   ],
+   "params": [
+    "PARAMETER top_p 1",
+    "PARAMETER num_ctx 8192",
+    "PARAMETER num_predict 512",
+    "PARAMETER repeat_penalty 1.15",
+    "PARAMETER seed 1234",
+    "PARAMETER temperature 0"
+   ],
+   "supports_tools": false
+  },
+  {
+   "name": "virtu-max:97a7eb76",
+   "id": "ee9bf288dce1",
+   "size": "4.6 GB",
+   "from": [
+    "C:\\Users\\Administrator\\.ollama\\models\\blobs\\sha256-97a7eb763837c37d07f89e03ee2a636d38ce8516dec628b3e3e724ceae5d3dd6"
+   ],
+   "params": [
+    "PARAMETER top_p 1",
+    "PARAMETER num_ctx 8192",
+    "PARAMETER num_predict 512",
+    "PARAMETER repeat_penalty 1.15",
+    "PARAMETER seed 1234",
+    "PARAMETER temperature 0"
+   ],
+   "supports_tools": false
+  },
+  {
+   "name": "virtu-max:df83b71e",
+   "id": "1a1e514a387d",
+   "size": "4.6 GB",
+   "from": [
+    "C:\\Users\\Administrator\\.ollama\\models\\blobs\\sha256-df83b71eeacef0a041f7cc4b4fabe94bce71e9e7141d080f0d2597121977c044"
+   ],
+   "params": [
+    "PARAMETER top_p 1",
+    "PARAMETER num_ctx 8192",
+    "PARAMETER num_predict 512",
+    "PARAMETER repeat_penalty 1.15",
+    "PARAMETER seed 1234",
+    "PARAMETER temperature 0"
+   ],
+   "supports_tools": false
+  },
+  {
+   "name": "virtu-max:c3b78c77",
+   "id": "41aa6196b587",
+   "size": "4.6 GB",
+   "from": [
+    "C:\\Users\\Administrator\\.ollama\\models\\blobs\\sha256-c3b78c7735c9ac1f0b16cbbb5babc809f2c99e71c9a76043d39dbae8ce448749"
+   ],
+   "params": [
+    "PARAMETER top_p 1",
+    "PARAMETER num_ctx 8192",
+    "PARAMETER num_predict 512",
+    "PARAMETER repeat_penalty 1.15",
+    "PARAMETER seed 1234",
+    "PARAMETER temperature 0"
+   ],
+   "supports_tools": false
+  },
+  {
+   "name": "virtu-max:293cdac3",
+   "id": "68a3b68a46ec",
+   "size": "4.6 GB",
+   "from": [
+    "C:\\Users\\Administrator\\.ollama\\models\\blobs\\sha256-293cdac3e52f6340208967b743ee4a1d67684a24f8a8f011849423e34c1ed9c2"
+   ],
+   "params": [
+    "PARAMETER num_ctx 8192",
+    "PARAMETER num_predict 512",
+    "PARAMETER repeat_penalty 1.15",
+    "PARAMETER seed 1234",
+    "PARAMETER temperature 0",
+    "PARAMETER top_p 1"
+   ],
+   "supports_tools": true
+  },
+  {
+   "name": "virtu-max:a3de86cd",
+   "id": "3a9070842bed",
+   "size": "5.2 GB",
+   "from": [
+    "C:\\Users\\Administrator\\.ollama\\models\\blobs\\sha256-a3de86cd1c132c822487ededd47a324c50491393e6565cd14bafa40d0b8e686f"
+   ],
+   "params": [
+    "PARAMETER seed 1234",
+    "PARAMETER temperature 0",
+    "PARAMETER top_p 1",
+    "PARAMETER num_ctx 8192",
+    "PARAMETER num_predict 512",
+    "PARAMETER repeat_penalty 1.15"
+   ],
+   "supports_tools": true
+  },
+  {
+   "name": "virtu-max:154d486a",
+   "id": "db0a8559fe7f",
+   "size": "6.3 GB",
+   "from": [
+    "C:\\Users\\Administrator\\.ollama\\models\\blobs\\sha256-154d486ae5d87675f032f1792fd9a88c8ff6255457c18f309edb5b9b2cd65dbd"
+   ],
+   "params": [
+    "PARAMETER temperature 0",
+    "PARAMETER top_p 1",
+    "PARAMETER num_ctx 8192",
+    "PARAMETER num_predict 512",
+    "PARAMETER repeat_penalty 1.15",
+    "PARAMETER seed 1234"
+   ],
+   "supports_tools": true
+  },
+  {
+   "name": "virtu-max:b68a251f",
+   "id": "8efe94416194",
+   "size": "6.7 GB",
+   "from": [
+    "C:\\Users\\Administrator\\.ollama\\models\\blobs\\sha256-b68a251f92cdd02859588300dcac5c77507d61b12bb68d22d6e1c8eee3bb89f1"
+   ],
+   "params": [
+    "PARAMETER num_predict 512",
+    "PARAMETER repeat_penalty 1.15",
+    "PARAMETER seed 1234",
+    "PARAMETER temperature 0",
+    "PARAMETER top_p 1",
+    "PARAMETER num_ctx 8192"
+   ],
+   "supports_tools": true
+  },
+  {
+   "name": "virtu-max:8610e633",
+   "id": "948478976b56",
+   "size": "8.3 GB",
+   "from": [
+    "C:\\Users\\Administrator\\.ollama\\models\\blobs\\sha256-8610e63361db3280d28f656e48ba996db26a6459ca15c2401daa99ee7ccdeed7"
+   ],
+   "params": [
+    "PARAMETER num_ctx 8192",
+    "PARAMETER num_predict 512",
+    "PARAMETER repeat_penalty 1.15",
+    "PARAMETER seed 1234",
+    "PARAMETER temperature 0",
+    "PARAMETER top_p 1"
+   ],
+   "supports_tools": true
+  },
+  {
+   "name": "virtu-max:a2103c68",
+   "id": "cd40ce99d63a",
+   "size": "8.3 GB",
+   "from": [
+    "C:\\Users\\Administrator\\.ollama\\models\\blobs\\sha256-a2103c68d9e881ac3655ce271902997cdc8eb5c35da3803261f25f5364e52d7a"
+   ],
+   "params": [
+    "PARAMETER num_predict 512",
+    "PARAMETER repeat_penalty 1.15",
+    "PARAMETER seed 1234",
+    "PARAMETER temperature 0",
+    "PARAMETER top_p 1",
+    "PARAMETER num_ctx 8192"
+   ],
+   "supports_tools": true
+  },
+  {
+   "name": "virtu-max:01068725",
+   "id": "7dd823cf37ce",
+   "size": "8.3 GB",
+   "from": [
+    "C:\\Users\\Administrator\\.ollama\\models\\blobs\\sha256-0106872590e5b4fbf7a5a7c08452e9109faec91ebfce612af15906b216233ef5"
+   ],
+   "params": [
+    "PARAMETER num_predict 512",
+    "PARAMETER repeat_penalty 1.15",
+    "PARAMETER seed 1234",
+    "PARAMETER temperature 0",
+    "PARAMETER top_p 1",
+    "PARAMETER num_ctx 8192"
+   ],
+   "supports_tools": true
+  },
+  {
+   "name": "virtu-probe:test",
+   "id": "9791a44f8a88",
+   "size": "986 MB",
+   "from": [
+    "C:\\Users\\Administrator\\.ollama\\models\\blobs\\sha256-183715c435899236895da3869489cc30ac241476b4971a20285b1a462818a5b4"
+   ],
+   "params": [
+    "PARAMETER num_ctx 4096",
+    "PARAMETER temperature 0"
+   ],
+   "supports_tools": true
+  },
+  {
+   "name": "virtu-internet-enhanced:latest",
+   "id": "35654504aafa",
+   "size": "8.3 GB",
+   "from": [
+    "C:\\Users\\Administrator\\.ollama\\models\\blobs\\sha256-8610e63361db3280d28f656e48ba996db26a6459ca15c2401daa99ee7ccdeed7"
+   ],
+   "params": [
+    "PARAMETER num_ctx 4096",
+    "PARAMETER repeat_last_n 512"
+   ],
+   "supports_tools": true
+  },
+  {
+   "name": "virtu-moe-14b:hardened",
+   "id": "df5a7ad26715",
+   "size": "8.3 GB",
+   "from": [
+    "C:\\Users\\Administrator\\.ollama\\models\\blobs\\sha256-a2103c68d9e881ac3655ce271902997cdc8eb5c35da3803261f25f5364e52d7a"
+   ],
+   "params": [
+    "PARAMETER stop <|im_end|>",
+    "PARAMETER temperature 0",
+    "PARAMETER top_p 0.9",
+    "PARAMETER num_ctx 8192",
+    "PARAMETER num_gpu 14",
+    "PARAMETER repeat_penalty 1.15"
+   ],
+   "supports_tools": true
+  },
+  {
+   "name": "virtu-13.63b:hardened",
+   "id": "76d60f566736",
+   "size": "6.3 GB",
+   "from": [
+    "C:\\Users\\Administrator\\.ollama\\models\\blobs\\sha256-154d486ae5d87675f032f1792fd9a88c8ff6255457c18f309edb5b9b2cd65dbd"
+   ],
+   "params": [
+    "PARAMETER top_p 0.9",
+    "PARAMETER num_ctx 8192",
+    "PARAMETER num_gpu 14",
+    "PARAMETER repeat_penalty 1.15",
+    "PARAMETER stop <|im_end|>",
+    "PARAMETER temperature 0"
+   ],
+   "supports_tools": true
+  },
+  {
+   "name": "virtu-v3:hardened",
+   "id": "17bb4ec2ecc2",
+   "size": "4.6 GB",
+   "from": [
+    "C:\\Users\\Administrator\\.ollama\\models\\blobs\\sha256-293cdac3e52f6340208967b743ee4a1d67684a24f8a8f011849423e34c1ed9c2"
+   ],
+   "params": [
+    "PARAMETER num_ctx 8192",
+    "PARAMETER num_gpu 99",
+    "PARAMETER repeat_penalty 1.15",
+    "PARAMETER temperature 0",
+    "PARAMETER top_p 0.9"
+   ],
+   "supports_tools": true
+  },
+  {
+   "name": "virtu-comprehensive:perfect",
+   "id": "53e116e864ae",
+   "size": "4.6 GB",
+   "from": [
+    "C:\\Users\\Administrator\\.ollama\\models\\blobs\\sha256-c3b78c7735c9ac1f0b16cbbb5babc809f2c99e71c9a76043d39dbae8ce448749"
+   ],
+   "params": [
+    "PARAMETER stop <|im_start|>",
+    "PARAMETER stop <|im_end|>",
+    "PARAMETER stop <|endoftext|>",
+    "PARAMETER temperature 0",
+    "PARAMETER top_p 0.9",
+    "PARAMETER min_p 0.05",
+    "PARAMETER num_ctx 4096",
+    "PARAMETER num_gpu 99",
+    "PARAMETER repeat_last_n 512",
+    "PARAMETER repeat_penalty 1.15"
+   ],
+   "supports_tools": true
+  },
+  {
+   "name": "virtu-production:perfect",
+   "id": "00df6dd4451a",
+   "size": "4.6 GB",
+   "from": [
+    "C:\\Users\\Administrator\\.ollama\\models\\blobs\\sha256-df83b71eeacef0a041f7cc4b4fabe94bce71e9e7141d080f0d2597121977c044"
+   ],
+   "params": [
+    "PARAMETER num_ctx 4096",
+    "PARAMETER num_gpu 99",
+    "PARAMETER repeat_last_n 512",
+    "PARAMETER repeat_penalty 1.15",
+    "PARAMETER stop <|im_start|>",
+    "PARAMETER stop <|im_end|>",
+    "PARAMETER stop <|endoftext|>",
+    "PARAMETER temperature 0",
+    "PARAMETER top_p 0.9",
+    "PARAMETER min_p 0.05"
+   ],
+   "supports_tools": true
+  },
+  {
+   "name": "virtu-v3-all90:perfect",
+   "id": "4c68a4e0c59f",
+   "size": "4.6 GB",
+   "from": [
+    "C:\\Users\\Administrator\\.ollama\\models\\blobs\\sha256-293cdac3e52f6340208967b743ee4a1d67684a24f8a8f011849423e34c1ed9c2"
+   ],
+   "params": [
+    "PARAMETER temperature 0",
+    "PARAMETER top_p 0.9",
+    "PARAMETER min_p 0.05",
+    "PARAMETER num_ctx 4096",
+    "PARAMETER num_gpu 99",
+    "PARAMETER repeat_last_n 512",
+    "PARAMETER repeat_penalty 1.15",
+    "PARAMETER stop <|im_start|>",
+    "PARAMETER stop <|im_end|>",
+    "PARAMETER stop <|endoftext|>"
+   ],
+   "supports_tools": true
+  },
+  {
+   "name": "virtu-moe-14b:perfect",
+   "id": "302ee25375ae",
+   "size": "8.3 GB",
+   "from": [
+    "C:\\Users\\Administrator\\.ollama\\models\\blobs\\sha256-0106872590e5b4fbf7a5a7c08452e9109faec91ebfce612af15906b216233ef5"
+   ],
+   "params": [
+    "PARAMETER repeat_last_n 512",
+    "PARAMETER repeat_penalty 1.15",
+    "PARAMETER stop <|im_start|>",
+    "PARAMETER stop <|im_end|>",
+    "PARAMETER stop <|endoftext|>",
+    "PARAMETER temperature 0",
+    "PARAMETER top_p 0.9",
+    "PARAMETER min_p 0.05",
+    "PARAMETER num_ctx 4096",
+    "PARAMETER num_gpu 20"
+   ],
+   "supports_tools": true
+  },
+  {
+   "name": "virtu-13.63b:perfect",
+   "id": "fd1e51c47c43",
+   "size": "8.3 GB",
+   "from": [
+    "C:\\Users\\Administrator\\.ollama\\models\\blobs\\sha256-8610e63361db3280d28f656e48ba996db26a6459ca15c2401daa99ee7ccdeed7"
+   ],
+   "params": [
+    "PARAMETER num_ctx 4096",
+    "PARAMETER num_gpu 20",
+    "PARAMETER repeat_last_n 512",
+    "PARAMETER repeat_penalty 1.15",
+    "PARAMETER stop <|im_start|>",
+    "PARAMETER stop <|im_end|>",
+    "PARAMETER stop <|endoftext|>",
+    "PARAMETER temperature 0",
+    "PARAMETER top_p 0.9",
+    "PARAMETER min_p 0.05"
+   ],
+   "supports_tools": true
+  },
+  {
+   "name": "virtu-moe-14b:real-clean",
+   "id": "360a6f5becbb",
+   "size": "8.3 GB",
+   "from": [
+    "C:\\Users\\Administrator\\.ollama\\models\\blobs\\sha256-0106872590e5b4fbf7a5a7c08452e9109faec91ebfce612af15906b216233ef5"
+   ],
+   "params": [
+    "PARAMETER num_ctx 4096",
+    "PARAMETER num_gpu 20",
+    "PARAMETER repeat_last_n 512",
+    "PARAMETER repeat_penalty 1.1",
+    "PARAMETER stop <|im_start|>",
+    "PARAMETER stop <|im_end|>",
+    "PARAMETER stop <|endoftext|>",
+    "PARAMETER temperature 0",
+    "PARAMETER top_p 0.9",
+    "PARAMETER min_p 0.05"
+   ],
+   "supports_tools": true
+  },
+  {
+   "name": "virtu-13.63b:real-clean",
+   "id": "ce88cadb5a61",
+   "size": "8.3 GB",
+   "from": [
+    "C:\\Users\\Administrator\\.ollama\\models\\blobs\\sha256-8610e63361db3280d28f656e48ba996db26a6459ca15c2401daa99ee7ccdeed7"
+   ],
+   "params": [
+    "PARAMETER top_p 0.9",
+    "PARAMETER num_ctx 8192",
+    "PARAMETER num_gpu 20",
+    "PARAMETER repeat_penalty 1.1",
+    "PARAMETER stop <|im_start|>",
+    "PARAMETER stop <|im_end|>",
+    "PARAMETER stop <|endoftext|>",
+    "PARAMETER temperature 0"
+   ],
+   "supports_tools": true
+  },
+  {
+   "name": "virtu-v3-all90-q4_0:latest",
+   "id": "02eb58a03b32",
+   "size": "4.6 GB",
+   "from": [
+    "C:\\Users\\Administrator\\.ollama\\models\\blobs\\sha256-293cdac3e52f6340208967b743ee4a1d67684a24f8a8f011849423e34c1ed9c2"
+   ],
+   "params": [
+    "PARAMETER num_ctx 4096",
+    "PARAMETER repeat_penalty 1.15",
+    "PARAMETER temperature 0.1",
+    "PARAMETER top_k 40",
+    "PARAMETER top_p 0.85"
+   ],
+   "supports_tools": true
+  },
+  {
+   "name": "virtu-13.63b-q4_0:latest",
+   "id": "a3daaed3182c",
+   "size": "8.3 GB",
+   "from": [
+    "C:\\Users\\Administrator\\.ollama\\models\\blobs\\sha256-8610e63361db3280d28f656e48ba996db26a6459ca15c2401daa99ee7ccdeed7"
+   ],
+   "params": [
+    "PARAMETER repeat_penalty 1.15",
+    "PARAMETER stop <|im_start|>",
+    "PARAMETER stop <|im_end|>",
+    "PARAMETER stop <|endoftext|>",
+    "PARAMETER temperature 0.1",
+    "PARAMETER top_k 40",
+    "PARAMETER top_p 0.85"
+   ],
+   "supports_tools": true
+  },
+  {
+   "name": "virtu-wm-v3:latest",
+   "id": "be171996744b",
+   "size": "4.6 GB",
+   "from": [
+    "C:\\Users\\Administrator\\.ollama\\models\\blobs\\sha256-293cdac3e52f6340208967b743ee4a1d67684a24f8a8f011849423e34c1ed9c2"
+   ],
+   "params": [
+    "PARAMETER num_ctx 4096",
+    "PARAMETER repeat_penalty 1.05",
+    "PARAMETER temperature 0",
+    "PARAMETER top_p 0.9"
+   ],
+   "supports_tools": true
+  },
+  {
+   "name": "virtu-13.63b:latest",
+   "id": "0638c84b93d0",
+   "size": "6.3 GB",
+   "from": [
+    "C:\\Users\\Administrator\\.ollama\\models\\blobs\\sha256-154d486ae5d87675f032f1792fd9a88c8ff6255457c18f309edb5b9b2cd65dbd"
+   ],
+   "params": [
+    "PARAMETER top_k 40",
+    "PARAMETER top_p 0.85",
+    "PARAMETER num_ctx 2048",
+    "PARAMETER num_gpu 99",
+    "PARAMETER repeat_penalty 1.15",
+    "PARAMETER stop <|im_start|>",
+    "PARAMETER stop <|im_end|>",
+    "PARAMETER stop <|endoftext|>",
+    "PARAMETER temperature 0.1"
+   ],
+   "supports_tools": true
+  },
+  {
+   "name": "virtu-13.63b:asym",
+   "id": "0638c84b93d0",
+   "size": "6.3 GB",
+   "from": [
+    "C:\\Users\\Administrator\\.ollama\\models\\blobs\\sha256-154d486ae5d87675f032f1792fd9a88c8ff6255457c18f309edb5b9b2cd65dbd"
+   ],
+   "params": [
+    "PARAMETER top_k 40",
+    "PARAMETER top_p 0.85",
+    "PARAMETER num_ctx 2048",
+    "PARAMETER num_gpu 99",
+    "PARAMETER repeat_penalty 1.15",
+    "PARAMETER stop <|im_start|>",
+    "PARAMETER stop <|im_end|>",
+    "PARAMETER stop <|endoftext|>",
+    "PARAMETER temperature 0.1"
+   ],
+   "supports_tools": true
+  },
+  {
+   "name": "virtu-13b:gold",
+   "id": "15d834e00569",
+   "size": "8.3 GB",
+   "from": [
+    "C:\\Users\\Administrator\\.ollama\\models\\blobs\\sha256-8610e63361db3280d28f656e48ba996db26a6459ca15c2401daa99ee7ccdeed7"
+   ],
+   "params": [
+    "PARAMETER stop <|im_start|>",
+    "PARAMETER stop <|im_end|>",
+    "PARAMETER stop <|endoftext|>",
+    "PARAMETER temperature 0.7",
+    "PARAMETER top_k 20",
+    "PARAMETER top_p 0.8"
+   ],
+   "supports_tools": true
+  },
+  {
+   "name": "virtu-13.63b:wm-v1",
+   "id": "99a7e0c73151",
+   "size": "8.3 GB",
+   "from": [
+    "C:\\Users\\Administrator\\.ollama\\models\\blobs\\sha256-8610e63361db3280d28f656e48ba996db26a6459ca15c2401daa99ee7ccdeed7"
+   ],
+   "params": [
+    "PARAMETER repeat_penalty 1.15",
+    "PARAMETER stop <|im_end|>",
+    "PARAMETER stop <|endoftext|>",
+    "PARAMETER temperature 0.2",
+    "PARAMETER top_k 40",
+    "PARAMETER top_p 0.9",
+    "PARAMETER min_p 0.05",
+    "PARAMETER presence_penalty 0.3"
+   ],
+   "supports_tools": true
+  },
+  {
+   "name": "virtu-moe-14b:fast",
+   "id": "729abf24bddd",
+   "size": "8.3 GB",
+   "from": [
+    "C:\\Users\\Administrator\\.ollama\\models\\blobs\\sha256-0106872590e5b4fbf7a5a7c08452e9109faec91ebfce612af15906b216233ef5"
+   ],
+   "params": [
+    "PARAMETER min_p 0.05",
+    "PARAMETER num_ctx 4096",
+    "PARAMETER presence_penalty 0.3",
+    "PARAMETER repeat_last_n 512",
+    "PARAMETER repeat_penalty 1.15",
+    "PARAMETER top_p 0.9",
+    "PARAMETER num_gpu 24",
+    "PARAMETER stop <|im_start|>",
+    "PARAMETER stop <|im_end|>",
+    "PARAMETER stop <|endoftext|>",
+    "PARAMETER temperature 0.1"
+   ],
+   "supports_tools": true
+  },
+  {
+   "name": "virtu-moe-14b:latest",
+   "id": "729abf24bddd",
+   "size": "8.3 GB",
+   "from": [
+    "C:\\Users\\Administrator\\.ollama\\models\\blobs\\sha256-0106872590e5b4fbf7a5a7c08452e9109faec91ebfce612af15906b216233ef5"
+   ],
+   "params": [
+    "PARAMETER num_gpu 24",
+    "PARAMETER repeat_penalty 1.15",
+    "PARAMETER stop <|im_start|>",
+    "PARAMETER stop <|im_end|>",
+    "PARAMETER stop <|endoftext|>",
+    "PARAMETER temperature 0.1",
+    "PARAMETER top_p 0.9",
+    "PARAMETER min_p 0.05",
+    "PARAMETER num_ctx 4096",
+    "PARAMETER presence_penalty 0.3",
+    "PARAMETER repeat_last_n 512"
+   ],
+   "supports_tools": true
+  },
+  {
+   "name": "virtu-moe-14b:out-opt-sys",
+   "id": "887af3f474c3",
+   "size": "8.3 GB",
+   "from": [
+    "C:\\Users\\Administrator\\.ollama\\models\\blobs\\sha256-a2103c68d9e881ac3655ce271902997cdc8eb5c35da3803261f25f5364e52d7a"
+   ],
+   "params": [
+    "PARAMETER num_gpu 30",
+    "PARAMETER repeat_penalty 1",
+    "PARAMETER stop <|im_start|>",
+    "PARAMETER stop <|im_end|>",
+    "PARAMETER temperature 0.3",
+    "PARAMETER top_p 0.85",
+    "PARAMETER num_ctx 8192"
+   ],
+   "supports_tools": true
+  },
+  {
+   "name": "virtu-moe-14b:out-opt",
+   "id": "c3236d86ed36",
+   "size": "8.3 GB",
+   "from": [
+    "C:\\Users\\Administrator\\.ollama\\models\\blobs\\sha256-a2103c68d9e881ac3655ce271902997cdc8eb5c35da3803261f25f5364e52d7a"
+   ],
+   "params": [
+    "PARAMETER num_ctx 8192",
+    "PARAMETER num_gpu 30",
+    "PARAMETER repeat_penalty 1",
+    "PARAMETER stop <|im_start|>",
+    "PARAMETER stop <|im_end|>",
+    "PARAMETER temperature 0.3",
+    "PARAMETER top_p 0.85"
+   ],
+   "supports_tools": true
+  },
+  {
+   "name": "virtu-moe-14b:q3km",
+   "id": "13fbf5e1232f",
+   "size": "6.7 GB",
+   "from": [
+    "C:\\Users\\Administrator\\.ollama\\models\\blobs\\sha256-b68a251f92cdd02859588300dcac5c77507d61b12bb68d22d6e1c8eee3bb89f1"
+   ],
+   "params": [],
+   "supports_tools": true
+  },
+  {
+   "name": "virtu-moe-14b:01068725",
+   "id": "ea0a6ea9f89d",
+   "size": "8.3 GB",
+   "from": [
+    "C:\\Users\\Administrator\\.ollama\\models\\blobs\\sha256-0106872590e5b4fbf7a5a7c08452e9109faec91ebfce612af15906b216233ef5"
+   ],
+   "params": [
+    "PARAMETER top_p 0.9",
+    "PARAMETER num_ctx 4096",
+    "PARAMETER num_gpu 30",
+    "PARAMETER repeat_last_n 256",
+    "PARAMETER repeat_penalty 1.15",
+    "PARAMETER stop <|im_start|>",
+    "PARAMETER stop <|im_end|>",
+    "PARAMETER temperature 0.1"
+   ],
+   "supports_tools": true
+  },
+  {
+   "name": "virtu-moe-14b:a2103c68",
+   "id": "4007223565e9",
+   "size": "8.3 GB",
+   "from": [
+    "C:\\Users\\Administrator\\.ollama\\models\\blobs\\sha256-a2103c68d9e881ac3655ce271902997cdc8eb5c35da3803261f25f5364e52d7a"
+   ],
+   "params": [
+    "PARAMETER repeat_penalty 1.15",
+    "PARAMETER stop <|im_start|>",
+    "PARAMETER stop <|im_end|>",
+    "PARAMETER temperature 0.1",
+    "PARAMETER top_p 0.9",
+    "PARAMETER num_ctx 4096",
+    "PARAMETER num_gpu 30",
+    "PARAMETER repeat_last_n 256"
+   ],
+   "supports_tools": true
+  },
+  {
+   "name": "bge-m3:latest",
+   "id": "790764642607",
+   "size": "1.2 GB",
+   "from": [
+    "C:\\Users\\Administrator\\.ollama\\models\\blobs\\sha256-daec91ffb5dd0c27411bd71f29932917c49cf529a641d0168496c3a501e3062c"
+   ],
+   "params": [],
+   "supports_tools": false
+  },
+  {
+   "name": "virtu-production:latest",
+   "id": "b48811aea3be",
+   "size": "4.6 GB",
+   "from": [
+    "C:\\Users\\Administrator\\.ollama\\models\\blobs\\sha256-df83b71eeacef0a041f7cc4b4fabe94bce71e9e7141d080f0d2597121977c044"
+   ],
+   "params": [
+    "PARAMETER top_p 0.9",
+    "PARAMETER min_p 0.05",
+    "PARAMETER num_ctx 4096",
+    "PARAMETER num_gpu 99",
+    "PARAMETER repeat_last_n 256",
+    "PARAMETER repeat_penalty 1.15",
+    "PARAMETER stop <|im_start|>",
+    "PARAMETER stop <|im_end|>",
+    "PARAMETER temperature 0.1"
+   ],
+   "supports_tools": true
+  },
+  {
+   "name": "virtu-dense-ties:q4",
+   "id": "5696d873631a",
+   "size": "4.6 GB",
+   "from": [
+    "C:\\Users\\Administrator\\.ollama\\models\\blobs\\sha256-36f5d7bd63578bbfb41d8cb0d46c4eda615cb29d0795bbc5f1cd5665c100828a"
+   ],
+   "params": [
+    "PARAMETER repeat_last_n 256",
+    "PARAMETER repeat_penalty 1.15",
+    "PARAMETER stop <|im_start|>",
+    "PARAMETER stop <|im_end|>",
+    "PARAMETER temperature 0.1",
+    "PARAMETER top_p 0.9",
+    "PARAMETER min_p 0.05",
+    "PARAMETER num_ctx 4096",
+    "PARAMETER num_gpu 99"
+   ],
+   "supports_tools": false
+  },
+  {
+   "name": "virtu-dense-merged-v2:q4_0",
+   "id": "71550bf3eb84",
+   "size": "4.6 GB",
+   "from": [
+    "C:\\Users\\Administrator\\.ollama\\models\\blobs\\sha256-97a7eb763837c37d07f89e03ee2a636d38ce8516dec628b3e3e724ceae5d3dd6"
+   ],
+   "params": [
+    "PARAMETER min_p 0.05",
+    "PARAMETER num_ctx 4096",
+    "PARAMETER num_gpu 99",
+    "PARAMETER repeat_last_n 256",
+    "PARAMETER repeat_penalty 1.15",
+    "PARAMETER stop <|im_start|>",
+    "PARAMETER stop <|im_end|>",
+    "PARAMETER temperature 0.1",
+    "PARAMETER top_p 0.9"
+   ],
+   "supports_tools": true
+  },
+  {
+   "name": "virtu-dense-merged:q4_0",
+   "id": "c25d5fae9362",
+   "size": "4.6 GB",
+   "from": [
+    "C:\\Users\\Administrator\\.ollama\\models\\blobs\\sha256-df83b71eeacef0a041f7cc4b4fabe94bce71e9e7141d080f0d2597121977c044"
+   ],
+   "params": [
+    "PARAMETER min_p 0.05",
+    "PARAMETER num_ctx 4096",
+    "PARAMETER num_gpu 99",
+    "PARAMETER repeat_last_n 256",
+    "PARAMETER repeat_penalty 1.15",
+    "PARAMETER stop <|im_start|>",
+    "PARAMETER stop <|im_end|>",
+    "PARAMETER temperature 0.1",
+    "PARAMETER top_p 0.9"
+   ],
+   "supports_tools": true
+  },
+  {
+   "name": "virtu-moe-14b:semantic",
+   "id": "729abf24bddd",
+   "size": "8.3 GB",
+   "from": [
+    "C:\\Users\\Administrator\\.ollama\\models\\blobs\\sha256-0106872590e5b4fbf7a5a7c08452e9109faec91ebfce612af15906b216233ef5"
+   ],
+   "params": [
+    "PARAMETER num_gpu 24",
+    "PARAMETER repeat_last_n 512",
+    "PARAMETER stop <|im_start|>",
+    "PARAMETER stop <|im_end|>",
+    "PARAMETER stop <|endoftext|>",
+    "PARAMETER top_p 0.9",
+    "PARAMETER min_p 0.05",
+    "PARAMETER num_ctx 4096",
+    "PARAMETER presence_penalty 0.3",
+    "PARAMETER repeat_penalty 1.15",
+    "PARAMETER temperature 0.1"
+   ],
+   "supports_tools": true
+  },
+  {
+   "name": "virtu-comprehensive:fast",
+   "id": "e1b4a21e537e",
+   "size": "4.6 GB",
+   "from": [
+    "C:\\Users\\Administrator\\.ollama\\models\\blobs\\sha256-c3b78c7735c9ac1f0b16cbbb5babc809f2c99e71c9a76043d39dbae8ce448749"
+   ],
+   "params": [
+    "PARAMETER top_p 0.9",
+    "PARAMETER min_p 0.05",
+    "PARAMETER num_ctx 4096",
+    "PARAMETER num_gpu 99",
+    "PARAMETER repeat_last_n 256",
+    "PARAMETER repeat_penalty 1.15",
+    "PARAMETER stop <|im_start|>",
+    "PARAMETER stop <|im_end|>",
+    "PARAMETER temperature 0.1"
+   ],
+   "supports_tools": true
+  },
+  {
+   "name": "virtu-moe-14b:bf16",
+   "id": "7ed8dac6c7f4",
+   "size": "27 GB",
+   "from": [
+    "C:\\Users\\Administrator\\.ollama\\models\\blobs\\sha256-9f5c34f33f05a68af683131297468461544b9736fb90359cb81a624b27135d9a"
+   ],
+   "params": [
+    "PARAMETER num_ctx 4096",
+    "PARAMETER num_gpu 0"
+   ],
+   "supports_tools": true
+  },
+  {
+   "name": "virtu-comprehensive:q3",
+   "id": "860f8e1e751d",
+   "size": "4.6 GB",
+   "from": [
+    "C:\\Users\\Administrator\\.ollama\\models\\blobs\\sha256-c3b78c7735c9ac1f0b16cbbb5babc809f2c99e71c9a76043d39dbae8ce448749"
+   ],
+   "params": [
+    "PARAMETER num_ctx 8192",
+    "PARAMETER stop <|im_start|>",
+    "PARAMETER stop <|im_end|>"
+   ],
+   "supports_tools": true
+  },
+  {
+   "name": "virtu-comprehensive:think",
+   "id": "6b7c94f1dd64",
+   "size": "4.6 GB",
+   "from": [
+    "C:\\Users\\Administrator\\.ollama\\models\\blobs\\sha256-c3b78c7735c9ac1f0b16cbbb5babc809f2c99e71c9a76043d39dbae8ce448749"
+   ],
+   "params": [
+    "PARAMETER num_ctx 8192"
+   ],
+   "supports_tools": false
+  },
+  {
+   "name": "virtu-disciplined:v1",
+   "id": "9fff19a2101a",
+   "size": "4.6 GB",
+   "from": [
+    "C:\\Users\\Administrator\\.ollama\\models\\blobs\\sha256-c3b78c7735c9ac1f0b16cbbb5babc809f2c99e71c9a76043d39dbae8ce448749"
+   ],
+   "params": [
+    "PARAMETER stop <|im_end|>",
+    "PARAMETER stop <|endoftext|>",
+    "PARAMETER temperature 0",
+    "PARAMETER top_p 0.95",
+    "PARAMETER num_ctx 8192",
+    "PARAMETER repeat_last_n 512",
+    "PARAMETER repeat_penalty 1.15"
+   ],
+   "supports_tools": true
+  },
+  {
+   "name": "virtu-comprehensive:latest",
+   "id": "aba2c916368b",
+   "size": "4.6 GB",
+   "from": [
+    "C:\\Users\\Administrator\\.ollama\\models\\blobs\\sha256-c3b78c7735c9ac1f0b16cbbb5babc809f2c99e71c9a76043d39dbae8ce448749"
+   ],
+   "params": [
+    "PARAMETER num_ctx 8192",
+    "PARAMETER stop <|im_end|>",
+    "PARAMETER stop <|endoftext|>",
+    "PARAMETER temperature 0",
+    "PARAMETER top_p 0.95"
+   ],
+   "supports_tools": true
+  },
+  {
+   "name": "virtu-master:latest",
+   "id": "a46aaae54d32",
+   "size": "4.6 GB",
+   "from": [
+    "C:\\Users\\Administrator\\.ollama\\models\\blobs\\sha256-c3b78c7735c9ac1f0b16cbbb5babc809f2c99e71c9a76043d39dbae8ce448749"
+   ],
+   "params": [
+    "PARAMETER top_p 0.95",
+    "PARAMETER num_ctx 8192",
+    "PARAMETER stop <|im_end|>",
+    "PARAMETER stop <|endoftext|>",
+    "PARAMETER temperature 0"
+   ],
+   "supports_tools": true
+  },
+  {
+   "name": "virtu-test-nothink:latest",
+   "id": "fe5186854600",
+   "size": "4.6 GB",
+   "from": [
+    "C:\\Users\\Administrator\\.ollama\\models\\blobs\\sha256-c3b78c7735c9ac1f0b16cbbb5babc809f2c99e71c9a76043d39dbae8ce448749"
+   ],
+   "params": [
+    "PARAMETER num_ctx 8192",
+    "PARAMETER stop <|im_end|>",
+    "PARAMETER stop <|endoftext|>",
+    "PARAMETER temperature 0",
+    "PARAMETER top_p 0.95"
+   ],
+   "supports_tools": true
+  },
+  {
+   "name": "virtu-frozen:comp_v5",
+   "id": "33c12ba1b892",
+   "size": "4.6 GB",
+   "from": [
+    "C:\\Users\\Administrator\\.ollama\\models\\blobs\\sha256-c3b78c7735c9ac1f0b16cbbb5babc809f2c99e71c9a76043d39dbae8ce448749"
+   ],
+   "params": [
+    "PARAMETER num_ctx 8192",
+    "PARAMETER stop <|im_end|>",
+    "PARAMETER stop <|endoftext|>",
+    "PARAMETER temperature 0",
+    "PARAMETER top_p 0.95"
+   ],
+   "supports_tools": true
+  },
+  {
+   "name": "virtu-ties-v1:latest",
+   "id": "e6d1b8a8ecb5",
+   "size": "4.6 GB",
+   "from": [
+    "C:\\Users\\Administrator\\.ollama\\models\\blobs\\sha256-c3b78c7735c9ac1f0b16cbbb5babc809f2c99e71c9a76043d39dbae8ce448749"
+   ],
+   "params": [
+    "PARAMETER num_ctx 8192",
+    "PARAMETER stop <|im_end|>",
+    "PARAMETER stop <|endoftext|>",
+    "PARAMETER temperature 0",
+    "PARAMETER top_p 0.95"
+   ],
+   "supports_tools": true
+  },
+  {
+   "name": "virtu-test-tool:latest",
+   "id": "4965ffe4770f",
+   "size": "4.6 GB",
+   "from": [
+    "C:\\Users\\Administrator\\.ollama\\models\\blobs\\sha256-c3b78c7735c9ac1f0b16cbbb5babc809f2c99e71c9a76043d39dbae8ce448749"
+   ],
+   "params": [
+    "PARAMETER temperature 0",
+    "PARAMETER top_p 0.95",
+    "PARAMETER num_ctx 4096",
+    "PARAMETER stop <|im_end|>",
+    "PARAMETER stop <|endoftext|>"
+   ],
+   "supports_tools": true
+  },
+  {
+   "name": "virtu-extreme-256k:latest",
+   "id": "cbfcb551915a",
+   "size": "986 MB",
+   "from": [
+    "C:\\Users\\Administrator\\.ollama\\models\\blobs\\sha256-183715c435899236895da3869489cc30ac241476b4971a20285b1a462818a5b4"
+   ],
+   "params": [
+    "PARAMETER num_ctx 262144",
+    "PARAMETER repeat_penalty 1.05",
+    "PARAMETER temperature 0.2",
+    "PARAMETER top_p 0.9"
+   ],
+   "supports_tools": true
+  },
+  {
+   "name": "qwen2.5:1.5b",
+   "id": "65ec06548149",
+   "size": "986 MB",
+   "from": [
+    "C:\\Users\\Administrator\\.ollama\\models\\blobs\\sha256-183715c435899236895da3869489cc30ac241476b4971a20285b1a462818a5b4"
+   ],
+   "params": [],
+   "supports_tools": true
+  },
+  {
+   "name": "virtu-longctx:latest",
+   "id": "e5412ad249b7",
+   "size": "1.9 GB",
+   "from": [
+    "C:\\Users\\Administrator\\.ollama\\models\\blobs\\sha256-5ee4f07cdb9beadbbb293e85803c569b01bd37ed059d2715faa7bb405f31caa6"
+   ],
+   "params": [
+    "PARAMETER repeat_penalty 1.05",
+    "PARAMETER temperature 0.2",
+    "PARAMETER top_p 0.9",
+    "PARAMETER num_ctx 32768"
+   ],
+   "supports_tools": true
+  },
+  {
+   "name": "qwen2.5:3b",
+   "id": "357c53fb659c",
+   "size": "1.9 GB",
+   "from": [
+    "C:\\Users\\Administrator\\.ollama\\models\\blobs\\sha256-5ee4f07cdb9beadbbb293e85803c569b01bd37ed059d2715faa7bb405f31caa6"
+   ],
+   "params": [],
+   "supports_tools": true
+  },
+  {
+   "name": "qwen2.5:7b-instruct-q4_K_M",
+   "id": "845dbda0ea48",
+   "size": "4.7 GB",
+   "from": [
+    "C:\\Users\\Administrator\\.ollama\\models\\blobs\\sha256-2bada8a7450677000f678be90653b85d364de7db25eb5ea54136ada5f3933730"
+   ],
+   "params": [],
+   "supports_tools": true
+  },
+  {
+   "name": "qwen3:8b",
+   "id": "500a1f067a9f",
+   "size": "5.2 GB",
+   "from": [
+    "C:\\Users\\Administrator\\.ollama\\models\\blobs\\sha256-a3de86cd1c132c822487ededd47a324c50491393e6565cd14bafa40d0b8e686f"
+   ],
+   "params": [
+    "PARAMETER top_k 20",
+    "PARAMETER top_p 0.95",
+    "PARAMETER repeat_penalty 1",
+    "PARAMETER stop <|im_start|>",
+    "PARAMETER stop <|im_end|>",
+    "PARAMETER temperature 0.6"
+   ],
+   "supports_tools": true
+  },
+  {
+   "name": "nomic-embed-text:latest",
+   "id": "0a109f422b47",
+   "size": "274 MB",
+   "from": [
+    "C:\\Users\\Administrator\\.ollama\\models\\blobs\\sha256-970aa74c0a90ef7482477cf803618e776e173c007bf957f635f1015bfcfef0e6"
+   ],
+   "params": [
+    "PARAMETER num_ctx 8192"
+   ],
+   "supports_tools": false
+  }
+ ],
+ "disk_weights": [
+  {
+   "path": "D:\\Virtu模型\\checkpoints\\virtu_boundary_sft_lora.gguf",
+   "gb": 0.16
+  },
+  {
+   "path": "D:\\Virtu模型\\checkpoints\\virtu_lora_adapter.gguf",
+   "gb": 0.15
+  },
+  {
+   "path": "D:\\Virtu模型\\checkpoints\\cad_cam_six_software_lora\\adapter_model.safetensors",
+   "gb": 0.33
+  },
+  {
+   "path": "D:\\Virtu模型\\checkpoints\\omni_autonomous_agent_lora\\adapter_model.safetensors",
+   "gb": 0.33
+  },
+  {
+   "path": "D:\\Virtu模型\\checkpoints\\tool_agent_lora_final\\adapter_model.safetensors",
+   "gb": 0.16
+  },
+  {
+   "path": "D:\\Virtu模型\\checkpoints\\turing_conversational_lora\\adapter_model.safetensors",
+   "gb": 0.33
+  },
+  {
+   "path": "D:\\Virtu模型\\checkpoints\\ug_teacher_guided_agent_lora\\adapter_model.safetensors",
+   "gb": 0.33
+  },
+  {
+   "path": "D:\\Virtu模型\\checkpoints\\virtu_cad_cam_merged_v3\\model-00001-of-00005.safetensors",
+   "gb": 3.72
+  },
+  {
+   "path": "D:\\Virtu模型\\checkpoints\\virtu_cad_cam_merged_v3\\model-00002-of-00005.safetensors",
+   "gb": 3.72
+  },
+  {
+   "path": "D:\\Virtu模型\\checkpoints\\virtu_cad_cam_merged_v3\\model-00003-of-00005.safetensors",
+   "gb": 3.69
+  },
+  {
+   "path": "D:\\Virtu模型\\checkpoints\\virtu_cad_cam_merged_v3\\model-00004-of-00005.safetensors",
+   "gb": 2.97
+  },
+  {
+   "path": "D:\\Virtu模型\\checkpoints\\virtu_cad_cam_merged_v3\\model-00005-of-00005.safetensors",
+   "gb": 1.16
+  },
+  {
+   "path": "D:\\Virtu模型\\checkpoints\\virtu_cad_cam_production_lora\\adapter_model.safetensors",
+   "gb": 0.33
+  },
+  {
+   "path": "D:\\Virtu模型\\checkpoints\\virtu_lora_adapter\\adapter_model.safetensors",
+   "gb": 0.3
+  },
+  {
+   "path": "D:\\Virtu模型\\checkpoints\\virtu_master_lora_v4\\adapter_model.safetensors",
+   "gb": 0.33
+  },
+  {
+   "path": "D:\\Virtu模型\\checkpoints\\virtu_moe_14b_hf\\model-00001-of-00017.safetensors",
+   "gb": 1.52
+  },
+  {
+   "path": "D:\\Virtu模型\\checkpoints\\virtu_moe_14b_hf\\model-00002-of-00017.safetensors",
+   "gb": 1.59
+  },
+  {
+   "path": "D:\\Virtu模型\\checkpoints\\virtu_moe_14b_hf\\model-00003-of-00017.safetensors",
+   "gb": 1.52
+  },
+  {
+   "path": "D:\\Virtu模型\\checkpoints\\virtu_moe_14b_hf\\model-00004-of-00017.safetensors",
+   "gb": 1.56
+  },
+  {
+   "path": "D:\\Virtu模型\\checkpoints\\virtu_moe_14b_hf\\model-00005-of-00017.safetensors",
+   "gb": 1.55
+  },
+  {
+   "path": "D:\\Virtu模型\\checkpoints\\virtu_moe_14b_hf\\model-00006-of-00017.safetensors",
+   "gb": 1.56
+  },
+  {
+   "path": "D:\\Virtu模型\\checkpoints\\virtu_moe_14b_hf\\model-00007-of-00017.safetensors",
+   "gb": 1.55
+  },
+  {
+   "path": "D:\\Virtu模型\\checkpoints\\virtu_moe_14b_hf\\model-00008-of-00017.safetensors",
+   "gb": 1.56
+  },
+  {
+   "path": "D:\\Virtu模型\\checkpoints\\virtu_moe_14b_hf\\model-00009-of-00017.safetensors",
+   "gb": 1.59
+  },
+  {
+   "path": "D:\\Virtu模型\\checkpoints\\virtu_moe_14b_hf\\model-00010-of-00017.safetensors",
+   "gb": 1.52
+  },
+  {
+   "path": "D:\\Virtu模型\\checkpoints\\virtu_moe_14b_hf\\model-00011-of-00017.safetensors",
+   "gb": 1.56
+  },
+  {
+   "path": "D:\\Virtu模型\\checkpoints\\virtu_moe_14b_hf\\model-00012-of-00017.safetensors",
+   "gb": 1.55
+  },
+  {
+   "path": "D:\\Virtu模型\\checkpoints\\virtu_moe_14b_hf\\model-00013-of-00017.safetensors",
+   "gb": 1.56
+  },
+  {
+   "path": "D:\\Virtu模型\\checkpoints\\virtu_moe_14b_hf\\model-00014-of-00017.safetensors",
+   "gb": 1.55
+  },
+  {
+   "path": "D:\\Virtu模型\\checkpoints\\virtu_moe_14b_hf\\model-00015-of-00017.safetensors",
+   "gb": 1.56
+  },
+  {
+   "path": "D:\\Virtu模型\\checkpoints\\virtu_moe_14b_hf\\model-00016-of-00017.safetensors",
+   "gb": 0.92
+  },
+  {
+   "path": "D:\\Virtu模型\\checkpoints\\virtu_moe_14b_hf\\model-00017-of-00017.safetensors",
+   "gb": 1.16
+  },
+  {
+   "path": "D:\\Virtu模型\\checkpoints\\virtu_ties_v1\\model-00001-of-00005.safetensors",
+   "gb": 3.72
+  },
+  {
+   "path": "D:\\Virtu模型\\checkpoints\\virtu_ties_v1\\model-00002-of-00005.safetensors",
+   "gb": 3.72
+  },
+  {
+   "path": "D:\\Virtu模型\\checkpoints\\virtu_ties_v1\\model-00003-of-00005.safetensors",
+   "gb": 3.69
+  },
+  {
+   "path": "D:\\Virtu模型\\checkpoints\\virtu_ties_v1\\model-00004-of-00005.safetensors",
+   "gb": 2.97
+  },
+  {
+   "path": "D:\\Virtu模型\\checkpoints\\virtu_ties_v1\\model-00005-of-00005.safetensors",
+   "gb": 1.16
+  },
+  {
+   "path": "D:\\Virtu模型\\checkpoints\\virtu_toolcall_lora\\adapter_model.safetensors",
+   "gb": 0.33
+  },
+  {
+   "path": "D:\\Virtu模型\\checkpoints\\virtu_v100_merged\\model-00001-of-00005.safetensors",
+   "gb": 1.16
+  },
+  {
+   "path": "D:\\Virtu模型\\checkpoints\\virtu_v2_all90\\adapter_model.safetensors",
+   "gb": 0.33
+  },
+  {
+   "path": "D:\\Virtu模型\\checkpoints\\virtu_v2_all90\\checkpoint-300\\adapter_model.safetensors",
+   "gb": 0.33
+  },
+  {
+   "path": "D:\\Virtu模型\\checkpoints\\virtu_v2_all90\\checkpoint-504\\adapter_model.safetensors",
+   "gb": 0.33
+  },
+  {
+   "path": "D:\\Virtu模型\\checkpoints\\virtu_v3_all90\\adapter_model.safetensors",
+   "gb": 0.33
+  },
+  {
+   "path": "D:\\Virtu模型\\checkpoints\\virtu_v3_all90\\checkpoint-153\\adapter_model.safetensors",
+   "gb": 0.33
+  },
+  {
+   "path": "D:\\Virtu模型\\checkpoints\\_base_qwen3_8b\\model-00001-of-00005.safetensors",
+   "gb": 3.72
+  },
+  {
+   "path": "D:\\Virtu模型\\checkpoints\\_base_qwen3_8b\\model-00002-of-00005.safetensors",
+   "gb": 3.72
+  },
+  {
+   "path": "D:\\Virtu模型\\checkpoints\\_base_qwen3_8b\\model-00003-of-00005.safetensors",
+   "gb": 3.69
+  },
+  {
+   "path": "D:\\Virtu模型\\checkpoints\\_base_qwen3_8b\\model-00004-of-00005.safetensors",
+   "gb": 2.97
+  },
+  {
+   "path": "D:\\Virtu模型\\checkpoints\\_base_qwen3_8b\\model-00005-of-00005.safetensors",
+   "gb": 1.16
+  },
+  {
+   "path": "D:\\Virtu模型\\cloud_artifacts\\cad_cam_boundary_lora\\adapter_model.safetensors",
+   "gb": 0.33
+  },
+  {
+   "path": "D:\\Virtu模型\\cloud_train_pack\\output_13b\\virtu-13.63b-q4_0.gguf",
+   "gb": 7.74
+  },
+  {
+   "path": "D:\\Virtu模型\\cloud_train_pack\\output_13b\\adapter_13b_sft\\adapter_model.safetensors",
+   "gb": 0.24
+  },
+  {
+   "path": "D:\\Virtu模型\\models\\Qwen3-VL-2B-Instruct\\model.safetensors",
+   "gb": 3.96
+  },
+  {
+   "path": "D:\\Virtu模型\\models\\virtu-13b\\virtu-13.63b-asym-q3km.gguf",
+   "gb": 5.88
+  },
+  {
+   "path": "D:\\Virtu模型\\models\\virtu-13b\\adapter_13b_dpo\\adapter_model.safetensors",
+   "gb": 0.12
+  },
+  {
+   "path": "D:\\Virtu模型\\models\\virtu-13b\\adapter_13b_dpo\\ref\\adapter_model.safetensors",
+   "gb": 0.24
+  }
+ ],
+ "blob_count": 153,
+ "blob_total_gb": 95.53
+}

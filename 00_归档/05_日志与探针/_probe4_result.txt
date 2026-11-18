@@ -1,0 +1,9 @@
+thread_desktop= Default
+window_station= WinSta0
+enum_visible_windows= 11
+first10_titles= ['Windows PowerShell', 'Windows 输入体验', 'Program Manager']
+solid_like_hits= []
+attach_default_ok= None
+after_attach_visible_windows= 11
+tasklist_sldworks= "SLDWORKS.exe","28628","Console","1","329,296 K"
+DONE

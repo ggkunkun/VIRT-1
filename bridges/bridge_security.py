@@ -14,6 +14,30 @@ from pathlib import Path
 from typing import Any
 
 MODEL_ID = "virtu-cad-cam-10b"
+_SERVICE_TOKEN_DIR = "ServiceAuth"
+
+
+def service_token_path(service: str) -> Path:
+    """Return a per-service token path under the current user's private data dir."""
+    if not service or not service.isascii() or not service.replace("-", "").replace("_", "").isalnum():
+        raise ValueError("Service name must contain only ASCII letters, digits, '-' or '_'")
+    base = default_token_path().parent
+    if base.name.casefold() == "bridgeauth":
+        base = base.parent
+    return base / _SERVICE_TOKEN_DIR / service / "bearer_token"
+
+
+def ensure_service_token(service: str, env_var: str,
+                        path: str | Path | None = None) -> str:
+    """Load a strong environment token or create/reuse a private per-service token."""
+    token = os.environ.get(env_var, "")
+    if token:
+        token = token.strip()
+    else:
+        token = ensure_bridge_token(path or service_token_path(service))
+    if len(token) < 32 or any(ch.isspace() for ch in token):
+        raise RuntimeError(f"{env_var} must contain at least 32 non-whitespace characters")
+    return token
 
 
 def bearer_authorized(header_value: str, expected_token: str) -> bool:

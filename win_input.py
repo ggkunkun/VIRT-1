@@ -3,17 +3,33 @@
 
 用途：当目标窗口对 BM_CLICK / WM_COMMAND / 坐标级消息全部无反应，只认「真鼠标」时，
 用它把点击打到具体控件上。风险与自律：
-  - 会短暂移动光标，点后必须复位；
+  - **必须**通过 ``virtu_omni.computer_use.input_guard`` 授权（默认拒绝），
+    避免模型侧一次幻觉调用就把操作者的光标拽走；
+  - 默认点完**不复位**光标：旧实现无条件 ``SetCursorPos(old)``，连点几次就是
+    "抽走—弹回—再抽走"，并发时还会把另一个执行体刚放好的光标拽回去；
   - 只允许打在**自己按 PID 找到的窗口**上（先 GetAncestor 拿根属主窗再提前台），
     绝不用标题匹配去抓用户的窗口。
 """
 
 import ctypes
+import os
+import sys
 import time
 from ctypes import wintypes
 
 user32 = ctypes.windll.user32
 kernel32 = ctypes.windll.kernel32
+
+_ROOT = os.path.dirname(os.path.abspath(__file__))
+if _ROOT not in sys.path:
+    sys.path.insert(0, _ROOT)
+
+try:
+    from virtu_omni.computer_use import input_guard as _INPUT_GUARD
+    _INPUT_GUARD_ERROR = None
+except Exception as _exc:          # pragma: no cover
+    _INPUT_GUARD = None
+    _INPUT_GUARD_ERROR = str(_exc)
 
 INPUT_MOUSE = 0
 MOUSEEVENTF_MOVE = 0x0001
@@ -106,22 +122,45 @@ def is_point_on_window(x, y, h):
     return False, under
 
 
-def click(x, y, hold=0.08, settle=0.30):
-    """真鼠标左键点击，点后把光标复位。
+def click(x, y, hold=0.08, settle=0.30, restore=False):
+    """真鼠标左键点击，返回 True=已发出 / False=被闸门拒绝。
+
+    ``restore`` 默认 False：点完不复位光标。旧实现无条件复位，一次流程里连点
+    几次就是"抽走—弹回—再抽走"，并发时还会把另一个执行体刚放好的光标拽回去，
+    观感上完全就是程序在抢鼠标。确需保留旧行为时显式传 ``restore=True``。
 
     注意：`MOUSEEVENTF_MOVE` 单独用是**相对位移**（dx,dy），拿屏幕坐标喂它会点到别处去
     （VERICUT 的 ribbon 就是这么一直点不中的）。绝对定位要 MOUSEEVENTF_ABSOLUTE + 归一化 0..65535，
     这里直接用 SetCursorPos 更不容易错。
     """
+    if _INPUT_GUARD is None:
+        print("[win_input] 输入闸门不可用（%s），拒绝点击" % _INPUT_GUARD_ERROR,
+              file=sys.stderr)
+        return False
+
     old = wintypes.POINT()
     user32.GetCursorPos(ctypes.byref(old))
-    user32.SetCursorPos(int(x), int(y))
-    time.sleep(0.12)
-    _send(MOUSEEVENTF_LEFTDOWN)
-    time.sleep(hold)
-    _send(MOUSEEVENTF_LEFTUP)
-    time.sleep(settle)
-    user32.SetCursorPos(old.x, old.y)
+
+    try:
+        with _INPUT_GUARD.input_session("click", x=int(x), y=int(y),
+                                        require_bounds=True, agent="win_input") as ctx:
+            if ctx["dry_run"]:
+                return False
+            user32.SetCursorPos(int(x), int(y))
+            time.sleep(0.12)
+            try:
+                _send(MOUSEEVENTF_LEFTDOWN)
+                time.sleep(hold)
+            finally:
+                # 任何中断都补 UP：否则左键留在按下态，用户一动就是拖选
+                _send(MOUSEEVENTF_LEFTUP)
+            time.sleep(settle)
+            if restore:
+                user32.SetCursorPos(old.x, old.y)
+    except _INPUT_GUARD.InputDenied as exc:
+        print("[win_input] 点击被拒绝：%s" % exc, file=sys.stderr)
+        return False
+    return True
 
 
 def click_control(h, tries=2, wake=True):
@@ -141,6 +180,11 @@ def click_control(h, tries=2, wake=True):
         diag["aborted"] = "屏幕该点不属于目标控件，放弃点击（避免误操别的窗口）"
         return diag
     for _ in range(tries):
-        click(x, y)
-    diag["clicked"] = True
+        if click(x, y):
+            diag["clicked"] = True
+            break
+    else:
+        # 一次都没发出去：闸门拒绝 / 急停 / 演练。不能谎报 clicked=True。
+        diag["clicked"] = False
+        diag["aborted"] = ("输入被闸门拒绝（VIRTU_DESKTOP_INPUT != 1，或处于急停/演练状态）")
     return diag

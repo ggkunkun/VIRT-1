@@ -44,6 +44,8 @@ class CIMCOBridge:
         errors = []
         variables_used = set()
         loop_stack = []
+        spindle_on = False
+        program_end = False
 
         for idx, line in enumerate(lines, 1):
             clean = line.strip().upper()
@@ -71,28 +73,57 @@ class CIMCOBridge:
                     if expected_id != end_id:
                         errors.append(f"Line {idx}: Mismatched END {end_id}, expected END {expected_id} from line {start_line}.")
 
-            # Check G-code syntax
+            # G/M token range audit + program-end / spindle-stop checks
             if clean.startswith("G") or clean.startswith("M") or clean.startswith("O"):
-                # Basic token validation
-                pass
+                for letter, val in re.findall(r"([GM])(-?\d+(?:\.\d+)?)", clean):
+                    num = float(val)
+                    if not (0.0 <= num <= 999.0):
+                        errors.append(f"Line {idx}: out-of-range {letter}{val}.")
+                if re.search(r"M0?[34]\b", clean):
+                    spindle_on = True
+                if re.search(r"M0?5\b", clean):
+                    spindle_on = False
+                if re.search(r"M0?[23]0\b", clean):
+                    program_end = True
 
         if loop_stack:
             for loop_id, line in loop_stack:
                 errors.append(f"Line {line}: Unclosed WHILE DO {loop_id}.")
+        if not program_end:
+            errors.append("Program end M02/M30 not found.")
+        if spindle_on:
+            errors.append("Spindle still on at program end (no M05).")
 
         # Deep G-code syntax and safety sentinel (G00 collision, missing feedrate, unclosed comment)
+        syntax_checked = True
+        syntax_check_error = None
         try:
             from virtu_omni.serving.gbnf_grammar import validate_gcode_syntax
             _, g_errors = validate_gcode_syntax(nc_code)
-            if g_errors:
-                errors.extend(g_errors)
-        except Exception:
-            pass
+            for ge in g_errors:
+                m = re.match(r"Line (\d+): No valid G-code words", ge)
+                if m:
+                    src = lines[int(m.group(1)) - 1].strip().upper()
+                    # Macro B assignments / WHILE-DO / END / expression coords are valid FANUC
+                    if src.startswith("#") or src.startswith("WHILE") or re.match(r"^END\s*\d+", src) or "[" in src:
+                        continue
+                errors.append(ge)
+        except Exception as exc:  # noqa: BLE001
+            # 哨兵自身不可用 ≠ 程序合法。原实现 except: pass 后照样 status=success、
+            # is_valid 来自"跑过的检查"，于是"没检查"会被读成"检查通过"。
+            # 现在：状态降 partial，is_valid 必须同时满足"哨兵真跑过"，并把不可用原因
+            # 以 CHECK_UNAVAILABLE 前缀入错误清单（不伪装成程序缺陷，也不让它静默）。
+            syntax_checked = False
+            syntax_check_error = f"{type(exc).__name__}: {exc}"[:160]
+            errors.append("CHECK_UNAVAILABLE: gcode syntax sentinel did not run: " + syntax_check_error)
 
-        is_valid = len([e for e in errors if "CRITICAL" in e or "Unclosed" in e or "without matching" in e or "Mismatched" in e]) == 0
+        critical = [e for e in errors if "CRITICAL" in e or "Unclosed" in e or "without matching" in e or "Mismatched" in e]
+        is_valid = syntax_checked and not critical
         return {
-            "status": "success",
+            "status": "success" if syntax_checked else "partial",
             "is_valid": is_valid,
+            "syntax_checked": syntax_checked,
+            "syntax_check_error": syntax_check_error,
             "errors": errors,
             "variables_count": len(variables_used),
             "variables": sorted(list(variables_used)),

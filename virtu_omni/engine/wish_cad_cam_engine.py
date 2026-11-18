@@ -15,6 +15,80 @@ import re
 from typing import Any, Dict, List, Optional
 from virtu_omni.knowledge.software_plugin_ontology import SOFTWARE_ONTOLOGY
 
+import json as _json
+import os as _os
+import sys as _sys
+from pathlib import Path as _Path
+
+_ROOT = _Path(__file__).resolve().parents[2]
+
+# 工作区样本库（成品网格 + 样本毛坯 + 样本 VERICUT 工程）。反推毛坯/五轴工装的唯一依据。
+SAMPLE_LIBRARY: Dict[str, Dict[str, str]] = {
+    "turbine_blade": {
+        "design_stl": str(_ROOT / "00_归档" / "01_历史备份" / "eval_archive" / "turbine_blade_design.stl"),
+        "sample_stock_stl": str(_ROOT / "00_归档" / "01_历史备份" / "eval_archive" / "turbine_blade_stock.stl"),
+        "sample_vcproject": str(_ROOT / "01_CAD交付件" / "turbine_blade_vericut.vcproject"),
+        "nc_path": str(_ROOT / "01_CAD交付件" / "turbine_blade_5axis.nc"),
+        "spec_json": str(_ROOT / "projects" / "turbine_blade_autonomous_v100" / "TURBINE_BLADE_SPEC.json"),
+    },
+    "impeller_box": {
+        "design_stl": str(_ROOT / "work" / "impeller_box_stock" / "AE-CI-060_BOX_impeller.stl"),
+        "sample_stock_stl": str(_ROOT / "work" / "impeller_box_stock" / "AE-CI-060_BOX_stock_box.stl"),
+        "sample_vcproject": str(_ROOT / "work" / "impeller_box_stock" / "AE-CI-060_BOX_5axis.vcproject"),
+        "nc_path": str(_ROOT / "work" / "impeller_box_stock" / "AE-CI-060_BOX_5axis.nc"),
+    },
+}
+_SAMPLE_CACHE: Dict[str, Dict[str, Any]] = {}
+
+
+def _load_sample_spec(kind: str) -> Dict[str, Any]:
+    """实测样本（成品网格 + 样本毛坯 + .vcproject）反推毛坯与五轴工装；样本缺失返回 {}。"""
+    if kind in _SAMPLE_CACHE:
+        return _SAMPLE_CACHE[kind]
+    lib = SAMPLE_LIBRARY.get(kind, {})
+    out: Dict[str, Any] = {}
+    if lib and _os.path.exists(lib["design_stl"]):
+        if str(_ROOT) not in _sys.path:
+            _sys.path.insert(0, str(_ROOT))
+        try:
+            from stock_derivation import inverse_derive_from_sample
+            ev = inverse_derive_from_sample(
+                lib["design_stl"], lib.get("sample_stock_stl"), lib.get("sample_vcproject"),
+                part_type="涡轮叶片" if kind == "turbine_blade" else "叶轮", stock_hint="box")
+            ev.pop("stock_spec", None)
+            sx, sy, sz = ev["product_size_mm"]
+            vc = ev.get("vcproject_setup") or {}
+            m = ev.get("sample_allowances_mm") or {}
+            out = {
+                "design_bbox_mm": {"dx": round(sx, 4), "dy": round(sy, 4), "dz": round(sz, 4)},
+                "stock_shape": ev["spec"]["shape"],
+                "stock_dims_mm": {k: round(float(v), 4) for k, v in ev["spec"]["dims"].items()},
+                "allowances_mm": m,
+                "kinematics": (f"5-Axis Simultaneous ({'/'.join(vc.get('linear_axes', []) + vc.get('rotary_axes', []))}"
+                               f"{', G43.4 RTCP' if vc.get('nc_has_rtcp') else ''})") if vc.get("is_5axis") else None,
+                "rotary_axes": vc.get("rotary_axes"),
+                "machine_files": vc.get("machine_files"),
+                "control_files": vc.get("control_files"),
+                "sample_provenance": {k: v for k, v in lib.items()},
+                "inverse_evidence_basis": ev.get("basis"),
+            }
+        except Exception as exc:  # 样本不可读：如实标注，不伪造
+            out = {"sample_error": f"{type(exc).__name__}: {exc}"}
+        spec_json = lib.get("spec_json")
+        if spec_json and _os.path.exists(spec_json):
+            try:
+                sj = _json.loads(open(spec_json, encoding="utf-8").read())
+                g = sj.get("geometry", {})
+                out["twist_angle_deg"] = g.get("twist_angle_deg")
+                out["root_type"] = g.get("root_type")
+                mat = str(sj.get("material", {}).get("name", ""))
+                if "718" in mat or "inconel" in mat.lower():
+                    out["material"] = "Inconel718"
+            except Exception:
+                pass
+    _SAMPLE_CACHE[kind] = out
+    return out
+
 
 class WishCADCAMEngine:
     """Translates high-level declarative wishes into multi-software engineering code."""
@@ -63,6 +137,8 @@ class WishCADCAMEngine:
 
         d_outer = safe_float(outer_d[0], 53.0) if outer_d else (safe_float(generic_d[0], 53.0) if generic_d else 53.0)
         d_inner = safe_float(inner_d[0], 14.0) if inner_d else (safe_float(generic_d[1], 14.0) if len(generic_d) > 1 else (14.0 if d_outer > 30 else 8.0))
+        outer_source = "prompt_labeled" if outer_d else ("prompt_generic_diameter" if generic_d else "default")
+        inner_source = "prompt_labeled" if inner_d else ("prompt_generic_diameter" if len(generic_d) > 1 else "default")
 
         # 半径：`R15` 这种紧贴数字的写法必须认（旧正则要求 R 后面先有空格/等号，结果 R15 R12 R10 一个都没抓到，静默退回默认 3.0）；
         # 负向后顾排除 Cr12MoV 这类材料牌号里的 r12。
@@ -99,6 +175,7 @@ class WishCADCAMEngine:
             num_features = len(groove_radii)
         geometry_warnings = []
         overall_len = safe_float(lengths[0], 45.0) if lengths else 45.0
+        length_source = "prompt_labeled" if lengths else "default"
         for _i, _rr in enumerate(groove_radii, 1):
             _pitch = overall_len / (len(groove_radii) + 1.0)
             _cz = _pitch * _i
@@ -116,6 +193,41 @@ class WishCADCAMEngine:
         is_multiaxis = bool(re.search(r"5轴|五轴|联动|叶轮|曲面|复杂", wish_text))
         is_die_mold = bool(re.search(r"模具|轮模|注塑|冲压|斜顶|滑块", wish_text))
 
+        # 2026-11-14：高温合金识别 + 涡轮叶片 / 包容块叶轮 基于样本反推（不再退回 Ø53×45 棒料默认值）
+        if re.search(r"inconel|in718|gh4169|高温合金|镍基|dd6|(?<![0-9])718(?![0-9])", wish_text, re.I):
+            material = "Inconel718"
+        low = wish_text.lower()
+        is_turbine_blade = bool(re.search(r"涡轮叶片|航空叶片|工作叶片|导向叶片|叶片|turbine\s*blade|airfoil|榫头", low)) \
+            and not re.search(r"叶轮|整体叶盘|impeller|blisk", low)
+        wants_box = bool(re.search(r"包容块|方料|方块|矩形毛坯|box\s*stock|bounding\s*block", low))
+        explicit_dims = bool(outer_d or inner_d or generic_d or lengths)
+        sample_fields: Dict[str, Any] = {}
+        part_family = "generic"
+        stock_shape = "box" if wants_box else None
+        if is_turbine_blade:
+            part_family = "turbine_blade_5axis"
+            is_multiaxis = True
+            stock_shape = "box"
+            sample_fields = _load_sample_spec("turbine_blade")
+            if material == "Cr12MoV":
+                material = "Inconel718"   # 航空涡轮叶片默认镍基高温合金（样本 SPEC 若声明则以样本为准）
+                if sample_fields.get("material"):
+                    material = sample_fields["material"]
+            if sample_fields.get("design_bbox_mm") and not explicit_dims:
+                bb = sample_fields["design_bbox_mm"]
+                d_outer, overall_len = bb["dx"], bb["dz"]
+                d_inner = 0.0
+                outer_source = length_source = "measured_from_sample"
+                inner_source = "sample_has_no_bore_dimension"
+        elif wants_box and re.search(r"叶轮|impeller|blisk|叶盘", low):
+            part_family = "impeller_bounding_block_5axis"
+            is_multiaxis = True
+            sample_fields = _load_sample_spec("impeller_box")
+            if sample_fields.get("design_bbox_mm") and not explicit_dims:
+                bb = sample_fields["design_bbox_mm"]
+                d_outer, overall_len = bb["dx"], bb["dz"]
+                outer_source = length_source = "measured_from_sample"
+
         return {
             "wish": wish_text,
             "material": material,
@@ -131,6 +243,30 @@ class WishCADCAMEngine:
             "sweep_angle": sweep_angle,
             "is_multiaxis": is_multiaxis,
             "is_die_mold": is_die_mold,
+            "is_turbine_blade": is_turbine_blade,
+            "part_family": part_family,
+            "stock_shape": stock_shape or sample_fields.get("stock_shape"),
+            "stock_dims_mm": sample_fields.get("stock_dims_mm"),
+            "design_bbox_mm": sample_fields.get("design_bbox_mm"),
+            "allowances_mm": sample_fields.get("allowances_mm"),
+            "width_mm": (sample_fields.get("design_bbox_mm") or {}).get("dy"),
+            "twist_angle_deg": sample_fields.get("twist_angle_deg"),
+            "root_type": sample_fields.get("root_type"),
+            "kinematics": sample_fields.get("kinematics"),
+            "sample_provenance": sample_fields.get("sample_provenance"),
+            "dimension_evidence": {
+                "d_outer_mm": {"value": d_outer, "source": outer_source},
+                "d_inner_mm": {"value": d_inner, "source": inner_source},
+                "overall_len_mm": {"value": overall_len, "source": length_source},
+                "engineering_verified": False,
+                "status": (
+                    "measured_from_sample"
+                    if "measured_from_sample" in (outer_source, inner_source, length_source)
+                    else "assumptions_present"
+                    if "default" in (outer_source, inner_source, length_source)
+                    else "prompt_parsed"
+                ),
+            },
         }
 
     def generate_blueprint_annotation(self, spec: Dict[str, Any]) -> str:

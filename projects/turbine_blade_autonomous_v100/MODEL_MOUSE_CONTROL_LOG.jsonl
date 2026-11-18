@@ -1,0 +1,7 @@
+{"timestamp": "2026-11-08T01:46:16", "event": "ACTION_EXECUTED", "data": {"step": 1, "tool": "Move", "args": {"loc": [960, 480], "drag": false}, "observation": "物理鼠标成功平滑滑行移动至屏幕坐标 (960, 480)。"}}
+{"timestamp": "2026-11-08T01:46:57", "event": "ACTION_EXECUTED", "data": {"step": 2, "tool": "Wait", "args": {"duration_seconds": 1.5}, "observation": "完成等待 1.5 秒，机床仿真运动进行中。"}}
+{"timestamp": "2026-11-08T01:47:37", "event": "ACTION_EXECUTED", "data": {"step": 3, "tool": "Click", "args": {"loc": [460, 680], "button": "left", "clicks": 1}, "observation": "物理鼠标在当前坐标成功执行 left 键物理单击操作。"}}
+{"timestamp": "2026-11-08T01:48:25", "event": "ACTION_EXECUTED", "data": {"step": 4, "tool": "Move", "args": {"loc": [1020, 480], "drag": true}, "observation": "物理鼠标成功平滑滑行移动至屏幕坐标 (1020, 480)。"}}
+{"timestamp": "2026-11-08T01:49:30", "event": "ACTION_EXECUTED", "data": {"step": 5, "tool": "Click", "args": {"loc": [1020, 480], "button": "right", "clicks": 1}, "observation": "物理鼠标在当前坐标成功执行 right 键物理单击操作。"}}
+{"timestamp": "2026-11-08T01:50:26", "event": "ACTION_EXECUTED", "data": {"step": 6, "tool": "Wait", "args": {"duration_seconds": 7.2}, "observation": "完成等待 7.2 秒，机床仿真运动进行中。"}}
+{"timestamp": "2026-11-08T01:51:15", "event": "ACTION_EXECUTED", "data": {"step": 7, "tool": "Screenshot", "args": {"label": "涡轮叶片五轴数控精密切削仿真终检"}, "observation": "已通过高精度硬件视口捕获五轴切削状态帧并保存至 frame_07_涡轮叶片五轴数控精密切削仿真终检.png。"}}

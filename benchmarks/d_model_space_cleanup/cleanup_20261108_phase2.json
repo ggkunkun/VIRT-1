@@ -1,0 +1,48 @@
+{
+  "timestamp": "2026-11-08 19:19:00",
+  "authorization": "user confirmed: 按你的建议全面执行",
+  "scope": "Delete 5 unquantized intermediate merged HF checkpoints in D:\\Virtu模型\\checkpoints",
+  "targets": [
+    {
+      "name": "virtu_v2_all90_merged",
+      "files": 14,
+      "bytes": 16397438614,
+      "gb": 15.27
+    },
+    {
+      "name": "virtu_v3_all90_merged",
+      "files": 14,
+      "bytes": 16397438619,
+      "gb": 15.27
+    },
+    {
+      "name": "virtu_boundary_sft_merged",
+      "files": 14,
+      "bytes": 16397438603,
+      "gb": 15.27
+    },
+    {
+      "name": "virtu_dense_merged_hf",
+      "files": 19,
+      "bytes": 16397433337,
+      "gb": 15.27
+    },
+    {
+      "name": "virtu_dense_ties_hf",
+      "files": 19,
+      "bytes": 16397432001,
+      "gb": 15.27
+    }
+  ],
+  "free_before_gb": 93.73,
+  "free_after_gb": 170.08,
+  "reclaimed_gb": 76.36,
+  "red_lines_preserved": [
+    "_base_qwen3_8b",
+    "virtu_ties_v1",
+    "virtu_cad_cam_merged_v3",
+    "virtu_moe_14b_hf",
+    "all LoRA adapter weights"
+  ],
+  "basis": "measured"
+}

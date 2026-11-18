@@ -12,6 +12,7 @@ import sys
 import json
 import time
 import hashlib
+import warnings
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple, Union
 
@@ -20,6 +21,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 from virtu_omni.errors import ModelError, FEAT_TOKENIZER_ARG
+from virtu_omni.security.weights import safe_torch_load as _safe_torch_load
 
 # Ensure VIRTU source root in path for Virtu neural architecture definition
 CANDIDATE_PATHS = [
@@ -70,6 +72,23 @@ PAD_ID, BOS_ID, EOS_ID, UNK_ID = 0, 1, 2, 3
 # Supported operations and materials
 OPERATIONS = ["face", "pocket", "drill", "slot", "contour", "thread", "chamfer", "boss"]
 MATERIALS = ["al6061", "steel4140", "ti6al4v", "cuc360", "inconel718", "ss304", "pa66", "castiron"]
+
+# 字节码产物：其摘要随解释器版本与实际编译结果漂移，不构成归档内容的完整性证据。
+_COMPILED_CACHE_SUFFIXES = (".pyc", ".pyo")
+
+
+def _sha256_file(path: Path, chunk_size: int = 4 * 1024 * 1024) -> str:
+    """流式计算文件 SHA-256（分块读取，不把大权重整体载入内存）。"""
+    digest = hashlib.sha256()
+    with open(path, "rb") as f:
+        for chunk in iter(lambda: f.read(chunk_size), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def _is_compiled_cache(path: Path) -> bool:
+    """判断路径是否属于 Python 字节码缓存（.pyc/.pyo 或 __pycache__ 下）。"""
+    return path.suffix.lower() in _COMPILED_CACHE_SUFFIXES or "__pycache__" in path.parts
 
 
 class StandardizedSmeltTokenizer:
@@ -185,23 +204,71 @@ class StandardizedSmeltBundle:
                 self._verification_report = json.load(f)
         return self._verification_report
 
-    def verify_bundle_integrity(self) -> Tuple[bool, List[str]]:
-        """Verify checksums and structural integrity of the bundle on disk."""
+    def verify_bundle_integrity(
+        self,
+        check_sha256: bool = True,
+        skip_compiled_cache: bool = True,
+    ) -> Tuple[bool, List[str]]:
+        """Verify file sizes, SHA-256 digests and structural integrity of the bundle on disk.
+
+        兼容升级策略（不把旧 manifest 一刀切判红）:
+          * 记录带 ``sha256``      -> 计算实际摘要逐字节比对，不一致记入 ``errors`` 判失败；
+          * 记录缺 ``sha256``      -> 发出 ``RuntimeWarning`` 告警但仍放行（内容无法校验）；
+          * ``.pyc`` / ``__pycache__`` -> 字节码产物，摘要随解释器版本漂移，默认跳过并告警，
+            置 ``skip_compiled_cache=False`` 可强制纳入校验。
+
+        Args:
+            check_sha256: 是否执行摘要比对（False 时退化为旧行为，仅比对尺寸）。
+            skip_compiled_cache: 是否跳过 Python 字节码缓存条目。
+
+        Returns:
+            ``(ok, errors)``：``ok`` 为 True 表示未发现完整性缺陷；
+            ``errors`` 逐条给出缺失 / 尺寸不符 / 摘要不符的具体原因。
+        """
         manifest = self.load_manifest()
-        errors = []
+        errors: List[str] = []
+        notes: List[str] = []
 
         for record in manifest.get("files", []):
             target_path = Path(record["target_path"])
+
+            if skip_compiled_cache and _is_compiled_cache(target_path):
+                notes.append(f"跳过字节码缓存条目（摘要随解释器版本漂移）：{record['filename']}")
+                continue
+
             if not target_path.exists():
                 errors.append(f"Missing bundle file: {target_path}")
                 continue
 
-            expected_size = record["size_bytes"]
+            expected_size = record.get("size_bytes")
             actual_size = target_path.stat().st_size
-            if actual_size != expected_size:
+            if expected_size is not None and actual_size != expected_size:
                 errors.append(
                     f"Size mismatch on {record['filename']}: expected {expected_size}, got {actual_size}"
                 )
+
+            if not check_sha256:
+                continue
+
+            declared = str(record.get("sha256") or "").strip().lower()
+            if not declared:
+                notes.append(f"manifest 未记录 sha256，内容无法校验：{record['filename']}")
+                continue
+
+            actual = _sha256_file(target_path)
+            if actual != declared:
+                errors.append(
+                    f"SHA-256 mismatch on {record['filename']}: "
+                    f"expected {declared[:16]}..., got {actual[:16]}..."
+                )
+
+        if notes:
+            warnings.warn(
+                "verify_bundle_integrity：%d 条条目未做内容校验或按设计跳过 —— %s"
+                % (len(notes), "；".join(notes[:5])),
+                RuntimeWarning,
+                stacklevel=2,
+            )
 
         return (len(errors) == 0, errors)
 
@@ -214,7 +281,7 @@ class StandardizedSmeltBundle:
             raise FileNotFoundError(f"Weights file not found: {self.weights_path}")
 
         # Load standardized weights package
-        package = torch.load(self.weights_path, map_location="cpu", weights_only=False)
+        package = _safe_torch_load(self.weights_path, map_location="cpu")
         raw_sd = package.get("model_state_dict", package)
         model_cfg = package.get("model_config", {})
 

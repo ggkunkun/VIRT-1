@@ -35,6 +35,29 @@ WORKSPACE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(
 if WORKSPACE_DIR not in sys.path:
     sys.path.insert(0, WORKSPACE_DIR)
 
+# --- V-03 修复：统一使用 virtu_omni.security.code_guard 的 AST 闸门 -----------
+try:
+    from virtu_omni.security import code_guard as _code_guard
+except Exception:  # pragma: no cover
+    _code_guard = None
+
+
+def _validate_source(code: str, **kwargs: Any) -> List[str]:
+    if _code_guard is None:
+        return []
+    return _code_guard.validate_source(code, **kwargs)
+
+
+def _guarded_builtins(**kwargs: Any) -> Dict[str, Any]:
+    if _code_guard is None:
+        return dict(ProgramSandbox.SAFE_BUILTINS) if "ProgramSandbox" in globals() else {}
+    return _code_guard.restricted_builtins(**kwargs)
+
+
+def _guard_mode() -> str:
+    return _code_guard.guard_mode() if _code_guard is not None else "enforce"
+
+
 logger = logging.getLogger("virtu_omni.evolution.funsearch")
 
 
@@ -200,7 +223,17 @@ class NestingProblemEvaluator:
 # Program Sandbox & Execution
 # -----------------------------------------------------------------------------
 class ProgramSandbox:
-    """Executes untrusted candidate code in a secure namespace."""
+    """Executes untrusted candidate code in a secure namespace.
+
+    安全说明（V-03 修复）
+    --------------------
+    旧的 AST 检查只拦 ``Import/ImportFrom`` 与 ``eval/exec/open/__import__``
+    的直接调用，且 ``module is None`` 时直接放行；对 ``ast.Attribute`` 完全
+    不设防，因此 ``().\\_\\_class\\_\\_.\\_\\_base\\_\\_.\\_\\_subclasses\\_\\_()``
+    或 ``(lambda:0).\\_\\_globals\\_\\_['sys'].modules['os']`` 可以正常拿到 ``os``。
+    现在统一委托给 :mod:`virtu_omni.security.code_guard`：AST 白名单 + 真正
+    裁剪的 builtins（``open`` 限定在白名单根目录内）。
+    """
 
     SAFE_BUILTINS = {
         "abs": abs,
@@ -212,7 +245,6 @@ class ProgramSandbox:
         "len": len,
         "range": range,
         "sum": sum,
-        "math": math,
     }
 
     @classmethod
@@ -223,18 +255,26 @@ class ProgramSandbox:
         except SyntaxError as e:
             return None, f"AST SyntaxError: {e}"
 
-        # Disallow dangerous operations
-        for node in ast.walk(tree):
-            if isinstance(node, (ast.Import, ast.ImportFrom)):
-                # Only allow math
-                module = getattr(node, "module", None)
-                if module and module != "math":
-                    return None, f"Import of module '{module}' disallowed in FunSearch sandbox"
-            elif isinstance(node, ast.Call):
-                if isinstance(node.func, ast.Name) and node.func.id in ("eval", "exec", "open", "__import__"):
-                    return None, f"Dangerous call '{node.func.id}' disallowed"
+        # V-03: 全量 AST 闸门（dunder 属性 / 反射入口 / import 白名单 / 危险调用）
+        violations = _validate_source(code, allowed_modules=("math", "statistics", "itertools"),
+                                      allow_open=False)
+        if violations:
+            return None, "FunSearch sandbox rejected unsafe code: " + "；".join(violations[:5])
+        if _guard_mode() == "audit":
+            # audit 模式下仍执行旧的最小检查，避免完全裸奔
+            for node in ast.walk(tree):
+                if isinstance(node, (ast.Import, ast.ImportFrom)):
+                    module = getattr(node, "module", None)
+                    if module and module != "math":
+                        return None, f"Import of module '{module}' disallowed in FunSearch sandbox"
+                elif isinstance(node, ast.Call):
+                    if isinstance(node.func, ast.Name) and node.func.id in ("eval", "exec", "open", "__import__"):
+                        return None, f"Dangerous call '{node.func.id}' disallowed"
 
-        namespace: Dict[str, Any] = {"__builtins__": cls.SAFE_BUILTINS, "math": math}
+        namespace: Dict[str, Any] = {
+            "__builtins__": _guarded_builtins(allow_open=False),
+            "math": math,
+        }
         try:
             exec(code, namespace)
         except Exception as e:

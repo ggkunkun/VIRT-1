@@ -136,7 +136,7 @@ class TestToolchainAccessModes(unittest.TestCase):
         self.assertGreaterEqual(len(specs), 8)
         for s in specs:
             self.assertEqual(s["type"], "function")
-            self.assertTrue(s["function"]["name"].startswith("cadcam_"))
+            self.assertTrue(s["function"]["name"].startswith(("cadcam_", "desktop_")))
             self.assertIn("description", s["function"])
             self.assertIn("parameters", s["function"])
 

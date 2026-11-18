@@ -1,0 +1,76 @@
+{
+  "D2_mm": 200.0,
+  "N_rpm": 47284.1,
+  "Z_blades": 12,
+  "beta2b_deg": 25.0,
+  "b2_mm": 12.0,
+  "D1t_mm": 147.87,
+  "D1h_mm": 33.06,
+  "axial_length_mm": 75.0,
+  "shroud_thickness_mm": 2.0,
+  "blade_thickness_mm": 1.8,
+  "hub_disk_thickness_mm": 2.0,
+  "bore_diameter_mm": 20.0,
+  "fillet_root_mm": 1.2,
+  "eta_total": 0.8,
+  "claimed_pressure_ratio": 4.01,
+  "claimed_tip_speed_m_s": 495.16,
+  "claimed_FOS": 1.617,
+  "_audit": {
+    "ruler_values": {
+      "u2_m_s": 495.158,
+      "slip_sigma": 0.8328,
+      "dh0_kJ_kg": 176.219,
+      "pressure_ratio_recomputed": 4.01,
+      "cm2_m_s": 145.46,
+      "sigma_eq_MPa": 544.16,
+      "FOS_recomputed": 1.6172,
+      "ca1_m_s": 105.0,
+      "M_rel_tip": 1.13,
+      "Ns": 0.8696,
+      "T02_K": 463.58
+    },
+    "advisory": [
+      "保守等厚环盘 bore 应力 908.7 MPa (FOS_bore=0.97)；真实 tapered 轮毂需 FEA 复核，本尺子用等效盘+叶片系数",
+      "比转速 Ns=0.870（rad/s 基），离心级典型 0.4–1.2"
+    ],
+    "attempts": "A'",
+    "payload_hashes": [
+      "ee553d385a63",
+      "ddb04daa9ee4",
+      "62eb5323b230"
+    ],
+    "derivation": {
+      "mode": "assist",
+      "model_freedom": {
+        "Z_blades": 12,
+        "beta2b_deg": 25.0,
+        "eta_total": 0.8,
+        "D2_mm": 200.0,
+        "N_rpm": 46500.0,
+        "b2_ratio": 0.06
+      },
+      "policy": "锁 D2=200 mm，反解 N=47284 rpm",
+      "candidates": [
+        {
+          "id": "A",
+          "policy": "锁 D2=200 mm，反解 N=47284 rpm",
+          "n_viol": 0
+        },
+        {
+          "id": "B",
+          "policy": "锁 N=46500 rpm，反解 D2=203 mm",
+          "n_viol": 0
+        }
+      ],
+      "solver_derived": [
+        "N_rpm|D2_mm(反解π目标)",
+        "D1t_mm/D1h_mm(反解喉口面积)",
+        "b2_mm(=比值×D2)",
+        "axial_length_mm(可行区间中值)",
+        "bore_diameter_mm",
+        "claimed_pressure_ratio/claimed_tip_speed_m_s/claimed_FOS(复算派生)"
+      ]
+    }
+  }
+}

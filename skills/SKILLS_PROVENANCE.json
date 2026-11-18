@@ -1,727 +1,727 @@
 {
- "skills": {
-  "additive-job-preflight": {
-   "name": "additive-job-preflight",
-   "tier": "T1",
-   "role": "FDM 打印前预检",
-   "source_repo": "AgentCADCAM",
-   "upstream_path": "AgentCADCAM/skills/additive-job-preflight",
-   "upstream_commit": "2fd5f918dede5802716aa7965ec21dc8149d578c",
-   "upstream_license": "MIT License",
-   "install_path": "skills/additive-job-preflight",
-   "files": [
-    {
-     "path": "SKILL.md",
-     "bytes": 1802,
-     "sha256": "3afff20acbfee9694fe86dbe5b950e7f14c21bec0db3fba3632599216462bb72"
+  "skills": {
+    "additive-job-preflight": {
+      "name": "additive-job-preflight",
+      "tier": "T1",
+      "role": "FDM 打印前预检",
+      "source_repo": "AgentCADCAM",
+      "upstream_path": "AgentCADCAM/skills/additive-job-preflight",
+      "upstream_commit": "2fd5f918dede5802716aa7965ec21dc8149d578c",
+      "upstream_license": "MIT License",
+      "install_path": "skills/additive-job-preflight",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "bytes": 1802,
+          "sha256": "3afff20acbfee9694fe86dbe5b950e7f14c21bec0db3fba3632599216462bb72"
+        }
+      ]
+    },
+    "cad-manufacturability-review": {
+      "name": "cad-manufacturability-review",
+      "tier": "T1",
+      "role": "DFM 可制造性复审",
+      "source_repo": "AgentCADCAM",
+      "upstream_path": "AgentCADCAM/skills/cad-manufacturability-review",
+      "upstream_commit": "2fd5f918dede5802716aa7965ec21dc8149d578c",
+      "upstream_license": "MIT License",
+      "install_path": "skills/cad-manufacturability-review",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "bytes": 2495,
+          "sha256": "e2c5c6fd4b4a1a017ff254bb823239202b96af1290c055d6ccb3049cf718de81"
+        }
+      ]
+    },
+    "cadcam-intake-and-scope": {
+      "name": "cadcam-intake-and-scope",
+      "tier": "T1",
+      "role": "需求入库/缺失上下文报告",
+      "source_repo": "AgentCADCAM",
+      "upstream_path": "AgentCADCAM/skills/cadcam-intake-and-scope",
+      "upstream_commit": "2fd5f918dede5802716aa7965ec21dc8149d578c",
+      "upstream_license": "MIT License",
+      "install_path": "skills/cadcam-intake-and-scope",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "bytes": 2246,
+          "sha256": "7a115f70f4c822955ff98d0f499cfed354c50c38dbc6f521a7bb069874f495fd"
+        }
+      ]
+    },
+    "cnc-setup-planner": {
+      "name": "cnc-setup-planner",
+      "tier": "T1",
+      "role": "三轴 CNC 装夹与 WCS 计划",
+      "source_repo": "AgentCADCAM",
+      "upstream_path": "AgentCADCAM/skills/cnc-setup-planner",
+      "upstream_commit": "2fd5f918dede5802716aa7965ec21dc8149d578c",
+      "upstream_license": "MIT License",
+      "install_path": "skills/cnc-setup-planner",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "bytes": 1551,
+          "sha256": "b308666f723e4ab9412305fc9f64c7639c705316054dff66b77976f29041a497"
+        }
+      ]
+    },
+    "design-file-provenance-review": {
+      "name": "design-file-provenance-review",
+      "tier": "T1",
+      "role": "文件出处与改版一致性",
+      "source_repo": "AgentCADCAM",
+      "upstream_path": "AgentCADCAM/skills/design-file-provenance-review",
+      "upstream_commit": "2fd5f918dede5802716aa7965ec21dc8149d578c",
+      "upstream_license": "MIT License",
+      "install_path": "skills/design-file-provenance-review",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "bytes": 2229,
+          "sha256": "a87292b66bbb9d1f5d2c08ae062bce577ccb3aefe8dd54a8bba5829097740361"
+        }
+      ]
+    },
+    "drawing-pmi-handoff-review": {
+      "name": "drawing-pmi-handoff-review",
+      "tier": "T1",
+      "role": "图纸-模型 PMI/GD&T 交接审查",
+      "source_repo": "AgentCADCAM",
+      "upstream_path": "AgentCADCAM/skills/drawing-pmi-handoff-review",
+      "upstream_commit": "2fd5f918dede5802716aa7965ec21dc8149d578c",
+      "upstream_license": "MIT License",
+      "install_path": "skills/drawing-pmi-handoff-review",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "bytes": 2023,
+          "sha256": "810664e13668876aaa99c8d61e99e9f25b40ae032ccab3f65bbdc41bbd2da9f6"
+        }
+      ]
+    },
+    "file-format-interoperability-plan": {
+      "name": "file-format-interoperability-plan",
+      "tier": "T1",
+      "role": "STEP/DXF/DWG 交换语义损失",
+      "source_repo": "AgentCADCAM",
+      "upstream_path": "AgentCADCAM/skills/file-format-interoperability-plan",
+      "upstream_commit": "2fd5f918dede5802716aa7965ec21dc8149d578c",
+      "upstream_license": "MIT License",
+      "install_path": "skills/file-format-interoperability-plan",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "bytes": 2051,
+          "sha256": "b3aecc8d399cf5f5db5a37367245e38f5bd44a8b5f8c8c436e0a9af6ddea87a8"
+        }
+      ]
+    },
+    "laser-job-preflight": {
+      "name": "laser-job-preflight",
+      "tier": "T1",
+      "role": "激光切割 DXF 预检",
+      "source_repo": "AgentCADCAM",
+      "upstream_path": "AgentCADCAM/skills/laser-job-preflight",
+      "upstream_commit": "2fd5f918dede5802716aa7965ec21dc8149d578c",
+      "upstream_license": "MIT License",
+      "install_path": "skills/laser-job-preflight",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "bytes": 1699,
+          "sha256": "5489aebc977d03e30213b1b034c84c1e92f0997b4697ac2c94f59a847c914bf0"
+        }
+      ]
+    },
+    "machine-capability-match": {
+      "name": "machine-capability-match",
+      "tier": "T1",
+      "role": "机床能力匹配",
+      "source_repo": "AgentCADCAM",
+      "upstream_path": "AgentCADCAM/skills/machine-capability-match",
+      "upstream_commit": "2fd5f918dede5802716aa7965ec21dc8149d578c",
+      "upstream_license": "MIT License",
+      "install_path": "skills/machine-capability-match",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "bytes": 1624,
+          "sha256": "feb1dd75a6f0aedae01bd2a1631d073360d5c116d3b0a6bb1be230d35a0fe990"
+        }
+      ]
+    },
+    "nc-static-safety-review": {
+      "name": "nc-static-safety-review",
+      "tier": "T1",
+      "role": "G 代码静态安全审查",
+      "source_repo": "AgentCADCAM",
+      "upstream_path": "AgentCADCAM/skills/nc-static-safety-review",
+      "upstream_commit": "2fd5f918dede5802716aa7965ec21dc8149d578c",
+      "upstream_license": "MIT License",
+      "install_path": "skills/nc-static-safety-review",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "bytes": 1714,
+          "sha256": "5d3d64dec90807f22b585f890e3b77764480955e74a7f442a0f025f20dc6795c"
+        }
+      ]
+    },
+    "postprocessor-readiness-review": {
+      "name": "postprocessor-readiness-review",
+      "tier": "T1",
+      "role": "后处理与控制器身份核验",
+      "source_repo": "AgentCADCAM",
+      "upstream_path": "AgentCADCAM/skills/postprocessor-readiness-review",
+      "upstream_commit": "2fd5f918dede5802716aa7965ec21dc8149d578c",
+      "upstream_license": "MIT License",
+      "install_path": "skills/postprocessor-readiness-review",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "bytes": 1641,
+          "sha256": "18615c6d6dd7d15018bc74c944bf01dcda0a9f9db21ed081af86220e735a2b0f"
+        }
+      ]
+    },
+    "simulation-readiness-review": {
+      "name": "simulation-readiness-review",
+      "tier": "T1",
+      "role": "仿真就绪判定",
+      "source_repo": "AgentCADCAM",
+      "upstream_path": "AgentCADCAM/skills/simulation-readiness-review",
+      "upstream_commit": "2fd5f918dede5802716aa7965ec21dc8149d578c",
+      "upstream_license": "MIT License",
+      "install_path": "skills/simulation-readiness-review",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "bytes": 1670,
+          "sha256": "b6afcd9cba0361b0c8e857039980fd40012816c20c378bf66c70301eb3e860d9"
+        }
+      ]
+    },
+    "tooling-plan-review": {
+      "name": "tooling-plan-review",
+      "tier": "T1",
+      "role": "刀具计划与刀库可追溯",
+      "source_repo": "AgentCADCAM",
+      "upstream_path": "AgentCADCAM/skills/tooling-plan-review",
+      "upstream_commit": "2fd5f918dede5802716aa7965ec21dc8149d578c",
+      "upstream_license": "MIT License",
+      "install_path": "skills/tooling-plan-review",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "bytes": 1556,
+          "sha256": "cf6602dbedc501a3e32225807cc9c3fda1d1605a65e79e702345bb91bbbb7b01"
+        }
+      ]
+    },
+    "toolpath-strategy-planner": {
+      "name": "toolpath-strategy-planner",
+      "tier": "T1",
+      "role": "粗/精加工刀路策略",
+      "source_repo": "AgentCADCAM",
+      "upstream_path": "AgentCADCAM/skills/toolpath-strategy-planner",
+      "upstream_commit": "2fd5f918dede5802716aa7965ec21dc8149d578c",
+      "upstream_license": "MIT License",
+      "install_path": "skills/toolpath-strategy-planner",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "bytes": 1621,
+          "sha256": "1035c4ad6b197108fc198d7c8dceb8e64e4a3ee17ed909aba660f85472fcb2ec"
+        }
+      ]
+    },
+    "mechanical-drafting-gbt": {
+      "name": "mechanical-drafting-gbt",
+      "tier": "T1",
+      "role": "GB/T 机械制图全流程",
+      "source_repo": "AutoCAD-skills",
+      "upstream_path": "AutoCAD-skills/skills/mechanical-drafting-gbt",
+      "upstream_commit": "da9204d1e25d12dbb92a667bcf3e95c29a4a132c",
+      "upstream_license": "MIT License",
+      "install_path": "skills/mechanical-drafting-gbt",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "bytes": 23498,
+          "sha256": "32281b09e2501f2b44bada573443c572689053db12a5d4c20a2952efa73e5db3"
+        },
+        {
+          "path": "SKILL.zh-CN.md",
+          "bytes": 15686,
+          "sha256": "0be4ecb70cc3fafb8e9827636b03a3d360e93a4ab458f476d0032def41d99cf0"
+        },
+        {
+          "path": "agents/openai.yaml",
+          "bytes": 938,
+          "sha256": "d3ff1a59427ba8b842b4179c715a2660c81771522b93708808641b6fbf9f6a84"
+        },
+        {
+          "path": "references/autocad-mcp-workflow.md",
+          "bytes": 21367,
+          "sha256": "21ea750847bc29a1b32fbe0374316aa65c76c755a3ac5f2adfb450dcee29faae"
+        },
+        {
+          "path": "references/cad-3d-modeling.md",
+          "bytes": 9535,
+          "sha256": "9e9e7a7a3d839410c8797e32677b411510701c9e949026ecb2695b7f83ec70f1"
+        },
+        {
+          "path": "references/cad-workflows.md",
+          "bytes": 13578,
+          "sha256": "89b1ce9195a55a7d9333d5edcb08e568a1305a32feb7667c634ac01e6cb1a20a"
+        },
+        {
+          "path": "references/complex-assembly-drafting.md",
+          "bytes": 12088,
+          "sha256": "a58047d8c737564582314a5b0e21364ad847f1c1ca116aa5c3adbaba43a03e19"
+        },
+        {
+          "path": "references/consumer-product-concept.md",
+          "bytes": 14179,
+          "sha256": "00f3f906ab23c3ddac636ca0e0565af915c7acf9975b08373a45ce722662249c"
+        },
+        {
+          "path": "references/drc-review.md",
+          "bytes": 20292,
+          "sha256": "74fb62174df21372d5c9ef91fa24a53e462191b8defe6fb7db7689c928a47ec3"
+        },
+        {
+          "path": "references/engineering-analysis.md",
+          "bytes": 7672,
+          "sha256": "4b6303e724aee30487ddadb3e1e629095a6e1080d045be88c04a1ab8aa9eecfb"
+        },
+        {
+          "path": "references/gbt-drafting.md",
+          "bytes": 15858,
+          "sha256": "112760800c7f331ccb0e2e80d47145f1406bfe94ff4475203f4777cdec967b54"
+        },
+        {
+          "path": "references/gps-inspection.md",
+          "bytes": 7544,
+          "sha256": "ba22f7b2305d24b2670aa51b3348a47adacb94c8dac29ca3290389649ea727a8"
+        },
+        {
+          "path": "references/product-definition-release.md",
+          "bytes": 9561,
+          "sha256": "30a048022a6ee6c9ad34dafb5abfbf5a6380afa81201135782d7ff727b1e96f2"
+        },
+        {
+          "path": "references/zh-CN/autocad-mcp-workflow.md",
+          "bytes": 18101,
+          "sha256": "97c6e6fc097047c56d26660bd5b646b12c0d00b86799a76796be2ee4c70db9d8"
+        },
+        {
+          "path": "references/zh-CN/complex-assembly-drafting.md",
+          "bytes": 10044,
+          "sha256": "ee5084064e6dd8a6c59f5bd8918b07adcd37ffc4c6392e50e8076a79e4371a52"
+        },
+        {
+          "path": "references/zh-CN/consumer-product-concept.md",
+          "bytes": 12041,
+          "sha256": "d87c756db10f0db4630cfefff28d989b27b1269c88995be11c42f1b9fead0350"
+        },
+        {
+          "path": "references/zh-CN/drc-review.md",
+          "bytes": 17160,
+          "sha256": "b30a5ae9bbd70a341d1d6770af5aa4cb2a8283c8d36a6a5300a8921a5476a808"
+        },
+        {
+          "path": "references/zh-CN/gbt-drafting.md",
+          "bytes": 12691,
+          "sha256": "5700464c89dff3dc255aa1ccf57894245f08a12c1220742d9c050f17257bd990"
+        },
+        {
+          "path": "scripts/build_release_manifest.py",
+          "bytes": 5358,
+          "sha256": "3bd7fc1057829609c61e641b21864891084d3903ebd0924980fb8568d098366e"
+        },
+        {
+          "path": "scripts/validate_translation_sync.py",
+          "bytes": 4490,
+          "sha256": "2bac9a458ef793676a4ae405dd3b5cf06cac8ad363e4ee38cb4a82729ea26b3e"
+        }
+      ]
+    },
+    "ctq-extraction": {
+      "name": "ctq-extraction",
+      "tier": "T1",
+      "role": "图纸 CTQ/GD&T 结构化提取",
+      "source_repo": "CTQ-extraction",
+      "upstream_path": "CTQ-extraction/skills/ctq-extraction",
+      "upstream_commit": "bae1981f4d29ea12f221b5a2de59f5bfd85004d1",
+      "upstream_license": null,
+      "install_path": "skills/ctq-extraction",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "bytes": 3950,
+          "sha256": "aef636f1f9ff431888fe2bfc65d63e703102885a88975bbde296bddc5497dc41"
+        },
+        {
+          "path": "examples/sample_drawing_output.json",
+          "bytes": 943,
+          "sha256": "4fc0138dff0533872f970aa2c8ee84bb8cbccfa2eccb85a39b9f157e2fb3fe83"
+        },
+        {
+          "path": "references/gdt_symbols.md",
+          "bytes": 1362,
+          "sha256": "7e58eab51cab104c32f17ece04e99e2c5630bae4926d92b68d6e57a40d653e73"
+        }
+      ]
+    },
+    "fanuc-macro-b-post-gate": {
+      "name": "fanuc-macro-b-post-gate",
+      "tier": "T1_self_author",
+      "role": "NC 上机前静态安全闸(单位/极坐标/模态/包络/未知指令)",
+      "source_repo": null,
+      "upstream_path": null,
+      "origin": "self-authored 2026-11-04 (GitHub 无该域可落位技能源)",
+      "install_path": "skills/fanuc-macro-b-post-gate",
+      "acceptance_evidence": "Flange_Machining_O1001.nc -> 8 blockers, 5 codes; 修正副本 -> 0 blockers (exit 0)",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "bytes": 3818,
+          "sha256": "dfebfe0a7fea16e0260d2e668d803ab23fc3192930c0b310d1e9c811aeb3b6eb"
+        },
+        {
+          "path": "scripts/validate_nc.py",
+          "bytes": 10937,
+          "sha256": "b1196c0533d23bb0759adac96358b4e3e0fc9a94924c0c915606deb7b2e510ff"
+        },
+        {
+          "path": "scripts/__pycache__/validate_nc.cpython-312.pyc",
+          "bytes": 17212,
+          "sha256": "109c1cc932f7352578dbf16093a3d100bcb1eee578c9764ea6a3cdf2fda141dc"
+        }
+      ]
+    },
+    "cae-fos-gate": {
+      "name": "cae-fos-gate",
+      "tier": "T1_self_author",
+      "role": "CAE FOS 独立闭式解复核 + 与引擎对账",
+      "source_repo": null,
+      "upstream_path": null,
+      "origin": "self-authored 2026-11-04 (GitHub 无该域可落位技能源)",
+      "install_path": "skills/cae-fos-gate",
+      "acceptance_evidence": "法兰/轴/支座 rel_diff<=0.0006 且屈服一致; 钣金族改判 formability_advisory",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "bytes": 3448,
+          "sha256": "7c58ddcff0b50a897460ac0e6cb012481f43929519f56373962a50d2843f4e40"
+        },
+        {
+          "path": "scripts/fos_crosscheck.py",
+          "bytes": 5368,
+          "sha256": "a210f4a66a5985c262f5345eed1c3f3fe6af408e39a2b062746354d856923aaf"
+        },
+        {
+          "path": "scripts/__pycache__/fos_crosscheck.cpython-312.pyc",
+          "bytes": 8620,
+          "sha256": "bf4ed9a4789eec22b28a0b1ec1da9c3b38a4f918eaa8809708206d234eab9c35"
+        }
+      ]
+    },
+    "sheetmetal-nest-verification": {
+      "name": "sheetmetal-nest-verification",
+      "tier": "T1_self_author",
+      "role": "套料产物几何复核(重叠/越界/割缝/利用率)",
+      "source_repo": null,
+      "upstream_path": null,
+      "origin": "self-authored 2026-11-04 (GitHub 无该域可落位技能源)",
+      "install_path": "skills/sheetmetal-nest-verification",
+      "acceptance_evidence": "引擎 12 件排样 NEST_OK(42.075% vs 抬头 42.08%); 突变体 NEST-OVERLAP+NEST-OUT-OF-SHEET",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "bytes": 2537,
+          "sha256": "1c227f6dfff8afa8d7af13058c64a1f39c3f3f283d0909724a386df12739208b"
+        },
+        {
+          "path": "scripts/verify_nest.py",
+          "bytes": 5850,
+          "sha256": "46c9d354f846b6c9056eba38dc9e83ffa4bd478802ee958bc6a0ee4862a84a27"
+        },
+        {
+          "path": "scripts/__pycache__/verify_nest.cpython-312.pyc",
+          "bytes": 9399,
+          "sha256": "cf72cf7a225418a7e38049ec7a18dcf3fa6e623467a6a0c714954c8ffe8c543e"
+        }
+      ]
+    },
+    "vericut-autodiff-triage": {
+      "name": "vericut-autodiff-triage",
+      "tier": "T1_self_author",
+      "role": "Auto-Diff 结论的证据审计(空场不算绿)",
+      "source_repo": null,
+      "upstream_path": null,
+      "origin": "self-authored 2026-11-04 (GitHub 无该域可落位技能源)",
+      "install_path": "skills/vericut-autodiff-triage",
+      "acceptance_evidence": "4 夹具: ACCEPTED / INSUFFICIENT_EVIDENCE / STOP_AND_FIX x2",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "bytes": 2685,
+          "sha256": "9a9395184c2b879567e0155e5424e10775e7e7a9343119cbf6c6778169716379"
+        },
+        {
+          "path": "scripts/triage_autodiff.py",
+          "bytes": 7294,
+          "sha256": "f81daa4e6b6fb919bac0fcd785db035657612ec9992bef953d6c492319f1d22d"
+        },
+        {
+          "path": "scripts/__pycache__/triage_autodiff.cpython-312.pyc",
+          "bytes": 6917,
+          "sha256": "62261f6dc54ec23ff65ff0d768d5140f08dff589fe70006ae1d64b65ac4f92b5"
+        }
+      ]
+    },
+    "sscnc-touchoff-ledger": {
+      "name": "sscnc-touchoff-ledger",
+      "tier": "T1_self_author",
+      "role": "对刀台账算术闭环(机座标=偏置+相对)",
+      "source_repo": null,
+      "upstream_path": null,
+      "origin": "self-authored 2026-11-04 (GitHub 无该域可落位技能源)",
+      "install_path": "skills/sscnc-touchoff-ledger",
+      "acceptance_evidence": "5 夹具: CONSISTENT / SIGN-ERROR / DUP-TOOL / NO-SPARK / WEAR-LIMIT",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "bytes": 2695,
+          "sha256": "17e52618b40639b1a213ae439af8808968163083546a72d116ae0339d6e0c597"
+        },
+        {
+          "path": "scripts/touchoff_ledger.py",
+          "bytes": 3940,
+          "sha256": "94541afc23468e1a2bc33da246835994911a75d71b03761f40ff85bb1b1b5c65"
+        },
+        {
+          "path": "scripts/__pycache__/touchoff_ledger.cpython-312.pyc",
+          "bytes": 5976,
+          "sha256": "aae61e60500a5d08818d199b69303775049ea848ed1508c6ccf6118e0d114f77"
+        }
+      ]
+    },
+    "desktop-automation-protocol": {
+      "name": "desktop-automation-protocol",
+      "tier": "T1",
+      "role": "桌面自动化选型/焦点/安全/任务编排协议（上游方法论）",
+      "source_repo": "windows-computer-use-mcp",
+      "upstream_path": "windows-computer-use-mcp/skills/desktop-automation-protocol",
+      "upstream_commit": null,
+      "upstream_license": "MIT License",
+      "install_path": "skills/desktop-automation-protocol",
+      "extra_files": [
+        "references/SAFETY.md 来自上游 docs/SAFETY.md，为让技能里的阅读指引可解析"
+      ],
+      "files": [
+        {
+          "path": "SKILL.md",
+          "bytes": 1889,
+          "sha256": "8572165998754bed3e6f4fa547d36a39d82398741de548b2133d07a5bda32d0f"
+        },
+        {
+          "path": "references/SAFETY.md",
+          "bytes": 11733,
+          "sha256": "6c9b936e0654c9296c03abbbeb89e1dfdc73a9db8360a85afa000023c5398410"
+        }
+      ]
+    },
+    "windows-desktop-input-gate": {
+      "name": "windows-desktop-input-gate",
+      "tier": "T1_derived_local",
+      "role": "鼠标键盘接管与读屏的执行纪律（含注入红线与 HITL/限速/kill_switch）",
+      "source_repo": null,
+      "upstream_path": null,
+      "origin": "派生自建：上游 windows-computer-use 卡片结尾含 'run ruff + pytest, commit per AGENTS.md' 越权动作指令，已剥离后重写",
+      "install_path": "skills/windows-desktop-input-gate",
+      "acceptance_evidence": "scratch/skill_gap/e2e.py：62 字符含 '@; Set-Content 对抗文本逐字节落进目标应用；hotkey ctrl,a 送达；未映射组合键被拒；capture 1920x1080 PNG 274KB；仅杀自启 PID",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "bytes": 7534,
+          "sha256": "0742711c385a878c50e3b0f817c73da8acb01a7c51e106e27580701c4297761c"
+        }
+      ]
     }
-   ]
   },
-  "cad-manufacturability-review": {
-   "name": "cad-manufacturability-review",
-   "tier": "T1",
-   "role": "DFM 可制造性复审",
-   "source_repo": "AgentCADCAM",
-   "upstream_path": "AgentCADCAM/skills/cad-manufacturability-review",
-   "upstream_commit": "2fd5f918dede5802716aa7965ec21dc8149d578c",
-   "upstream_license": "MIT License",
-   "install_path": "skills/cad-manufacturability-review",
-   "files": [
+  "source_of_record": "GitHub clones under external/; see scratch/skill_gap/skill_matrix.json for verdicts",
+  "engine_fixes_2026-11-04": [
     {
-     "path": "SKILL.md",
-     "bytes": 2495,
-     "sha256": "e2c5c6fd4b4a1a017ff254bb823239202b96af1290c055d6ccb3049cf718de81"
+      "file": "virtu_omni/engine/universal_cae_engine.py",
+      "defect": "材料名不在表内静默改用 Cr12MoV(σy850)，而工具默认传 45号钢 -> FOS 虚高 2.4x",
+      "fix": "MATERIAL_ALIASES + resolve_material；解析不到返回 status=blocked / MATERIAL_UNRESOLVED，不出数",
+      "test": "tests/test_cae_gate_honesty.py::test_material_alias_changes_fos_instead_of_silently_defaulting"
+    },
+    {
+      "file": "virtu_omni/engine/universal_cae_engine.py",
+      "defect": "工具层 force_n 映射成 load_n，各构件族读 radial_load_n/bending_force_n -> 用户载荷被丢弃；torque_nm 从不参与 von Mises",
+      "fix": "_normalize_loads 键名归一 + 轴分析加入扭矩剪应力(τ=0 时与旧值退化为同式)",
+      "test": "test_tool_level_force_reaches_bearing_bracket_formula, test_torque_participates_in_shaft_mises_stress"
+    },
+    {
+      "file": "virtu_omni/engine/universal_cae_engine.py",
+      "defect": "自愈未达标仍返回 status=optimized 且判词写死 (>= 1.5)；钣金族走轴分支只改外径，公式不用外径 -> FOS 0.83→0.83 仍称已强化",
+      "fix": "未达标改判 not_healed + healed_to_target=false + 如实判词；钣金族返回 formability_advisory 并禁止按强度自愈",
+      "test": "test_sheet_family_is_formability_advisory_not_strength_selfheal, test_sheet_family_never_reports_optimized_without_reaching_target"
     }
-   ]
+  ],
+  "desktop_backend_2026-11-04": {
+    "project": "external/windows-computer-use-mcp (v0.8.0, 已 editable 安装进项目内 .venv)",
+    "why_venv": "共享 Python312 不能装 fastmcp[server]：它要 mcp<2，而本机 build123d-mcp 要 mcp>=2（实测降级 mcp 2.3.0->1.30.0 会砸掉后者，已回滚）",
+    "measured_tools": [
+      "automation_assert",
+      "automation_dialog",
+      "automation_elements",
+      "automation_keyboard",
+      "automation_macro",
+      "automation_mission",
+      "automation_mouse",
+      "automation_safety",
+      "automation_shortcut",
+      "automation_smart",
+      "automation_system",
+      "automation_task",
+      "automation_visual",
+      "automation_watch",
+      "automation_windows",
+      "analyze_winapp",
+      "approve_automation",
+      "cua_computer_use_screenshot",
+      "get_desktop_state",
+      "get_window_state"
+    ],
+    "mutating_tools": 14,
+    "opt_in_absent_from_list": [
+      "keylogger",
+      "face_recognition"
+    ],
+    "registered_in": [
+      "mcp_cadcam_config.json",
+      "AGENT_TOOLCHAIN_INTERFACE.md"
+    ],
+    "in_repo_channel": "cadcam_desktop_gui 新增 type_text/hotkey/inspect_window/button/double，且键盘路径不再经 shell",
+    "fixed_injection": "type_text 旧实现经 powershell here-string 拼接，实测 ' 行首的 @ 可逃逸并执行注入语句(rc=0)；改为 CF_UNICODETEXT+keybd_event"
   },
-  "cadcam-intake-and-scope": {
-   "name": "cadcam-intake-and-scope",
-   "tier": "T1",
-   "role": "需求入库/缺失上下文报告",
-   "source_repo": "AgentCADCAM",
-   "upstream_path": "AgentCADCAM/skills/cadcam-intake-and-scope",
-   "upstream_commit": "2fd5f918dede5802716aa7965ec21dc8149d578c",
-   "upstream_license": "MIT License",
-   "install_path": "skills/cadcam-intake-and-scope",
-   "files": [
-    {
-     "path": "SKILL.md",
-     "bytes": 2246,
-     "sha256": "7a115f70f4c822955ff98d0f499cfed354c50c38dbc6f521a7bb069874f495fd"
+  "mcp_registration_2026-11-04": {
+    "config_file": ".qoder/settings.local.json",
+    "scope": "local",
+    "scope_why": "能控制鼠标键盘的服务器不走 project 作用域：project 会把注册提交进 git、协作者一拉取就自动拉起一个输入注入通道。要提升成 project 只需把该 JSON 移进 .qoder/settings.json。",
+    "not_committed_to_git": true,
+    "gitignore_boundary": ".qoder/.gitignore -> settings.local.json",
+    "servers": {
+      "windows-computer-use": {
+        "status": "ok",
+        "tool_count": 20,
+        "tools": [
+          "analyze_winapp",
+          "approve_automation",
+          "automation_assert",
+          "automation_dialog",
+          "automation_elements",
+          "automation_keyboard",
+          "automation_macro",
+          "automation_mission",
+          "automation_mouse",
+          "automation_safety",
+          "automation_shortcut",
+          "automation_smart",
+          "automation_system",
+          "automation_task",
+          "automation_visual",
+          "automation_watch",
+          "automation_windows",
+          "cua_computer_use_screenshot",
+          "get_desktop_state",
+          "get_window_state"
+        ]
+      },
+      "industrial-cadcam": {
+        "status": "ok",
+        "tool_count": 14,
+        "tools": [
+          "cadcam_autocad_draw",
+          "cadcam_cae_stress_analysis",
+          "cadcam_cimco_validate",
+          "cadcam_desktop_gui",
+          "cadcam_extreme_chain",
+          "cadcam_nx_journal",
+          "cadcam_preflight",
+          "cadcam_run_full_chain",
+          "cadcam_sheetmetal_nest",
+          "cadcam_solidworks_model",
+          "cadcam_sscnc_control",
+          "cadcam_universal_geometry",
+          "cadcam_vericut_simulate",
+          "cadcam_visual_inspect"
+        ]
+      }
+    },
+    "handshake_verified": true,
+    "verification_script": "scratch/skill_gap/probe_registered_mcps.py",
+    "verification_mode": "按注册文件里的字面 command/args/cwd/env 逐字段起进程，只做 initialize + tools/list + 只读 automation_safety，不触发任何写操作工具",
+    "safety_snapshot_as_registered": {
+      "actions_last_60s": 0,
+      "max_actions_per_minute": 40,
+      "total_mutations_session": 0,
+      "kill_switch": false,
+      "dry_run": false
+    },
+    "safety_env_as_readback": {
+      "windows_computer_use_mcp_MAX_ACTIONS_PER_MINUTE": "40",
+      "windows_computer_use_mcp_ENABLE_FACE": "0",
+      "windows_computer_use_mcp_ENABLE_KEYLOGGER": "0"
+    },
+    "vendored_upstream": {
+      "path": "external/windows-computer-use-mcp",
+      "origin": "https://github.com/sandraschi/windows-computer-use-mcp.git",
+      "commit": "b71afd0cd164508e36b1bbce482b26630377f54a",
+      "branch": "master",
+      "version": "0.8.0",
+      "license": "MIT (Copyright (c) 2025 Sandra Schilling)",
+      "worktree_clean": true,
+      "not_added_to_parent_git": "该目录自带 .git，纳入父仓会变成 gitlink/子模块，故只在台账记 provenance"
     }
-   ]
   },
-  "cnc-setup-planner": {
-   "name": "cnc-setup-planner",
-   "tier": "T1",
-   "role": "三轴 CNC 装夹与 WCS 计划",
-   "source_repo": "AgentCADCAM",
-   "upstream_path": "AgentCADCAM/skills/cnc-setup-planner",
-   "upstream_commit": "2fd5f918dede5802716aa7965ec21dc8149d578c",
-   "upstream_license": "MIT License",
-   "install_path": "skills/cnc-setup-planner",
-   "files": [
-    {
-     "path": "SKILL.md",
-     "bytes": 1551,
-     "sha256": "b308666f723e4ab9412305fc9f64c7639c705316054dff66b77976f29041a497"
-    }
-   ]
-  },
-  "design-file-provenance-review": {
-   "name": "design-file-provenance-review",
-   "tier": "T1",
-   "role": "文件出处与改版一致性",
-   "source_repo": "AgentCADCAM",
-   "upstream_path": "AgentCADCAM/skills/design-file-provenance-review",
-   "upstream_commit": "2fd5f918dede5802716aa7965ec21dc8149d578c",
-   "upstream_license": "MIT License",
-   "install_path": "skills/design-file-provenance-review",
-   "files": [
-    {
-     "path": "SKILL.md",
-     "bytes": 2229,
-     "sha256": "a87292b66bbb9d1f5d2c08ae062bce577ccb3aefe8dd54a8bba5829097740361"
-    }
-   ]
-  },
-  "drawing-pmi-handoff-review": {
-   "name": "drawing-pmi-handoff-review",
-   "tier": "T1",
-   "role": "图纸-模型 PMI/GD&T 交接审查",
-   "source_repo": "AgentCADCAM",
-   "upstream_path": "AgentCADCAM/skills/drawing-pmi-handoff-review",
-   "upstream_commit": "2fd5f918dede5802716aa7965ec21dc8149d578c",
-   "upstream_license": "MIT License",
-   "install_path": "skills/drawing-pmi-handoff-review",
-   "files": [
-    {
-     "path": "SKILL.md",
-     "bytes": 2023,
-     "sha256": "810664e13668876aaa99c8d61e99e9f25b40ae032ccab3f65bbdc41bbd2da9f6"
-    }
-   ]
-  },
-  "file-format-interoperability-plan": {
-   "name": "file-format-interoperability-plan",
-   "tier": "T1",
-   "role": "STEP/DXF/DWG 交换语义损失",
-   "source_repo": "AgentCADCAM",
-   "upstream_path": "AgentCADCAM/skills/file-format-interoperability-plan",
-   "upstream_commit": "2fd5f918dede5802716aa7965ec21dc8149d578c",
-   "upstream_license": "MIT License",
-   "install_path": "skills/file-format-interoperability-plan",
-   "files": [
-    {
-     "path": "SKILL.md",
-     "bytes": 2051,
-     "sha256": "b3aecc8d399cf5f5db5a37367245e38f5bd44a8b5f8c8c436e0a9af6ddea87a8"
-    }
-   ]
-  },
-  "laser-job-preflight": {
-   "name": "laser-job-preflight",
-   "tier": "T1",
-   "role": "激光切割 DXF 预检",
-   "source_repo": "AgentCADCAM",
-   "upstream_path": "AgentCADCAM/skills/laser-job-preflight",
-   "upstream_commit": "2fd5f918dede5802716aa7965ec21dc8149d578c",
-   "upstream_license": "MIT License",
-   "install_path": "skills/laser-job-preflight",
-   "files": [
-    {
-     "path": "SKILL.md",
-     "bytes": 1699,
-     "sha256": "5489aebc977d03e30213b1b034c84c1e92f0997b4697ac2c94f59a847c914bf0"
-    }
-   ]
-  },
-  "machine-capability-match": {
-   "name": "machine-capability-match",
-   "tier": "T1",
-   "role": "机床能力匹配",
-   "source_repo": "AgentCADCAM",
-   "upstream_path": "AgentCADCAM/skills/machine-capability-match",
-   "upstream_commit": "2fd5f918dede5802716aa7965ec21dc8149d578c",
-   "upstream_license": "MIT License",
-   "install_path": "skills/machine-capability-match",
-   "files": [
-    {
-     "path": "SKILL.md",
-     "bytes": 1624,
-     "sha256": "feb1dd75a6f0aedae01bd2a1631d073360d5c116d3b0a6bb1be230d35a0fe990"
-    }
-   ]
-  },
-  "nc-static-safety-review": {
-   "name": "nc-static-safety-review",
-   "tier": "T1",
-   "role": "G 代码静态安全审查",
-   "source_repo": "AgentCADCAM",
-   "upstream_path": "AgentCADCAM/skills/nc-static-safety-review",
-   "upstream_commit": "2fd5f918dede5802716aa7965ec21dc8149d578c",
-   "upstream_license": "MIT License",
-   "install_path": "skills/nc-static-safety-review",
-   "files": [
-    {
-     "path": "SKILL.md",
-     "bytes": 1714,
-     "sha256": "5d3d64dec90807f22b585f890e3b77764480955e74a7f442a0f025f20dc6795c"
-    }
-   ]
-  },
-  "postprocessor-readiness-review": {
-   "name": "postprocessor-readiness-review",
-   "tier": "T1",
-   "role": "后处理与控制器身份核验",
-   "source_repo": "AgentCADCAM",
-   "upstream_path": "AgentCADCAM/skills/postprocessor-readiness-review",
-   "upstream_commit": "2fd5f918dede5802716aa7965ec21dc8149d578c",
-   "upstream_license": "MIT License",
-   "install_path": "skills/postprocessor-readiness-review",
-   "files": [
-    {
-     "path": "SKILL.md",
-     "bytes": 1641,
-     "sha256": "18615c6d6dd7d15018bc74c944bf01dcda0a9f9db21ed081af86220e735a2b0f"
-    }
-   ]
-  },
-  "simulation-readiness-review": {
-   "name": "simulation-readiness-review",
-   "tier": "T1",
-   "role": "仿真就绪判定",
-   "source_repo": "AgentCADCAM",
-   "upstream_path": "AgentCADCAM/skills/simulation-readiness-review",
-   "upstream_commit": "2fd5f918dede5802716aa7965ec21dc8149d578c",
-   "upstream_license": "MIT License",
-   "install_path": "skills/simulation-readiness-review",
-   "files": [
-    {
-     "path": "SKILL.md",
-     "bytes": 1670,
-     "sha256": "b6afcd9cba0361b0c8e857039980fd40012816c20c378bf66c70301eb3e860d9"
-    }
-   ]
-  },
-  "tooling-plan-review": {
-   "name": "tooling-plan-review",
-   "tier": "T1",
-   "role": "刀具计划与刀库可追溯",
-   "source_repo": "AgentCADCAM",
-   "upstream_path": "AgentCADCAM/skills/tooling-plan-review",
-   "upstream_commit": "2fd5f918dede5802716aa7965ec21dc8149d578c",
-   "upstream_license": "MIT License",
-   "install_path": "skills/tooling-plan-review",
-   "files": [
-    {
-     "path": "SKILL.md",
-     "bytes": 1556,
-     "sha256": "cf6602dbedc501a3e32225807cc9c3fda1d1605a65e79e702345bb91bbbb7b01"
-    }
-   ]
-  },
-  "toolpath-strategy-planner": {
-   "name": "toolpath-strategy-planner",
-   "tier": "T1",
-   "role": "粗/精加工刀路策略",
-   "source_repo": "AgentCADCAM",
-   "upstream_path": "AgentCADCAM/skills/toolpath-strategy-planner",
-   "upstream_commit": "2fd5f918dede5802716aa7965ec21dc8149d578c",
-   "upstream_license": "MIT License",
-   "install_path": "skills/toolpath-strategy-planner",
-   "files": [
-    {
-     "path": "SKILL.md",
-     "bytes": 1621,
-     "sha256": "1035c4ad6b197108fc198d7c8dceb8e64e4a3ee17ed909aba660f85472fcb2ec"
-    }
-   ]
-  },
-  "mechanical-drafting-gbt": {
-   "name": "mechanical-drafting-gbt",
-   "tier": "T1",
-   "role": "GB/T 机械制图全流程",
-   "source_repo": "AutoCAD-skills",
-   "upstream_path": "AutoCAD-skills/skills/mechanical-drafting-gbt",
-   "upstream_commit": "da9204d1e25d12dbb92a667bcf3e95c29a4a132c",
-   "upstream_license": "MIT License",
-   "install_path": "skills/mechanical-drafting-gbt",
-   "files": [
-    {
-     "path": "SKILL.md",
-     "bytes": 23498,
-     "sha256": "32281b09e2501f2b44bada573443c572689053db12a5d4c20a2952efa73e5db3"
+  "desktop_gate_2026-11-05": {
+    "question": "被服务的模型能否操控本机鼠标键盘",
+    "answer": "能；且修复前仓内通道无任何审批闸（第三方服务器的 approve_automation 在仓内运行时代码引用数为 0）",
+    "enforcement_point": "bridges/tool_calling_specs.py::execute_tool_call 最前，早于 get_orchestrator()",
+    "why_one_point": "REST 桥 / MCP 桥 / CLI / cadcam_cli gui / adaptive_router 七种接入方式共用这一漏斗",
+    "module": "bridges/desktop_gate.py",
+    "defects_fixed": [
+      "漏斗无闸且拒绝前已构造六个 bridge（含 COM 挂载尝试）",
+      "cadcam_cli.cmd_gui 绕过漏斗且 click 用 args.x or 0 盲点 (0,0)",
+      "adaptive_router._execute_gui 绕过漏斗且用另一套默认值 (500,500)",
+      "GUI_ACTIONS 缺 type_text/hotkey/inspect_window，已暴露的工具面路由不到",
+      "CLI 容灾分支拿 dismiss_dialogs 撞 argparse 的 dismiss-dialogs，该动作在 CLI 下恒 rc=2",
+      "type_text/hotkey 假成功：按键已发即 status=typed，实测有回读 0 字符的场合"
+    ],
+    "env_contract": {
+      "VIRTU_DESKTOP_INPUT": "必须=1 才允许写入，默认拒绝",
+      "VIRTU_DESKTOP_KILL": "=1 无条件拒，优先于 opt-in",
+      "VIRTU_DESKTOP_MAX_PER_MIN": "默认 20",
+      "VIRTU_DESKTOP_APPROVAL_FILE": "人工批准凭据新鲜度",
+      "VIRTU_DESKTOP_APPROVAL_TTL_S": "默认 600",
+      "VIRTU_DESKTOP_ALLOWED_PIDS": "操作者点名 PID，只放宽目标绑定"
     },
-    {
-     "path": "SKILL.zh-CN.md",
-     "bytes": 15686,
-     "sha256": "0be4ecb70cc3fafb8e9827636b03a3d360e93a4ab458f476d0032def41d99cf0"
+    "audit_log": "runs/desktop_gate/decisions.jsonl（不记原文，记长度+sha256 前 8 位）",
+    "verification": {
+      "unit": "tests/test_desktop_gate.py 14 passed（spy 断言 mouse_event/keybd_event/SetCursorPos 零调用）",
+      "adjacent": "pytest 33 passed 含 test_agent_toolchain_full / test_toolchain_access_modes / test_cae_gate_honesty",
+      "live_e2e": "scratch/skill_gap/e2e_gate.py 6/6：5 拦截场景目标框为空，1 批准场景 72 字符逐字节命中",
+      "repeat_paste": "scratch/skill_gap/probe_paste.py 4 次：3 次逐字节命中，1 次在写入前被拦"
     },
-    {
-     "path": "agents/openai.yaml",
-     "bytes": 938,
-     "sha256": "d3ff1a59427ba8b842b4179c715a2660c81771522b93708808641b6fbf9f6a84"
-    },
-    {
-     "path": "references/autocad-mcp-workflow.md",
-     "bytes": 21367,
-     "sha256": "21ea750847bc29a1b32fbe0374316aa65c76c755a3ac5f2adfb450dcee29faae"
-    },
-    {
-     "path": "references/cad-3d-modeling.md",
-     "bytes": 9535,
-     "sha256": "9e9e7a7a3d839410c8797e32677b411510701c9e949026ecb2695b7f83ec70f1"
-    },
-    {
-     "path": "references/cad-workflows.md",
-     "bytes": 13578,
-     "sha256": "89b1ce9195a55a7d9333d5edcb08e568a1305a32feb7667c634ac01e6cb1a20a"
-    },
-    {
-     "path": "references/complex-assembly-drafting.md",
-     "bytes": 12088,
-     "sha256": "a58047d8c737564582314a5b0e21364ad847f1c1ca116aa5c3adbaba43a03e19"
-    },
-    {
-     "path": "references/consumer-product-concept.md",
-     "bytes": 14179,
-     "sha256": "00f3f906ab23c3ddac636ca0e0565af915c7acf9975b08373a45ce722662249c"
-    },
-    {
-     "path": "references/drc-review.md",
-     "bytes": 20292,
-     "sha256": "74fb62174df21372d5c9ef91fa24a53e462191b8defe6fb7db7689c928a47ec3"
-    },
-    {
-     "path": "references/engineering-analysis.md",
-     "bytes": 7672,
-     "sha256": "4b6303e724aee30487ddadb3e1e629095a6e1080d045be88c04a1ab8aa9eecfb"
-    },
-    {
-     "path": "references/gbt-drafting.md",
-     "bytes": 15858,
-     "sha256": "112760800c7f331ccb0e2e80d47145f1406bfe94ff4475203f4777cdec967b54"
-    },
-    {
-     "path": "references/gps-inspection.md",
-     "bytes": 7544,
-     "sha256": "ba22f7b2305d24b2670aa51b3348a47adacb94c8dac29ca3290389649ea727a8"
-    },
-    {
-     "path": "references/product-definition-release.md",
-     "bytes": 9561,
-     "sha256": "30a048022a6ee6c9ad34dafb5abfbf5a6380afa81201135782d7ff727b1e96f2"
-    },
-    {
-     "path": "references/zh-CN/autocad-mcp-workflow.md",
-     "bytes": 18101,
-     "sha256": "97c6e6fc097047c56d26660bd5b646b12c0d00b86799a76796be2ee4c70db9d8"
-    },
-    {
-     "path": "references/zh-CN/complex-assembly-drafting.md",
-     "bytes": 10044,
-     "sha256": "ee5084064e6dd8a6c59f5bd8918b07adcd37ffc4c6392e50e8076a79e4371a52"
-    },
-    {
-     "path": "references/zh-CN/consumer-product-concept.md",
-     "bytes": 12041,
-     "sha256": "d87c756db10f0db4630cfefff28d989b27b1269c88995be11c42f1b9fead0350"
-    },
-    {
-     "path": "references/zh-CN/drc-review.md",
-     "bytes": 17160,
-     "sha256": "b30a5ae9bbd70a341d1d6770af5aa4cb2a8283c8d36a6a5300a8921a5476a808"
-    },
-    {
-     "path": "references/zh-CN/gbt-drafting.md",
-     "bytes": 12691,
-     "sha256": "5700464c89dff3dc255aa1ccf57894245f08a12c1220742d9c050f17257bd990"
-    },
-    {
-     "path": "scripts/build_release_manifest.py",
-     "bytes": 5358,
-     "sha256": "3bd7fc1057829609c61e641b21864891084d3903ebd0924980fb8568d098366e"
-    },
-    {
-     "path": "scripts/validate_translation_sync.py",
-     "bytes": 4490,
-     "sha256": "2bac9a458ef793676a4ae405dd3b5cf06cac8ad363e4ee38cb4a82729ea26b3e"
-    }
-   ]
-  },
-  "ctq-extraction": {
-   "name": "ctq-extraction",
-   "tier": "T1",
-   "role": "图纸 CTQ/GD&T 结构化提取",
-   "source_repo": "CTQ-extraction",
-   "upstream_path": "CTQ-extraction/skills/ctq-extraction",
-   "upstream_commit": "bae1981f4d29ea12f221b5a2de59f5bfd85004d1",
-   "upstream_license": null,
-   "install_path": "skills/ctq-extraction",
-   "files": [
-    {
-     "path": "SKILL.md",
-     "bytes": 3950,
-     "sha256": "aef636f1f9ff431888fe2bfc65d63e703102885a88975bbde296bddc5497dc41"
-    },
-    {
-     "path": "examples/sample_drawing_output.json",
-     "bytes": 943,
-     "sha256": "4fc0138dff0533872f970aa2c8ee84bb8cbccfa2eccb85a39b9f157e2fb3fe83"
-    },
-    {
-     "path": "references/gdt_symbols.md",
-     "bytes": 1362,
-     "sha256": "7e58eab51cab104c32f17ece04e99e2c5630bae4926d92b68d6e57a40d653e73"
-    }
-   ]
-  },
-  "fanuc-macro-b-post-gate": {
-   "name": "fanuc-macro-b-post-gate",
-   "tier": "T1_self_author",
-   "role": "NC 上机前静态安全闸(单位/极坐标/模态/包络/未知指令)",
-   "source_repo": null,
-   "upstream_path": null,
-   "origin": "self-authored 2026-11-04 (GitHub 无该域可落位技能源)",
-   "install_path": "skills/fanuc-macro-b-post-gate",
-   "acceptance_evidence": "Flange_Machining_O1001.nc -> 8 blockers, 5 codes; 修正副本 -> 0 blockers (exit 0)",
-   "files": [
-    {
-     "path": "SKILL.md",
-     "bytes": 3818,
-     "sha256": "dfebfe0a7fea16e0260d2e668d803ab23fc3192930c0b310d1e9c811aeb3b6eb"
-    },
-    {
-     "path": "scripts/validate_nc.py",
-     "bytes": 10772,
-     "sha256": "52373bdbc8f51be523683b26ebf769f46e39736e2956f5859c9fa01dfe213b34"
-    },
-    {
-     "path": "scripts/__pycache__/validate_nc.cpython-312.pyc",
-     "bytes": 17212,
-     "sha256": "109c1cc932f7352578dbf16093a3d100bcb1eee578c9764ea6a3cdf2fda141dc"
-    }
-   ]
-  },
-  "cae-fos-gate": {
-   "name": "cae-fos-gate",
-   "tier": "T1_self_author",
-   "role": "CAE FOS 独立闭式解复核 + 与引擎对账",
-   "source_repo": null,
-   "upstream_path": null,
-   "origin": "self-authored 2026-11-04 (GitHub 无该域可落位技能源)",
-   "install_path": "skills/cae-fos-gate",
-   "acceptance_evidence": "法兰/轴/支座 rel_diff<=0.0006 且屈服一致; 钣金族改判 formability_advisory",
-   "files": [
-    {
-     "path": "SKILL.md",
-     "bytes": 3448,
-     "sha256": "7c58ddcff0b50a897460ac0e6cb012481f43929519f56373962a50d2843f4e40"
-    },
-    {
-     "path": "scripts/fos_crosscheck.py",
-     "bytes": 5203,
-     "sha256": "6b74e7f63be511eef216030a9e7ae837e19251412a0b7f38f621a59ebff656a8"
-    },
-    {
-     "path": "scripts/__pycache__/fos_crosscheck.cpython-312.pyc",
-     "bytes": 8620,
-     "sha256": "bf4ed9a4789eec22b28a0b1ec1da9c3b38a4f918eaa8809708206d234eab9c35"
-    }
-   ]
-  },
-  "sheetmetal-nest-verification": {
-   "name": "sheetmetal-nest-verification",
-   "tier": "T1_self_author",
-   "role": "套料产物几何复核(重叠/越界/割缝/利用率)",
-   "source_repo": null,
-   "upstream_path": null,
-   "origin": "self-authored 2026-11-04 (GitHub 无该域可落位技能源)",
-   "install_path": "skills/sheetmetal-nest-verification",
-   "acceptance_evidence": "引擎 12 件排样 NEST_OK(42.075% vs 抬头 42.08%); 突变体 NEST-OVERLAP+NEST-OUT-OF-SHEET",
-   "files": [
-    {
-     "path": "SKILL.md",
-     "bytes": 2537,
-     "sha256": "1c227f6dfff8afa8d7af13058c64a1f39c3f3f283d0909724a386df12739208b"
-    },
-    {
-     "path": "scripts/verify_nest.py",
-     "bytes": 5685,
-     "sha256": "f634a701c575f10e19f2d4461912be27e4111da24d7073205a7cbc4a2770de49"
-    },
-    {
-     "path": "scripts/__pycache__/verify_nest.cpython-312.pyc",
-     "bytes": 9399,
-     "sha256": "cf72cf7a225418a7e38049ec7a18dcf3fa6e623467a6a0c714954c8ffe8c543e"
-    }
-   ]
-  },
-  "vericut-autodiff-triage": {
-   "name": "vericut-autodiff-triage",
-   "tier": "T1_self_author",
-   "role": "Auto-Diff 结论的证据审计(空场不算绿)",
-   "source_repo": null,
-   "upstream_path": null,
-   "origin": "self-authored 2026-11-04 (GitHub 无该域可落位技能源)",
-   "install_path": "skills/vericut-autodiff-triage",
-   "acceptance_evidence": "4 夹具: ACCEPTED / INSUFFICIENT_EVIDENCE / STOP_AND_FIX x2",
-   "files": [
-    {
-     "path": "SKILL.md",
-     "bytes": 2685,
-     "sha256": "9a9395184c2b879567e0155e5424e10775e7e7a9343119cbf6c6778169716379"
-    },
-    {
-     "path": "scripts/triage_autodiff.py",
-     "bytes": 4575,
-     "sha256": "1fbf10d1999143ba1be660146aa41ed045a54e80ffad26c2f67f0b35c724d5e0"
-    },
-    {
-     "path": "scripts/__pycache__/triage_autodiff.cpython-312.pyc",
-     "bytes": 6646,
-     "sha256": "44cc37789b86c3dada8305b0eec6092c6af730e589a366704d5e4e19eb04ae4d"
-    }
-   ]
-  },
-  "sscnc-touchoff-ledger": {
-   "name": "sscnc-touchoff-ledger",
-   "tier": "T1_self_author",
-   "role": "对刀台账算术闭环(机座标=偏置+相对)",
-   "source_repo": null,
-   "upstream_path": null,
-   "origin": "self-authored 2026-11-04 (GitHub 无该域可落位技能源)",
-   "install_path": "skills/sscnc-touchoff-ledger",
-   "acceptance_evidence": "5 夹具: CONSISTENT / SIGN-ERROR / DUP-TOOL / NO-SPARK / WEAR-LIMIT",
-   "files": [
-    {
-     "path": "SKILL.md",
-     "bytes": 2695,
-     "sha256": "17e52618b40639b1a213ae439af8808968163083546a72d116ae0339d6e0c597"
-    },
-    {
-     "path": "scripts/touchoff_ledger.py",
-     "bytes": 3775,
-     "sha256": "e385059a1354086a892683b063166d481ab708ad60ae64760372d56216d48490"
-    },
-    {
-     "path": "scripts/__pycache__/touchoff_ledger.cpython-312.pyc",
-     "bytes": 5976,
-     "sha256": "aae61e60500a5d08818d199b69303775049ea848ed1508c6ccf6118e0d114f77"
-    }
-   ]
-  },
-  "desktop-automation-protocol": {
-   "name": "desktop-automation-protocol",
-   "tier": "T1",
-   "role": "桌面自动化选型/焦点/安全/任务编排协议（上游方法论）",
-   "source_repo": "windows-computer-use-mcp",
-   "upstream_path": "windows-computer-use-mcp/skills/desktop-automation-protocol",
-   "upstream_commit": null,
-   "upstream_license": "MIT License",
-   "install_path": "skills/desktop-automation-protocol",
-   "extra_files": [
-    "references/SAFETY.md 来自上游 docs/SAFETY.md，为让技能里的阅读指引可解析"
-   ],
-   "files": [
-    {
-     "path": "SKILL.md",
-     "bytes": 1889,
-     "sha256": "8572165998754bed3e6f4fa547d36a39d82398741de548b2133d07a5bda32d0f"
-    },
-    {
-     "path": "references/SAFETY.md",
-     "bytes": 11733,
-     "sha256": "6c9b936e0654c9296c03abbbeb89e1dfdc73a9db8360a85afa000023c5398410"
-    }
-   ]
-  },
-  "windows-desktop-input-gate": {
-   "name": "windows-desktop-input-gate",
-   "tier": "T1_derived_local",
-   "role": "鼠标键盘接管与读屏的执行纪律（含注入红线与 HITL/限速/kill_switch）",
-   "source_repo": null,
-   "upstream_path": null,
-   "origin": "派生自建：上游 windows-computer-use 卡片结尾含 'run ruff + pytest, commit per AGENTS.md' 越权动作指令，已剥离后重写",
-   "install_path": "skills/windows-desktop-input-gate",
-   "acceptance_evidence": "scratch/skill_gap/e2e.py：62 字符含 '@; Set-Content 对抗文本逐字节落进目标应用；hotkey ctrl,a 送达；未映射组合键被拒；capture 1920x1080 PNG 274KB；仅杀自启 PID",
-   "files": [
-    {
-     "path": "SKILL.md",
-     "bytes": 4963,
-     "sha256": "c02f2c4f93e9c3ab5b0d35021564d145fc662a2a62f0d44ae1903cd085130820"
-    }
-   ]
+    "left_for_decision": "scripts/generate_omni_autonomous_agent_corpus.py:229,242 把未回读确认的 status=typed 硬编码进训练轨迹"
   }
- },
- "source_of_record": "GitHub clones under external/; see scratch/skill_gap/skill_matrix.json for verdicts",
- "engine_fixes_2026-11-04": [
-  {
-   "file": "virtu_omni/engine/universal_cae_engine.py",
-   "defect": "材料名不在表内静默改用 Cr12MoV(σy850)，而工具默认传 45号钢 -> FOS 虚高 2.4x",
-   "fix": "MATERIAL_ALIASES + resolve_material；解析不到返回 status=blocked / MATERIAL_UNRESOLVED，不出数",
-   "test": "tests/test_cae_gate_honesty.py::test_material_alias_changes_fos_instead_of_silently_defaulting"
-  },
-  {
-   "file": "virtu_omni/engine/universal_cae_engine.py",
-   "defect": "工具层 force_n 映射成 load_n，各构件族读 radial_load_n/bending_force_n -> 用户载荷被丢弃；torque_nm 从不参与 von Mises",
-   "fix": "_normalize_loads 键名归一 + 轴分析加入扭矩剪应力(τ=0 时与旧值退化为同式)",
-   "test": "test_tool_level_force_reaches_bearing_bracket_formula, test_torque_participates_in_shaft_mises_stress"
-  },
-  {
-   "file": "virtu_omni/engine/universal_cae_engine.py",
-   "defect": "自愈未达标仍返回 status=optimized 且判词写死 (>= 1.5)；钣金族走轴分支只改外径，公式不用外径 -> FOS 0.83→0.83 仍称已强化",
-   "fix": "未达标改判 not_healed + healed_to_target=false + 如实判词；钣金族返回 formability_advisory 并禁止按强度自愈",
-   "test": "test_sheet_family_is_formability_advisory_not_strength_selfheal, test_sheet_family_never_reports_optimized_without_reaching_target"
-  }
- ],
- "desktop_backend_2026-11-04": {
-  "project": "external/windows-computer-use-mcp (v0.8.0, 已 editable 安装进项目内 .venv)",
-  "why_venv": "共享 Python312 不能装 fastmcp[server]：它要 mcp<2，而本机 build123d-mcp 要 mcp>=2（实测降级 mcp 2.3.0->1.30.0 会砸掉后者，已回滚）",
-  "measured_tools": [
-   "automation_assert",
-   "automation_dialog",
-   "automation_elements",
-   "automation_keyboard",
-   "automation_macro",
-   "automation_mission",
-   "automation_mouse",
-   "automation_safety",
-   "automation_shortcut",
-   "automation_smart",
-   "automation_system",
-   "automation_task",
-   "automation_visual",
-   "automation_watch",
-   "automation_windows",
-   "analyze_winapp",
-   "approve_automation",
-   "cua_computer_use_screenshot",
-   "get_desktop_state",
-   "get_window_state"
-  ],
-  "mutating_tools": 14,
-  "opt_in_absent_from_list": [
-   "keylogger",
-   "face_recognition"
-  ],
-  "registered_in": [
-   "mcp_cadcam_config.json",
-   "AGENT_TOOLCHAIN_INTERFACE.md"
-  ],
-  "in_repo_channel": "cadcam_desktop_gui 新增 type_text/hotkey/inspect_window/button/double，且键盘路径不再经 shell",
-  "fixed_injection": "type_text 旧实现经 powershell here-string 拼接，实测 ' 行首的 @ 可逃逸并执行注入语句(rc=0)；改为 CF_UNICODETEXT+keybd_event"
- },
- "mcp_registration_2026-11-04": {
-  "config_file": ".qoder/settings.local.json",
-  "scope": "local",
-  "scope_why": "能控制鼠标键盘的服务器不走 project 作用域：project 会把注册提交进 git、协作者一拉取就自动拉起一个输入注入通道。要提升成 project 只需把该 JSON 移进 .qoder/settings.json。",
-  "not_committed_to_git": true,
-  "gitignore_boundary": ".qoder/.gitignore -> settings.local.json",
-  "servers": {
-   "windows-computer-use": {
-    "status": "ok",
-    "tool_count": 20,
-    "tools": [
-     "analyze_winapp",
-     "approve_automation",
-     "automation_assert",
-     "automation_dialog",
-     "automation_elements",
-     "automation_keyboard",
-     "automation_macro",
-     "automation_mission",
-     "automation_mouse",
-     "automation_safety",
-     "automation_shortcut",
-     "automation_smart",
-     "automation_system",
-     "automation_task",
-     "automation_visual",
-     "automation_watch",
-     "automation_windows",
-     "cua_computer_use_screenshot",
-     "get_desktop_state",
-     "get_window_state"
-    ]
-   },
-   "industrial-cadcam": {
-    "status": "ok",
-    "tool_count": 14,
-    "tools": [
-     "cadcam_autocad_draw",
-     "cadcam_cae_stress_analysis",
-     "cadcam_cimco_validate",
-     "cadcam_desktop_gui",
-     "cadcam_extreme_chain",
-     "cadcam_nx_journal",
-     "cadcam_preflight",
-     "cadcam_run_full_chain",
-     "cadcam_sheetmetal_nest",
-     "cadcam_solidworks_model",
-     "cadcam_sscnc_control",
-     "cadcam_universal_geometry",
-     "cadcam_vericut_simulate",
-     "cadcam_visual_inspect"
-    ]
-   }
-  },
-  "handshake_verified": true,
-  "verification_script": "scratch/skill_gap/probe_registered_mcps.py",
-  "verification_mode": "按注册文件里的字面 command/args/cwd/env 逐字段起进程，只做 initialize + tools/list + 只读 automation_safety，不触发任何写操作工具",
-  "safety_snapshot_as_registered": {
-   "actions_last_60s": 0,
-   "max_actions_per_minute": 40,
-   "total_mutations_session": 0,
-   "kill_switch": false,
-   "dry_run": false
-  },
-  "safety_env_as_readback": {
-   "windows_computer_use_mcp_MAX_ACTIONS_PER_MINUTE": "40",
-   "windows_computer_use_mcp_ENABLE_FACE": "0",
-   "windows_computer_use_mcp_ENABLE_KEYLOGGER": "0"
-  },
-  "vendored_upstream": {
-   "path": "external/windows-computer-use-mcp",
-   "origin": "https://github.com/sandraschi/windows-computer-use-mcp.git",
-   "commit": "b71afd0cd164508e36b1bbce482b26630377f54a",
-   "branch": "master",
-   "version": "0.8.0",
-   "license": "MIT (Copyright (c) 2025 Sandra Schilling)",
-   "worktree_clean": true,
-   "not_added_to_parent_git": "该目录自带 .git，纳入父仓会变成 gitlink/子模块，故只在台账记 provenance"
-  }
- },
- "desktop_gate_2026-11-05": {
-  "question": "被服务的模型能否操控本机鼠标键盘",
-  "answer": "能；且修复前仓内通道无任何审批闸（第三方服务器的 approve_automation 在仓内运行时代码引用数为 0）",
-  "enforcement_point": "bridges/tool_calling_specs.py::execute_tool_call 最前，早于 get_orchestrator()",
-  "why_one_point": "REST 桥 / MCP 桥 / CLI / cadcam_cli gui / adaptive_router 七种接入方式共用这一漏斗",
-  "module": "bridges/desktop_gate.py",
-  "defects_fixed": [
-   "漏斗无闸且拒绝前已构造六个 bridge（含 COM 挂载尝试）",
-   "cadcam_cli.cmd_gui 绕过漏斗且 click 用 args.x or 0 盲点 (0,0)",
-   "adaptive_router._execute_gui 绕过漏斗且用另一套默认值 (500,500)",
-   "GUI_ACTIONS 缺 type_text/hotkey/inspect_window，已暴露的工具面路由不到",
-   "CLI 容灾分支拿 dismiss_dialogs 撞 argparse 的 dismiss-dialogs，该动作在 CLI 下恒 rc=2",
-   "type_text/hotkey 假成功：按键已发即 status=typed，实测有回读 0 字符的场合"
-  ],
-  "env_contract": {
-   "VIRTU_DESKTOP_INPUT": "必须=1 才允许写入，默认拒绝",
-   "VIRTU_DESKTOP_KILL": "=1 无条件拒，优先于 opt-in",
-   "VIRTU_DESKTOP_MAX_PER_MIN": "默认 20",
-   "VIRTU_DESKTOP_APPROVAL_FILE": "人工批准凭据新鲜度",
-   "VIRTU_DESKTOP_APPROVAL_TTL_S": "默认 600",
-   "VIRTU_DESKTOP_ALLOWED_PIDS": "操作者点名 PID，只放宽目标绑定"
-  },
-  "audit_log": "runs/desktop_gate/decisions.jsonl（不记原文，记长度+sha256 前 8 位）",
-  "verification": {
-   "unit": "tests/test_desktop_gate.py 14 passed（spy 断言 mouse_event/keybd_event/SetCursorPos 零调用）",
-   "adjacent": "pytest 33 passed 含 test_agent_toolchain_full / test_toolchain_access_modes / test_cae_gate_honesty",
-   "live_e2e": "scratch/skill_gap/e2e_gate.py 6/6：5 拦截场景目标框为空，1 批准场景 72 字符逐字节命中",
-   "repeat_paste": "scratch/skill_gap/probe_paste.py 4 次：3 次逐字节命中，1 次在写入前被拦"
-  },
-  "left_for_decision": "scripts/generate_omni_autonomous_agent_corpus.py:229,242 把未回读确认的 status=typed 硬编码进训练轨迹"
- }
 }

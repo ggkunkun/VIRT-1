@@ -86,6 +86,13 @@ class HeadlessSandboxVerifier:
         warnings: List[str] = []
         collision_detected = False
 
+        # G71/G70 不能只靠令牌命中：负背吃刀量、缺失轮廓块或空轮廓都会造成
+        # 「有 G71 字样但没有有效粗车刀路」的假通过。
+        from virtu_omni.agent.cnc_semantic_gate import validate_g71_program
+        g71_gate = validate_g71_program(code)
+        for violation in g71_gate["violations"]:
+            errors.append(f"G71_SEMANTIC:{violation}")
+
         lines = [line.strip() for line in code.splitlines() if line.strip()]
 
         # 1. Program envelope
@@ -152,6 +159,7 @@ class HeadlessSandboxVerifier:
             "passed": is_passed,
             "collision_detected": collision_detected,
             "spindle_verified": spindle_on,
+            "g71_semantic_gate": g71_gate,
             "errors": errors,
             "warnings": warnings,
             "execution_status": "VIRTUAL_TOOLPATH_VERIFIED" if is_passed else "CRASH_OR_SYNTAX_ABORT"

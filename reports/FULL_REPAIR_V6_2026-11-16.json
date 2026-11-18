@@ -1,0 +1,96 @@
+{
+  "generated_at": "2026-11-16 23:07:01",
+  "tag": "virtu-six-software:v6-repair",
+  "basis": "measured",
+  "corpus_sha256": "895084d04825bb1e91a1d850f55b5e901ec3da54a8d466641bd8f89a03c757bb",
+  "corpus_rows": 511,
+  "rounds": [
+    {
+      "tag": "virtu-six-software:v3",
+      "round": 1,
+      "passed": 7,
+      "total": 10,
+      "failed": {
+        "sw_coordinate_probe": "missing_normal:front",
+        "lame_stress_probe": "missing_sigma_theta_33.33",
+        "fanuc_g71_safety_probe": "valid_F>0,unsafe_G00_negative_Z_plunge"
+      }
+    },
+    {
+      "tag": "virtu-six-software:v3",
+      "round": 2,
+      "passed": 8,
+      "total": 10,
+      "failed": {
+        "sw_coordinate_probe": "missing_normal:front",
+        "lame_stress_probe": "missing_sigma_theta_33.33"
+      }
+    },
+    {
+      "tag": "virtu-six-software:v4-local-repair",
+      "round": 1,
+      "passed": 8,
+      "total": 10,
+      "failed": {
+        "lame_stress_probe": "missing_negative_sigma_r_-20",
+        "fanuc_g71_safety_probe": "unsafe_G00_negative_Z_plunge"
+      }
+    },
+    {
+      "tag": "virtu-six-software:v4-local-repair",
+      "round": 2,
+      "passed": 7,
+      "total": 10,
+      "failed": {
+        "lame_stress_probe": "missing_negative_sigma_r_-20",
+        "fanuc_g71_safety_probe": "unsafe_G00_negative_Z_plunge",
+        "vericut_autodiff_probe": "missing_color:blue"
+      }
+    },
+    {
+      "tag": "virtu-six-software:v6-repair",
+      "round": 1,
+      "passed": 8,
+      "total": 10,
+      "failed": {
+        "lame_stress_probe": "missing_sigma_theta_33.33",
+        "fanuc_g71_safety_probe": "G70,unsafe_G00_negative_Z_plunge"
+      }
+    },
+    {
+      "tag": "virtu-six-software:v6-repair",
+      "round": 2,
+      "passed": 8,
+      "total": 10,
+      "failed": {
+        "lame_stress_probe": "missing_sigma_theta_33.33",
+        "fanuc_g71_safety_probe": "G70"
+      }
+    },
+    {
+      "tag": "virtu-six-software:v6-repair",
+      "round": 3,
+      "passed": 8,
+      "total": 10,
+      "failed": {
+        "lame_stress_probe": "missing_sigma_theta_33.33",
+        "fanuc_g71_safety_probe": "G70"
+      }
+    }
+  ],
+  "gate": {
+    "rule": "连测最差值做门禁 (project §8.2)",
+    "v6_rounds_passed": [
+      8,
+      8,
+      8
+    ],
+    "worst_passed": 8,
+    "worst_total": 10,
+    "worst_round": 1,
+    "worst_failed": {
+      "lame_stress_probe": "missing_sigma_theta_33.33",
+      "fanuc_g71_safety_probe": "G70,unsafe_G00_negative_Z_plunge"
+    }
+  }
+}

@@ -33,8 +33,19 @@ LAWS = {
     ],
     "roughness": [("surface_roughness_ra_um", "1000*f^2/(8*r_eps)")],
     "fea_fos": [
+        # 照抄量也是绑定：recompute 产出 yield_strength_mpa 参考值，注册表缺位
+        # 时该字段无人判（test_registry_covers_every_numeric_reference_field）。
+        ("yield_strength_mpa", "Sy"),
         ("peak_von_mises_mpa", "sigma"),
         ("safety_factor", "Sy/sigma"),
+    ],
+    "lame_cylinder_closed_end": [
+        ("yield_strength_mpa", "yield_strength_mpa"),
+        # Closed-end thick cylinder, maximum von Mises stress at the bore.
+        # Radial, hoop, and axial Lamé stresses are combined before comparing yield.
+        ("peak_von_mises_mpa",
+         "sqrt(3)*pressure_mpa*r_outer_mm^2/(r_outer_mm^2-r_inner_mm^2)"),
+        ("safety_factor", "yield_strength_mpa/peak_von_mises_mpa"),
     ],
     "collision": [
         ("safe_plane_z_mm", "z_safe"),
@@ -64,8 +75,16 @@ LAWS = {
         ("surface_roughness_ra_um", "1000*f^2/(8*r_eps)"),
         ("cut_time_min", "L/feed_rate_mm_per_min"),
     ],
-    "adapt_material": [("safety_factor", "Sy/sigma")],
-    "adapt_machine": [("required_spindle_rpm", "1000*vc/(pi*D)")],
+    "adapt_material": [
+        ("yield_strength_mpa", "Sy"),
+        ("peak_von_mises_mpa", "sigma"),
+        ("safety_factor", "Sy/sigma"),
+    ],
+    "adapt_machine": [
+        ("required_spindle_rpm", "1000*vc/(pi*D)"),
+        ("machine_max_rpm", "n_max"),
+        ("recommended_vc_m_per_min", "vc"),
+    ],
 }
 
 # Verdict fields are predicates, not arithmetic: they stay with world_state_verified's exact match.

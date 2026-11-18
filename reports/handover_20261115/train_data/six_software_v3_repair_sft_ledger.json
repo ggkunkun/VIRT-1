@@ -1,0 +1,17 @@
+{
+  "generated_at": "2026-11-15 22:36:43",
+  "purpose": "本地 6GB QLoRA SFT 增量修复 six-software:v3 缺陷",
+  "source_file": "cloud_train_pack\\dataset_v2\\vericut96_v3_dpo_repair.jsonl",
+  "source_sha256": "96bb3ba188a5aee4f3bcff9f5292325a21dcd18df576be24fc286ee9db5e1160",
+  "output_file": "reports\\handover_20261115\\train_data\\six_software_v3_repair_sft.jsonl",
+  "output_sha256": "3f4acfae0dbaa99d0437dc316dc801ceb54a7215b95c6c9920ed6c195daab721",
+  "rows": 279,
+  "stat": {
+    "total": 279,
+    "prompt_list": 221,
+    "prompt_str": 58,
+    "skipped": 0
+  },
+  "method": "rejection-sampling SFT: DPO prompt + chosen -> messages; rejected discarded",
+  "note": "仅用正确回答做监督微调；不含 rejected，不引入 DPO 依赖"
+}

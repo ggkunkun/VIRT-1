@@ -59,7 +59,7 @@ def test_sha_gate_rejects_a_tampered_row(monkeypatch, staged):
 
 
 def test_max_len_2048_is_refused_as_truncation(monkeypatch, staged):
-    """The trainer's own default max_len is 2048 and the corpus measures ~2091 est tokens."""
+    """The trainer's own default max_len is 2048 and the corpus measures ~5580 est tokens."""
     _point_at(monkeypatch, staged)
     monkeypatch.setitem(L.MODES, "v100", dict(L.MODES["v100"], max_len=2048))
     problems, _ = L.preflight("v100")
@@ -95,9 +95,14 @@ def test_ruler_regrade_catches_a_bad_derivation(monkeypatch, staged):
 
 def test_receipt_gate_rejects_truncated_or_wrong_corpus(monkeypatch, staged):
     _point_at(monkeypatch, staged)
-    expected = {"rows": 2400, "est_p95": 2091}
+    # 预算期望从实测 preflight 派生，不写作者手填快照（契约扩容后 p95 会变，
+    # 手填 2091 曾在 2026-11-08 把整套闸变成假红）。此处不要求 problems 为空：
+    # 模块级 fixture 可能已被前面的 sha 变异测试改写，清洁性由
+    # test_clean_staged_copy_passes 单独负责；长度统计不受 task 字段变异影响。
+    _problems, stats = L.preflight("v100")
+    expected = {"rows": 2400, "est_p95": stats["est_p95"]}
     good = {"status": "COMPLETED", "data_rows": 2400, "data_file": str(L.STAGED_CORPUS),
-            "train": {"max_len": 3072}}
+            "train": {"max_len": L.MODES["v100"]["max_len"]}}
 
     def run(rec, tmp_path, name="r.json"):
         p = tmp_path / name
@@ -118,7 +123,7 @@ def test_receipt_gate_rejects_truncated_or_wrong_corpus(monkeypatch, staged):
 def test_command_targets_the_hash_gated_trainer_with_posix_paths():
     cmd = " ".join(L.build_command("v100", "out/x"))
     assert "train_virtu_v100.py" in cmd, "turnkey has a silent corpus fallback; do not target it"
-    assert "--max-len 3072" in cmd
+    assert f"--max-len {L.MODES['v100']['max_len']}" in cmd
     assert "\\" not in cmd, cmd
     assert "data/physics_derivation_v1/train" in cmd
 

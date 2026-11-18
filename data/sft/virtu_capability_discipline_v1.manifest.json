@@ -1,0 +1,49 @@
+{
+  "version": "virtu_capability_discipline_v1",
+  "created_at": "2026-11-18 15:13:40",
+  "seed": 20261117,
+  "generator": "scripts/generate_capability_corpus.py",
+  "corpus": "data/sft/virtu_capability_discipline_v1.jsonl",
+  "source_catalog": "virtu_omni/capabilities/catalog.py",
+  "source_catalog_version": "1.2.1",
+  "total": 122,
+  "atoms_covered": 36,
+  "by_kind": {
+    "execute": 36,
+    "resist": 36,
+    "tool_lookup": 36,
+    "tool_guard": 14
+  },
+  "by_family": {
+    "code": 12,
+    "comm": 9,
+    "data": 12,
+    "desktop": 3,
+    "domain": 12,
+    "memory": 9,
+    "orch": 9,
+    "plan": 9,
+    "research": 12,
+    "safety": 9,
+    "verify": 20,
+    "write": 6
+  },
+  "by_stance": {
+    "advisory": 20,
+    "conditional": 34,
+    "hard": 32
+  },
+  "channels": {
+    "text_sft": 72,
+    "toolcall": 50,
+    "note": "tool_lookup / tool_guard 含 tool_calls，应进 virtu-toolcall 通道；execute / resist 为纯文本，可进 text SFT 通道。不要混在同一次训练里改两个变量。"
+  },
+  "char_len": {
+    "p50": 509,
+    "p95": 1043,
+    "max": 1453
+  },
+  "render_validation": "data/validation/cap_discipline_render_report.json",
+  "quality_contract": "tests/test_capability_corpus.py",
+  "intent": "训练'什么时候不能说完成 / 什么时候必须拒绝 / 什么时候证据不足'，与 data/sft/virtu_capability_sft_v6.jsonl（算得对与建模正确）互补，不重叠。"
+}

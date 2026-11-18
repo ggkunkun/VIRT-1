@@ -1,0 +1,110 @@
+{
+  "purpose": "接手 Antigravity 会话后的独立复测（不写共享凭证）",
+  "generated_at": "2026-11-15 22:01:49",
+  "grader_sha256_imported": "48c8230eaafb29bb25f1687e05417ffd5b29f03db2a9c9a1a2103b97eece871d",
+  "grader_sha256_disk_at_start": "48c8230eaafb29bb25f1687e05417ffd5b29f03db2a9c9a1a2103b97eece871d",
+  "rounds": [
+    {
+      "round": 1,
+      "tag": "virtu-six-software:v3",
+      "started_at": "2026-11-15 21:58:08",
+      "runtime_s": 74.8,
+      "basis": "measured",
+      "run_id": "0e03b91024287647",
+      "measurement_version": "probes-2026-11-15-v2",
+      "grader_sha256_imported": "48c8230eaafb29bb25f1687e05417ffd5b29f03db2a9c9a1a2103b97eece871d",
+      "grader_sha256_disk_start": "48c8230eaafb29bb25f1687e05417ffd5b29f03db2a9c9a1a2103b97eece871d",
+      "grader_sha256_disk_end": "48c8230eaafb29bb25f1687e05417ffd5b29f03db2a9c9a1a2103b97eece871d",
+      "tags_digest_before": "ed409a5e45d807ec188369bcd92c26fe8e8be3e7338ee60104404f282c8edd92",
+      "tags_digest_after": "ed409a5e45d807ec188369bcd92c26fe8e8be3e7338ee60104404f282c8edd92",
+      "drifted": false,
+      "error": null,
+      "probes_total": 10,
+      "probes_passed": 8,
+      "passed_names": [
+        "show_template_gate",
+        "chat_liveness_probe",
+        "native_tool_call_probe",
+        "anti_degenerate_sanity_probe",
+        "fanuc_g71_safety_probe",
+        "vericut_autodiff_probe",
+        "vericut_coordinate_unit_probe",
+        "vericut_tool_call_probe"
+      ],
+      "failed": {
+        "sw_coordinate_probe": "wrong_normal_axis:right",
+        "lame_stress_probe": "missing_sigma_theta_33.33"
+      }
+    },
+    {
+      "round": 2,
+      "tag": "virtu-six-software:v3",
+      "started_at": "2026-11-15 21:59:23",
+      "runtime_s": 76.2,
+      "basis": "measured",
+      "run_id": "88adc16611d08e9f",
+      "measurement_version": "probes-2026-11-15-v2",
+      "grader_sha256_imported": "48c8230eaafb29bb25f1687e05417ffd5b29f03db2a9c9a1a2103b97eece871d",
+      "grader_sha256_disk_start": "48c8230eaafb29bb25f1687e05417ffd5b29f03db2a9c9a1a2103b97eece871d",
+      "grader_sha256_disk_end": "48c8230eaafb29bb25f1687e05417ffd5b29f03db2a9c9a1a2103b97eece871d",
+      "tags_digest_before": "ed409a5e45d807ec188369bcd92c26fe8e8be3e7338ee60104404f282c8edd92",
+      "tags_digest_after": "ed409a5e45d807ec188369bcd92c26fe8e8be3e7338ee60104404f282c8edd92",
+      "drifted": false,
+      "error": null,
+      "probes_total": 10,
+      "probes_passed": 7,
+      "passed_names": [
+        "show_template_gate",
+        "chat_liveness_probe",
+        "native_tool_call_probe",
+        "anti_degenerate_sanity_probe",
+        "fanuc_g71_safety_probe",
+        "vericut_autodiff_probe",
+        "vericut_tool_call_probe"
+      ],
+      "failed": {
+        "sw_coordinate_probe": "wrong_normal_axis:top",
+        "lame_stress_probe": "missing_sigma_theta_33.33",
+        "vericut_coordinate_unit_probe": "missing_coordinate_isolation"
+      }
+    },
+    {
+      "round": 3,
+      "tag": "virtu-six-software:v3",
+      "started_at": "2026-11-15 22:00:39",
+      "runtime_s": 70.6,
+      "basis": "measured",
+      "run_id": "8fa7b2170770b957",
+      "measurement_version": "probes-2026-11-15-v2",
+      "grader_sha256_imported": "48c8230eaafb29bb25f1687e05417ffd5b29f03db2a9c9a1a2103b97eece871d",
+      "grader_sha256_disk_start": "48c8230eaafb29bb25f1687e05417ffd5b29f03db2a9c9a1a2103b97eece871d",
+      "grader_sha256_disk_end": "48c8230eaafb29bb25f1687e05417ffd5b29f03db2a9c9a1a2103b97eece871d",
+      "tags_digest_before": "ed409a5e45d807ec188369bcd92c26fe8e8be3e7338ee60104404f282c8edd92",
+      "tags_digest_after": "ed409a5e45d807ec188369bcd92c26fe8e8be3e7338ee60104404f282c8edd92",
+      "drifted": false,
+      "error": null,
+      "probes_total": 10,
+      "probes_passed": 7,
+      "passed_names": [
+        "show_template_gate",
+        "chat_liveness_probe",
+        "native_tool_call_probe",
+        "anti_degenerate_sanity_probe",
+        "fanuc_g71_safety_probe",
+        "vericut_autodiff_probe",
+        "vericut_tool_call_probe"
+      ],
+      "failed": {
+        "sw_coordinate_probe": "wrong_normal_axis:top",
+        "lame_stress_probe": "missing_sigma_theta_33.33",
+        "vericut_coordinate_unit_probe": "missing_coordinate_isolation"
+      }
+    }
+  ],
+  "pass_counts": [
+    8,
+    7,
+    7
+  ],
+  "stable_all_pass": false
+}

@@ -25,6 +25,10 @@ import json
 import os
 import sys
 import time
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from datasets import Dataset
 
 os.environ.setdefault("TOKENIZERS_PARALLELISM", "false")
 os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "expandable_segments:True"

@@ -1,0 +1,29 @@
+﻿key,参数,符号,原值,原单位,换算值,换算单位,来源/说明
+rotational_speed,转速,n,27900,rpm,27900,rpm,原文
+mass_flow,设计质量流量,m_dot,4.61,lbm/s,2.091,kg/s,原文
+inlet_total_pressure,进口总压,P01,14.7,psia,101.35,kPa,原文
+inlet_total_temperature,进口总温,T01,528,degR,293.33,K,原文
+isentropic_efficiency,叶轮等熵效率,eta,0.945,-,0.945,-,原文
+discharge_blade_angle,出口叶片后弯角,beta2,约 -25（图5题注 25-degree backslope）,deg,-25（待核对）,deg,图5题注；OCR 原值缺失
+inlet_hub_radius,进口轮毂半径,r1h,1.5,in,38.10,mm,原文
+inlet_shroud_radius,进口轮盖半径,r1s,3.33,in,84.58,mm,原文
+discharge_radius,出口半径,r2,5.08,in,129.03,mm,原文
+discharge_diameter,出口直径,D2,10.16,in,258.06,mm,由 r2 推导
+discharge_width,出口宽度,b2,0.539,in,13.69,mm,原文
+axial_length,叶轮轴向长度,L,2.75,in,69.85,mm,原文
+leading_edge_element_slope,前缘线元斜率角,a_z_LE,90,deg,90,deg,原文（径向线元）
+leading_edge_element_lean,前缘线元倾角,a_e_LE,0,deg,0,deg,原文
+trailing_edge_element_slope,尾缘线元斜率角,a_z_TE,0,deg,0,deg,原文（轴向线元）
+trailing_edge_element_lean,尾缘线元倾角,a_e_TE,-30（初版）,deg,0（最终版零 lean）,deg,原文：最终设计改为零 lean
+blade_number,叶片数,Z,16,-,16,-,原文
+blade_thickness_shroud,轮盖侧叶片厚度,t_s,0.05,in,1.27,mm,原文
+blade_thickness_hub_avg,轮毂侧平均叶片厚度,t_h,0.15,in,3.81,mm,原文
+tip_speed_u2,出口圆周速度,U2,-,m/s,377.0,m/s,推导 U2=ω·r2
+inlet_tip_speed_u1s,进口轮盖圆周速度,U1s,-,m/s,247.1,m/s,推导 U1s=ω·r1s
+inlet_hub_speed_u1h,进口轮毂圆周速度,U1h,-,m/s,111.3,m/s,推导 U1h=ω·r1h
+blade_surface,叶片曲面类型,-,直纹面（直线元连接 hub/中间/轮盖三条流线）,-,-,-,原文
+thickness_distribution,厚度分布,-,轮毂到轮盖线性锥度（梯形厚度）,-,-,-,原文
+loading_shroud,轮盖流线载荷,-,最小扩散（双线性）,-,-,-,原文
+loading_hub,轮毂/中间流线载荷,-,线性,-,-,-,原文
+design_iterations,收敛迭代次数,-,2~3,次,2~3,次,原文
+manufacturing,制造方式,-,铸造或五轴数控铣削,-,-,-,原文

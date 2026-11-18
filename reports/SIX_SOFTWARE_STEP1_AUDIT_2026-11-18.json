@@ -1,0 +1,380 @@
+{
+  "generated_at": "2026-11-18 14:07:26",
+  "basis": "measured",
+  "grader_sha256": "74a7da08e31dcf9ce25b271f37dcf7e85767175b472adc3c1636817431c37950",
+  "measurement_version": "probes-2026-11-16-v5",
+  "models": [
+    {
+      "tag": "virtu-six-software:v3",
+      "digest": "35cd9e06c40e6a4faf4bd567da68d0ecdb58058f432cf543492bc9ff2b7ca69b",
+      "elapsed_s": 366.1,
+      "official_passed": 10,
+      "official_total": 10,
+      "official_failed": {},
+      "g71_semantic_gate": {
+        "passed": false,
+        "violations": [
+          "profile_too_short(2<5)",
+          "profile_missing_step_diameter_38",
+          "profile_step_too_short(need Z~-20)",
+          "profile_missing_shoulder_X60",
+          "profile_total_too_short(need Z~-45)",
+          "G70_starts_inside_stock"
+        ],
+        "evidence": {
+          "first_block": "G71 U1.5 R0.4",
+          "profile": [
+            "N1 G00 X28.0 Z2.0",
+            "N2 G01 Z0.0 F0.12"
+          ],
+          "profile_motion_blocks": 2,
+          "z_min_at_step": null,
+          "shoulder_z": null,
+          "z_min_after_shoulder": null,
+          "profile_end_X": 28.0
+        }
+      },
+      "gen_lame_Di50_Do100_Pi24": {
+        "passed": false,
+        "has_hoop_40": false,
+        "has_neg_24": true,
+        "sample": "根据 Lamé 厚壁圆筒理论：\r\n\r\n- 内半径 $ r_i = \\frac{Di}{2} = \\frac{50}{2} = 25.0\\,\\text{mm} $，外半径 $ r_o = \\frac{Do}{2} = \\frac{100}{2} = 50.0\\,\\text{mm} $；\r\n- 压力比平方 $ \\left(\\frac{r_o}{r_i}\\right)^2 = \\left(\\frac{50.0}{25.0}\\right)^2 "
+      },
+      "gen_g71_D80_d46_L25_T60": {
+        "passed": false,
+        "token_gate": false,
+        "token_reason": "valid_F>0,unsafe_G00_negative_Z_plunge",
+        "has_X46": true,
+        "has_X80": false,
+        "has_Z-25": true,
+        "has_Z-60": true,
+        "sample": "```nc\r\n%\r\nO1007 (FANUC G71/G70 STEP-UP TURN)\nG50 S1800\nG96 S150 M03\nT0101\nG0 X82.0 Z2.0\nG71 U1.5 R0.7\nG71 P1 Q2 U0.4 W0.1 R0.2\nN1 G0 X46.0\nN2 G0 Z-25.0\nG0 Z-60.0\nT0202\nG00 X82.0 Z-60.0\nG70 P1 Q2 U0.2 W0.05\nM30\n%\n```"
+      },
+      "probes": {
+        "show_template_gate": {
+          "passed": true,
+          "has_tools_and_tool_call": true,
+          "no_hardcoded_num_gpu": true
+        },
+        "chat_liveness_probe": {
+          "passed": true,
+          "response_len": 150,
+          "sample": "薄壁圆筒（r/t >= 10）环向应力（hoop stress）：  \n$$ \\sigma_{\\theta} = \\frac{p \\cdot r}{t} $$  \n- $ p $：内压，MPa；$ r $：半径，mm；$ t $：壁厚，mm；$ \\sigma_{\\theta} $：环向应力，MPa。"
+        },
+        "native_tool_call_probe": {
+          "passed": true,
+          "tool_calls_count": 1,
+          "called_names": [
+            "cadcam_universal_geometry"
+          ],
+          "parsed_args": {
+            "shape": "cylinder",
+            "diameter_mm": 80,
+            "length_mm": 120
+          },
+          "reason": "ok",
+          "raw_snippet": "",
+          "full_response": ""
+        },
+        "anti_degenerate_sanity_probe": {
+          "passed": true,
+          "response_len": 279,
+          "unique_ngram_ratio": 0.913,
+          "sample": "SOLIDWORKS 2021 默认 **Front Plane**（前视基准面）、**Top Plane**（顶视基准面）、**Right Plane**（右视基准面）的法向方向如下：\r\n\r\n- **Front Plane (Z+)**：垂直于屏幕向前（+Z 轴方向），通常为零件的 **正面**，用于构建主体轮廓；\r"
+        },
+        "sw_coordinate_probe": {
+          "passed": true,
+          "reason": "ok",
+          "sample": "SOLIDWORKS 2021 默认 **Front Plane**（前视基准面）、**Top Plane**（顶视基准面）、**Right Plane**（右视基准面）的法向方向如下：\r\n\r\n- **Front Plane (Z+)**：垂直于屏幕向前（+Z 轴方向），通常为零件的 **正面**，用于构建主体轮廓；\r",
+          "full_response": "SOLIDWORKS 2021 默认 **Front Plane**（前视基准面）、**Top Plane**（顶视基准面）、**Right Plane**（右视基准面）的法向方向如下：\r\n\r\n- **Front Plane (Z+)**：垂直于屏幕向前（+Z 轴方向），通常为零件的 **正面**，用于构建主体轮廓；\r\n- **Top Plane (Y+)**：水平向上（+Y 轴方向），对应零件的 **顶部**，常用于定位与装配；\r\n- **Right Plane (X+)**：水平向右（+X 轴方向），对应零件的 **右侧**，辅助完成 3D 包络。"
+        },
+        "lame_stress_probe": {
+          "passed": true,
+          "reason": "ok",
+          "sample": "根据 Lamé 厚壁圆筒理论：\r\n\r\n- 内半径 $ r_i = \\frac{Di}{2} = 30\\,\\text{mm} $，外半径 $ r_o = \\frac{Do}{2} = 60\\,\\text{mm} $；\r\n- 压力比平方 $ \\left(\\frac{P_i}{P_o}\\right) = \\left(\\fra",
+          "truncated": true,
+          "full_response": "根据 Lamé 厚壁圆筒理论：\r\n\r\n- 内半径 $ r_i = \\frac{Di}{2} = 30\\,\\text{mm} $，外半径 $ r_o = \\frac{Do}{2} = 60\\,\\text{mm} $；\r\n- 压力比平方 $ \\left(\\frac{P_i}{P_o}\\right) = \\left(\\frac{r_i}{r_o}\\right)^2 = \\left(\\frac{30}{60}\\right)^2 = 0.25 $，故内壁环向应力为：\r\n  $$\r\n  \\sigma_{\\theta} = P_i \\left( \\frac{r_o^2 + r_i^2}{r_o^2 - r_i^2} \\right) = 20 \\cdot \\left( \\frac{60^2 + 30^2}{60^2 - 30^2} \\right) = 20 \\cdot \\left( \\frac{4500}{2700} \\right) = 20 \\cdot 1.6667 = 33.33\\,\\text{MPa}\r\n  $$\r\n- 内壁径向应力（受拉为正）：\r\n  $$\r\n  \\sigma_r = -P_i \\left( \\frac{r_o^2 - r_i^2}{r_o^2 - r_i^2} \\right) = -P_i = -20\\,\\text{MPa}\r\n  $$"
+        },
+        "fanuc_g71_safety_probe": {
+          "passed": true,
+          "reason": "ok",
+          "sample": "G50 S1800\r\nG96 S150 M03\r\nT0101\r\nG71 U1.5 R0.4\r\nG71 P1 Q2 U0.75 W0.1 F0.25\r\nN1 G00 X28.0 Z2.0\r\nN2 G01 Z0.0 F0.12\nG00 X68.0\nG70 P1 Q2\nM30",
+          "full_response": "G50 S1800\r\nG96 S150 M03\r\nT0101\r\nG71 U1.5 R0.4\r\nG71 P1 Q2 U0.75 W0.1 F0.25\r\nN1 G00 X28.0 Z2.0\r\nN2 G01 Z0.0 F0.12\nG00 X68.0\nG70 P1 Q2\nM30"
+        },
+        "vericut_autodiff_probe": {
+          "passed": true,
+          "reason": "ok",
+          "sample": "在 VERICUT 9.6 的 Auto-Diff 偏差图中，颜色标识如下：\n\n- **红色 (Red)**：**过切 (Gouge)**，表示刀具**侵入**了设计模型的实体内部（**负偏差**），属于**致命错误**，必须立即**停止加工**并**修改刀路或参数**。\n- **蓝色 (Blue)**：**残料 (Excess Material)**，表示",
+          "full_response": "在 VERICUT 9.6 的 Auto-Diff 偏差图中，颜色标识如下：\n\n- **红色 (Red)**：**过切 (Gouge)**，表示刀具**侵入**了设计模型的实体内部（**负偏差**），属于**致命错误**，必须立即**停止加工**并**修改刀路或参数**。\n- **蓝色 (Blue)**：**残料 (Excess Material)**，表示刀具未切到目标表面（**正偏差**），需**增加切削次数**或**调整进给/步距**。\n- **绿色 (Green)**：**在公差带内 (In-Tolerance)**，表示实际加工结果满足允许的尺寸偏差范围。\n\n### 发现红色（过切）时的处置步骤：\n1. **立即停止仿真与实体加工**，避免损坏工件或刀具。\n2. **回溯刀路轨迹**，确认刀具何时/何位置切入了设计模型内部。\n3. **检查刀具半径/长度补偿**是否正确，刀路是否选择了 `Gouge Check`。\n4. **修改刀路参数**（如降低切削深度、减小步距、切换更保守的策略）或改用 `Z-Level` / `Offset` 策略。\n5. **重新运行 VERICUT 检验**，确认过切已消除后再进入下一轮加工。"
+        },
+        "vericut_coordinate_unit_probe": {
+          "passed": true,
+          "reason": "ok",
+          "sample": "1. **工程单位确认**：`<Unit>inch</Unit>` 表示英制单位（英寸，inch），不是公制毫米（millimeter）。若导入 VERICUT 仿真或后处理至 3D 检验系统，必须一并保持英制基准，不得擅自改写为 `millimeter`。",
+          "full_response": "1. **工程单位确认**：`<Unit>inch</Unit>` 表示英制单位（英寸，inch），不是公制毫米（millimeter）。若导入 VERICUT 仿真或后处理至 3D 检验系统，必须一并保持英制基准，不得擅自改写为 `millimeter`。"
+        },
+        "vericut_tool_call_probe": {
+          "passed": true,
+          "tool_calls_count": 1,
+          "parsed_args": {
+            "action": "autodiff_check",
+            "project_path": "E:/training/session_101m.vcproject"
+          },
+          "reason": "ok",
+          "raw_snippet": "",
+          "full_response": ""
+        }
+      }
+    },
+    {
+      "tag": "virtu-six-software:v7-repair",
+      "digest": "6f3a5a49cca31e917bca0c507d7f7b474ce0e6ddc2da1c14c57b326f22e9990f",
+      "elapsed_s": 334.9,
+      "official_passed": 9,
+      "official_total": 10,
+      "official_failed": {
+        "vericut_autodiff_probe": "swapped_meaning:red"
+      },
+      "g71_semantic_gate": {
+        "passed": false,
+        "violations": [
+          "G71_first_block_negative_U",
+          "profile_step_too_short(need Z~-20)",
+          "profile_shoulder_at_wrong_Z(0,need~-20)",
+          "profile_total_too_short(need Z~-45)"
+        ],
+        "evidence": {
+          "first_block": "G71 U-1.5 R0.75",
+          "profile": [
+            "N1 G00 X38.0",
+            "G01 Z0.0 F0.25",
+            "X60.0",
+            "Z-20.0",
+            "N2 G01 X62.0 Z-22.0"
+          ],
+          "profile_motion_blocks": 5,
+          "z_min_at_step": 0.0,
+          "shoulder_z": 0.0,
+          "z_min_after_shoulder": -22.0,
+          "profile_end_X": 62.0
+        }
+      },
+      "gen_lame_Di50_Do100_Pi24": {
+        "passed": true,
+        "has_hoop_40": true,
+        "has_neg_24": true,
+        "sample": "由 Lamé 厚壁圆筒闭式解（严禁薄壁近似）：  \n- 径比 K = Do/Di = 100/50 = 2；平方比 k = K^2 = 4。  \n- 内壁环向拉应力 σ_θ = Pi*(k+1)/(k-1) = 24*(4+1)/(4-1) = 24*5/3 = 40.00 MPa。  \n- 内壁径向压应力 σ_r = -Pi = -24.00 MPa（受压为负）。"
+      },
+      "gen_g71_D80_d46_L25_T60": {
+        "passed": false,
+        "token_gate": true,
+        "token_reason": "ok",
+        "has_X46": true,
+        "has_X80": false,
+        "has_Z-25": true,
+        "has_Z-60": false,
+        "sample": "O1004 (FANUC_G71_G70_ISO_G)\r\nG50 S1800\r\nG96 S150 M03\r\nT0101\nG00 X82.0 Z2.0\nG71 U-1.5 R0.75\nG71 P1 Q2 U0.4 W0.1 F0.25\nN1 G01 Z0.0 T0.15\nN2 G01 X46.0 Z-25.0\nG70 P1 Q2 F0.25\nG00 X88.0 Z50.0\nM30"
+      },
+      "probes": {
+        "show_template_gate": {
+          "passed": true,
+          "has_tools_and_tool_call": true,
+          "no_hardcoded_num_gpu": true
+        },
+        "chat_liveness_probe": {
+          "passed": true,
+          "response_len": 104,
+          "sample": "内压 $p$ 薄壁圆筒（壁厚 $t/D \\leq 1/20$），环向拉应力：$\\sigma_{\\theta} = \\frac{pD}{2t}$；轴向应力：$\\sigma_z = \\frac{pD}{4t}$。"
+        },
+        "native_tool_call_probe": {
+          "passed": true,
+          "tool_calls_count": 1,
+          "called_names": [
+            "cadcam_universal_geometry"
+          ],
+          "parsed_args": {
+            "length_mm": 120,
+            "shape": "cylinder",
+            "diameter_mm": 80
+          },
+          "reason": "ok",
+          "raw_snippet": "",
+          "full_response": ""
+        },
+        "anti_degenerate_sanity_probe": {
+          "passed": true,
+          "response_len": 195,
+          "unique_ngram_ratio": 0.938,
+          "sample": "SOLIDWORKS 2021 默认基准面及其标准法向（+X、+Y、+Z 轴指向工件外侧）为：  \n- **Front Plane**（前视图平面）: XY 平面，法向 +Z (0, 0, 1)  \n- **Top Plane**（俯视图平面）: XZ 平面，法向 +Y (0, 1, 0)  \n- **Right Pl"
+        },
+        "sw_coordinate_probe": {
+          "passed": true,
+          "reason": "ok",
+          "sample": "SOLIDWORKS 2021 默认基准面及其标准法向（+X、+Y、+Z 轴指向工件外侧）为：  \n- **Front Plane**（前视图平面）: XY 平面，法向 +Z (0, 0, 1)  \n- **Top Plane**（俯视图平面）: XZ 平面，法向 +Y (0, 1, 0)  \n- **Right Pl",
+          "full_response": "SOLIDWORKS 2021 默认基准面及其标准法向（+X、+Y、+Z 轴指向工件外侧）为：  \n- **Front Plane**（前视图平面）: XY 平面，法向 +Z (0, 0, 1)  \n- **Top Plane**（俯视图平面）: XZ 平面，法向 +Y (0, 1, 0)  \n- **Right Plane**（右视图平面）: YZ 平面，法向 +X (1, 0, 0)"
+        },
+        "lame_stress_probe": {
+          "passed": true,
+          "reason": "ok",
+          "sample": "- 内壁环向拉应力 σ_θ = Pi*(k^2 + 1)/(k^2 - 1) = 20*(4 + 1)/(4 - 1) = 33.33 MPa  \n- 内壁径向压应力 σ_r = -Pi = -20.00 MPa",
+          "truncated": true,
+          "full_response": "- 内壁环向拉应力 σ_θ = Pi*(k^2 + 1)/(k^2 - 1) = 20*(4 + 1)/(4 - 1) = 33.33 MPa  \n- 内壁径向压应力 σ_r = -Pi = -20.00 MPa"
+        },
+        "fanuc_g71_safety_probe": {
+          "passed": true,
+          "reason": "ok",
+          "sample": "%\r\nO1007 (G71_G70_FANUC_ISO_G)\r\nG50 S1800 ;\r\nG96 S150 M03 ;\r\nT0101 ;\r\nG00 X62.0 Z2.0 ;\r\nG71 U-1.5 R0.75 ;\nG71 P1 Q2 U0.4 W0.1 F0.25 ;\nN1 G00 X38.0 ;\nG01 Z0.0 F0.25 ;\nX60.0 ;\nZ-20.0",
+          "full_response": "%\r\nO1007 (G71_G70_FANUC_ISO_G)\r\nG50 S1800 ;\r\nG96 S150 M03 ;\r\nT0101 ;\r\nG00 X62.0 Z2.0 ;\r\nG71 U-1.5 R0.75 ;\nG71 P1 Q2 U0.4 W0.1 F0.25 ;\nN1 G00 X38.0 ;\nG01 Z0.0 F0.25 ;\nX60.0 ;\nZ-20.0 ;\nN2 G01 X62.0 Z-22.0 ;\nG70 P1 Q2 F0.2 ;\nG00 X100.0 Z50.0 ;\nM30 ;\r\n%"
+        },
+        "vericut_autodiff_probe": {
+          "passed": false,
+          "reason": "swapped_meaning:red",
+          "sample": "在 VERICUT 9.6 的 Auto-Diff 偏差图中，三种颜色含义如下：\n\n- **红色（Red）**：表示过切（Gouge），刀具切入零件内部、切除过多材料，属于致命制造错误，必须立即停机排查 NC 偏置、刀补与程序并修正后重跑合格。\n- **蓝色（Blue）**：表示残料/欠切（Excess material），零件表面仍留有未切除的余量，应补充",
+          "segment": "红色（red）**：表示过切（gouge），刀具切入零件内部、切除过多材料，属于致命制造错误，必须立即停机排查 nc 偏置、刀补与程序并修正后重跑合格",
+          "full_response": "在 VERICUT 9.6 的 Auto-Diff 偏差图中，三种颜色含义如下：\n\n- **红色（Red）**：表示过切（Gouge），刀具切入零件内部、切除过多材料，属于致命制造错误，必须立即停机排查 NC 偏置、刀补与程序并修正后重跑合格。\n- **蓝色（Blue）**：表示残料/欠切（Excess material），零件表面仍留有未切除的余量，应补充半精或精加工走刀清除。\n- **绿色（Green）**：表示尺寸在公差内（In tolerance），合格合格。"
+        },
+        "vericut_coordinate_unit_probe": {
+          "passed": true,
+          "reason": "ok",
+          "sample": "### 问题解析与结论：\r\n1. **VERICUT 工程单位为 `inch`**，不能混当为 `millimeter`。VERICUT 9.6 默认单位是 `inch`（英寸），仅在明确指定 `<Unit>millimeter</Unit>` 时才按毫米计算；不得用“mm”字面默认覆盖 XML 声明。\r\n\r\n2. **不能将 Z-up / G54 等同于 ",
+          "full_response": "### 问题解析与结论：\r\n1. **VERICUT 工程单位为 `inch`**，不能混当为 `millimeter`。VERICUT 9.6 默认单位是 `inch`（英寸），仅在明确指定 `<Unit>millimeter</Unit>` 时才按毫米计算；不得用“mm”字面默认覆盖 XML 声明。\r\n\r\n2. **不能将 Z-up / G54 等同于 SOLIDWORKS 2021 默认 Front/Top/Right 基准面**，二者坐标系正交定义不同（见下表），强行映射会导致模型对齐错误与仿真失效。必须改用 SOLIDWORKS 内部 Z-down 机台基准做联调。\r\n\r\n| 轴向 | VERICUT G54 / Z-up | SOLIDWORKS 2021 默认 |\n|------|------------------|---------------------|\n| X    | 右（+X 向右）     | 前（+X 向右）        |\n| Y    | 上（+Y 向上）      | 上（+Y 向上）         |\n| Z    | 远（+Z 向下）      | 前（+Z 向前）        |\n\n### 修正操作：\r\n- 若 VERICUT 工程为 `inch`，必须改用 `inch` 单位导出 STEP/STL 并在 SOLIDWORKS 2021 采用 Z-down 机台基准做对齐；不得用毫米标注或默认 Y-up 假想基准替代。"
+        },
+        "vericut_tool_call_probe": {
+          "passed": true,
+          "tool_calls_count": 1,
+          "parsed_args": {
+            "action": "autodiff_check",
+            "project_path": "E:/training/session_101m.vcproject"
+          },
+          "reason": "ok",
+          "raw_snippet": "",
+          "full_response": ""
+        }
+      }
+    },
+    {
+      "tag": "virtu-six-software:v8-repair",
+      "digest": "a18dbebd17e9207121b9f8a24c26b467580c1946b523228c6631bc8b34981714",
+      "elapsed_s": 494.8,
+      "official_passed": 6,
+      "official_total": 10,
+      "official_failed": {
+        "sw_coordinate_probe": "missing_normal:front",
+        "lame_stress_probe": "missing_sigma_theta_33.33",
+        "vericut_autodiff_probe": "missing_color:blue",
+        "vericut_coordinate_unit_probe": "missing_coordinate_isolation"
+      },
+      "g71_semantic_gate": {
+        "passed": false,
+        "violations": [
+          "profile_too_short(2<5)",
+          "profile_missing_shoulder_X60",
+          "profile_total_too_short(need Z~-45)"
+        ],
+        "evidence": {
+          "first_block": "G71 U1.5 R0.75",
+          "profile": [
+            "N10 G00 X38.0",
+            "N15 Z-20.0"
+          ],
+          "profile_motion_blocks": 2,
+          "z_min_at_step": -20.0,
+          "shoulder_z": null,
+          "z_min_after_shoulder": null,
+          "profile_end_X": 38.0
+        }
+      },
+      "gen_lame_Di50_Do100_Pi24": {
+        "passed": false,
+        "has_hoop_40": false,
+        "has_neg_24": true,
+        "sample": "- 内壁环向拉应力 σ_θ = Pi*(Do^2/Do^2 - Di^2/Do^2) = 24*(100^2/100^2 - 50^2/100^2) = 24*(1 - 0.25) = 24*0.75 = **18.00 MPa**；  \n- 内壁径向压应力 σ_r = -Pi = **-24.00 MPa**（受内压拉伸，与壁厚平方成正比）。"
+      },
+      "gen_g71_D80_d46_L25_T60": {
+        "passed": false,
+        "token_gate": false,
+        "token_reason": "unsafe_G00_negative_Z_plunge",
+        "has_X46": true,
+        "has_X80": true,
+        "has_Z-25": true,
+        "has_Z-60": true,
+        "sample": "%;\r\n%\r\nO1004\r\nG50 S1800\r\nG96 S150 M03\r\nT0101\r\nG71 U1.2 R0.6 P1 Q2 U0.4 W0.1 F0.25\r\nN1 G00 X46.0 Z-25.0\r\nG01 Z-30.0 F0.2\r\nX80.0 Z-35.0\r\nZ-60.0\r\nN2 X46.0 Z-65.0\r\nG00 X100.0 Z80.0\r\nT0202\nG70 P1 Q2 F0.15\nG00 X100.0 Z80.0\nM30%;\r\n%"
+      },
+      "probes": {
+        "show_template_gate": {
+          "passed": true,
+          "has_tools_and_tool_call": true,
+          "no_hardcoded_num_gpu": true
+        },
+        "chat_liveness_probe": {
+          "passed": true,
+          "response_len": 218,
+          "sample": "- 内半径 $ r_i $, 外半径 $ r_o $, 厚度 $ h = r_o - r_i $；\r\n- 内压 $ p_i $, 外压 $ p_o $, 环向应力 $ \\sigma_\\theta = \\frac{p_i r_i^2 - p_o r_o^2}{r_o^2 - r_i^2} $；\r\n- 径比 $ k = r"
+        },
+        "native_tool_call_probe": {
+          "passed": true,
+          "tool_calls_count": 1,
+          "called_names": [
+            "cadcam_universal_geometry"
+          ],
+          "parsed_args": {
+            "shape": "cylinder",
+            "diameter_mm": 80,
+            "length_mm": 120
+          },
+          "reason": "ok",
+          "raw_snippet": "",
+          "full_response": ""
+        },
+        "anti_degenerate_sanity_probe": {
+          "passed": true,
+          "response_len": 181,
+          "unique_ngram_ratio": 0.932,
+          "sample": "SOLIDWORKS 2021 默认基准面及其标准法向（Z=+1 为上表面）：  \n- **Front Plane**（前视基准面）: `Y=+1`（法向 0, 1, 0）；  \n- **Top Plane**（俯视基准面）: `Z=+1`（法向 0, 0, 1）；  \n- **Right Plane**（右视基准面）"
+        },
+        "sw_coordinate_probe": {
+          "passed": false,
+          "reason": "missing_normal:front",
+          "sample": "SOLIDWORKS 2021 默认基准面及其标准法向（Z=+1 为上表面）：  \n- **Front Plane**（前视基准面）: `Y=+1`（法向 0, 1, 0）；  \n- **Top Plane**（俯视基准面）: `Z=+1`（法向 0, 0, 1）；  \n- **Right Plane**（右视基准面）",
+          "segment": "front plane**（前视基准面）: `y=+1`（法向 0, 1, 0）；  \n- **top plane**（俯视基准面）: `z=+1`（法向 0,",
+          "full_response": "SOLIDWORKS 2021 默认基准面及其标准法向（Z=+1 为上表面）：  \n- **Front Plane**（前视基准面）: `Y=+1`（法向 0, 1, 0）；  \n- **Top Plane**（俯视基准面）: `Z=+1`（法向 0, 0, 1）；  \n- **Right Plane**（右视基准面）: `X=+1`（法向 1, 0, 0）。"
+        },
+        "lame_stress_probe": {
+          "passed": false,
+          "reason": "missing_sigma_theta_33.33",
+          "sample": "- 内壁环向拉应力 σ_θ = Pi*(Do^2)/(Di^2 - Do^2) = 20*(120^2)/(60^2 - 120^2) = -30.00 MPa（受内压作用为拉伸）；  \n- 内壁径向应力 σ_r = -Pi = -20.00 MPa（指向内壁中心，受压为负）。",
+          "full_response": "- 内壁环向拉应力 σ_θ = Pi*(Do^2)/(Di^2 - Do^2) = 20*(120^2)/(60^2 - 120^2) = -30.00 MPa（受内压作用为拉伸）；  \n- 内壁径向应力 σ_r = -Pi = -20.00 MPa（指向内壁中心，受压为负）。"
+        },
+        "fanuc_g71_safety_probe": {
+          "passed": true,
+          "reason": "ok",
+          "sample": "%   (NCG71_G70_FANUC_ISO_G)\r\nO1008\r\nG50 S1800\r\nG96 S150 M03\nT0101\nG00 X60.0 Z2.0\nG71 U1.5 R0.75\nG71 P10 Q15 U0.4 W0.1 F0.25\nN10 G00 X38.0\nN15 Z-20.0\nN20 G01 Z-20.0 F0.15\nN25 G00 X6",
+          "full_response": "%   (NCG71_G70_FANUC_ISO_G)\r\nO1008\r\nG50 S1800\r\nG96 S150 M03\nT0101\nG00 X60.0 Z2.0\nG71 U1.5 R0.75\nG71 P10 Q15 U0.4 W0.1 F0.25\nN10 G00 X38.0\nN15 Z-20.0\nN20 G01 Z-20.0 F0.15\nN25 G00 X60.0 Z2.0\nG70 P10 Q15 F0.2\nG00 X100.0 Z80.0\nM30"
+        },
+        "vericut_autodiff_probe": {
+          "passed": false,
+          "reason": "missing_color:blue",
+          "sample": "VERICUT 9.6 的 Auto-Diff 偏差图采用三色图例，含义如下（单位为毫米，mm）：\r\n\r\n- **红色（Red）**：过切（Gouge），刀具切入零件内部、切除过多材料，属致命制造缺陷，必须立即停机排查 NC 偏置、刀补与刀路参数并修正重算，严禁签字放行。",
+          "full_response": "VERICUT 9.6 的 Auto-Diff 偏差图采用三色图例，含义如下（单位为毫米，mm）：\r\n\r\n- **红色（Red）**：过切（Gouge），刀具切入零件内部、切除过多材料，属致命制造缺陷，必须立即停机排查 NC 偏置、刀补与刀路参数并修正重算，严禁签字放行。"
+        },
+        "vericut_coordinate_unit_probe": {
+          "passed": false,
+          "reason": "missing_coordinate_isolation",
+          "sample": "(1) 工程单位为 `inch`（英寸），不是 `millimeter`（毫米）。VERICUT 默认采用 `inch` 作为长度单位，除非在工程配置中显式指定为 `millimeter`。",
+          "full_response": "(1) 工程单位为 `inch`（英寸），不是 `millimeter`（毫米）。VERICUT 默认采用 `inch` 作为长度单位，除非在工程配置中显式指定为 `millimeter`。"
+        },
+        "vericut_tool_call_probe": {
+          "passed": true,
+          "tool_calls_count": 1,
+          "parsed_args": {
+            "project_path": "E:/training/session_101m.vcproject",
+            "action": "autodiff_check"
+          },
+          "reason": "ok",
+          "raw_snippet": "",
+          "full_response": ""
+        }
+      }
+    }
+  ]
+}

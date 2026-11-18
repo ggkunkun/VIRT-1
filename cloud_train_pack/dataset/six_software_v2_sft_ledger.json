@@ -1,0 +1,51 @@
+{
+  "schema_version": "1.0",
+  "track": "six-software-v2",
+  "dataset": "six_software_v2_sft.jsonl",
+  "output_path": "D:\\Virtu模型\\cloud_train_pack\\dataset\\six_software_v2_sft.jsonl",
+  "output_sha256": "f9000d74fb9e1d900dfda5171e380aa0d422823ed57ba765af59606d0ffb33e4",
+  "size_bytes": 3012349,
+  "count": 950,
+  "rows": 950,
+  "generated_at": "2026-11-15 19:11:36",
+  "files": {
+    "six_software_v2_sft.jsonl": {
+      "sha256": "f9000d74fb9e1d900dfda5171e380aa0d422823ed57ba765af59606d0ffb33e4",
+      "rows": 950,
+      "size_bytes": 3012349
+    },
+    "six_software_v2_dpo.jsonl": {
+      "sha256": "33a64efab4ff3fc960f213032dcd9bdc163eb00408c4276e21e3139962ba5df0",
+      "rows": 164,
+      "size_bytes": 241628
+    }
+  },
+  "v1_baseline": {
+    "sft_path": "D:\\Virtu模型\\cloud_train_pack\\dataset\\six_software_real_assets_sft.jsonl",
+    "sft_sha256": "5f5c436bfb24094832514a2644a2f201347c6097eeca56816be67bdfd84f7317",
+    "sft_rows": 850,
+    "dpo_path": "D:\\Virtu模型\\cloud_train_pack\\dataset\\six_software_real_assets_dpo.jsonl",
+    "dpo_sha256": "032896c5ca1c420915355fd506db6943ea9afa7fa4d472826cf473d204644854",
+    "dpo_rows": 90
+  },
+  "v2_anchors": {
+    "sft_added": 100,
+    "dpo_added": 74,
+    "families": [
+      "lame_closed_form",
+      "fanuc_g71_safety",
+      "autodiff_triage",
+      "coordinate_unit_safety"
+    ]
+  },
+  "token_audit": {
+    "checked": true,
+    "base_dir": "D:\\Virtu模型\\checkpoints\\_base_qwen3_8b",
+    "sft_max_tokens": 2378,
+    "sft_p95_tokens": 1686,
+    "sft_trunc": 0,
+    "dpo_max_tokens": 485,
+    "dpo_trunc": 0
+  },
+  "basis": "measured_corpus_build"
+}

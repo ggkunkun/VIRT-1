@@ -1,0 +1,10 @@
+PYTHON_OK C:\Users\Administrator\AppData\Local\Programs\Python\Python312\python.exe 3.12.10
+IMPORT_OK bridges.software_registry
+READY_COUNT 6 of 6
+solidworks ready=True running=True lnk=True binary=D:\SOLIDWORKS (2)\SLDWORKS.exe pids=[21056]
+sscnc ready=True running=False lnk=True binary=E:\仿真软件\2斯沃7.2（内含安装说明）\SSCNC\CNCLogin.exe pids=[]
+cimco ready=True running=False lnk=True binary=E:\仿真软件\CIMCOEdit_20260102\CIMCO 2026\CIMCOEdit\CIMCOEdit.exe pids=[]
+autocad ready=True running=False lnk=True binary=D:\cad2026\AutoCAD 2026\acad.exe pids=[]
+vericut ready=True running=False lnk=True binary=E:\windows64\commands\vericut.bat pids=[]
+nx ready=True running=False lnk=True binary=E:\BaiduNetdiskDownload\NX 12.0.2.9\NX12.2.9waigua\NX12.2.9\NX\NXBIN\run_journal.exe pids=[]
+DONE

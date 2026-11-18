@@ -108,7 +108,14 @@ class RunIdentity:
             if not directory.is_absolute():
                 directory = ROOT / directory
             for path in sorted(directory.glob("*.jsonl")):
-                cases[path.name] = sha256_file(path)
+                # Key by workspace-relative path, not bare filename: this repo
+                # has several same-named corpora (e.g. boundary.jsonl), so a
+                # name-only key cannot be attributed to a specific byte range.
+                try:
+                    key = path.resolve().relative_to(Path(ROOT).resolve()).as_posix()
+                except ValueError:
+                    key = path.resolve().as_posix()
+                cases[key] = sha256_file(path)
         ruler = {}
         for rel in ruler_files:
             path = ROOT / rel
@@ -149,12 +156,35 @@ class RunIdentity:
                                  f"{current[kind][7:19]}")
         for rel, digest in self.ruler.items():
             path = ROOT / rel
-            if path.exists() and sha256_file(path) != digest:
-                moved.append(f"判分器 {rel} 已被改动（{digest[:12]} -> {sha256_file(path)[:12]}）")
-        for name, digest in self.cases.items():
-            found = next((p for p in (ROOT / "data" / "benchmark").rglob(name)), None)
-            if found and sha256_file(found) != digest:
-                moved.append(f"用例集 {name} 已被改动")
+            if not path.exists():
+                moved.append(f"判分器 {rel} 已缺失（证据缺失，判红）")
+                continue
+            current = sha256_file(path)
+            if current != digest:
+                moved.append(f"判分器 {rel} 已被改动（{digest[:12]} -> {current[:12]}）")
+        for key, digest in self.cases.items():
+            candidate = ROOT / key
+            if candidate.is_file():
+                paths = [candidate]
+            else:
+                # Legacy identity.json files keyed cases by bare filename.
+                paths = sorted(
+                    p for p in (ROOT / "data" / "benchmark").rglob(Path(key).name)
+                    if p.is_file()
+                )
+            if not paths:
+                moved.append(f"用例集 {key} 已不存在（证据缺失，判红）")
+                continue
+            if len(paths) > 1:
+                # Ambiguous name: only content can settle it. If the captured
+                # digest is still present among the candidates, nothing moved.
+                if digest not in {sha256_file(p) for p in paths}:
+                    moved.append(
+                        f"用例集 {key} 有 {len(paths)} 个同名文件且无匹配内容，身份不唯一（判红）"
+                    )
+                continue
+            if sha256_file(paths[0]) != digest:
+                moved.append(f"用例集 {key} 已被改动")
         return moved
 
 
@@ -426,7 +456,8 @@ def sentinel_coverage(ticks_path, drift_log_path, leg_start, leg_end, poll_s: in
                 try:
                     rec = json.loads(line)
                 except ValueError:
-                    continue
+                    return {"status": "none", "ticks": 0,
+                            "why": f"{drift_log_path} 有残缺行，哨兵账本不可信（解析失败判红）"}
                 at = _iso(rec.get("at"))
                 if not at:
                     continue

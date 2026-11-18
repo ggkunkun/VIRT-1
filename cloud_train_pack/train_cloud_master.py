@@ -393,11 +393,13 @@ def train_dpo_stage(
     if os.path.exists(safetensor_path):
         state_dict = load_file(safetensor_path)
     elif os.path.exists(bin_path):
-        state_dict = torch.load(bin_path, map_location="cpu")
+        state_dict = torch.load(bin_path, map_location="cpu", weights_only=True)
     else:
-        state_dict = None
-    if state_dict is not None:
-        set_peft_model_state_dict(model, state_dict)
+        raise FileNotFoundError(
+            f"Missing SFT adapter weights in {sft_adapter_path}: "
+            "expected adapter_model.safetensors or adapter_model.bin; refusing DPO training."
+        )
+    set_peft_model_state_dict(model, state_dict)
 
     # 2. 读取并构建 DPO 对
     pairs = []

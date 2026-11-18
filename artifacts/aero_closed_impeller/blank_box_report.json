@@ -1,0 +1,60 @@
+{
+  "blank_type": "包容块（长方体，机床坐标系对齐）",
+  "allowance_mm": {
+    "xy_each_side": 3.0,
+    "bottom": 5.0,
+    "top": 3.0
+  },
+  "local_bbox": {
+    "x": [
+      -132.03,
+      132.03
+    ],
+    "y": [
+      -132.03,
+      132.03
+    ],
+    "z": [
+      -5.0,
+      77.85
+    ]
+  },
+  "machine_placement": {
+    "stock_component_matrix_origin_z": 175.0,
+    "attach_component_position_z": -100.0,
+    "world_z_bottom": 70.0,
+    "world_z_top": 152.85,
+    "fixture_top_world_z": 70.0,
+    "seats_on_fixture": true,
+    "case_reference": "force_impeller_dmg_mori_nmv1500_fan30im_mm.vcproject"
+  },
+  "measured": {
+    "bbox_min": [
+      -132.03,
+      -132.03,
+      -5.0
+    ],
+    "bbox_max": [
+      132.03,
+      132.03,
+      77.85
+    ],
+    "size_mm": [
+      264.06,
+      264.06,
+      82.85
+    ],
+    "volume_mm3": 5776938.0,
+    "part_volume_mm3": 2121175.0,
+    "stock_to_part_ratio": 2.723,
+    "watertight": true,
+    "faces": 12,
+    "enclosure": {
+      "samples": 20000,
+      "points_outside_stock": 0,
+      "passed": true
+    }
+  },
+  "stl": "D:\\Virtu模型\\artifacts\\aero_closed_impeller\\AE_CLOSED_IMPELLER_stock.stl",
+  "basis": "measured (产品包围盒 + 各面余量；包容性自检)"
+}

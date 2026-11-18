@@ -20,6 +20,53 @@ from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
 WORKSPACE_DIR = Path(__file__).resolve().parent.parent.parent
+def _code_deny_finder():
+    """惰性取 bridges.code_sandbox_policy.find_deny_violation（不可用时返回 None）。
+
+    阶段二 B 组：VBA/AutoLISP 沙箱由黑名单正则改为 deny-by-default，工具层
+    审计复用同一份硬禁清单，避免「工具层放过、桥接层才拦」的缝隙。
+    """
+    try:
+        root = str(WORKSPACE_DIR)
+        if root not in sys.path:
+            sys.path.insert(0, root)
+        from bridges.code_sandbox_policy import find_deny_violation
+
+        return find_deny_violation
+    except Exception:  # pragma: no cover - 策略模块缺失时退化为纯黑名单
+        return None
+
+
+def _iter_nested_argument_maps(arguments):
+    """Yield JSON-style dictionaries below a tool argument object, with hard bounds."""
+    pending = [(arguments, 0)]
+    seen = set()
+    visited = 0
+    while pending:
+        value, depth = pending.pop()
+        visited += 1
+        if visited > 8192:
+            raise ValueError("Tool arguments exceed the supported structure size.")
+        if depth > 64:
+            raise ValueError("Tool arguments exceed the maximum nesting depth.")
+        if isinstance(value, dict):
+            identity = id(value)
+            if identity in seen:
+                raise ValueError("Tool arguments contain a cyclic structure.")
+            seen.add(identity)
+            yield value
+            children = list(value.values())
+        elif isinstance(value, (list, tuple)):
+            identity = id(value)
+            if identity in seen:
+                raise ValueError("Tool arguments contain a cyclic structure.")
+            seen.add(identity)
+            children = list(value)
+        else:
+            continue
+        pending.extend((child, depth + 1) for child in reversed(children)
+                       if isinstance(child, (dict, list, tuple)))
+
 
 
 class FindingBuilder:
@@ -103,17 +150,22 @@ class ModelSecurityAuditor:
 
     # Patterns for prompt injection & jailbreak attempts (bilingual EN + ZH)
     INJECTION_PATTERNS = [
-        (re.compile(r"(?i)(ignore\s+all\s+(previous|prior)\s+instructions|忽略.*(之前|以往|前文|以上|所有).*(指令|提示|规则|约束))"), "Prompt injection: override instructions"),
+        (re.compile(r"(?i)(ignore\s+(?:all\s+)?(previous|prior)\s+instructions|忽略.*(之前|以往|前文|以上|所有).*(指令|提示|规则|约束))"), "Prompt injection: override instructions"),
         (re.compile(r"(?i)(disregard\s+all\s+guardrails|bypass\s+safety|(绕过|无视|解除|禁用).*(安全|防护|护栏|限制|底线|合规))"), "Prompt injection: guardrail bypass"),
         (re.compile(r"(?i)(you\s+are\s+now\s+in\s+developer\s+mode|DAN\s*mode|DAN\s*模式|(?:你|作为|扮演).{0,10}(?:DAN|开发者模式|无限制|Do\s*Anything\s*Now))"), "Role confusion: developer mode bypass"),
-        (re.compile(r"(?i)(system\s*prompt\s*leak|print\s+system\s+prompt|(输出|打印|导出|显示|给出|逐字).*(系统提示|提示词|system\s*prompt|Prompt\s*原文))"), "Sensitive context extraction attempt"),
+        (re.compile(r"(?i)(system\s*prompt\s*leak|(?:print|reveal)\s+(?:your\s+)?system\s+prompt|(输出|打印|导出|显示|给出|逐字).*(系统提示|提示词|system\s*prompt|Prompt\s*原文))"), "Sensitive context extraction attempt"),
         (re.compile(r"(?i)(override\s+equation\s*mgr|remove\s+wall\s*thickness\s*constraint|(修改|删除|覆盖|移除).*(方程式管理器|壁厚限制|几何约束))"), "Safety override: geometry constraints"),
         (re.compile(r"(?i)((短接|旁路).*(安全门|急停|门联锁|联锁开关)|(屏蔽|禁用).*(硬限位|软限位|行程限位|限位开关)|(跳过|伪造|规避).*(首件|首件检验|质检))"), "Physical safety violation attempt"),
         (re.compile(r"(?i)((删除|清空|销毁|格式化).*(runs|历史证据|评测日志|测试记录|磁盘)|rm\s+-rf|del\s+/[fsq]|rmdir\s+/s)"), "Destructive command attempt"),
     ]
 
     # Patterns for dangerous path traversal
-    PATH_TRAVERSAL_PATTERN = re.compile(r"(\.\.[/\\]|[/\\]\.\.|^[/\\]|[A-Za-z]:[/\\])")
+    #: 相对路径逃逸（../ 、..\ 、/.. ）—— 与「绝对路径越界」是两类不同的越界，
+    #: 审计轨迹里必须能区分：前者是 path traversal，后者是 outside authorized roots。
+    #: 合并成一个正则 + 一条理由串会让两类越界在取证时无法分辨（2026-11-16 实测）。
+    PATH_TRAVERSAL_PATTERN = re.compile(r"(\.\.[/\\]|[/\\]\.\.)")
+    #: 绝对路径（POSIX 根 / Windows 盘符）
+    ABSOLUTE_PATH_PATTERN = re.compile(r"(^[/\\]|[A-Za-z]:[/\\])")
 
     # Dangerous script / macro execution patterns in CAD/CAM code
     VBA_DANGEROUS_PATTERN = re.compile(r"(?i)\b(Shell|CreateObject\s*\(\s*[\"']WScript\.Shell|cmd\.exe|powershell|FileSystemObject|Kill\b|RmDir\b|Environ\b)")
@@ -146,7 +198,47 @@ class ModelSecurityAuditor:
         }
 
     def audit_tool_arguments(self, tool_name: str, arguments: Dict[str, Any]) -> Dict[str, Any]:
-        """Audits tool-calling arguments against injection, path traversal, and parameter bounds."""
+        """Recursively audit tool arguments against injection, traversal, and bounds."""
+        if not isinstance(arguments, dict):
+            return {
+                "passed": False,
+                "tool_name": tool_name,
+                "violations": ["Tool arguments must be a JSON object."],
+                "risk_level": "high",
+            }
+
+        violations = []
+        try:
+            for nested_arguments in _iter_nested_argument_maps(arguments):
+                result = self._audit_tool_arguments_flat(tool_name, nested_arguments)
+                violations.extend(result["violations"])
+        except ValueError as exc:
+            violations.append(str(exc))
+
+        passed = len(violations) == 0
+        return {
+            "passed": passed,
+            "tool_name": tool_name,
+            "violations": violations,
+            "risk_level": "high" if not passed else "low",
+        }
+
+    def _path_inside_authorized_root(self, value: str) -> bool:
+        try:
+            candidate = Path(value)
+            if not candidate.is_absolute():
+                candidate = Path(self.workspace_root) / candidate
+            resolved = candidate.resolve()
+            roots = [Path(self.workspace_root).resolve()]
+            profile = os.environ.get("USERPROFILE", "")
+            if profile:
+                roots.append((Path(profile) / "Desktop").resolve())
+            return any(resolved == root or root in resolved.parents for root in roots)
+        except (OSError, RuntimeError, ValueError):
+            return False
+
+    def _audit_tool_arguments_flat(self, tool_name: str, arguments: Dict[str, Any]) -> Dict[str, Any]:
+        """Apply the existing argument rules to a single object level."""
         violations = []
 
         # 1. Path traversal checks on path/filename fields
@@ -154,14 +246,23 @@ class ModelSecurityAuditor:
             "file_path", "filename", "output_dir", "template_path", "script_path",
             "target_path", "out_root", "nc_file_path", "project_path", "log_path", "output_dxf"
         )
-        for field in path_fields:
-            if field in arguments and isinstance(arguments[field], str):
-                val = arguments[field]
-                if self.PATH_TRAVERSAL_PATTERN.search(val):
-                    violations.append(f"Field '{field}' contains dangerous path traversal sequence: '{val}'")
-                base_name = os.path.basename(val)
-                if self.WINDOWS_RESERVED.match(base_name):
-                    violations.append(f"Field '{field}' references reserved Windows device name: '{base_name}'")
+        for field, val in arguments.items():
+            field_name = str(field).lower()
+            is_path_field = (field_name in path_fields or "path" in field_name
+                             or field_name.endswith("_file"))
+            if not is_path_field or not isinstance(val, str):
+                continue
+            if (self.PATH_TRAVERSAL_PATTERN.search(val)
+                    and not self._path_inside_authorized_root(val)):
+                violations.append(
+                    f"Field '{field}' contains a path traversal sequence "
+                    f"(relative escape outside authorized roots).")
+            elif (self.ABSOLUTE_PATH_PATTERN.search(val)
+                    and not self._path_inside_authorized_root(val)):
+                violations.append(f"Field '{field}' contains a path outside authorized roots.")
+            base_name = re.split(r"[/\\]", val)[-1]
+            if self.WINDOWS_RESERVED.match(base_name):
+                violations.append(f"Field '{field}' references a reserved Windows device name.")
 
         # 2. Command injection on command or shell fields
         for field in ("command", "cmd", "exec", "script_args"):
@@ -171,11 +272,22 @@ class ModelSecurityAuditor:
                     violations.append(f"Field '{field}' contains suspicious shell metacharacters: '{val}'")
 
         # 2.1 Dangerous code execution in VBA, AutoLISP, and G-Code fields
+        # 阶段二 B 组：旧黑名单之外追加 deny-by-default 硬禁清单（复用
+        # bridges/code_sandbox_policy.py），补上 Declare/PtrSafe/CallByName/
+        # Application.Run/Open...For 等黑名单漏项，使工具层即拦截。
+        deny_finder = _code_deny_finder()
+
         for field in ("vba_code", "macro_code"):
             if field in arguments and isinstance(arguments[field], str):
                 val = arguments[field]
                 if self.VBA_DANGEROUS_PATTERN.search(val):
                     violations.append(f"Dangerous system execution detected in VBA code field '{field}'")
+                deny_hit = deny_finder("vba", val) if deny_finder else None
+                if deny_hit:
+                    violations.append(
+                        f"VBA field '{field}' hits deny-by-default construct "
+                        f"[{deny_hit[0]}]: {deny_hit[1]}"
+                    )
 
         for field in ("code", "lisp_code"):
             if field in arguments and isinstance(arguments[field], str):
@@ -184,6 +296,12 @@ class ModelSecurityAuditor:
                     violations.append(f"Dangerous system execution detected in AutoLISP code field '{field}'")
                 if self.GCODE_PLUNGE_PATTERN.search(val):
                     violations.append(f"Dangerous G00 high-speed crash plunge detected in field '{field}'")
+                deny_hit = deny_finder("lisp", val) if deny_finder else None
+                if deny_hit:
+                    violations.append(
+                        f"AutoLISP field '{field}' hits deny-by-default construct "
+                        f"[{deny_hit[0]}]: {deny_hit[1]}"
+                    )
 
         # 3. Manufacturing physical bounds checks
         if "d_outer" in arguments and "d_inner" in arguments:
@@ -573,6 +691,8 @@ class ModelSecurityAuditor:
                 capture_output=True,
                 text=True,
                 timeout=15,
+                encoding="utf-8",
+                errors="replace",
             )
             if res.returncode == 0:
                 return True, "Schema validation passed with 0 errors."

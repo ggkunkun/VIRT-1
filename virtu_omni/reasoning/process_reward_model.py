@@ -254,15 +254,137 @@ class ProcessSupervisedRewardModel:
         )
 
     @classmethod
-    def falsifiable_prm_probe(cls) -> bool:
-        """Rule 4: Injects a 4-step G-code with Step 3 rapid plunge into stock Z=-5.0.
+    def audit_cot_steps(
+        cls,
+        raw_output: str,
+        prompt: str = "",
+        scenario: Optional[Dict[str, Any]] = None,
+        require_think: bool = True,
+    ) -> PRMTrajectoryAudit:
+        """Step-by-step Process Supervision of <think> Chain-of-Thought and final answer faithfulness."""
+        from virtu_omni.reasoning.chain_of_thought import StructuredCoTEngine
 
-        PRM MUST flag Step 3 with reward == 0.0, first_failure_step == 3, and all_steps_passed == False.
+        rep = StructuredCoTEngine.verify_cot_faithfulness(
+            raw_output=raw_output,
+            prompt=prompt,
+            scenario=scenario,
+            require_think=require_think,
+        )
+        step_results: List[PRMStepResult] = []
+        state: Dict[str, Any] = {
+            "has_think_block": rep.has_think_block,
+            "stages_covered": [],
+            "derived_fields": {},
+        }
+        all_ok = True
+        first_fail: Optional[int] = None
+        fatal_msg: Optional[str] = None
+
+        if not rep.steps:
+            veto = "Missing or empty <think> reasoning steps" if require_think else None
+            rw = 0.0 if require_think else 1.0
+            if require_think:
+                all_ok = False
+                first_fail = 1
+                fatal_msg = veto
+            step_results.append(
+                PRMStepResult(
+                    step_index=1,
+                    step_type="PHYSICS_DERIVATION",
+                    content="<no_think_steps>",
+                    reward=rw,
+                    passed=(rw > 0.0),
+                    veto_reason=veto,
+                    accumulated_state=copy.deepcopy(state),
+                )
+            )
+        else:
+            for s in rep.steps:
+                rw = 1.0
+                veto = None
+                if not s.grounding_valid or not s.arithmetic_valid:
+                    rw = 0.0
+                    veto = s.error_detail or "CoT step arithmetic or grounding failure"
+                    all_ok = False
+                    if first_fail is None:
+                        first_fail = s.step_index
+                        fatal_msg = veto
+                if s.stage not in state["stages_covered"]:
+                    state["stages_covered"].append(s.stage)
+                if s.bound_field and s.evaluated_value is not None:
+                    state["derived_fields"][s.bound_field] = s.evaluated_value
+                step_results.append(
+                    PRMStepResult(
+                        step_index=s.step_index,
+                        step_type="PHYSICS_DERIVATION",
+                        content=s.content,
+                        reward=rw,
+                        passed=(rw > 0.0),
+                        veto_reason=veto,
+                        accumulated_state=copy.deepcopy(state),
+                    )
+                )
+
+        # Final terminal step: check Thought-to-Answer faithfulness and gate violations
+        if rep.faithfulness_conflicts or rep.gate_violations:
+            term_idx = len(step_results) + 1
+            reasons = rep.faithfulness_conflicts + rep.gate_violations
+            veto = "; ".join(reasons)
+            all_ok = False
+            if first_fail is None:
+                first_fail = term_idx
+                fatal_msg = veto
+            step_results.append(
+                PRMStepResult(
+                    step_index=term_idx,
+                    step_type="PHYSICS_DERIVATION",
+                    content="[FAITHFULNESS_AND_GATE_CHECK]",
+                    reward=0.0,
+                    passed=False,
+                    veto_reason=veto,
+                    accumulated_state=copy.deepcopy(state),
+                )
+            )
+
+        overall = sum(s.reward for s in step_results) / max(1, len(step_results))
+        if not all_ok:
+            overall = min(overall, rep.overall_cot_score)
+        traj_id = f"PRM_COT_{hashlib.sha256((raw_output or '').encode('utf-8', 'replace')).hexdigest()[:8]}"
+        return PRMTrajectoryAudit(
+            trajectory_id=traj_id,
+            total_steps=len(step_results),
+            steps=step_results,
+            overall_score=round(overall, 4),
+            first_failure_step=first_fail,
+            all_steps_passed=all_ok,
+            fatal_error=fatal_msg,
+        )
+
+    @classmethod
+    def falsifiable_prm_probe(cls) -> bool:
+        """Rule 4:
+        1) Injects a 4-step G-code with Step 3 rapid plunge into stock Z=-5.0 -> Step 3 MUST get reward 0.0.
+        2) Injects a 3-step CoT with Step 2 arithmetic hallucination (355/180 = 2.50) -> Step 2 MUST get reward 0.0.
         """
         gcode = """G90 G54 G21
 M03 S2000
 G00 Z-5.0
 G01 X50.0 F200.0
 """
-        audit = cls.audit_gcode_steps(gcode, safe_plane_z=5.0, stock_top_z=0.0)
-        return not audit.all_steps_passed and audit.first_failure_step == 3 and audit.steps[2].reward == 0.0
+        audit_g = cls.audit_gcode_steps(gcode, safe_plane_z=5.0, stock_top_z=0.0)
+        g_ok = (not audit_g.all_steps_passed and audit_g.first_failure_step == 3 and audit_g.steps[2].reward == 0.0)
+
+        bad_cot = (
+            "<think>\n"
+            "[STAGE 1: INTENT_AND_GIVENS] Sy=355 MPa, sigma=180 MPa\n"
+            "[STAGE 4: SYMBOLIC_DERIVATION] safety_factor = 355 / 180 = 2.50\n"
+            "</think>\n"
+            '{"world_state": {"safety_factor": 2.50, "fos_gate": "pass"}}'
+        )
+        audit_c = cls.audit_cot_steps(
+            bad_cot,
+            prompt="Sy=355 MPa, sigma=180 MPa",
+            scenario={"task": "fea_fos", "inputs": {"Sy": 355.0, "sigma": 180.0}},
+        )
+        c_ok = (not audit_c.all_steps_passed and audit_c.first_failure_step == 2 and audit_c.steps[1].reward == 0.0)
+        return g_ok and c_ok

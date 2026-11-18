@@ -38,6 +38,47 @@ WORKSPACE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(
 if WORKSPACE_DIR not in sys.path:
     sys.path.insert(0, WORKSPACE_DIR)
 
+# --- V-03 修复：沙箱统一走 virtu_omni.security.code_guard 的 AST 闸门 ---------
+try:
+    from virtu_omni.security import code_guard as _code_guard
+except Exception:  # pragma: no cover - 路径异常时退化为本地最小实现
+    _code_guard = None
+
+
+def _guarded_builtins() -> Dict[str, Any]:
+    if _code_guard is not None:
+        return _code_guard.restricted_builtins()
+    return {"abs": abs, "min": min, "max": max, "round": round, "float": float,
+            "int": int, "len": len, "range": range, "sum": sum,
+            "print": lambda *args: None}
+
+
+def _validate_source(code: str) -> List[str]:
+    # 静思沙箱只跑纯计算代码：不开 open 豁免。旧写法沿用 code_guard 默认
+    # allow_open=True，等于源级放行任意文件读取（全靠运行期 builtins 兜底），
+    # 一旦有人调整 SAFE_GLOBALS 就直接穿透，所以这里显式收紧。
+    if _code_guard is None:
+        return []
+    try:
+        return _code_guard.validate_source(code, allow_open=False)
+    except TypeError:  # 老版本 code_guard 无该关键字
+        return _code_guard.validate_source(code)
+
+
+def _guard_mode() -> str:
+    return _code_guard.guard_mode() if _code_guard is not None else "enforce"
+
+
+def _audit_blocked(code: str, violations: List[str]) -> None:
+    """被拒代码留痕：只记哈希与违规摘要，不落原文。"""
+    try:
+        digest = hashlib.sha256((code or "").encode("utf-8", "replace")).hexdigest()[:12]
+        logger.warning("quiet_star sandbox 拒绝不安全代码 sha256_12=%s violations=%s",
+                       digest, violations[:3])
+    except Exception:
+        pass
+
+
 logger = logging.getLogger("virtu_omni.reasoning.quiet_star")
 
 
@@ -78,7 +119,18 @@ class SilentHealingAuditReport:
 
 
 class SilentCodeExecutor:
-    """Runs untrusted code in a controlled safe local namespace."""
+    """Runs untrusted code in a controlled safe local namespace.
+
+    安全说明（V-03 修复）
+    --------------------
+    旧实现只裁掉了 ``__builtins__``，但模块级仍暴露了 ``math`` 对象与外层真实
+    全局，任何 ``().\\_\\_class\\_\\_.\\_\\_base\\_\\_.\\_\\_subclasses\\_\\_()``
+    或 ``(lambda:0).\\_\\_globals\\_\\_['sys'].modules['os']`` 都能反射回完整
+    ``os``，等于没有沙箱。现在改为：
+
+    * 执行前用 :mod:`virtu_omni.security.code_guard` 做 AST 静态校验（主防线）；
+    * 执行时注入真正裁剪过的 builtins（``open`` 限定在白名单根目录内）。
+    """
 
     SAFE_GLOBALS = {
         "abs": abs,
@@ -91,18 +143,7 @@ class SilentCodeExecutor:
         "range": range,
         "sum": sum,
         "math": math,
-        "__builtins__": {
-            "abs": abs,
-            "min": min,
-            "max": max,
-            "round": round,
-            "float": float,
-            "int": int,
-            "len": len,
-            "range": range,
-            "sum": sum,
-            "print": lambda *args: None,
-        },
+        "__builtins__": _guarded_builtins(),
     }
 
     @classmethod
@@ -114,10 +155,18 @@ class SilentCodeExecutor:
         except SyntaxError as e:
             return False, "", "SyntaxError", f"Line {e.lineno}: {e.msg}"
 
-        # 2. Namespace execution
+        # 2. Security gate: 危险构造在 exec 之前就拒绝（fail-closed）
+        violations = _validate_source(code)
+        if violations:
+            _audit_blocked(code, violations)
+            if _guard_mode() != "audit":
+                return False, "", "UnsafeCodeError", "；".join(violations[:5])
+
+        # 3. Namespace execution
         local_scope: Dict[str, Any] = {}
         global_scope = copy.copy(cls.SAFE_GLOBALS)
         global_scope["math"] = math
+        global_scope["__builtins__"] = _guarded_builtins()
 
         try:
             exec(compile(tree, "<quiet_star_sandbox>", "exec"), global_scope, local_scope)

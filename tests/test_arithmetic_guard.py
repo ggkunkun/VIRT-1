@@ -184,7 +184,8 @@ def test_derivation_recalculation_overwrites_hallucination():
     assert ws["material_removed_mm3"] == 48000.0
     assert ws["delta_volume_mm3"] == -48000.0
     assert abs(ws["resulting_mass_g"] - 1884.0) < 0.1
-    assert ws["volume_conservation"] == "pass_cut_negative"
+    # 闸门字面以 wm_contract.KEY_SCHEMA 短字面为唯一真源（guard 已归一）
+    assert ws["volume_conservation"] == "pass"
 
 
 def test_fea_safety_factor_prevents_fake_pass():
@@ -196,7 +197,7 @@ def test_fea_safety_factor_prevents_fake_pass():
     corrected_text = _verify_arithmetic_response(raw_response, msgs(prompt))
     parsed = json.loads(corrected_text)
     ws = parsed["world_state"]
-    assert ws["fos_gate"] == "FOS<1.5_FAIL"
+    assert ws["fos_gate"] == "fail"
     assert "FAIL" in ws.get("status", "")
     assert abs(ws["safety_factor"] - (200.0 / 171.3)) < 0.05
 

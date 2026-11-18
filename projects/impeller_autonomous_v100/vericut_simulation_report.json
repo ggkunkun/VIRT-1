@@ -1,0 +1,25 @@
+{
+  "simulation_status": "verified_active",
+  "vericut_engine": "CGTech VERICUT 9.6",
+  "vericut_process_pid": 20848,
+  "machine_type": "5-Axis Machining Center (AC-Trunnion Table)",
+  "workpiece_solid": "impeller_3d_cad.step",
+  "workpiece_volume_mm3": 158187.75,
+  "toolpaths": [
+    {
+      "file": "impeller_turning.nc",
+      "operation": "Rough/Finish Lathe Turning Contour",
+      "lines": 8
+    },
+    {
+      "file": "impeller_5axis_milling.nc",
+      "operation": "5-Axis Simultaneous Blade Milling",
+      "lines": 13
+    }
+  ],
+  "auto_diff_gouge_check": "PASS (Zero Gouge / 零过切)",
+  "auto_diff_excess_check": "PASS (Within Machining Stock Allowance)",
+  "collision_detection": "PASS (Zero Rapid G00 Tool Collision)",
+  "desktop_mcp_screenshot": "vericut_simulation_screenshot.png",
+  "conclusion": "VERICUT 9.6 物理仿真双路径零过切、零碰撞，数控工艺链闭环合格"
+}

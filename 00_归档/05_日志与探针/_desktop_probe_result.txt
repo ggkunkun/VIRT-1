@@ -1,0 +1,8 @@
+desktop_controller.init OK repr= ok
+find_software_window(solidworks) OK repr= None
+capture OK status= captured keys= ['status', 'target', 'width', 'height', 'output_path']
+hotkey_esc OK status= hotkey_sent keys= ['status', 'keys']
+type_text OK status= typed keys= ['status', 'length']
+dismiss_all_dialogs OK status= dismissed keys= ['status', 'results']
+import agent_chain_executor OK has_preflight_apps= True
+DONE

@@ -10,9 +10,13 @@ just two different random models).
 from __future__ import annotations
 
 import json
+import subprocess
+import sys
 from pathlib import Path
 
 import pytest
+# torch 是可选训练依赖：无 torch 的推理主机上跳过本模块，而不是让收集阶段中断。
+pytest.importorskip("torch")
 import torch
 
 from virtu_omni.config import ModelConfig
@@ -88,12 +92,50 @@ def test_graph_executor_rejects_drifted_output():
 # 2. Measured hardware bound and roofline monotonicity
 # ---------------------------------------------------------------------------
 
+_HW_JSON_SCRIPT = (
+    "import json,sys;"
+    "sys.path.insert(0, r'%s');"
+    "from dataclasses import asdict;"
+    "from virtu_omni.models.operator_extreme import characterize_hardware;"
+    "print(json.dumps(asdict(characterize_hardware('cuda', repeats=3))))"
+) % str(Path(__file__).resolve().parents[1])
+
+
 def test_hardware_limits_are_measured_and_sane():
-    hw = characterize_hardware(DEV, repeats=3)
-    assert hw.basis == "measured"
-    assert hw.bandwidth_gbs > 50.0
-    assert hw.peak_tflops["bf16"] > hw.peak_tflops["fp32"] * 2
-    assert hw.peak_tflops["tf32"] > hw.peak_tflops["fp32"]
+    # 为什么要起子进程：全量跑时前面那些用例会把同进程的显存吃到见底，此时
+    # `dst.copy_(src)` 退化成主机内存往返（RTX 4050 从 174 GB/s 掉到 7.8）。
+    # 这是「被测环境脏了」，不是显卡不行；但在同进程里既测不出硬件、也测不出代码。
+    # 子进程拿到干净的 CUDA 上下文，测的才是这块卡本身。
+    proc = subprocess.run([sys.executable, "-c", _HW_JSON_SCRIPT],
+                          capture_output=True, text=True, encoding="utf-8", timeout=300)
+    assert proc.returncode == 0, f"子进程探针失败: {proc.stderr[-2000:]}"
+    hw = json.loads(proc.stdout.strip().splitlines()[-1])
+    assert hw["basis"] == "measured", (
+        f"干净上下文里测出的带宽 {hw['bandwidth_gbs']} GB/s 低于物理下限；"
+        "这时候不是显存压力问题，是探针或驱动真的出事了，去查，别放宽阈值。")
+    assert hw["bandwidth_gbs"] > 50.0
+    assert hw["peak_tflops"]["bf16"] > hw["peak_tflops"]["fp32"] * 2
+    assert hw["peak_tflops"]["tf32"] > hw["peak_tflops"]["fp32"]
+
+
+def test_contended_bandwidth_is_flagged_not_published_as_measured(monkeypatch):
+    """显存被占满时的读数必须被标成 contended，不许再冒充 measured。
+
+    正例证据（2026-11-13 同机实测）：空显存 174.7 GB/s；吃满 4.2 GB 后 7.8 GB/s，
+    后者正是 PCIe 往返量级。这里不真的吃显存（慢且污染同进程后续用例），
+    而是把探针计时放慢 30 倍来注入同一种「读数崩塌」，验证标签切换。
+    """
+    import virtu_omni.models.operator_extreme as oe
+
+    real_event_time_ms = oe._event_time_ms
+
+    def slow_copy_probe(fn, repeats=7):
+        return real_event_time_ms(fn, repeats) * 30
+
+    monkeypatch.setattr(oe, "_event_time_ms", slow_copy_probe)
+    hw = characterize_hardware(DEV, repeats=2)
+    assert hw.basis == "contended", "崩塌的读数仍被标成 measured，会污染 roofline 下界"
+    assert hw.bandwidth_gbs > 0, "数字本身仍应如实返回，只是标签降级"
 
 
 def test_roofline_bounds_respect_precision_and_sequence_length():

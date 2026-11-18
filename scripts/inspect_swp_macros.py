@@ -17,7 +17,7 @@ def extract_strings_from_swp(file_path):
     code_snippets = []
     
     # 1. Plain ASCII strings
-    ascii_tokens = re.findall(b'[a-zA-Z0-9_ \t\.\(\)\,\=\+\-\*\/\\\"\'\:]{6,}', data)
+    ascii_tokens = re.findall(rb'[a-zA-Z0-9_ \t\.\(\)\,\=\+\-\*\/"\'\:]{6,}', data)
     vba_keywords = [b'Sub ', b'Function ', b'Dim ', b'End Sub', b'End Function', b'Set ', b'SldWorks', b'ModelDoc', b'SelectionMgr', b'PartDoc', b'AssemblyDoc']
     
     meaningful_lines = []

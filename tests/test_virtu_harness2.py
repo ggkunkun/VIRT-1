@@ -18,6 +18,7 @@ Verifies:
 """
 
 import json
+import os
 import tempfile
 import unittest
 from pathlib import Path
@@ -153,6 +154,11 @@ class TestVirtuHarness2(unittest.TestCase):
         self.assertTrue(exp_rep.ok)
         self.assertIn("<experience>", exp_rep.text)
 
+    @unittest.skipUnless(
+        os.environ.get("VIRTU_HARNESS2_E2E") == "1",
+        "需要真实 LLM 后端（proposer 会重试并退避 sleep）；"
+        "设 VIRTU_HARNESS2_E2E=1 且后端可用时才跑，避免整套测试被挂住",
+    )
     def test_05_end_to_end_pipeline(self):
         """Test running complete Harness 2 sweep across tasks."""
         out_runs = self.root / "pipeline_runs"

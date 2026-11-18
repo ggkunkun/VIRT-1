@@ -33,6 +33,7 @@ sys.path.insert(0, HERE)
 ROOT = os.path.dirname(HERE)
 
 import build_worldmodel_sft as base  # noqa: E402
+import wm_derivation  # noqa: E402  (契约要求 derivation，v2 历史语料缺这一段)
 from distill_local_solver import mass_props_csg  # noqa: E402  (间接校验可用)
 
 REL_TOL = 0.08  # 与 eval_worldmodel.py 一致
@@ -47,8 +48,12 @@ SYSTEM_V2 = base.SYSTEM + (
 )
 
 
-def mk(user, assistant_obj):
-    return {
+def mk(user, assistant_obj, scenario=None):
+    # 契约规则 F：每个数值字段必须在顶层 derivation 给出代入算式；
+    # 同时把闸门字面归一为 KEY_SCHEMA 字面（pass/fail、"true"/"false"）。
+    if scenario is not None:
+        wm_derivation.enrich(assistant_obj, scenario)
+    rec = {
         "messages": [
             {"role": "system", "content": SYSTEM_V2},
             {"role": "user", "content": user},
@@ -56,14 +61,23 @@ def mk(user, assistant_obj):
         ],
         "meta": {"stage": "WMv2"},
     }
+    # scenario 必须落盘：v1 的 make_messages 一直带，v2 此前只在传入时用于 enrich
+    # 却不写入样本，导致 v2 语料（design/process/adapt/self_correction）没有任何
+    # 可复算标注——评测只能靠 infer 反推族别与参数，族级判分无法逐条核对，
+    # self_correction 的派生样本更是完全丢失来源场景。
+    if scenario is not None:
+        rec["scenario"] = scenario
+    return rec
 
 
 # ----------------------------------------------------------------------------
 # 1) 需求 -> 设计规格 + 质量属性（"根据需求设计绘图"）
 # ----------------------------------------------------------------------------
 def _flange_mass(r_out, r_bore, t, n_holes, r_hole, rho):
+    # 禁止 max(V,1) 静默夹紧（测量宪法第 5 条）：孔体积超过环形体积时负值
+    # 必须暴露给上游判非法，而不是夹成 1.0 伪造一个正体积靶值。
+    # 与 wm_verifier.recompute(design) 同口径（test_design_negative_volume...）。
     V = math.pi * (r_out ** 2 - r_bore ** 2) * t - n_holes * math.pi * r_hole ** 2 * t
-    V = max(V, 1.0)
     return V, V * rho
 
 
@@ -78,6 +92,10 @@ def gen_design_from_requirement(rng):
     pcd = round((d_out + d_bore) / 2.0 * rng.uniform(0.82, 0.95), 1)
 
     V, m = _flange_mass(d_out / 2.0, d_bore / 2.0, t, n, d_hole / 2.0, rho)
+    if V <= 0 or (pcd - d_hole <= d_bore + 2.0) or (pcd + d_hole >= d_out - 2.0):
+        pcd = round((d_out + d_bore) / 2.0, 1)
+        d_hole = round(max(4.0, min(d_hole, (d_out - d_bore) * 0.35)), 1)
+        V, m = _flange_mass(d_out / 2.0, d_bore / 2.0, t, n, d_hole / 2.0, rho)
     design = {
         "part_type": "flange",
         "outer_dia_mm": d_out,
@@ -107,7 +125,9 @@ def gen_design_from_requirement(rng):
     u = (f"设计一个{mat}法兰：外径 φ{d_out} mm，中心孔 φ{d_bore} mm，厚度 {t} mm，"
          f"{n}×φ{d_hole} mm 螺栓孔均布于 φ{pcd} mm 节圆。"
          f"请给出可直接驱动 CAD 建模的设计规格（含特征树）与质量属性。")
-    return mk(u, ws)
+    return mk(u, ws, {"task": "design", "inputs": {
+        "r_out": d_out / 2.0, "r_bore": d_bore / 2.0, "t": t,
+        "n_holes": n, "r_hole": d_hole / 2.0, "rho": rho}})
 
 
 # ----------------------------------------------------------------------------
@@ -150,7 +170,8 @@ def gen_machining_process_plan(rng):
     u = (f"为{mat}轴类件（φ{D} mm，车削长度 {L} mm）制定车削工艺："
          f"粗车 ap={ap} mm、f={f} mm/rev、vc={vc} m/min，刀尖圆弧 rε={r_eps} mm。"
          f"给出主轴转速、进给速度、材料去除率 MRR、表面粗糙度 Ra 与单刀切削时间，并给出工序序列。")
-    return mk(u, ws)
+    return mk(u, ws, {"task": "process", "inputs": {
+        "D": D, "L": L, "ap": ap, "f": f, "vc": vc, "r_eps": r_eps}})
 
 
 # ----------------------------------------------------------------------------
@@ -181,7 +202,7 @@ def gen_unfamiliar_adaptation(rng):
                 "yield_strength_mpa": m["Sy"],
                 "peak_von_mises_mpa": sigma,
                 "safety_factor": base.round_sig(fos, 3),
-                "fos_gate": "FOS>=1.5_pass" if fos >= 1.5 else "FOS<1.5_FAIL",
+                "fos_gate": "pass" if fos >= 1.5 else "fail",
             },
             "adaptation": {"used_provided_spec": True, "source": "user_supplied_table"},
             "verification": {"formula": "FOS=Sy/σ_vm (Sy 来自用户物性表)", "checks": ["FOS>0"]},
@@ -190,7 +211,7 @@ def gen_unfamiliar_adaptation(rng):
              f"屈服强度 {m['Sy']} MPa，弹性模量 {m['E']:.0f} MPa。"
              f"构件 FEA 峰值 von Mises 应力 σ_vm={sigma} MPa。"
              f"请严格用该表数据预测安全系数并判定 FOS≥1.5 是否通过。")
-        return mk(u, ws)
+        return mk(u, ws, {"task": "adapt_material", "inputs": {"Sy": m["Sy"], "sigma": sigma}})
     else:
         mc = rng.choice(UNFAMILIAR_MACHINES)
         D = round(rng.uniform(10, 80), 1)
@@ -211,7 +232,7 @@ def gen_unfamiliar_adaptation(rng):
         u = (f"陌生机床 {mc['name']}（现场参数表：最高转速 {mc['n_max']} rpm，"
              f"最大进给 {mc['feed_max']} mm/min）。要在 φ{D} mm 工件上以 vc={vc} m/min 车削，"
              f"需多少转速？是否超出机床能力？请严格按参数表判定。")
-        return mk(u, ws)
+        return mk(u, ws, {"task": "adapt_machine", "inputs": {"D": D, "vc": vc, "n_max": mc["n_max"]}})
 
 
 # ----------------------------------------------------------------------------
@@ -259,6 +280,9 @@ def gen_self_correction(rng, rec):
         return []
     orig_user = rec["messages"][1]["content"]
     inner = ws["world_state"]
+    # 纠错样本的正确答案同样必须带 derivation，否则模型学到「纠错后不用给算式」
+    deriv = ws.get("derivation")
+    scen = rec.get("scenario")
 
     cand = [(p, v) for p, v in _numeric_leaves(inner) if abs(v) > 1e-9]
     if not cand:
@@ -291,6 +315,8 @@ def gen_self_correction(rng, rec):
         },
         "verification": {"source": "verifier_L2", "rel_tol": REL_TOL, "resolved": True},
     }
+    if deriv:
+        wrong_out["derivation"] = copy.deepcopy(deriv)
     user_wrong = (
         f"【场景】{orig_user}\n"
         f"【草案】{json.dumps(draft, ensure_ascii=False)}\n"
@@ -307,13 +333,15 @@ def gen_self_correction(rng, rec):
         },
         "verification": {"source": "verifier_L2", "rel_tol": REL_TOL, "resolved": True},
     }
+    if deriv:
+        ok_out["derivation"] = copy.deepcopy(deriv)
     user_ok = (
         f"【场景】{orig_user}\n"
         f"【草案】{json.dumps(ws, ensure_ascii=False)}\n"
         f"【校验器反馈】{json.dumps({'level': 'L2', 'rel_tol': REL_TOL, 'verdict': 'accept', 'issues': []}, ensure_ascii=False)}\n"
         f"请依据校验器反馈输出更正后的 world_state；若草案正确则确认不变。"
     )
-    return [mk(user_wrong, wrong_out), mk(user_ok, ok_out)]
+    return [mk(user_wrong, wrong_out, scen), mk(user_ok, ok_out, scen)]
 
 
 # ----------------------------------------------------------------------------
@@ -378,10 +406,36 @@ def main():
                             recs.append(json.loads(line))
 
     rng.shuffle(recs)
+    # 合并蒸馏源后必然出现重复行（旧语料实测 2049 行里 24 行重复）。
+    # 以「同一条 assistant 答案」为唯一键去重，避免重复样本虚增训练权重。
+    seen, uniq = set(), []
+    for r in recs:
+        key = r["messages"][2]["content"]
+        if key in seen:
+            continue
+        seen.add(key)
+        uniq.append(r)
+    if len(uniq) != len(recs):
+        print(f"[dedup] 丢弃重复样本 {len(recs) - len(uniq)} 条")
+    recs = uniq
+
     os.makedirs(os.path.dirname(args.out), exist_ok=True)
     with open(args.out, "w", encoding="utf-8") as f:
         for r in recs:
             f.write(json.dumps(r, ensure_ascii=False) + "\n")
+
+    # 蒸馏源的历史 mm^5 靶值由官方审计工具就地修复，输出必须过量纲闸：
+    # 生成器侧已接待修正的 mass_props_csg，但并入的 virtu_worldmodel_distilled.jsonl
+    # 是旧求解器输出的冻结件（实测 81 条坏行），不修复会污染新语料。
+    import corpus_unit_audit as AUD
+    import normalize_wm_corpus as NWC
+    tmp = args.out + ".units_tmp"
+    rep = AUD.fix(args.out, tmp)
+    os.replace(tmp, args.out)
+    if rep["rewritten"]:
+        print(f"[unit-audit] 修复 {rep['rewritten']} 行 mm^5 靶值（蒸馏源历史遗留）")
+    AUD.assert_units_clean(args.out)
+    NWC.process_file(args.out, apply=True)
 
     fam = {}
     for r in recs:

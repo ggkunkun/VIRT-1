@@ -1,0 +1,78 @@
+[
+  {
+    "role": "system",
+    "content": "你是由 DeepMind 与 Virtu 团队打造的工业超级智能体（Virtu Super Agent）。\n当前五轴数控加工仿真中心已在桌面 [180, 60] 就绪。\n你的任务是自主决定并输出 Windows-MCP 工具调用以操控物理鼠标。\n可选工具：\n- Move(loc=[x, y])\n- Click(loc=[x, y], button='left'|'right', clicks=1)\n- Wait(duration=秒数)\n- Screenshot()\n\n必须且只能输出标准 JSON 格式：\n```json\n{\"name\": \"工具名\", \"arguments\": {...}}\n```"
+  },
+  {
+    "role": "user",
+    "content": "机床伺服已就绪。请操控鼠标执行第 1 步：移动光标至按钮 1 [加载五轴NC代码] [350, 205]。"
+  },
+  {
+    "role": "assistant",
+    "content": "{\"name\": \"Move\", \"arguments\": {\"loc\": [350, 205]}}"
+  },
+  {
+    "role": "user",
+    "content": "光标已成功移动至 [350, 205]。请发出左键单击指令以加载五轴 NC 代码。"
+  },
+  {
+    "role": "assistant",
+    "content": "{\"name\": \"Click\", \"arguments\": {\"loc\": [350, 200], \"button\": \"left\", \"clicks\": 1}}"
+  },
+  {
+    "role": "user",
+    "content": "五轴 NC 代码已成功注入数控缓冲区。请操控鼠标执行第 3 步：移动并单击按钮 2 [WCS G54 对刀与基准对齐] [350, 280]。"
+  },
+  {
+    "role": "assistant",
+    "content": "{\"name\": \"Click\", \"arguments\": {\"loc\": [350, 280], \"button\": \"left\", \"clicks\": 1}}"
+  },
+  {
+    "role": "user",
+    "content": "WCS G54 坐标系已校准完成。请操控鼠标执行第 4 步：移动并单击按钮 3 [启转主轴 M03 (16,000 RPM) & 高压冷却 M08] [350, 355]。"
+  },
+  {
+    "role": "assistant",
+    "content": "{\"name\": \"Click\", \"arguments\": {\"loc\": [350, 355], \"button\": \"left\", \"clicks\": 1}}"
+  },
+  {
+    "role": "user",
+    "content": "主轴已加速至 16,000 RPM，高压油冷 M08 正常喷射。请操控鼠标执行第 5 步：移动并单击按钮 4 [循环启动 CYCLE START] [350, 430] 开始五轴联动切削。"
+  },
+  {
+    "role": "assistant",
+    "content": "{\"name\": \"Click\", \"arguments\": {\"loc\": [350, 430], \"button\": \"left\", \"clicks\": 1}}"
+  },
+  {
+    "role": "user",
+    "content": "五轴空间螺旋铣削切削循环已激活，机床正在执行切削。请操控鼠标执行第 6 步：移动光标至 3D 视口中心 [1100, 450] 并巡检切削状态。"
+  },
+  {
+    "role": "assistant",
+    "content": "{\"name\": \"Move\", \"arguments\": {\"loc\": [1100, 450]}}"
+  },
+  {
+    "role": "user",
+    "content": "光标已定位至 3D 视口。请执行 Wait(duration=5) 等待五轴刀具螺旋精切削演进完成。"
+  },
+  {
+    "role": "assistant",
+    "content": "{\"name\": \"Wait\", \"arguments\": {\"duration\": 5}}"
+  },
+  {
+    "role": "user",
+    "content": "五轴切削已全部完成，叶身成型。请操控鼠标执行第 8 步：移动并单击按钮 5 [Auto-Diff 公差与残料分析 (±0.01mm)] [350, 505]。"
+  },
+  {
+    "role": "assistant",
+    "content": "{\"name\": \"Click\", \"arguments\": {\"loc\": [350, 505], \"button\": \"left\", \"clicks\": 1}}"
+  },
+  {
+    "role": "user",
+    "content": "Auto-Diff 分析完成，偏差 <= 0.01mm，全绿合格！请操控鼠标执行最后一步：移动并单击按钮 6 [导出质量证据封缄] [350, 575]。"
+  },
+  {
+    "role": "assistant",
+    "content": "{\"name\": \"Click\", \"arguments\": {\"loc\": [350, 575], \"button\": \"left\", \"clicks\": 1}}"
+  }
+]

@@ -18,6 +18,7 @@ import torch.nn.functional as F
 
 from virtu_omni.config import ModelConfig
 from virtu_omni.errors import ModelError, INFER_LOOP_METRIC
+from virtu_omni.models import cuda_ops as _cuda_ops
 
 
 class LoopRMSNorm(nn.Module):
@@ -36,6 +37,11 @@ class LoopRMSNorm(nn.Module):
         return x * torch.rsqrt(x.pow(2).mean(-1, keepdim=True) + self.eps)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
+        # 定制 CUDA kernel 快路径：与 VirtuRMSNorm 同口径（单遍 block 归约）；
+        # 不可用/需梯度时显式回退到下面的 float 参考实现。
+        fast = _cuda_ops.rmsnorm_or_none(x, self.weight, self.eps)
+        if fast is not None:
+            return fast
         normed = self._norm(x.float()).type_as(x)
         return normed * self.weight
 

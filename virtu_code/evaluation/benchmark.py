@@ -16,6 +16,7 @@ Follows Workspace Rule 8 (Measurement Constitution):
 
 from __future__ import annotations
 import ast
+import hashlib
 import json
 import math
 import os
@@ -700,7 +701,6 @@ class CodeCapabilityBenchmark:
                 except Exception:
                     run_id = "eval_" + hashlib.sha256(raw_file.read_bytes()).hexdigest()[:12]
             else:
-                import hashlib
                 run_id = "canon_" + hashlib.sha256(raw_file.read_bytes()).hexdigest()[:12]
 
             seal_info = seal_leg(out_path, owner=f"virtu_code_benchmark_{run_id}")

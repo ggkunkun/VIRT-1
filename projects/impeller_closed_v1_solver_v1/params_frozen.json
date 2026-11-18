@@ -1,0 +1,19 @@
+{
+  "D2_mm": 200.0,
+  "N_rpm": 47284.1,
+  "Z_blades": 12,
+  "beta2b_deg": 25.0,
+  "b2_mm": 12.0,
+  "D1t_mm": 135.53,
+  "D1h_mm": 41.09,
+  "axial_length_mm": 75.0,
+  "shroud_thickness_mm": 2.0,
+  "blade_thickness_mm": 1.8,
+  "hub_disk_thickness_mm": 8.0,
+  "bore_diameter_mm": 0.0,
+  "fillet_root_mm": 1.2,
+  "eta_total": 0.8,
+  "claimed_pressure_ratio": 4.01,
+  "claimed_tip_speed_m_s": 495.16,
+  "claimed_FOS": 1.617
+}

@@ -1,0 +1,37 @@
+{
+  "dataset": "cloud_train_pack\\dataset\\vericut96_sft_mix.jsonl",
+  "base": "checkpoints\\_base_qwen3_8b",
+  "total": 2190,
+  "passed": 2190,
+  "failed": 0,
+  "pass_rate": 1.0,
+  "failures_by_stage": {},
+  "failure_samples": [],
+  "token_stats": {
+    "min": 91,
+    "p50": 1859,
+    "p90": 2318,
+    "p95": 2646,
+    "p99": 2789,
+    "max": 4096,
+    "mean": 1360.6,
+    "total_tokens": 2979741,
+    "total_loss_tokens": 547707,
+    "truncated_at_max_length": 10,
+    "truncated_ratio": 0.0046,
+    "max_length": 4096
+  },
+  "role_stats": {
+    "assistant": 4094,
+    "total_rounds": 10273
+  },
+  "loss_ratio_mean": 0.3122,
+  "elapsed_sec": 16.5,
+  "checks": {
+    "C1_json_structure": "PASS",
+    "C2_template_render": "PASS",
+    "C3_mask_construction": "PASS",
+    "C4_loss_mask_scope": "PASS",
+    "C5_tool_call_integrity": "PASS"
+  }
+}

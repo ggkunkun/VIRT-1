@@ -39,6 +39,57 @@ from typing import Any, Dict, List, Optional, Set, Tuple, Union
 logger = logging.getLogger("virtu_omni.memory.working_memory")
 
 
+def _atomic_write_text(path: Union[str, Path], text: str) -> None:
+    """Unique-temp + os.replace with backoff: concurrent writers on Windows
+    raise WinError 5 on replace, and a half-written ledger is unrecoverable."""
+    target = Path(path)
+    tmp = target.with_name(f".{target.name}.tmp-{os.getpid()}-{time.time_ns()}")
+    try:
+        with open(tmp, "w", encoding="utf-8") as f:
+            f.write(text)
+            f.flush()
+            os.fsync(f.fileno())
+        for attempt in range(5):
+            try:
+                os.replace(tmp, target)
+                return
+            except PermissionError:
+                time.sleep(0.05 * (attempt + 1))
+        os.replace(tmp, target)
+    finally:
+        if tmp.exists():
+            try:
+                tmp.unlink()
+            except OSError:
+                pass
+
+
+def _alias_pattern(alias: str) -> str:
+    """Latin aliases need ASCII-only boundaries so single letters (n, R) do not
+    match inside words; CJK aliases have no word-boundary concept."""
+    esc = re.escape(alias)
+    if re.fullmatch(r"[A-Za-z0-9_]+", alias):
+        return rf"(?<![A-Za-z0-9_]){esc}(?![A-Za-z0-9_])"
+    return esc
+
+
+def _fmt_num(value: Any) -> str:
+    f = float(value)
+    return str(int(f)) if f.is_integer() else str(f)
+
+
+_FAILED_STATUSES = {"error", "blocked", "failed", "failure", "timeout", "rejected"}
+
+
+def _is_failed_result(result: Dict[str, Any]) -> bool:
+    status = str(result.get("status", "")).strip().lower()
+    if status in _FAILED_STATUSES:
+        return True
+    if result.get("success") is False:
+        return True
+    return False
+
+
 class MilestoneStatus(str, Enum):
     PENDING = "PENDING"
     IN_PROGRESS = "IN_PROGRESS"
@@ -126,6 +177,7 @@ class BuiltinWorkingMemory:
         self.lessons_learned: List[str] = []
         self.conversation_turn: int = 0
         self.last_sync_time: float = time.time()
+        self._persist_load_failed: bool = False
 
         if self.persist_path and os.path.exists(self.persist_path):
             self.load()
@@ -546,6 +598,10 @@ class BuiltinWorkingMemory:
 
     def _ingest_tool_result_facts(self, tool_name: str, result: Dict[str, Any]) -> None:
         """Parse tool output dictionary and update facts and milestones."""
+        # A failed/blocked receipt is not evidence: it must neither complete a
+        # milestone nor enter the verified-fact ledger (phantom-completion hole).
+        if _is_failed_result(result):
+            return
         # Check volume delta
         if "volume_mm3" in result:
             self.record_fact("rebuild_volume_mm3", result["volume_mm3"], unit="mm³", source=tool_name)
@@ -599,11 +655,14 @@ class BuiltinWorkingMemory:
         """Persist state to disk if persist_path is set."""
         if not self.persist_path:
             return
+        if self._persist_load_failed:
+            logger.warning(
+                "Refusing to overwrite unreadable working-memory ledger %s", self.persist_path)
+            return
         try:
             os.makedirs(os.path.dirname(os.path.abspath(self.persist_path)), exist_ok=True)
             snapshot = self.export_snapshot()
-            with open(self.persist_path, "w", encoding="utf-8") as f:
-                json.dump(snapshot, f, ensure_ascii=False, indent=2)
+            _atomic_write_text(self.persist_path, json.dumps(snapshot, ensure_ascii=False, indent=2))
         except Exception as e:
             logger.warning("Failed to auto-persist working memory: %s", e)
 
@@ -616,6 +675,7 @@ class BuiltinWorkingMemory:
                 data = json.load(f)
             self.import_snapshot(data)
         except Exception as e:
+            self._persist_load_failed = True
             logger.warning("Failed to load working memory from %s: %s", self.persist_path, e)
 
 
@@ -643,9 +703,12 @@ class LongTaskHallucinationSentinel:
             if not isinstance(val, (int, float)):
                 continue
 
-            # Look for mentions of this parameter with a different number
+            # Look for mentions of this parameter with a different number.
+            # The gap is restricted to connector words: a free .*? would steal
+            # a neighboring parameter's value across the sentence.
             aliases = PARAM_ALIASES.get(canonical_key, [canonical_key])
-            pattern_str = r"(?:{}).*?([0-9]+(?:\.[0-9]+)?)".format("|".join(re.escape(a) for a in aliases))
+            pattern_str = r"(?:{})[\s为是设定修改取约等于达到调整变更:：=]{{0,15}}([0-9]+(?:\.[0-9]+)?)".format(
+                "|".join(_alias_pattern(a) for a in aliases))
             matches = re.finditer(pattern_str, text, re.I)
             for m in matches:
                 try:
@@ -716,15 +779,27 @@ class LongTaskHallucinationSentinel:
         if has_defect and auto_repair:
             # 1. Deterministically repair fact contradictions
             for c in contradictions:
-                # Replace hallucinated number with verified number in snippet context
                 key = c["key"]
-                expected = c["expected_value"]
-                hallucinated = c["hallucinated_value"]
-                # Safe regex substitution near alias
+                expected = float(c["expected_value"])
+                hallucinated = float(c["hallucinated_value"])
                 aliases = PARAM_ALIASES.get(key, [key])
+                h_int = _fmt_num(hallucinated)
+                if hallucinated.is_integer():
+                    num_re = re.escape(h_int) + r"(?:\.0+)?"
+                else:
+                    num_re = re.escape(str(hallucinated))
                 for alias in aliases:
-                    pat = rf"({re.escape(alias)}[^\d\n\r]{{0,15}}){re.escape(str(hallucinated))}"
-                    repaired_text = re.sub(pat, rf"\g<1>{expected}", repaired_text)
+                    pat = (rf"({_alias_pattern(alias)}[\s为是设定修改取约等于达到调整变更:：=]{{0,15}})"
+                           rf"({num_re})(?!\d)")
+
+                    def _restore(m, _expected=expected):
+                        prefix, token = m.group(1), m.group(2)
+                        if "." in token:
+                            decimals = len(token.split(".", 1)[1])
+                            return f"{prefix}{_expected:.{decimals}f}"
+                        return f"{prefix}{_fmt_num(_expected)}"
+
+                    repaired_text = re.sub(pat, _restore, repaired_text, flags=re.I)
 
             # 2. Qualify phantom claims
             for p in phantom_claims:

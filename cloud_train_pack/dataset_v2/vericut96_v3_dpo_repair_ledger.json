@@ -1,0 +1,21 @@
+{
+  "corpus": "vericut96_v3_dpo_repair",
+  "seed": 20261114,
+  "base_dpo_path": "D:\\Virtu模型\\cloud_train_pack\\dataset_v2\\vericut96_v2_dpo_mix.jsonl",
+  "base_dpo_sha256": "e95bdd2067138b5f93277a938e2ed71c784bb14cffa6a73a0d37bd9683b9b7f0",
+  "base_dpo_rows": 210,
+  "repair_rows": 69,
+  "repair_repeat": 3,
+  "families": [
+    "autodiff_triage_repair",
+    "coordinate_unit_isolation_repair",
+    "lame_closed_form_repair",
+    "sw_plane_notation_repair"
+  ],
+  "output_path": "cloud_train_pack\\dataset_v2\\vericut96_v3_dpo_repair.jsonl",
+  "output_name": "vericut96_v3_dpo_repair.jsonl",
+  "output_sha256": "96bb3ba188a5aee4f3bcff9f5292325a21dcd18df576be24fc286ee9db5e1160",
+  "size_bytes": 296855,
+  "rows": 279,
+  "generated_at": "2026-11-15 17:57:40"
+}

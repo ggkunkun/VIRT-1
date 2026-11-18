@@ -1,0 +1,79 @@
+{
+  "generated_at": "2026-11-15T13:08:02",
+  "run_id": "b01a7e4e6fdb12ca",
+  "ruler_sha256": {
+    "virtu_omni/eval/capability_oracles.py": "ddf57de8340f3f93bcb772f27662b8c91881a9f1f7f31e32f95880c3a71c05aa",
+    "virtu_omni/engine/sheetmetal_nesting_engine.py": "ca0cddcfabd44a3a90bbf504c976ac2d67fadcbeb07d6af40f993d896bfa53a8",
+    "virtu_omni/engine/cnc_post_processor.py": "d50bce87bb7ed74a32768beedea815e7b3ce4d2a6ec44ac04a6c84a597608df3",
+    "virtu_omni/engine/universal_cae_engine.py": "76862b4e6c4538278134fdee3f10d8dc283b36f9ee6a795e54384297a81b7ca0"
+  },
+  "oracles": {
+    "nesting": {
+      "oracle": "nesting_utilization_overlap_containment",
+      "good_layout_passed": true,
+      "planted_overlap_rejected": true,
+      "placed_count": 2,
+      "utilization_pct": 68.57,
+      "recomputed_utilization_pct": 68.5714,
+      "passed": true,
+      "basis": "measured"
+    },
+    "post_dialect": {
+      "oracle": "post_dialect_coordinate_consistency",
+      "coord_consistency_passed": true,
+      "per_dialect": {
+        "fanuc": {
+          "status": "passed",
+          "dialect_gate_passed": true,
+          "coord_gate_passed": true
+        },
+        "siemens": {
+          "status": "passed",
+          "dialect_gate_passed": true,
+          "coord_gate_passed": true
+        },
+        "heidenhain": {
+          "status": "passed",
+          "dialect_gate_passed": true,
+          "coord_gate_passed": true
+        }
+      },
+      "max_err_mm": {
+        "fanuc": 0.0,
+        "siemens": 0.0,
+        "heidenhain": 0.0
+      },
+      "passed": true,
+      "basis": "measured"
+    },
+    "fea_cross_check": {
+      "oracle": "pynite_beam_fea_analytic_cross_check",
+      "status": "not_healed",
+      "cross_check_passed": true,
+      "deflection_error_pct": 0.0,
+      "moment_error_pct": 0.0,
+      "factor_of_safety": 0.43,
+      "passed": true,
+      "basis": "measured"
+    },
+    "gui_success_ledger": {
+      "source": "D:\\Virtu模型\\runs\\desktop_input\\input_audit.jsonl",
+      "read_error": null,
+      "total_events": 26,
+      "input_gate_allow_count": 0,
+      "input_gate_deny_count": 24,
+      "verdict_code_counts": {
+        "DESKTOP_INPUT_NOT_APPROVED": 23,
+        "panic": 1,
+        "DESKTOP_KILLED": 1,
+        "clear_panic": 1
+      },
+      "input_gate_basis": "measured",
+      "gui_task_success": null,
+      "gui_task_success_basis": "unmeasured",
+      "note": "输入门 allow/deny 为实测；GUI 任务成功需真实批准运行+任务完成信号，审计日志不提供，故标 unmeasured。deny 日志绝不等于成功，也不等于失败。"
+    }
+  },
+  "all_measurable_oracles_passed": true,
+  "gui_task_success_basis": "unmeasured"
+}

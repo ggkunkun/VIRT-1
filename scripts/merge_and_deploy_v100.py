@@ -131,7 +131,9 @@ def step3_register_ollama():
     print("PHASE 3: 免下载秒级编译注册本地 Ollama 生产模型 `virtu-master:latest` ...")
     print("="*70)
 
-    modelfile_content = f"""FROM {str(OUT_GGUF).replace('\\', '/')}
+    # 路径分隔符归一化提前到 f-string 外完成，避免 f-string 表达式含反斜杠（3.10/3.11 非法）
+    gguf_posix = str(OUT_GGUF).replace('\\', '/')
+    modelfile_content = f"""FROM {gguf_posix}
 
 TEMPLATE \"\"\"{{{{ if .System }}}}<|im_start|>system
 {{{{ .System }}}}<|im_end|>

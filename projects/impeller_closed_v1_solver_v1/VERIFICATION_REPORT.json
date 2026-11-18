@@ -1,0 +1,111 @@
+{
+  "task": "closed aero-engine impeller design",
+  "model": "virtu-ties-v1:latest",
+  "mode": "bare",
+  "engine": "solver",
+  "params_source": "frozen_file:params_frozen.json",
+  "weight_digest": "UNRESOLVED:solver_engine_URLError",
+  "n": 1,
+  "basis_legend": {
+    "ruler": "analytic_recomputed(inferred)",
+    "topology": "measured_from_stl",
+    "claims": "asserted_by_model"
+  },
+  "stages": {
+    "B_cad": {
+      "pass": true,
+      "volume_mm3": 365780.24,
+      "mass_g": 1620.41,
+      "watertight": true,
+      "envelope_xy_ok": true,
+      "envelope_z_ok": true,
+      "envelope_fraction": 0.1552,
+      "topology": {
+        "z_shroud": 74.0,
+        "z_hub": 4.0,
+        "z_mid": 40.5,
+        "shroud_ring": true,
+        "hub_ring": true,
+        "mid_ring": false,
+        "mid_islands": 12,
+        "violations": []
+      },
+      "fabrication": [],
+      "claimed_volume": 366154.26,
+      "claimed_mass": 1622.06
+    },
+    "C_analysis": {
+      "pass": true,
+      "model_result": {
+        "u2_m_s": 495.158,
+        "pressure_ratio": 4.01,
+        "M_rel_tip": 1.08,
+        "FOS": 1.6172,
+        "sigma_eq_MPa": 544.16,
+        "T02_K": 463.58,
+        "dh0_kJ_kg": 176.219,
+        "cm2_m_s": 145.46,
+        "slip_sigma": 0.8328,
+        "Ns": 0.8696,
+        "method": "analytic_recomputed(由冻结参数解析复算，判别式见 closed_impeller_proctor.ruler)",
+        "ruler_violations": []
+      },
+      "ruler_values": {
+        "u2_m_s": 495.158,
+        "slip_sigma": 0.8328,
+        "dh0_kJ_kg": 176.219,
+        "pressure_ratio_recomputed": 4.01,
+        "cm2_m_s": 145.46,
+        "sigma_eq_MPa": 544.16,
+        "FOS_recomputed": 1.6172,
+        "ca1_m_s": 135.0,
+        "M_rel_tip": 1.08,
+        "Ns": 0.8696,
+        "T02_K": 463.58
+      },
+      "discrepancies": []
+    },
+    "D_drawing": {
+      "pass": true,
+      "entities": 53,
+      "layers": [
+        "CENTER",
+        "DIM",
+        "OUTLINE",
+        "TITLE_BLOCK"
+      ],
+      "circles": 3,
+      "dimensions": 5,
+      "curve_entities": 31,
+      "checks": []
+    }
+  },
+  "params": {
+    "D2_mm": 200.0,
+    "N_rpm": 47284.1,
+    "Z_blades": 12,
+    "beta2b_deg": 25.0,
+    "b2_mm": 12.0,
+    "D1t_mm": 135.53,
+    "D1h_mm": 41.09,
+    "axial_length_mm": 75.0,
+    "shroud_thickness_mm": 2.0,
+    "blade_thickness_mm": 1.8,
+    "hub_disk_thickness_mm": 8.0,
+    "bore_diameter_mm": 0.0,
+    "fillet_root_mm": 1.2,
+    "eta_total": 0.8,
+    "claimed_pressure_ratio": 4.01,
+    "claimed_tip_speed_m_s": 495.16,
+    "claimed_FOS": 1.617
+  },
+  "derivation": [
+    {
+      "source": "frozen_params_file",
+      "path": "projects\\impeller_closed_v1_solver_v1\\params_frozen.json",
+      "note": "参数来自已冻结文件，stage_a 模型设计环节被显式跳过"
+    }
+  ],
+  "verdict": "PASS",
+  "finished": "2026-11-12T17:22:46"
+}

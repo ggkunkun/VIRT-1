@@ -1,0 +1,221 @@
+{
+  "schema_version": "1.0.0",
+  "generated_at_local": "2026-11-17T23:30:00+08:00",
+  "workdir": "E:\\vericut_fix_work",
+  "workdir_origin": "robocopy E:\\training E:\\vericut_fix_work /E (1186/1186 files, read-only attribute cleared)",
+  "originals_backup": "E:\\vericut_fix_work\\_original\\",
+  "read_only_sources_untouched": [
+    "E:\\training",
+    "d:\\Virtu模型\\knowledge_base\\training_case_index.json",
+    "d:\\Virtu模型\\knowledge_base\\error_case_verification.json"
+  ],
+  "vericut": {
+    "install": "E:\\windows64",
+    "launcher": "E:\\windows64\\commands\\vericut.bat",
+    "batch_invocation_used": "vericut.bat BATCH batchp <project.vcproject>",
+    "runner": "scripts/run_vericut_batch_case.py",
+    "runner_change": "printargs token is rejected by this 9.6 build ('参数无效: printargs'), so the runner now launches '<bat> BATCH batchp \"vcp=<project>\"' via a raw CreateProcess command line (cmd.exe eats an unquoted k=v argument)."
+  },
+  "summary": {
+    "cases": 6,
+    "passed": 3,
+    "not_passed": 3,
+    "measured_after_fix_logs": 3,
+    "blocker": "Since 21:26 local the VERICUT 9.6 batch engine stopped loading any project in this machine state: every launch either exits with an empty vericut.log (0 bytes) or opens the GUI instead of batch-play, and the JVM dumps hs_err (EXCEPTION_ACCESS_VIOLATION in com.cgtech.product.CGTechIpcWrapper.askEngine2 <- initRadio). The same failure was reproduced in an untouched work copy (E:\\vericut_verify_work) and after resetting cgtech_96_user.prefs, so it is not caused by the modified projects. A second, competing VERICUT driver (scripts/vc_full_drive.py) also runs 'Get-Process javaw,java | Stop-Process -Force' repeatedly and killed in-flight runs (one run died at 22:46:05 mid-simulation)."
+  },
+  "cases": [
+    {
+      "case_id": "lathe_session_day1",
+      "project": "E:\\vericut_fix_work\\lathe_session_day1.vcproject",
+      "passed": false,
+      "fixes": [
+        {
+          "file": "lathe_program.mcd",
+          "line": 47,
+          "before": "N0220 X.04",
+          "after": "N0220 G1 X.04 F10.",
+          "reason": "47 行 G0 快速进给去除材料（去除体积 0.0011），改为 G1 进给"
+        },
+        {
+          "file": "lathe_session_day1.vcproject",
+          "component": "Jaws / Poly lathe_fixture.ply / ModelMatrix/MatrixOrigin",
+          "before": "Z=\"4.05\"",
+          "after": "Z=\"5.05\"",
+          "reason": "刀具 \"1\" 在 23/24 行碰撞 Jaws，按策略仅平移夹具模型 +1.0\"，未动 Stock/Design 矩阵"
+        }
+      ],
+      "before_errors": [
+        "错误:在 23 行:N1100 Z-1.81 ,刀具 \"1\" 碰撞 \"Jaws\"",
+        "错误:在 24 行:N1110 X2.32 ,刀具 \"1\" 碰撞 \"Jaws\"",
+        "错误:在 47 行:N0220 X.04,组件\"Tool_1\"上的刀具\"1\"快速进给去除材料,去除体积0.0011"
+      ],
+      "after_errors": [],
+      "after_errors_basis": "无有效重跑：所有修复后重跑都在 VERICUT 批处理引擎故障期，日志 0 字节（工程未被加载），不能据此判合格，也不伪造错误数",
+      "after_run_attempts": [
+        "22:18:08-22:22:18 window, vericut.log 仅含 END-OF-FILE，无 \"处理数控程序文件\" 行",
+        "22:22:40-22:26:42 同上",
+        "23:03 重跑打开了 GUI 窗口（标题含本工程）但未进入批处理"
+      ],
+      "log_path": null,
+      "remaining_issues": [
+        "修复未被仿真验证：Jaws +1.0\" 是否足够、是否引入新的 Jaws/Stock/Design 碰撞均未实测",
+        "lathe_program.mcd 第 45 行另有原始拼写错误 N0200 G3 X1.56 Z-..3818 R.23（本次任务未要求，未改）"
+      ]
+    },
+    {
+      "case_id": "mill_session_day1",
+      "project": "E:\\vericut_fix_work\\mill_session_day1.vcproject",
+      "passed": false,
+      "fixes": [
+        {
+          "file": "mill_tools.tls",
+          "scope": "11 个 <SOR ID=\"Holder1\"> 块内全部 <X>（共 162 个数值）",
+          "before": "如 1.2750 / 1.3750 / 1.9375 / 0.7917 等（刀柄半径）",
+          "after": "全部 x0.5：0.6375 / 0.6875 / 0.96875 / 0.3958315 等",
+          "reason": "刀具 9 的 Holder1 与 Fixture 碰撞（280/281 行）、刀具 7 的 Holder1 与 Stock 碰撞（363 行）；共享刀柄先缩径保持形状"
+        }
+      ],
+      "before_errors": [
+        "错误:在 280 行:N201 X4.125 Y2.00 Z1.07,组件\"Tool\"上刀具\"9\"的刀柄\"Holder1\"与\"Fixture\"碰撞",
+        "错误:在 281 行:N202 G28 G91 Z0,刀具\"9\"的刀柄\"Holder1\"与\"Fixture\"碰撞",
+        "错误:在 363 行:N266 G81 G99 X-2. Y6.5 Z1.433 R3.85 F10.,刀具 \"7\" 刀柄\"Holder1\"碰撞\"Stock\"，碰撞体积 0.8176/0.8175",
+        "（该案例原始日志错误数 12、警告数 3）"
+      ],
+      "after_errors": [],
+      "after_errors_basis": "无有效重跑：批处理引擎故障期，日志 0 字节",
+      "log_path": null,
+      "remaining_issues": [
+        "Holder1 缩径后是否仍与 Fixture/Stock 干涉、以及是否因刀柄细于刀具而产生新的“刀柄过渡”问题均未实测",
+        "若缩径无效，备选策略（Holder1 全部 <Z> +0.5 或 X 再 x0.6）尚未执行"
+      ]
+    },
+    {
+      "case_id": "millturn_session_day1",
+      "project": "E:\\vericut_fix_work\\millturn_session_day1.vcproject",
+      "passed": false,
+      "fixes": [
+        {
+          "file": "millturn_program.tap",
+          "line": 66,
+          "before": "Z.0313",
+          "after": "G1 Z.0313 F.005",
+          "reason": "66 行 G0 扎料（去除体积 0.0112）"
+        },
+        {
+          "file": "millturn_program.tap",
+          "line": 68,
+          "before": "G1 X3.1992 Z-.0394 F..005",
+          "after": "G1 X3.1992 Z-.0394 F.005",
+          "reason": "F..005 非法，导致 68-71 行零进给"
+        },
+        {
+          "file": "millturn_program.tap",
+          "lines": "165-176",
+          "before": "M251 / G1 A0. F20. / ... / G0 Y0. Z-1.05",
+          "after": "M251 / G0 X4.5 / G1 A0. F20. / G0 X8.1 / ... / G0 X4.5 / G0 Y0. Z-1.05",
+          "reason": "A 轴回转前 X 向内安全退刀、回转后恢复；171 行快移前再次退到 X4.5 再进 Z-1.05",
+          "note": "这是第 2 版（iteration 2），从未仿真过；第 1 版用 G0 Z2.0 + G0 X4.5 退刀，实测反而把刀具引入 Sub_Fixture"
+        }
+      ],
+      "before_errors": [
+        "错误:在 66 行:Z.0313,刀具\"7901\"快速进给去除材料,去除体积0.0112",
+        "错误:在 68 行:G1 X3.1992 Z-.0394 F..005,有进给速度的运动设定为零",
+        "错误:在 69/70/71 行,有进给速度的运动设定为零",
+        "错误:在 165 行:G1 A0. F20.,\"Tool CUTTER\"和\"Sub_Fixture\"碰撞 / \"Tool HOLDER\"和\"Sub_Fixture\"碰撞",
+        "错误:在 171 行:G0 Y0. Z-1.05,\"Tool CUTTER\"和\"Sub_Fixture\"碰撞 / \"Tool HOLDER\"和\"Sub_Fixture\"碰撞",
+        "（原始日志错误数 9、警告数 5）"
+      ],
+      "after_errors": [
+        "第1版实测（2026-11-17 21:24-21:25，END-OF-FILE，错误数 14、警告数 5）：",
+        "66 行扎料、68-71 行零进给 全部消失（F..005 / Z.0313 修复有效）",
+        "新增/残留：165 行 G0 Z2.0 与 Sub_Fixture 碰撞（CUTTER/HOLDER 各 1 条）",
+        "166 行 G0 X4.5 与 Sub_Fixture 碰撞（2 条）",
+        "167 行 G1 A0. F20. 与 Sub_Fixture 碰撞（2 条）",
+        "168 行 G0 X8.1 与 Sub_Fixture 碰撞（2 条）",
+        "169 行 G0 Z.25 与 Sub_Fixture 碰撞（2 条）",
+        "175 行 G0 Y0. Z2.0 与 Sub_Fixture 碰撞（2 条）",
+        "176 行 G1 Z-1.05 F.005 与 Sub_Fixture 碰撞（2 条）"
+      ],
+      "after_errors_basis": "measured（第1版日志，文件随后被环境故障期的空日志覆盖，内容如实摘录于此）",
+      "log_path": "d:\\Virtu模型\\reports\\vericut_fix_case_logs\\millturn_session_day1.log",
+      "log_path_note": "该文件当前是 21:46 的一次失败重跑（仅 END-OF-FILE，398 字节）；21:24 的第1版实测日志已被覆盖，无法再从磁盘取回",
+      "remaining_issues": [
+        "第 2 版退刀方案未仿真验证（批处理引擎故障），因此 165/171 行 Sub_Fixture 碰撞是否消除未知",
+        "第 1 版已证明：沿 +Z（Z2.0）退刀方向错误，刀具反而进入 Sub_Fixture 区域",
+        "20 行合同的原始刀具/工件系统里 Sub_Fixture 位于 Z 正方向，正确退刀方向可能是 X 向内或 Y 正向，需实测确认"
+      ]
+    },
+    {
+      "case_id": "lathe_session_103l_add_3d_models_to_the_machine",
+      "project": "E:\\vericut_fix_work\\lathe_session_103l_add_3d_models_to_the_machine.vcproject",
+      "passed": true,
+      "fixes": [
+        {
+          "file": "lathe_session_103l_add_3d_models_to_the_machine.mch",
+          "component": "Z",
+          "before": "<Position X=\"0\" Y=\"0\" Z=\"0\"/>",
+          "after": "<Position X=\"0\" Y=\"0\" Z=\"32.25\"/>",
+          "unit": "inch (VcMachine Unit=\"inch\")"
+        }
+      ],
+      "before_errors": [
+        "静态：Z 组件 Position Z=0，与讲义要求的 32.25\" 不符（无 NC 报警，属装配/定位错误）"
+      ],
+      "after_errors": [],
+      "after_error_count": 0,
+      "after_warning_count": 0,
+      "after_log_excerpt": "*** 处理数控程序文件E:\\vericut_fix_work\\mc_lathe_machine_nc_program.eia ... 错误数: 0 / 警告数: 0 / 总时间 0:10:51",
+      "log_path": "d:\\Virtu模型\\reports\\vericut_fix_case_logs\\lathe_session_103l_2043_transcript.txt",
+      "log_path_note": "20:42 的实测日志在 23:12 被一次批处理失败重跑覆盖（0 字节，已改名 lathe_session_103l_rerun_2312_empty.log）；现存 transcript 为当时原文摘录",
+      "remaining_issues": []
+    },
+    {
+      "case_id": "mill_session_103m_add_3d_models_to_the_machine",
+      "project": "E:\\vericut_fix_work\\mill_session_103m_add_3d_models_to_the_machine.vcproject",
+      "passed": true,
+      "fixes": [
+        {
+          "file": "mill_session_103m_add_3d_models_to_the_machine.mch",
+          "component": "Z",
+          "before": "<Position X=\"0\" Y=\"0\" Z=\"0\"/>",
+          "after": "<Position X=\"0\" Y=\"0\" Z=\"600\"/>",
+          "unit": "millimeter (VcMachine Unit=\"millimeter\")"
+        }
+      ],
+      "before_errors": [
+        "静态：Z 组件 Position Z=0，与讲义要求的 600 mm 不符"
+      ],
+      "after_errors": [],
+      "after_error_count": 0,
+      "after_warning_count": 0,
+      "after_log_excerpt": "*** 处理数控程序文件E:\\vericut_fix_work\\mc_mill_session_nc_program.mcd ... 错误数: 0 / 警告数: 0",
+      "log_path": "d:\\Virtu模型\\reports\\vericut_fix_case_logs\\mill_session_103m.log",
+      "remaining_issues": []
+    },
+    {
+      "case_id": "millturn_session_103mt_add_3d_models_to_the_machine",
+      "project": "E:\\vericut_fix_work\\millturn_session_103mt_add_3d_models_to_the_machine.vcproject",
+      "passed": true,
+      "fixes": [
+        {
+          "file": "millturn_session_103mt_add_3d_models_to_the_machine.mch",
+          "component": "W",
+          "before": "<Position X=\"0\" Y=\"0\" Z=\"0\"/> (Rotation I=\"180\")",
+          "after": "<Position X=\"0\" Y=\"0\" Z=\"1972\"/> (Rotation I=\"180\" 保持不变)",
+          "unit": "millimeter"
+        }
+      ],
+      "before_errors": [
+        "静态：W 组件 Position Z=0，与讲义要求的 1972 mm 不符"
+      ],
+      "after_errors": [],
+      "after_error_count": 0,
+      "after_warning_count": 0,
+      "after_log_excerpt": "*** 处理数控程序文件E:\\vericut_fix_work\\mc_millturn_nc_program.eia ... 错误数: 0 / 警告数: 0",
+      "log_path": "d:\\Virtu模型\\reports\\vericut_fix_case_logs\\millturn_session_103mt.log",
+      "remaining_issues": [
+        "任务要求的“改完用 MDI 方向确认”未做：批处理模式下无法执行 MDI 单段，只做了静态坐标核对 + 批处理重跑（0 错误）"
+      ]
+    }
+  ]
+}

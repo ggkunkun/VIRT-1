@@ -32,7 +32,7 @@ WORKSPACE_DIR = Path(__file__).resolve().parent.parent
 if str(WORKSPACE_DIR) not in sys.path:
     sys.path.insert(0, str(WORKSPACE_DIR))
 
-from virtu_omni.memory.sleep_framework import get_sleep_framework, VirtuSleepFramework
+from virtu_omni.memory.sleep_framework import get_sleep_framework, VirtuSleepFramework, build_ollama_model_caller
 from virtu_omni.agent.process_memory_reclaimer import ProcessMemoryReclaimer
 
 logging.basicConfig(
@@ -45,30 +45,23 @@ logging.basicConfig(
 logger = logging.getLogger("run_sleep_maintenance")
 
 
-def get_default_model_caller() -> Callable[[str], str]:
-    """Provides direct connection to virtu-disciplined:v1 in Ollama with backoff retry."""
-    def _call(prompt: str) -> str:
-        for attempt in range(3):
-            try:
-                payload = {
-                    "model": "virtu-disciplined:v1",
-                    "messages": [{"role": "user", "content": prompt}],
-                    "stream": False,
-                    "options": {"temperature": 0.0, "num_predict": 300},
-                }
-                req = urllib.request.Request(
-                    "http://127.0.0.1:11434/api/chat",
-                    data=json.dumps(payload).encode("utf-8"),
-                    headers={"Content-Type": "application/json"},
-                )
-                resp = urllib.request.urlopen(req, timeout=60)
-                data = json.loads(resp.read().decode("utf-8"))
-                return data["message"]["content"].strip()
-            except Exception as e:
-                logger.warning(f"Model query attempt {attempt+1}/3 failed ({e}), retrying in 2s...")
-                time.sleep(2)
-        return "ERROR: Model query failed after 3 attempts"
-    return _call
+CALLER_LABEL: str = "unavailable"
+
+
+def get_default_model_caller(model: Optional[str] = None) -> Optional[Callable[[str], str]]:
+    """解析真实 Ollama 模型调用器；不可用时返回 None，绝不返回伪装答案。
+
+    旧实现重试 3 次后返回 "ERROR: Model query failed..." 字符串，被稳态审计
+    当成正常模型应答计入通过率，是历史 gate 恒 True 的根因之一。
+    """
+    global CALLER_LABEL
+    caller, label = build_ollama_model_caller(model=model)
+    CALLER_LABEL = label
+    if caller is None:
+        logger.error(f"No real model caller available ({label}); sleep cycles will be honest-unmeasured.")
+    else:
+        logger.info(f"Sleep model caller resolved: {label}")
+    return caller
 
 
 def perform_maintenance_cycle(
@@ -105,8 +98,14 @@ def perform_maintenance_cycle(
 
     logger.info("=== Sleep Maintenance Cycle Completed ===")
     logger.info(f"  Consolidated Knowledge Units: {report['consolidated_units']}")
-    logger.info(f"  Context Token Compression:    {report['average_token_compression']*100:.1f}%")
-    logger.info(f"  Counterfactual Dreams:         {report['dreams_generated']} (Pass Rate: {report['dream_oracle_pass_rate']*100:.1f}%)")
+    _comp = report["average_token_compression"]
+    _comp_str = f"{_comp*100:.1f}%" if isinstance(_comp, (int, float)) else str(_comp)
+    logger.info(f"  Context Token Compression:    {_comp_str}")
+    logger.info(f"  Counterfactual Dreams:         {report['dreams_generated']} (Pass Rate: {report['dream_oracle_pass_rate']*100:.1f}%, basis={report['dream_evidence_basis']})")
+    logger.info(f"  Measurement Valid:             {report['measurement_valid']} (basis={report['basis']}, caller={report['model_caller_label']})")
+    logger.info(f"  Sleep Gate Passed:             {report['homeostasis_gate_passed']}")
+    if report["reasons"]:
+        logger.warning(f"  Gate reasons:                  {report['reasons']}")
     logger.info(f"  Stability Score (Retention):   {report['stability_score']*100:.1f}%")
     logger.info(f"  Catastrophic Forgetting Rate:  {report['catastrophic_forgetting_rate']*100:.1f}%")
     logger.info(f"  Plasticity Score (New Rules):  {report['plasticity_score']*100:.1f}%")
@@ -123,10 +122,16 @@ def main():
     parser.add_argument("--interval", type=int, default=300, help="Daemon polling interval in seconds (default: 300s)")
     parser.add_argument("--no-clean", action="store_true", help="Skip ProcessMemoryReclaimer software closure")
     parser.add_argument("--dry-run", action="store_true", help="Inspect wake buffer status without sleeping")
+    parser.add_argument("--model", default=None, help="Ollama model tag (default: VIRTU_SLEEP_MODEL or virtu-disciplined:v1)")
+    parser.add_argument("--baseline", type=float, default=None, help="Independently measured pre-sleep anchor score; required for CF gate")
     args = parser.parse_args()
 
-    caller = get_default_model_caller()
-    framework = get_sleep_framework(model_caller=caller)
+    caller = get_default_model_caller(model=args.model)
+    framework = get_sleep_framework(
+        model_caller=caller,
+        model_caller_label=CALLER_LABEL,
+        baseline_score=args.baseline,
+    )
 
     unconsolidated_count = len(framework.wake_buffer)
     logger.info(f"Current Wake Buffer: {unconsolidated_count} unconsolidated experiences.")

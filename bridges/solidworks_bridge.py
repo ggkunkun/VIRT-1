@@ -622,11 +622,41 @@ class SolidWorksBridge:
 
 
 
+    def active_mass_properties(self):
+        """回读当前活动零件的真实质量属性（体积/质量/质心/表面积）。
+
+        审计 P0 要求的「真实回读通道」：不新建零件、不猜测数值，只读取
+        SOLIDWORKS 当前 ActiveDoc 的 CreateMassProperty 结果。任何一步缺失
+        都返回结构化 error，绝不回填理论值冒充实测。
+        """
+        if self.sw is None:
+            conn = self.connect()
+            if conn.get("status") != "connected":
+                return conn
+        doc = self.sw.ActiveDoc
+        if doc is None:
+            return {
+                "status": "error",
+                "verdict_code": "NO_ACTIVE_DOCUMENT",
+                "message": "SOLIDWORKS 无活动文档：请先建模/打开零件再回读质量属性",
+            }
+        props = self.mass_properties(doc)
+        if "error" in props:
+            return {"status": "error", "verdict_code": "MASS_PROPERTY_FAILED",
+                    "message": props["error"]}
+        title = getattr(doc, "GetTitle", "")
+        if callable(title):
+            title = title()
+        return {"status": "ok", "action": "mass_properties",
+                "part": str(title or ""), **props}
+
     # ----------------------------------------------------------- legacy / VBA
 
     def execute_vba_code(self, vba_code: str,
 
-                         temp_swp_path: str = r"D:\Virtu模型\scratch\temp_macro.swp"):
+                         temp_swp_path: str = r"D:\Virtu模型\scratch\temp_macro.swp",
+
+                         allow_freeform: bool = None):
 
         """Save a VBA macro source for inspection and (if SOLIDWORKS is connected)
 
@@ -642,26 +672,45 @@ class SolidWorksBridge:
 
         RunMacro if a compiled .swp is provided.
 
+
+
+        Security (阶段二 B 组)：由「黑名单正则」改为 deny-by-default。
+
+        策略实现在 bridges/code_sandbox_policy.py：
+
+          1) 硬禁构念（Declare/PtrSafe/Type/Implements/CallByName/Application.Run/
+
+             Open...For/Name...As/MkDir/RmDir/Kill/Shell/CreateObject/Environ 等）
+
+             无论开关如何一律 blocked；
+
+          2) 自由文本 VBA 默认拒绝，仅当代码带 VIRTU_DSL_RENDERED 标记（结构化 DSL
+
+             渲染产物）或显式 allow_freeform=True / VIRTU_VBA_ALLOW_FREEFORM=1 时放行；
+
+          3) 每次判定写结构化审计日志（kind/decision/rule/code_sha256/pid）。
+
         """
 
-        # Security sanitizer: block dangerous VBA execution
+        try:
 
-        import re
+            from bridges.code_sandbox_policy import validate_code as _validate_code_policy
 
-        if re.search(r"(?i)\b(Shell|CreateObject|cmd\.exe|powershell|FileSystemObject|Kill\b|RmDir\b|Environ\b)", vba_code or ""):
+        except Exception:  # 以脚本方式直接运行时的兜底
 
-            return {
+            from code_sandbox_policy import validate_code as _validate_code_policy
 
-                "status": "blocked",
+        _blocked = _validate_code_policy(
 
-                "verdict_code": "VBA_SECURITY_VIOLATION",
+            "vba", vba_code, allow_freeform=allow_freeform,
 
-                "message": "VBA macro contains disallowed system execution or shell escape commands.",
+            source="bridges.solidworks_bridge.execute_vba_code",
 
-            }
+        )
 
+        if _blocked:
 
-
+            return _blocked
         os.makedirs(os.path.dirname(temp_swp_path), exist_ok=True)
 
         bas_path = temp_swp_path.replace(".swp", ".bas")

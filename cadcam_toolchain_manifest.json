@@ -10,10 +10,18 @@
     "vericut": "C:\\Users\\Public\\Desktop\\Vericut 9.6.lnk",
     "nx": "C:\\Users\\Administrator\\Desktop\\中文版NX12.0.lnk"
   },
+  "resolved_entries": {
+    "solidworks": "C:\\Users\\Public\\Desktop\\SOLIDWORKS 2021.lnk",
+    "sscnc": "C:\\Users\\Public\\Desktop\\斯沃数控仿真软件.lnk",
+    "cimco": "C:\\Users\\Public\\Desktop\\CIMCO Edit 2026.lnk",
+    "autocad": "C:\\Users\\Public\\Desktop\\AutoCAD 2026 - 简体中文 (Simplified Chinese).lnk",
+    "vericut": "C:\\Users\\Public\\Desktop\\Vericut 9.6.lnk",
+    "nx": "C:\\Users\\Administrator\\Desktop\\中文版NX12.0.exe"
+  },
   "diagnostics": {
     "total_software": 6,
     "ready_count": 6,
-    "running_count": 1,
+    "running_count": 0,
     "all_ready": true,
     "software": {
       "solidworks": {
@@ -25,10 +33,8 @@
         "resolved_target": "C:\\WINDOWS\\Installer\\{9C0A2571-4AAE-4FEE-B673-038B38B85EFC}\\i386_SldWorks.exe",
         "binary_found": "D:\\SOLIDWORKS (2)\\SLDWORKS.exe",
         "is_ready": true,
-        "is_running": true,
-        "running_pids": [
-          2848
-        ],
+        "is_running": false,
+        "running_pids": [],
         "com_registered": true,
         "capabilities": [
           "parametric_modeling",
@@ -118,9 +124,9 @@
         "display_name": "Siemens NX 12.0 (中文版)",
         "category": "High-End CAD/CAM / Multi-Axis Toolpaths",
         "shortcut_present": true,
-        "shortcut_path": "C:\\Users\\Administrator\\Desktop\\中文版NX12.0.lnk",
-        "resolved_target": "E:\\BaiduNetdiskDownload\\NX 12.0.2.9\\NX12.2.9waigua\\NX12.2.9\\中文版NX12.0.exe",
-        "binary_found": "E:\\BaiduNetdiskDownload\\NX 12.0.2.9\\NX12.2.9waigua\\NX12.2.9\\NX\\NXBIN\\run_journal.exe",
+        "shortcut_path": "C:\\Users\\Administrator\\Desktop\\中文版NX12.0.exe",
+        "resolved_target": "C:\\Users\\Administrator\\Desktop\\中文版NX12.0.exe",
+        "binary_found": "D:\\BaiduNetdiskDownload\\NX 12.0.2.9\\NX12.2.9waigua\\NX12.2.9\\NX\\NXBIN\\run_journal.exe",
         "is_ready": true,
         "is_running": false,
         "running_pids": [],
@@ -159,19 +165,25 @@
               "type": "string",
               "enum": [
                 "model_flange",
+                "annotate_drawing",
                 "create_parametric_part",
                 "execute_vba",
+                "mass_properties",
                 "connect"
               ],
-              "description": "执行动作：model_flange（带颈法兰盘参数化建模）、create_parametric_part（基础参数化建模）或 execute_vba（直接执行VBA代码）"
+              "description": "执行动作：model_flange（带颈法兰盘参数化建模）、annotate_drawing（在工程图上放视图并标注尺寸与尺寸细节）、create_parametric_part（基础参数化建模）、execute_vba（直接执行VBA代码）或 mass_properties（回读当前活动零件的真实体积/质量/质心，非理论估算）"
+            },
+            "annotation": {
+              "type": "object",
+              "description": "仅 action=annotate_drawing 时使用：{'dimensions': [{'target': 'D_outer'}], 'notes': ['一句尺寸细节'], 'gb': {...}}。可标注对象 target 只有这些：D_outer、D_hub、D_bore、D_bolt、t_base、hub_height（轮毂段高=H_total-t_base）、H_total；notes 写尺寸细节（孔数×孔径与分布圆、孔口倒角、材料、标准号）。gb 里按中国机械制图国标给图面细节：scale（如 1:2，GB/T 14690）、center_marks（true，GB/T 4457.4 中心线）、surface_finish（[{'target':..., 'ra':...}]，GB/T 131 表面结构）、tolerances（[{'target':..., 'fit':..., 'min_mm':..., 'max_mm':...}]，GB/T 4458.5 与 GB/T 1800 公差带）、general_tolerance（未注公差等级，GB/T 1804）、projection（第一角画法，GB/T 17451）。等轴测视图不标注尺寸。执行器会把图面真实读回来的尺寸、中心标记数、表面结构符号数与公差类型逐项核对，不靠返回值判定成功。"
             },
             "part_name": {
               "type": "string",
-              "description": "零件名称，如 wheel_mold、bearing_flange"
+              "description": "零件名称：请自己起一个能体现你所选标准的名字（例如把标准号与规格写进名字），不要沿用示例占位名"
             },
             "dimensions": {
               "type": "object",
-              "description": "关键几何尺寸字典，如 {'d_outer': 53.0, 'd_inner': 14.0, 'overall_len': 45.0, 'material': 'Cr12MoV'}"
+              "description": "关键几何尺寸字典，必须由你按所选标准自己算出并填入，例如 {'d_outer': <mm>, 'd_inner': <mm>, 'overall_len': <mm>, 'material': '<钢号>'}。本描述不提供任何可照抄的数值。"
             },
             "vba_code": {
               "type": "string",
@@ -210,7 +222,7 @@
             },
             "expressions": {
               "type": "object",
-              "description": "NX ExpressionCollection 参数表达式字典，如 {'D_OUTER': 53.0, 'LENGTH': 45.0}"
+              "description": "NX ExpressionCollection 参数表达式字典，数值须由你按所选规格自行给出，如 {'D_OUTER': <mm>, 'LENGTH': <mm>}。本描述不提供任何可照抄的数值。"
             }
           },
           "required": [
@@ -294,7 +306,7 @@
       "type": "function",
       "function": {
         "name": "cadcam_vericut_simulate",
-        "description": "VERICUT 9.6 机床动力学仿真与防碰撞检验：调用 vericut.bat -b 启动无头批处理仿真，执行 Auto-Diff 过切/欠切检查与干涉报警日志解析。",
+        "description": "VERICUT 9.6 机床仿真与防碰撞检验。能力边界（2026-10-30 逆向实测）：VERICUT 9.6 不提供 COM/IPC/批处理/UIA 接口，vericut.bat -b 会空退出，因此 run_simulation 会明确返回 unsupported_headless 并给出 GUI 驱动通道（work/vericut-toolchain/vericut_link.py 的 launch_via_bat + play_simulation）；check_collision 解析真实仿真日志（中英文）统计碰撞/过切与错误行。",
         "parameters": {
           "type": "object",
           "properties": {
@@ -304,7 +316,7 @@
                 "run_simulation",
                 "check_collision"
               ],
-              "description": "执行动作：run_simulation（无头批处理仿真）或 check_collision（解析仿真碰撞日志）"
+              "description": "执行动作：run_simulation（尝试无头仿真；9.6 实测不支持，返回 unsupported_headless + GUI 通道指引）或 check_collision（解析仿真日志，统计碰撞/过切/错误行）"
             },
             "project_path": {
               "type": "string",
@@ -325,7 +337,7 @@
       "type": "function",
       "function": {
         "name": "cadcam_sscnc_control",
-        "description": "斯沃数控仿真软件 7.2 (SSCNC) 虚拟加工配置：拉起数控系统、设置 G54 工件坐标系、计算刀具几何补偿与刀尖象限 (T1-T9)，触发循环启动加工走刀。",
+        "description": "斯沃数控仿真软件 7.2 (SSCNC) 虚拟加工配置：拉起数控系统、设置 G54 工件坐标系、计算刀具几何补偿与刀尖象限 (T1-T9)。面板按键仅在可寻址控件存在时可用；自绘面板会明确返回 unsupported，不伪称已循环启动。",
         "parameters": {
           "type": "object",
           "properties": {
@@ -334,9 +346,15 @@
               "enum": [
                 "launch",
                 "find_window",
-                "calculate_offsets"
+                "calculate_offsets",
+                "panel_capability",
+                "press_panel_key"
               ],
-              "description": "执行动作：launch（启动斯沃）、find_window（检测主窗句柄）、calculate_offsets（计算车铣刀偏与象限）"
+              "description": "执行动作：launch（启动斯沃）、find_window（检测主窗句柄）、calculate_offsets（计算车铣刀偏与象限）、panel_capability（探测面板是否有可寻址按键控件）、press_panel_key（按文本点按面板键；自绘面板会明确返回 unsupported）"
+            },
+            "key_label": {
+              "type": "string",
+              "description": "仅 action=press_panel_key 时使用：面板按键文本，如 EDIT、AUTO、MDI、循环启动"
             },
             "tools": {
               "type": "array",
@@ -345,6 +363,46 @@
           },
           "required": [
             "action"
+          ]
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "cadcam_extreme_chain",
+        "description": "极限极速闭环CAD/CAE/CAM全生命周期引擎：将制造意图按【绘图(ezdxf/GB图层) -> 建模(体积守恒ΔV>0/特征树) -> 仿真(解析FEA应力FOS>=1.5 & G00快速下刀防撞) -> 加工(FANUC Macro B变量与主轴模态)】全流程毫秒级执行(<100ms)；严格践行【未到极限则自愈重试，到了极限则熔断回滚并输出RCFA报告】。",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "wish": {
+              "type": "string",
+              "description": "非标零件或模具制造意图描述，包含材质、主要直径、孔径、长度、特殊形状要求"
+            },
+            "out_root": {
+              "type": "string",
+              "description": "输出工程产物根目录（默认 runs/extreme_chain）"
+            },
+            "max_attempts": {
+              "type": "integer",
+              "description": "熔断尝试预算上限（默认 3 次）"
+            },
+            "tier2_native": {
+              "type": "boolean",
+              "description": "是否在毫秒级自查通过后连带驱动桌面原生六大软件（默认 False，极速毫秒模式）"
+            },
+            "dialect": {
+              "type": "string",
+              "enum": [
+                "fanuc",
+                "siemens",
+                "heidenhain"
+              ],
+              "description": "加工阶段额外发射的控制器方言 NC（默认 fanuc）。siemens=840D CYCLE81/83/84+TRAORI(仅五轴)，heidenhain=TNC Klartext CYCL DEF 200/203/207。同一 CL 刀路经坐标一致性门取证。"
+            }
+          },
+          "required": [
+            "wish"
           ]
         }
       }
@@ -393,6 +451,12 @@
                 "capture",
                 "focus",
                 "click",
+                "move",
+                "drag",
+                "scroll",
+                "type_text",
+                "hotkey",
+                "inspect_window",
                 "dismiss_dialogs"
               ],
               "description": "动作类型"
@@ -412,6 +476,47 @@
             "output_path": {
               "type": "string",
               "description": "截图保存路径"
+            },
+            "button": {
+              "type": "string",
+              "enum": [
+                "left",
+                "right",
+                "middle"
+              ],
+              "description": "鼠标键，默认 left"
+            },
+            "double": {
+              "type": "boolean",
+              "description": "是否双击"
+            },
+            "start_x": {
+              "type": "integer",
+              "description": "拖拽起始横坐标"
+            },
+            "start_y": {
+              "type": "integer",
+              "description": "拖拽起始纵坐标"
+            },
+            "end_x": {
+              "type": "integer",
+              "description": "拖拽终点横坐标"
+            },
+            "end_y": {
+              "type": "integer",
+              "description": "拖拽终点纵坐标"
+            },
+            "clicks": {
+              "type": "integer",
+              "description": "滚轮滚动单位（正数向上，负数向下）"
+            },
+            "text": {
+              "type": "string",
+              "description": "仅 action=type_text：输入原文，经 CF_UNICODETEXT 剪贴板贴入当前焦点，不经 shell"
+            },
+            "keys": {
+              "type": "string",
+              "description": "仅 action=hotkey：逗号分隔组合键，如 ctrl,s / alt,f4 / f5；解析不到的 token 报错不发送"
             }
           },
           "required": [
@@ -445,6 +550,556 @@
           "required": [
             "task",
             "image_path"
+          ]
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "cadcam_universal_geometry",
+        "description": "通用机械几何解析与跨平台生成引擎：支持轴类(Shaft)、法兰盘(Flange)、键槽(Keyway)、轴承座/支架(BearingBracket)、钣金折弯(SheetMetal)等多零件族。自动生成GB国标AutoCAD工程图(DXF)、SolidWorks参数化VBA宏、Siemens NX 12 Python Journal、FANUC数控宏程序G代码。",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "wish": {
+              "type": "string",
+              "description": "自然语言机械零件制造或几何需求描述"
+            },
+            "part_type": {
+              "type": "string",
+              "enum": [
+                "auto",
+                "shaft",
+                "flange",
+                "keyway",
+                "bearing_bracket",
+                "sheet_metal"
+              ],
+              "description": "零件家族类型（默认 auto 自动语义推断）"
+            },
+            "output_dir": {
+              "type": "string",
+              "description": "工程产物输出目录路径（默认 runs/universal_cad）"
+            }
+          },
+          "required": [
+            "wish"
+          ]
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "cadcam_cae_stress_analysis",
+        "description": "通用解析结构强度分析与几何闭环自愈引擎：依据受力工况（轴向拉伸/弯曲、法兰内压Lamé厚壁圆筒、平板Timoshenko弯曲、轴承座螺栓剪切拉拔）计算von Mises等效应力与安全系数(FOS)；当 FOS < 1.5 时触发物理尺寸反向闭环自愈，自动重算最小安全壁厚/截面。",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "spec": {
+              "type": "object",
+              "description": "零件几何规格字典（包含 dimensions 或关键截面尺寸）"
+            },
+            "material": {
+              "type": "string",
+              "description": "工程材料名称（如 45号钢, 304不锈钢, Q235, Cr12MoV, 6061铝合金）"
+            },
+            "pressure_mpa": {
+              "type": "number",
+              "description": "承受内压力 (MPa)"
+            },
+            "force_n": {
+              "type": "number",
+              "description": "承受拉伸或剪切载荷力 (N)"
+            },
+            "torque_nm": {
+              "type": "number",
+              "description": "承受扭矩 (N·m)"
+            },
+            "target_fos": {
+              "type": "number",
+              "description": "设计安全系数下限（默认 1.5）"
+            },
+            "solver": {
+              "type": "string",
+              "enum": [
+                "analytic",
+                "pynite"
+              ],
+              "description": "求解器（默认 analytic 解析）。pynite=真实梁单元 FEA（仅回转轴/梁族，悬臂挠度/弯矩与解析解交叉核验，不可用诚实返回 unmeasured）。"
+            }
+          },
+          "required": [
+            "spec"
+          ]
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "cadcam_sheetmetal_nest",
+        "description": "钣金与下料排样引擎 (2D True-Shape Nesting)：基于最低水平线与Bottom-Left-Fill (BLF)启发式几何算法，支持零件旋转(0/90/180/270度)、间隙(kerf/margin)、板材利用率评估，并输出排样排版DXF工程图。",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "parts": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "width": {
+                    "type": "number"
+                  },
+                  "height": {
+                    "type": "number"
+                  },
+                  "quantity": {
+                    "type": "integer"
+                  },
+                  "allow_rotation": {
+                    "type": "boolean"
+                  },
+                  "contour": {
+                    "type": "array",
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "type": "number"
+                      },
+                      "minItems": 2,
+                      "maxItems": 2
+                    },
+                    "description": "真形状轮廓多边形顶点 [[x,y],...] (mm)；提供时按真实轮廓排样，缺省退化为 width×height 矩形"
+                  }
+                },
+                "required": [
+                  "name",
+                  "width",
+                  "height"
+                ]
+              },
+              "description": "下料零件清单"
+            },
+            "sheet_width": {
+              "type": "number",
+              "description": "板材基料宽度 (mm，默认 1000.0)"
+            },
+            "sheet_height": {
+              "type": "number",
+              "description": "板材基料高度 (mm，默认 1000.0)"
+            },
+            "margin": {
+              "type": "number",
+              "description": "零件与板边以及零件间割缝安全间隙 (mm，默认 5.0)"
+            },
+            "output_dxf": {
+              "type": "string",
+              "description": "排样图 DXF 输出路径（可选）"
+            }
+          },
+          "required": [
+            "parts"
+          ]
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "cadcam_step_reverse",
+        "description": "STEP 几何逆向测量：直接解析 STEP AP203/AP214 文本，不打开 CAD 即可返回产品树、包围盒、圆柱面直径谱、锥面半角，并按 MANIFOLD_SOLID_BREP 拆出每个实体的面数/母线圆弧/偏心孔系，最后给出 rebuild_recipe（回转母线站位+孔分布）。用于从 .step 反求尺寸后自行决定参数化建模策略。【理解装配体首选 action=bom】：把 8000 行几何压成结构化装配树（零件名/层级/实体面数/摆放坐标/紧凑 DSL），返回 prompt_context 可直接注入大模型，解决领域模型读不懂装配体的问题。第一步可先用 action=list 找到工作区内的 STEP 文件。",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "action": {
+              "type": "string",
+              "enum": [
+                "list",
+                "analyze",
+                "assembly",
+                "features",
+                "bom"
+              ],
+              "description": "bom=结构化装配树+prompt_context(理解装配体首选)；list=列出可用 STEP；analyze=几何逆向测量；assembly=装配位姿；features=特征树"
+            },
+            "step_path": {
+              "type": "string",
+              "description": "工作区内 .step 文件的绝对路径（action=analyze 时必填）"
+            },
+            "name_contains": {
+              "type": "string",
+              "description": "action=list 时按文件名子串过滤，可选"
+            },
+            "max_bodies": {
+              "type": "integer",
+              "description": "最多返回的实体明细数，默认 6"
+            },
+            "detail": {
+              "type": "boolean",
+              "description": "true=返回逐孔坐标等完整明细（体积较大）；默认 false 精简"
+            }
+          },
+          "required": []
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "cadcam_assembly_build",
+        "description": "逆向工程后的建模/拼装/出图执行器。understand=只理解：解析 BOM（含旋转位姿）、拆件、实测每件体积、推断共面/同轴配合候选；build_mated=在 SolidWorks 里逐件导入原生 SLDPRT、按 BOM 位姿插入、加真实配合（选面后核对曲面类型/半径，漂移即撤销），保存 .SLDASM 并重开核对组件位姿与配合；full_mated=understand+build_mated+GB 第一角三视图与等轴测 .SLDDRW，全部产出带门禁的 verification.json；model=按 STEP 母线剖面参数化重建回转件；assemble=导入 STEP 总成；drawing=仅出图；full=旧版三步。",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "action": {
+              "type": "string",
+              "enum": [
+                "model",
+                "assemble",
+                "drawing",
+                "full",
+                "understand",
+                "build_mated",
+                "full_mated"
+              ],
+              "description": "understand / build_mated / full_mated 为真实装配链路；model / assemble / drawing / full 为旧版导入链路"
+            },
+            "step_path": {
+              "type": "string",
+              "description": "工作区内 STEP 绝对路径；留空则用 assets/wheel_mold_P0.step"
+            },
+            "out_dir": {
+              "type": "string",
+              "description": "产物目录（必须位于工作区内）；留空用 runs/virtu_assembly"
+            }
+          },
+          "required": []
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "cadcam_feature_ops",
+        "description": "原子特征执行器：不提供任何一键策略，只按你自己给出的方案逐步执行。action=measure 返回 STEP 原始测量数据（母线闭合点列、直径谱、孔系、包围盒）；action=execute_plan 严格按 plan.ops 顺序执行，每个 op 后立即读质量属性形成证据链，不认识或缺参数的 op 如实报错、绝不自动补齐。",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "action": {
+              "type": "string",
+              "enum": [
+                "measure",
+                "execute_plan",
+                "single_case"
+              ],
+              "description": "measure=读测量数据；execute_plan=按你的方案执行"
+            },
+            "plan": {
+              "type": "object",
+              "description": "建模方案。格式 {'ops':[ ... ]}。可用 op 按你的方法自行排序：new_part；sketch_profile(source=step_meridian 或 points=[[x,r],...], plane)；revolve(angle_deg)；sketch_holes(pcd_mm,hole_dia_mm,count,angles_deg,plane)；cut(type=through_all)；save_part(name)；import_assembly(step_path)；save_assembly(name)；drawing(template,first_angle,isometric,model_path,name)；verify。特征顺序、参数、是否使用某步骤全由你决定。",
+              "properties": {
+                "ops": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  }
+                },
+                "method_reason": {
+                  "type": "string",
+                  "description": "你选择这套特征顺序与参数的理由"
+                },
+                "expected_volume_mm3": {
+                  "type": "number",
+                  "description": "你预期最终体积，用于与实测对比"
+                }
+              }
+            },
+            "step_path": {
+              "type": "string",
+              "description": "工作区内 STEP 绝对路径"
+            },
+            "out_dir": {
+              "type": "string",
+              "description": "产物目录（工作区内）"
+            }
+          },
+          "required": []
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "desktop_status",
+        "description": "查看 agent-desktop 桌面适配器运行健康度、系统平台信息与辅助功能权限状态（免截屏结构化感知引擎状态）。",
+        "parameters": {
+          "type": "object",
+          "properties": {},
+          "required": []
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "desktop_list_displays",
+        "description": "列出所有已连接的物理显示器参数，包括分辨率 (width/height)、原点坐标 (x/y)、缩放比 (scale) 与主屏标识。",
+        "parameters": {
+          "type": "object",
+          "properties": {},
+          "required": []
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "desktop_list_apps",
+        "description": "列出 Windows 系统中所有正在运行的前台/后台图形界面应用程序 (GUI Applications)。可通过 app 参数过滤指定软件（如 SLDWORKS、AutoCAD、CIMCO、VERICUT、ugraf）。",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "app": {
+              "type": "string",
+              "description": "可选过滤条件：进程名或可执行文件名子串（如 'SLDWORKS' 或 'acad'）"
+            }
+          },
+          "required": []
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "desktop_list_windows",
+        "description": "列出当前桌面上所有可见的顶层应用窗口，返回每个窗口的 HWND、标题、所属进程 PID、坐标位置与状态。",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "app": {
+              "type": "string",
+              "description": "可选过滤条件：应用名称或进程文件名"
+            }
+          },
+          "required": []
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "desktop_snapshot",
+        "description": "【核心感知】通过操作系统原生辅助功能树 (Accessibility Tree) 截取应用程序的完整结构化 JSON DOM 树。每个交互元素均带有稳定的 @ref 引用 ID（如 @s8f3k2p9:e1），避免像素坐标猜测。",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "app": {
+              "type": "string",
+              "description": "目标应用程序名或可执行文件名（如 'SLDWORKS', 'notepad', 'AutoCAD'）"
+            },
+            "compact": {
+              "type": "boolean",
+              "description": "是否以紧凑格式输出元素树，减少冗余标记"
+            },
+            "skeleton": {
+              "type": "boolean",
+              "description": "仅提取主要框架与骨架元素"
+            },
+            "max_depth": {
+              "type": "integer",
+              "description": "最大遍历树深度（默认 8）"
+            }
+          },
+          "required": []
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "desktop_find",
+        "description": "在应用程序窗口的辅助功能树中快速搜索特定 UI 控件元素（按角色 role、名称 name、文本 text 或值 value 匹配），返回符合条件的 @ref 节点列表。",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "app": {
+              "type": "string",
+              "description": "目标应用程序名称"
+            },
+            "query": {
+              "type": "string",
+              "description": "搜索关键词或文本内容（如 '确定', '文件', '保存', 'FeatureManager'）"
+            },
+            "role": {
+              "type": "string",
+              "description": "可选控件角色（如 'button', 'menuitem', 'edit', 'checkbox'）"
+            }
+          },
+          "required": [
+            "query"
+          ]
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "desktop_click",
+        "description": "【语义交互】通过 UI 元素稳定的 @ref 引用 ID 或文本选择器执行点击操作。语义点击直接调用底层 UIA 动作接口，无需移动实体光标即可在后台完成。",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "target": {
+              "type": "string",
+              "description": "目标元素 @ref 引用 ID（必须用单引号包裹，如 '@s8f3k2p9:e5'）或文本选择器"
+            },
+            "headed": {
+              "type": "boolean",
+              "description": "是否使用实体物理光标点击（默认 false 为语义后台静默点击）"
+            }
+          },
+          "required": [
+            "target"
+          ]
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "desktop_type",
+        "description": "向输入框、文本控件或当前聚焦窗口输入文本内容。",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "text": {
+              "type": "string",
+              "description": "要输入的文本字符串"
+            },
+            "target": {
+              "type": "string",
+              "description": "目标控件的 @ref 引用 ID（可选，留空则向当前焦点输入）"
+            },
+            "clear_first": {
+              "type": "boolean",
+              "description": "输入前是否先清空原有内容"
+            }
+          },
+          "required": [
+            "text"
+          ]
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "desktop_press",
+        "description": "发送键盘快捷键组合（如 'ctrl+s', 'enter', 'escape', 'alt+f', 'f5'）到当前前台或指定应用。",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "combo": {
+              "type": "string",
+              "description": "快捷键组合（如 'return', 'escape', 'ctrl+s', 'ctrl+c', 'tab'）"
+            },
+            "app": {
+              "type": "string",
+              "description": "可选目标应用"
+            }
+          },
+          "required": [
+            "combo"
+          ]
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "desktop_focus_window",
+        "description": "将指定软件窗口激活并带到前台，确认获取操作系统焦点。",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "app": {
+              "type": "string",
+              "description": "应用程序名或可执行文件名（如 'SLDWORKS', 'acad', 'notepad'）"
+            }
+          },
+          "required": [
+            "app"
+          ]
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "desktop_screenshot",
+        "description": "截取指定窗口或整个桌面的物理像素截图，保存为 PNG 图片。",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "app": {
+              "type": "string",
+              "description": "可选目标应用名称；留空则截取整屏"
+            },
+            "output_path": {
+              "type": "string",
+              "description": "输出 PNG 图片路径（默认保存至 scratch/agent_desktop_capture.png）"
+            }
+          },
+          "required": []
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "desktop_launch",
+        "description": "启动指定的 Windows 桌面应用程序，并等待其窗口就绪。",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "path_or_name": {
+              "type": "string",
+              "description": "可执行文件绝对路径或系统命令名（如 'notepad.exe', 'calc.exe'）"
+            },
+            "wait_for_window": {
+              "type": "boolean",
+              "description": "是否等待主窗口建立（默认 true）"
+            }
+          },
+          "required": [
+            "path_or_name"
+          ]
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "desktop_batch",
+        "description": "以单批次原子/顺序方式执行一组 agent-desktop 指令，减少多次往返延迟。",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "commands": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "指令列表，例如 ['status', 'list-displays']"
+            }
+          },
+          "required": [
+            "commands"
           ]
         }
       }

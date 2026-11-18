@@ -1,0 +1,17 @@
+{
+  "total": 24,
+  "per_family": {
+    "T1_law_application": 6,
+    "T2_deterministic_repair": 6,
+    "T3_honest_recitation": 6,
+    "T4_geometry_domain": 6
+  },
+  "certifier": "closed_impeller_proctor.ruler",
+  "probe_selftest": "PASS",
+  "difficulty_band_target": [
+    0.2,
+    0.8
+  ],
+  "calibration": "pending_solver_runs",
+  "capstone": "exam_pool_only(pass_rate_0)"
+}

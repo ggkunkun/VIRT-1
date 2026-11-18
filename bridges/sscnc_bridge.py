@@ -9,7 +9,7 @@ Features:
 - SSCNC launch & window activation
 - WCS G54 ~ G59 coordinate setup automation
 - Tool geometry offset quadrant calculation (T1 ~ T9)
-- G-code program loading and Cycle Start trigger
+- Panel capability probe: self-drawn canvas is reported as unsupported, never faked
 """
 
 import os
@@ -22,6 +22,7 @@ SSCNC_EXE = r"E:\仿真软件\2斯沃7.2（内含安装说明）\SSCNC\CNCLogin.
 try:
     import win32gui
     import win32con
+    import win32api
     HAS_WIN32 = True
 except ImportError:
     HAS_WIN32 = False
@@ -60,6 +61,61 @@ class SSCNCBridge:
         if hwnd_found:
             return {"status": "found", "hwnd": hwnd_found[0][0], "title": hwnd_found[0][1]}
         return {"status": "not_running", "message": "SSCNC window not found"}
+
+    def panel_capability(self):
+        """Probe whether the CNC panel exposes text-addressable child controls.
+
+        SSCNC 7.2 draws the CNC panel on a self-drawn canvas; on this build the
+        panel has no Button/Static children with key labels.  The probe makes
+        that boundary explicit instead of reporting a fake key press.
+        """
+        if not HAS_WIN32:
+            return {"status": "unsupported", "reason": "win32gui not available"}
+        win = self.find_window()
+        if win.get("status") != "found":
+            return {"status": win.get("status", "not_running"), "reason": "SSCNC window not found"}
+        hwnd = win["hwnd"]
+        children = []
+
+        def _cb(h, _):
+            try:
+                children.append({
+                    "hwnd": h,
+                    "class": win32gui.GetClassName(h),
+                    "text": win32gui.GetWindowText(h),
+                })
+            except Exception:
+                pass
+            return True
+
+        win32gui.EnumChildWindows(hwnd, _cb, None)
+        key_like = [c for c in children
+                    if c["class"] in ("Button", "Static") and c["text"].strip()]
+        return {
+            "status": "supported" if key_like else "unsupported",
+            "reason": "" if key_like else "self-drawn CNC canvas: no Button/Static key controls",
+            "window_title": win.get("title"),
+            "child_count": len(children),
+            "key_like": key_like[:20],
+        }
+
+    def press_panel_key(self, label: str):
+        """Press a text-addressable panel key; refuse loudly when none exists."""
+        cap = self.panel_capability()
+        if cap.get("status") != "supported":
+            return {"status": "unsupported", "reason": cap.get("reason"), "capability": cap}
+        target = None
+        for c in cap["key_like"]:
+            if label.upper() in (c["text"] or "").upper():
+                target = c
+                break
+        if target is None:
+            return {"status": "not_found", "label": label, "keys": [c["text"] for c in cap["key_like"]]}
+        try:
+            win32api.PostMessage(target["hwnd"], win32con.BM_CLICK, 0, 0)
+            return {"status": "clicked", "label": label, "hwnd": target["hwnd"]}
+        except Exception as e:
+            return {"status": "error", "message": str(e)}
 
     def calculate_tool_offsets(self, tools: list):
         """Calculate FANUC lathe/mill tool geometry and wear offsets with quadrant logic (T1-T9)."""

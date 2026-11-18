@@ -1,0 +1,107 @@
+{
+  "stock_stl": "D:\\Virtu模型\\artifacts\\aero_closed_impeller\\AE_CLOSED_IMPELLER_stock_block.stl",
+  "stock_bytes": 684,
+  "stock_shape": "bounding_block",
+  "stock_material": "TC11",
+  "machine": "DMG MORI NMV1500 (5-axis milling, X/Y/Z/B/C)",
+  "orientation": "axis-aligned: faces parallel to machine X/Y/Z, no rotation",
+  "stock_dims_mm": [
+    258.06,
+    258.06,
+    79.85
+  ],
+  "stock_origin_center_mm": [
+    0.0,
+    0.0,
+    34.925
+  ],
+  "stock_bounds_mm": {
+    "min": [
+      -129.03,
+      -129.03,
+      -5.0
+    ],
+    "max": [
+      129.03,
+      129.03,
+      74.85
+    ]
+  },
+  "design_bounds_mm": {
+    "min": [
+      -129.03,
+      -129.03,
+      0.0
+    ],
+    "max": [
+      129.03,
+      129.03,
+      74.85
+    ]
+  },
+  "allowance_mm": {
+    "xy_per_side": 0.0,
+    "top": 0.0,
+    "bottom_grip": 5.0
+  },
+  "model_matrix_origin_z": 175.0,
+  "world_bounds_mm": {
+    "stock": [
+      -129.03,
+      -129.03,
+      170.0
+    ],
+    "stock_max": [
+      129.03,
+      129.03,
+      249.85
+    ],
+    "design_min": [
+      -129.03,
+      -129.03,
+      175.0
+    ],
+    "design_max": [
+      129.03,
+      129.03,
+      249.85
+    ]
+  },
+  "case_reference": {
+    "vcproject": "E:\\samples\\All\\force_impeller_dmg_mori_nmv1500_fan30im_mm.vcproject",
+    "case_stock_local": {
+      "min": [
+        -24.0,
+        -23.9938,
+        -30.0
+      ],
+      "max": [
+        24.0,
+        24.0,
+        0.0
+      ]
+    },
+    "case_design_local": {
+      "min": [
+        -24.0,
+        -23.9728,
+        -25.0
+      ],
+      "max": [
+        24.0,
+        23.9965,
+        -0.0
+      ]
+    },
+    "case_fixture_top_local_z": 170.0,
+    "case_step_stock_stl": "D:\\Virtu模型\\artifacts\\aero_closed_impeller\\AE_CLOSED_IMPELLER_stock_block.stl"
+  },
+  "encloses_design": true,
+  "design_vertices_outside": 0,
+  "watertight": true,
+  "volume_mm3": 5317607.8,
+  "design_volume_mm3": 2121174.9,
+  "material_removal_mm3": 3196432.9,
+  "material_removal_ratio": 0.6011,
+  "basis": "measured (design bbox + vertex containment test)"
+}

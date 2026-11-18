@@ -98,13 +98,19 @@ class BinaryInspector:
         return round(entropy, 4)
 
     @staticmethod
-    def calculate_hashes(data: bytes) -> Dict[str, str]:
-        """Compute cryptographic hashes (MD5, SHA1, SHA256)."""
-        return {
-            "md5": hashlib.md5(data).hexdigest(),
-            "sha1": hashlib.sha1(data).hexdigest(),
-            "sha256": hashlib.sha256(data).hexdigest(),
-        }
+    def calculate_hashes(data: bytes, *, include_legacy: bool = False) -> Dict[str, str]:
+        """Compute file fingerprints.
+
+        V-10：原先无条件产出 md5/sha1。这两个算法已有实际可行的碰撞构造，
+        一旦下游用它做"文件是否被篡改"的判断，即可被伪造命中。默认只给 sha256；
+        需要与历史结果对齐时显式传 ``include_legacy=True``（或设置
+        ``VIRTU_REA_LEGACY_HASHES=1``），并在使用处标注其非安全用途。
+        """
+        digests = {"sha256": hashlib.sha256(data).hexdigest()}
+        if include_legacy or os.environ.get("VIRTU_REA_LEGACY_HASHES") == "1":
+            digests["md5"] = hashlib.md5(data).hexdigest()
+            digests["sha1"] = hashlib.sha1(data).hexdigest()
+        return digests
 
     def detect_format(self, data: bytes) -> str:
         """Detect binary target type."""

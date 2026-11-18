@@ -1,5 +1,5 @@
 {
-  "sha256": "9370e8315f41a02db574139ec9b0f46c2fc61bcd393003135294127415ee2911",
+  "sha256": "9665a9872c7b9df735538424a8f927fd9df988ed8ea8c2debee51b145c548422",
   "rows": 2400,
   "file": "train/derivation_sft.jsonl",
   "source": "scripts/build_physics_derivation_corpus.py",
@@ -9,7 +9,7 @@
     "eval_holdout_separated": true
   },
   "rejects_at_generation": {
-    "registry_solver_disagreement": 13,
+    "gold_fails_grader": 13,
     "too_close_to_eval_scenario": 1
   },
   "per_task": {

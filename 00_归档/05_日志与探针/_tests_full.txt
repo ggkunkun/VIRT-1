@@ -1,0 +1,4 @@
+...........................................................[2026-11-01 10:59:05] [REST API] "GET /v1/cadcam/preflight HTTP/1.1" 200 -
+[2026-11-01 10:59:05] [REST API] "POST /v1/cadcam/dispatch HTTP/1.1" 200 -
+[2026-11-01 10:59:05] [REST API] "POST /v1/cadcam/dispatch HTTP/1.1" 200 -
+....[LONG-TERM MEMORY] Recorded episodic memory: EXP_0083 (AgentTeam_Part_Cr12MoV) [Vector Indexed]

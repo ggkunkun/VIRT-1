@@ -1,0 +1,350 @@
+{
+  "timestamp": "2026-11-08 14:41:20",
+  "agent_desktop_binary": "C:\\Users\\Administrator\\AppData\\Roaming\\npm\\node_modules\\agent-desktop\\bin\\agent-desktop-win32-x64.exe",
+  "agent_desktop_version": "1.2.0",
+  "platform": "windows",
+  "basis": "measured",
+  "total_models_evaluated": 8,
+  "successful_connections": 8,
+  "results": [
+    {
+      "model": "virtu-13.63b:hardened",
+      "status": "connected_and_verified",
+      "turn1_time_s": 27.58,
+      "turn2_time_s": 15.12,
+      "total_time_s": 42.83,
+      "tools_called": [
+        {
+          "name": "desktop_status",
+          "arguments": {},
+          "ok": true,
+          "exec_time_s": 0.126,
+          "result_preview": {
+            "permissions": {
+              "accessibility": {
+                "state": "granted"
+              },
+              "automation": {
+                "state": "not_required"
+              },
+              "screen_recording": {
+                "state": "not_required"
+              }
+            },
+            "platform": "windows",
+            "ref_count": null,
+            "session_id": null,
+            "snapshot_id": null,
+            "state_root": "C:\\Users\\Administrator\\.agent-desktop",
+            "supported_surfaces": [
+              "window",
+              "focused",
+              "sheet",
+              "menu",
+              "start-menu",
+              "taskbar",
+              "system-tray",
+              "system-tray-overflow",
+              "action-center"
+            ],
+            "tracing": false,
+            "version": "1.2.0"
+          }
+        }
+      ],
+      "final_answer": "桌面适配器运行状态：权限已授权，平台为 Windows。无需要屏幕录制或自动化操作的界面交互需求，当前桌面处于可访问状态（Accessibility: granted）。"
+    },
+    {
+      "model": "virtu-moe-14b:hardened",
+      "status": "connected_and_verified",
+      "turn1_time_s": 32.34,
+      "turn2_time_s": 19.23,
+      "total_time_s": 51.97,
+      "tools_called": [
+        {
+          "name": "desktop_status",
+          "arguments": {},
+          "ok": true,
+          "exec_time_s": 0.405,
+          "result_preview": {
+            "permissions": {
+              "accessibility": {
+                "state": "granted"
+              },
+              "automation": {
+                "state": "not_required"
+              },
+              "screen_recording": {
+                "state": "not_required"
+              }
+            },
+            "platform": "windows",
+            "ref_count": null,
+            "session_id": null,
+            "snapshot_id": null,
+            "state_root": "C:\\Users\\Administrator\\.agent-desktop",
+            "supported_surfaces": [
+              "window",
+              "focused",
+              "sheet",
+              "menu",
+              "start-menu",
+              "taskbar",
+              "system-tray",
+              "system-tray-overflow",
+              "action-center"
+            ],
+            "tracing": false,
+            "version": "1.2.0"
+          }
+        }
+      ],
+      "final_answer": "系统桌面适配器状态检查完成，当前运行健康度为正常（ok: true），已获得无障碍访问权限。支持的屏幕表面类型包括窗口、任务栏等，可进行自动化操作与截图录制。"
+    },
+    {
+      "model": "virtu-v3:hardened",
+      "status": "connected_and_verified",
+      "turn1_time_s": 14.4,
+      "turn2_time_s": 2.37,
+      "total_time_s": 16.98,
+      "tools_called": [
+        {
+          "name": "desktop_status",
+          "arguments": {},
+          "ok": true,
+          "exec_time_s": 0.214,
+          "result_preview": {
+            "permissions": {
+              "accessibility": {
+                "state": "granted"
+              },
+              "automation": {
+                "state": "not_required"
+              },
+              "screen_recording": {
+                "state": "not_required"
+              }
+            },
+            "platform": "windows",
+            "ref_count": null,
+            "session_id": null,
+            "snapshot_id": null,
+            "state_root": "C:\\Users\\Administrator\\.agent-desktop",
+            "supported_surfaces": [
+              "window",
+              "focused",
+              "sheet",
+              "menu",
+              "start-menu",
+              "taskbar",
+              "system-tray",
+              "system-tray-overflow",
+              "action-center"
+            ],
+            "tracing": false,
+            "version": "1.2.0"
+          }
+        }
+      ],
+      "final_answer": "桌面适配器状态检查完成，系统报告如下：\n- **软件版本**: 2.6\n- **运行状态**: ✅ 正常运行（ok: true）\n- **平台类型**: Windows 操作系统\n- **权限配置**:\n  - 辅助功能 (Accessibility): 已授权 (granted)"
+    },
+    {
+      "model": "virtu-internet-enhanced:latest",
+      "status": "connected_and_verified",
+      "turn1_time_s": 33.52,
+      "turn2_time_s": 4.83,
+      "total_time_s": 38.88,
+      "tools_called": [
+        {
+          "name": "desktop_status",
+          "arguments": {},
+          "ok": true,
+          "exec_time_s": 0.532,
+          "result_preview": {
+            "permissions": {
+              "accessibility": {
+                "state": "granted"
+              },
+              "automation": {
+                "state": "not_required"
+              },
+              "screen_recording": {
+                "state": "not_required"
+              }
+            },
+            "platform": "windows",
+            "ref_count": null,
+            "session_id": null,
+            "snapshot_id": null,
+            "state_root": "C:\\Users\\Administrator\\.agent-desktop",
+            "supported_surfaces": [
+              "window",
+              "focused",
+              "sheet",
+              "menu",
+              "start-menu",
+              "taskbar",
+              "system-tray",
+              "system-tray-overflow",
+              "action-center"
+            ],
+            "tracing": false,
+            "version": "1.2.0"
+          }
+        }
+      ],
+      "final_answer": "系统桌面适配器状态正常，权限已授予。"
+    },
+    {
+      "model": "qwen3:8b",
+      "status": "connected_and_verified",
+      "turn1_time_s": 20.9,
+      "turn2_time_s": 6.86,
+      "total_time_s": 28.33,
+      "tools_called": [
+        {
+          "name": "desktop_status",
+          "arguments": {},
+          "ok": true,
+          "exec_time_s": 0.571,
+          "result_preview": {
+            "permissions": {
+              "accessibility": {
+                "state": "granted"
+              },
+              "automation": {
+                "state": "not_required"
+              },
+              "screen_recording": {
+                "state": "not_required"
+              }
+            },
+            "platform": "windows",
+            "ref_count": null,
+            "session_id": null,
+            "snapshot_id": null,
+            "state_root": "C:\\Users\\Administrator\\.agent-desktop",
+            "supported_surfaces": [
+              "window",
+              "focused",
+              "sheet",
+              "menu",
+              "start-menu",
+              "taskbar",
+              "system-tray",
+              "system-tray-overflow",
+              "action-center"
+            ],
+            "tracing": false,
+            "version": "1.2.0"
+          }
+        }
+      ],
+      "final_answer": "系统桌面适配器状态检查结果如下：\n\n- **状态**: 正常（`ok: true`）\n- **版本**: 2.6\n- **平台**: Windows\n- **权限状态**:\n  - **辅助功能**: 已授予（`granted`）\n  - **自动化**: 不需要（`not"
+    },
+    {
+      "model": "qwen2.5:7b-instruct-q4_K_M",
+      "status": "connected_and_verified",
+      "turn1_time_s": 14.54,
+      "turn2_time_s": 3.36,
+      "total_time_s": 18.04,
+      "tools_called": [
+        {
+          "name": "desktop_status",
+          "arguments": {},
+          "ok": true,
+          "exec_time_s": 0.136,
+          "result_preview": {
+            "permissions": {
+              "accessibility": {
+                "state": "granted"
+              },
+              "automation": {
+                "state": "not_required"
+              },
+              "screen_recording": {
+                "state": "not_required"
+              }
+            },
+            "platform": "windows",
+            "ref_count": null,
+            "session_id": null,
+            "snapshot_id": null,
+            "state_root": "C:\\Users\\Administrator\\.agent-desktop",
+            "supported_surfaces": [
+              "window",
+              "focused",
+              "sheet",
+              "menu",
+              "start-menu",
+              "taskbar",
+              "system-tray",
+              "system-tray-overflow",
+              "action-center"
+            ],
+            "tracing": false,
+            "version": "1.2.0"
+          }
+        }
+      ],
+      "final_answer": "桌面适配器状态检查结果显示如下：\n\n- 系统平台：Windows\n- 权限状态：\n  - 可访问性权限：已授予\n  - 自动化权限：无需\n  - 屏幕录制权限：无需\n\n当前桌面适配器版本为 1.2.0，状态正常。"
+    },
+    {
+      "model": "qwen2.5:1.5b",
+      "status": "connected_and_verified",
+      "turn1_time_s": 5.03,
+      "turn2_time_s": 0.61,
+      "total_time_s": 5.79,
+      "tools_called": [
+        {
+          "name": "desktop_status",
+          "arguments": {},
+          "ok": true,
+          "exec_time_s": 0.148,
+          "result_preview": {
+            "permissions": {
+              "accessibility": {
+                "state": "granted"
+              },
+              "automation": {
+                "state": "not_required"
+              },
+              "screen_recording": {
+                "state": "not_required"
+              }
+            },
+            "platform": "windows",
+            "ref_count": null,
+            "session_id": null,
+            "snapshot_id": null,
+            "state_root": "C:\\Users\\Administrator\\.agent-desktop",
+            "supported_surfaces": [
+              "window",
+              "focused",
+              "sheet",
+              "menu",
+              "start-menu",
+              "taskbar",
+              "system-tray",
+              "system-tray-overflow",
+              "action-center"
+            ],
+            "tracing": false,
+            "version": "1.2.0"
+          }
+        }
+      ],
+      "final_answer": "The desktop status check for your Windows system has been completed. Here are the details:\n\n- **Permissions:**\n  - Accessibility: Granted\n  - Automation: Not Required\n  - Screen Recording: Not Required\n\n- **Platform:** Windows\n\n- **Supported Surfaces:** \n  - Window\n  - Focused\n  - Sheet"
+    },
+    {
+      "model": "models/Qwen3-VL-2B-Instruct (Local HF)",
+      "status": "connected_and_verified",
+      "modality": "Vision-Language Grounding",
+      "supported_tools": [
+        "desktop_screenshot",
+        "desktop_snapshot"
+      ],
+      "note": "Local safetensors weights present (4.25 GB). Ready for visual grounding & screenshot OCR."
+    }
+  ]
+}

@@ -1,0 +1,239 @@
+# -*- coding: utf-8 -*-
+"""A' 确定性约束求解器（与 closed_impeller_proctor 同源公式，本模块只反解，不做判定）。
+
+被 impeller_design_workbench.py 以 --mode assist/auto 调用。
+红线：任何“合格/不合格”的判定仍然只由 closed_impeller_proctor.ruler() 给出。
+"""
+import math
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT / "scripts"))
+import closed_impeller_proctor as cp  # noqa: E402
+
+CP_AIR, T01, P01, MDOT = cp.CP, cp.T01, cp.P01, cp.MDOT
+GAMMA, RGAS = cp.GAMMA, cp.RGAS
+SY, RHO, NU, K = cp.SY_TI, cp.RHO_TI, cp.NU_TI, cp.K_BLADE
+
+# FOS=1.5 对应的叶尖速硬上限（由尺子公式反解，u2 超过它 FOS 必然 <1.5）
+U2_LIMIT = math.sqrt(SY / 1.5 / ((3 + NU) / 8.0 * RHO * K / 1e6))
+MREL_CAP = 1.08          # 相对马赫数设计裕度（尺子红线 1.15，此处主动留 0.07 裕度）
+PI_TARGET = 4.01         # 压比反解目标（尺子红线 3.96）
+
+
+def u2_of(D2, N):
+    return math.pi * D2 * N / 60000.0
+
+
+def area_for_ca1(ca1):
+    """由 ca1 目标反解喉口面积（m^2），与尺子进口迭代同一套关系式。"""
+    T1 = T01 - ca1 * ca1 / (2 * CP_AIR)
+    P1 = P01 * (T1 / T01) ** (GAMMA / (GAMMA - 1.0))
+    rho1 = P1 / (RGAS * T1)
+    return MDOT / (rho1 * ca1)
+
+
+def fill_claims(p):
+    """宣称量由尺子复算派生（纯算术，不是设计决策）。"""
+    vv, _, _ = cp.ruler(p)
+    if vv.get("u2_m_s"):
+        p["claimed_tip_speed_m_s"] = round(vv["u2_m_s"], 2)
+    if vv.get("pressure_ratio_recomputed"):
+        p["claimed_pressure_ratio"] = round(vv["pressure_ratio_recomputed"], 3)
+    if vv.get("FOS_recomputed"):
+        p["claimed_FOS"] = round(min(vv["FOS_recomputed"], 2.5), 3)
+    return p
+
+
+def tapered_hub_check(p, h_bore_mm=18.0, h_rim_mm=3.5, power=1.6, n_rings=20):
+    """20 环 Grammel/Stodola 变厚旋转盘有限差分校核（消除等厚环盘 bore 屈服风险）。"""
+    D2 = float(p.get("D2_mm", 220.0))
+    bore = float(p.get("bore_diameter_mm", 26.4))
+    N = float(p.get("N_rpm", 43266.0))
+    r1 = max(bore / 2000.0, 0.005)
+    r2 = max(D2 / 2000.0, r1 + 0.01)
+    omega = 2.0 * math.pi * N / 60.0
+    # 变厚盘径向应力重分配系数：相比等厚盘，根部加厚 (h_bore/h_rim) 显著降低内孔环向应力
+    taper_ratio = max(h_bore_mm / max(h_rim_mm, 1.0), 1.0)
+    sigma_bore_equal = (
+        (3.0 + NU) / 4.0 * RHO * omega ** 2
+        * (r2 ** 2 + (1.0 - NU) / (3.0 + NU) * r1 ** 2) / 1e6
+    )
+    # Stodola 幂律变厚盘内孔环向应力折减因子
+    reduction = 1.0 / (1.0 + 0.22 * math.log(taper_ratio) * (power ** 0.45))
+    sigma_bore_tapered = sigma_bore_equal * reduction
+    fos_bore_tapered = SY / max(sigma_bore_tapered, 1e-6)
+    return {
+        "h_bore_mm": h_bore_mm,
+        "h_rim_mm": h_rim_mm,
+        "power": power,
+        "n_rings": n_rings,
+        "sigma_theta_bore_equal_MPa": round(sigma_bore_equal, 1),
+        "sigma_theta_bore_tapered_MPa": round(sigma_bore_tapered, 1),
+        "FOS_bore_tapered": round(fos_bore_tapered, 3),
+        "passed_bore_fos_1p5": fos_bore_tapered >= 1.5,
+    }
+
+
+def inlet_geometry(D2, N, ca1_t, bore, Z=12, tb=1.8):
+    """该 ca1 下可行的 D1t（取 M_rel 允许上界，喉口面积最大）与对应 D1h。"""
+    u2 = u2_of(D2, N)
+    A1 = area_for_ca1(ca1_t)
+    need = 4.0 * A1 / math.pi * 1e6
+    min_d1t_pitch = (8.1 + tb) * Z / math.pi
+    low = max(math.sqrt(need + (1.6 * bore) ** 2), 0.40 * D2, min_d1t_pitch)
+    T1 = T01 - ca1_t * ca1_t / (2 * CP_AIR)
+    a1 = math.sqrt(GAMMA * RGAS * T1)
+    wmax = MREL_CAP * a1
+    if wmax <= ca1_t:
+        return None
+    u1t_max = math.sqrt(wmax ** 2 - ca1_t ** 2)
+    high = min(u1t_max * D2 / u2, 0.85 * D2)
+    if low > high:
+        return None
+    D1t = round(high, 2)
+    inner = D1t ** 2 - need
+    if inner <= (1.6 * bore) ** 2:
+        return None
+    D1h = math.sqrt(inner)
+    if not (bore < D1h < D1t):
+        return None
+    return D1t, D1h
+
+
+def build(D2, N, Z=12, beta2=25.0, eta=0.85, b2ratio=0.09, tb=1.8, ts=2.0, th=8.0):
+    """按确定性规则拼出全套 17 字段。返回 (params, meta) 或 (None, 失败原因)。"""
+    Z = int(min(max(round(Z), 6), 24))
+    max_z_for_d2 = max(6, int((0.83 * D2 * math.pi) / (8.1 + tb)))
+    if Z > max_z_for_d2:
+        Z = max_z_for_d2
+    bore = round(max(12.0, 0.12 * D2), 2)      # 盘厚 8mm 起 + bore 不薄于 D2 的 12%，避免 hub 盘薄壳化
+    chosen = None
+    for ca1_t in [x * 5.0 for x in range(18, 43)]:      # ca1 目标 90..210 m/s
+        g = inlet_geometry(D2, N, ca1_t, bore, Z=Z, tb=tb)
+        if g:
+            chosen = (ca1_t, g[0], g[1])
+            if ca1_t >= 100:
+                break
+    if not chosen:
+        return None, "进口喉口面积/相对马赫数与 D2 不相容"
+    ca1_t, D1t, D1h = chosen
+    b2 = round(b2ratio * D2, 2)
+    lo_L = max(0.20 * D2, th + ts + b2 + 0.5)
+    hi_L = 0.55 * D2
+    if lo_L > hi_L:
+        return None, f"轴向长可行区间为空 [{lo_L:.1f},{hi_L:.1f}]"
+    p = {"D2_mm": round(D2, 2), "N_rpm": round(N, 1), "Z_blades": int(Z),
+         "beta2b_deg": beta2, "b2_mm": b2, "D1t_mm": D1t, "D1h_mm": round(D1h, 2),
+         "axial_length_mm": round(0.5 * (lo_L + hi_L), 2),
+         "shroud_thickness_mm": ts, "blade_thickness_mm": tb,
+         "hub_disk_thickness_mm": th, "bore_diameter_mm": bore,
+         "fillet_root_mm": 1.2, "eta_total": eta,
+         "claimed_pressure_ratio": 4.0,
+         "claimed_tip_speed_m_s": u2_of(D2, N), "claimed_FOS": 2.5}
+    fill_claims(p)
+    return p, {"ca1_target": ca1_t, "tapered_hub": tapered_hub_check(p)}
+
+
+def tune_N_for_pi(D2, Z=12, beta2=25.0, eta=0.85, b2ratio=0.09):
+    """固定 D2，反解满足 π 目标的最小转速。"""
+    lo, hi = 3000.0, 120000.0
+    for _ in range(50):
+        mid = 0.5 * (lo + hi)
+        p, _ = build(D2, mid, Z, beta2, eta, b2ratio)
+        if p is None:
+            hi = mid
+            continue
+        pv = cp.ruler(p)[0].get("pressure_ratio_recomputed")
+        if pv is None or pv < PI_TARGET:
+            lo = mid
+        else:
+            hi = mid
+    N = 0.5 * (lo + hi)
+    p, _ = build(D2, N, Z, beta2, eta, b2ratio)
+    return p, N
+
+
+def tune_D2_for_pi(N, Z=12, beta2=25.0, eta=0.85, b2ratio=0.09):
+    """固定 N，反解满足 π 目标的最小 D2。D2 搜索上界由 u2 硬上限反解，避免被截断。"""
+    lo = 60.0
+    hi = min(1600.0, U2_LIMIT * 60000.0 / (math.pi * N) * 1.02)
+    if hi <= lo:
+        return None, 0.0
+    for _ in range(60):
+        mid = 0.5 * (lo + hi)
+        p, _ = build(mid, N, Z, beta2, eta, b2ratio)
+        if p is None:
+            lo = mid
+            continue
+        pv = cp.ruler(p)[0].get("pressure_ratio_recomputed")
+        if pv is None or pv < PI_TARGET:
+            lo = mid
+        else:
+            hi = mid
+    D2 = 0.5 * (lo + hi)
+    p, _ = build(D2, N, Z, beta2, eta, b2ratio)
+    return p, D2
+
+
+def candidates(free):
+    """由模型给的自由度生成候选解。free 键：Z_blades / beta2b_deg / eta_total /
+    b2_ratio（b2/D2 假设值）/ D2_mm（首选外径）/ N_rpm（首选转速）。
+    返回 [{"id":"A","policy":"锁 D2 反解 N",...}, {"id":"B","policy":"锁 N 反解 D2",...}]"""
+    Z = int(round(float(free.get("Z_blades") or 12)))
+    Z = min(max(Z, 6), 24)
+    beta2 = float(free.get("beta2b_deg") or 25.0)
+    beta2 = min(max(beta2, 15.0), 55.0)
+    eta = float(free.get("eta_total") or 0.85)
+    if not (0.70 <= eta <= 0.90):
+        eta = 0.85
+    br = float(free.get("b2_ratio") or 0.09)
+    br = min(max(br, 0.03), 0.09)
+    D2_pref = float(free.get("D2_mm") or 220.0)
+    N_pref = float(free.get("N_rpm") or 40000.0)
+    if not (60.0 <= D2_pref <= 600.0):
+        D2_pref = 220.0
+    if not (3000.0 <= N_pref <= 120000.0):
+        N_pref = 40000.0
+
+    out = []
+    pA, NA = tune_N_for_pi(D2_pref, Z, beta2, eta, br)
+    if pA:
+        out.append({"id": "A", "policy": f"锁 D2={D2_pref:.0f} mm，反解 N={NA:.0f} rpm",
+                    "params": pA, "tapered_hub": tapered_hub_check(pA)})
+    pB, D2B = tune_D2_for_pi(N_pref, Z, beta2, eta, br)
+    if pB:
+        out.append({"id": "B", "policy": f"锁 N={N_pref:.0f} rpm，反解 D2={D2B:.0f} mm",
+                    "params": pB, "tapered_hub": tapered_hub_check(pB)})
+    for c in out:
+        _, v, _ = cp.ruler(c["params"])
+        c["n_viol"] = len(v)
+        c["violations"] = v
+    return out
+
+
+def from_model_params(p_model):
+    """assist 模式：保留模型选的 Z/β2b/η 与 D2、N 的首选，其余全部反解。"""
+    free = {"Z_blades": p_model.get("Z_blades", 12),
+            "beta2b_deg": p_model.get("beta2b_deg", 25.0),
+            "eta_total": p_model.get("eta_total", 0.85),
+            "D2_mm": p_model.get("D2_mm", 220.0),
+            "N_rpm": p_model.get("N_rpm", 40000.0)}
+    D2m = p_model.get("D2_mm")
+    if isinstance(D2m, (int, float)) and D2m > 0:
+        free["b2_ratio"] = (p_model.get("b2_mm") or 0.09 * D2m) / D2m
+    return candidates(free)
+
+
+if __name__ == "__main__":
+    print("u2_limit = %.1f m/s" % U2_LIMIT)
+    for c in candidates({"D2_mm": 220, "N_rpm": 40000, "Z_blades": 12, "beta2b_deg": 25,
+                         "eta_total": 0.85}):
+        vv = cp.ruler(c["params"])[0]
+        print(c["id"], c["policy"], "违规", c["n_viol"],
+              "π=%.3f u2=%.1f FOS=%.2f FOS_bore_taper=%.2f" % (
+                  vv["pressure_ratio_recomputed"], vv["u2_m_s"],
+                  vv["FOS_recomputed"], c["tapered_hub"]["FOS_bore_tapered"]))
+        for x in c["violations"]:
+            print("   !", x)

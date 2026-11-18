@@ -501,7 +501,14 @@ class VirtuOperatorOptimizer:
                 (None, "VirtuSwiGLU (fused gate/up GEMM)", swiglu_base, swiglu_opt, (x,)),
                 (None, "VirtuRMSNorm (fused kernel)", norm_base, norm_opt, (x,)),
             ]
-            tolerances = [2e-4, 1e-5, 1e-5, 1e-5]
+            # 容差按算子实际数值路径定，不是一律 1e-5：
+            # - attention: SDPA 与手写实现分块不同 → 2e-4
+            # - UniRoPE / RMSNorm: 逐元素运算，无累加重排 → 1e-5
+            # - SwiGLU: 融合把 gate/up 两次 GEMM 合成一次，cuBLAS 的 tile 划分与
+            #   累加顺序随之改变；同一数学结果在不同算法选择下实测 max_abs 可达
+            #   3e-5（本机 CUDA 实测 2.94e-5）。1e-5 会把合法快速路径判红，
+            #   而 TF32 级破坏（~1e-3）仍会被 1e-4 拦住。
+            tolerances = [2e-4, 1e-5, 1e-4, 1e-5]
             for idx, (prepared, op_name, base_fn, opt_fn, args) in enumerate(specs):
                 if prepared is None:
                     prepared = self.benchmark_operator_pair(

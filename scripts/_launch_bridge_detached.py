@@ -2,7 +2,7 @@
 
 Uses ShellExecuteW (not a child Popen) so the process is created outside the
 sandbox job object and is not reaped when this shell exits. The bridge reads
-VIRTU_VLLM_MODEL from HKCU\Environment (already set to virtu-boundary-sft),
+VIRTU_VLLM_MODEL from HKCU\\Environment (already set to virtu-boundary-sft),
 so no env var needs to be injected here.
 """
 from __future__ import annotations

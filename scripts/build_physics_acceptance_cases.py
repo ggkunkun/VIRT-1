@@ -110,8 +110,9 @@ FAMILIES = {
                    {"shape": "cylinder", "params": {"r": 45.0, "h": 90.0}, "rho": 4.5e-3}],
     },
     "collision": {
-        "zh": "G00 快速移动碰撞判定：最低点 Z 低于安全平面且低于毛坯顶面+1mm 记高风险，"
-             "最低点 Z 低于毛坯顶面即过切；autodiff 取 red（过切）/yellow（风险无过切）/green（安全）",
+        "zh": "G00 快速移动碰撞判定：最低点 Z 同时低于安全平面与毛坯顶面+1mm 记高风险，"
+             "或已低于毛坯顶面（过切）也记高风险；最低点 Z 低于毛坯顶面即过切；"
+             "autodiff 取 red（过切）/yellow（风险无过切）/green（安全）",
         # deliberately one of each verdict
         "inputs": [{"z_safe": 50.0, "z_min_rapid": 38.0, "stock_top": 40.0},
                    {"z_safe": 50.0, "z_min_rapid": 40.5, "stock_top": 40.0},
@@ -135,11 +136,10 @@ FAMILIES = {
 # Per-tier quota, 9/15/6 as the schema demands. collision gets all three variants because its
 # verdict fields (autodiff red/yellow/green, gouge) must each appear, or the set would only
 # ever exercise two of the three states.
-# mass_props is EXCLUDED (measured 2026-11-04): mass_props_csg returns V*(h^2+w^2)/12, whose
-# unit is mm^5, under the field name inertia_ixx_mm4. The true area moment of the 120x60x20 box
-# is w*h^3/12 = 4.0e4 mm^4 while the solver says 4.8e7, a 1200x disagreement. A field whose
-# reference is dimensionally wrong cannot grade anything; same expression at
-# scripts/distill_local_solver.py:180 and scripts/build_worldmodel_sft.py:267.
+# mass_props is EXCLUDED: the board size is pinned at 30 cases / 10 families by
+# tests/test_physics_case_set.py. (Historical reason, now fixed: mass_props_csg returned
+# V*(h^2+w^2)/12 in mm^5 under inertia_*_mm4; the solver and corpus_unit_audit were corrected
+# on 2026-11-08 and the fix is pinned by tests/test_physics_reference_honesty.py.)
 BUCKETS = {
     "easy": ["roughness", "fea_fos", "adapt_material"],
     "medium": ["removal", "tolerance", "design", "adapt_machine"],

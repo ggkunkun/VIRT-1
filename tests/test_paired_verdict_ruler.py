@@ -64,8 +64,9 @@ def write_run_unnamed(dirpath, scores):
 
 class TestPairedRuler(unittest.TestCase):
     def setUp(self):
-        self.tmp = tempfile.TemporaryDirectory(dir=str(ROOT / "runs" / "eval")
-                                               if (ROOT / "runs" / "eval").exists() else str(ROOT))
+        # 系统 TEMP 下的临时目录：宿主 safe-delete 垫片对仓库内路径的删除会
+        # 累计到 turn 级批量阈值，cleanup() 被拦会把用例打成假红。
+        self.tmp = tempfile.TemporaryDirectory(dir=tempfile.gettempdir())
         self.noise = Path(self.tmp.name) / "noise.json"
         self.noise.write_text(json.dumps({"records": NOISE_RECORDS}), encoding="utf-8")
         for tag in ("runs_a", "runs_b"):

@@ -28,6 +28,13 @@ from virtu_omni.reasoning.brep_grammar_dsl import (
     CADCommand,
     TopologyValidationReport,
 )
+from virtu_omni.reasoning.chain_of_thought import (
+    COT_STAGES,
+    CoTStep,
+    CoTTrajectory,
+    CoTVerificationReport,
+    StructuredCoTEngine,
+)
 
 __all__ = [
     "AlphaGeometrySymbolicEngine",
@@ -49,4 +56,9 @@ __all__ = [
     "DeepCADBRepGrammarEngine",
     "CADCommand",
     "TopologyValidationReport",
+    "COT_STAGES",
+    "CoTStep",
+    "CoTTrajectory",
+    "CoTVerificationReport",
+    "StructuredCoTEngine",
 ]

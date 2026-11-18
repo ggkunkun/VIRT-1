@@ -1,9 +1,0 @@
-{
-  "text": "{\"kind\": \"prompt_policy\", \"strategy\": \"POLICY1: read each parameter and verify units.\", \"hypothesis\": \"avoid arithmetic mistakes\"}",
-  "error": null,
-  "served_model": "virtu-ties-v1:latest",
-  "model_digest": "declared-fake-test-digest",
-  "finish_reason": "stop",
-  "elapsed_s": 0.001,
-  "tool_calls": null
-}

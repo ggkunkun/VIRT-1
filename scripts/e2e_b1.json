@@ -1,0 +1,38 @@
+[
+ {
+  "fam": "removal_mrr",
+  "sec": 11.6,
+  "action": "accept",
+  "all_ok": 5,
+  "total": 5,
+  "raw_ok": 0,
+  "issues": [],
+  "binding_risk": null,
+  "raw_head": "{\"volume_removed\": 1580.53, \"unit_volume_removed\": \"mm^3\", \"mass_remaining_kg\": 367.25}"
+ },
+ {
+  "fam": "roughness",
+  "sec": 2.2,
+  "action": "accept",
+  "all_ok": 1,
+  "total": 1,
+  "raw_ok": 0,
+  "issues": [],
+  "binding_risk": null,
+  "raw_head": "{\"Ra\": 1.6, \"roughness_grade\": \"Ra 1.6 μm (Grade 3: Fine finish)\"}"
+ },
+ {
+  "fam": "fea_fos",
+  "sec": 1.2,
+  "action": "corrected",
+  "all_ok": 2,
+  "total": 3,
+  "raw_ok": 0,
+  "issues": [
+   "安全系数 FOS=0.74 < 1.5，触发安全熔断，强制判定为 FAIL",
+   "安全门字面与 FOS=1.50 不一致，已归一为 PASS (FOS >= 1.5)"
+  ],
+  "binding_risk": null,
+  "raw_head": "{\"FOS\": 1.5, \"status\": \"pass\"}"
+ }
+]

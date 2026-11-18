@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<title>Virtu 全模型真实能力雷达图（现场实测 · 可复算）</title>
+<style>
+ body{background:#0b0e17;color:#e6ebf5;font-family:'Microsoft YaHei','Segoe UI',sans-serif;margin:0;padding:28px}
+ h1{font-size:23px;margin:0 0 6px} .sub{color:#8b95ad;font-size:13px;line-height:1.8;margin-bottom:22px}
+ .grid{display:grid;grid-template-columns:minmax(520px,760px) 1fr;gap:24px;align-items:start}
+ @media(max-width:1250px){.grid{grid-template-columns:1fr}}
+ .card{background:#11162a;border:1px solid #232c47;border-radius:14px;padding:18px;margin-bottom:18px}
+ .badge{display:inline-block;font-size:11px;padding:3px 9px;border-radius:6px;margin-right:6px}
+ .ok{background:rgba(0,230,118,.14);border:1px solid #00e676;color:#00e676}
+ .warn{background:rgba(255,122,89,.14);border:1px solid #ff7a59;color:#ff7a59}
+ table{width:100%;border-collapse:collapse;font-size:11.5px} th,td{border:1px solid #232c47;padding:6px 7px;text-align:center}
+ th{background:#1a2238;color:#aab4d4} td.l{text-align:left} td.mono{font-family:Consolas,monospace;color:#9fb0d0}
+ td.small{font-size:10px;color:#6b7694} .n{color:#5b6580;font-size:9px;margin-left:2px}
+ .total{color:#ffd24d;font-weight:700} .dot{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:6px}
+ .fam{color:#9fb0d0;font-size:11px} .muted{color:#6b7694} .bad{color:#ff5252}
+ #legend{max-height:520px;overflow:auto;display:grid;grid-template-columns:1fr 1fr;gap:4px 10px;font-size:11.5px}
+ #legend label{display:flex;align-items:center;gap:3px;cursor:pointer;color:#c7d0e6}
+ .btn{background:#1a2238;color:#c7d0e6;border:1px solid #2a3350;border-radius:6px;padding:5px 12px;cursor:pointer;font-size:12px}
+ .footer{font-size:12px;line-height:1.9;color:#8b95ad} code{color:#ffd24d}
+</style></head><body>
+<h1>Virtu 全模型真实能力雷达图</h1>
+<div class="sub">
+ <span class="badge ok">现场实测</span><span class="badge ok">逐腿封缄</span>
+ <span class="badge warn">多模态维未测</span>
+ 生成时间 2026-11-07T18:57:46+0800 ·
+ 唯一构件 9 个 · <b style="color:#00e676">可发布 7</b> ·
+ <b style="color:#ff7a59">未测/作废 2</b><br>
+ 每个多边形都由本进程从该腿 <code>raw.jsonl</code> 现场复算；封缄、sha256、完整性闸门、
+ 逐行 served_layers 身份、run_id 任一不通过即整腿作废，不进图。
+</div>
+<div class="grid">
+ <div><div class="card"><h3 style="margin:0 0 10px;font-size:15px">7 维能力雷达（0–100，仅实测维度）</h3>
+ <svg viewBox="0 0 760 760" id="radar" role="img" aria-label="全模型实测能力雷达图">
+<circle cx="380" cy="380" r="250" fill="#0f1320" stroke="#232c47"/>
+<polygon points="380.0,330.0 419.1,348.8 428.7,391.1 401.7,425.0 358.3,425.0 331.3,391.1 340.9,348.8" fill="none" stroke="#232c47" stroke-width="1"/>
+<polygon points="380.0,280.0 458.2,317.7 477.5,402.3 423.4,470.1 336.6,470.1 282.5,402.3 301.8,317.7" fill="none" stroke="#232c47" stroke-width="1"/>
+<polygon points="380.0,230.0 497.3,286.5 526.2,413.4 445.1,515.1 314.9,515.1 233.8,413.4 262.7,286.5" fill="none" stroke="#232c47" stroke-width="1"/>
+<polygon points="380.0,180.0 536.4,255.3 575.0,424.5 466.8,560.2 293.2,560.2 185.0,424.5 223.6,255.3" fill="none" stroke="#232c47" stroke-width="1"/>
+<polygon points="380.0,130.0 575.5,224.1 623.7,435.6 488.5,605.2 271.5,605.2 136.3,435.6 184.5,224.1" fill="none" stroke="#232c47" stroke-width="1"/>
+<line x1="380" y1="380" x2="380.0" y2="130.0" stroke="#232c47"/>
+<text x="380.0" y="90.0" fill="#c7d0e6" font-size="14" text-anchor="middle" dominant-baseline="middle">工具编排<tspan fill="#6b7694" font-size="11"> w=0.18</tspan></text>
+<line x1="380" y1="380" x2="575.5" y2="224.1" stroke="#232c47"/>
+<text x="606.7" y="199.2" fill="#c7d0e6" font-size="14" text-anchor="start" dominant-baseline="middle">推理逻辑<tspan fill="#6b7694" font-size="11"> w=0.17</tspan></text>
+<line x1="380" y1="380" x2="623.7" y2="435.6" stroke="#232c47"/>
+<text x="662.7" y="444.5" fill="#c7d0e6" font-size="14" text-anchor="start" dominant-baseline="middle">知识覆盖<tspan fill="#6b7694" font-size="11"> w=0.15</tspan></text>
+<line x1="380" y1="380" x2="488.5" y2="605.2" stroke="#232c47"/>
+<text x="505.8" y="641.3" fill="#c7d0e6" font-size="14" text-anchor="start" dominant-baseline="middle">指令遵循<tspan fill="#6b7694" font-size="11"> w=0.14</tspan></text>
+<line x1="380" y1="380" x2="271.5" y2="605.2" stroke="#232c47"/>
+<text x="254.2" y="641.3" fill="#c7d0e6" font-size="14" text-anchor="end" dominant-baseline="middle">边界处理<tspan fill="#6b7694" font-size="11"> w=0.12</tspan></text>
+<line x1="380" y1="380" x2="136.3" y2="435.6" stroke="#232c47"/>
+<text x="97.3" y="444.5" fill="#c7d0e6" font-size="14" text-anchor="end" dominant-baseline="middle">内容生成<tspan fill="#6b7694" font-size="11"> w=0.10</tspan></text>
+<line x1="380" y1="380" x2="184.5" y2="224.1" stroke="#232c47"/>
+<text x="153.3" y="199.2" fill="#c7d0e6" font-size="14" text-anchor="end" dominant-baseline="middle">泛化适配<tspan fill="#6b7694" font-size="11"> w=0.08</tspan></text>
+<text x="384" y="342.0" fill="#5b6580" font-size="10">20</text>
+<text x="384" y="292.0" fill="#5b6580" font-size="10">40</text>
+<text x="384" y="242.0" fill="#5b6580" font-size="10">60</text>
+<text x="384" y="192.0" fill="#5b6580" font-size="10">80</text>
+<text x="384" y="142.0" fill="#5b6580" font-size="10">100</text>
+<polygon class="arm" data-model="qwen2.5:1.5b" points="380.0,296.6 419.1,348.8 501.9,407.8 470.4,567.7 307.7,530.2 349.5,387.0 332.5,342.1" fill="#4ea1ff" fill-opacity="0.045" stroke="#4ea1ff" stroke-width="1.8" stroke-opacity="0.85"><title>qwen2.5:1.5b 综合=42.3</title></polygon>
+<polygon class="arm" data-model="virtu-13.63b-q4_0:latest" points="380.0,296.6 477.7,302.1 562.8,421.7 488.5,605.2 307.7,530.2 245.9,410.6 318.6,331.0" fill="#00e676" fill-opacity="0.045" stroke="#00e676" stroke-width="1.8" stroke-opacity="0.85"><title>virtu-13.63b-q4_0:latest 综合=59.33</title></polygon>
+<polygon class="arm" data-model="virtu-13.63b:hardened" points="380.0,296.6 419.1,348.8 522.2,412.5 488.5,605.2 307.7,530.2 270.3,405.0 318.6,331.0" fill="#ffd24d" fill-opacity="0.045" stroke="#ffd24d" stroke-width="1.8" stroke-opacity="0.85"><title>virtu-13.63b:hardened 综合=50.18</title></polygon>
+<polygon class="arm" data-model="virtu-13.63b:latest" points="380.0,296.6 432.1,338.4 501.9,407.8 488.5,605.2 289.6,567.7 300.8,398.1 332.5,342.1" fill="#ff7a59" fill-opacity="0.045" stroke="#ff7a59" stroke-width="1.8" stroke-opacity="0.85"><title>virtu-13.63b:latest 综合=50.24</title></polygon>
+<polygon class="arm" data-model="virtu-13.63b:wm-v1" points="380.0,338.4 432.1,338.4 562.8,421.7 488.5,605.2 289.6,567.7 349.5,387.0 338.1,346.6" fill="#b388ff" fill-opacity="0.045" stroke="#b388ff" stroke-width="1.8" stroke-opacity="0.85"><title>virtu-13.63b:wm-v1 综合=48.67</title></polygon>
+<polygon class="arm" data-model="virtu-moe-14b:hardened" points="380.0,296.6 399.5,364.4 562.8,421.7 488.5,605.2 307.7,530.2 349.5,387.0 318.6,331.0" fill="#40c4ff" fill-opacity="0.045" stroke="#40c4ff" stroke-width="1.8" stroke-opacity="0.85"><title>virtu-moe-14b:hardened 综合=47.57</title></polygon>
+<polygon class="arm" data-model="virtu-v3-all90-q4_0:latest" points="380.0,255.0 516.8,270.9 562.8,421.7 488.5,605.2 289.6,567.7 221.6,416.2 240.4,268.7" fill="#ff80ab" fill-opacity="0.045" stroke="#ff80ab" stroke-width="1.8" stroke-opacity="0.85"><title>virtu-v3-all90-q4_0:latest 综合=72.73</title></polygon>
+</svg>
+ <div style="margin-top:10px"><button class="btn" id="all">全选</button> <button class="btn" id="none">全不选</button>
+ <button class="btn" id="top8">仅 Top 8</button></div>
+ </div>
+ <div class="card footer">
+ <b>口径</b>：用例 <code>data/benchmark/virtu_eval_v1</code>，7 维 × easy,medium 各 1 题
+ = 每腿 14 条；temperature=0 / seed=1234 /
+ num_predict≤128 / num_ctx=1024 / think=false。<br>
+ <b>计分</b>：case=命中权重/总权重×100；维度=有效用例算术平均；综合=Σ(维度分×权重)/Σ(权重)；
+ transport_error 剔除，空回答与截断照实计 0 或低分。<br>
+ <b>toolcall</b>：本轮未注入工具 schema，判分锚定响应文本中的 JSON 字面量，
+ 不得与历史 16 工具 schema 腿直接比较。<br>
+ <b>多模态</b>：需视觉通道，Ollama 库无 VL 标签，<b>未测</b>，故不画第 8 轴、不进综合分。<br>
+ <b>限制</b>：每维样本量小（n=2），
+ 用于全库横向对齐，不能当作发布级精度；生成预算 128 token 会压低长输出题（generation）的分数，
+ 该偏差对所有模型一致。<br>
+ <b>复算</b>：<code>python scripts/generate_verified_radar.py --self-test</code>
+ </div></div>
+ <div><div class="card"><h3 style="margin:0 0 8px;font-size:15px">显示控制（7 条实测多边形）</h3>
+ <div id="legend"><label><input type="checkbox" checked data-model="virtu-v3-all90-q4_0:latest"><span class="dot" style="background:#ff80ab"></span>virtu-v3-all90-q4_0:latest</label><label><input type="checkbox" checked data-model="virtu-13.63b-q4_0:latest"><span class="dot" style="background:#00e676"></span>virtu-13.63b-q4_0:latest</label><label><input type="checkbox" checked data-model="virtu-13.63b:latest"><span class="dot" style="background:#ff7a59"></span>virtu-13.63b:latest</label><label><input type="checkbox" checked data-model="virtu-13.63b:hardened"><span class="dot" style="background:#ffd24d"></span>virtu-13.63b:hardened</label><label><input type="checkbox" checked data-model="virtu-13.63b:wm-v1"><span class="dot" style="background:#b388ff"></span>virtu-13.63b:wm-v1</label><label><input type="checkbox" checked data-model="virtu-moe-14b:hardened"><span class="dot" style="background:#40c4ff"></span>virtu-moe-14b:hardened</label><label><input type="checkbox" checked data-model="qwen2.5:1.5b"><span class="dot" style="background:#4ea1ff"></span>qwen2.5:1.5b</label></div></div>
+ <div class="card"><h3 style="margin:0 0 8px;font-size:15px">反证闸门（植入坏样本必须判红）</h3>
+ <ul style="font-size:12px;line-height:2;padding-left:18px;margin:0"><li><code>篡改单题分数（重封缄+伪摘要）</code> → <b class=ok>判红 PASS</b> <span class="muted">维度 boundary 现场复算 83.34 != 记录 66.67</span></li><li><code>删除一行（覆盖不全）</code> → <b class=ok>判红 PASS</b> <span class="muted">完整性闸门判红: [&#x27;记录数 13 &lt; 计划用例数 14（覆盖不全）&#x27;]</span></li><li><code>删除封缄</code> → <b class=ok>判红 PASS</b> <span class="muted">封缄校验失败: leg: 未封缄，不得发布（谁写的、写完有没有人动过，都无从证明）</span></li><li><code>植入 3 条 transport_error</code> → <b class=ok>判红 PASS</b> <span class="muted">完整性闸门判红: [&#x27;transport_error 占比 21.4% &gt; 5%，本轮分数无效，需重跑&#x27;]</span></li><li><code>抹掉一行 served_layers 身份</code> → <b class=ok>判红 PASS</b> <span class="muted">存在无 served_layers 身份指纹的记录</span></li></ul></div></div>
+</div>
+<div class="card"><h3 style="margin:0 0 10px;font-size:15px">逐模型溯源表（分数 / n / run_id / 证据）</h3>
+<div style="overflow:auto"><table><tr><th>模型标签</th><th>家族</th><th>digest</th>
+<th>工具编排</th><th>推理逻辑</th><th>知识覆盖</th><th>指令遵循</th><th>边界处理</th><th>内容生成</th><th>泛化适配</th><th>综合</th><th>run_id</th><th>raw sha256</th><th>证据路径</th></tr>
+<tr><td class="l"><span class="dot" style="background:#ff80ab"></span>virtu-v3-all90-q4_0:latest</td><td class="fam">其它/实验</td><td class="mono">02eb58a03b32</td><td>50.0<span class="n">/n2</span></td><td>70.0<span class="n">/n2</span></td><td>75.0<span class="n">/n2</span></td><td>100.0<span class="n">/n2</span></td><td>83.3<span class="n">/n2</span></td><td>65.0<span class="n">/n2</span></td><td>71.4<span class="n">/n2</span></td><td class="total">72.73</td><td class="mono">1a358422440b40c2</td><td class="mono" title="14af6d3b40f4afc063da087a1c2acf654151ab68a3bfc01aef9e7c204618d0f2">14af6d3b40f4</td><td class="mono small">runs/eval/all_models_live_v2_20261107/virtu-v3-all90-q4_0_latest/raw.jsonl</td></tr><tr><td class="l"><span class="dot" style="background:#00e676"></span>virtu-13.63b-q4_0:latest</td><td class="fam">13B 家族</td><td class="mono">a3daaed3182c</td><td>33.3<span class="n">/n2</span></td><td>50.0<span class="n">/n2</span></td><td>75.0<span class="n">/n2</span></td><td>100.0<span class="n">/n2</span></td><td>66.7<span class="n">/n2</span></td><td>55.0<span class="n">/n2</span></td><td>31.4<span class="n">/n2</span></td><td class="total">59.33</td><td class="mono">057a86c0d4cc737c</td><td class="mono" title="32867038c9badf99c3b0ad6fe2ca9e25346f95dc0a578bb65ce5574fbecf89a5">32867038c9ba</td><td class="mono small">runs/eval/all_models_live_v2_20261107/virtu-13.63b-q4_0_latest/raw.jsonl</td></tr><tr><td class="l"><span class="dot" style="background:#ff7a59"></span>virtu-13.63b:latest</td><td class="fam">13B 家族</td><td class="mono">0638c84b93d0</td><td>33.3<span class="n">/n2</span></td><td>26.7<span class="n">/n2</span></td><td>50.0<span class="n">/n2</span></td><td>100.0<span class="n">/n2</span></td><td>83.3<span class="n">/n2</span></td><td>32.5<span class="n">/n2</span></td><td>24.3<span class="n">/n2</span></td><td class="total">50.24</td><td class="mono">9a2a9157070b17ec</td><td class="mono" title="070c5216598639df7b7bf2ad8e4a7e2adf5d9cdf3672379588d5393f599a0775">070c52165986</td><td class="mono small">runs/eval/all_models_live_v2_20261107/virtu-13.63b_latest/raw.jsonl</td></tr><tr><td class="l"><span class="dot" style="background:#ffd24d"></span>virtu-13.63b:hardened</td><td class="fam">13B 家族</td><td class="mono">16888647dd4a</td><td>33.3<span class="n">/n2</span></td><td>20.0<span class="n">/n2</span></td><td>58.3<span class="n">/n2</span></td><td>100.0<span class="n">/n2</span></td><td>66.7<span class="n">/n2</span></td><td>45.0<span class="n">/n2</span></td><td>31.4<span class="n">/n2</span></td><td class="total">50.18</td><td class="mono">fdd614d988ffc9df</td><td class="mono" title="6fd16ee370be20a44840b91a4ed9dbd9d5b87fc8ffc3e812c060128723b03c78">6fd16ee370be</td><td class="mono small">runs/eval/all_models_live_v2_20261107/virtu-13.63b_hardened/raw.jsonl</td></tr><tr><td class="l"><span class="dot" style="background:#b388ff"></span>virtu-13.63b:wm-v1</td><td class="fam">13B 家族</td><td class="mono">99a7e0c73151</td><td>16.7<span class="n">/n2</span></td><td>26.7<span class="n">/n2</span></td><td>75.0<span class="n">/n2</span></td><td>100.0<span class="n">/n2</span></td><td>83.3<span class="n">/n2</span></td><td>12.5<span class="n">/n2</span></td><td>21.4<span class="n">/n2</span></td><td class="total">48.67</td><td class="mono">22c8d15a8aadb087</td><td class="mono" title="149e0129ecd61d1b4fb9b90cef9d62c1f8d67bfbc0df29c676ea3cba87645555">149e0129ecd6</td><td class="mono small">runs/eval/all_models_live_v2_20261107/virtu-13.63b_wm-v1/raw.jsonl</td></tr><tr><td class="l"><span class="dot" style="background:#40c4ff"></span>virtu-moe-14b:hardened</td><td class="fam">MoE-14B</td><td class="mono">e71e5f7b669c</td><td>33.3<span class="n">/n2</span></td><td>10.0<span class="n">/n2</span></td><td>75.0<span class="n">/n2</span></td><td>100.0<span class="n">/n2</span></td><td>66.7<span class="n">/n2</span></td><td>12.5<span class="n">/n2</span></td><td>31.4<span class="n">/n2</span></td><td class="total">47.57</td><td class="mono">c407c80da18b4f16</td><td class="mono" title="87df15b39cab797d705b43fcf938f57a2b75ec3cbe38c88fc408aadbc3591137">87df15b39cab</td><td class="mono small">runs/eval/all_models_live_v2_20261107/virtu-moe-14b_hardened/raw.jsonl</td></tr><tr><td class="l"><span class="dot" style="background:#4ea1ff"></span>qwen2.5:1.5b</td><td class="fam">基座对照</td><td class="mono">65ec06548149</td><td>33.3<span class="n">/n2</span></td><td>20.0<span class="n">/n2</span></td><td>50.0<span class="n">/n2</span></td><td>83.3<span class="n">/n2</span></td><td>66.7<span class="n">/n2</span></td><td>12.5<span class="n">/n2</span></td><td>24.3<span class="n">/n2</span></td><td class="total">42.30</td><td class="mono">99194b6efdf95fe3</td><td class="mono" title="788c8205ea1c8b94aab70651851271b70c04ccca74f57f5d25b28e2e2e56f63b">788c8205ea1c</td><td class="mono small">runs/eval/all_models_live_v2_20261107/qwen2.5_1.5b/raw.jsonl</td></tr></table></div></div>
+<div class="card"><h3 style="margin:0 0 10px;font-size:15px">未测 / 作废清单（不填分数）</h3>
+<table><tr><th>模型</th><th>状态</th><th colspan="4">原因</th></tr><tr><td class="l">virtu-13b:gold</td><td>failed</td><td colspan="4" class="l">gate_invalid: {&#x27;expected_cases&#x27;: 14, &#x27;recorded_cases&#x27;: 14, &#x27;malformed_lines&#x27;: 0, &#x27;transport_errors&#x27;: 1, &#x27;transport_rate&#x27;: 0.0714, &#x27;valid&#x27;: False, &#x27;problems&#x27;: [&#x27;transport_error 占比 7</td></tr><tr><td class="l">virtu-wm-v3:latest</td><td>failed</td><td colspan="4" class="l">gate_invalid: {&#x27;expected_cases&#x27;: 14, &#x27;recorded_cases&#x27;: 2, &#x27;malformed_lines&#x27;: 0, &#x27;transport_errors&#x27;: 2, &#x27;transport_rate&#x27;: 1.0, &#x27;valid&#x27;: False, &#x27;problems&#x27;: [&#x27;记录数 2 &lt; 计划用例数 14（覆盖不全）&#x27;,</td></tr></table></div>
+<script>
+const boxes=[...document.querySelectorAll('#legend input')];
+const arms=[...document.querySelectorAll('.arm')];
+function apply(){const on=new Set(boxes.filter(b=>b.checked).map(b=>b.dataset.model));
+ arms.forEach(a=>a.style.display=on.has(a.dataset.model)?'':'none');}
+boxes.forEach(b=>b.addEventListener('change',apply));
+document.getElementById('all').onclick=()=>{boxes.forEach(b=>b.checked=true);apply();};
+document.getElementById('none').onclick=()=>{boxes.forEach(b=>b.checked=false);apply();};
+document.getElementById('top8').onclick=()=>{const top=new Set(boxes.slice(0,8).map(b=>b.dataset.model));
+ boxes.forEach(b=>b.checked=top.has(b.dataset.model));apply();};
+apply();
+</script></body></html>

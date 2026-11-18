@@ -1,0 +1,63 @@
+{
+  "run_id": "LIVE_EFFECTIVENESS_20261112",
+  "sample_size_anchor": 5,
+  "sample_size_plasticity": 3,
+  "pre_baseline_score": 1.0,
+  "baseline_provided": true,
+  "stability_score": 1.0,
+  "plasticity_score": 1.0,
+  "catastrophic_forgetting_rate": 0.0,
+  "gate_passed": true,
+  "basis": "measured",
+  "thresholds": {
+    "stability_min": 0.95,
+    "plasticity_min": 0.9,
+    "cf_max": 0.05
+  },
+  "reasons": [],
+  "anchor_details": [
+    {
+      "case_id": "ANCHOR_01_G71_FANUC",
+      "passed": true,
+      "response": "在 FANUC G71 外径粗车复合循环中，**第二行的 `U` 参数表示每次退刀量**（即每次切入深度）。\n- 单位：mm。\n- 控制意义：每轮精进切深为 `U`，对余量切除速度和表面粗糙度有直接影响。"
+    },
+    {
+      "case_id": "ANCHOR_02_LAME_STRESS",
+      "passed": true,
+      "response": "厚壁圆筒仅受内压 Pi 作用时，内壁 (r=a) 径向应力恰好为零。物理机理是：液体压力无法拉伸固体壁面产生法向分离，只能诱发环向和纵向弯曲变形。数学上源于 Lame 方程在 r=a 处的自然消零特性。"
+    },
+    {
+      "case_id": "ANCHOR_03_MMC_TOLERANCE",
+      "passed": true,
+      "response": "在 GB/T 形位公差标注中：\n1. 符号 **Ⓜ** 外面带圆圈表示 **最大实体要求**（Maximum Material Requirement，简称 MMC）；\n2. 实际尺寸偏离最大实体尺寸时，形状或位置公差可以**自动放宽**（获得额外的容许量），而不是变严。"
+    },
+    {
+      "case_id": "ANCHOR_04_SOLIDWORKS_VBA",
+      "passed": true,
+      "response": "在 SolidWorks VBA 中添加方程字符串时，双引号需用另一个双引号进行转义。正确的写法是：\n```vba\nswEqnMgr.AddEquation Name:=\"X\", Expression:=\"\" & \"sqrt(D^2 + W^2)\" & \"\"\n```\n或更常见的是直接使用两个连续的双引号来表示单个：\"。"
+    },
+    {
+      "case_id": "ANCHOR_05_ISO_SAFETY",
+      "passed": true,
+      "response": "机械安全设计通则国家标准 GB/T 15706 对应的是国际标准 **ISO 12100**。"
+    }
+  ],
+  "plasticity_details": [
+    {
+      "rule_key": "lame_thick_cylinder_fos",
+      "passed": true,
+      "response": "【cae_simulation 规则 lame_thick_cylinder_fos】：\n核心公式：$ \\text{Factor of Safety} = \\frac{\\sigma_{\\text{yield}}}{\\sigma_{\\text{max}}} $；\n约束：仅适用于厚壁筒体纯拉伸应力状态下的极限强度储备评估。"
+    },
+    {
+      "rule_key": "spindle_speed_formula",
+      "passed": true,
+      "response": "在 CNC 加工体系中，主轴速度 (spindle speed) 规则的核心公式为：\n$$ n_{\\text{main}} [\\text{rpm}] = \\frac{1000 \\times V_c}{\\pi \\times D} $$\n其中：\n- $ V_c $: 切削线速度 [mm/min]\n- $ D $: 工具直径或刀杆直径 [mm] \n- π ≈ 3.141592653589793\n工程约束：\n1. 车外圆取最小直径 d_min 来避免超程；\n2. 每个刀位切换前确认当前刀具直径并修正公式；\n3. 最大允许空转极限一般不超过 30,000 rpm（视机床型号而定）；\n4. 根据材质及刀具状态调整合理范围，防止过度磨损或共振失稳。"
+    },
+    {
+      "rule_key": "volume_conservation_assertion",
+      "passed": true,
+      "response": "【volume_conservation_assertion】的核心公式：\n$$ \\text{切除前体积} - \\text{切除量} = \\text{残留工件体积} $$\n工程约束：严格禁止刀具路径导致的物理缺失物质（即不允许出现负容积切除），确保所有切除操作符合物理可行性。"
+    }
+  ],
+  "timestamp": 1794497592.1362188
+}

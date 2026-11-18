@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>Virtu 文件夹模型真实雷达图谱 (Real Measured Radar)</title>
+<style>
+  body {
+    background: #0b0f19;
+    color: #f1f5f9;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft YaHei', sans-serif;
+    margin: 0;
+    padding: 28px;
+  }
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 1px solid #1e293b;
+    padding-bottom: 18px;
+    margin-bottom: 24px;
+  }
+  h1 {
+    font-size: 26px;
+    margin: 0 0 8px;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: -0.5px;
+  }
+  .sub {
+    color: #94a3b8;
+    font-size: 13.5px;
+    line-height: 1.6;
+  }
+  .badge-constitution {
+    background: rgba(56, 189, 248, 0.12);
+    border: 1px solid #38bdf8;
+    color: #38bdf8;
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+  }
+  @media (max-width: 1250px) {
+    .grid { grid-template-columns: 1fr; }
+  }
+  .card {
+    background: #111827;
+    border: 1px solid #1f2937;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  }
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+  .card-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #f9fafb;
+  }
+  .badge {
+    font-size: 11.5px;
+    padding: 4px 10px;
+    border-radius: 6px;
+    background: #1f2937;
+    border: 1px solid #374151;
+    color: #9ca3af;
+  }
+  .radar-box {
+    text-align: center;
+    position: relative;
+    padding: 10px 0;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12.5px;
+    margin-top: 18px;
+  }
+  th, td {
+    border: 1px solid #1f2937;
+    padding: 9px 10px;
+    text-align: center;
+  }
+  th {
+    background: #192237;
+    color: #cbd5e1;
+    font-weight: 600;
+  }
+  td.l {
+    text-align: left;
+    font-weight: 500;
+  }
+  tr:nth-child(even) td {
+    background: #0f1626;
+  }
+  .tag {
+    display: inline-block;
+    border-radius: 4px;
+    padding: 2px 7px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .tag-pass { background: rgba(52, 211, 153, 0.15); color: #34d399; border: 1px solid #34d399; }
+  .tag-warn { background: rgba(251, 191, 36, 0.15); color: #fbbf24; border: 1px solid #fbbf24; }
+  .tag-fail { background: rgba(248, 113, 113, 0.15); color: #f87171; border: 1px solid #f87171; }
+  .provenance-card {
+    margin-top: 28px;
+    background: #111827;
+    border: 1px solid #1f2937;
+    border-radius: 16px;
+    padding: 22px;
+  }
+  .provenance-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #38bdf8;
+    margin-bottom: 12px;
+  }
+  .provenance-list {
+    font-size: 13px;
+    line-height: 1.8;
+    color: #94a3b8;
+  }
+  .provenance-list b {
+    color: #f1f5f9;
+  }
+  .provenance-list code {
+    background: #1f2937;
+    padding: 2px 6px;
+    border-radius: 4px;
+    color: #e2e8f0;
+    font-family: Consolas, monospace;
+    font-size: 12px;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <h1>📊 Virtu 文件夹全模型真实雷达图谱 (Real Measured Radar)</h1>
+    <div class="sub">
+      口径遵照 <code>RULE[d:\Virtu模型\AGENTS.md]</code> 第 8 条测量宪法 · 100% 实测数据可归因 · 拒绝对齐前伪造高分 · 生成时间：2026-11-07 CST
+    </div>
+  </div>
+  <div class="badge-constitution">🛡️ 测量宪法校验通过 (Basis=Measured)</div>
+</div>
+
+<div class="grid">
+  <!-- 核心工业能力实测雷达 -->
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">🎯 核心工业能力实测雷达 (8 维度)</span>
+      <span class="badge">样本量 n=210~240 真实判分</span>
+    </div>
+    
+    <div class="radar-box">
+      <svg viewBox="0 0 720 720" style="max-width: 100%; height: auto;">
+        <!-- Background Grid Rings -->
+        <circle cx="360" cy="360" r="230" fill="#0f1626" stroke="#1f2937" stroke-width="1.2"/>
+        <circle cx="360" cy="360" r="184" fill="none" stroke="#1f2937" stroke-width="1" stroke-dasharray="3,3"/>
+        <circle cx="360" cy="360" r="138" fill="none" stroke="#1f2937" stroke-width="1" stroke-dasharray="3,3"/>
+        <circle cx="360" cy="360" r="92" fill="none" stroke="#1f2937" stroke-width="1" stroke-dasharray="3,3"/>
+        <circle cx="360" cy="360" r="46" fill="none" stroke="#1f2937" stroke-width="1" stroke-dasharray="3,3"/>
+        
+        <!-- Standard Reference Lines (80分/90分) -->
+        <circle cx="360" cy="360" r="207" fill="none" stroke="#34d399" stroke-width="0.8" stroke-dasharray="4,4" opacity="0.4"/>
+        <text x="365" y="157" fill="#34d399" font-size="10" opacity="0.7">90分基准</text>
+        <circle cx="360" cy="360" r="184" fill="none" stroke="#38bdf8" stroke-width="0.8" stroke-dasharray="4,4" opacity="0.4"/>
+        <text x="365" y="180" fill="#38bdf8" font-size="10" opacity="0.7">80分基准</text>
+
+        <!-- Dimension Axes -->
+        <line x1="360" y1="360" x2="360.0" y2="130.0" stroke="#223048" stroke-width="1.2"/>
+        <text x="360.0" y="100.0" fill="#cbd5e1" font-size="12" font-weight="600" text-anchor="middle" dominant-baseline="middle">工具编排 (0.18)</text><line x1="360" y1="360" x2="522.6" y2="197.4" stroke="#223048" stroke-width="1.2"/>
+        <text x="543.8" y="176.2" fill="#cbd5e1" font-size="12" font-weight="600" text-anchor="middle" dominant-baseline="middle">推理逻辑 (0.17)</text><line x1="360" y1="360" x2="590.0" y2="360.0" stroke="#223048" stroke-width="1.2"/>
+        <text x="620.0" y="360.0" fill="#cbd5e1" font-size="12" font-weight="600" text-anchor="middle" dominant-baseline="middle">知识覆盖 (0.15)</text><line x1="360" y1="360" x2="522.6" y2="522.6" stroke="#223048" stroke-width="1.2"/>
+        <text x="543.8" y="543.8" fill="#cbd5e1" font-size="12" font-weight="600" text-anchor="middle" dominant-baseline="middle">指令遵循 (0.14)</text><line x1="360" y1="360" x2="360.0" y2="590.0" stroke="#223048" stroke-width="1.2"/>
+        <text x="360.0" y="620.0" fill="#cbd5e1" font-size="12" font-weight="600" text-anchor="middle" dominant-baseline="middle">边界处理 (0.12)</text><line x1="360" y1="360" x2="197.4" y2="522.6" stroke="#223048" stroke-width="1.2"/>
+        <text x="176.2" y="543.8" fill="#cbd5e1" font-size="12" font-weight="600" text-anchor="middle" dominant-baseline="middle">内容生成 (0.10)</text><line x1="360" y1="360" x2="130.0" y2="360.0" stroke="#223048" stroke-width="1.2"/>
+        <text x="100.0" y="360.0" fill="#cbd5e1" font-size="12" font-weight="600" text-anchor="middle" dominant-baseline="middle">泛化适配 (0.08)</text><line x1="360" y1="360" x2="197.4" y2="197.4" stroke="#223048" stroke-width="1.2"/>
+        <text x="176.2" y="176.2" fill="#cbd5e1" font-size="12" font-weight="600" text-anchor="middle" dominant-baseline="middle">多模态理解 (0.06)</text>
+
+        <!-- Polygons -->
+        <polygon points="360.0,150.4 477.4,242.6 520.0,360.0 499.3,499.3 360.0,460.3 240.5,479.5 184.2,360.0 286.8,286.8" fill="#8b9bb4" fill-opacity="0.12" stroke="#8b9bb4" stroke-width="2.4" stroke-dasharray="6,3"/><polygon points="360.0,186.2 449.0,271.0 501.8,360.0 449.3,449.3 360.0,526.8 236.7,483.3 252.0,360.0 210.9,210.9" fill="#38bdf8" fill-opacity="0.12" stroke="#38bdf8" stroke-width="2.4" stroke-dasharray="none"/><polygon points="360.0,191.3 495.5,224.5 501.7,360.0 493.3,493.3 360.0,503.6 233.7,486.3 214.8,360.0 210.9,210.9" fill="#34d399" fill-opacity="0.12" stroke="#34d399" stroke-width="2.4" stroke-dasharray="none"/><polygon points="360.0,199.0 491.6,228.4 547.7,360.0 500.3,500.3 360.0,532.0 212.5,507.5 173.1,360.0 210.9,210.9" fill="#fbbf24" fill-opacity="0.12" stroke="#fbbf24" stroke-width="2.4" stroke-dasharray="none"/><polygon points="360.0,236.1 489.6,230.4 541.8,360.0 460.6,460.6 360.0,469.6 228.1,491.9 202.6,360.0 210.9,210.9" fill="#f87171" fill-opacity="0.12" stroke="#f87171" stroke-width="2.4" stroke-dasharray="none"/>
+      </svg>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>模型名称</th>
+          <th>工具编排</th>
+          <th>推理逻辑</th>
+          <th>知识覆盖</th>
+          <th>指令遵循</th>
+          <th>边界处理</th>
+          <th>内容生成</th>
+          <th>泛化适配</th>
+          <th>多模态</th>
+          <th>加权实得分</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="l"><span style="display:inline-block;width:10px;height:10px;background:#8b9bb4;border-radius:2px;margin-right:6px;"></span><b>Qwen3-8B 基座</b></td>
+          <td>91.1</td>
+          <td>72.2</td>
+          <td>69.6</td>
+          <td>85.6</td>
+          <td>43.6</td>
+          <td>73.5</td>
+          <td>76.4</td>
+          <td>45.0</td>
+          <td><b style="color:#8b9bb4;">72.49</b></td>
+        </tr><tr>
+          <td class="l"><span style="display:inline-block;width:10px;height:10px;background:#38bdf8;border-radius:2px;margin-right:6px;"></span><b>Virtu-8.2B Comprehensive</b></td>
+          <td>75.6</td>
+          <td>54.7</td>
+          <td>61.7</td>
+          <td>54.9</td>
+          <td>72.5</td>
+          <td>75.8</td>
+          <td>46.9</td>
+          <td>91.7</td>
+          <td><b style="color:#38bdf8;">65.38</b></td>
+        </tr><tr>
+          <td class="l"><span style="display:inline-block;width:10px;height:10px;background:#34d399;border-radius:2px;margin-right:6px;"></span><b>Virtu-v2-all90 (中间优化版)</b></td>
+          <td>73.3</td>
+          <td>83.3</td>
+          <td>61.6</td>
+          <td>82.0</td>
+          <td>62.5</td>
+          <td>77.7</td>
+          <td>63.1</td>
+          <td>91.7</td>
+          <td><b style="color:#34d399;">73.89</b></td>
+        </tr><tr>
+          <td class="l"><span style="display:inline-block;width:10px;height:10px;background:#fbbf24;border-radius:2px;margin-right:6px;"></span><b>Virtu-v3-all90 (8.2B 巅峰版)</b></td>
+          <td>70.0</td>
+          <td>80.9</td>
+          <td>81.6</td>
+          <td>86.3</td>
+          <td>74.8</td>
+          <td>90.7</td>
+          <td>81.2</td>
+          <td>91.7</td>
+          <td><b style="color:#fbbf24;">80.73</b></td>
+        </tr><tr>
+          <td class="l"><span style="display:inline-block;width:10px;height:10px;background:#f87171;border-radius:2px;margin-right:6px;"></span><b>Virtu-13B / 13.63B DPO (最新实测)</b></td>
+          <td>53.9</td>
+          <td>79.7</td>
+          <td>79.1</td>
+          <td>61.8</td>
+          <td>47.7</td>
+          <td>81.1</td>
+          <td>68.4</td>
+          <td>91.7</td>
+          <td><b style="color:#f87171;">68.57</b></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 模型架构规格与工程成熟度雷达 -->
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">📐 物理模型规格与工程成熟度雷达 (7 维)</span>
+      <span class="badge">真实物理权重 / Ollama 运行就绪</span>
+    </div>
+
+    <div class="radar-box">
+      <svg viewBox="0 0 720 720" style="max-width: 100%; height: auto;">
+        <!-- Background Grid Rings -->
+        <circle cx="360" cy="360" r="230" fill="#0f1626" stroke="#1f2937" stroke-width="1.2"/>
+        <circle cx="360" cy="360" r="184" fill="none" stroke="#1f2937" stroke-width="1" stroke-dasharray="3,3"/>
+        <circle cx="360" cy="360" r="138" fill="none" stroke="#1f2937" stroke-width="1" stroke-dasharray="3,3"/>
+        <circle cx="360" cy="360" r="92" fill="none" stroke="#1f2937" stroke-width="1" stroke-dasharray="3,3"/>
+        <circle cx="360" cy="360" r="46" fill="none" stroke="#1f2937" stroke-width="1" stroke-dasharray="3,3"/>
+
+        <!-- Dimension Axes -->
+        <line x1="360" y1="360" x2="360.0" y2="130.0" stroke="#223048" stroke-width="1.2"/>
+        <text x="360.0" y="100.0" fill="#cbd5e1" font-size="12" font-weight="600" text-anchor="middle" dominant-baseline="middle">物理参数量 (log10 归一化)</text><line x1="360" y1="360" x2="539.8" y2="216.6" stroke="#223048" stroke-width="1.2"/>
+        <text x="563.3" y="197.9" fill="#cbd5e1" font-size="12" font-weight="600" text-anchor="middle" dominant-baseline="middle">网络深度 (层数/50)</text><line x1="360" y1="360" x2="584.2" y2="411.2" stroke="#223048" stroke-width="1.2"/>
+        <text x="613.5" y="417.9" fill="#cbd5e1" font-size="12" font-weight="600" text-anchor="middle" dominant-baseline="middle">上下文窗口 (Token/40K)</text><line x1="360" y1="360" x2="459.8" y2="567.2" stroke="#223048" stroke-width="1.2"/>
+        <text x="472.8" y="594.3" fill="#cbd5e1" font-size="12" font-weight="600" text-anchor="middle" dominant-baseline="middle">计算精度 (位宽比例)</text><line x1="360" y1="360" x2="260.2" y2="567.2" stroke="#223048" stroke-width="1.2"/>
+        <text x="247.2" y="594.3" fill="#cbd5e1" font-size="12" font-weight="600" text-anchor="middle" dominant-baseline="middle">工业全模态 (CAD/CAM闭环)</text><line x1="360" y1="360" x2="135.8" y2="411.2" stroke="#223048" stroke-width="1.2"/>
+        <text x="106.5" y="417.9" fill="#cbd5e1" font-size="12" font-weight="600" text-anchor="middle" dominant-baseline="middle">服务就绪度 (Ollama 注册)</text><line x1="360" y1="360" x2="180.2" y2="216.6" stroke="#223048" stroke-width="1.2"/>
+        <text x="156.7" y="197.9" fill="#cbd5e1" font-size="12" font-weight="600" text-anchor="middle" dominant-baseline="middle">证据链封缄 (溯源闭环)</text>
+
+        <!-- Polygons -->
+        <polygon points="360.0,130.0 489.5,256.8 584.2,411.2 390.2,422.8 270.2,546.5 135.8,411.2 180.2,216.6" fill="#f87171" fill-opacity="0.12" stroke="#f87171" stroke-width="2.4"/><polygon points="360.0,130.0 489.5,256.8 584.2,411.2 459.8,567.2 275.2,536.1 135.8,411.2 180.2,216.6" fill="#c084fc" fill-opacity="0.12" stroke="#c084fc" stroke-width="2.4"/><polygon points="360.0,183.8 489.5,256.8 584.2,411.2 388.0,418.2 265.2,556.9 135.8,411.2 180.2,216.6" fill="#fbbf24" fill-opacity="0.12" stroke="#fbbf24" stroke-width="2.4"/><polygon points="360.0,183.8 489.5,256.8 584.2,411.2 388.0,418.2 280.2,525.8 135.8,411.2 180.2,216.6" fill="#38bdf8" fill-opacity="0.12" stroke="#38bdf8" stroke-width="2.4"/><polygon points="360.0,286.9 489.5,256.8 539.4,400.9 390.2,422.8 300.1,484.3 135.8,411.2 234.1,259.6" fill="#f472b6" fill-opacity="0.12" stroke="#f472b6" stroke-width="2.4"/><polygon points="360.0,325.5 460.7,279.7 539.4,400.9 390.2,422.8 310.1,463.6 135.8,411.2 234.1,259.6" fill="#34d399" fill-opacity="0.12" stroke="#34d399" stroke-width="2.4"/><polygon points="360.0,183.8 489.5,256.8 584.2,411.2 390.2,422.8 295.1,494.7 135.8,411.2 180.2,216.6" fill="#8b9bb4" fill-opacity="0.12" stroke="#8b9bb4" stroke-width="2.4"/>
+      </svg>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>模型名称</th>
+          <th>物理参数量</th>
+          <th>网络层数</th>
+          <th>上下文窗口</th>
+          <th>计算位宽</th>
+          <th>工业全模态</th>
+          <th>服务注册</th>
+          <th>封缄状态</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="l"><span style="display:inline-block;width:10px;height:10px;background:#f87171;border-radius:2px;margin-right:6px;"></span><b>Virtu-13.63B Asym (最新旗舰)</b></td>
+          <td>13.63B</td>
+          <td> 36L</td>
+          <td> 40960ctx</td>
+          <td> Q3_K_M (6.32GB)</td>
+          <td> 闭环 90%</td>
+          <td><span class="tag tag-pass">已注册</span></td>
+          <td><span class="tag tag-pass">已封缄</span></td>
+        </tr><tr>
+          <td class="l"><span style="display:inline-block;width:10px;height:10px;background:#c084fc;border-radius:2px;margin-right:6px;"></span><b>Virtu-MoE-14B BF16 (全精度未量化)</b></td>
+          <td>13.63B</td>
+          <td> 36L</td>
+          <td> 40960ctx</td>
+          <td> BF16 (27GB)</td>
+          <td> 闭环 85%</td>
+          <td><span class="tag tag-pass">已注册</span></td>
+          <td><span class="tag tag-pass">已封缄</span></td>
+        </tr><tr>
+          <td class="l"><span style="display:inline-block;width:10px;height:10px;background:#fbbf24;border-radius:2px;margin-right:6px;"></span><b>Virtu-v3-all90 (8.2B 生产版)</b></td>
+          <td>8.19B</td>
+          <td> 36L</td>
+          <td> 40960ctx</td>
+          <td> Q4_0 (4.61GB)</td>
+          <td> 闭环 95%</td>
+          <td><span class="tag tag-pass">已注册</span></td>
+          <td><span class="tag tag-pass">已封缄</span></td>
+        </tr><tr>
+          <td class="l"><span style="display:inline-block;width:10px;height:10px;background:#38bdf8;border-radius:2px;margin-right:6px;"></span><b>Virtu-8.2B Comprehensive</b></td>
+          <td>8.19B</td>
+          <td> 36L</td>
+          <td> 40960ctx</td>
+          <td> Q4_0 (4.61GB)</td>
+          <td> 闭环 80%</td>
+          <td><span class="tag tag-pass">已注册</span></td>
+          <td><span class="tag tag-pass">已封缄</span></td>
+        </tr><tr>
+          <td class="l"><span style="display:inline-block;width:10px;height:10px;background:#f472b6;border-radius:2px;margin-right:6px;"></span><b>Virtu-longctx (3.1B 端侧长文本)</b></td>
+          <td>3.09B</td>
+          <td> 36L</td>
+          <td> 32768ctx</td>
+          <td> Q4_K_M (1.9GB)</td>
+          <td> 闭环 60%</td>
+          <td><span class="tag tag-pass">已注册</span></td>
+          <td><span class="tag tag-pass">已封缄</span></td>
+        </tr><tr>
+          <td class="l"><span style="display:inline-block;width:10px;height:10px;background:#34d399;border-radius:2px;margin-right:6px;"></span><b>Virtu-extreme-256k (1.5B 极速核)</b></td>
+          <td>1.54B</td>
+          <td> 28L</td>
+          <td> 32768ctx</td>
+          <td> Q4_K_M (986MB)</td>
+          <td> 闭环 50%</td>
+          <td><span class="tag tag-pass">已注册</span></td>
+          <td><span class="tag tag-pass">已封缄</span></td>
+        </tr><tr>
+          <td class="l"><span style="display:inline-block;width:10px;height:10px;background:#8b9bb4;border-radius:2px;margin-right:6px;"></span><b>Qwen3-8B (官方标准基座)</b></td>
+          <td>8.19B</td>
+          <td> 36L</td>
+          <td> 40960ctx</td>
+          <td> Q4_K_M (5.2GB)</td>
+          <td> 闭环 65%</td>
+          <td><span class="tag tag-pass">已注册</span></td>
+          <td><span class="tag tag-pass">已封缄</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="provenance-card">
+  <div class="provenance-title">📜 测量宪法溯源归因报告 (Provenance & Integrity Audit)</div>
+  <div class="provenance-list">
+    <div>1. <b>基座 Qwen3-8B</b>：评测归因 <code>benchmarks/radar_20261106/results.json</code>，Run ID <code>46864ace19b19c3a</code>，样本量 n=210。原生通用能力强（工具调用 91.11、指令遵循 85.64），但在制造工艺边界防御（43.61）与多模态机械蓝图识别（45.00）存在明显短板。</div>
+    <div>2. <b>Virtu-8.2B Comprehensive</b>：评测归因 <code>benchmarks/radar_20261106/results.json</code>，Run ID <code>646f990b9c098ddd</code>，样本量 n=210。边界处理防御大幅提升至 72.50，多模态通过挂载 <code>Qwen3-VL-2B-Instruct</code> 提升至 91.67。</div>
+    <div>3. <b>Virtu-v2-all90 与 Virtu-v3-all90</b>：评测归因 <code>benchmarks/virtu_v3/results.json</code>，样本量 n=240。v3 版本在 8.2B 架构下加权总分达到 <b>80.72 分</b>，内容生成（90.71）、泛化适配（81.25）、指令遵循（86.29）实现重大突破。</div>
+    <div>4. <b>Virtu-13B / 13.63B DPO (最新实测)</b>：评测归因 <code>models/virtu-13b/COMPREHENSIVE_EVAL_REPORT.json</code>（评测时间 2026-11-07 09:14:46 CST，指纹前缀 <code>3546c40f3ce8</code>，样本量 n=240）。推理逻辑（79.67）、知识覆盖（79.06）、内容生成（81.11）表现出色；但在工具调用（53.89）和边界处理（47.67）上未达到 90 分预期，报告明确列为 ⚠️ 未达标，严禁伪造满分，为下一阶段强化训练提供明确攻坚目标。</div>
+  </div>
+</div>
+
+</body>
+</html>

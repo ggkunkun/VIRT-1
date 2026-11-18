@@ -1,0 +1,197 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.12"]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      # Single dependency source of truth: pyproject.toml. The dev extra pulls
+      # only pytest/flake8/build, not GPU/Windows/industrial heavy packages.
+      - name: Install (editable + dev extra)
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev]"
+
+      - name: Syntax compile (hard)
+        run: python -m compileall -q virtu_omni virtu_edge virtu_eval virtu_code bridges tests
+
+      - name: Lint (soft)
+        continue-on-error: true
+        run: |
+          if ! python -m flake8 --version >/dev/null 2>&1; then
+            echo "[lint] flake8 缺失，跳过"
+            exit 0
+          fi
+          python -m flake8 virtu_omni/memory/hindsight_adapter.py \
+            virtu_omni/agent/skill_writer_and_memory.py \
+            virtu_omni/settings.py tests/test_memory_lifecycle.py \
+            --max-line-length=120 || true
+
+      # Core falsifiability gates: these tests inject bad samples and must go
+      # red whenever a verdict is hard-coded back to True. Hard failure.
+      - name: Core gates (hard)
+        run: |
+          mkdir -p reports
+          pytest -q \
+            tests/test_gate_falsifiability.py \
+            tests/test_provenance_gates.py \
+            tests/test_publish_gate.py \
+            tests/test_eval_in_situ_gate.py \
+            tests/test_runtime_gateway.py \
+            tests/test_memory_lifecycle.py \
+            --junitxml=reports/pytest-core-${{ matrix.python-version }}.xml
+
+      # The legacy suite still has known failures (Windows COM / Ollama / env
+      # dependent). Publish its junitxml for gradual convergence instead of
+      # blocking every PR. This is a reported debt, not a silent pass.
+      - name: Full suite (report only)
+        continue-on-error: true
+        run: |
+          pytest -q --junitxml=reports/pytest-full-${{ matrix.python-version }}.xml || true
+
+      - name: Upload junitxml
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pytest-${{ matrix.python-version }}
+          path: reports/pytest-*.xml
+          if-no-files-found: warn
+
+      # AGENTS.md §8 static gate. Three responsibilities:
+      #   1. The gate itself must be falsifiable (bad sample + empty match red).
+      #   2. Any controlled artifact NOT in the recorded historical debt
+      #      baseline must be attributable -> hard fail. Baseline debt is
+      #      reported as KNOWN_DEBT, never silently passed.
+      #   3. The baseline must exist and parse; a missing/empty baseline is a
+      #      failure, not an exemption. The baseline can only shrink.
+      # README.md numbers remain in the debt backlog until migrated to
+      # publish.py output; this trade-off is explicit.
+      - name: Static gate / attribution (hard)
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          import subprocess
+          import sys
+          import tempfile
+          from pathlib import Path
+
+          ROOT = Path(".").resolve()
+          PUBLISH = ROOT / "virtu_eval" / "publish.py"
+          BENCH = ROOT / "benchmarks"
+          BASELINE = ROOT / "reports" / "ATTRIBUTION_DEBT_BASELINE.json"
+
+
+          def run_check(paths):
+              return subprocess.run(
+                  [sys.executable, "-m", "virtu_eval.publish", "--check", "--paths", *paths],
+                  capture_output=True, text=True,
+              )
+
+
+          if not PUBLISH.is_file():
+              print("[static-gate] publish.py 缺失 → 出数入口不可用，判红", file=sys.stderr)
+              sys.exit(1)
+
+          # --- 1. Falsifiability self-check -----------------------------------
+          with tempfile.TemporaryDirectory() as td:
+              td = Path(td)
+              (td / "benchmarks").mkdir()
+              bad = td / "benchmarks" / "results.json"
+              bad.write_text(json.dumps({"score": 88.8}), encoding="utf-8")
+              empty = td / "empty_dir"
+              empty.mkdir()
+
+              r_bad = run_check([str(bad)])
+              if r_bad.returncode == 0 or "不合规" not in (r_bad.stdout + r_bad.stderr):
+                  print("[static-gate] 坏样本未被判为不合规 → 闸失能，判红", file=sys.stderr)
+                  sys.exit(1)
+              r_empty = run_check([str(empty)])
+              if r_empty.returncode == 0:
+                  print("[static-gate] 空匹配集被判绿 → 违反测量宪法，判红", file=sys.stderr)
+                  sys.exit(1)
+          print("[static-gate] 可证伪性自检 PASS（坏样本红 / 空匹配红）")
+
+          # --- 2. Baseline-scoped hard gate ----------------------------------
+          sys.path.insert(0, str(ROOT))
+          from virtu_eval.publish import audit_paths
+
+          files = sorted(q for q in BENCH.rglob("*.json") if q.is_file())
+          if not files:
+              print("[static-gate] 空匹配集：benchmarks/** 无可审 JSON，判红", file=sys.stderr)
+              sys.exit(1)
+
+          current_bad = []
+          for f in files:
+              try:
+                  violations = audit_paths([str(f)])
+              except Exception as exc:
+                  violations = [f"audit error: {type(exc).__name__}: {exc}"]
+              if violations:
+                  current_bad.append(f.relative_to(ROOT).as_posix())
+
+          if not BASELINE.is_file():
+              print("[static-gate] 债务基线缺失，判红（不得空基线放行）", file=sys.stderr)
+              sys.exit(1)
+          try:
+              baseline = set(json.loads(BASELINE.read_text(encoding="utf-8"))["files"])
+          except (OSError, ValueError, KeyError) as exc:
+              print(f"[static-gate] 债务基线解析失败，判红：{exc}", file=sys.stderr)
+              sys.exit(1)
+          if not baseline:
+              print("[static-gate] 债务基线为空，判红（禁止空基线豁免）", file=sys.stderr)
+              sys.exit(1)
+
+          new_bad = sorted(set(current_bad) - baseline)
+          if new_bad:
+              for f in new_bad:
+                  print(f"[static-gate] [不合规] 基线外新增未归因数值：{f}", file=sys.stderr)
+              print(f"[static-gate] 新增 {len(new_bad)} 项债务，判红", file=sys.stderr)
+              sys.exit(1)
+
+          resolved = sorted(baseline - set(current_bad))
+          print(f"[static-gate] 变更闸 PASS：无基线外新增违规；"
+                f"KNOWN_DEBT={len(current_bad)} 项历史未归因数值"
+                f"（基线 {len(baseline)} 项，已修复待收缩 {len(resolved)} 项）")
+          if resolved:
+              print("[static-gate] 可收缩基线的文件：" + ", ".join(resolved[:10]))
+          PY
+
+  # 世界模型护栏门禁（2026-11-08 新增）。
+  # 12 项护栏漏洞（H1-H11）修复后，回归能力散落在 wm_gate / guard_hooks /
+  # anti_hallucination_guard / wm_verifier / wm_vuln_regression 等多个脚本里，
+  # 靠人力逐个跑，漏跑一个就等于门禁失守。这里收敛成单一入口 wm_ci_gate.py：
+  #   - 任一必需项失败 → 非零退出，PR 直接红
+  #   - 缺依赖导致的 SKIP 同样判红（必需项不允许以"环境没装"为借口跳过）
+  # 独立成 job 而非并入 test：门禁红需要一眼定位到护栏退化，而不是埋在
+  # 几百个单测输出里；同时它不依赖 pip install -e ".[dev]" 的重依赖。
+  wm-guard-gates:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Guard gates (hard)
+        run: python scripts/wm_ci_gate.py

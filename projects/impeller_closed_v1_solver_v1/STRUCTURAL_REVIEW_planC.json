@@ -1,0 +1,56 @@
+{
+  "scope": "方案C（取消中心通孔，整体转子）落地后的结构复核；客户判据 ruler 之外的自主动作，不改变 ruler 判定结果",
+  "revision": "2026-11-12 覆盖旧版 STRUCTURAL_REVIEW.json（旧版针对 bore=24mm 套装件方案，作为历史留档保留）",
+  "method": "Timoshenko 旋转圆盘解析解（实心盘中心解与环盘孔边解）+ 扭转剪应力解析；rho=4430 kg/m3, nu=0.34, Sy=880 MPa (Ti-6Al-4V)",
+  "inputs": {
+    "D2_mm": 200.0,
+    "N_rpm": 47284.1,
+    "u2_m_s": 495.158,
+    "omega_rad_s": 4951.6,
+    "bore_diameter_mm": 0.0,
+    "hub_disk_thickness_mm": 8.0,
+    "shroud_thickness_mm": 2.0,
+    "blade_count": 12,
+    "power_kW": 352.3,
+    "torque_Nm": 71.15
+  },
+  "rim_stress_no_bore": {
+    "formula": "sigma_theta(r)=((3+nu)/8)*rho*omega^2*(r2^2 - k*r^2), k=(1+3nu)/(3+nu)=0.6048",
+    "sigma_center_MPa": 453.5,
+    "FOS_center": 1.94,
+    "sigma_rim_MPa": 179.2,
+    "FOS_rim": 4.91,
+    "verdict": "PASS（>1.5）",
+    "note": "实心盘无中心通孔，切向应力峰值位于盘中心；孔边解在 r1->0 处不收敛到该值（差异约 2 倍），故 bore=0 必须切到实心盘口径"
+  },
+  "torque_path": {
+    "design": "叶轮与轴一体（整体锻件/整体铣削）或电子束焊；中心通孔取消后不再有套装过盈面，传扭不经摩擦面",
+    "shaft_neck_phi24": {"tau_MPa": 26.2, "FOS_vonMises": 19.4},
+    "shaft_neck_phi30": {"tau_MPa": 13.4, "FOS_vonMises": 37.9},
+    "hub_ring_shear": {"r20_t8_MPa": 3.54, "r50_t8_MPa": 0.57, "r20_t14_MPa": 2.02},
+    "weld_option_phi24_depth3": {"tau_MPa": 26.2, "allow_shear_MPa": 352.0, "FOS": 13.4},
+    "verdict": "PASS：传扭各环节 FOS 均 >13，扭矩不是本方案的控制载荷"
+  },
+  "hub_disk_thickness_decision": {
+    "frozen_value_mm": 8.0,
+    "rejected_value_mm": 14.0,
+    "reason": "等厚盘离心应力与盘厚无关；传扭由轴颈承担，r=20mm 处轮毂周向剪应力 t=8mm 仅 3.54 MPa，加厚无强度收益",
+    "mass_cost_if_14mm": {"th14_g": 2435.84, "th8_g": 1622.06, "delta_g": 813.78, "delta_pct": 50.2},
+    "mass_reference": {"legacy_th8_bore24_g": 1602.02, "planC_th8_bore0_g": 1622.06, "delta_g": 20.04}
+  },
+  "comparison_with_other_schemes": [
+    {"scheme": "A 保留中心通孔 bore=24mm（旧方案）", "sigma_theta_MPa": 917.3, "FOS": 0.96, "verdict": "不满足 FOS>=1.5", "note": "孔边应力约为实心盘中心 2.02 倍，且对孔径不敏感（bore 24->8mm 仅降 0.25%）"},
+    {"scheme": "B 换材料（Ti-6242 / Inconel 718），几何不变", "FOS": 0.98, "verdict": "不满足（Inconel 718 仅 1.13）", "note": "材料升级不足以补偿孔边集中"},
+    {"scheme": "C 取消中心通孔 + 端面法兰螺栓传扭", "FOS": "0.79~1.04（螺栓孔边）", "verdict": "否决", "note": "把失效点从中心孔搬到法兰孔，问题未解决"},
+    {"scheme": "C' 取消中心通孔 + 整体转子（一体/焊接）", "FOS": 1.94, "verdict": "采纳", "note": "本次落地方案"},
+    {"scheme": "D 降转速至 FOS=1.5", "pressure_ratio": 2.93, "verdict": "不满足", "note": "压比 2.93 < 4.0，击穿客户指标"}
+  ],
+  "residual_risk": [
+    "本复核为解析口径（等厚盘 + 叶片载荷系数），真实锥形轮毂仍需三维 FEA 关闭；解析结论只用于方案取舍，不作为适航证据",
+    "取消中心通孔后不能用心轴定位，动平衡与磨削需专用夹具/外圆定位，工艺路线与工装必须重排",
+    "焊接方案需焊后无损检测（荧光/超声）与去应力热处理，并复核焊缝区低周疲劳",
+    "轴颈 φ24/φ30 与轴系接口由整机方定义；本件为叶轮本体零件（无中心孔），CAD/图纸不含轴的实体",
+    "整体转子失去套装件可更换性，单件失效即整转子报废，全寿命成本与备件策略需重新评估"
+  ],
+  "note": "本文件只做披露与方案比选，未改动 ruler 任何判据；判据修订（bore=0 口径）见 closed_impeller_proctor.py 中的显式注释与 selftest 反例"
+}

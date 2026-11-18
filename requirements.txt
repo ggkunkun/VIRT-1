@@ -1,3 +1,25 @@
+# ===========================================================================
+# requirements.txt —— 引导性说明（不再是依赖真源）
+#
+# 唯一依赖真源是 pyproject.toml 的 [project.dependencies] 与
+# [project.optional-dependencies]。请按用途安装：
+#
+#   pip install -e .           # 仅核心运行时
+#   pip install -e .[dev]      # + 测试/lint（CI 使用）
+#   pip install -e .[gpu]      # + GPU 训练（transformers/peft/trl/gguf/...）
+#   pip install -e .[l40s]     # L40S 训练（对齐 requirements-l40s.txt）
+#   pip install -e .[v100]     # V100 训练（对齐 requirements-v100.txt）
+#   pip install -e .[windows]  # Windows 桌面（pywin32/pyautogui）
+#   pip install -e .[industrial] # 工业库（ezdxf/build123d/OCP/paramiko/matplotlib）
+#
+# 三个 GPU requirements 文件仍保留，供 scripts/bootstrap_*_train.sh 与
+# scripts/make_cloud_bundle.py 按原路径引用；flash-attn 需按
+# requirements-gpu.txt 的说明单独 --no-build-isolation 安装。
+#
+# 下面是兼容旧命令（README.md / DEPLOYMENT_GUIDE.md 里的
+# `pip install -r requirements.txt`）的最小核心引导集，仅保证推理服务可启动；
+# 完整、带分组的清单以 pyproject.toml 为准。
+# ===========================================================================
 torch>=2.2.0
 torchvision>=0.17.0
 fastapi>=0.110.0
@@ -5,20 +27,10 @@ uvicorn>=0.28.0
 pydantic>=2.0.0
 pyyaml>=6.0.0
 pillow>=10.0.0
-pytest>=8.0.0
-flake8>=7.0.0
 numpy>=1.26.0
-rich>=13.7.0
 requests>=2.31.0
-
-# virtu_omni.engine 的 __init__ 直接 import cv2（visual_grounding_engine /
-# closed_loop_sentinel），缺它桥在启动阶段就 ModuleNotFoundError ——
-# 见 logs/bridge_service.log。不用于 GUI，headless 足够。
+psutil>=5.9.0
+rich>=13.7.0
 opencv-python-headless>=4.9
-
-# 本地视觉通道（Qwen3-VL-2B，可选；不装则图片自动走云端视觉）
-transformers>=4.57.0
-accelerate>=0.30.0
-bitsandbytes>=0.43.0
-safetensors>=0.4.0
-av>=12.0.0          # 视频抽帧（PyAV），仅本地视频通道需要
+# 核心运行时硬依赖（依赖真源为 pyproject.toml [project.dependencies]）
+sympy>=1.12

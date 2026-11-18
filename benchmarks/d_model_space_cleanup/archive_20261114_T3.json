@@ -1,0 +1,25 @@
+{
+ "started": "2026-11-14 23:06:43",
+ "mode": "T3 reversible archive + junction",
+ "free_before_gb": {
+  "D": 53.12,
+  "E": 82.38
+ },
+ "basis": "measured",
+ "targets": [
+  {
+   "src": "D:\\Virtu模型\\checkpoints\\_deploy_vericut96\\merged_hf",
+   "dst": "E:\\moved_from_D\\checkpoints\\_deploy_vericut96\\merged_hf",
+   "files": 14,
+   "bytes": 16397438617,
+   "hardlinked_before": [],
+   "status": "archived+junction+verified"
+  }
+ ],
+ "aborted": "file-locked",
+ "free_after_gb": {
+  "D": 53.12,
+  "E": 67.11
+ },
+ "finished": "2026-11-14 23:08:23"
+}

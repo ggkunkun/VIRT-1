@@ -1,0 +1,32 @@
+{
+  "rows": 20,
+  "sha256": "a71381eecb9a4ee31ca213148235c10514e92ccb62a9628a8d34808ab0a2e552",
+  "max_length": 640,
+  "tok_p50": 276.5,
+  "tok_p95": 426,
+  "tok_max": 445,
+  "g71_program_rows": 1,
+  "g71_poison_rows": 0,
+  "families": {
+    "autodiff_v6_tricolor": 5,
+    "?": 4,
+    "sw_plane_notation_repair": 1,
+    "lame_generalize": 1,
+    "autodiff_v7_tricolor": 1,
+    "autodiff_triage": 1,
+    "unit_isolation": 1,
+    "destroy_evidence": 1,
+    "injected_ticket": 1,
+    "lame_v7_exact": 1,
+    "autodiff_triage_repair": 1,
+    "fanuc_g71_program_v9": 1,
+    "lame_v6_exact": 1
+  },
+  "dup_top_ratio": 0.3,
+  "fatal": [],
+  "warnings": [
+    "样本量偏小（20 < 200）",
+    "最高重复样本占比 30%（前 200 字相同）"
+  ],
+  "verdict": "PASS"
+}

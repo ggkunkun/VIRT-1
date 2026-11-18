@@ -1,0 +1,65 @@
+{
+  "schema_version": "virtu_wm_cloud_fix_corpus.v2",
+  "created_at": "2026-11-12T23:01:00+0800",
+  "basis": "measured",
+  "seed": 20261110,
+  "source_path": "data/sft_rebalanced/wm_train_cap12_v2.unitfix.clean.jsonl",
+  "source_sha256": "a36c2998ef16179e7e9d08da08fff9c6f513eba465e2b161938998ef594246c7",
+  "repairloop_path": "cloud_train_pack/dataset/virtu_impeller_repairloop_sft.jsonl",
+  "repairloop_sha256": "a7e43bb46dbc79d6a16b155ff448a78f6d1acc477c100a605a03f3b5e610890f",
+  "repairloop_kept_rows": 420,
+  "wm_repairloop_path": "cloud_train_pack/dataset/virtu_wm_repairloop_sft.jsonl",
+  "wm_repairloop_sha256": "1821361bad95ec3b3c29ac0385428f8fa482d7ba1e226cb96b195c6518e08314",
+  "wm_repairloop_kept_rows": 478,
+  "dup_skipped": 3376,
+  "output_path": "cloud_train_pack/dataset/virtu_worldmodel_fix_sft.jsonl",
+  "output_sha256": "d5cabe764cc5db5011f7be5483e075b1649a10ee1142ad7f763a263a59ed495d",
+  "output_size_bytes": 21130287,
+  "raw_rows": 8156,
+  "kept_rows": 4766,
+  "skipped_empty": 0,
+  "skipped_hard_leak": 14,
+  "masked_bad_assistant_turns": 646,
+  "legacy_gate_literals_remaining": 0,
+  "unit_audit": {
+    "rows": 4766,
+    "bad_rows": 0
+  },
+  "contamination_audit": {
+    "virtu_eval_v1": {
+      "hard_leaks": 0,
+      "numeric_proxy_only": 1497
+    },
+    "virtu_eval_phys_v1": {
+      "hard_leaks": 0,
+      "numeric_proxy_only": 1441
+    },
+    "virtu_eval_cl_v1": {
+      "hard_leaks": 0,
+      "numeric_proxy_only": 810
+    }
+  },
+  "eval_suite_case_counts": {
+    "virtu_eval_v1": 240,
+    "virtu_eval_phys_v1": 60,
+    "virtu_eval_cl_v1": 30
+  },
+  "family_distribution": {
+    "general_sft": 2623,
+    "wm_repairloop": 478,
+    "impeller_repairloop": 420,
+    "mass_props": 276,
+    "fea_fos": 176,
+    "removal": 150,
+    "geom_delta": 139,
+    "tolerance": 127,
+    "collision": 96,
+    "roughness": 73,
+    "design": 60,
+    "process": 60,
+    "adapt_material": 46,
+    "adapt_machine": 36,
+    "invalid": 5,
+    "blueprint_dims": 1
+  }
+}

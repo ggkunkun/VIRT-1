@@ -71,7 +71,8 @@ def fmt(x: float, nd: int = 1) -> str:
 def gen_reasoning(rng: random.Random, n: int) -> list[dict]:
     out = []
     while len(out) < n:
-        kind = rng.choice(["rpm", "vf", "mrr", "time", "stack", "feed"])
+        kind = rng.choice(["rpm", "vf", "mrr", "time", "stack", "feed", "lame", "sw_vol"])
+        with_think = (rng.random() < 0.25)
         if kind == "rpm":
             d = rng.choice([10, 12, 14, 18, 20, 22, 25, 32, 40, 50, 63])
             vc = rng.choice([60, 80, 90, 95, 110, 130, 150, 180, 200])
@@ -79,11 +80,75 @@ def gen_reasoning(rng: random.Random, n: int) -> list[dict]:
             n1 = round(n_rpm, 1)
             check = 1000.0 * vc / (math.pi * d)
             assert abs(check - n_rpm) < 1e-9
-            user = (
-                f"已知 n=1000*Vc/(π*D)。立铣刀直径 {d} mm，切削速度 {vc} m/min。"
-                f"只计算主轴转速 n，单位 r/min，保留 1 位小数。"
+            core = f"n = 1000*{vc}/(π*{d}) = {fmt(1000*vc,0)}/{fmt(math.pi*d,6)} = {n1} r/min"
+            if with_think:
+                user = (
+                    f"先在 <think> 中推导，再输出最终结果：已知 n=1000*Vc/(π*D)。"
+                    f"立铣刀直径 {d} mm，切削速度 {vc} m/min。计算主轴转速 n，单位 r/min，保留 1 位小数。"
+                )
+                asst = (
+                    f"<think>\n代入公式 n = 1000*Vc/(π*D)：\n"
+                    f"分子 1000*{vc}={fmt(1000*vc,0)}，分母 π*{d}≈{fmt(math.pi*d,6)}，相除得 {n1} r/min。\n</think>\n"
+                    f"{core}"
+                )
+            else:
+                user = (
+                    f"已知 n=1000*Vc/(π*D)。立铣刀直径 {d} mm，切削速度 {vc} m/min。"
+                    f"只计算主轴转速 n，单位 r/min，保留 1 位小数。"
+                )
+                asst = core
+            out.append(rec(user, asst, "S4"))
+        elif kind == "lame":
+            di = rng.choice([40, 50, 60, 70, 80, 90, 100])
+            wall = rng.choice([15, 20, 25, 30, 35, 40])
+            do = di + 2 * wall
+            pi_mpa = rng.choice([10, 12, 15, 20, 25, 30])
+            k = (do / di) ** 2
+            sigma_theta = pi_mpa * (k + 1.0) / (k - 1.0)
+            sigma_r = -float(pi_mpa)
+            st_round = round(sigma_theta, 2)
+            assert st_round > pi_mpa > 0 and sigma_r == -pi_mpa
+            core = (
+                f"k = (Do/Di)^2 = ({do}/{di})^2 = {fmt(k,4)}；"
+                f"内壁环向应力 σ_θ = Pi*(k+1)/(k-1) = {pi_mpa}*({fmt(k,4)}+1)/({fmt(k,4)}-1) = {st_round:.2f} MPa；"
+                f"内壁径向应力 σ_r = -Pi = {fmt(sigma_r,1)} MPa。"
             )
-            asst = f"n = 1000*{vc}/(π*{d}) = {fmt(1000*vc,0)}/{fmt(math.pi*d,6)} = {n1} r/min"
+            if with_think:
+                user = (
+                    f"先在 <think> 中写明拉梅 (Lamé) 厚壁圆筒公式再给答案："
+                    f"圆筒内径 Di={di} mm，外径 Do={do} mm，内压 Pi={pi_mpa} MPa。"
+                    f"求内壁环向应力 σ_θ (保留2位小数) 与径向应力 σ_r，单位 MPa。"
+                )
+                asst = (
+                    f"<think>\n厚壁圆筒受内压 Pi 时，径比系数 k=(Do/Di)^2=({do}/{di})^2={fmt(k,4)}。\n"
+                    f"内壁处受拉环向应力 σ_θ=Pi*(k+1)/(k-1)={st_round:.2f} MPa，受压径向应力 σ_r=-Pi={fmt(sigma_r,1)} MPa。\n</think>\n"
+                    f"{core}"
+                )
+            else:
+                user = (
+                    f"按 Lamé 厚壁圆筒理论：内径 Di={di} mm，外径 Do={do} mm，内压 Pi={pi_mpa} MPa。"
+                    f"计算内壁环向应力 σ_θ（保留 2 位小数）与径向应力 σ_r，单位 MPa。"
+                )
+                asst = core
+            out.append(rec(user, asst, "S4"))
+        elif kind == "sw_vol":
+            before = rng.choice([120000, 180000, 240000, 320000])
+            d_hole = rng.choice([16, 20, 24, 30, 32])
+            h_hole = rng.choice([20, 25, 30, 40])
+            r_hole = d_hole / 2.0
+            feat_vol = math.pi * (r_hole ** 2) * h_hole
+            delta_v = -feat_vol
+            after = before + delta_v
+            assert delta_v < 0 and abs((before - after) - feat_vol) < 1e-6
+            user = (
+                f"SOLIDWORKS 2021 体积守恒校核：零件拉伸切除前体积 {before} mm³，"
+                f"在基准面上钻通孔 Ø{d_hole} mm、深 {h_hole} mm。"
+                f"计算切除体积变化 ΔV 与切除后体积 V_after，单位 mm³，保留 2 位小数。"
+            )
+            asst = (
+                f"SOLIDWORKS 2021 体积守恒断言：拉伸切除特征 ΔV = -π*(D/2)^2*h = -π*({d_hole}/2)^2*{h_hole} = {delta_v:.2f} mm³ (<0)；"
+                f"切除后体积 V_after = {before} + ({delta_v:.2f}) = {after:.2f} mm³。"
+            )
             out.append(rec(user, asst, "S4"))
         elif kind == "vf":
             f = rng.choice([0.05, 0.08, 0.10, 0.12, 0.15, 0.18, 0.25])
@@ -231,6 +296,17 @@ KNOWLEDGE_QA = [
      "T0101 表示选用 01 号刀具并调用 01 号偏置（T0101）。"),
     ("工件坐标系与机床坐标系的差别？",
      "机床坐标系原点在机床参考点；工件坐标系由 G54 等把原点放到工件。"),
+    ("SOLIDWORKS 2021 的 Front / Top / Right 三个默认基准面及法向分别是什么？",
+     "SOLIDWORKS 2021 以世界 +Y 为上方向：Front Plane（前视基准面）为 XY 平面，法向 +Z (0,0,1)；"
+     "Top Plane（上视基准面）为 XZ 平面，法向 +Y (0,1,0)；Right Plane（右视基准面）为 YZ 平面，法向 +X (1,0,0)。"),
+    ("SOLIDWORKS 2021 的体积守恒断言 ΔV 规则是什么？",
+     "拉伸凸台增料必须满足 ΔV > 0；拉伸切除减料必须满足 ΔV < 0；圆角或倒角特征需满足 ΔV ≠ 0，否则说明特征失败或空建模。"),
+    ("VERICUT Auto-Diff 的红、蓝、绿三种颜色偏差分别代表什么？",
+     "VERICUT Auto-Diff 中：红色（Red）表示过切（Gouge），属致命缺陷必须立即修刀路；"
+     "蓝色（Blue）表示残料过多（Excess），需补半精/精加工；绿色（Green）表示公差内合格。"),
+    ("FANUC 车削 G71 与 G70 循环的作用及安全要点？",
+     "G71 为外圆/内孔轴向粗车复合循环（U 为单边背吃刀量，R 为退刀量，P/Q 指定精加工轮廓起止段号，留精车余量 U/W），"
+     "G70 P_ Q_ 按同一轮廓进行精车；定位时 X/Z 必须位于毛坯外部，严禁 G00 负向扎刀进料，且必须配合 M03 主轴正转与非零进给率 F。"),
 ]
 
 
@@ -313,7 +389,7 @@ def gen_instruction(rng: random.Random, n: int) -> list[dict]:
 def gen_generation(rng: random.Random, n: int) -> list[dict]:
     out = []
     while len(out) < n:
-        kind = rng.choice(["chamfer", "drill", "od", "card", "py"])
+        kind = rng.choice(["chamfer", "drill", "od", "g71", "card", "py"])
         if kind == "chamfer":
             d = rng.choice([28, 32, 36, 42, 44, 48, 52, 56])
             c = rng.choice([1, 1.5, 2, 2.5, 3])
@@ -358,6 +434,38 @@ def gen_generation(rng: random.Random, n: int) -> list[dict]:
                 f"O1103 (STOCK D{fmt(d0,1)})\nG97 S600 M03\nT0101\n"
                 f"G0 X{fmt(d0+2,1)} Z2\nG1 Z0 F{fmt(f,2)}\n"
                 f"G1 X{fmt(d1,1)}\nG1 Z-{zlen}\nG0 X{fmt(d0+10,1)} Z50\nM30"
+            )
+            out.append(rec(user, asst, "S4"))
+        elif kind == "g71":
+            d_stock = rng.choice([54, 60, 64, 70])
+            d_step = d_stock - rng.choice([10, 12, 14])
+            d_front = d_step - rng.choice([8, 10])
+            l_front = rng.choice([18, 22, 26])
+            l_total = l_front + rng.choice([20, 24, 28])
+            s_max = rng.choice([1800, 2000])
+            vc = rng.choice([140, 160])
+            user = (
+                f"用 FANUC ISO/G 格式为 Ø{d_stock} 棒料编写 G71 粗车+G70 精车台阶轴程序："
+                f"第一台阶 Ø{d_front} 长 {l_front} mm，第二台阶 Ø{d_step} 总长 {l_total} mm。"
+                f"限速 G50 S{s_max}，恒线速 G96 S{vc} M03，刀具 T0101，精加工切深 F0.12，粗车 F0.25，只输出程序。"
+            )
+            asst = (
+                f"O1104 (G71_G70_STEP_D{d_stock})\n"
+                f"G50 S{s_max}\n"
+                f"G96 S{vc} M03\n"
+                f"T0101\n"
+                f"G0 X{fmt(d_stock+2,1)} Z2.0\n"
+                f"G71 U1.5 R0.5\n"
+                f"G71 P10 Q20 U0.4 W0.1 F0.25\n"
+                f"N10 G0 X{fmt(d_front,1)}\n"
+                f"G1 Z0.0 F0.12\n"
+                f"G1 Z-{l_front}.0\n"
+                f"G1 X{fmt(d_step,1)}\n"
+                f"G1 Z-{l_total}.0\n"
+                f"N20 X{fmt(d_stock+2,1)}\n"
+                f"G70 P10 Q20\n"
+                f"G0 X{fmt(d_stock+20,1)} Z50.0\n"
+                f"M30"
             )
             out.append(rec(user, asst, "S4"))
         elif kind == "card":
@@ -730,6 +838,84 @@ def gen_generalization(rng: random.Random, base: list[dict], n: int) -> list[dic
 _NUM_RE = re.compile(r"[-+]?\d+(?:\.\d+)?")
 
 
+_MATERIAL_ALIASES = {
+    "cuc360": "CuC360",
+    "cr12mov": "Cr12MoV",
+    "45钢": "45#",
+    "45#": "45#",
+    "40cr": "40Cr",
+    "20crmnti": "20CrMnTi",
+    "6061-t6": "6061",
+    "6061": "6061",
+    "7075-t6": "7075",
+    "7075": "7075",
+    "sus304": "304",
+    "304不锈钢": "304",
+    "316l": "316L",
+    "tc4": "TC4",
+    "ht250": "HT250",
+    "qt500-7": "QT500",
+    "qt500": "QT500",
+    "p20": "P20",
+    "h13": "H13",
+    "s136": "S136",
+    "q235": "Q235",
+    "gcr15": "GCr15",
+}
+_MAT_RE = re.compile(
+    "|".join(re.escape(k) for k in sorted(_MATERIAL_ALIASES, key=len, reverse=True)),
+    re.IGNORECASE,
+)
+
+
+def extract_materials(text: str) -> set[str]:
+    return {_MATERIAL_ALIASES[m.group(0).lower()] for m in _MAT_RE.finditer(text or "")}
+
+
+def _strip_echoed_wish_from_tool_calls(tool_calls) -> str:
+    """Drop verbatim `wish` strings so echoed prompt text cannot mask mismatched tool materials."""
+    if not tool_calls:
+        return ""
+    cleaned = []
+    for tc in tool_calls:
+        if not isinstance(tc, dict):
+            cleaned.append(str(tc))
+            continue
+        fn = tc.get("function") or {}
+        args_raw = fn.get("arguments", "")
+        if isinstance(args_raw, str):
+            try:
+                args_obj = json.loads(args_raw)
+                if isinstance(args_obj, dict) and "wish" in args_obj:
+                    args_obj = {k: v for k, v in args_obj.items() if k != "wish"}
+                args_text = json.dumps(args_obj, ensure_ascii=False)
+            except Exception:
+                args_text = args_raw
+        else:
+            args_text = json.dumps(args_raw, ensure_ascii=False)
+        cleaned.append(f"{fn.get('name', '')} {args_text}")
+    return "\n".join(cleaned)
+
+
+def gold_materials_consistent(user: str, messages: list[dict]) -> bool:
+    """Reject records where tool outputs or assistant responses switch to another alloy/steel."""
+    user_mats = extract_materials(user)
+    if not user_mats:
+        return True
+    for m in messages:
+        role = m.get("role")
+        if role == "tool":
+            tool_mats = extract_materials(str(m.get("content") or ""))
+            if tool_mats and not tool_mats.issubset(user_mats):
+                return False
+        elif role == "assistant":
+            asst_blob = str(m.get("content") or "") + "\n" + _strip_echoed_wish_from_tool_calls(m.get("tool_calls"))
+            asst_mats = extract_materials(asst_blob)
+            if asst_mats and not asst_mats.issubset(user_mats):
+                return False
+    return True
+
+
 def gold_numbers_consistent(user: str, assistant: str) -> bool:
     """Every number in the user prompt with >=1 decimal or >=2 digits should
     appear in the assistant unless the sample is a refusal or boolean answer."""
@@ -758,17 +944,27 @@ def filter_legacy_gold(path: str, eval_cases, limit: int) -> list[dict]:
                 rec0 = json.loads(line)
             except json.JSONDecodeError:
                 continue
-            user, blob = "", ""
-            for m in rec0.get("messages") or []:
-                if m.get("role") == "user":
-                    user += m.get("content") or ""
-                if m.get("role") == "assistant":
-                    blob += m.get("content") or ""
+            msgs = rec0.get("messages") or []
+            user, asst_blob, all_blob = "", "", ""
+            for m in msgs:
+                role = m.get("role")
+                content = str(m.get("content") or "")
+                if role == "user":
+                    user += content
+                elif role == "assistant":
+                    asst_blob += content
+                    all_blob += content
                     if m.get("tool_calls"):
-                        blob += json.dumps(m["tool_calls"], ensure_ascii=False)
-            if not user or not blob:
+                        tc_json = json.dumps(m["tool_calls"], ensure_ascii=False)
+                        asst_blob += tc_json
+                        all_blob += tc_json
+                elif role == "tool":
+                    all_blob += "\n" + content
+            if not user or not asst_blob:
                 continue
-            if not gold_numbers_consistent(user, blob):
+            if not gold_numbers_consistent(user, all_blob):
+                continue
+            if not gold_materials_consistent(user, msgs):
                 continue
             if check_sample(rec0, eval_cases):
                 continue
@@ -780,22 +976,20 @@ def filter_legacy_gold(path: str, eval_cases, limit: int) -> list[dict]:
 
 
 def self_check_generation(samples: list[dict]) -> None:
-    """Spot-check: chamfer-like samples must pass gcode_structure."""
+    """Verify every generated S4 G-code sample passes gcode_structure (no silent partial sampling)."""
     n = 0
     for s in samples:
         if s.get("meta", {}).get("stage") != "S4":
             continue
         text = s["messages"][2]["content"]
-        if "O11" not in text and "O1" not in text:
+        if not re.search(r"(?m)^O11\d\d\b", text):
             continue
         scored = score_case(text, [{"type": "gcode_structure", "weight": 1, "key": "gcode"}])
         if scored["score"] < 100:
             raise RuntimeError(f"gcode sample failed grader: {text!r} {scored}")
         n += 1
-        if n >= 20:
-            break
     if n < 5:
-        raise RuntimeError("too few gcode samples to self-check")
+        raise RuntimeError(f"too few gcode samples to self-check: {n}")
 
 
 def main(argv=None) -> int:

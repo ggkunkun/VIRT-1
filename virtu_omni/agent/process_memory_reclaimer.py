@@ -85,9 +85,128 @@ class ProcessMemoryReclaimer:
         }
     }
 
-    def __init__(self, log_path: Optional[str] = None):
+    def __init__(self, log_path: Optional[str] = None, allow_global_kill: bool = False):
         self.log_path = log_path
+        # By default we NEVER kill by image name. Only an explicit opt-in
+        # enables the legacy taskkill /F /IM behaviour, and that is audited.
+        self.allow_global_kill = bool(allow_global_kill)
         self.history: List[Dict[str, Any]] = []
+        self.audit_log: List[Dict[str, Any]] = []
+        # PIDs known to belong to THIS session; only these may be reclaimed.
+        self._session_pids: set = set()
+        # 开始工作前已在运行的 CAD/CAM 进程（很可能是用户自己打开的会话）。
+        # 基线内的 PID 永不接管、永不关闭——这是"不误杀用户正在编辑的模型"的边界。
+        self._baseline_pids: Optional[set] = None
+        self._baseline_captured_at: Optional[float] = None
+
+    def register_session_pid(self, pid: int) -> None:
+        """Register a PID as owned by this session (eligible for reclamation)."""
+        try:
+            pid_int = int(pid)
+        except (TypeError, ValueError) as exc:
+            raise ValueError(f"invalid pid: {pid!r}") from exc
+        if pid_int <= 0:
+            raise ValueError(f"invalid pid: {pid!r}")
+        self._session_pids.add(pid_int)
+
+    def register_session_pids(self, pids) -> None:
+        for pid in pids:
+            self.register_session_pid(pid)
+
+    def snapshot_baseline(self, software_keys: Optional[List[str]] = None) -> Dict[str, List[int]]:
+        """记录"开始工作前"已在运行的目标进程，作为不可接管的基线。
+
+        返回 ``{software_key: [pid, ...]}``。必须在任何 CAD/CAM 动作之前调用。
+        """
+        keys = list(software_keys) if software_keys else list(self.SOFTWARE_PROFILES)
+        snapshot: Dict[str, List[int]] = {}
+        pids: set = set()
+        for key in keys:
+            found = [p.pid for p in self.find_target_processes(key)]
+            snapshot[key] = found
+            pids.update(found)
+        self._baseline_pids = pids
+        self._baseline_captured_at = time.time()
+        return snapshot
+
+    def adopt_new_processes(self, software_key: str,
+                            procs: Optional[List["psutil.Process"]] = None) -> List[int]:
+        """把运行期间**新出现**的目标进程登记为本会话所有（基线内的绝不动）。
+
+        修复：此前新拉起的进程从未进入 ``_session_pids``，导致 ``close_software``
+        认为"没有该软件的进程"，返回 NOT_RUNNING 并把孤儿留在机器上。
+
+        ``procs`` 可传入调用方已枚举好的进程列表，避免一次关闭里重复枚举
+        （枚举本身在 Windows 上是相对昂贵的操作）。
+        """
+        if self._baseline_pids is None:
+            return []
+        if procs is None:
+            procs = self.find_target_processes(software_key)
+        adopted = [p.pid for p in procs if p.pid not in self._baseline_pids]
+        if adopted:
+            self.register_session_pids(adopted)
+            entry = {
+                "event": "ADOPT_NEW_PROCESSES",
+                "software_key": software_key,
+                "adopted_pids": sorted(adopted),
+                "baseline_pids": sorted(self._baseline_pids),
+                "timestamp": time.strftime("%Y-%m-%d %H:%M:%S"),
+            }
+            self.audit_log.append(entry)
+            if self.log_path:
+                self._append_log(entry)
+        return adopted
+
+    def orphan_processes(self, software_key: str) -> List[psutil.Process]:
+        """本会话产生、但仍存活的进程（真正的"孤儿"）。
+
+        - 已取基线：基线之外的进程都算本会话产生；
+        - 未取基线：只认显式登记的 ``_session_pids``（保守，绝不含用户进程）。
+        """
+        procs = self.find_target_processes(software_key)
+        if self._baseline_pids is None:
+            return [p for p in procs if p.pid in self._session_pids]
+        return [p for p in procs if p.pid not in self._baseline_pids]
+
+    def track_software_pids(self, software_key: str) -> List[int]:
+        """Snapshot precisely-matched processes and mark them session-owned."""
+        pids = [p.pid for p in self.find_target_processes(software_key)]
+        self.register_session_pids(pids)
+        return pids
+
+    def _audit_global_kill(self, software_key: str, exes: List[str]) -> None:
+        """Audit + perform the explicitly opted-in kill-by-name fallback."""
+        entry = {
+            "event": "GLOBAL_KILL_BY_NAME",
+            "software_key": software_key,
+            "exes": list(exes),
+            "allow_global_kill": True,
+            "warning": "kills ALL processes matching the image name, including user-owned ones",
+            "timestamp": time.strftime("%Y-%m-%d %H:%M:%S"),
+        }
+        self.audit_log.append(entry)
+        print(f"[virtu.process_memory_reclaimer] AUDIT {json.dumps(entry, ensure_ascii=False)}",
+              file=sys.stderr)
+        if self.log_path:
+            self._append_log(entry)
+        for exe in exes:
+            try:
+                # Windows：不用 capture_output。`ollama` / `taskkill` 可能派生孙进程
+                # 继承 stdout 管道，父进程被 timeout kill 后管道仍不 EOF，
+                # subprocess.communicate() 的 reader thread 会无限 join，把整个
+                # pytest 进程拖到 --timeout 被杀。输出重定向到 DEVNULL 后
+                # communicate 没有 reader thread，timeout 才能真正生效。
+                subprocess.run(
+                    ["taskkill", "/F", "/IM", exe, "/T"],
+                    stdout=subprocess.DEVNULL,
+                    stderr=subprocess.DEVNULL,
+                    shell=False,
+                    timeout=5,
+                )
+            except Exception as exc:
+                print(f"[virtu.process_memory_reclaimer] taskkill failed for {exe}: "
+                      f"{type(exc).__name__}: {exc}", file=sys.stderr)
 
     @staticmethod
     def get_system_memory() -> Dict[str, float]:
@@ -101,26 +220,37 @@ class ProcessMemoryReclaimer:
         }
 
     def find_target_processes(self, software_key: str) -> List[psutil.Process]:
-        """查找指定工业软件的所有存活进程对象。"""
+        """查找指定工业软件的所有存活进程对象。
+
+        性能/稳定性要点：只按 ``pid`` + ``name`` 枚举进程，**不要**一开始就请求
+        ``cmdline``。Windows 上对受保护/系统进程读取命令行会走 psutil 的内部重试
+        （_pswindows.wrapper 里 sleep 累加），实测能让一次 ``reclaim_all_cad_cam``
+        卡住数十秒甚至超时。只有在确实命中 ``javaw.exe``（需按命令行区分 Vericut
+        与其他 Java 实例）时，才对这几个进程单独取 cmdline。
+        """
         cfg = self.SOFTWARE_PROFILES.get(software_key.lower())
         if not cfg:
             return []
-        
+
         target_exes = [e.lower() for e in cfg["exes"]]
         is_java = cfg.get("is_java", False)
         matched = []
 
-        for p in psutil.process_iter(["pid", "name", "cmdline"]):
+        for p in psutil.process_iter(["pid", "name"]):
             try:
                 pname = (p.info["name"] or "").lower()
-                if pname in target_exes:
-                    if is_java and pname == "javaw.exe":
-                        # 过滤只有 CGTech/Vericut 的 javaw 进程，避免误伤其他 Java 实例
-                        cmd = " ".join(p.info.get("cmdline") or []).lower()
-                        if "cgtech" in cmd or "vericut" in cmd:
-                            matched.append(p)
-                    else:
+                if pname not in target_exes:
+                    continue
+                if is_java and pname == "javaw.exe":
+                    # 过滤只有 CGTech/Vericut 的 javaw 进程，避免误伤其他 Java 实例
+                    try:
+                        cmd = " ".join(p.cmdline() or []).lower()
+                    except (psutil.NoSuchProcess, psutil.AccessDenied):
+                        continue
+                    if "cgtech" in cmd or "vericut" in cmd:
                         matched.append(p)
+                else:
+                    matched.append(p)
             except (psutil.NoSuchProcess, psutil.AccessDenied):
                 continue
 
@@ -137,19 +267,43 @@ class ProcessMemoryReclaimer:
             except Exception:
                 pass
 
-    def unload_ollama_model(self, model_name: str = "virtu-omni-8b:v2") -> bool:
+    def unload_ollama_model(self, model_name: Optional[str] = None) -> bool:
         """卸载 Ollama 中驻留的大模型，立即释放 4GB+ 显存与内存回到待机状态。"""
-        try:
-            res = subprocess.run(
-                ["ollama", "stop", model_name],
-                capture_output=True,
-                encoding="utf-8",
-                errors="ignore",
-                timeout=10
-            )
-            return res.returncode == 0
-        except Exception:
-            return False
+        targets: List[str] = []
+        if model_name:
+            targets = [model_name]
+        else:
+            try:
+                import urllib.request
+
+                base = os.environ.get("VIRTU_OLLAMA_URL", "http://127.0.0.1:11434").rstrip("/")
+                opener = urllib.request.build_opener(urllib.request.ProxyHandler({}))
+                with opener.open(f"{base}/api/ps", timeout=2) as resp:
+                    data = json.loads(resp.read().decode("utf-8"))
+                targets = [
+                    m.get("name") or m.get("model")
+                    for m in data.get("models", [])
+                    if isinstance(m, dict) and (m.get("name") or m.get("model"))
+                ]
+                if not targets:
+                    return True
+            except Exception:
+                targets = ["virtu-ties-v1:latest"]
+
+        ok = True
+        for target in targets:
+            try:
+                res = subprocess.run(
+                    ["ollama", "stop", target],
+                    stdout=subprocess.DEVNULL,
+                    stderr=subprocess.DEVNULL,
+                    timeout=10,
+                )
+                if res.returncode != 0:
+                    ok = False
+            except Exception:
+                ok = False
+        return ok
 
     def close_software(self, software_key: str, grace_period_s: float = 2.0) -> Dict[str, Any]:
         """关闭指定软件，执行内存回收，返回实测回收指标。
@@ -164,15 +318,21 @@ class ProcessMemoryReclaimer:
         7. 再次测量可用内存并计算增量
         """
         mem_before = self.get_system_memory()
+        cfg = self.SOFTWARE_PROFILES.get(software_key.lower(), {})
+        # 只枚举一次：先接管"运行期间新出现"的进程（基线内的用户实例绝不动），
+        # 否则新拉起的软件会被当作"未运行"，关闭请求被静默跳过而留下孤儿。
         procs = self.find_target_processes(software_key)
-        pids_found = [p.pid for p in procs]
+        adopted_pids = self.adopt_new_processes(software_key, procs=procs)
+        session_procs = [p for p in procs if p.pid in self._session_pids]
+        pids_found = [p.pid for p in session_procs]
         rss_freed_est_mb = 0.0
 
-        if not procs and software_key.lower() != "ollama":
-            # 无对应进程存活
+        if not session_procs and software_key.lower() != "ollama":
+            # 无本会话所属进程存活（且未被接管）
             return {
                 "target": software_key,
                 "closed_pids": [],
+                "adopted_pids": adopted_pids,
                 "rss_freed_est_mb": 0.0,
                 "mem_before_mb": mem_before["available_mb"],
                 "mem_after_mb": mem_before["available_mb"],
@@ -182,7 +342,7 @@ class ProcessMemoryReclaimer:
             }
 
         # 计算目标进程占据的 RSS 内存
-        for p in procs:
+        for p in session_procs:
             try:
                 rss_freed_est_mb += p.memory_info().rss / (1024 * 1024)
             except Exception:
@@ -207,14 +367,14 @@ class ProcessMemoryReclaimer:
         # 2. 等待进程正常退出
         t_deadline = time.time() + grace_period_s
         while time.time() < t_deadline:
-            alive = [p for p in procs if p.is_running()]
+            alive = [p for p in session_procs if p.is_running()]
             if not alive:
                 break
             time.sleep(0.3)
 
-        # 3. 超时仍未退出则强制终止
+        # 3. 超时仍未退出则强制终止 (only session-owned PIDs)
         killed_pids = []
-        for p in procs:
+        for p in session_procs:
             try:
                 if p.is_running():
                     p.kill()
@@ -222,20 +382,12 @@ class ProcessMemoryReclaimer:
             except Exception:
                 pass
 
-        # 兜底：对特定 exe 进行 taskkill 确认
-        cfg = self.SOFTWARE_PROFILES.get(software_key.lower(), {})
-        for exe in cfg.get("exes", []):
-            if exe.lower() == "javaw.exe":
-                continue  # javaw 不盲杀
-            try:
-                subprocess.run(
-                    ["taskkill", "/F", "/IM", exe, "/T"],
-                    capture_output=True,
-                    shell=False,
-                    timeout=5
-                )
-            except Exception:
-                pass
+        # Legacy unconditional taskkill /F /IM is REMOVED: it used to kill
+        # unrelated user-owned SOLIDWORKS/AutoCAD processes. It is available
+        # only via an explicit opt-in and is always audited.
+        if self.allow_global_kill:
+            global_exes = [e for e in cfg.get("exes", []) if e.lower() != "javaw.exe"]
+            self._audit_global_kill(software_key, global_exes)
 
         # 若目标是 Ollama，显式停用模型释放显存
         if software_key.lower() == "ollama":
@@ -253,12 +405,15 @@ class ProcessMemoryReclaimer:
             "target": software_key,
             "target_name": cfg.get("name", software_key),
             "pids_found": pids_found,
+            "adopted_pids": adopted_pids,
             "killed_pids": killed_pids,
             "rss_freed_est_mb": round(rss_freed_est_mb, 2),
             "mem_before_mb": mem_before["available_mb"],
             "mem_after_mb": mem_after["available_mb"],
             "reclaimed_mb": reclaimed_mb,
             "status": "RECLAIMED",
+            "session_pids_tracked": sorted(self._session_pids),
+            "allow_global_kill": self.allow_global_kill,
             "timestamp": time.strftime("%Y-%m-%d %H:%M:%S")
         }
 

@@ -9,7 +9,9 @@ _ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if _ROOT not in sys.path:
     sys.path.insert(0, _ROOT)
 
-from bridges.software_registry import SOFTWARE_SPECS, DESKTOP_SHORTCUTS, diagnose_all
+from bridges.software_registry import (
+    SOFTWARE_SPECS, DESKTOP_SHORTCUTS, diagnose_all, resolve_entry,
+)
 from bridges.tool_calling_specs import get_cadcam_tool_definitions
 
 MCP_TARGET_DIR = r"C:\Users\Administrator\.gemini\antigravity\mcp\industrial-cadcam"
@@ -77,9 +79,20 @@ def export():
         }
     }
     config_path = os.path.join(_ROOT, "mcp_cadcam_config.json")
+    # 合并写：只更新 industrial-cadcam 条目，保留用户手工加进同一份配置的其它
+    # MCP server（例如 external/windows-computer-use-mcp）。整文件覆盖会静默抹掉它们。
+    existing_servers: dict = {}
+    try:
+        with open(config_path, "r", encoding="utf-8") as fh:
+            prev = json.load(fh)
+        if isinstance(prev, dict) and isinstance(prev.get("mcpServers"), dict):
+            existing_servers = dict(prev["mcpServers"])
+    except (OSError, ValueError):
+        existing_servers = {}
+    existing_servers["industrial-cadcam"] = mcp_config["mcpServers"]["industrial-cadcam"]
     with open(config_path, "w", encoding="utf-8") as f:
-        json.dump(mcp_config, f, ensure_ascii=False, indent=2)
-    print(f"Wrote MCP client config: {config_path}")
+        json.dump({"mcpServers": existing_servers}, f, ensure_ascii=False, indent=2)
+    print(f"Wrote MCP client config: {config_path} ({len(existing_servers)} servers)")
 
     # 4. Write full Toolchain Manifest
     diag = diagnose_all()
@@ -88,6 +101,11 @@ def export():
         "title": "Industrial CAD/CAM Six-Software Agent Toolchain Manifest",
         "description": "Stable, reusable toolchain invocation interface for AI Agents.",
         "desktop_shortcuts": DESKTOP_SHORTCUTS,
+        # 入口形态会漂移（.lnk 可能被换成直连 .exe），显式导出本次实际命中的入口，
+        # 避免 manifest 里留下一个已不存在的路径让下游误判。
+        "resolved_entries": {
+            key: resolve_entry(key).get("entry_path") for key in DESKTOP_SHORTCUTS
+        },
         "diagnostics": diag,
         "tools": defs,
         "access_modes": [

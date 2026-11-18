@@ -1,0 +1,149 @@
+{
+  "report": "AGENT_OPTIMIZATION_VERIFICATION",
+  "generated_at": "2026-11-08T21:17:54.682378+08:00",
+  "basis": "measured",
+  "scope": "2026-11-08 按 P0→P2 三批建议全面执行；只读静态审查转为实际代码改动。所有 result 均为本次真实命令输出，非源码常量。",
+  "summary": {
+    "tracked_modified": 18,
+    "new_or_untracked": 12,
+    "compileall_rc": 0,
+    "pytest_core_and_affected": "130 passed, 7 subtests passed in 100.87s",
+    "mutation_probes_red": "3/3",
+    "ci_static_gate": "normal=0, bad_sample=1, restored=0"
+  },
+  "batches": [
+    {
+      "id": "P0-A",
+      "goal": "闸门可证伪",
+      "files": [
+        "virtu_omni/agent/agent_team.py",
+        "virtu_omni/internet/internet_hub.py",
+        "virtu_omni/agent/super_agent.py",
+        "tests/test_gate_falsifiability.py",
+        "tests/test_super_agent.py",
+        "tests/test_sleep_integration_dual_track.py"
+      ],
+      "result": "12 passed in 7.19s；三处源码变异植入恒真字面量后对应测试全部判红（mutation_rc=1），已原子恢复"
+    },
+    {
+      "id": "P0-B",
+      "goal": "数字可归因",
+      "files": [
+        "virtu_eval/publish.py",
+        "virtu_eval/runner.py",
+        "scripts/run_domain_ab.py",
+        "scripts/generate_real_models_radar.py",
+        "cloud_train_pack/eval_in_situ.py",
+        "tests/test_publish_gate.py"
+      ],
+      "result": "41 passed, 7 subtests passed in 12.09s（含 test_provenance_gates / test_eval_in_situ_gate）"
+    },
+    {
+      "id": "P1",
+      "goal": "运行时治理",
+      "files": [
+        "virtu_omni/runtime/__init__.py",
+        "virtu_omni/runtime/llm_gateway.py",
+        "virtu_omni/runtime/trace.py",
+        "tests/test_runtime_gateway.py",
+        "virtu_omni/context_mode/optimizer.py",
+        "virtu_omni/internet/search_engine.py",
+        "virtu_omni/agent/process_memory_reclaimer.py",
+        "scripts/workbuddy_virtu_bridge.py"
+      ],
+      "result": "45 passed in 1.62s（项目 venv；默认 python 缺 pydantic，已如实记录）"
+    },
+    {
+      "id": "P2",
+      "goal": "记忆/依赖/CI/文档",
+      "files": [
+        "virtu_omni/memory/hindsight_adapter.py",
+        "virtu_omni/agent/skill_writer_and_memory.py",
+        "bridges/tool_calling_specs.py",
+        "pyproject.toml",
+        "requirements.txt",
+        "virtu_omni/settings.py",
+        ".github/workflows/ci.yml",
+        "tests/test_memory_lifecycle.py",
+        "README.md",
+        "AGENTS.md"
+      ],
+      "result": "14 passed in 7.46s（test_memory_lifecycle + test_rag）"
+    },
+    {
+      "id": "收口",
+      "goal": "修并行代理遗留与让 CI 真可用",
+      "files": [
+        "virtu_eval/provenance.py",
+        "bridges/tool_calling_specs.py",
+        "pyproject.toml",
+        ".github/workflows/ci.yml",
+        "reports/ATTRIBUTION_DEBT_BASELINE.json"
+      ],
+      "result": "provenance drift 误判修复 + 判分器/用例证据缺失判红 + 哨兵解析失败判红；skill 工具参数名对齐（AST 校验 MATCH=True）；补 beautifulsoup4 声明；CI 改分层闸并用债务基线防新增"
+    }
+  ],
+  "verification_evidence": [
+    {
+      "check": "compileall",
+      "cmd": ".venv/Scripts/python.exe -m compileall -q virtu_omni virtu_edge virtu_eval virtu_code bridges tests",
+      "rc": 0
+    },
+    {
+      "check": "pytest core+affected",
+      "cmd": ".venv/Scripts/python.exe -m pytest <10 files> -q -p no:cacheprovider --basetemp=.pytest_tmp_final",
+      "result": "130 passed, 7 subtests passed in 100.87s"
+    },
+    {
+      "check": "P0-A mutation probes",
+      "cmd": "临时把 passed/success 改回恒真 True，分别跑对应测试",
+      "result": "3/3 mutation_rc=1 (RED)，文件已按 finally 原子恢复，恢复后 14 passed"
+    },
+    {
+      "check": "CI static gate",
+      "cmd": "从 ci.yml 提取内嵌脚本实跑 + 注入 benchmarks/_CI_PROBE_UNAtTRIBUTED.json",
+      "result": "NORMAL_GATE_EXIT=0, MUTATION_GATE_EXIT=1, RESTORED_GATE_EXIT=0；KNOWN_DEBT=59"
+    },
+    {
+      "check": "provenance regression",
+      "cmd": "pytest tests/test_provenance_gates.py tests/test_publish_gate.py -q",
+      "result": "35 passed, 7 subtests passed in 5.58s"
+    },
+    {
+      "check": "skill tool signature",
+      "cmd": "AST 对比 synthesize_skill 签名与调用关键字",
+      "result": "MATCH True"
+    },
+    {
+      "check": "bs4",
+      "cmd": ".venv/Scripts/python.exe -m pip install beautifulsoup4",
+      "result": "BS4_OK 4.15.0；已写入 pyproject.toml"
+    }
+  ],
+  "known_debt": {
+    "attribution_baseline": {
+      "count": 59,
+      "scanned": 60,
+      "path": "reports/ATTRIBUTION_DEBT_BASELINE.json",
+      "口径": "逐个调用 publish.audit_paths() 的实测结果；基线外新增违规 CI 判红，基线只减不增"
+    },
+    "full_suite": "此前审计记录 .pytest_cache/v/cache/lastfailed 159 条；本次未跑全量，CI 中设为 report-only 逐步收敛",
+    "uv_lock": "两次 uv lock 均因本机到 pypi/阿里云镜像 TLS 连接被切断失败（rc=2），已按熔断停止并原子恢复原 uv.lock；与 pyproject.toml 仍有漂移",
+    "hardcoded_paths": "576 行 D:\\Virtu模型 与 417 处端口硬编码仅提供 settings.py 入口，未批量替换",
+    "swarm_blackboard": "SWARM / Blackboard 写锁 / Meta-SOP / 红蓝辩论按建议在 AGENTS.md §4 标注为规划中，未补实现",
+    "other": [
+      "bridge 工具编排分支未接提示注入审计（主 /v1/chat/completions 已接）",
+      "SKILLS_PROVENANCE.json 运行时仍无人读取",
+      "Hindsight 向量仍是 MD5 3-gram 哈希投影，非语义 embedding",
+      "24 案例判分口径改为 slot_exact_v2，与历史分不可混用",
+      "runner 旧腿走 legacy 分支标 basis=partial；agent_team 的 HeadlessSandboxVerifier 仍未接入 run()"
+    ]
+  },
+  "not_done_by_design": [
+    "不补 SWARM/Blackboard（写型任务拆分放大失败半径，且无 trace）",
+    "不重写 1662 行 super_agent.py（应先抽 contracts 打断循环依赖）",
+    "不删除 AGENTS.md §8 测量宪法",
+    "不批量清理 benchmarks 历史数值（未测就写未测，不伪造 run_id）"
+  ],
+  "口径说明": "本报告位于 reports/，不属于 AGENTS.md §8 定义的受控发布路径（benchmarks/**、checkpoints/PROVENANCE.json、README.md 数值段）；其中数值均为本会话真实命令输出摘要，逐条证据见 verification_evidence，不得当作模型能力实测分数引用。"
+}

@@ -1,0 +1,200 @@
+[
+  {
+    "family": "roughness",
+    "user": "车削外圆，每转进给 f=0.172 mm/rev，刀尖圆弧半径 r_ε=0.4 mm。预测加工表面粗糙度 Ra（μm）与对应粗糙度等级。",
+    "expected": {
+      "world_state": {
+        "feed_per_rev_mm": 0.172,
+        "nose_radius_mm": 0.4,
+        "surface_roughness_ra_um": 9.24,
+        "finish_class": "粗加工"
+      },
+      "verification": {
+        "formula": "Ra[um]=1000*f^2/(8*r_eps)",
+        "checks": [
+          "ra>0"
+        ]
+      }
+    },
+    "scenario_present": true,
+    "guard_layers": [
+      "L2_SOLVER"
+    ],
+    "predicted": {
+      "world_state": {
+        "surface_roughness_ra_um": 9.244999999999997,
+        "roughness_grade": "Ra 3.2 μm (ISO 1944-1: Grade 3)"
+      }
+    },
+    "pass": true,
+    "raw_pass": false,
+    "fmt_raw": true,
+    "miss": [],
+    "miss_raw": [
+      "surface_roughness_ra_um(3.5!=9.24)"
+    ],
+    "guard_action": "corrected",
+    "raw": "{\"world_state\": {\"surface_roughness_ra_um\": 3.5, \"roughness_grade\": \"Ra 3.2 μm (ISO 1944-1: Grade 3)\"}, \"derivation\": {\"surface_roughness_ra_um\": \"1000*f*f/(8*r_eps) = 1000*(0.172)^2/(8*0.4)\", \"roughness_grade\": \"根据 Ra=3.5 μm 查 ISO 1944-1 粗糙度等级表确定\"}}"
+  },
+  {
+    "family": "collision",
+    "user": "分析一段 FANUC 加工程序：安全平面 Z=22.7 mm，某 G00 快速移动段最低 Z=22.2 mm，毛坯顶面 Z=19.7 mm。预测碰撞/过切风险与 VERICUT Auto-Diff 颜色（红=过切，黄=风险，绿=合格）。",
+    "expected": {
+      "world_state": {
+        "safe_plane_z_mm": 22.7,
+        "rapid_min_z_mm": 22.2,
+        "stock_top_z_mm": 19.7,
+        "collision_risk": "none",
+        "gouge": false,
+        "autodiff": "green"
+      },
+      "verification": {
+        "formula": "risk = (Z_rapid_min < Z_safe) AND (Z_rapid_min < Z_stock_top+1)；gouge = (Z_rapid_min < Z_stock_top)",
+        "checks": [
+          "no_gouge"
+        ]
+      }
+    },
+    "scenario_present": true,
+    "guard_layers": [],
+    "predicted": {
+      "world_state": {
+        "collision_risk": "none",
+        "autodiff": "green",
+        "safe_plane_z_mm": 22.7,
+        "rapid_min_z_mm": 22.2,
+        "stock_top_z_mm": 19.7,
+        "gouge": false
+      }
+    },
+    "pass": true,
+    "raw_pass": true,
+    "fmt_raw": true,
+    "miss": [],
+    "miss_raw": [],
+    "guard_action": "accept",
+    "raw": "{\"world_state\": {\"collision_risk\": \"none\", \"autodiff\": \"green\"}, \"derivation\": {\"collision_risk\": \"rapid_min_z_mm=22.2 >= safe_plane_z_mm=22.7 ? false : true; rapid_min_z_mm=22.2 >= stock_top_z_mm=19.7 ? true : false → none\", \"autodiff\": \"gouge=(rapid_min_z_mm < stock_top_z_mm) = false; risk=high=(rapid_min_z_mm < safe_plane_z_mm) = false → green\"}}"
+  },
+  {
+    "family": "roughness",
+    "user": "车削外圆，每转进给 f=0.241 mm/rev，刀尖圆弧半径 r_ε=0.8 mm。预测加工表面粗糙度 Ra（μm）与对应粗糙度等级。",
+    "expected": {
+      "world_state": {
+        "feed_per_rev_mm": 0.241,
+        "nose_radius_mm": 0.8,
+        "surface_roughness_ra_um": 9.08,
+        "finish_class": "粗加工"
+      },
+      "verification": {
+        "formula": "Ra[um]=1000*f^2/(8*r_eps)",
+        "checks": [
+          "ra>0"
+        ]
+      }
+    },
+    "scenario_present": true,
+    "guard_layers": [
+      "L2_SOLVER"
+    ],
+    "predicted": {
+      "world_state": {
+        "surface_roughness_ra_um": 9.07515625
+      }
+    },
+    "pass": true,
+    "raw_pass": false,
+    "fmt_raw": true,
+    "miss": [],
+    "miss_raw": [
+      "surface_roughness_ra_um(3.6!=9.08)"
+    ],
+    "guard_action": "corrected",
+    "raw": "{\"world_state\": {\"surface_roughness_ra_um\": 3.6}, \"derivation\": {\"surface_roughness_ra_um\": \"1000*f*f/(8*r_eps) = 1000*(0.241)^2/(8*0.8) = 3.6\"}, \"verification\": {\"source\": \"roughness_formula\", \"resolved\": true}}"
+  },
+  {
+    "family": "collision",
+    "user": "分析一段 FANUC 加工程序：安全平面 Z=18.3 mm，某 G00 快速移动段最低 Z=20.7 mm，毛坯顶面 Z=9.9 mm。预测碰撞/过切风险与 VERICUT Auto-Diff 颜色（红=过切，黄=风险，绿=合格）。",
+    "expected": {
+      "world_state": {
+        "safe_plane_z_mm": 18.3,
+        "rapid_min_z_mm": 20.7,
+        "stock_top_z_mm": 9.9,
+        "collision_risk": "none",
+        "gouge": false,
+        "autodiff": "green"
+      },
+      "verification": {
+        "formula": "risk = (Z_rapid_min < Z_safe) AND (Z_rapid_min < Z_stock_top+1)；gouge = (Z_rapid_min < Z_stock_top)",
+        "checks": [
+          "no_gouge"
+        ]
+      }
+    },
+    "scenario_present": true,
+    "guard_layers": [],
+    "predicted": {
+      "world_state": {
+        "collision_risk": "none",
+        "autodiff": "green",
+        "safe_plane_z_mm": 18.3,
+        "rapid_min_z_mm": 20.7,
+        "stock_top_z_mm": 9.9,
+        "gouge": false
+      }
+    },
+    "pass": true,
+    "raw_pass": true,
+    "fmt_raw": true,
+    "miss": [],
+    "miss_raw": [],
+    "guard_action": "accept",
+    "raw": "{\"world_state\": {\"collision_risk\": \"none\", \"autodiff\": \"green\"}, \"derivation\": {\"collision_risk\": \"rapid_min_z_mm=20.7 >= safe_plane_z_mm=18.3 且 rapid_min_z_mm=20.7 >= stock_top_z_mm=9.9+1=10.9 → 无穿透毛坯\", \"autodiff\": \"gouge=false ∧ penetration_risk=false → green\"}}"
+  },
+  {
+    "family": "removal",
+    "user": "毛坯体积 291958 mm^3，材料 铝合金6061，密度 2.7 g/cm^3。用端铣刀单刀路：切削深度 DOC=2.06 mm，切削宽度 WOC=9.93 mm，进给速度 vf=725 mm/min，刀路长度 L=252.8 mm。预测去除量与余下质量。",
+    "expected": {
+      "world_state": {
+        "material_removed_mm3": 5171.0,
+        "mrr_mm3_per_min": 14830.0,
+        "removed_mass_g": 14.0,
+        "resulting_mass_g": 774.0,
+        "delta_volume_mm3": -5171.0,
+        "volume_conservation": "pass_cut_negative"
+      },
+      "verification": {
+        "formula": "MRR=DOC*WOC*vf; V_removed=DOC*WOC*L; m=rho*V",
+        "checks": [
+          "dV<0",
+          "mrr>0"
+        ]
+      }
+    },
+    "scenario_present": true,
+    "guard_layers": [
+      "L2_SOLVER"
+    ],
+    "predicted": {
+      "world_state": {
+        "material_removed_mm3": 5171.22624,
+        "resulting_mass_g": 774.324289152,
+        "delta_volume_mm3": -5171.22624,
+        "mrr_mm3_per_min": 14830.455,
+        "removed_mass_g": 13.962310848000001,
+        "volume_conservation": "pass_cut_negative"
+      }
+    },
+    "pass": true,
+    "raw_pass": false,
+    "fmt_raw": true,
+    "miss": [],
+    "miss_raw": [
+      "material_removed_mm3(49600!=5171)",
+      "mrr_mm3_per_min(missing)",
+      "resulting_mass_g(152.5!=774)",
+      "delta_volume_mm3(-49600!=-5171)"
+    ],
+    "guard_action": "corrected",
+    "raw": "{\"world_state\": {\"material_removed_mm3\": 49600, \"resulting_mass_g\": 152.5, \"delta_volume_mm3\": -49600}, \"derivation\": {\"material_removed_mm3\": \"(DOC)*(WOC)*(L) = (2.06)*(9.93)*(252.8)\", \"resulting_mass_g\": \"(291958)*(2.7/1000) - ((291958 - 49600))*(2.7/1000) = 291958*0.0027 - (291958-49600)*0.0027\"}, \"verification\": {\"source\": \"volume_formula\", \"resolved\": true}}"
+  }
+]

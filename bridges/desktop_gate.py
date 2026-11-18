@@ -10,12 +10,15 @@ dismiss_dialogs 会真的往这台机器的鼠标键盘总线上写，而模型�
 
 import ctypes
 import json
+import hmac
+import hashlib
+import secrets
 import os
 import time
 from typing import Any, Dict, List, Optional, Tuple
 
-MUTATING_ACTIONS = frozenset({"click", "focus", "type_text", "hotkey", "dismiss_dialogs"})
-READ_ONLY_ACTIONS = frozenset({"capture", "inspect_window"})
+MUTATING_ACTIONS = frozenset({"click", "focus", "type_text", "hotkey", "dismiss_dialogs", "drag", "scroll"})
+READ_ONLY_ACTIONS = frozenset({"capture", "inspect_window", "move"})
 
 # 通用宿主进程不能用来"证明焦点属于目标软件"：vericut 的 process_names 里就有
 # javaw.exe，放行等于对任意 Java 窗口注键。
@@ -123,6 +126,35 @@ def _dangerous(keys: str) -> Optional[str]:
         if combo <= toks:
             return "%s -> %s" % ("+".join(sorted(combo)), why)
     return None
+
+
+# --- V-07：热键白名单 ---------------------------------------------------------
+# 旧实现只有 4 条黑名单（win / alt+f4 / ctrl+alt+del / ctrl+shift+esc）。
+# 攻击者换成 ctrl+shift+del、win+r、ctrl+esc、alt+tab 等即可拿到系统级能力。
+# 现在默认改为白名单：只有明确列出的键位 token 允许通过。
+HOTKEY_LOOSE_ENV = "VIRTU_DESKTOP_HOTKEY_LOOSE"
+
+#: 允许的修饰键
+HOTKEY_MODIFIERS = frozenset({"ctrl", "control", "alt", "shift"})
+
+#: 允许的普通键（字母/数字/F 键 + 常用编辑与导航键）
+HOTKEY_KEYS = frozenset(
+    set("abcdefghijklmnopqrstuvwxyz") | set("0123456789")
+    | {"f1", "f2", "f3", "f4", "f5", "f6", "f7", "f8", "f9", "f10", "f11", "f12",
+       "escape", "esc", "enter", "return", "tab", "space", "backspace", "delete",
+       "insert", "home", "end", "pageup", "pagedown", "up", "down", "left", "right",
+       "plus", "minus", "equal", "comma", "period", "slash", "semicolon", "quote"}
+)
+
+
+def _hotkey_loose() -> bool:
+    return str(os.environ.get(HOTKEY_LOOSE_ENV) or "") == "1"
+
+
+def _not_allowlisted(keys: str) -> List[str]:
+    """返回不在白名单内的键位 token（空列表即全部合规）。"""
+    allowed = HOTKEY_MODIFIERS | HOTKEY_KEYS
+    return [tok for tok in _hotkey_tokens(keys) if tok not in allowed]
 
 
 def _rate_ok() -> Tuple[bool, int, int]:
@@ -249,6 +281,15 @@ def evaluate(tool_name: str, args: Dict[str, Any]) -> Optional[Dict[str, Any]]:
                                 attempted_action=act, keys=args.get("keys"))
             if not _hotkey_tokens(args.get("keys", "")):
                 return _blocked("DESKTOP_HOTKEY_EMPTY", "keys 为空", attempted_action=act)
+            # V-07：黑名单只能挡住"已知最危险"的组合，换个等价组合即可绕过。
+            # 改为白名单默认：任何不在允许集合里的键位一律拒绝。
+            if _hotkey_loose() is False:
+                bad = _not_allowlisted(args.get("keys", ""))
+                if bad:
+                    return _blocked("DESKTOP_HOTKEY_NOT_ALLOWLISTED",
+                                    "键位 %s 不在热键白名单内（白名单模式，可用 %s=1 临时回退）"
+                                    % ("+".join(bad), HOTKEY_LOOSE_ENV),
+                                    attempted_action=act, keys=args.get("keys"))
         if act == "type_text" and not str(args.get("text") or ""):
             return _blocked("DESKTOP_TEXT_EMPTY", "text 为空", attempted_action=act)
 
@@ -259,6 +300,80 @@ def default_audit_log() -> str:
     return os.environ.get(AUDIT_ENV) or os.path.join(
         os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
         "runs", "desktop_gate", "decisions.jsonl")
+
+
+# --- V-09：审计日志防篡改（HMAC 链） -----------------------------------------
+# 旧实现是纯 JSONL：事后把某条 "decision":"blocked" 改成 "allowed" 或直接删掉
+# 一行，谁都看不出来——这恰好抹掉了唯一的追责依据。
+# 现在每条记录带 prev/mac：mac = HMAC-SHA256(key, prev + 规范化记录)。
+# 链尾写入 decisions.head，verify_audit_log() 可检出改写与尾部截断。
+AUDIT_KEY_ENV = "VIRTU_DESKTOP_AUDIT_KEY"
+AUDIT_KEY_FILE_NAME = "audit_key.bin"
+AUDIT_HEAD_FILE_NAME = "decisions.head"
+_HMAC_TAG_LEN = 32
+
+
+def audit_key_path(log_path: str = "") -> str:
+    path = log_path or default_audit_log()
+    return os.path.join(os.path.dirname(path), AUDIT_KEY_FILE_NAME)
+
+
+def audit_head_path(log_path: str = "") -> str:
+    """head 文件名跟随日志基名，避免同目录多份日志共用链尾互相污染。"""
+    path = log_path or default_audit_log()
+    base = os.path.splitext(os.path.basename(path))[0] or "decisions"
+    return os.path.join(os.path.dirname(path), base + ".head")
+
+
+def load_or_create_audit_key(log_path: str = "") -> bytes:
+    """优先取环境变量（便于统一托管），否则本地 0600 密钥文件。"""
+    env_key = str(os.environ.get(AUDIT_KEY_ENV) or "").strip()
+    if env_key:
+        return env_key.encode("utf-8")
+    path = audit_key_path(log_path)
+    try:
+        if os.path.isfile(path):
+            with open(path, "rb") as fh:
+                stored = fh.read().strip()
+            if stored:
+                return stored
+    except OSError:
+        pass
+    key = secrets.token_bytes(32)
+    try:
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+        with open(path, "wb") as fh:
+            fh.write(key)
+        os.chmod(path, 0o600)
+    except OSError:
+        pass
+    return key
+
+
+def _record_mac(key: bytes, prev: str, rec: Dict[str, Any]) -> str:
+    payload = dict(rec)
+    payload.pop("mac", None)
+    blob = prev + json.dumps(payload, ensure_ascii=False, sort_keys=True,
+                            separators=(",", ":"))
+    return hmac.new(key, blob.encode("utf-8"), hashlib.sha256).hexdigest()[:_HMAC_TAG_LEN]
+
+
+def _last_mac(path: str) -> str:
+    try:
+        with open(path, "rb") as fh:
+            fh.seek(0, os.SEEK_END)
+            size = fh.tell()
+            if size == 0:
+                return ""
+            back = min(size, 8192)
+            fh.seek(-back, os.SEEK_END)
+            chunk = fh.read().decode("utf-8", "replace").strip().splitlines()
+        if not chunk:
+            return ""
+        last = json.loads(chunk[-1])
+        return str(last.get("mac") or "")
+    except (OSError, ValueError):
+        return ""
 
 
 def audit(tool_name: str, args: Dict[str, Any], verdict: Optional[Dict[str, Any]],
@@ -280,17 +395,67 @@ def audit(tool_name: str, args: Dict[str, Any], verdict: Optional[Dict[str, Any]
         rec["keys"] = args.get("keys")
     if args.get("text") is not None:
         text = str(args.get("text"))
-        import hashlib
         rec["text_len"] = len(text)
         rec["text_sha8"] = hashlib.sha256(text.encode("utf-8", "replace")).hexdigest()[:8]
     path = log_path or default_audit_log()
     try:
         os.makedirs(os.path.dirname(path), exist_ok=True)
+        prev = _last_mac(path)
+        rec["prev"] = prev
+        rec["mac"] = _record_mac(load_or_create_audit_key(log_path), prev, rec)
         with open(path, "a", encoding="utf-8") as fh:
             fh.write(json.dumps(rec, ensure_ascii=False) + "\n")
+        try:
+            with open(audit_head_path(log_path), "w", encoding="utf-8") as hf:
+                hf.write(rec["mac"])
+        except OSError:
+            pass
     except OSError:
         pass
     return rec
+
+
+def verify_audit_log(log_path: str = "", *, check_head: bool = True) -> Dict[str, Any]:
+    """逐条复核 HMAC 链；返回首个断点位置，便于取证。"""
+    path = log_path or default_audit_log()
+    key = load_or_create_audit_key(log_path)
+    prev = ""
+    count = 0
+    try:
+        with open(path, "r", encoding="utf-8") as fh:
+            for lineno, line in enumerate(fh, 1):
+                line = line.strip()
+                if not line:
+                    continue
+                try:
+                    rec = json.loads(line)
+                except ValueError:
+                    return {"ok": False, "count": count, "first_bad_line": lineno,
+                            "reason": "JSON 解析失败"}
+                count += 1
+                if str(rec.get("prev") or "") != prev:
+                    return {"ok": False, "count": count, "first_bad_line": lineno,
+                            "reason": "prev 与前一条 mac 不连续（记录被删/被插）"}
+                expected = _record_mac(key, prev, rec)
+                if not hmac.compare_digest(str(rec.get("mac") or ""), expected):
+                    return {"ok": False, "count": count, "first_bad_line": lineno,
+                            "reason": "mac 不匹配（记录内容被改写）"}
+                prev = expected
+    except FileNotFoundError:
+        return {"ok": True, "count": 0, "first_bad_line": None, "reason": "日志尚未创建"}
+    except OSError as exc:
+        return {"ok": False, "count": count, "first_bad_line": None, "reason": str(exc)}
+
+    if check_head and count:
+        try:
+            with open(audit_head_path(log_path), "r", encoding="utf-8") as hf:
+                head = hf.read().strip()
+            if head and not hmac.compare_digest(head, prev):
+                return {"ok": False, "count": count, "first_bad_line": count,
+                        "reason": "链尾 head 与最后一条 mac 不一致（尾部被截断/追加篡改）"}
+        except OSError:
+            pass
+    return {"ok": True, "count": count, "first_bad_line": None, "reason": "链完整"}
 
 
 def gate(tool_name: str, args: Dict[str, Any], log_path: str = "") -> Optional[Dict[str, Any]]:

@@ -35,28 +35,42 @@ from ctypes import wintypes
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CK = os.path.join(ROOT, "checkpoints")
 PROV = os.path.join(CK, "PROVENANCE.json")
-BLOBS = r"E:\ollama\models\blobs"
-MANIFEST_ROOTS = [r"E:\ollama\models\manifests", r"E:\ollama\models\manifests-v2"]
+# 2026-11-15 修正：ollama 存储已迁到 E:\migrated\D-MigratedFromC\ollama\models。
+# 原路径 E:\ollama\models\{blobs,manifests,manifests-v2} 已不存在 => gate-t1 的
+# "blob_on_e" 恒为 False => T1 永远判 RED => 清理工具被自己的陈旧常量锁死。
+OLLAMA_ROOT = r"E:\migrated\D-MigratedFromC\ollama\models"
+BLOBS = os.path.join(OLLAMA_ROOT, "blobs")
+MANIFEST_ROOTS = [os.path.join(OLLAMA_ROOT, "manifests"),
+                  os.path.join(OLLAMA_ROOT, "manifests-v2")]
 E_DEST_ROOT = r"E:\moved_from_D\checkpoints"
 EVIDENCE_DIR = os.path.join(ROOT, "benchmarks", "d_model_space_cleanup")
 LOCK_DIR = os.path.join(ROOT, ".cleanup.lock")
 CHUNK = 64 * 1024 * 1024
 
-# T1: D 侧字节已按同一 sha256 存在于 E 盘 ollama blob 库，删后可逐字节还原
+# T1: 2026-11-15 重新标定。当前 D 盘上真实存在的、与 ollama 权重层字节一致的 GGUF。
+# 路径相对 checkpoints/；name/tag 指向 ollama manifest 里的同名 tag，
+# 供 manifest_weight_digest() 取权重层 digest 做三方对账。
 T1 = [
-    ("virtu-moe-14b-bf16.gguf", "virtu-moe-14b", "bf16"),
-    ("virtu-moe-14b-q4_k_m.gguf", "virtu-moe-14b", "fast"),
-    ("virtu-moe-14b-semantic-q4_k_m.gguf", "virtu-moe-14b", "semantic"),
-    ("virtu-dense-merged-q4_0.gguf", "virtu-dense-merged", "q4_0"),
-    ("virtu-dense-merged-v2-q4_0.gguf", "virtu-dense-merged-v2", "q4_0"),
-    ("virtu-dense-ties-q4_0.gguf", "virtu-dense-ties", "q4"),
-    ("virtu-comprehensive-q4_0.gguf", "virtu-comprehensive", "latest"),
+    ("_deploy_six_software\\virtu-six-software_v1.q4_0.gguf", "virtu-six-software", "v1"),
+    ("_deploy_six_software_v2\\virtu-six-software_v2.q4_0.gguf", "virtu-six-software", "v2"),
+    ("_deploy_six_software_v3\\virtu-six-software_v3.q4_0.gguf", "virtu-six-software", "v3"),
+    ("_deploy_vericut96\\virtu-vericut96_v1.q4_0.gguf", "virtu-vericut96", "v1"),
+    ("_deploy_vericut96_v2\\virtu-vericut96_v2.q4_0.gguf", "virtu-vericut96", "v2"),
+    ("_deploy_vericut96_v3\\virtu-vericut96_v3.q4_0.gguf", "virtu-vericut96", "v3"),
+    ("_deploy_vericut_e\\virtu-vericut-e_latest.q4_0.gguf", "virtu-vericut-e", "latest"),
 ]
-# T2: 零活引用、已被后继取代、不可再生（删前必须重新取证）
-T2_DIRS = ["virtu_dense_merged_v2_hf"]
+# T2: 零活引用删除。原目标 virtu_dense_merged_v2_hf 已不在 D 盘上（上一轮已清理），
+# 保留它会让 derivative-tag 判据 RED-abort 整个流程，而这里没有可删对象。
+T2_DIRS = []
 T2_SUCCESSOR = "virtu_dense_ties_hf"
-# T3: 搬迁 + junction，不删数据
-T3_DIRS = ["virtu_v2_all90_merged", "virtu_v3_all90_merged"]
+# T3: 搬迁 + junction，不删数据。
+# 2026-11-15 校准：impeller_fixed_merged 已是 junction（且正被另一会话写入，
+# move_dir 会判 already-junctioned 自动跳过）；本轮目标是两个仍留在 D 盘的
+# merged_hf 全精度合并件，其量化产物已在 E 盘 blob 中。
+T3_DIRS = [
+    "_deploy_six_software_v3\\merged_hf",
+    "_deploy_vericut_e\\merged_hf",
+]
 
 BUSY_CMDLINE = re.compile(
     r"virtu_eval|moe14b|_post_train|train_virtu|runner\.py|densify_|write_dense|hf_to_gguf|"
@@ -144,8 +158,11 @@ def chain_processes() -> list[str]:
         "Get-CimInstance Win32_Process | Where-Object { $_.Name -match '^python' } | "
         "ForEach-Object { if ($_.ProcessId -ne %d) { $_.CommandLine } }" % SELF_PID
     )
+    # 2026-11-16: console codepage is GBK; text=True decodes as utf-8 and raises
+    # UnicodeDecodeError on non-ascii bytes, making .stdout None -> idle gate crashes.
     out = subprocess.run(["powershell", "-NoProfile", "-Command", ps],
-                         capture_output=True, text=True).stdout or ""
+                         capture_output=True, text=True,
+                         errors="replace").stdout or ""
     return [ln.strip() for ln in out.splitlines() if ln.strip() and BUSY_CMDLINE.search(ln)]
 
 
@@ -236,20 +253,20 @@ def manifest_weight_digest(name: str, tag: str) -> str | None:
 # 删除前只复核「自那次哈希起文件未被改写」= size + mtime 逐字不变 + manifest/blob 仍一致；
 # 任一不符则回退到全量重哈希（需要磁盘空闲窗口）。
 T1_EVIDENCE = {
-    "virtu-moe-14b-bf16.gguf": (27260863392, "2026-11-06 01:18",
-                                "9f5c34f33f05a68af683131297468461544b9736fb90359cb81a624b27135d9a"),
-    "virtu-moe-14b-q4_k_m.gguf": (8320185248, "2026-11-06 01:32",
-                                  "a2103c68d9e881ac3655ce271902997cdc8eb5c35da3803261f25f5364e52d7a"),
-    "virtu-moe-14b-semantic-q4_k_m.gguf": (8320185248, "2026-11-06 09:20",
-                                           "0106872590e5b4fbf7a5a7c08452e9109faec91ebfce612af15906b216233ef5"),
-    "virtu-comprehensive-q4_0.gguf": (4614297600, "2026-11-05 04:16",
-                                      "c3b78c7735c9ac1f0b16cbbb5babc809f2c99e71c9a76043d39dbae8ce448749"),
-    "virtu-dense-merged-q4_0.gguf": (4614297600, "2026-11-06 09:47",
-                                     "df83b71eeacef0a041f7cc4b4fabe94bce71e9e7141d080f0d2597121977c044"),
-    "virtu-dense-merged-v2-q4_0.gguf": (4614297600, "2026-11-06 12:41",
-                                        "97a7eb763837c37d07f89e03ee2a636d38ce8516dec628b3e3e724ceae5d3dd6"),
-    "virtu-dense-ties-q4_0.gguf": (4614297600, "2026-11-06 12:50",
-                                   "36f5d7bd63578bbfb41d8cb0d46c4eda615cb29d0795bbc5f1cd5665c100828a"),
+    "_deploy_six_software\\virtu-six-software_v1.q4_0.gguf": (4614301728, "2026-11-15 15:19",
+                  "d96938fbcb6002cbeab5fb0abd713e19b0980e232cde532455c401f41cb16f91"),
+    "_deploy_six_software_v2\\virtu-six-software_v2.q4_0.gguf": (4614301728, "2026-11-15 18:48",
+                  "cd222214412e69d3cf525440a7551eef797ef82f10f5f27d4acf18fb8fbb587a"),
+    "_deploy_six_software_v3\\virtu-six-software_v3.q4_0.gguf": (4614301728, "2026-11-15 20:18",
+                  "abd8b726fbe792dddca40115cc93f3a9f915ff7389da3e5e8f2ad07e79baa10b"),
+    "_deploy_vericut96\\virtu-vericut96_v1.q4_0.gguf": (4614301728, "2026-11-14 20:32",
+                  "588ab839d9c5b49ba81ea5b68dc14ae5cdcd1f316127baa5f5c83a04a0858834"),
+    "_deploy_vericut96_v2\\virtu-vericut96_v2.q4_0.gguf": (4614301728, "2026-11-15 17:42",
+                  "4f2f8dd5a2860ee2d28c14718c90afcfbd788efcb3caa5017a20fe3cb761f4da"),
+    "_deploy_vericut96_v3\\virtu-vericut96_v3.q4_0.gguf": (4614301728, "2026-11-15 19:08",
+                  "6945dc61900fe4d5a6e4c104a9c07182778cfbea9e1151a311fee7f3f8e71ee9"),
+    "_deploy_vericut_e\\virtu-vericut-e_latest.q4_0.gguf": (4614301728, "2026-11-15 20:02",
+                  "acf02db26c451bc6d23b9edc880ce1e16460e8c8f11caa9d8958473ea4833836"),
 }
 
 
@@ -263,6 +280,12 @@ def verify_t1_fast() -> tuple[list[dict], bool]:
         rec = {"file": fname, "tag": "%s:%s" % (name, tag), "basis": "measured_earlier+stat"}
         if not os.path.exists(path):
             rec["verdict"] = "already-absent"
+            rows.append(rec)
+            continue
+        if fname not in T1_EVIDENCE:
+            # 2026-11-15: T1 重新标定后新增的候选没有旧哈希记录 => 不能走快通道，
+            # 只能回退到全量重哈希，否则会拿"无记录"当"无变化"。
+            rec["verdict"] = "RED-fast-check-inconclusive-needs-rehash"
             rows.append(rec)
             continue
         size, mtime_s, sha = T1_EVIDENCE[fname]
@@ -408,6 +431,9 @@ def make_junction(link: str, target: str) -> None:
     a tree here: the caller must have already moved and verified its content."""
     if os.path.exists(link):
         raise RuntimeError("junction refused: %s still exists" % link)
+    parent = os.path.dirname(link)
+    if parent and not os.path.isdir(parent):
+        os.makedirs(parent, exist_ok=True)   # mklink /J does not create parents
     subprocess.run(["cmd", "/c", "mklink", "/J", link, target],
                    capture_output=True, text=True, check=True)
 
@@ -415,7 +441,7 @@ def make_junction(link: str, target: str) -> None:
 # ---------------------------------------------------------------- provenance
 def append_provenance(block: dict) -> dict:
     before = json.load(open(PROV, encoding="utf-8"))
-    key = "space_cleanup_2026_11_06"
+    key = "space_cleanup_2026_11_15"
     if key in before:
         return {"verdict": "already-recorded", "keys_before": len(before)}
     before_json = json.dumps(before, sort_keys=True, ensure_ascii=False)
@@ -517,9 +543,14 @@ def acquire_lock() -> bool:
             pid = int(open(os.path.join(LOCK_DIR, "pid"), encoding="ascii").read().strip())
         except (OSError, ValueError):
             pass
-        alive = pid and bool(subprocess.run(
+        # 2026-11-16: tasklist emits GBK here; text=True w/ utf-8 raises and
+        # .stdout becomes None -> .count() crashes, so a stale lock can never be
+        # adopted. errors="replace" keeps the ascii PID digits and makes the
+        # stale-lock path actually reachable.
+        task_out = subprocess.run(
             ["tasklist", "/FI", "PID eq %d" % pid], capture_output=True,
-            text=True).stdout.count(str(pid)))
+            text=True, errors="replace").stdout or ""
+        alive = pid and bool(task_out.count(str(pid)))
         if alive:
             say("CHAIN_BUSY: another cleanup holds %s (pid %d)" % (LOCK_DIR, pid))
             return False

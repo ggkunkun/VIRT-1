@@ -154,11 +154,11 @@ def resolve_ollama_model(names, env_model=""):
 
 
 def _vllm_text_model():
-    return _env("VIRTU_VLLM_MODEL", "qwen3:8b")
+    return _env("VIRTU_VLLM_MODEL", "virtu-ties-v1:latest")
 
 
 def _vllm_tool_model():
-    return _env("VIRTU_TOOL_MODEL", "virtu-toolcall")
+    return _env("VIRTU_TOOL_MODEL", "virtu-ties-v1:latest")
 
 
 class VisionUnavailable(RuntimeError):
@@ -917,6 +917,37 @@ class VirtuRealModel:
             "vision_channel": "separate configured vision backend",
         }
 
+    # -- 系统提示 canary（供输出侧泄露闸） ---------------------------------
+    _SYSTEM_CANARY_CACHE: dict = {}
+
+    def system_canaries(self):
+        """Verbatim system-prompt fragments of the served Ollama model.
+
+        Returns the default canaries plus the model's own SYSTEM fragments so the
+        leak gate catches leaks of the *served* prompt, not only the production
+        default.  Returns None for non-Ollama backends or on any fetch failure
+        (the gate then falls back to its built-in defaults).  Cached per model.
+        """
+        if self._resolved != "ollama" or not self.ollama_model:
+            return None
+        key = (self.ollama_url, self.ollama_model)
+        if key in self._SYSTEM_CANARY_CACHE:
+            return self._SYSTEM_CANARY_CACHE[key]
+        from virtu_omni.serving.deception_gate import DEFAULT_CANARIES
+        try:
+            req = urllib.request.Request(
+                self.ollama_url.rstrip("/") + "/api/show",
+                data=json.dumps({"model": self.ollama_model}).encode("utf-8"),
+                headers={"Content-Type": "application/json"})
+            with urllib.request.urlopen(req, timeout=10) as r:
+                system = json.load(r).get("system", "") or ""
+        except Exception:
+            return None
+        frags = [f.strip() for f in re.split(r"[\n。；;]", system) if len(f.strip()) >= 12]
+        canaries = tuple(dict.fromkeys(list(DEFAULT_CANARIES) + frags))
+        self._SYSTEM_CANARY_CACHE[key] = canaries
+        return canaries
+
     # -- 意图识别 ----------------------------------------------------------
     def _is_cad_intent(self, messages):
         chunks = []
@@ -1226,6 +1257,7 @@ class VirtuRealModel:
             raise RuntimeError(f"backend unavailable: {self.error}")
         cad = self._is_cad_intent(messages)
         if self._resolved == "ollama":
+            messages = self._with_internet(messages, tools=tools)
             for chunk in self._gen_ollama_stream(messages, cad, tools=tools, think=think):
                 yield chunk
             return
@@ -1240,6 +1272,23 @@ class VirtuRealModel:
         if text:
             yield {"type": "content", "delta": text}
 
+    def _with_internet(self, messages, tools=None):
+        """所有后端统一联网：把实时检索资料以 system 注记注入，不改用户原文。
+
+        跳过场景：视觉输入、工具调用请求（避免污染工具 JSON）、已注入过的消息。
+        任何检索失败都原样返回，模型行为与未联网时完全一致。
+        """
+        if tools is not None or _has_image(messages) or _has_video(messages):
+            return messages
+        if _is_toolcall_prompt(_last_user_text(messages)):
+            return messages
+        try:
+            from virtu_omni.internet.augmentation import augment_messages
+            augmented, _citations = augment_messages(messages)
+            return augmented
+        except Exception:
+            return messages
+
     def _generate(self, messages, tools=None, think=None):
         self.last_usage = None
         self.last_thought = ""
@@ -1251,6 +1300,7 @@ class VirtuRealModel:
         if not self.available:
             raise RuntimeError(f"backend unavailable: {self.error}")
         cad = self._is_cad_intent(messages)
+        messages = self._with_internet(messages, tools=tools)
         if self._resolved == "ollama":
             return self._gen_ollama(messages, cad, tools=tools, think=think)
         if self._resolved == "transformers":
@@ -1290,6 +1340,10 @@ class VirtuRealModel:
         identical tool name and parseable arguments). Any other error still propagates.
         """
         base = kwargs.get("num_predict") or self.max_tokens
+        # 放宽预算只做一次。原写法用 `attempt < 3` 计数、却把 base 冻在循环外，
+        # 于是第三次仍算出同一个 768 再试一遍——花的是一次白跑的完整前向。
+        # tests/test_tool_call_retry.py::test_retry_that_still_fails_propagates 钉住这点。
+        widened_once = False
         for attempt in (1, 2, 3):
             try:
                 return chat(**kwargs)
@@ -1305,11 +1359,14 @@ class VirtuRealModel:
                                                                     kwargs.get("tools")), up), flush=True)
                     kwargs = dict(kwargs, num_ctx=up)
                     continue
-                if "invalid tool call arguments" in msg and attempt < 3:
+                if "invalid tool call arguments" in msg:
+                    if widened_once:
+                        raise
                     widened = max(base * 3, 768)
                     print("[virtu_backend] 工具调用 JSON 被 %s token 预算截断，"
                           "放宽到 %s 后重试一次" % (base, widened), flush=True)
                     kwargs = dict(kwargs, num_predict=widened)
+                    widened_once = True
                     continue
                 raise
 

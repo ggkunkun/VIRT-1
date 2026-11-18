@@ -1,0 +1,197 @@
+[
+  {
+    "family": "geom_delta",
+    "user": "在工件上切除一个倒角，特征体积 4406.0 mm^3，切除前工件体积 153584.0 mm^3。预测切除后几何体积变化 ΔV 与切除后体积，并校验体积守恒。",
+    "expected": {
+      "world_state": {
+        "feature": "倒角",
+        "feature_volume_mm3": 4406.0,
+        "delta_volume_mm3": -4406.0,
+        "before_volume_mm3": 153584.0,
+        "after_volume_mm3": 149178.0,
+        "volume_conservation": "pass_cut_negative"
+      },
+      "verification": {
+        "formula": "dV = -V_feature (切除为负)",
+        "checks": [
+          "dV<0",
+          "after=before+dV"
+        ]
+      }
+    },
+    "scenario_present": true,
+    "guard_layers": [],
+    "predicted": {
+      "world_state": {
+        "delta_volume_mm3": -4406.0,
+        "after_volume_mm3": 149178.0,
+        "volume_conservation": "pass_cut_negative",
+        "feature_volume_mm3": 4406.0,
+        "before_volume_mm3": 153584.0
+      }
+    },
+    "pass": true,
+    "raw_pass": true,
+    "fmt_raw": true,
+    "miss": [],
+    "miss_raw": [],
+    "guard_action": "accept",
+    "raw": "{\"world_state\": {\"delta_volume_mm3\": -4406.0, \"after_volume_mm3\": 149178.0, \"volume_conservation\": \"pass\"}, \"derivation\": {\"delta_volume_mm3\": \"-4406.0\", \"after_volume_mm3\": \"153584.0-4406.0\"}, \"verification\": {\"source\": \"volume_formula\", \"resolved\": true}}"
+  },
+  {
+    "family": "fea_fos",
+    "user": "钛合金TC4构件，屈服强度 Sy=830 MPa，FEA 算得峰值 von Mises 应力 σ_vm=239.7 MPa。预测安全系数并判定 FOS≥1.5 是否通过。",
+    "expected": {
+      "world_state": {
+        "material": "钛合金TC4",
+        "yield_strength_mpa": 830.0,
+        "peak_von_mises_mpa": 239.7,
+        "safety_factor": 3.46,
+        "fos_gate": "FOS>=1.5_pass"
+      },
+      "verification": {
+        "formula": "FOS=Sy/sigma_vm",
+        "checks": [
+          "FOS>=1.5"
+        ]
+      }
+    },
+    "scenario_present": true,
+    "guard_layers": [
+      "L2_SOLVER"
+    ],
+    "predicted": {
+      "world_state": {
+        "safety_factor": 3.4626616604088447,
+        "fos_gate": "FOS>=1.5_PASS",
+        "peak_von_mises_mpa": 239.7
+      }
+    },
+    "pass": true,
+    "raw_pass": true,
+    "fmt_raw": true,
+    "miss": [],
+    "miss_raw": [],
+    "guard_action": "corrected",
+    "raw": "{\"world_state\": {\"safety_factor\": 3.48, \"fos_gate\": \"pass\"}, \"derivation\": {\"safety_factor\": \"(830)/(239.7)\"} }"
+  },
+  {
+    "family": "tolerance",
+    "user": "尺寸链含 3 个组成环，半公差分别为 [0.05, 0.063, 0.068] mm（基本尺寸 64.0 mm）。孔轴偏差：上偏差 +0.034 mm，下偏差 -0.02 mm。用极值法与统计法（RSS）给出封闭环公差带半宽，并判定配合性质与等级。",
+    "expected": {
+      "world_state": {
+        "component_tolerances_mm": [
+          0.05,
+          0.063,
+          0.068
+        ],
+        "closed_loop_worstcase_halfwidth_mm": 0.181,
+        "closed_loop_rss_halfwidth_mm": 0.1053,
+        "basic_size_mm": 64.0,
+        "fit_clearance_mm": 0.054,
+        "tolerance_fit": "间隙配合",
+        "fit_class": "H7/g6",
+        "tolerance_pass": true
+      },
+      "verification": {
+        "formula": "WC=sum(ti); RSS=sqrt(sum(ti^2))",
+        "checks": [
+          "WC>=RSS"
+        ]
+      }
+    },
+    "scenario_present": true,
+    "guard_layers": [
+      "L2_SOLVER"
+    ],
+    "predicted": {
+      "world_state": {
+        "closed_loop_worstcase_halfwidth_mm": 0.181,
+        "closed_loop_rss_halfwidth_mm": 0.10532331175955303,
+        "tolerance_fit": "间隙配合（孔大轴小）",
+        "fit_clearance_mm": 0.054000000000000006
+      }
+    },
+    "pass": true,
+    "raw_pass": false,
+    "fmt_raw": true,
+    "miss": [],
+    "miss_raw": [
+      "closed_loop_rss_halfwidth_mm(0.096!=0.1053)",
+      "fit_clearance_mm(missing)"
+    ],
+    "guard_action": "corrected",
+    "raw": "{\"world_state\": {\"closed_loop_worstcase_halfwidth_mm\": 0.181, \"closed_loop_rss_halfwidth_mm\": 0.096, \"tolerance_fit\": \"间隙配合（孔大轴小）\"}, \"derivation\": {\"closed_loop_worstcase_halfwidth_mm\": \"sum([0.05, 0.063, 0.068])\", \"closed_loop_rss_halfwidth_mm\": \"sqrt(0.05^2 + 0.063^2 + 0.068^2)\", \"tolerance_fit\": \"max(0.034 - (-0.02), 0) > 0 ? '间隙配合' : '过盈配合'\"}, \"verification\": {\"source\": \"tolerance_rules\", \"resolved\": true}}"
+  },
+  {
+    "family": "invalid",
+    "user": "未提供材料类型，要求预测去除质量。",
+    "expected": {
+      "world_state": null,
+      "invalid": true,
+      "reason": "missing_material",
+      "expected_action": "拒绝并列出缺失/非法项，不输出臆测数值"
+    },
+    "scenario_present": false,
+    "guard_layers": [],
+    "predicted": {
+      "world_state": null,
+      "invalid": true,
+      "reason": "missing_material"
+    },
+    "pass": true,
+    "raw_pass": true,
+    "fmt_raw": true,
+    "miss": [],
+    "miss_raw": [],
+    "guard_action": "accept",
+    "raw": "{\"world_state\": null, \"invalid\": true, \"reason\": \"missing_material\"}"
+  },
+  {
+    "family": "removal",
+    "user": "毛坯体积 333826 mm^3，材料 45钢，密度 7.8 g/cm^3。用端铣刀单刀路：切削深度 DOC=3.43 mm，切削宽度 WOC=6.19 mm，进给速度 vf=402 mm/min，刀路长度 L=94.9 mm。预测去除量与余下质量。",
+    "expected": {
+      "world_state": {
+        "material_removed_mm3": 2015.0,
+        "mrr_mm3_per_min": 8535.0,
+        "removed_mass_g": 15.8,
+        "resulting_mass_g": 2600.0,
+        "delta_volume_mm3": -2015.0,
+        "volume_conservation": "pass_cut_negative"
+      },
+      "verification": {
+        "formula": "MRR=DOC*WOC*vf; V_removed=DOC*WOC*L; m=rho*V",
+        "checks": [
+          "dV<0",
+          "mrr>0"
+        ]
+      }
+    },
+    "scenario_present": true,
+    "guard_layers": [
+      "L2_SOLVER"
+    ],
+    "predicted": {
+      "world_state": {
+        "material_removed_mm3": 2014.8883300000005,
+        "resulting_mass_g": 2604.7172266095,
+        "delta_volume_mm3": -2014.8883300000005,
+        "mrr_mm3_per_min": 8535.1434,
+        "removed_mass_g": 15.816873390500001,
+        "volume_conservation": "pass_cut_negative"
+      }
+    },
+    "pass": true,
+    "raw_pass": false,
+    "fmt_raw": true,
+    "miss": [],
+    "miss_raw": [
+      "material_removed_mm3(19587.5!=2015)",
+      "mrr_mm3_per_min(missing)",
+      "resulting_mass_g(262.8!=2600)",
+      "delta_volume_mm3(-19587.5!=-2015)"
+    ],
+    "guard_action": "corrected",
+    "raw": "{\"world_state\": {\"material_removed_mm3\": 19587.5, \"resulting_mass_g\": 262.8, \"delta_volume_mm3\": -19587.5}, \"derivation\": {\"material_removed_mm3\": \"(DOC)*(WOC)*(L) = (3.43)*(6.19)*(94.9)\", \"resulting_mass_g\": \"(333826)*(0.0078) - ((333826 - 19587.5))*(0.0078)\", \"delta_volume_mm3\": \"-((DOC)*(WOC)*(L)) = -(3.43*6.19*94.9)\"}, \"verification\": {\"source\": \"volume_formula\", \"resolved\": true}}"
+  }
+]

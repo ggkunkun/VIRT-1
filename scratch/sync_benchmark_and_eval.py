@@ -1,3 +1,9 @@
+# --- 凭据外置：口令不得写入源码（机制见 scripts/damodel_env.py / tests/test_no_hardcoded_credentials.py）
+import os as _os
+import sys as _sys
+_sys.path.insert(0, _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..', 'scripts'))
+from damodel_env import password_for as _pw
+# ---
 import os
 import tarfile
 import paramiko
@@ -6,7 +12,7 @@ from pathlib import Path
 HOST = "cpod-1xesnvd6jbqp.podtcp.compshare.cn"
 PORT = 24334
 USER = "root"
-PASS = "0158TRUs7ihD9y23"
+PASS = _pw(HOST, PORT)
 
 LOCAL_ROOT = Path(r"D:\Virtu模型")
 tar_path = LOCAL_ROOT / "scratch" / "eval_bundle.tar.gz"

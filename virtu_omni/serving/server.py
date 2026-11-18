@@ -17,6 +17,7 @@ import base64
 import io
 import asyncio
 import logging
+import threading
 from collections import deque
 from typing import Dict, Any, List, Optional
 import torch
@@ -24,7 +25,9 @@ from fastapi import FastAPI, HTTPException
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel, Field
 from PIL import Image
+from starlette.types import ASGIApp, Receive, Scope, Send
 
+from bridges.bridge_security import bearer_authorized, ensure_service_token
 from virtu_omni.config import VirtuOmniConfig, ModelConfig
 from virtu_omni.errors import (
     ModelError,
@@ -40,19 +43,115 @@ logger = logging.getLogger(__name__)
 
 # Reject oversized payloads before they are decoded into memory.
 MAX_IMAGE_BASE64_BYTES = 32 * 1024 * 1024
+MAX_IMAGE_PIXELS = 25_000_000
+MAX_TEXT_CHARS = 32768
 LATENCY_WINDOW = 10000
+
+
+class ServingSecurityMiddleware:
+    """Authenticate and bound HTTP requests before FastAPI parses their bodies."""
+
+    def __init__(self, app: ASGIApp, *, token: str, max_body_bytes: int,
+                 max_concurrency: int):
+        self.app = app
+        self.token = token
+        self.max_body_bytes = max_body_bytes
+        self.request_slots = threading.BoundedSemaphore(max_concurrency)
+
+    @staticmethod
+    async def _reject(send: Send, status: int, message: str) -> None:
+        body = json.dumps({"detail": message}, ensure_ascii=False).encode("utf-8")
+        headers = [(b"content-type", b"application/json; charset=utf-8"),
+                   (b"content-length", str(len(body)).encode("ascii"))]
+        if status == 401:
+            headers.append((b"www-authenticate", b"Bearer"))
+        await send({"type": "http.response.start", "status": status, "headers": headers})
+        await send({"type": "http.response.body", "body": body})
+
+    async def __call__(self, scope: Scope, receive: Receive, send: Send) -> None:
+        if scope["type"] != "http":
+            await self.app(scope, receive, send)
+            return
+
+        headers = scope.get("headers", [])
+        auth_values = [value.decode("latin-1") for name, value in headers
+                       if name.lower() == b"authorization"]
+        if len(auth_values) != 1 or not bearer_authorized(auth_values[0], self.token):
+            await self._reject(send, 401, "Valid Bearer token required")
+            return
+
+        if not self.request_slots.acquire(blocking=False):
+            await self._reject(send, 503, "Serving service is busy; retry later")
+            return
+
+        try:
+            transfer_encoded = any(name.lower() == b"transfer-encoding" for name, _ in headers)
+            raw_lengths = [value for name, value in headers if name.lower() == b"content-length"]
+            try:
+                lengths = [value.decode("ascii") for value in raw_lengths]
+            except UnicodeDecodeError:
+                await self._reject(send, 400, "Invalid Content-Length")
+                return
+            if len(lengths) > 1:
+                await self._reject(send, 400, "Ambiguous Content-Length")
+                return
+            if transfer_encoded and lengths:
+                await self._reject(send, 400, "Transfer-Encoding and Content-Length cannot be combined")
+                return
+            if lengths:
+                if not lengths[0].isdigit() or len(lengths[0]) > 10:
+                    await self._reject(send, 400, "Invalid Content-Length")
+                    return
+                if int(lengths[0]) > self.max_body_bytes:
+                    await self._reject(send, 413, "Request body exceeds allowed size")
+                    return
+
+            body = bytearray()
+            while True:
+                try:
+                    message = await asyncio.wait_for(receive(), timeout=30.0)
+                except asyncio.TimeoutError:
+                    await self._reject(send, 408, "Timed out while receiving request body")
+                    return
+                if message["type"] == "http.disconnect":
+                    return
+                if message["type"] != "http.request":
+                    continue
+                body.extend(message.get("body", b""))
+                if len(body) > self.max_body_bytes:
+                    await self._reject(send, 413, "Request body exceeds allowed size")
+                    return
+                if not message.get("more_body", False):
+                    break
+
+            buffered_body = bytes(body)
+            delivered = False
+
+            async def replay_receive():
+                nonlocal delivered
+                if not delivered:
+                    delivered = True
+                    return {"type": "http.request", "body": buffered_body,
+                            "more_body": False}
+                return await receive()
+
+            await self.app(scope, replay_receive, send)
+        finally:
+            self.request_slots.release()
 
 
 # Pydantic Schemas
 class Message(BaseModel):
     role: str = Field(..., description="Role: 'user', 'assistant', or 'system'")
-    content: str = Field(..., description="Text content or multimodal JSON structure")
-    image_base64: Optional[str] = Field(None, description="Optional base64-encoded image")
+    content: str = Field(..., max_length=MAX_TEXT_CHARS,
+                         description="Text content or multimodal JSON structure")
+    image_base64: Optional[str] = Field(None, max_length=MAX_IMAGE_BASE64_BYTES + 256,
+                                        description="Optional base64-encoded image")
 
 
 class ChatCompletionRequest(BaseModel):
     model: str = "Virtu-Omni-10B"
-    messages: List[Message]
+    messages: List[Message] = Field(..., min_length=1, max_length=128)
     max_tokens: int = Field(512, ge=1, le=4096)
     temperature: float = Field(0.7, ge=0.0, le=2.0)
     top_p: float = Field(0.9, ge=0.0, le=1.0)
@@ -60,8 +159,9 @@ class ChatCompletionRequest(BaseModel):
 
 
 class ImageGenerationRequest(BaseModel):
-    prompt: str = Field(..., description="Linguistic description of the target image")
-    negative_prompt: Optional[str] = None
+    prompt: str = Field(..., max_length=MAX_TEXT_CHARS,
+                        description="Linguistic description of the target image")
+    negative_prompt: Optional[str] = Field(None, max_length=MAX_TEXT_CHARS)
     height: int = Field(512, ge=256, le=1024)
     width: int = Field(512, ge=256, le=1024)
     num_inference_steps: int = Field(20, ge=1, le=100)
@@ -69,8 +169,10 @@ class ImageGenerationRequest(BaseModel):
 
 
 class MultimodalUnderstandRequest(BaseModel):
-    image_base64: str = Field(..., description="Base64-encoded input image")
-    question: str = Field("Describe this image in comprehensive detail.", description="User query")
+    image_base64: str = Field(..., max_length=MAX_IMAGE_BASE64_BYTES + 256,
+                              description="Base64-encoded input image")
+    question: str = Field("Describe this image in comprehensive detail.",
+                          max_length=MAX_TEXT_CHARS, description="User query")
 
 
 def _decode_base64_image(payload: str, resolution: int, patch_size: int) -> torch.Tensor:
@@ -104,7 +206,11 @@ def _decode_base64_image(payload: str, resolution: int, patch_size: int) -> torc
         )
     try:
         img_data = base64.b64decode(payload, validate=True)
-        img = Image.open(io.BytesIO(img_data)).convert("RGB")
+        img = Image.open(io.BytesIO(img_data))
+        width, height = img.size
+        if width < 1 or height < 1 or width * height > MAX_IMAGE_PIXELS:
+            raise ValueError("Image dimensions exceed the allowed pixel count")
+        img = img.convert("RGB")
         # Snap the resize target to a patch-size multiple so the vision
         # projector never receives a non-divisible grid.
         side = max(patch_size, (resolution // patch_size) * patch_size)
@@ -156,7 +262,8 @@ def _encode_scaffold_tokens(text: str, vocab_size: int, max_tokens: int = 512) -
     return torch.tensor([ids], dtype=torch.long)
 
 
-def create_app(config: Optional[VirtuOmniConfig] = None) -> FastAPI:
+def create_app(config: Optional[VirtuOmniConfig] = None, *,
+               bearer_token: Optional[str] = None) -> FastAPI:
     """Initialize FastAPI application with model lifecycle bindings."""
     if config is not None:
         cfg = config
@@ -185,6 +292,24 @@ def create_app(config: Optional[VirtuOmniConfig] = None) -> FastAPI:
         docs_url="/docs",
         redoc_url="/redoc",
     )
+    serving_token = (bearer_token if bearer_token is not None else
+                     ensure_service_token("serving", "VIRTU_SERVING_TOKEN"))
+    serving_token = serving_token.strip()
+    if len(serving_token) < 32 or any(ch.isspace() for ch in serving_token):
+        raise RuntimeError("Serving Bearer token must contain at least 32 non-whitespace characters")
+    app.add_middleware(
+        ServingSecurityMiddleware,
+        token=serving_token,
+        max_body_bytes=cfg.serving.max_request_bytes,
+        max_concurrency=cfg.serving.max_concurrency,
+    )
+    app.state.inference_slots = threading.BoundedSemaphore(
+        cfg.serving.max_inference_concurrency)
+
+    def acquire_inference_slot() -> None:
+        if not app.state.inference_slots.acquire(blocking=False):
+            raise HTTPException(status_code=503,
+                                detail="Inference capacity is busy; retry later")
 
     if torch.cuda.is_available():
         torch.backends.cuda.matmul.allow_tf32 = True
@@ -249,8 +374,17 @@ def create_app(config: Optional[VirtuOmniConfig] = None) -> FastAPI:
         # A prompt is BOS + content. ``encode`` also appends EOS by default, which
         # tells the decoder the sequence is already finished and inflates
         # ``prompt_tokens`` by one; prepend BOS explicitly instead.
+        prompt_text = user_msg.content
+        if image_tensor is None:
+            # 所有模型统一联网：纯文本请求注入实时检索资料；检索失败则原样使用原文。
+            try:
+                from virtu_omni.internet.augmentation import augment_prompt
+                prompt_text, _citations = await asyncio.to_thread(
+                    augment_prompt, prompt_text)
+            except Exception:
+                prompt_text = user_msg.content
         input_ids = tokenizer.encode(
-            user_msg.content,
+            prompt_text,
             max_length=cfg.model.max_position_embeddings,
             add_special_tokens=False,
         ).to(device)
@@ -262,7 +396,9 @@ def create_app(config: Optional[VirtuOmniConfig] = None) -> FastAPI:
         token_budget = min(request.max_tokens, 16 if cfg.model.vocab_size < 1000 else 512)
 
         if request.stream:
-            async def event_generator():
+            acquire_inference_slot()
+
+            async def _stream_events():
                 req_id = f"chatcmpl-virtu-{int(time.time() * 1000)}"
                 created_ts = int(time.time())
                 header = json.dumps({
@@ -326,6 +462,13 @@ def create_app(config: Optional[VirtuOmniConfig] = None) -> FastAPI:
                     err_payload = json.dumps({"error": {"message": str(exc), "type": "server_error"}})
                     yield f"data: {err_payload}\n\n"
 
+            async def event_generator():
+                try:
+                    async for chunk in _stream_events():
+                        yield chunk
+                finally:
+                    app.state.inference_slots.release()
+
             return StreamingResponse(event_generator(), media_type="text/event-stream")
 
         def _generate_tokens() -> torch.Tensor:
@@ -340,22 +483,26 @@ def create_app(config: Optional[VirtuOmniConfig] = None) -> FastAPI:
                     loop_steps=1,
                 )
 
+        acquire_inference_slot()
         try:
-            generated_ids = await asyncio.to_thread(_generate_tokens)
-        except ModelError as exc:
-            logger.warning("chat inference rejected: %s", exc.to_dict())
-            raise HTTPException(status_code=400, detail=exc.to_dict()) from exc
-        except Exception as exc:  # noqa: BLE001 - mapped to a structured 503
-            logger.exception("chat inference crashed")
-            raise HTTPException(
-                status_code=503,
-                detail=ModelError(
-                    SERVE_MODEL_FAILURE,
-                    f"Model execution failed: {type(exc).__name__}: {exc}",
-                    hint="Check server logs; retry once the model is ready.",
-                    context={"mode": "text_gen"},
-                ).to_dict(),
-            ) from exc
+            try:
+                generated_ids = await asyncio.to_thread(_generate_tokens)
+            except ModelError as exc:
+                logger.warning("chat inference rejected: %s", exc.to_dict())
+                raise HTTPException(status_code=400, detail=exc.to_dict()) from exc
+            except Exception as exc:  # noqa: BLE001 - mapped to a structured 503
+                logger.exception("chat inference crashed")
+                raise HTTPException(
+                    status_code=503,
+                    detail=ModelError(
+                        SERVE_MODEL_FAILURE,
+                        f"Model execution failed: {type(exc).__name__}: {exc}",
+                        hint="Check server logs; retry once the model is ready.",
+                        context={"mode": "text_gen"},
+                    ).to_dict(),
+                ) from exc
+        finally:
+            app.state.inference_slots.release()
 
         latency_ms = (time.perf_counter() - start_time) * 1000
         request_latencies.append(latency_ms)
@@ -451,21 +598,25 @@ def create_app(config: Optional[VirtuOmniConfig] = None) -> FastAPI:
             with torch.inference_mode():
                 return model(input_ids=input_ids, images=image_tensor, mode="multimodal_eval")
 
+        acquire_inference_slot()
         try:
-            outputs = await asyncio.to_thread(_forward)
-        except ModelError as exc:
-            raise HTTPException(status_code=400, detail=exc.to_dict()) from exc
-        except Exception as exc:  # noqa: BLE001 - mapped to a structured 503
-            logger.exception("multimodal inference crashed")
-            raise HTTPException(
-                status_code=503,
-                detail=ModelError(
-                    SERVE_INFER_FAILURE,
-                    f"Multimodal execution failed: {type(exc).__name__}: {exc}",
-                    hint="Check server logs; retry once the model is ready.",
-                    context={"mode": "multimodal_eval"},
-                ).to_dict(),
-            ) from exc
+            try:
+                outputs = await asyncio.to_thread(_forward)
+            except ModelError as exc:
+                raise HTTPException(status_code=400, detail=exc.to_dict()) from exc
+            except Exception as exc:  # noqa: BLE001 - mapped to a structured 503
+                logger.exception("multimodal inference crashed")
+                raise HTTPException(
+                    status_code=503,
+                    detail=ModelError(
+                        SERVE_INFER_FAILURE,
+                        f"Multimodal execution failed: {type(exc).__name__}: {exc}",
+                        hint="Check server logs; retry once the model is ready.",
+                        context={"mode": "multimodal_eval"},
+                    ).to_dict(),
+                ) from exc
+        finally:
+            app.state.inference_slots.release()
 
         logits = outputs["logits"]
         last_logits = logits[0, -1].float()
@@ -547,4 +698,21 @@ def __getattr__(name: str):
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("virtu_omni.serving.server:app", host="0.0.0.0", port=8080, reload=False)
+    host = os.environ.get("VIRTU_SERVING_HOST", "127.0.0.1")
+    try:
+        port = int(os.environ.get("VIRTU_SERVING_PORT", "8080"))
+    except ValueError as exc:
+        raise SystemExit("VIRTU_SERVING_PORT must be an integer") from exc
+    if not 1 <= port <= 65535:
+        raise SystemExit("VIRTU_SERVING_PORT must be between 1 and 65535")
+    # V-04：对外绑定必须显式声明意向，且服务令牌必须就绪，避免一条命令就把
+    # 推理服务（含 /v1/metrics）暴露到局域网。
+    if host.strip().lower() not in ("127.0.0.1", "localhost", "::1"):
+        if os.environ.get("VIRTU_ALLOW_REMOTE_BIND") != "1":
+            raise SystemExit(
+                "拒绝绑定非回环地址 %s：需要显式设置 VIRTU_ALLOW_REMOTE_BIND=1，"
+                "并通过 VIRTU_SERVING_TOKEN 配置服务令牌。" % host)
+        ensure_service_token("serving", "VIRTU_SERVING_TOKEN")
+        logging.getLogger(__name__).warning(
+            "Serving 绑定到非回环地址 %s:%s，请确认前面有可信网络边界。", host, port)
+    uvicorn.run("virtu_omni.serving.server:app", host=host, port=port, reload=False)

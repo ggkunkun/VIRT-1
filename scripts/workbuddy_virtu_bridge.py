@@ -17,6 +17,7 @@ import threading
 from http.server import HTTPServer, BaseHTTPRequestHandler
 from socketserver import ThreadingMixIn
 from typing import Any, Dict, List
+from urllib.parse import parse_qs, urlsplit
 
 # Add workspace to path
 WORKSPACE_DIR = r"D:\Virtu模型"
@@ -47,6 +48,7 @@ from bridges.software_registry import diagnose_all
 from bridges.tool_calling_specs import get_cadcam_tool_definitions, execute_tool_call
 from bridges.bridge_security import bearer_authorized, path_allowed, SingleFlight, ensure_bridge_token
 from virtu_omni.serving.deception_gate import gate_answer
+from virtu_omni.runtime import trace as _runtime_trace
 
 MODEL_ID = "virtu-cad-cam-10b"
 MODEL_NAME = "Virtu local bridge (Qwen3-8B text backend; separate vision channel)"
@@ -71,71 +73,45 @@ working_memory = get_working_memory(
 )
 memory_sentinel = LongTaskHallucinationSentinel(working_memory)
 
+
+def _inject_hindsight_anchor(conv: list, user_prompt: str, max_chars: int = 1400) -> list:
+    """Inject read-only Hindsight + coordinate isolation anchor into system context."""
+    prompt_text = (user_prompt or "").strip()
+    if not prompt_text:
+        return conv
+    try:
+        ctx = hindsight_memory.build_domain_memory_context(
+            query=prompt_text,
+            bank_ids=["virtu_cad_cam", "virtu_cnc_machining", "virtu_quality_audit", "default"],
+            max_items=3,
+            update_stats=False,
+            include_invariants=True,
+            max_chars=max_chars,
+        )
+    except Exception:
+        ctx = ""
+    if not ctx:
+        return conv
+    block = f"<HINDSIGHT_MEMORY_ANCHOR>\n{ctx}\n</HINDSIGHT_MEMORY_ANCHOR>"
+    updated = [dict(m) for m in conv]
+    if updated and updated[0].get("role") == "system":
+        cur = str(updated[0].get("content", ""))
+        if "<HINDSIGHT_MEMORY_ANCHOR>" not in cur:
+            updated[0]["content"] = (cur + "\n\n" + block).strip() if cur.strip() else block
+    else:
+        updated.insert(0, {"role": "system", "content": block})
+    return updated
+
 # Bridge authentication and app-exclusive execution guards
 _BRIDGE_TOKEN = None
 _MAX_REQUEST_BYTES = 16 * 1024 * 1024
-_PUBLIC_GET_PATHS = {
-    "/", "/health", "/healthz", "/v1/models", "/models", "/api/v1/models",
-    "/v1/reach/channels", "/reach/channels",
-    "/v1/ai-scratch/curriculum", "/ai-scratch/curriculum", "/v1/ai-scratch/overview",
-    "/v1/ai-scratch/diagnostic", "/ai-scratch/diagnostic",
-    "/v1/paperclip/dashboard", "/paperclip/dashboard",
-    "/v1/paperclip/tasks", "/paperclip/tasks",
-    "/v1/paperclip/org", "/paperclip/org",
-    "/v1/context-mode/dashboard", "/context-mode/dashboard",
-    "/v1/context-mode/doctor", "/context-mode/doctor",
-    "/v1/rea/status", "/rea/status",
-    "/v1/plugins/status", "/plugins/status",
-    "/v1/plugins/marketplace", "/plugins/marketplace",
-    "/v1/plugins/list", "/plugins/list",
-    "/v1/computer-use/status", "/computer-use/status",
-    "/v1/computer-use/summary", "/computer-use/summary",
-    "/v1/computer-use/windows", "/computer-use/windows",
-    "/v1/hindsight/status", "/hindsight/status",
-    "/v1/security-audit", "/security-audit",
-    "/v1/harness2/status", "/harness2/status",
-    "/v1/cad/parametric-slider", "/cad/parametric-slider",
-    "/v1/cadcam/preflight", "/api/preflight", "/cadcam/preflight",
-    "/v1/cadcam/tools", "/api/tools", "/cadcam/tools",
-    "/v1/memory/working-memory/status", "/memory/working-memory/status",
-    "/v1/working-memory/status", "/working-memory/status",
-    "/v1/super-agent/architecture", "/super-agent/architecture",
-    "/v1/sleep/status", "/sleep/status", "/v1/virtu/sleep/status",
-    "/v1/deepmind/status", "/deepmind/status", "/v1/virtu/deepmind/status",
-    "/v1/frontier/status", "/frontier/status", "/v1/virtu/frontier/status",
-    "/v1/ultimate/status", "/ultimate/status", "/v1/virtu/ultimate/status",
-}
+_PUBLIC_GET_PATHS = {"/", "/health", "/healthz"}
+_TRUSTED_CORS_ORIGINS = frozenset({
+    "http://localhost", "http://127.0.0.1",
+    "http://localhost:3000", "http://127.0.0.1:3000",
+    "http://localhost:5173", "http://127.0.0.1:5173",
+})
 
-_PUBLIC_POST_PATHS = {
-    "/v1/super-agent/solve", "/super-agent/solve",
-    "/v1/reach/search", "/reach/search",
-    "/v1/reach/read", "/reach/read",
-    "/v1/ai-scratch/first-principles/autograd", "/ai-scratch/first-principles/autograd",
-    "/v1/ai-scratch/tutor/placement", "/ai-scratch/tutor/placement",
-    "/v1/context-mode/session/event", "/context-mode/session/event",
-    "/v1/context-mode/session/search", "/context-mode/session/search",
-    "/v1/context-mode/execute", "/context-mode/execute",
-    "/v1/paperclip/task/dispatch", "/paperclip/task/dispatch",
-    "/v1/paperclip/heartbeat/trigger", "/paperclip/heartbeat/trigger",
-    "/v1/paperclip/approval/decide", "/paperclip/approval/decide",
-    "/v1/hindsight/retain", "/hindsight/retain",
-    "/v1/hindsight/recall", "/hindsight/recall",
-    "/v1/hindsight/reflect", "/hindsight/reflect",
-    "/v1/memory/working-memory/update", "/memory/working-memory/update",
-    "/v1/memory/working-memory/reset", "/memory/working-memory/reset",
-    "/v1/memory/working-memory/compact", "/memory/working-memory/compact",
-    "/v1/sleep/trigger", "/sleep/trigger", "/v1/virtu/sleep/trigger",
-    "/v1/deepmind/funsearch/evolve", "/deepmind/funsearch/evolve",
-    "/v1/deepmind/geometry/solve", "/deepmind/geometry/solve",
-    "/v1/deepmind/affordance/check", "/deepmind/affordance/check",
-    "/v1/deepmind/mcts/plan", "/deepmind/mcts/plan",
-    "/v1/frontier/rlvr/evaluate", "/frontier/rlvr/evaluate",
-    "/v1/frontier/prm/audit", "/frontier/prm/audit",
-    "/v1/frontier/brep/compile", "/frontier/brep/compile",
-    "/v1/ultimate/quiet-star/heal", "/ultimate/quiet-star/heal",
-    "/v1/ultimate/blueprint/ground", "/ultimate/blueprint/ground",
-    "/v1/ultimate/pinn/predict", "/ultimate/pinn/predict",
-}
 _app_lock_token = None
 _app_lock = SingleFlight()
 
@@ -329,7 +305,10 @@ class OpenAIBaseHandler(BaseHTTPRequestHandler):
             self.close_connection = True
 
     def _send_cors_headers(self):
-        self.send_header("Access-Control-Allow-Origin", "*")
+        origin = self.headers.get("Origin", "")
+        if origin in _TRUSTED_CORS_ORIGINS:
+            self.send_header("Access-Control-Allow-Origin", origin)
+            self.send_header("Vary", "Origin")
         self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
         self.send_header("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Requested-With")
 
@@ -344,13 +323,36 @@ class OpenAIBaseHandler(BaseHTTPRequestHandler):
         return False
 
     def do_OPTIONS(self):
+        origin = self.headers.get("Origin", "")
+        if origin not in _TRUSTED_CORS_ORIGINS:
+            self._send_raw_json({"error": {"message": "Untrusted Origin", "type": "cors_error"}}, status=403)
+            return
+        requested_method = self.headers.get("Access-Control-Request-Method", "").upper()
+        if requested_method not in {"GET", "POST"}:
+            self._send_raw_json({"error": {"message": "Unsupported CORS method", "type": "cors_error"}}, status=403)
+            return
+        if not self._authorized_cors_preflight():
+            return
         self.send_response(200)
         self._send_cors_headers()
         self.end_headers()
 
+    def _authorized_cors_preflight(self):
+        requested_headers = {
+            header.strip().lower()
+            for header in self.headers.get("Access-Control-Request-Headers", "").split(",")
+            if header.strip()
+        }
+        allowed_headers = {"content-type", "authorization", "x-requested-with"}
+        if not requested_headers.issubset(allowed_headers):
+            self._send_raw_json({"error": {"message": "Unsupported CORS header", "type": "cors_error"}}, status=403)
+            return False
+        return True
+
     def do_GET(self):
         clean_path = self.path.split("?")[0].rstrip("/")
-        if clean_path not in _PUBLIC_GET_PATHS and not self._require_auth():
+        query_params = parse_qs(urlsplit(self.path).query)
+        if clean_path not in {"/", "/health", "/healthz"} and not self._require_auth():
             return
         if clean_path in ["/v1/models", "/models", "/api/v1/models"]:
             try:
@@ -683,7 +685,7 @@ class OpenAIBaseHandler(BaseHTTPRequestHandler):
         self._gate_prompt = ""
         self._gate_evidence = None
         clean_path = self.path.split("?")[0].rstrip("/")
-        if clean_path not in _PUBLIC_POST_PATHS and not self._require_auth():
+        if not self._require_auth():
             return
         try:
             content_length = int(self.headers.get("Content-Length", "0"))
@@ -694,6 +696,7 @@ class OpenAIBaseHandler(BaseHTTPRequestHandler):
             self._send_raw_json({"error": {"message": "Request body exceeds allowed size", "type": "invalid_request_error"}}, status=413)
             return
         body = self.rfile.read(content_length) if content_length else b"{}"
+        self._request_body_consumed = True
         old_rfile = self.rfile
         self.rfile = io.BytesIO(body)
         requires_lock = clean_path in {
@@ -1811,16 +1814,6 @@ class OpenAIBaseHandler(BaseHTTPRequestHandler):
             if self.headers.get("X-Auto-Execute-Tools", "").lower() in ("true", "1", "yes"):
                 auto_execute = True
 
-            if has_tool_context:
-                tool_resp = self._handle_tool_orchestration(
-                    messages, tools, auto_execute=auto_execute,
-                    max_tokens=max_tokens, temperature=temperature)
-                if stream:
-                    self._handle_streaming_tool_response(tool_resp)
-                else:
-                    self._send_raw_json(tool_resp)
-                return
-
             # Robust user prompt extraction (handling str, list of blocks, dicts)
             user_prompt = ""
             if messages:
@@ -1834,9 +1827,40 @@ class OpenAIBaseHandler(BaseHTTPRequestHandler):
                 user_prompt = self._extract_text(prompt)
             self._gate_prompt = user_prompt
 
+            # --- P1 runtime governance: trace root span + prompt-injection audit ---
+            # 主分支与工具编排分支均强制经过提示注入审计（消除工具编排旁路缺口）
+            _runtime_trace.start_run()
+            with _runtime_trace.span(_runtime_trace.THOUGHT, event="chat.prompt_audit") as _root_span:
+                _audit = security_auditor.audit_prompt_injection(user_prompt)
+                if not _audit["passed"]:
+                    _root_span.fail("prompt injection rejected", status="rejected")
+                    # Explicit rejection: never disguise an audited violation as a normal answer.
+                    self._send_raw_json({
+                        "error": {
+                            "message": "Request rejected by prompt-injection audit: "
+                                       + "; ".join(_audit["detected_attacks"]),
+                            "type": "invalid_request_error",
+                        },
+                        "security_audit": _audit,
+                    }, status=400)
+                    return
+            _runtime_trace.emit(_runtime_trace.THOUGHT, "chat.prompt_accepted",
+                                audit_risk=_audit["risk_level"])
+
+            if has_tool_context:
+                tool_resp = self._handle_tool_orchestration(
+                    messages, tools, auto_execute=auto_execute,
+                    max_tokens=max_tokens, temperature=temperature)
+                if stream:
+                    self._handle_streaming_tool_response(tool_resp)
+                else:
+                    self._send_raw_json(tool_resp)
+                return
+
             # Log incoming request
             print(f"[WorkBuddy-Bridge] POST {self.path} | Prompt: {user_prompt[:60]}... | Stream: {stream}")
 
+            _runtime_trace.emit(_runtime_trace.ACTION, "chat.backend_call", stream=stream)
             from virtu_real_backend import get_backend
             backend = get_backend()
             if backend is None or not backend.available:
@@ -1850,7 +1874,8 @@ class OpenAIBaseHandler(BaseHTTPRequestHandler):
             if not conv or conv[-1]["role"] != "user":
                 conv.append({"role": "user", "content": user_prompt})
 
-            # Auto-sync working memory and inject working memory zone for long tasks
+            # Inject read-only Hindsight/coordinate anchor and auto-sync working memory
+            conv = _inject_hindsight_anchor(conv, user_prompt)
             working_memory.auto_sync_from_messages(conv)
             if len(conv) >= 3 or working_memory.facts or (working_memory.goal and working_memory.goal.invariants):
                 conv = working_memory.compact_context(conv, max_turns_to_keep=6)
@@ -1860,21 +1885,41 @@ class OpenAIBaseHandler(BaseHTTPRequestHandler):
                 think_param = data.get("enable_thinking")
             if think_param is None and isinstance(data.get("thinking"), dict):
                 think_param = data.get("thinking", {}).get("type") in ("enabled", "auto")
+            grounded_flag = data.get("grounded") if isinstance(data.get("grounded"), bool) else None
 
             if stream:
                 self._handle_live_streaming_response(
-                    backend, conv, max_tokens=max_tokens, temperature=temperature, think=think_param
+                    backend, conv, max_tokens=max_tokens, temperature=temperature,
+                    think=think_param, grounded_flag=grounded_flag,
                 )
             else:
-                if think_param is not None:
+                grounded_res = _run_grounded_chat(
+                    backend, conv, user_prompt,
+                    max_tokens=max_tokens, temperature=temperature,
+                    think_param=think_param, request_flag=grounded_flag,
+                )
+                grounding_meta = None
+                if grounded_res is not None:
+                    response_text = grounded_res.get("content")
+                    grounding_meta = grounded_res.get("grounding")
+                elif think_param is not None:
                     response_text = backend.generate(conv, max_tokens=max_tokens, temperature=temperature, think=think_param)
                 else:
                     response_text = backend.generate(conv, max_tokens=max_tokens, temperature=temperature)
                 if not response_text:
                     raise RuntimeError("模型输出为空")
                 self._served_model = backend.identity()
-                thought = getattr(backend, "last_thought", "") or ""
-                self._handle_json_response(response_text, reasoning_text=thought)
+                # 私有思维留在服务端：_handle_json_response 在调用方显式传入
+                # reasoning_text 时仍可序列化（调试/显式展示场景），但正常 chat
+                # 路径不得把 backend.last_thought 转发给客户端。
+                _runtime_trace.emit(_runtime_trace.OBSERVATION, "chat.response_ready",
+                                    length=len(response_text))
+                _runtime_trace.emit(_runtime_trace.VERIFICATION, "chat.response_serve")
+                self._handle_json_response(
+                    response_text,
+                    evidence=_grounded_evidence(grounding_meta),
+                    grounding=grounding_meta,
+                )
         except Exception as err:
             print(f"[WorkBuddy-Bridge] completion failed: {type(err).__name__}: {err}")
             status = _error_http_status(err)
@@ -1930,12 +1975,56 @@ class OpenAIBaseHandler(BaseHTTPRequestHandler):
             return blocks
         return " ".join(b["text"] for b in blocks).strip()
 
+    def _drain_unread_request_body(self):
+        """排空未读的请求体，避免 Windows 因未读数据直接 close() 而发 RST。
+
+        客户端 POST 带 body、服务端在鉴权/长度校验阶段就提前回 4xx 时，
+        若请求体还留在内核接收队列里，close() 会触发 TCP RST，客户端读到的是
+        ``ConnectionAbortedError [WinError 10053]`` 而不是 401/413。此前
+        ``BoundedThreadingHTTPServer`` 的 503 路径已用同样的「先排空再回」修掉，
+        这里是同一类问题在普通 handler 上的补漏。
+        """
+        if getattr(self, "_request_body_consumed", False):
+            return
+        if self.command not in ("POST", "PUT", "PATCH"):
+            return
+        try:
+            length = int(self.headers.get("Content-Length", "0") or 0)
+        except (TypeError, ValueError):
+            length = 0
+        if length <= 0:
+            return
+        length = min(length, _MAX_REQUEST_BYTES)
+        prev_timeout = self.connection.gettimeout()
+        try:
+            self.connection.settimeout(0.3)
+            remaining = length
+            while remaining > 0:
+                chunk = self.rfile.read(min(remaining, 8192))
+                if not chunk:
+                    break
+                remaining -= len(chunk)
+        except (OSError, ValueError):
+            pass
+        finally:
+            try:
+                self.connection.settimeout(prev_timeout)
+            except OSError:
+                pass
+
     def _send_raw_json(self, payload: dict, status: int = 200):
+        body = json.dumps(payload, ensure_ascii=False).encode("utf-8")
+        if status >= 400:
+            self._drain_unread_request_body()
         self.send_response(status)
         self.send_header("Content-Type", "application/json; charset=utf-8")
+        # 提前返回的 4xx 必须给出确定长度：否则客户端只能靠连接关闭判断结束，
+        # 一旦对端 RST 就连状态码都读不到。
+        if status >= 400:
+            self.send_header("Content-Length", str(len(body)))
         self._send_cors_headers()
         self.end_headers()
-        self.wfile.write(json.dumps(payload, ensure_ascii=False).encode("utf-8"))
+        self.wfile.write(body)
 
     def _handle_tool_orchestration(self, messages: list, tools: list, auto_execute: bool = False,
                                    max_tokens=None, temperature=None) -> dict:
@@ -2097,6 +2186,7 @@ class OpenAIBaseHandler(BaseHTTPRequestHandler):
             raise RuntimeError(f"后端大模型未就绪: {getattr(backend, 'error', '无法连接模型服务')}")
         self._served_model = backend.identity()
 
+        conv = _inject_hindsight_anchor(conv, user_prompt)
         gen_out = backend.generate(conv, tools=tools, max_tokens=max_tokens,
                                    temperature=temperature)
         if isinstance(gen_out, tuple):
@@ -2165,7 +2255,6 @@ class OpenAIBaseHandler(BaseHTTPRequestHandler):
                 if not isinstance(synth_text, str) or not synth_text.strip():
                     raise RuntimeError("Model returned an empty post-tool summary")
                 self._served_model = backend.identity()
-                synth_thought = getattr(backend, "last_thought", "") or ""
                 synth_decision = self._gate_text(synth_text, evidence=exec_results)
                 synth_msg = {
                     "role": "assistant",
@@ -2173,8 +2262,6 @@ class OpenAIBaseHandler(BaseHTTPRequestHandler):
                     "tool_calls": normalized_calls,
                     "tool_results": exec_results,
                 }
-                if synth_thought:
-                    synth_msg["reasoning_content"] = synth_thought
                 self._served_model = backend.identity()
                 return _attach_usage({
                     "id": req_id,
@@ -2190,14 +2277,11 @@ class OpenAIBaseHandler(BaseHTTPRequestHandler):
                     }],
                 })
 
-            pre_thought = getattr(backend, "last_thought", "") or ""
             pre_msg = {
                 "role": "assistant",
                 "content": content_text or "",
                 "tool_calls": normalized_calls
             }
-            if pre_thought:
-                pre_msg["reasoning_content"] = pre_thought
             return _attach_usage({
                 "id": req_id,
                 "object": "chat.completion",
@@ -2211,14 +2295,11 @@ class OpenAIBaseHandler(BaseHTTPRequestHandler):
                 }],
             })
         else:
-            no_tool_thought = getattr(backend, "last_thought", "") or ""
             no_tool_decision = self._gate_text(content_text or "", evidence=None)
             no_tool_msg = {
                 "role": "assistant",
                 "content": no_tool_decision.text
             }
-            if no_tool_thought:
-                no_tool_msg["reasoning_content"] = no_tool_thought
             return _attach_usage({
                 "id": req_id,
                 "object": "chat.completion",
@@ -2239,15 +2320,25 @@ class OpenAIBaseHandler(BaseHTTPRequestHandler):
         if working_memory.facts or (working_memory.goal and working_memory.goal.invariants):
             _, audited_text, _ = memory_sentinel.audit_and_repair(audited_text, auto_repair=True)
 
+        canaries = None
+        try:
+            from virtu_real_backend import get_backend
+            backend = get_backend()
+            if backend is not None:
+                canaries = backend.system_canaries()
+        except Exception:
+            canaries = None
+
         return gate_answer(
             audited_text,
             prompt=getattr(self, "_gate_prompt", "") or "",
             evidence=evidence if evidence is not None else getattr(self, "_gate_evidence", None),
             done_reason=done_reason,
+            canaries=canaries,
         )
 
     def _handle_json_response(self, text: str, reasoning_text: str = "", evidence=None,
-                              done_reason=None):
+                              done_reason=None, grounding=None):
         decision = self._gate_text(text, evidence=evidence, done_reason=done_reason)
         text = decision.text
         self.send_response(200)
@@ -2263,7 +2354,7 @@ class OpenAIBaseHandler(BaseHTTPRequestHandler):
         if reasoning_text:
             msg["reasoning_content"] = reasoning_text
 
-        resp = _attach_usage({
+        payload_obj = {
             "id": f"chatcmpl-{uuid.uuid4().hex[:12]}",
             "object": "chat.completion",
             "created": created,
@@ -2277,10 +2368,21 @@ class OpenAIBaseHandler(BaseHTTPRequestHandler):
                     "finish_reason": "length" if decision.action == "incomplete" else "stop"
                 }
             ],
-        })
+        }
+        if grounding is not None:
+            payload_obj["virtu_grounding"] = grounding
+        resp = _attach_usage(payload_obj)
         self.wfile.write(json.dumps(resp, ensure_ascii=False).encode("utf-8"))
 
-    def _handle_streaming_response(self, text: str, reasoning_text: str = ""):
+    def _handle_streaming_response(self, text: str, reasoning_text: str = "",
+                                   expose_reasoning: bool = False):
+        """Legacy SSE helper.
+
+        Private model reasoning is **not** serialized by default. Callers that
+        intentionally surface the thinking trace (e.g. a debug console) must opt
+        in with ``expose_reasoning=True``; this keeps the helper consistent with
+        ``_handle_live_streaming_response``, which already drops it.
+        """
         self.send_response(200)
         self.send_header("Content-Type", "text/event-stream; charset=utf-8")
         self.send_header("Cache-Control", "no-cache")
@@ -2292,26 +2394,25 @@ class OpenAIBaseHandler(BaseHTTPRequestHandler):
         created = int(time.time())
 
         try:
-            chunk_size = 40
-            # Stream reasoning / thinking chunk progressively if present
-            if reasoning_text:
-                for i in range(0, len(reasoning_text), chunk_size):
-                    r_payload = {
-                        "id": req_id,
-                        "object": "chat.completion.chunk",
-                        "created": created,
-                        "model": MODEL_ID,
-                        "served_model": getattr(self, "_served_model", None),
-                        "choices": [
-                            {
-                                "index": 0,
-                                "delta": {"reasoning_content": reasoning_text[i:i + chunk_size]},
-                                "finish_reason": None
-                            }
-                        ]
-                    }
-                    self.wfile.write(f"data: {json.dumps(r_payload, ensure_ascii=False)}\n\n".encode("utf-8"))
-                    self.wfile.flush()
+            # Reasoning chain first (DeepSeek/Qwen OpenAI-compatible convention),
+            # then the visible content chunks. Only on explicit opt-in.
+            if reasoning_text and expose_reasoning:
+                r_payload = {
+                    "id": req_id,
+                    "object": "chat.completion.chunk",
+                    "created": created,
+                    "model": MODEL_ID,
+                    "served_model": getattr(self, "_served_model", None),
+                    "choices": [
+                        {
+                            "index": 0,
+                            "delta": {"reasoning_content": reasoning_text},
+                            "finish_reason": None
+                        }
+                    ]
+                }
+                self.wfile.write(f"data: {json.dumps(r_payload, ensure_ascii=False)}\n\n".encode("utf-8"))
+                self.wfile.flush()
 
             # Chunk response into small parts
             chunk_size = 40
@@ -2355,7 +2456,8 @@ class OpenAIBaseHandler(BaseHTTPRequestHandler):
         except (ConnectionResetError, BrokenPipeError, ConnectionAbortedError) as conn_err:
             print(f"[WorkBuddy-Bridge] Client disconnected during SSE streaming: {conn_err}")
 
-    def _handle_live_streaming_response(self, backend, conv, max_tokens=None, temperature=None, think=None):
+    def _handle_live_streaming_response(self, backend, conv, max_tokens=None, temperature=None,
+                                        think=None, grounded_flag=None):
         self.send_response(200)
         self.send_header("Content-Type", "text/event-stream; charset=utf-8")
         self.send_header("Cache-Control", "no-cache")
@@ -2379,46 +2481,48 @@ class OpenAIBaseHandler(BaseHTTPRequestHandler):
         self.wfile.flush()
 
         content_parts: list[str] = []
+        grounding_meta = None
         try:
-            if hasattr(backend, "generate_stream"):
-                gen = backend.generate_stream(conv, max_tokens=max_tokens, temperature=temperature, think=think)
+            grounded_res = _run_grounded_chat(
+                backend, conv, getattr(self, "_gate_prompt", "") or "",
+                max_tokens=max_tokens, temperature=temperature,
+                think_param=think, request_flag=grounded_flag,
+            )
+            if grounded_res is not None:
+                grounding_meta = grounded_res.get("grounding")
+                raw_text = grounded_res.get("content")
+                if not raw_text:
+                    raise RuntimeError("模型输出为空")
+                self._served_model = backend.identity()
+                decision = self._gate_text(raw_text, evidence=_grounded_evidence(grounding_meta))
             else:
-                full_text = backend.generate(conv, max_tokens=max_tokens, temperature=temperature, think=think)
-                thought = getattr(backend, "last_thought", "") or ""
-                gen = []
-                if thought:
-                    gen.append({"type": "thinking", "delta": thought})
-                if full_text:
-                    gen.append({"type": "content", "delta": full_text})
+                if hasattr(backend, "generate_stream"):
+                    gen = backend.generate_stream(conv, max_tokens=max_tokens, temperature=temperature, think=think)
+                else:
+                    full_text = backend.generate(conv, max_tokens=max_tokens, temperature=temperature, think=think)
+                    thought = getattr(backend, "last_thought", "") or ""
+                    gen = []
+                    if thought:
+                        gen.append({"type": "thinking", "delta": thought})
+                    if full_text:
+                        gen.append({"type": "content", "delta": full_text})
 
-            for item in gen:
-                if not isinstance(item, dict):
-                    continue
-                itype = item.get("type")
-                delta_str = item.get("delta") or ""
-                if not delta_str:
-                    continue
-                if itype == "thinking":
-                    payload = {
-                        "id": req_id,
-                        "object": "chat.completion.chunk",
-                        "created": created,
-                        "model": MODEL_ID,
-                        "served_model": getattr(self, "_served_model", None),
-                        "choices": [{
-                            "index": 0,
-                            "delta": {"reasoning_content": delta_str},
-                            "finish_reason": None,
-                        }],
-                    }
-                    self.wfile.write(f"data: {json.dumps(payload, ensure_ascii=False)}\n\n".encode("utf-8"))
-                    self.wfile.flush()
-                elif itype == "content":
-                    # Buffer the visible answer: a deceptive answer must be gated
-                    # before any of it reaches the client.  Thinking stays live.
-                    content_parts.append(delta_str)
+                for item in gen:
+                    if not isinstance(item, dict):
+                        continue
+                    itype = item.get("type")
+                    delta_str = item.get("delta") or ""
+                    if not delta_str:
+                        continue
+                    if itype == "thinking":
+                        # Private model reasoning is never included in client output.
+                        continue
+                    elif itype == "content":
+                        # Buffer the visible answer: a deceptive answer must be gated
+                        # before any of it reaches the client.  Thinking stays live.
+                        content_parts.append(delta_str)
 
-            decision = self._gate_text("".join(content_parts))
+                decision = self._gate_text("".join(content_parts))
             safe_text = decision.text
             for i in range(0, len(safe_text), 40):
                 payload = {
@@ -2437,7 +2541,7 @@ class OpenAIBaseHandler(BaseHTTPRequestHandler):
                 self.wfile.flush()
 
             # End chunk
-            end_payload = _attach_usage({
+            end_obj = {
                 "id": req_id,
                 "object": "chat.completion.chunk",
                 "created": created,
@@ -2449,7 +2553,10 @@ class OpenAIBaseHandler(BaseHTTPRequestHandler):
                     "delta": {},
                     "finish_reason": "length" if decision.action == "incomplete" else "stop",
                 }],
-            })
+            }
+            if grounding_meta is not None:
+                end_obj["virtu_grounding"] = grounding_meta
+            end_payload = _attach_usage(end_obj)
             self.wfile.write(f"data: {json.dumps(end_payload, ensure_ascii=False)}\n\n".encode("utf-8"))
             self.wfile.write(b"data: [DONE]\n\n")
             self.wfile.flush()
@@ -2483,27 +2590,21 @@ class OpenAIBaseHandler(BaseHTTPRequestHandler):
         content = msg.get("content", "")
 
         try:
-            # 1. Progressive reasoning chunk
-            reasoning_text = msg.get("reasoning_content") or "正在深度协同 CAD/CAM 工业智能工具与调度网桥..."
-            chunk_size = 40
-            for i in range(0, len(reasoning_text), chunk_size):
-                r_payload = {
-                    "id": req_id,
-                    "object": "chat.completion.chunk",
-                    "created": created,
-                    "model": MODEL_ID,
-                    "served_model": getattr(self, "_served_model", None),
-                    "choices": [{
-                        "index": 0,
-                        "delta": {
-                            "role": "assistant",
-                            "reasoning_content": reasoning_text[i:i + chunk_size]
-                        },
-                        "finish_reason": None
-                    }]
-                }
-                self.wfile.write(f"data: {json.dumps(r_payload, ensure_ascii=False)}\n\n".encode("utf-8"))
-                self.wfile.flush()
+            # 1. Declare the assistant role without exposing private reasoning.
+            role_payload = {
+                "id": req_id,
+                "object": "chat.completion.chunk",
+                "created": created,
+                "model": MODEL_ID,
+                "served_model": getattr(self, "_served_model", None),
+                "choices": [{
+                    "index": 0,
+                    "delta": {"role": "assistant"},
+                    "finish_reason": None
+                }]
+            }
+            self.wfile.write(f"data: {json.dumps(role_payload, ensure_ascii=False)}\n\n".encode("utf-8"))
+            self.wfile.flush()
 
             # 2. Content chunks if content exists
             if content:

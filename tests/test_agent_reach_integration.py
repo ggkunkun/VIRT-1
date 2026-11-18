@@ -17,6 +17,7 @@ import time
 import unittest
 import urllib.request
 from pathlib import Path
+from unittest.mock import patch
 
 WORKSPACE_DIR = Path(__file__).resolve().parent.parent
 if str(WORKSPACE_DIR) not in sys.path:
@@ -74,23 +75,32 @@ class TestAgentReachIntegration(unittest.TestCase):
 
     def test_bridge_reach_endpoints(self):
         """Verify WorkBuddy Bridge REST API endpoints (/v1/reach/*)."""
-        test_port = 8012
-        bridge._BRIDGE_TOKEN = "test-token-" + "x" * 48
-        server = ThreadingServer(("127.0.0.1", test_port), OpenAIBaseHandler)
+        # patch.object 而非直接赋值：假 token 不能留在模块全局里，否则后续
+        # 「无 token 必须 401」的用例会被它污染（2026-11-13 全量跑实测过一次）
+        token_patch = patch.object(bridge, "_BRIDGE_TOKEN", "test-token-" + "x" * 48)
+        token_patch.start()
+        self.addCleanup(token_patch.stop)
+        server = ThreadingServer(("127.0.0.1", 0), OpenAIBaseHandler)
+        test_port = server.server_address[1]
         t = threading.Thread(target=server.serve_forever, daemon=True)
         t.start()
-        time.sleep(0.4)
+        time.sleep(0.1)
 
         try:
+            token = bridge._BRIDGE_TOKEN or ensure_bridge_token()
+            headers = {"Content-Type": "application/json", "Authorization": f"Bearer {token}"}
+
             # 1. GET /v1/reach/channels
-            with urllib.request.urlopen(f"http://127.0.0.1:{test_port}/v1/reach/channels") as resp:
+            ch_req = urllib.request.Request(
+                f"http://127.0.0.1:{test_port}/v1/reach/channels",
+                headers=headers,
+            )
+            with urllib.request.urlopen(ch_req) as resp:
                 data = json.loads(resp.read().decode("utf-8"))
                 self.assertTrue(data.get("ok"))
                 self.assertGreaterEqual(data.get("count", 0), 7)
 
             # 2. POST /v1/reach/search
-            token = bridge._BRIDGE_TOKEN or ensure_bridge_token()
-            headers = {"Content-Type": "application/json", "Authorization": f"Bearer {token}"}
             search_req = urllib.request.Request(
                 f"http://127.0.0.1:{test_port}/v1/reach/search",
                 data=json.dumps({
@@ -122,6 +132,7 @@ class TestAgentReachIntegration(unittest.TestCase):
 
         finally:
             server.shutdown()
+            server.server_close()
 
 
 if __name__ == "__main__":

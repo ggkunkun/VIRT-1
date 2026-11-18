@@ -1,0 +1,450 @@
+{
+ "generated": "2026-11-13T21:17:53",
+ "note": "sha256 of every benchmark jsonl; verify before starting a leg",
+ "files": {
+  "data/benchmark/one_sentence_cad_drawing_assembly_blind_test.jsonl": {
+   "sha256": "50abb42f594111883c63d3cdcdf75fb509102df6699465d746a77526316bcd9e",
+   "bytes": 10989,
+   "mtime": "2026-10-29T15:02:46",
+   "lines": 4
+  },
+  "data/benchmark/virtu_blind_test_v1/boundary.jsonl": {
+   "sha256": "b8eae14001bf7a9f60cc6c218956eb9a731ef8c94c1cac02bcbbf715f1ded1f6",
+   "bytes": 65336,
+   "mtime": "2026-11-07T22:40:25",
+   "lines": 60
+  },
+  "data/benchmark/virtu_blind_test_v1/generalization.jsonl": {
+   "sha256": "6ae20caf6a161b951fb4ea46117db82a3788b7ac5f26e2dadfc7c1aca7289f0a",
+   "bytes": 42174,
+   "mtime": "2026-11-07T22:40:25",
+   "lines": 60
+  },
+  "data/benchmark/virtu_blind_test_v1/generation.jsonl": {
+   "sha256": "99441e5138523047967732740b0c9c2be39189b58ecfa46421d2a94cb33e79c5",
+   "bytes": 53068,
+   "mtime": "2026-11-07T22:40:25",
+   "lines": 60
+  },
+  "data/benchmark/virtu_blind_test_v1/instruction.jsonl": {
+   "sha256": "e18fcd07585e5a164890a150a5ff8f9c8fc12b83897deabec8bcd62a5e143138",
+   "bytes": 48160,
+   "mtime": "2026-11-07T22:40:25",
+   "lines": 60
+  },
+  "data/benchmark/virtu_blind_test_v1/knowledge.jsonl": {
+   "sha256": "b34bcf6370f0427e0ac65f73407eb4cdf88b38ba552c1c7622ce6b04fba0c8cb",
+   "bytes": 46260,
+   "mtime": "2026-11-07T22:40:25",
+   "lines": 60
+  },
+  "data/benchmark/virtu_blind_test_v1/reasoning.jsonl": {
+   "sha256": "3608a70001700db7acbc86a19e6a46e839ac74baa3f86a3cd2c2b1468b412188",
+   "bytes": 40197,
+   "mtime": "2026-11-07T22:40:25",
+   "lines": 60
+  },
+  "data/benchmark/virtu_blind_test_v1/toolcall.jsonl": {
+   "sha256": "4a7e92ebfbf69448b57aed030df2bfd4a01c32e5d6256d6121232f526fb39284",
+   "bytes": 58215,
+   "mtime": "2026-11-07T22:40:25",
+   "lines": 60
+  },
+  "data/benchmark/virtu_blind_test_v2/boundary.jsonl": {
+   "sha256": "b8eae14001bf7a9f60cc6c218956eb9a731ef8c94c1cac02bcbbf715f1ded1f6",
+   "bytes": 65336,
+   "mtime": "2026-11-07T23:06:51",
+   "lines": 60
+  },
+  "data/benchmark/virtu_blind_test_v2/generalization.jsonl": {
+   "sha256": "4ef58400bddbbf360864692757693f60dde7dd26dfaf1f2f4bfac3ded6c8a155",
+   "bytes": 42206,
+   "mtime": "2026-11-07T23:06:51",
+   "lines": 60
+  },
+  "data/benchmark/virtu_blind_test_v2/generation.jsonl": {
+   "sha256": "99441e5138523047967732740b0c9c2be39189b58ecfa46421d2a94cb33e79c5",
+   "bytes": 53068,
+   "mtime": "2026-11-07T23:06:51",
+   "lines": 60
+  },
+  "data/benchmark/virtu_blind_test_v2/instruction.jsonl": {
+   "sha256": "e18fcd07585e5a164890a150a5ff8f9c8fc12b83897deabec8bcd62a5e143138",
+   "bytes": 48160,
+   "mtime": "2026-11-07T23:06:51",
+   "lines": 60
+  },
+  "data/benchmark/virtu_blind_test_v2/knowledge.jsonl": {
+   "sha256": "b34bcf6370f0427e0ac65f73407eb4cdf88b38ba552c1c7622ce6b04fba0c8cb",
+   "bytes": 46260,
+   "mtime": "2026-11-07T23:06:51",
+   "lines": 60
+  },
+  "data/benchmark/virtu_blind_test_v2/reasoning.jsonl": {
+   "sha256": "8bdf5917686393ee3a0fff7affd7d32f5734f5c3fb3b91e890b3f9859f9b587a",
+   "bytes": 40200,
+   "mtime": "2026-11-07T23:06:51",
+   "lines": 60
+  },
+  "data/benchmark/virtu_blind_test_v2/toolcall.jsonl": {
+   "sha256": "4a7e92ebfbf69448b57aed030df2bfd4a01c32e5d6256d6121232f526fb39284",
+   "bytes": 58215,
+   "mtime": "2026-11-07T23:06:51",
+   "lines": 60
+  },
+  "data/benchmark/virtu_blind_test_v3/boundary.jsonl": {
+   "sha256": "b8eae14001bf7a9f60cc6c218956eb9a731ef8c94c1cac02bcbbf715f1ded1f6",
+   "bytes": 65336,
+   "mtime": "2026-11-08T00:59:25",
+   "lines": 60
+  },
+  "data/benchmark/virtu_blind_test_v3/generalization.jsonl": {
+   "sha256": "a9e601621f1e09961bbfc28604111eea4bb091d150ce4b8ac234ceba4e5aa56e",
+   "bytes": 42190,
+   "mtime": "2026-11-08T00:59:25",
+   "lines": 60
+  },
+  "data/benchmark/virtu_blind_test_v3/generation.jsonl": {
+   "sha256": "99441e5138523047967732740b0c9c2be39189b58ecfa46421d2a94cb33e79c5",
+   "bytes": 53068,
+   "mtime": "2026-11-08T00:59:25",
+   "lines": 60
+  },
+  "data/benchmark/virtu_blind_test_v3/instruction.jsonl": {
+   "sha256": "e18fcd07585e5a164890a150a5ff8f9c8fc12b83897deabec8bcd62a5e143138",
+   "bytes": 48160,
+   "mtime": "2026-11-08T00:59:25",
+   "lines": 60
+  },
+  "data/benchmark/virtu_blind_test_v3/knowledge.jsonl": {
+   "sha256": "b34bcf6370f0427e0ac65f73407eb4cdf88b38ba552c1c7622ce6b04fba0c8cb",
+   "bytes": 46260,
+   "mtime": "2026-11-08T00:59:25",
+   "lines": 60
+  },
+  "data/benchmark/virtu_blind_test_v3/reasoning.jsonl": {
+   "sha256": "750b7296c27f1035268ad8a880038e42cdc589d6a6b88ba5ff8b0332a121431c",
+   "bytes": 40190,
+   "mtime": "2026-11-08T00:59:25",
+   "lines": 60
+  },
+  "data/benchmark/virtu_blind_test_v3/toolcall.jsonl": {
+   "sha256": "4a7e92ebfbf69448b57aed030df2bfd4a01c32e5d6256d6121232f526fb39284",
+   "bytes": 58215,
+   "mtime": "2026-11-08T00:59:25",
+   "lines": 60
+  },
+  "data/benchmark/virtu_blind_test_v4/boundary.jsonl": {
+   "sha256": "b8eae14001bf7a9f60cc6c218956eb9a731ef8c94c1cac02bcbbf715f1ded1f6",
+   "bytes": 65336,
+   "mtime": "2026-11-08T11:12:28",
+   "lines": 60
+  },
+  "data/benchmark/virtu_blind_test_v4/generalization.jsonl": {
+   "sha256": "601be1c6a37ce2dbf01dc281d67712b661a0357562b82c797492c15edfcb4469",
+   "bytes": 42177,
+   "mtime": "2026-11-08T11:12:28",
+   "lines": 60
+  },
+  "data/benchmark/virtu_blind_test_v4/generation.jsonl": {
+   "sha256": "99441e5138523047967732740b0c9c2be39189b58ecfa46421d2a94cb33e79c5",
+   "bytes": 53068,
+   "mtime": "2026-11-08T11:12:28",
+   "lines": 60
+  },
+  "data/benchmark/virtu_blind_test_v4/instruction.jsonl": {
+   "sha256": "e18fcd07585e5a164890a150a5ff8f9c8fc12b83897deabec8bcd62a5e143138",
+   "bytes": 48160,
+   "mtime": "2026-11-08T11:12:28",
+   "lines": 60
+  },
+  "data/benchmark/virtu_blind_test_v4/knowledge.jsonl": {
+   "sha256": "b34bcf6370f0427e0ac65f73407eb4cdf88b38ba552c1c7622ce6b04fba0c8cb",
+   "bytes": 46260,
+   "mtime": "2026-11-08T11:12:28",
+   "lines": 60
+  },
+  "data/benchmark/virtu_blind_test_v4/reasoning.jsonl": {
+   "sha256": "e3edc0ff6decd6d9a31fc539544abee8897ee13d44f2c74c8d371a25f0bef677",
+   "bytes": 40194,
+   "mtime": "2026-11-08T11:12:28",
+   "lines": 60
+  },
+  "data/benchmark/virtu_blind_test_v4/toolcall.jsonl": {
+   "sha256": "4a7e92ebfbf69448b57aed030df2bfd4a01c32e5d6256d6121232f526fb39284",
+   "bytes": 58215,
+   "mtime": "2026-11-08T11:12:28",
+   "lines": 60
+  },
+  "data/benchmark/virtu_blind_test_v5/boundary.jsonl": {
+   "sha256": "b8eae14001bf7a9f60cc6c218956eb9a731ef8c94c1cac02bcbbf715f1ded1f6",
+   "bytes": 65336,
+   "mtime": "2026-11-08T11:31:52",
+   "lines": 60
+  },
+  "data/benchmark/virtu_blind_test_v5/generalization.jsonl": {
+   "sha256": "4b7e5a2ee0fd70b40f96cc0d20b0b0df163c8f70c52e3aac8c6799cdb50ec2c5",
+   "bytes": 42185,
+   "mtime": "2026-11-08T11:31:52",
+   "lines": 60
+  },
+  "data/benchmark/virtu_blind_test_v5/generation.jsonl": {
+   "sha256": "99441e5138523047967732740b0c9c2be39189b58ecfa46421d2a94cb33e79c5",
+   "bytes": 53068,
+   "mtime": "2026-11-08T11:31:52",
+   "lines": 60
+  },
+  "data/benchmark/virtu_blind_test_v5/instruction.jsonl": {
+   "sha256": "e18fcd07585e5a164890a150a5ff8f9c8fc12b83897deabec8bcd62a5e143138",
+   "bytes": 48160,
+   "mtime": "2026-11-08T11:31:52",
+   "lines": 60
+  },
+  "data/benchmark/virtu_blind_test_v5/knowledge.jsonl": {
+   "sha256": "b34bcf6370f0427e0ac65f73407eb4cdf88b38ba552c1c7622ce6b04fba0c8cb",
+   "bytes": 46260,
+   "mtime": "2026-11-08T11:31:52",
+   "lines": 60
+  },
+  "data/benchmark/virtu_blind_test_v5/reasoning.jsonl": {
+   "sha256": "b687f4e95522b469b7842d63fc8eb227b5639affb83b6e10de2bee92675ac557",
+   "bytes": 40193,
+   "mtime": "2026-11-08T11:31:52",
+   "lines": 60
+  },
+  "data/benchmark/virtu_blind_test_v5/toolcall.jsonl": {
+   "sha256": "4a7e92ebfbf69448b57aed030df2bfd4a01c32e5d6256d6121232f526fb39284",
+   "bytes": 58215,
+   "mtime": "2026-11-08T11:31:52",
+   "lines": 60
+  },
+  "data/benchmark/virtu_eval_cl_v1/toolrouting.jsonl": {
+   "sha256": "12064cb4e4791336c49c7e0117607d026b0151938f6881d283ab03c1479dd024",
+   "bytes": 83169,
+   "mtime": "2026-11-13T19:30:10",
+   "lines": 34
+  },
+  "data/benchmark/virtu_eval_phys_v1/derivation.jsonl": {
+   "sha256": "e99a61fc2acd3bad5e8b0e84e11473d4e65034ab4bc6df1907f5ad2c939717fd",
+   "bytes": 447039,
+   "mtime": "2026-11-08T16:09:48",
+   "lines": 30
+  },
+  "data/benchmark/virtu_eval_phys_v1/physics.jsonl": {
+   "sha256": "cbdf2114e73defe61e17bb4584d5242f4f7e8924d66601da780f846a8ffc9142",
+   "bytes": 380471,
+   "mtime": "2026-11-08T16:09:47",
+   "lines": 30
+  },
+  "data/benchmark/virtu_eval_text_v1/boundary.jsonl": {
+   "sha256": "d0171f2c012609f9ba205c8c070392229a94be40089c5377bb9d980c93a06d7f",
+   "bytes": 25434,
+   "mtime": "2026-11-05T12:54:37",
+   "lines": 30
+  },
+  "data/benchmark/virtu_eval_text_v1/generalization.jsonl": {
+   "sha256": "4f5c114b9b047446b7158e8c7b78586001988a3bd95f9144dc6c09f5fa357f41",
+   "bytes": 40602,
+   "mtime": "2026-11-05T12:54:37",
+   "lines": 30
+  },
+  "data/benchmark/virtu_eval_text_v1/generation.jsonl": {
+   "sha256": "3ac2ff57f2eb52a7ac77d7fc0878135fdd5bb9a9e5b7e12ec7c9e727eadefa5c",
+   "bytes": 36881,
+   "mtime": "2026-11-05T12:54:37",
+   "lines": 30
+  },
+  "data/benchmark/virtu_eval_text_v1/instruction.jsonl": {
+   "sha256": "88aa16f29a2a1b592d8bc7c8c5ee6a2204957d8336d73a02743b81f645505285",
+   "bytes": 31848,
+   "mtime": "2026-11-05T12:54:37",
+   "lines": 30
+  },
+  "data/benchmark/virtu_eval_text_v1/knowledge.jsonl": {
+   "sha256": "3546c40f3ce82a75369e119d61caab2f3373b7fec6613cede70fa5b11d819b5f",
+   "bytes": 26304,
+   "mtime": "2026-11-05T12:54:37",
+   "lines": 30
+  },
+  "data/benchmark/virtu_eval_text_v1/reasoning.jsonl": {
+   "sha256": "3f84a8ca2fb6f5500cd4ce1f31766533d08e13ebf781360b7ee9990d12ff237b",
+   "bytes": 34213,
+   "mtime": "2026-11-05T12:54:37",
+   "lines": 30
+  },
+  "data/benchmark/virtu_eval_text_v1/toolcall.jsonl": {
+   "sha256": "f758f28420f3baed1e3914192ebced6c6a48055ce2d70a1e8748957cd0b52a1a",
+   "bytes": 18266,
+   "mtime": "2026-11-05T12:54:37",
+   "lines": 30
+  },
+  "data/benchmark/virtu_eval_v1/boundary.jsonl": {
+   "sha256": "d0171f2c012609f9ba205c8c070392229a94be40089c5377bb9d980c93a06d7f",
+   "bytes": 25434,
+   "mtime": "2026-10-31T18:14:00",
+   "lines": 30
+  },
+  "data/benchmark/virtu_eval_v1/generalization.jsonl": {
+   "sha256": "4f5c114b9b047446b7158e8c7b78586001988a3bd95f9144dc6c09f5fa357f41",
+   "bytes": 40602,
+   "mtime": "2026-10-31T18:31:51",
+   "lines": 30
+  },
+  "data/benchmark/virtu_eval_v1/generation.jsonl": {
+   "sha256": "3ac2ff57f2eb52a7ac77d7fc0878135fdd5bb9a9e5b7e12ec7c9e727eadefa5c",
+   "bytes": 36881,
+   "mtime": "2026-10-31T18:14:00",
+   "lines": 30
+  },
+  "data/benchmark/virtu_eval_v1/instruction.jsonl": {
+   "sha256": "88aa16f29a2a1b592d8bc7c8c5ee6a2204957d8336d73a02743b81f645505285",
+   "bytes": 31848,
+   "mtime": "2026-10-31T18:22:07",
+   "lines": 30
+  },
+  "data/benchmark/virtu_eval_v1/knowledge.jsonl": {
+   "sha256": "3546c40f3ce82a75369e119d61caab2f3373b7fec6613cede70fa5b11d819b5f",
+   "bytes": 26304,
+   "mtime": "2026-10-31T18:22:07",
+   "lines": 30
+  },
+  "data/benchmark/virtu_eval_v1/multimodal.jsonl": {
+   "sha256": "baa7fd372ee49868d5bbdc4d67c73a3f77d43200d35db8d501f3b6cf9744b543",
+   "bytes": 12890,
+   "mtime": "2026-10-31T18:11:02",
+   "lines": 30
+  },
+  "data/benchmark/virtu_eval_v1/reasoning.jsonl": {
+   "sha256": "3f84a8ca2fb6f5500cd4ce1f31766533d08e13ebf781360b7ee9990d12ff237b",
+   "bytes": 34213,
+   "mtime": "2026-10-31T18:21:12",
+   "lines": 30
+  },
+  "data/benchmark/virtu_eval_v1/toolcall.jsonl": {
+   "sha256": "f758f28420f3baed1e3914192ebced6c6a48055ce2d70a1e8748957cd0b52a1a",
+   "bytes": 18266,
+   "mtime": "2026-10-31T18:11:02",
+   "lines": 30
+  },
+  "data/benchmark/virtu_eval_v1_disc/toolcall.jsonl": {
+   "sha256": "44a022708259a614c5faa4a6377f78d80f4cb056e0bd716fd62ad107f54a11ee",
+   "bytes": 21869,
+   "mtime": "2026-11-06T23:03:53",
+   "lines": 30
+  },
+  "data/benchmark/virtu_eval_v2_disc_multislot/toolcall.jsonl": {
+   "sha256": "dbb41f7589cbf100761834ec0b8099dd7b7fb55d42556afdf421af106346d040",
+   "bytes": 25771,
+   "mtime": "2026-11-06T23:43:39",
+   "lines": 12
+  },
+  "data/benchmark/virtu_eval_v3_multislot/toolcall.jsonl": {
+   "sha256": "dbb41f7589cbf100761834ec0b8099dd7b7fb55d42556afdf421af106346d040",
+   "bytes": 25771,
+   "mtime": "2026-11-07T16:13:25",
+   "lines": 12
+  },
+  "data/benchmark/virtu_fix_v1/formula_holdout_200.jsonl": {
+   "sha256": "1b9b60949005094b6873dd18e05da6f2cac0382c0d0423ed6f27642fad23e4e4",
+   "bytes": 49214,
+   "mtime": "2026-11-01T16:52:45",
+   "lines": 200
+  },
+  "data/benchmark/virtu_prod_holdout_v1/boundary.jsonl": {
+   "sha256": "655650fb8be8f92ce177968c054182f6a805f6e82b79003163d76c70f4abcfeb",
+   "bytes": 29502,
+   "mtime": "2026-11-08T16:34:00",
+   "lines": 30
+  },
+  "data/benchmark/virtu_prod_holdout_v1/generalization.jsonl": {
+   "sha256": "76edbb0c1c689b3308d5183b1406b827850e8f10dc65515ca1f344967f2d3ba0",
+   "bytes": 19995,
+   "mtime": "2026-11-08T16:34:00",
+   "lines": 30
+  },
+  "data/benchmark/virtu_prod_holdout_v1/generation.jsonl": {
+   "sha256": "9d07101cb134c3590c1230b9504da92161847803f7e8354b16301d357d32b23d",
+   "bytes": 29130,
+   "mtime": "2026-11-08T16:34:00",
+   "lines": 30
+  },
+  "data/benchmark/virtu_prod_holdout_v1/instruction.jsonl": {
+   "sha256": "e3d1699c457bd158d847d1771eb666d1d922c832f02ca5c2f6663b473aa5e30b",
+   "bytes": 20928,
+   "mtime": "2026-11-08T16:34:00",
+   "lines": 30
+  },
+  "data/benchmark/virtu_prod_holdout_v1/knowledge.jsonl": {
+   "sha256": "2f5f9ab95bd3bbcd59c0bcad8b96086cdf051d76c82b856f3e93d23c71b00c78",
+   "bytes": 23493,
+   "mtime": "2026-11-08T16:34:00",
+   "lines": 30
+  },
+  "data/benchmark/virtu_prod_holdout_v1/reasoning.jsonl": {
+   "sha256": "edf9f7e57c88112bb7512d0cf11134578f92482a158d5f1c0dd5c8b6c1872e06",
+   "bytes": 21081,
+   "mtime": "2026-11-08T16:34:00",
+   "lines": 30
+  },
+  "data/benchmark/virtu_prod_holdout_v1/toolcall.jsonl": {
+   "sha256": "2440bde5b6efd02d9cf8a13b6411ef638109baf3f0b4c20659a260700cd478e6",
+   "bytes": 35316,
+   "mtime": "2026-11-08T16:34:00",
+   "lines": 30
+  },
+  "data/benchmark/virtu_rsi_pool_v1/derivation.jsonl": {
+   "sha256": "dc3874a7503afe0be19f02d41885a186bee44e06fb634084938286765d347b63",
+   "bytes": 1978177,
+   "mtime": "2026-11-08T16:09:51",
+   "lines": 144
+  },
+  "data/benchmark/virtu_rsi_pool_v1/physics.jsonl": {
+   "sha256": "10b5e839e63f6c3518c3009d266d15fd22718f4637d2769489953fa5df0d6167",
+   "bytes": 1877544,
+   "mtime": "2026-11-08T16:09:50",
+   "lines": 144
+  },
+  "data/benchmark/virtu_rsi_pool_v2/boundary.jsonl": {
+   "sha256": "b8eae14001bf7a9f60cc6c218956eb9a731ef8c94c1cac02bcbbf715f1ded1f6",
+   "bytes": 65336,
+   "mtime": "2026-11-07T00:01:27",
+   "lines": 60
+  },
+  "data/benchmark/virtu_rsi_pool_v2/generalization.jsonl": {
+   "sha256": "21f7959437f48a6750e724bf95c88cdbb373ec9302c9dae9078c3fa205ea7b12",
+   "bytes": 42187,
+   "mtime": "2026-11-07T00:01:27",
+   "lines": 60
+  },
+  "data/benchmark/virtu_rsi_pool_v2/generation.jsonl": {
+   "sha256": "99441e5138523047967732740b0c9c2be39189b58ecfa46421d2a94cb33e79c5",
+   "bytes": 53068,
+   "mtime": "2026-11-07T00:01:27",
+   "lines": 60
+  },
+  "data/benchmark/virtu_rsi_pool_v2/instruction.jsonl": {
+   "sha256": "e18fcd07585e5a164890a150a5ff8f9c8fc12b83897deabec8bcd62a5e143138",
+   "bytes": 48160,
+   "mtime": "2026-11-07T00:01:27",
+   "lines": 60
+  },
+  "data/benchmark/virtu_rsi_pool_v2/knowledge.jsonl": {
+   "sha256": "b34bcf6370f0427e0ac65f73407eb4cdf88b38ba552c1c7622ce6b04fba0c8cb",
+   "bytes": 46260,
+   "mtime": "2026-11-07T00:01:27",
+   "lines": 60
+  },
+  "data/benchmark/virtu_rsi_pool_v2/reasoning.jsonl": {
+   "sha256": "d5031a5ae4bc47859c4cfddde8fe39b451ce5e7cb1fbfb2f0c6beadfab78e47f",
+   "bytes": 40185,
+   "mtime": "2026-11-07T00:01:27",
+   "lines": 60
+  },
+  "data/benchmark/virtu_rsi_pool_v2/toolcall.jsonl": {
+   "sha256": "4a7e92ebfbf69448b57aed030df2bfd4a01c32e5d6256d6121232f526fb39284",
+   "bytes": 58215,
+   "mtime": "2026-11-07T00:01:27",
+   "lines": 60
+  }
+ }
+}

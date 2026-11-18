@@ -354,10 +354,15 @@ def require(facts, num_ctx, num_gpu=None, kv_type="q8_0", mmap=False, env=None):
 
 
 def models_dir():
-    d = os.environ.get("OLLAMA_MODELS")
-    if d:
-        return d
-    return os.path.join(os.path.expanduser("~"), ".ollama", "models")
+    # A store must contain a manifest layout; an empty leftover directory named
+    # by OLLAMA_MODELS (rolled-back migration target) must not shadow the real
+    # store, or every tag reads as missing and gates silently degrade.
+    home = os.path.join(os.path.expanduser("~"), ".ollama", "models")
+    for d in (os.environ.get("OLLAMA_MODELS"), home):
+        if d and (os.path.isdir(os.path.join(d, "manifests"))
+                  or os.path.isdir(os.path.join(d, "manifests-v2"))):
+            return d
+    return home
 
 
 def _manifest_for_tag(tag, root=None):

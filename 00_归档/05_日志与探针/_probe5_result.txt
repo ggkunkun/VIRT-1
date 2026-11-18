@@ -1,0 +1,32 @@
+total_enum_windows= 86
+pid28628_windows= []
+named_windows_count= 51
+  WIN (131858, 2488, 'CASCADIA_HOSTING_WINDOW_CLASS', 'Windows PowerShell')
+  WIN (1179830, 22848, 'crash_svc_class', 'crash service')
+  WIN (327926, 22848, 'NVOpenGLPbuffer', '__wglDummyWindowFodder')
+  WIN (459302, 22848, 'NVOpenGLPbuffer', 'NVOGLDC invisible')
+  WIN (131646, 2488, 'OleDdeWndClass', 'DDE Server Window')
+  WIN (131854, 2488, 'Windows Terminal 3ef98a51c8c6c249', 'Windows Terminal')
+  WIN (196638, 28456, 'NVIDIA RLA Utility', 'NVIDIA RLA Utility')
+  WIN (262420, 28364, 'NvContainerWindowClass00006ECC', 'NvContainerWindowClass00006ECC')
+  WIN (131134, 22664, 'Windows.UI.Core.CoreWindow', 'Windows 输入体验')
+  WIN (131214, 25144, 'MS_WebcheckMonitor', 'MS_WebcheckMonitor')
+  WIN (66252, 24320, 'UxdService', 'UxdService')
+  WIN (131774, 12732, 'UxdService', 'UxdService')
+  WIN (459250, 25144, 'BluetoothNotificationAreaIconWindowClass', 'BluetoothNotificationAreaIconWindowClass')
+  WIN (66182, 25144, 'MiracastConnectionWindow', 'MiracastConnectionWindow')
+  WIN (393798, 25144, 'SystemTray_Main', '电池指示器')
+  WIN (65998, 25044, 'CrossDeviceResumeWindowClass', 'CrossDeviceResumeWindow')
+  WIN (65828, 18876, 'Windows.UI.Core.CoreWindow', 'DesktopWindowXamlSource')
+  WIN (131094, 18764, 'PushNotificationsPowerManagement', 'Windows Push Notifications Platform')
+  WIN (131098, 24612, 'COMTASKSWINDOWCLASS', 'Task Host Window')
+  WIN (131110, 9452, 'NvContainerWindowClass000024EC', 'NvContainerWindowClass000024EC')
+  WIN (65664, 12732, 'NvContainerWindowClass000031BC', 'NvContainerWindowClass000031BC')
+  WIN (65646, 24320, 'NvContainerWindowClass00005F00', 'NvContainerWindowClass00005F00')
+  WIN (65610, 24304, 'Dwm', 'DWM Notification Window')
+  WIN (65872, 25144, 'Progman', 'Program Manager')
+  WIN (65988, 25144, 'IME', 'Default IME')
+wmic_28628= CommandLine="D:\SOLIDWORKS (2)\sldworks.exe" -Embedding
+
+Name=SLDWORKS.exe
+DONE

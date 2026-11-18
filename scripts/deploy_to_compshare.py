@@ -19,6 +19,13 @@
 
 from __future__ import annotations
 
+# --- 凭据外置：口令不得写入源码（机制见 scripts/damodel_env.py / tests/test_no_hardcoded_credentials.py）
+import os as _os
+import sys as _sys
+_sys.path.insert(0, _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), '..', 'scripts'))
+from damodel_env import password_for as _pw
+# ---
+
 import argparse
 import os
 import sys
@@ -32,7 +39,7 @@ sys.path.insert(0, str(ROOT))
 HOST = "cpod-1xc9awyq3yn1.podtcp.compshare.cn"
 PORT = 29306
 USER = "root"
-PASSWORD = "3NP6G214m098WXoQ"
+PASSWORD = ""  # 运行时由 get_ssh_client() 解析，避免 import 即退出（见 get_ssh_client）
 BASE_MODEL = "/model/ModelScope/Qwen/Qwen3-8B"
 REMOTE_DIR = "/root/virtu_evolution_train"
 LOCAL_ARCHIVE = ROOT / "cloud_train_evolution_pack.tar.gz"
@@ -40,13 +47,14 @@ LOCAL_ARCHIVE = ROOT / "cloud_train_evolution_pack.tar.gz"
 
 def get_ssh_client():
     import paramiko
+    password = _pw(HOST, PORT)  # 口令只在连接时解析：DAMODEL_PASS / .damodel_pass.json
     client = paramiko.SSHClient()
     client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     client.connect(
         hostname=HOST,
         port=PORT,
         username=USER,
-        password=PASSWORD,
+        password=password,
         timeout=30,
         banner_timeout=30
     )

@@ -1,0 +1,10 @@
+{
+  "total": 2106,
+  "impeller_fix_unique": 202,
+  "impeller_oversample": 3,
+  "impeller_rows": 606,
+  "capability_replay": 1500,
+  "contamination_hard_leaks": 0,
+  "unit_gate": "pass",
+  "mix_note": "〔拟〕29% targeted / 71% general replay"
+}

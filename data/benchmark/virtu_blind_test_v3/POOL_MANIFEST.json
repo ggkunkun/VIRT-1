@@ -1,0 +1,100 @@
+{
+  "pool": "virtu_blind_test_v3",
+  "generated_by": "scripts/build_rsi_dim_pool.py",
+  "seed": 20261109,
+  "dimensions": [
+    "reasoning",
+    "knowledge",
+    "instruction",
+    "generation",
+    "generalization",
+    "boundary",
+    "toolcall"
+  ],
+  "n_cases": 420,
+  "files": {
+    "reasoning": {
+      "n": 60,
+      "sha256": "750b7296c27f1035268ad8a880038e42cdc589d6a6b88ba5ff8b0332a121431c",
+      "by_tier": {
+        "easy": 21,
+        "medium": 20,
+        "hard": 19
+      }
+    },
+    "knowledge": {
+      "n": 60,
+      "sha256": "b34bcf6370f0427e0ac65f73407eb4cdf88b38ba552c1c7622ce6b04fba0c8cb",
+      "by_tier": {
+        "easy": 21,
+        "medium": 20,
+        "hard": 19
+      }
+    },
+    "instruction": {
+      "n": 60,
+      "sha256": "e18fcd07585e5a164890a150a5ff8f9c8fc12b83897deabec8bcd62a5e143138",
+      "by_tier": {
+        "easy": 21,
+        "medium": 20,
+        "hard": 19
+      }
+    },
+    "generation": {
+      "n": 60,
+      "sha256": "99441e5138523047967732740b0c9c2be39189b58ecfa46421d2a94cb33e79c5",
+      "by_tier": {
+        "easy": 21,
+        "medium": 20,
+        "hard": 19
+      }
+    },
+    "generalization": {
+      "n": 60,
+      "sha256": "a9e601621f1e09961bbfc28604111eea4bb091d150ce4b8ac234ceba4e5aa56e",
+      "by_tier": {
+        "easy": 21,
+        "medium": 20,
+        "hard": 19
+      }
+    },
+    "boundary": {
+      "n": 60,
+      "sha256": "b8eae14001bf7a9f60cc6c218956eb9a731ef8c94c1cac02bcbbf715f1ded1f6",
+      "by_tier": {
+        "easy": 21,
+        "medium": 20,
+        "hard": 19
+      }
+    },
+    "toolcall": {
+      "n": 60,
+      "sha256": "4a7e92ebfbf69448b57aed030df2bfd4a01c32e5d6256d6121232f526fb39284",
+      "by_tier": {
+        "easy": 21,
+        "medium": 20,
+        "hard": 19
+      }
+    }
+  },
+  "gold_selfcheck": {
+    "ruler": "virtu_eval.graders",
+    "all_passed": true,
+    "min_score": 100.0
+  },
+  "disjointness": {
+    "protected_dirs": [
+      "virtu_eval_phys_v1",
+      "virtu_eval_v1",
+      "virtu_eval_cl_v1",
+      "virtu_text_v1",
+      "virtu_eval_v1_disc",
+      "virtu_fix_v1",
+      "virtu_rsi_pool_v1"
+    ],
+    "published_prompts_checked": 796,
+    "prompt_overlap": 0
+  },
+  "purpose": "RSI dev/validation pool covering all seven capability dimensions; graded by the production ruler, generated programmatically so no hand-written gold answer can drift.",
+  "not_for": "publishing capability scores"
+}

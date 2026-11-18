@@ -1,0 +1,216 @@
+[
+  {
+    "family": "fea_fos",
+    "user": "不锈钢304构件，屈服强度 Sy=215 MPa，FEA 算得峰值 von Mises 应力 σ_vm=97.0 MPa。预测安全系数并判定 FOS≥1.5 是否通过。",
+    "expected": {
+      "world_state": {
+        "material": "不锈钢304",
+        "yield_strength_mpa": 215.0,
+        "peak_von_mises_mpa": 97.0,
+        "safety_factor": 2.22,
+        "fos_gate": "FOS>=1.5_pass"
+      },
+      "verification": {
+        "formula": "FOS=Sy/sigma_vm",
+        "checks": [
+          "FOS>=1.5"
+        ]
+      }
+    },
+    "scenario_present": true,
+    "guard_layers": [
+      "L2_SOLVER"
+    ],
+    "predicted": {
+      "world_state": {
+        "safety_factor": 2.216494845360825,
+        "fos_gate": "FOS>=1.5_PASS",
+        "peak_von_mises_mpa": 97.0
+      }
+    },
+    "pass": true,
+    "raw_pass": true,
+    "fmt_raw": true,
+    "miss": [],
+    "miss_raw": [],
+    "guard_action": "corrected",
+    "raw": "{\"world_state\": {\"safety_factor\": 2.215, \"fos_gate\": \"pass\"}, \"derivation\": {\"safety_factor\": \"(215)/(97.0)\"} }"
+  },
+  {
+    "family": "invalid",
+    "user": "未提供材料类型，要求预测去除质量。",
+    "expected": {
+      "world_state": null,
+      "invalid": true,
+      "reason": "missing_material",
+      "expected_action": "拒绝并列出缺失/非法项，不输出臆测数值"
+    },
+    "scenario_present": false,
+    "guard_layers": [],
+    "predicted": {
+      "world_state": null,
+      "invalid": true,
+      "reason": "missing_material"
+    },
+    "pass": true,
+    "raw_pass": true,
+    "fmt_raw": true,
+    "miss": [],
+    "miss_raw": [],
+    "guard_action": "accept",
+    "raw": "{\"world_state\": null, \"invalid\": true, \"reason\": \"missing_material\"}"
+  },
+  {
+    "family": "mass_props",
+    "user": "预测cylinder（半径 r=10.8 mm，高 h=137.9 mm）的质量属性：体积、质量、质心坐标、绕质心惯性矩 Ixx 与 Izz。材料 45钢。",
+    "expected": {
+      "world_state": {
+        "shape": "cylinder",
+        "volume_mm3": 50531.44,
+        "mass_g": 396.672,
+        "centroid_mm": [
+          10.8,
+          10.8,
+          68.95
+        ],
+        "inertia_ixx_mm4": 10685.26,
+        "inertia_izz_mm4": 10685.26,
+        "solver": "analytic_csg"
+      },
+      "verification": {
+        "formula": "V=l*w*h (box) | V=π r^2 h (cyl); m=ρV; centroid=几何中心; I_box=截面两边之积×高^3/12 (mm^4), I_cyl=πr^4/4 与 πr^4/2 (mm^4)",
+        "checks": [
+          "V>0",
+          "m>0"
+        ]
+      }
+    },
+    "scenario_present": true,
+    "guard_layers": [
+      "L2_SOLVER"
+    ],
+    "predicted": {
+      "world_state": {
+        "mass_props": {
+          "volume_mm3": 268051,
+          "mass_g": 2109.7
+        },
+        "centroid_mm": [
+          10.8,
+          10.8,
+          68.95
+        ],
+        "inertia_ixx_mm4": 10685.255305065048,
+        "inertia_izz_mm4": 10685.255305065048,
+        "volume_mm3": 50531.43712511899,
+        "mass_g": 396.67178143218405
+      }
+    },
+    "pass": true,
+    "raw_pass": false,
+    "fmt_raw": true,
+    "miss": [],
+    "miss_raw": [
+      "volume_mm3(268051!=50531.4)",
+      "mass_g(2109.7!=396.672)"
+    ],
+    "guard_action": "corrected",
+    "raw": "{\"world_state\": {\"mass_props\": {\"volume_mm3\": 268051, \"mass_g\": 2109.7}, \"centroid_mm\": [0.0, 0.0, 68.95], \"inertia_ixx_mm4\": 126555, \"inertia_izz_mm4\": 316388}, \"derivation\": {\"mass_props.volume_mm3\": \"pi*r*r*h = 3.14159*(10.8)^2*137.9\", \"mass_props.mass_g\": \"volume_mm3*rho = 268051*0.00785\", \"centroid_mm\": \"[0.0, 0.0, h/2] = [0.0, 0.0, 137.9/2]\", \"inertia_ixx_mm4\": \"pi*r^4/4 = 3.14159*(10.8)^4/4\", \"inertia_izz_mm4\": \"pi*r^4/2 = 3.14159*(10.8)^4/2\"}, \"verification\": {\"source\": \"solid_geometry\", \"resolved\": true}}"
+  },
+  {
+    "family": "fea_fos",
+    "user": "铝合金6061构件，屈服强度 Sy=276 MPa，FEA 算得峰值 von Mises 应力 σ_vm=43.8 MPa。预测安全系数并判定 FOS≥1.5 是否通过。",
+    "expected": {
+      "world_state": {
+        "material": "铝合金6061",
+        "yield_strength_mpa": 276.0,
+        "peak_von_mises_mpa": 43.8,
+        "safety_factor": 6.3,
+        "fos_gate": "FOS>=1.5_pass"
+      },
+      "verification": {
+        "formula": "FOS=Sy/sigma_vm",
+        "checks": [
+          "FOS>=1.5"
+        ]
+      }
+    },
+    "scenario_present": true,
+    "guard_layers": [
+      "L2_SOLVER"
+    ],
+    "predicted": {
+      "world_state": {
+        "safety_factor": 6.301369863013699,
+        "fos_gate": "FOS>=1.5_PASS",
+        "peak_von_mises_mpa": 43.8
+      }
+    },
+    "pass": true,
+    "raw_pass": false,
+    "fmt_raw": true,
+    "miss": [],
+    "miss_raw": [
+      "safety_factor(276!=6.3)"
+    ],
+    "guard_action": "corrected",
+    "raw": "{\"world_state\": {\"safety_factor\": 276.000, \"fos_gate\": \"pass\"}, \"derivation\": {\"safety_factor\": \"(Sy)/(sigma_vm)\", \"fos_gate\": \"if (Sy/sigma_vm) >= 1.5 then 'pass' else 'fail'\"}, \"verification\": {\"source\": \"fea_stress\", \"resolved\": true}}"
+  },
+  {
+    "family": "mass_props",
+    "user": "预测box（长 l=108.5 mm，宽 w=116.9 mm，高 h=96.0 mm）的质量属性：体积、质量、质心坐标、绕质心惯性矩 Ixx 与 Izz。材料 铝合金6061。",
+    "expected": {
+      "world_state": {
+        "shape": "box",
+        "volume_mm3": 1217630.4,
+        "mass_g": 3287.602,
+        "centroid_mm": [
+          54.25,
+          58.45,
+          48.0
+        ],
+        "inertia_ixx_mm4": 8618803.2,
+        "inertia_izz_mm4": 14444151.19,
+        "solver": "analytic_csg"
+      },
+      "verification": {
+        "formula": "V=l*w*h (box) | V=π r^2 h (cyl); m=ρV; centroid=几何中心; I_box=截面两边之积×高^3/12 (mm^4), I_cyl=πr^4/4 与 πr^4/2 (mm^4)",
+        "checks": [
+          "V>0",
+          "m>0"
+        ]
+      }
+    },
+    "scenario_present": true,
+    "guard_layers": [
+      "L2_SOLVER"
+    ],
+    "predicted": {
+      "world_state": {
+        "mass_props": {
+          "volume_mm3": 108500000.0,
+          "mass_g": 27945.0
+        },
+        "centroid_mm": [
+          54.25,
+          58.45,
+          48.0
+        ],
+        "inertia_ixx_mm4": 8618803.200000001,
+        "inertia_izz_mm4": 14444151.189708335,
+        "volume_mm3": 1217630.4000000001,
+        "mass_g": 3287.6020800000006
+      }
+    },
+    "pass": true,
+    "raw_pass": false,
+    "fmt_raw": true,
+    "miss": [],
+    "miss_raw": [
+      "volume_mm3(1.085e+08!=1.21763e+06)",
+      "mass_g(27945!=3287.6)"
+    ],
+    "guard_action": "corrected",
+    "raw": "{\"world_state\": {\"mass_props\": {\"volume_mm3\": 108500000.0, \"mass_g\": 27945.0}, \"centroid_mm\": [54.25, 58.45, 48.0], \"inertia_ixx_mm4\": 16293750000.0, \"inertia_izz_mm4\": 22811250000.0}, \"derivation\": {\"mass_props.volume_mm3\": \"l*w*h = 108.5*116.9*96.0\", \"mass_props.mass_g\": \"volume_mm3*rho = 108500000.0*2.71e-3\", \"centroid_mm\": \"[l/2, w/2, h/2] = [108.5/2, 116.9/2, 96.0/2]\", \"inertia_ixx_mm4\": \"w*h^3/12 = 116.9*(96.0)^3/12\", \"inertia_izz_mm4\": \"l*w^3/12 = 108.5*(116.9)^3/12\"}, \"verification\": {\"source\": \"solid_mechanics\", \"resolved\": true}}"
+  }
+]

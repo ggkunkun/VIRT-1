@@ -29,7 +29,7 @@ nvidia-smi --query-gpu=index,name,memory.total,memory.free --format=csv || {
 }
 
 echo "[Step 2/4] 安装训练依赖（含 trl DPO 引擎）..."
-$PIP_CMD install "peft>=0.10.0" "transformers>=4.45.0" "datasets" "accelerate" "trl>=0.12.0" "bitsandbytes>=0.43.0" -i https://pypi.tuna.tsinghua.edu.cn/simple -q
+$PIP_CMD install "peft>=0.13.0,<0.16.0" "transformers>=4.51.0,<5.0.0" "datasets>=2.18.0,<4.0.0" "accelerate>=0.33.0,<2.0.0" "trl>=0.12.0,<0.18.0" "bitsandbytes>=0.43.0,<0.47.0" -i https://pypi.tuna.tsinghua.edu.cn/simple -q
 
 echo "[Step 3/4] 检查 DPO 偏好对数据集 ..."
 if [ -f "dataset/dpo_phys_rejects.jsonl" ]; then

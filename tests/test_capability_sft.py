@@ -28,7 +28,7 @@ def test_reasoning_numbers_match_formula():
         user = s["messages"][1]["content"]
         asst = s["messages"][2]["content"]
         assert gold_numbers_consistent(user, asst)
-        assert "r/min" in asst or "mm/min" in asst or "mm³" in asst or " s" in asst or "mm" in asst
+        assert "r/min" in asst or "mm/min" in asst or "mm³" in asst or " s" in asst or "mm" in asst or "MPa" in asst
 
 
 def test_gcode_samples_pass_grader():

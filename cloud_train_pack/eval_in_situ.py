@@ -18,7 +18,8 @@
 3. physics_gate 物理否决门禁：**实测** 每条 physics 用例是否同时通过求解器复算与守恒式，
    测不到即失败关闭（历史上这里写死过 1.0，见 tests/test_eval_in_situ_gate.py）；
 4. 输出多模型对比卡片与 COMPREHENSIVE_EVAL_REPORT.json，并把逐题响应写入 raw.jsonl 作为证据；
-   对比卡片里的历史列是源码常量（BASELINE_PROVENANCE 标注），不是实测。
+   对比卡片里的历史列明确标为 basis=asserted /「未测（源码常量，非实测）」，
+   列名与脚注同步标注（BASELINE_PROVENANCE），不是实测。
 """
 
 from __future__ import annotations
@@ -86,9 +87,13 @@ HISTORICAL_BASELINES = {
 
 # These numbers were typed into this source file. No raw.jsonl in this repo reproduces
 # them, so they must never be printed as if they were measured arms.
+# P0-B：明确标为 basis=asserted /「未测（源码常量，非实测）」，对比表列名与脚注同步写清楚。
+BASELINE_BASIS = "asserted"
+BASELINE_LABEL = "未测（源码常量，非实测）"
+BASELINE_COLS = ("未测·基座*", "未测·v2*", "未测·v3*")
 BASELINE_PROVENANCE = (
-    "源码内手写的常量，仓内无对应 raw.jsonl 证据，不能当作历史实测成绩引用；"
-    "需要对比请指向带 manifest 指纹的 run 目录。")
+    f"basis={BASELINE_BASIS}；{BASELINE_LABEL}。源码内手写的常量，仓内无对应 raw.jsonl 证据，"
+    "不能当作历史实测成绩引用；需要对比请指向带 manifest 指纹的 run 目录。")
 
 
 def case_fingerprints(case_dir: str) -> Dict[str, str]:
@@ -344,8 +349,8 @@ def run_evaluation(
               "  Virtu 工业智能体 · 全面测评得分看板 (All-Dimension Capability Card)")
     print(banner)
     print("=" * 85)
-    header = (f" {'维度 (Dimension)':<16} | {'权重':<4} | {'常量基座*':<9} | {'常量v2*':<8} "
-              f"| {'常量v3*':<8} | {'本次实测':<8} | {'验收状态'}")
+    header = (f" {'维度 (Dimension)':<16} | {'权重':<4} | {BASELINE_COLS[0]:<9} | {BASELINE_COLS[1]:<8} "
+              f"| {BASELINE_COLS[2]:<8} | {'本次实测':<8} | {'验收状态'}")
     print(header)
     print("-" * 85)
 
@@ -372,7 +377,8 @@ def run_evaluation(
                  if physics_gate.get("measured") else f"NOT MEASURED ({physics_gate.get('reason')})")
     print(f" {'物理合规率 (否决项)':<18} | —    | {'—':<9} | {'—':<8} | {'—':<8} | {gate_text:<24} | "
           f"{'✅ 100%合规' if physics_gate.get('measured') and (physics_compliance or 0) >= 1.0 else '❌ 否决/未测'}")
-    print("  * 常量列=本文件手写常量，无 raw 证据，禁止当历史实测引用")
+    print(f"  * {BASELINE_COLS[0]} / {BASELINE_COLS[1]} / {BASELINE_COLS[2]} 三列："
+          f"basis={BASELINE_BASIS}、{BASELINE_LABEL}；本文件手写常量，无 raw 证据，禁止当历史实测引用")
     print("=" * 85)
 
     # 产物落盘
@@ -398,6 +404,9 @@ def run_evaluation(
         "failed_dimensions": failed_dims,
         "dimensions": dim_summary,
         "historical_comparison": HISTORICAL_BASELINES,
+        "historical_comparison_basis": BASELINE_BASIS,
+        "historical_comparison_label": BASELINE_LABEL,
+        "historical_comparison_columns": list(BASELINE_COLS),
         "historical_comparison_provenance": BASELINE_PROVENANCE,
         "evidence_files": ["raw.jsonl", "COMPREHENSIVE_EVAL_REPORT.json"],
     }
@@ -436,11 +445,13 @@ def run_evaluation(
             f.write(f"- **物理规律合规率**：`NOT MEASURED`（原因：{physics_gate.get('reason')}）"
                     f"——按失败关闭处理，本报告不得声称物理合规 (否决项)\n")
         f.write(f"- **高分验收结论**：{'**【全部高分 PASS】** 所有维度均突破 90 分大关！' if all_high_scores else '**【未通过】** ' + '；'.join(failed_dims[:6])}\n\n")
-        f.write("> **口径警告**：表中「常量基座/常量v2/常量v3」三列是本文件手写的常量，"
+        f.write(f"> **口径警告**：表中「{BASELINE_COLS[0]}/{BASELINE_COLS[1]}/{BASELINE_COLS[2]}」三列 "
+                f"明确标为 basis={BASELINE_BASIS}、{BASELINE_LABEL}：本文件手写的源码常量，"
                 "仓内没有可复现它们的 raw 记录，**不得引用为历史实测成绩**；"
                 "本报告的对比一律以带 manifest 指纹的 run 目录为准。\n\n")
         f.write("## 维度对比矩阵\n\n")
-        f.write("| 维度 | 权重 | 常量基座* | 常量v2* | 常量v3* | 本次实测得分 | 难度分布(Easy/Med/Hard) | 状态 |\n")
+        f.write(f"| 维度 | 权重 | {BASELINE_COLS[0]} (asserted) | {BASELINE_COLS[1]} (asserted) | "
+                f"{BASELINE_COLS[2]} (asserted) | 本次实测得分 | 难度分布(Easy/Med/Hard) | 状态 |\n")
         f.write("|---|---|---|---|---|---|---|---|\n")
         for dim, info in dim_summary.items():
             b_base = HISTORICAL_BASELINES["Qwen3-8B-Base"].get(dim, 0.0)

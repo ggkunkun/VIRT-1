@@ -1,0 +1,212 @@
+{
+  "generated_at": "2026-11-12T23:44:16+0800",
+  "basis": "measured (real Ollama /api/chat) unless labelled otherwise",
+  "multi_needle": {
+    "basis": "measured",
+    "corpus_chars": 6223,
+    "chunks": 48,
+    "physical_ctx": 5120,
+    "rows": [
+      {
+        "value": "167.3",
+        "field": "outer_dia_mm",
+        "segment": 8,
+        "retrieval_query": "最终确认 法兰外径 外径",
+        "ok": true,
+        "recalled": true,
+        "prompt_tokens": 4280,
+        "latency_s": 19.71,
+        "guard_passed": true,
+        "retrieved_sources": [
+          {
+            "doc": "stress_minutes",
+            "idx": 8,
+            "score": 4.0644
+          },
+          {
+            "doc": "stress_minutes",
+            "idx": 23,
+            "score": 2.1802
+          },
+          {
+            "doc": "stress_minutes",
+            "idx": 40,
+            "score": 2.1094
+          },
+          {
+            "doc": "stress_minutes",
+            "idx": 0,
+            "score": 0.2043
+          }
+        ],
+        "text": "{\"outer_dia_mm\": 167.3}"
+      },
+      {
+        "value": "2.37",
+        "field": "safety_factor",
+        "segment": 22,
+        "retrieval_query": "最终确认 安全系数 FOS",
+        "ok": true,
+        "recalled": true,
+        "prompt_tokens": 4274,
+        "latency_s": 4.21,
+        "guard_passed": true,
+        "retrieved_sources": [
+          {
+            "doc": "stress_minutes",
+            "idx": 23,
+            "score": 6.2883
+          },
+          {
+            "doc": "stress_minutes",
+            "idx": 40,
+            "score": 2.1094
+          },
+          {
+            "doc": "stress_minutes",
+            "idx": 8,
+            "score": 1.8366
+          },
+          {
+            "doc": "stress_minutes",
+            "idx": 0,
+            "score": 0.1006
+          }
+        ],
+        "text": "{\"world_state\": {\"safety_factor\": 2.37}}"
+      },
+      {
+        "value": "2387",
+        "field": "spindle_speed_rpm",
+        "segment": 38,
+        "retrieval_query": "最终确认 主轴转速 转速",
+        "ok": true,
+        "recalled": true,
+        "prompt_tokens": 4278,
+        "latency_s": 4.55,
+        "guard_passed": true,
+        "retrieved_sources": [
+          {
+            "doc": "stress_minutes",
+            "idx": 40,
+            "score": 2.8046
+          },
+          {
+            "doc": "stress_minutes",
+            "idx": 23,
+            "score": 2.1802
+          },
+          {
+            "doc": "stress_minutes",
+            "idx": 8,
+            "score": 1.8366
+          },
+          {
+            "doc": "stress_minutes",
+            "idx": 0,
+            "score": 0.5155
+          }
+        ],
+        "text": "{\"world_state\": {\"spindle_speed_rpm\": 2387}}"
+      }
+    ],
+    "recall_rate": 1.0
+  },
+  "concurrency": {
+    "basis": "measured",
+    "workers": 2,
+    "num_ctx_each": 8192,
+    "gpu_before_mib": 2292,
+    "gpu_after_mib": 2388,
+    "wall_s": 17.67,
+    "rows": [
+      {
+        "worker": 0,
+        "ok": true,
+        "num_ctx": 8192,
+        "prompt_tokens": 3908,
+        "latency_s": 17.48
+      },
+      {
+        "worker": 1,
+        "ok": true,
+        "num_ctx": 8192,
+        "prompt_tokens": 3908,
+        "latency_s": 15.67
+      }
+    ],
+    "all_ok": true
+  },
+  "physical_ceiling": {
+    "basis": "measured (requests) + asserted (linear KV estimate)",
+    "kv_anchor": "612 MiB KV at 8192 ctx, q8_0, 36 layers (server.log)",
+    "gpu_total_mib": 6141,
+    "kv_estimate_mib": {
+      "40960": 3060,
+      "65536": 4896,
+      "131072": 9792
+    },
+    "rows": [
+      {
+        "requested_num_ctx": 40960,
+        "gpu_before_mib": 2388,
+        "ok": true,
+        "prompt_tokens": 3908,
+        "latency_s": 21.42,
+        "response": "{\"world_state\": null}",
+        "gpu_after_mib": 3616,
+        "effective_ctx_from_ollama_ps": 40960
+      },
+      {
+        "requested_num_ctx": 65536,
+        "gpu_before_mib": 3616,
+        "ok": true,
+        "prompt_tokens": 3908,
+        "latency_s": 1.85,
+        "response": "{\"world_state\": null}",
+        "gpu_after_mib": 3616,
+        "effective_ctx_from_ollama_ps": 40960
+      },
+      {
+        "requested_num_ctx": 131072,
+        "gpu_before_mib": 3616,
+        "ok": true,
+        "prompt_tokens": 3908,
+        "latency_s": 1.94,
+        "response": "{\"world_state\": null}",
+        "gpu_after_mib": 3616,
+        "effective_ctx_from_ollama_ps": 40960
+      }
+    ]
+  },
+  "verdict": {
+    "basis": "measured",
+    "multi_needle_recall_rate": 1.0,
+    "multi_needle_all_retrieved": true,
+    "concurrency_2_workers_ok": true,
+    "tested_ceiling_rows": 3,
+    "native_max_ctx": 40960,
+    "num_ctx_clamped_to_native": true,
+    "clamp_evidence": [
+      {
+        "requested": 40960,
+        "effective_ps_ctx": 40960,
+        "gpu_before_mib": 2388,
+        "gpu_after_mib": 3616
+      },
+      {
+        "requested": 65536,
+        "effective_ps_ctx": 40960,
+        "gpu_before_mib": 3616,
+        "gpu_after_mib": 3616
+      },
+      {
+        "requested": 131072,
+        "effective_ps_ctx": 40960,
+        "gpu_before_mib": 3616,
+        "gpu_after_mib": 3616
+      }
+    ],
+    "caveat": "A successful short request does NOT prove the window is usable: 65536/131072 were clamped to the native 40960 (ollama ps + unchanged GPU memory). Beyond 40960 requires YaRN. Single-run probes on a shared 6 GB GPU; no long-input (>4k tokens) test was performed at these ceilings."
+  }
+}

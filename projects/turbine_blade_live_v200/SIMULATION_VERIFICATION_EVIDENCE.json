@@ -1,0 +1,11 @@
+{
+  "component": "High-Pressure Turbine Rotor Blade Stage-2",
+  "material": "CMSX-4 Single Crystal Superalloy",
+  "nc_program": "turbine_5axis_airfoil.nc",
+  "spindle_rpm": 16000,
+  "feed_mm_min": 1800,
+  "collision_count": 0,
+  "autodiff_status": "IN_TOLERANCE_GREEN",
+  "tolerance_mm": 0.01,
+  "verified_at": "2026-11-08 11:14:21"
+}

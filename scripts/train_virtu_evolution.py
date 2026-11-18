@@ -2025,11 +2025,7 @@ _FALLBACK_SPLIT_RE = re.compile(r"(<\|im_start\|>|<\|im_end\|>|[A-Za-z_]+|\d+\.\
 
 
 class FallbackBPETokenizer:
-    """
-    当本地机器 `cache/.../Qwen3-8B` 仅含 config.json 缺少 tokenizer.json 时，
-    提供与 Qwen3-8B BPE 词表密度高度一致（中文双字/英文单词/数字独立成 token）的确定性回退分词器，
-    保证本地 `--selftest` 永不退化为 vocab_size=1 且序列打包比例真实准确。
-    """
+    """Deterministic diagnostic-only regex/digest tokenizer; not Qwen BPE, never for training."""
     vocab_size = 151936
     eos_token = "<|im_end|>"
     pad_token = "<|im_end|>"
@@ -2040,6 +2036,8 @@ class FallbackBPETokenizer:
         self._id_to_str: Dict[int, str] = {151644: "<|im_start|>", 151645: "<|im_end|>"}
 
     def encode(self, text: str, add_special_tokens: bool = False) -> List[int]:
+        from hashlib import sha256
+
         ids: List[int] = []
         for match in _FALLBACK_SPLIT_RE.finditer(text):
             piece = match.group(0)
@@ -2048,7 +2046,7 @@ class FallbackBPETokenizer:
             elif piece == "<|im_end|>":
                 tid = 151645
             else:
-                tid = ( abs(hash(piece)) % 140000 ) + 256
+                tid = int.from_bytes(sha256(piece.encode("utf-8")).digest()[:8], "big") % 140000 + 256
             self._id_to_str[tid] = piece
             ids.append(tid)
         return ids
@@ -2057,28 +2055,37 @@ class FallbackBPETokenizer:
         return "".join(self._id_to_str.get(t, "") for t in token_ids)
 
 
-def load_safe_tokenizer(base_path: str) -> Any:
-    """加载 Qwen3-8B 分词器；若本地缓存残缺（vocab_size <= 10）自动切换 FallbackBPETokenizer。"""
-    if HAVE_HF:
-        try:
-            tok = AutoTokenizer.from_pretrained(base_path, trust_remote_code=True)
-            if getattr(tok, "vocab_size", 0) > 1000:
+def load_safe_tokenizer(base_path: str, *, allow_fallback: bool = False) -> Any:
+    """Load a real tokenizer; synthetic fallback requires explicit diagnostic opt-in."""
+    errors = []
+    try:
+        # Independent of peft/torch availability and _load_heavy_imports' local bindings.
+        from transformers import AutoTokenizer
+    except Exception as exc:
+        errors.append(f"transformers import failed: {exc}")
+    else:
+        candidates = [base_path]
+        alt_base = os.path.join(ROOT, "checkpoints", "_base_qwen3_8b")
+        if alt_base != base_path and os.path.exists(os.path.join(alt_base, "tokenizer_config.json")):
+            candidates.append(alt_base)
+        for candidate in candidates:
+            try:
+                tok = AutoTokenizer.from_pretrained(candidate, trust_remote_code=True)
+                if not getattr(tok, "vocab_size", 0) > 1000:
+                    raise ValueError(f"incomplete tokenizer (vocab_size={getattr(tok, 'vocab_size', None)!r})")
                 if tok.pad_token is None:
                     tok.pad_token = tok.eos_token
                 return tok
-        except Exception:
-            pass
-    alt_base = os.path.join(ROOT, "checkpoints", "_base_qwen3_8b")
-    if HAVE_HF and os.path.exists(os.path.join(alt_base, "tokenizer_config.json")):
-        try:
-            tok = AutoTokenizer.from_pretrained(alt_base, trust_remote_code=True)
-            if getattr(tok, "vocab_size", 0) > 1000:
-                if tok.pad_token is None:
-                    tok.pad_token = tok.eos_token
-                return tok
-        except Exception:
-            pass
-    print("[Tokenizer] 本地未检测到完整 HF 分词器权重，已启用与 Qwen3 BPE 等密度的自检分词器 (FallbackBPETokenizer)")
+            except Exception as exc:
+                errors.append(f"{candidate}: {exc}")
+    if not allow_fallback:
+        raise RuntimeError(
+            f"Cannot load a complete tokenizer for {base_path!r}; refusing SFT/DPO training. "
+            "Install transformers and provide valid tokenizer files; "
+            "diagnostic fallback requires explicit allow_fallback=True. "
+            f"Details: {'; '.join(errors)}"
+        )
+    print("[Tokenizer] Diagnostic-only FallbackBPETokenizer; not Qwen BPE, tokens/packing are synthetic.")
     return FallbackBPETokenizer()
 
 
@@ -2185,7 +2192,8 @@ def run_post_train_pipeline(adapter_dir: str, model_id: str = "virtu-evo-v5") ->
             f.write(f'SYSTEM """{sys_prompt}"""\n\n')
             f.write("PARAMETER num_ctx 4096\nPARAMETER temperature 0.1\nPARAMETER top_p 0.95\n")
         print(f"[PostTrain] 已生成 Modelfile -> {mf_path}")
-        subprocess.run(f'ollama create {reg_name} -f "{mf_path}"', shell=True, check=False)
+        subprocess.run(["ollama", "create", str(reg_name), "-f", str(mf_path)],
+                       shell=False, check=False)
 
 
 # ============================================================================
@@ -2309,6 +2317,9 @@ def run_dpo_training(args: argparse.Namespace, tokenizer: Any) -> None:
     _log("=" * 70)
     _log(" Virtu 世界模型 · 反幻觉 Direct Preference Optimization (DPO) 训练引擎")
     _log("=" * 70)
+
+    if isinstance(tokenizer, FallbackBPETokenizer):
+        raise RuntimeError("Diagnostic-only FallbackBPETokenizer cannot be used for DPO training.")
 
     # 1. 自动定位或挖掘 DPO 数据集
     dpo_file = resolve_dpo_data_path(args.data)
@@ -2744,8 +2755,13 @@ def main() -> None:
         run_post_train_pipeline(args.out)
         return
 
-    # 分词器加载
-    tokenizer = load_safe_tokenizer(args.base)
+    # DPO dispatch precedes probe/validate, so those flags cannot authorize its fallback.
+    tokenizer = load_safe_tokenizer(
+        args.base,
+        allow_fallback=args.selftest or (
+            args.mode != "dpo" and (args.validate_only or args.probe_only)
+        ),
+    )
 
     # 零显存自检
     if args.selftest:
@@ -2821,6 +2837,9 @@ def main() -> None:
         _log(f"[validate-only] 总计有效样本: {len(train_records)} 条 | 总 Token: {n_tok_total:,} | 计 loss Token: {n_loss_total:,}")
         _log("[validate-only] 数据体检完成，退出（未加载模型）。")
         return
+
+    if isinstance(tokenizer, FallbackBPETokenizer):
+        raise RuntimeError("Diagnostic-only FallbackBPETokenizer cannot be used for SFT training.")
 
     # 动态序列打包
     simpo_pairs_count = sum(1 for x in train_records if "rejected_input_ids" in x)

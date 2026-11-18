@@ -7,6 +7,12 @@ Two drift modes were measured on 2026-11-05:
   * the 240-case board routes only to those same 10 names - no gold, no criterion mentions
     the other four - so widening the schema without authoring cases would move the score
     for reasons the board cannot attribute.
+
+Both directions are now gated (2026-11-13): declared == graded == injected == 17.
+`cadcam_feature_ops` got four routing cases; the three internet tools moved to
+`INTERNAL_TOOL_DEFINITIONS` because search/fetch/absorb depend on the network at call time
+and therefore have no deterministic oracle. Internal entries stay callable and keep their
+argument schemas - they just are not offered to the model and carry no capability score.
 """
 from __future__ import annotations
 

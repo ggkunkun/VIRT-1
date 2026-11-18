@@ -122,8 +122,20 @@ class UniversalCAEEngine:
             lp.setdefault("bending_force_n", lp["load_n"])
         return lp
 
-    def analyze_and_optimize(self, intent_data: Dict[str, Any], load_params: Optional[Dict[str, float]] = None) -> Dict[str, Any]:
-        """全自动力学仿真核查，并在不达标时自动自愈调整几何尺寸。"""
+    def analyze_and_optimize(self, intent_data: Dict[str, Any], load_params: Optional[Dict[str, float]] = None,
+                             solver: str = "analytic") -> Dict[str, Any]:
+        """全自动力学仿真核查，并在不达标时自动自愈调整几何尺寸。
+
+        solver: "analytic"（默认，Lamé/Timoshenko 解析）或 "pynite"（真实梁单元 FEA，
+        仅回转轴/梁族，带解析交叉核验）。未知 solver 或 FEA 不可用一律诚实拒绝，不静默回退。
+        """
+        if solver not in ("analytic", "pynite"):
+            return {"status": "blocked", "verdict_code": "UNKNOWN_SOLVER",
+                    "solver_arg": solver, "accepted_solvers": ["analytic", "pynite"],
+                    "needs_reinforcement": False,
+                    "verdict": "未知求解器 %s，拒绝代算" % solver}
+        if solver == "pynite":
+            return self.analyze_beam_fem(intent_data, load_params)
         family = intent_data.get("family", PartFamily.ROTATIONAL_SHAFT.value)
         spec = dict(intent_data.get("spec", {}))
         mat_key = spec.get("material")
@@ -192,6 +204,111 @@ class UniversalCAEEngine:
             "reinforcement_applied": healed_res["reinforcement_action"],
             "optimized_spec": reinforced_spec,
             "verdict": (f"已触发闭环自愈强化：FOS 从 {fos:.2f} 强化至 {healed_fos:.2f} (>= {self.TARGET_FOS:.2f})") if healed else (f"自愈后 FOS = {healed_fos:.2f} 仍低于 {self.TARGET_FOS:.2f}，几何自愈无法达标，需改材料/工艺或重新设计，禁止放行")
+        }
+
+    # ------------------------------------------------------------------
+    # 真实梁单元 FEA（PyNite）+ 解析交叉核验
+    # ------------------------------------------------------------------
+    FEM_CROSS_CHECK_TOL = 0.02   # FEA 与解析解相对偏差容差（细长梁 Euler-Bernoulli）
+
+    def analyze_beam_fem(self, intent_data: Dict[str, Any],
+                         load_params: Optional[Dict[str, float]] = None) -> Dict[str, Any]:
+        """用 PyNite 真实梁单元 FEA 求解回转轴/悬臂梁，并与解析解交叉核验。
+
+        诚实边界：这是 **1D 梁单元** FEA（Euler-Bernoulli），不是 3D 实体网格；
+        只覆盖回转轴/梁族。FEA 不可用时返回 status=unavailable / basis=unmeasured，
+        绝不静默回退解析冒充 FEA。交叉核验门可证伪：FEA 挠度/弯矩偏离解析解超容差即判红。
+        """
+        family = intent_data.get("family", PartFamily.ROTATIONAL_SHAFT.value)
+        if family != PartFamily.ROTATIONAL_SHAFT.value:
+            return {"status": "blocked", "verdict_code": "FEM_FAMILY_UNSUPPORTED",
+                    "family": family, "solver": "pynite", "needs_reinforcement": False,
+                    "basis": "unmeasured",
+                    "verdict": "梁单元 FEA 仅覆盖回转轴/梁族；%s 请走解析 solver 或实体 FEA" % family}
+
+        spec = dict(intent_data.get("spec", {}))
+        mat_key = spec.get("material")
+        mat, known = resolve_material(mat_key if mat_key is not None else DEFAULT_MATERIAL_KEY)
+        if mat is None:
+            return {"status": "blocked", "verdict_code": "MATERIAL_UNRESOLVED",
+                    "material_arg": mat_key, "accepted_materials": known,
+                    "solver": "pynite", "needs_reinforcement": False, "basis": "unmeasured",
+                    "verdict": "材料 %s 不在可用表内，拒绝代算" % mat_key}
+
+        try:
+            from Pynite import FEModel3D
+        except Exception as exc:
+            return {"status": "unavailable", "verdict_code": "PYNITE_UNAVAILABLE",
+                    "solver": "pynite", "needs_reinforcement": False, "basis": "unmeasured",
+                    "error": str(exc),
+                    "verdict": "PyNite 不可用，FEA 未执行；不得以解析解冒充 FEA 实测"}
+
+        loads = self._normalize_loads(load_params or {})
+        L = float(spec.get("overall_len", 45.0))
+        do = float(spec.get("d_outer", 53.0))
+        di = float(spec.get("d_inner", 0.0) or 0.0)
+        if di >= do:
+            di = 0.0
+        P = float(loads.get("radial_load_n", loads.get("load_n", 12000.0)))
+        if L <= 0 or do <= 0 or P <= 0:
+            return {"status": "blocked", "verdict_code": "FEM_BAD_INPUT",
+                    "solver": "pynite", "needs_reinforcement": False, "basis": "unmeasured",
+                    "verdict": "梁长/外径/载荷必须为正，拒绝非物理 FEA 输入"}
+
+        E = mat.elastic_modulus_gpa * 1000.0     # GPa -> MPa (N/mm^2)
+        nu = mat.poisson_ratio
+        G = E / (2.0 * (1.0 + nu))
+        A = math.pi / 4.0 * (do**2 - di**2)
+        I = math.pi / 64.0 * (do**4 - di**4)
+        J = 2.0 * I
+        c = do / 2.0
+
+        model = FEModel3D()
+        model.add_node("ROOT", 0.0, 0.0, 0.0)
+        model.add_node("TIP", L, 0.0, 0.0)
+        model.add_material("mat", E, G, nu, mat.density_g_cm3 * 1e-6)
+        model.add_section("circ", A, I, I, J)
+        model.add_member("BEAM", "ROOT", "TIP", "mat", "circ")
+        model.def_support("ROOT", True, True, True, True, True, True)  # 悬臂固支
+        model.add_node_load("TIP", "FY", -P)
+        model.analyze()
+
+        dy_fem = float(abs(list(model.nodes["TIP"].DY.values())[0]))
+        M_fem = float(abs(model.members["BEAM"].max_moment("Mz")))
+        dy_analytic = P * L**3 / (3.0 * E * I)
+        M_analytic = P * L
+
+        dy_err = abs(dy_fem - dy_analytic) / dy_analytic if dy_analytic else float("inf")
+        M_err = abs(M_fem - M_analytic) / M_analytic if M_analytic else float("inf")
+        cross_ok = bool(dy_err <= self.FEM_CROSS_CHECK_TOL and M_err <= self.FEM_CROSS_CHECK_TOL)
+
+        sigma_bend = M_fem * c / I                 # MPa
+        fos = mat.yield_strength_mpa / max(1.0, sigma_bend)
+        passed = cross_ok and fos >= self.TARGET_FOS
+
+        return {
+            "status": "passed" if passed else ("not_healed" if cross_ok else "fem_cross_check_failed"),
+            "solver": "pynite",
+            "model": "beam_element_1d_euler_bernoulli",
+            "boundary": "cantilever",
+            "family": family,
+            "material": mat.name,
+            "length_mm": L, "load_n": P,
+            "deflection_fem_mm": round(dy_fem, 6),
+            "deflection_analytic_mm": round(dy_analytic, 6),
+            "deflection_error_pct": round(dy_err * 100.0, 4),
+            "max_moment_fem_nmm": round(M_fem, 3),
+            "max_moment_analytic_nmm": round(M_analytic, 3),
+            "moment_error_pct": round(M_err * 100.0, 4),
+            "cross_check_passed": cross_ok,
+            "von_mises_stress_mpa": round(sigma_bend, 2),
+            "factor_of_safety": round(fos, 2),
+            "required_fos": self.TARGET_FOS,
+            "needs_reinforcement": fos < self.TARGET_FOS,
+            "basis": "measured" if cross_ok else "unmeasured",
+            "verdict": (f"PyNite 梁单元 FEA：挠度 {dy_fem:.4f}mm (解析 {dy_analytic:.4f}mm, 偏差 {dy_err*100:.3f}%)，"
+                        f"弯矩 {M_fem:.0f}N·mm，弯曲应力 {sigma_bend:.1f}MPa，FOS={fos:.2f}"
+                        + ("" if cross_ok else "；交叉核验未通过，禁止放行")),
         }
 
     def _compute_stress_and_fos(self, family: str, spec: Dict[str, Any], mat: MaterialProperties, loads: Dict[str, float]) -> Dict[str, Any]:

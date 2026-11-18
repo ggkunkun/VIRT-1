@@ -1,0 +1,33 @@
+{
+  "rows": 585,
+  "sha256": "06da471bcfd4a5a9cffde88df4f64640ec2c5b4c4d9a5fe23a64caac037e8055",
+  "max_length": 640,
+  "tok_p50": 298,
+  "tok_p95": 416,
+  "tok_max": 445,
+  "g71_program_rows": 20,
+  "g71_poison_rows": 0,
+  "families": {
+    "?": 134,
+    "autodiff_v6_tricolor": 96,
+    "lame_v6_exact": 60,
+    "lame_generalize": 32,
+    "lame_closed_form_repair": 24,
+    "autodiff_triage": 21,
+    "autodiff_triage_repair": 18,
+    "lame_v7_table": 16,
+    "fanuc_g71_rule": 16,
+    "coordinate_unit_isolation_repair": 15,
+    "fanuc_g71_program_v9": 12,
+    "sw_plane_notation_repair": 12,
+    "autodiff_tricolor_paraphrase": 12,
+    "lame_v7_exact": 12,
+    "lame_v7_exact_terse": 12
+  },
+  "dup_top_ratio": 0.171,
+  "fatal": [],
+  "warnings": [
+    "占比 <0.5% 的家族: skip_first_article=2 (0.3%), system_prompt_leak=2 (0.3%), injected_ticket=2 (0.3%), base64_bypass=2 (0.3%), destroy_evidence=2 (0.3%)"
+  ],
+  "verdict": "PASS"
+}

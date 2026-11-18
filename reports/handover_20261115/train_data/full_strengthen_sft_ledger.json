@@ -1,0 +1,99 @@
+{
+  "generated_at": "2026-11-16T20:03:10+0800",
+  "basis": "measured",
+  "n": 14,
+  "families": [
+    "fanuc_g71_safety",
+    "lame_closed_form"
+  ],
+  "dataset_sha256": "d477596ab038aa15aae4f34433d5ed04f914da9cc0c024943016c23329148875",
+  "grader_sha256": "6ffe8900dd3606207691ad317dbd8f6b5bc1b03450283da82dc7bae932f3f9b1",
+  "measurement_version": "probes-2026-11-16-v3",
+  "mutation_checks": [
+    {
+      "family": "lame_closed_form",
+      "chosen_passed": true,
+      "rejected_rejected": true,
+      "rejected_reason": "missing_sigma_theta_33.33,missing_negative_sigma_r_-20,claimed_sigma_theta_60"
+    },
+    {
+      "family": "lame_closed_form",
+      "chosen_passed": true,
+      "rejected_rejected": true,
+      "rejected_reason": "missing_sigma_theta_33.33,missing_negative_sigma_r_-20,claimed_sigma_theta_60"
+    },
+    {
+      "family": "fanuc_g71_safety",
+      "chosen_passed": true,
+      "rejected_rejected": true,
+      "rejected_reason": "G70,M30,valid_F>0,unsafe_G00_negative_Z_plunge"
+    },
+    {
+      "family": "fanuc_g71_safety",
+      "chosen_passed": true,
+      "rejected_rejected": true,
+      "rejected_reason": "G70,T01,M03,valid_S>0,valid_F>0,unsafe_G00_negative_Z_plunge"
+    },
+    {
+      "family": "lame_closed_form",
+      "chosen_passed": true,
+      "rejected_rejected": true,
+      "rejected_reason": "missing_sigma_theta_33.33,missing_negative_sigma_r_-20,claimed_sigma_theta_60"
+    },
+    {
+      "family": "lame_closed_form",
+      "chosen_passed": true,
+      "rejected_rejected": true,
+      "rejected_reason": "missing_sigma_theta_33.33,missing_negative_sigma_r_-20,claimed_sigma_theta_60"
+    },
+    {
+      "family": "lame_closed_form",
+      "chosen_passed": true,
+      "rejected_rejected": true,
+      "rejected_reason": "missing_sigma_theta_33.33,missing_negative_sigma_r_-20,claimed_sigma_theta_60"
+    },
+    {
+      "family": "lame_closed_form",
+      "chosen_passed": true,
+      "rejected_rejected": true,
+      "rejected_reason": "missing_sigma_theta_33.33,missing_negative_sigma_r_-20,claimed_sigma_theta_60"
+    },
+    {
+      "family": "lame_closed_form",
+      "chosen_passed": true,
+      "rejected_rejected": true,
+      "rejected_reason": "missing_sigma_theta_33.33,missing_negative_sigma_r_-20,claimed_sigma_theta_60"
+    },
+    {
+      "family": "fanuc_g71_safety",
+      "chosen_passed": true,
+      "rejected_rejected": true,
+      "rejected_reason": "G70,M30,valid_F>0,unsafe_G00_negative_Z_plunge"
+    },
+    {
+      "family": "fanuc_g71_safety",
+      "chosen_passed": true,
+      "rejected_rejected": true,
+      "rejected_reason": "G70,M30,valid_F>0,unsafe_G00_negative_Z_plunge"
+    },
+    {
+      "family": "fanuc_g71_safety",
+      "chosen_passed": true,
+      "rejected_rejected": true,
+      "rejected_reason": "G70,M30,valid_F>0,unsafe_G00_negative_Z_plunge"
+    },
+    {
+      "family": "fanuc_g71_safety",
+      "chosen_passed": true,
+      "rejected_rejected": true,
+      "rejected_reason": "G70,M30,valid_F>0,unsafe_G00_negative_Z_plunge"
+    },
+    {
+      "family": "fanuc_g71_safety",
+      "chosen_passed": true,
+      "rejected_rejected": true,
+      "rejected_reason": "G70,M30,valid_F>0,unsafe_G00_negative_Z_plunge"
+    }
+  ],
+  "note": "每条 chosen/rejected 都经同一判分器现场验证；靶值非源码字面量抄录"
+}

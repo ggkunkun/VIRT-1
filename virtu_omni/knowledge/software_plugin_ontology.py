@@ -257,3 +257,106 @@ SOFTWARE_ONTOLOGY: Dict[str, Dict[str, Any]] = {
         }
     }
 }
+
+
+# =====================================================================
+# 名称解析与标准件库查询（审计 §4-2）
+# ---------------------------------------------------------------------
+# 历史上 cad.query_standard_parts_library 直接写死
+# SOFTWARE_ONTOLOGY.get("SolidWorks_2021", {}).get("standard_features", [])，
+# 三个问题叠加导致该工具恒返回空列表：
+#   1. 键名大小写/空格不符（真实键是 "SOLIDWORKS 2021"）；
+#   2. 本体里没有 "standard_features" 字段（真实路径是
+#      plugins_and_addins["Toolbox"]["components"]）；
+#   3. NX 条的键是中文 "中文版NX12.0"，按产品名 "Siemens NX 12.0" 查不到。
+# 这里给出显式别名表 + 通用抽取器，任何软件的标准件库都可查，查不到就如实
+# 返回 not_found，而不是用 "ok + 空列表" 掩盖。
+# =====================================================================
+
+SOFTWARE_ALIASES: Dict[str, str] = {
+    "solidworks": "SOLIDWORKS 2021",
+    "solidworks 2021": "SOLIDWORKS 2021",
+    "solid works": "SOLIDWORKS 2021",
+    "sw": "SOLIDWORKS 2021",
+    "sw2021": "SOLIDWORKS 2021",
+    "中文版nx12.0": "中文版NX12.0",
+    "nx": "中文版NX12.0",
+    "nx12": "中文版NX12.0",
+    "nx 12": "中文版NX12.0",
+    "nx 12.0": "中文版NX12.0",
+    "siemens nx": "中文版NX12.0",
+    "siemens nx 12.0": "中文版NX12.0",
+    "ug": "中文版NX12.0",
+    "ug nx": "中文版NX12.0",
+    "autocad": "AutoCAD 2026",
+    "autocad 2026": "AutoCAD 2026",
+    "cad": "AutoCAD 2026",
+    "vericut": "Vericut 9.6",
+    "vericut 9.6": "Vericut 9.6",
+    "cimco": "CIMCO Edit 2026",
+    "cimco edit": "CIMCO Edit 2026",
+    "cimco edit 2026": "CIMCO Edit 2026",
+    "sscnc": "斯沃数控仿真软件 (SSCNC)",
+    "斯沃": "斯沃数控仿真软件 (SSCNC)",
+    "斯沃数控仿真": "斯沃数控仿真软件 (SSCNC)",
+    "斯沃数控仿真软件": "斯沃数控仿真软件 (SSCNC)",
+}
+
+
+def resolve_software(name: str) -> "str | None":
+    """把任意写法的产品名解析为本体中的真实键；解析不到返回 None。"""
+    if not name:
+        return None
+    raw = str(name).strip()
+    if raw in SOFTWARE_ONTOLOGY:
+        return raw
+    low = raw.lower().replace("_", " ").replace("-", " ")
+    low = " ".join(low.split())
+    if low in SOFTWARE_ALIASES:
+        return SOFTWARE_ALIASES[low]
+    for key in SOFTWARE_ONTOLOGY:
+        k = key.lower()
+        if low and (low in k or k in low):
+            return key
+    return None
+
+
+#: 本体中承载「标准件/刀柄/刀塔库」的字段名（按优先级）
+_LIBRARY_FIELDS = ("components", "types", "standards", "tool_types",
+                   "standard_parts", "standard_features")
+
+
+def standard_libraries(software: "str | None" = None) -> List[Dict[str, Any]]:
+    """抽取本体里的标准件库条目。
+
+    返回 [{"software","library","type","standards","items"}]，不硬编码任何键名。
+    """
+    targets: List[str]
+    if software:
+        key = resolve_software(software)
+        targets = [key] if key else []
+    else:
+        targets = list(SOFTWARE_ONTOLOGY.keys())
+
+    out: List[Dict[str, Any]] = []
+    for sw in targets:
+        plugins = SOFTWARE_ONTOLOGY.get(sw, {}).get("plugins_and_addins", {}) or {}
+        for lib_name, lib in plugins.items():
+            if not isinstance(lib, dict):
+                continue
+            items: List[str] = []
+            for field in _LIBRARY_FIELDS:
+                val = lib.get(field)
+                if isinstance(val, list):
+                    items.extend(str(x) for x in val)
+            if not items:
+                continue
+            out.append({
+                "software": sw,
+                "library": lib_name,
+                "type": lib.get("type", ""),
+                "standards": [str(x) for x in (lib.get("standards") or [])],
+                "items": items,
+            })
+    return out
+

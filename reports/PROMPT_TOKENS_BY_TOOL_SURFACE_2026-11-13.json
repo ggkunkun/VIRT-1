@@ -1,0 +1,18 @@
+{
+ "model": "virtu-moe-14b:latest",
+ "case": "toolcall-e01",
+ "endpoint": "http://127.0.0.1:11434/api/chat",
+ "num_ctx": 8192,
+ "measured_at": "2026-11-13T21:22:50",
+ "tools16": {
+  "prompt_eval_count": 4759,
+  "eval_count": 1,
+  "num_ctx": 8192
+ },
+ "tools17": {
+  "prompt_eval_count": 5132,
+  "eval_count": 1,
+  "num_ctx": 8192
+ },
+ "delta_tokens": 373
+}

@@ -1,144 +1,89 @@
-# Virtu 工业大模型 · 云端全面训练与缺陷靶向修复系统 (Evolution Master V6.0)
+# Virtu 工业大模型 · 云端极速训练与修复闭环套件 (2026-11-14 v2)
 
-针对 2026-11-05 真实测评与根因审计（RCFA）中暴露的**所有真实缺陷**：
-- **Toolcall 原生协议断裂**：历史导出的 Modelfile 缺少 `.Tools` 分支导致 Ollama 报 HTTP 400，现已全量注入 Qwen 官方 1723 字符原生模版；
-- **物理与数值计算失真**：针对浮点累积误差与守恒式失效，注入 5x 强化求解器可验样本（`rsi_synth_weak_2026-11-05`）；
-- **代码快乐路径缺陷**：针对 C 语言空指针崩溃与 Shell 交互挂起，注入 5x 防御性规训语料（`code_extreme_hardening_2026-11-05`）；
-- **防污染门禁合规**：经 `virtu_eval.contamination_check` 严格审计，与 240 道全量评测题 0 hard leak，严守《测量宪法》硬约束。
-
-本套件提供**端到端、全自动、零值守的云端训练、偏好对齐、原地评测与交付闭环**。
+本目录统一收口主力模型（`Qwen3-8B` 线：`virtu-ties-v1` / `virtu-comprehensive` / `virtu-master`；`13.63B / 14B` 线：`virtu-13.63b` / `virtu-moe-14b`）及专题修复线（WorldModel / Safety Boundary / All-90）的云端训练、门禁校验、安全打包回传与本地真融合部署流水线。
 
 ---
 
-## 1. 缺陷靶向攻关与破局矩阵
+## ⚡ 上线马上开训（0 秒等待一键闭环）
 
-| 历史真实缺陷与短板 | 根因与机理分析 | 本套件靶向攻关与数据对齐方案 | 预期成效 |
-|---|---|---|---|
-| **工程图纸标注退化为写宏** | 语料混入先验宏脚本，`annotate_drawing` 留空 `annotation` 并填入未定义 `vba_code` | 注入标准结构化标注样本（点名 $\ge 4$ 个尺寸公差与表面要求），DPO 强惩罚 `vba_code` 输出 | 100% 产出结构化标注，彻底根除 VBA 幻觉 |
-| **CAD 审计 100% 假阳性** | 缺乏无缺陷对照，只要提示“审计”即偏见式盖章报缺陷 | 引入 50% `NO_DEFECT` 严格对照，执行“先算后判”，各不等式满足时判定完全合格 | 假阳性率降至 0%，真缺陷检出率 100% |
-| **耦合参数修复接受率 0%** | 模型无法在脑内求解多变量耦合几何不等式，改参数产生新违规 | 注入最小耦合参数修复推导样本（D1 间隙不足、D2 轮缘破开、D3 量纲还原），保持其它参数满足约束 | 修复接受率达 95%+ |
-| **切削体积与剩余质量严重失真** | 混淆毛坯体积 $V_{stock}$ 与去除体积 $V_{rem}$，甚至算出负质量 | 严格注入 $V_{rem} = doc \times woc \times L$、$M_{rem} = V_{rem} \times \rho$ 以及 $M_{res} = M_{stock} - M_{rem} > 0$ 推导 | 彻底消除负质量与 1000 倍量纲错误 |
-| **主轴转速公式算术空转** | 计算 $n = 1000 V_c / (\pi D)$ 时丢弃分母 $\pi D$，裸输出 1000 或 241 | 注入显式分母代入推导链与数值对齐（保留 1 位小数），DPO 惩罚漏除项 | 算术与转速推理通过率 $\ge 95\%$ |
-| **安全系数 FOS 与过切误判** | FOS 计算偏差达 24%，G00 进刀净间隙正负不分 | 强化 $FOS = \sigma_s / \sigma_{max} \ge 1.5$ 判定，以及 $clearance = Z_{rapid} - Z_{stock}$ 过切哨兵分析 | 物理闸门与安全系数 100% 正确判别 |
-| **ISO 10303 与 Q235B 知识缺失** | 语料未覆盖 STEP 标准定义与通用碳素钢物理特性 | 注入 ISO 10303 (STEP AP203/214/242)、Q235B (屈服235MPa、正火/热轧)、英制螺纹十进制换算 | 知识覆盖分 $\ge 95.0$ |
-| **CIMCO 动作枚举错误** | 误调非法的 `validate_macro_b` | 严格统一为 `cadcam_cimco_validate` 与 `action="validate_macro"`，DPO 惩罚非白名单动作 | 工具调用准确率 $\ge 95.0$ |
+| 场景 | 一键命令 | 核心机制 |
+| :--- | :--- | :--- |
+| **本地 Windows 提前备战** | `START_CLOUD_TRAIN_NOW.cmd` (或 `--prepare-only`) | 离线跑通全部 `--selftest` 并预打 `cloud_train_pack.tar.gz` + `.sha256` 放桌面待命 |
+| **本地等云机上线即秒传开训** | `START_CLOUD_TRAIN_NOW.cmd --track master-8b --host <HOST> --port <PORT> --follow --auto-deploy` | TCP+SSH 轮询上线（默认等 300s）➔ `sha256sum -c` 上传 ➔ `flock` 后台启动 ➔ 双阶看门狗 + 完成后真融合部署 |
+| **云端 GPU 终端直接开训** | `bash cloud_train_pack/start_cloud_train_now.sh --track master-8b --bg` | 排他锁 + `fp16 torch.matmul` 探测(`/root/venv25`自愈) + `--selftest` ➔ 后台启动并做 8s 存活+`[FATAL]`探针 |
+
+支持 `--track`：`master-8b`（默认主力 8.2B）、`13b`、`all90`、`worldmodel`、`safety`。凭据优先按 `CLI -> DAMODEL_* 环境变量 -> cloud_train_pack/.cloud_creds.json` 读取，源码零硬编码密钥。
 
 ---
 
-## 2. 云端套件组成
+## 1. 四条云端主线入口一览
 
+| 产线 | 本地编排 / 准备脚本 | 云端执行脚本 | 目标交付物 | 本地真部署 / 验收 |
+| :--- | :--- | :--- | :--- | :--- |
+| **8.2B 主力 SFT 闭环** | `cloud_train_pack/local_one_click.py` | `cloud_train_pack/run.sh` -> `train_turnkey.py` | `virtu_lora_deliverable.tar.gz` + `.sha256` | `cloud_train_pack/deploy_trained_adapter.py` |
+| **13.63B / 14B SFT+DPO** | `cloud_train_pack/dataset/build_phase2_targeted_corpus.py` | `cloud_train_pack/run_13b_evolution_train.sh` -> `train_cloud_virtu_13b.py` | `virtu_13b_deliverable_*.tar.gz` + `training_summary.json` | 同产线 Stage 5 `hf_to_gguf_numpy.py` + `Modelfile_virtu_13b` |
+| **WorldModel / 物理修复** | `cloud_train_pack/local_one_click_worldmodel.py` | `cloud_train_pack/run_worldmodel_fix.sh` -> `train_turnkey_worldmodel.py` | `virtu_wm_lora_deliverable.tar.gz` | `deploy_safety_repair.py` / `scripts/_post_train_worldmodel.py` |
+| **安全边界修复 (14 类)** | `cloud_train_pack/dataset/build_safety_boundary_sft.py` | `cloud_train_pack/run_safety_repair.sh` -> `train_safety_cloud.py` | `output/virtu_safety/merged` | `cloud_train_pack/deploy_safety_repair.py` |
+
+---
+
+## 2. All-90 全链路脚本 (`scripts/`, 对齐 `CLOUD_TRAINING_PLAN_ALL90_2026-11-13.md`)
+
+1. `scripts/collect_six_trajectories.py`: 采集并归一化 SolidWorks / NX / AutoCAD / CIMCO / VERICUT / SSCNC 六大软件真实执行轨迹与溯源 SHA256。
+2. `scripts/derive_trajectories.py`: 受控表层改写泛化（`<= 3x`），锁定工具参数与数字 100% 不变量并过全门禁。
+3. `scripts/gate_all90_dataset.py`: 8 道自动化硬门禁（真实工具名 / System <= 702B / 去污染 / 量纲单位 / `wm_verifier` 物理重算 / 六软件覆盖与溯源 / SHA256 账本 / `+5%` 可证伪变异探针）。
+4. `scripts/build_six_holdout_200.py`: 生成六大软件各 `n=200` 分层留出题集（90% 通过率对应 Wilson 95% 下界 `>= 0.85`），排除与训练集重合问题。
+5. `scripts/train_dpo_all90.py`: 受控 DPO 阶段（`beta=0.1, lr=5e-6, epochs=1`），含基座门禁、偏好对完整性门与 `TimeBudgetCallback`。
+6. `scripts/eval_all90_three_boards.py`: 三榜单联合验收（`raw_model >= 75`、`system >= 90`、`engineering >= 90`、`wilson_lb >= 0.85`、`system <= 702B`）与 `virtu_eval/provenance.py` 实测归因报告。
+
+---
+
+## 3. 快速上手与离线零 GPU 自检
+
+开训前务必在本机先跑过所有离线门禁自检（不消耗云端 GPU）：
+
+```powershell
+# 主力 8.2B 全套离线门禁自检
+.venv\Scripts\python.exe cloud_train_pack\train_turnkey.py --selftest
+.venv\Scripts\python.exe cloud_train_pack\local_one_click.py --selftest
+.venv\Scripts\python.exe cloud_train_pack\deploy_trained_adapter.py --selftest
+
+# 13.63B 链路离线自检
+.venv\Scripts\python.exe cloud_train_pack\train_cloud_virtu_13b.py --selftest
+
+# All-90 6 个辅助脚本自检
+.venv\Scripts\python.exe scripts\gate_all90_dataset.py --self-test
+.venv\Scripts\python.exe scripts\collect_six_trajectories.py --self-test
+.venv\Scripts\python.exe scripts\derive_trajectories.py --self-test
+.venv\Scripts\python.exe scripts\build_six_holdout_200.py --self-test
+.venv\Scripts\python.exe scripts\train_dpo_all90.py --self-test
+.venv\Scripts\python.exe scripts\eval_all90_three_boards.py --self-test
+
+# 门禁与反证单测套件
+.venv\Scripts\python.exe -m pytest tests/test_master_cloud_gates.py tests/test_wm_cloud_gates.py tests/test_training_entrypoint_regressions.py tests/test_train_data_gate.py tests/test_physics_reference_honesty.py -v
 ```
-cloud_train_pack/
-├── dataset/
-│   ├── train_corpus_comprehensive.jsonl   # 7,500 条高质量靶向工程微调语料 (包含 CAD 缺陷修复与物理推导)
-│   ├── dpo_comprehensive_pairs.jsonl      # 1,200 对 chosen vs rejected 高质量偏好对
-│   └── corpus_manifest.json               # SHA-256 数据指纹与防污染账本
-├── build_high_score_corpus.py             # 语料合成、去污染扫描与 DPO 生成引擎 (V5.1 Upgraded)
-├── train_cloud_master.py                  # 云端全流程训练与合并总引擎 (SFT + DPO + In-Situ Eval + Merge)
-├── eval_in_situ.py                        # 云端原地全维度高分测评与看板生成器 (240 题确定性判分)
-├── launch_cloud_full_train.sh             # Linux 云主机一键开训 Shell 脚本 (AutoDL/Damodel/RunPod)
-└── output/                                # 权重、GGUF、Modelfile、测评报告产物目录
+
+### 一键云端开训 & 本地真融合部署
+
+```powershell
+# 1) 仅验证打包完整性与 SHA256 账本
+.venv\Scripts\python.exe cloud_train_pack\local_one_click.py --pack-only
+
+# 2) 一键上传并执行 7 阶段云端开训 (可选加 --auto-deploy 在 COMPLETED 后自动真合并上线)
+$env:DAMODEL_PASS="你的云端SSH密码"
+.venv\Scripts\python.exe cloud_train_pack\local_one_click.py --host <HOST> --port <PORT>
+
+# 3) 独立执行真 Qwen3-8B LoRA 融合 -> GGUF Q4_0 -> Ollama 17 工具原生态部署与 4 项探针自证
+.venv\Scripts\python.exe cloud_train_pack\deploy_trained_adapter.py `
+  --deliverable checkpoints\virtu_master_lora_deliverable.tar.gz `
+  --base checkpoints\_base_qwen3_8b `
+  --tag virtu-master-fixed:latest
 ```
 
 ---
 
-## 3. 云端极速开训指南（一键执行）
-
-### 3.1 适用云端环境
-- **推荐硬件**：
-  - **L40S (48GB)**：原生 `bfloat16`，约 40 分钟完成 SFT + DPO 全流程。
-  - **A100 / H100 (80GB)**：`bfloat16`，约 25 分钟完成。
-  - **Tesla V100 (32GB)**：自动切为 `fp16`，约 50 分钟完成。
-  - **RTX 3090 / 4090 (24GB)**：`bfloat16`，约 45 分钟完成。
-
-### 3.2 一键全自动开训命令
-
-在云端 GPU 服务器终端中，直接运行：
-
-```bash
-# 1. 赋予执行权限并启动一键训练（自动探测硬件、装依赖、合成语料、微调、DPO、原地评测、合并打包）
-bash cloud_train_pack/launch_cloud_full_train.sh
-```
-
-### 3.3 常用高级参数示例
-
-```bash
-# 指定预置的基座模型路径（跳过 ModelScope 联网下载）：
-bash cloud_train_pack/launch_cloud_full_train.sh --base=/root/models/Qwen3-8B
-
-# 强制重新合成与净化最新靶向语料：
-bash cloud_train_pack/launch_cloud_full_train.sh --rebuild-corpus
-
-# 快速冒烟跑通全流程（20步完成 SFT、DPO、评测与打包，耗时约 2 分钟）：
-bash cloud_train_pack/launch_cloud_full_train.sh --smoke
-
-# 仅跑 SFT 阶段与原地评测（跳过 DPO）：
-bash cloud_train_pack/launch_cloud_full_train.sh --skip-dpo
-
-# 零 GPU 依赖全管线逻辑自检（可在普通 CPU 机器上验证）：
-python cloud_train_pack/train_cloud_master.py --selftest
-```
-
----
-
-## 4. 产物交付与验收门禁
-
-训练完成后，系统自动在 `cloud_train_pack/output/` 下生成全部成果：
-1. **合并后高可用模型权重**：`virtu_comprehensive_merged/`（标准 HuggingFace 格式，无任何破坏性交叉项）；
-2. **GGUF 量化文件**：`virtu-comprehensive-q4_0.gguf`（可通过 Ollama 快速私有化部署）；
-3. **部署配置文件**：`Modelfile_v5_comprehensive`；
-4. **确定性验收测试报告**：
-   - JSON 凭据：`COMPREHENSIVE_EVAL_REPORT.json`
-   - Markdown 看板：`COMPREHENSIVE_EVAL_REPORT.md`
-5. **完整交付压缩包**：`deliverable_virtu_comprehensive.tar.gz` 及配套 `.sha256` 校验文件。
-
-
----
-
-## 5. RSI 云端闭环（Reproducible Self-Improvement）
-
-本地 RSI 默认锁在 loopback。要驱动云端 OpenAI 兼容端点（vLLM / SGLang / TGI），必须显式 opt-in，
-且凭据只走环境变量、不落盘。
-
-### 5.1 三个文件
-
-| 文件 | 作用 |
-| --- | --- |
-| `cloud_train_pack/rsi_cloud_entry.py` | 唯一入口：组装 Config（`allow_remote=true`、`arm_spec.kind=http_openai`）、probe、run |
-| `cloud_train_pack/rsi_cloud_run.sh` | 云端 Linux 启动器：先 probe，通过才进循环 |
-| `cloud_train_pack/rsi_cloud_run.cmd` | 本地 Windows 启动器，行为同上 |
-
-### 5.2 环境变量
-
-| 变量 | 必填 | 说明 |
-| --- | --- | --- |
-| `VIRTU_RSI_BASE_URL` | 是 | `https://host:port` 或 `https://host:port/v1`；不接受带账号密码、多余路径、query 的 URL，也不接受 loopback |
-| `VIRTU_RSI_MODEL_ID` | 是 | 端点实际 served 的 model id；identity 会与 `/v1/models` 逐字比对，且必须恰好命中一个 |
-| `VIRTU_EVAL_API_KEY` | 否 | Bearer token，仅存内存（`VIRTU_API_KEY` 可作回退） |
-| `VIRTU_RSI_CASE_DIR` | 否 | 默认 `data/benchmark/virtu_rsi_pool_v2`（420 题 / 7 维） |
-| `VIRTU_RSI_DIMS` | 否 | 默认七维全开 |
-| `VIRTU_RSI_MAX_CALLS` `VIRTU_RSI_MAX_SECONDS` `VIRTU_RSI_ROUNDS` `VIRTU_RSI_MAX_TOKENS` `VIRTU_RSI_SEED` `VIRTU_RSI_TIMEOUT` | 否 | 预算与采样 |
-
-### 5.3 运行
-
-```bash
-export VIRTU_RSI_BASE_URL=https://<host>:<port>/v1
-export VIRTU_RSI_MODEL_ID=<served model id>
-export VIRTU_EVAL_API_KEY=<token>        # 端点需要鉴权时
-bash cloud_train_pack/rsi_cloud_run.sh
-```
-
-只验通道、不跑循环：
-
-```bash
-python cloud_train_pack/rsi_cloud_entry.py --dry-run   # 打印最终 Config，不联网
-python cloud_train_pack/rsi_cloud_entry.py --probe     # /v1/models 身份校验 + 一次打分
-```
-
-退出码：0 正常 / 2 配置或 probe 失败 / 3 预算或门禁 blocked。产出的 run 目录在
-`runs/rsi/<timestamp>_<run_id>/`，probe 与日志落在 `runs/rsi/cloud_<stamp>.*`。
-
-### 5.4 边界（未变）
-
-不改权重、不改生产路由；holdout 由 `runs/rsi/validation_seen.jsonl` 跨 run 保护；候选必须人工
-`review --decision approve` 才能 `infer`。云端只扩展「模型在哪」，不扩展权限。
+## 4. 硬性合规约束 (Fail-Closed)
+- **基座血统锁定**：主力 8.2B 仅允许非 Instruct `Qwen3-8B` (`4096 / 36 / 151936`)，严拒 `Qwen3-8B-Instruct` 或 `Qwen2.5-7B` 错配；
+- **单实例排他锁**：所有 5 个云端 `.sh` 脚本均启用 `flock -n 9` 与纯 Unix LF (`\n`) 行尾；
+- **阶段门禁顺序**：Stage 0 CUDA `fp16` `torch.matmul` 实算探测 ➔ Stage 1 Ledger + 去污染 + 单位制审计 ➔ Stage 2 `--selftest` ➔ Stage 3 基座检查 ➔ Stage 4 20 步冒烟 ➔ Stage 5 `run_identity.json` ➔ Stage 6 全量训练 ➔ Stage 7 `sha256sum -c` + `COMPLETED` + 零语料漂移；
+- **绝不覆盖已封缄模型**：Ollama 标签默认禁止覆盖已有版本（需换新标签或显式 `--allow-overwrite`），`TIME_BUDGET_STOPPED` 产物退出码固定为 `3` 且禁止验收部署。

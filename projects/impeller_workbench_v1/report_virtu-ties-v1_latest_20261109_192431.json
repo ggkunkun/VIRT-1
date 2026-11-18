@@ -1,0 +1,70 @@
+{
+ "model": "virtu-ties-v1:latest",
+ "host": "http://127.0.0.1:11435",
+ "passed": false,
+ "rounds_used": 2,
+ "elapsed_s": 17.8,
+ "best_n_viol": 1,
+ "best_params": {},
+ "final_params": {},
+ "ruler": "closed_impeller_proctor.ruler (non-model, 未修改)",
+ "accounting": {
+  "model_decides": "全部设计参数与修正方向",
+  "system_provides": "算式求值 / 物理复算回喂 / 格式归一",
+  "system_does_not": "不代选设计值、不改判据、不给目标解"
+ },
+ "trace": [
+  {
+   "round": 1,
+   "elapsed_s": 14.1,
+   "eval_count": 14,
+   "action": "check",
+   "n_viol": 1,
+   "core": {
+    "D2_mm": null,
+    "N_rpm": null,
+    "Z_blades": null,
+    "beta2b_deg": null,
+    "b2_mm": null,
+    "D1t_mm": null,
+    "D1h_mm": null,
+    "axial_length_mm": null,
+    "claimed_tip_speed_m_s": null,
+    "claimed_pressure_ratio": null,
+    "claimed_FOS": null
+   },
+   "violations": [
+    "缺字段 ['D2_mm', 'N_rpm', 'Z_blades', 'beta2b_deg', 'b2_mm', 'D1t_mm', 'D1h_mm', 'axial_length_mm', 'shroud_thickness_mm', 'blade_thickness_mm', 'hub_disk_thickness_mm', 'bore_diameter_mm', 'fillet_root_mm', 'eta_total', 'claimed_pressure_ratio', 'claimed_tip_speed_m_s', 'claimed_FOS']"
+   ],
+   "recomputed": {},
+   "fp": "af45df0d63"
+  },
+  {
+   "round": 2,
+   "elapsed_s": 3.6,
+   "eval_count": 43,
+   "action": "patch",
+   "patch": {},
+   "reason": "前轮未输出任何字段，现在补全所有参数",
+   "n_viol": 1,
+   "core": {
+    "D2_mm": null,
+    "N_rpm": null,
+    "Z_blades": null,
+    "beta2b_deg": null,
+    "b2_mm": null,
+    "D1t_mm": null,
+    "D1h_mm": null,
+    "axial_length_mm": null,
+    "claimed_tip_speed_m_s": null,
+    "claimed_pressure_ratio": null,
+    "claimed_FOS": null
+   },
+   "violations": [
+    "缺字段 ['D2_mm', 'N_rpm', 'Z_blades', 'beta2b_deg', 'b2_mm', 'D1t_mm', 'D1h_mm', 'axial_length_mm', 'shroud_thickness_mm', 'blade_thickness_mm', 'hub_disk_thickness_mm', 'bore_diameter_mm', 'fillet_root_mm', 'eta_total', 'claimed_pressure_ratio', 'claimed_tip_speed_m_s', 'claimed_FOS']"
+   ],
+   "recomputed": {},
+   "fp": "af45df0d63"
+  }
+ ]
+}

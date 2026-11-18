@@ -1,0 +1,134 @@
+{
+ "model": "virtu-ties-v1:latest",
+ "host": "http://127.0.0.1:11435",
+ "passed": false,
+ "rounds_used": 3,
+ "elapsed_s": 169.9,
+ "best_n_viol": 4,
+ "best_params": {
+  "D2_mm": 150.0,
+  "N_rpm": 12000.0,
+  "Z_blades": 10.0,
+  "beta2b_deg": 25.0,
+  "b2_mm": 10.0,
+  "D1t_mm": 200.0,
+  "D1h_mm": 150.0,
+  "axial_length_mm": 50.0,
+  "shroud_thickness_mm": 2.0,
+  "blade_thickness_mm": 1.5,
+  "hub_disk_thickness_mm": 3.0,
+  "bore_diameter_mm": 120.0,
+  "fillet_root_mm": 1.2,
+  "eta_total": 0.85,
+  "claimed_pressure_ratio": 4.2,
+  "claimed_tip_speed_m_s": 235.0,
+  "claimed_FOS": 1.8,
+  "design_rationale": 2.0
+ },
+ "final_params": {
+  "D2_mm": 150.0,
+  "N_rpm": 12000.0,
+  "Z_blades": 10.0,
+  "beta2b_deg": 25.0,
+  "b2_mm": 10.0,
+  "D1t_mm": 200.0,
+  "D1h_mm": 150.0,
+  "axial_length_mm": 50.0,
+  "shroud_thickness_mm": 2.0,
+  "blade_thickness_mm": 1.5,
+  "hub_disk_thickness_mm": 3.0,
+  "bore_diameter_mm": 120.0,
+  "fillet_root_mm": 1.2,
+  "eta_total": 0.85,
+  "claimed_pressure_ratio": 4.2,
+  "claimed_tip_speed_m_s": 235.0,
+  "claimed_FOS": 1.8,
+  "design_rationale": 2.0,
+  "reason": 2.0
+ },
+ "ruler": "closed_impeller_proctor.ruler (non-model, 未修改)",
+ "accounting": {
+  "model_decides": "全部设计参数与修正方向",
+  "system_provides": "算式求值 / 物理复算回喂 / 格式归一",
+  "system_does_not": "不代选设计值、不改判据、不给目标解"
+ },
+ "trace": [
+  {
+   "round": 1,
+   "elapsed_s": 117.0,
+   "eval_count": 900,
+   "parse": false,
+   "head": ""
+  },
+  {
+   "round": 2,
+   "elapsed_s": 32.1,
+   "eval_count": 245,
+   "action": "check",
+   "n_viol": 4,
+   "core": {
+    "D2_mm": 150.0,
+    "N_rpm": 12000.0,
+    "Z_blades": 10.0,
+    "beta2b_deg": 25.0,
+    "b2_mm": 10.0,
+    "D1t_mm": 200.0,
+    "D1h_mm": 150.0,
+    "axial_length_mm": 50.0,
+    "claimed_tip_speed_m_s": 235.0,
+    "claimed_pressure_ratio": 4.2,
+    "claimed_FOS": 1.8
+   },
+   "violations": [
+    "直径序不成立: 需 0<bore<D1h<D1t<D2, 实得 bore=120.0, D1h=150.0, D1t=200.0, D2=150.0",
+    "进口叶顶径比 D1t/D2=1.333 不在 [0.40,0.85]",
+    "宣称叶尖速 235.0 与复算 u2=94.2 m/s 偏差 >1%",
+    "出口迭代非物理：b2=10.0mm 下流量/面积失配（cm2 发散或出口静温≤0），压比不可复算；需增大 b2 或 D2"
+   ],
+   "recomputed": {
+    "u2_m_s": 94.248,
+    "FOS_recomputed": 44.6374,
+    "M_rel_tip": 0.5338,
+    "sigma_eq_MPa": 19.71,
+    "ca1_m_s": 127.56
+   },
+   "fp": "7f96d061ca"
+  },
+  {
+   "round": 3,
+   "elapsed_s": 20.8,
+   "eval_count": 163,
+   "action": "patch",
+   "patch": {},
+   "reason": "",
+   "n_viol": 4,
+   "core": {
+    "D2_mm": 150.0,
+    "N_rpm": 12000.0,
+    "Z_blades": 10.0,
+    "beta2b_deg": 25.0,
+    "b2_mm": 10.0,
+    "D1t_mm": 200.0,
+    "D1h_mm": 150.0,
+    "axial_length_mm": 50.0,
+    "claimed_tip_speed_m_s": 235.0,
+    "claimed_pressure_ratio": 4.2,
+    "claimed_FOS": 1.8
+   },
+   "violations": [
+    "直径序不成立: 需 0<bore<D1h<D1t<D2, 实得 bore=120.0, D1h=150.0, D1t=200.0, D2=150.0",
+    "进口叶顶径比 D1t/D2=1.333 不在 [0.40,0.85]",
+    "宣称叶尖速 235.0 与复算 u2=94.2 m/s 偏差 >1%",
+    "出口迭代非物理：b2=10.0mm 下流量/面积失配（cm2 发散或出口静温≤0），压比不可复算；需增大 b2 或 D2"
+   ],
+   "recomputed": {
+    "u2_m_s": 94.248,
+    "FOS_recomputed": 44.6374,
+    "M_rel_tip": 0.5338,
+    "sigma_eq_MPa": 19.71,
+    "ca1_m_s": 127.56
+   },
+   "fp": "7f96d061ca"
+  }
+ ]
+}

@@ -12,8 +12,12 @@ Verifies:
 
 import os
 import sys
-import torch
+
 import pytest
+
+# 本文件只有 DeepSeek-MoE 用例（test_02/test_06 的 MoE 探针）需要 torch。
+# 之前用模块级 importorskip 会把 1/3/4/5 这四个纯 sandbox/grounding/PINN 用例
+# 一起跳过——它们是推理主机上真实可跑的能力，不该被一个可选依赖连坐。
 
 WORKSPACE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if WORKSPACE_DIR not in sys.path:
@@ -21,10 +25,17 @@ if WORKSPACE_DIR not in sys.path:
 
 from virtu_omni.ultimate_suite import get_ultimate_suite, VirtuUltimateSuite
 from virtu_omni.reasoning.quiet_star_sandbox import QuietStarSelfHealingSandbox
-from virtu_omni.models.deepseek_moe_architecture import VirtuDeepSeekMoELayer
 from virtu_omni.vision.blueprint_spatial_grounding import BlueprintSpatialGroundingEngine
 from virtu_omni.engine.pinn_surrogate_engine import PINNSurrogateEngine
 from virtu_omni.agent import VirtuSuperAgent
+
+
+def _torch_available() -> bool:
+    try:
+        import torch  # noqa: F401
+        return True
+    except ModuleNotFoundError:
+        return False
 
 
 def test_01_quiet_star_silent_healing():
@@ -49,6 +60,9 @@ result = x / divisor
 
 def test_02_deepseek_moe_fine_grained_routing():
     """Verify DeepSeek-MoE shared expert + fine-grained Top-2 routing."""
+    torch = pytest.importorskip("torch")
+    from virtu_omni.models.deepseek_moe_architecture import VirtuDeepSeekMoELayer
+
     batch_size, seq_len, hidden_dim = 2, 8, 64
     moe = VirtuDeepSeekMoELayer(
         hidden_dim=hidden_dim,
@@ -180,13 +194,22 @@ def test_05_super_agent_ultimate_facets():
 
 
 def test_06_ultimate_suite_probes_report():
-    """Verify full ultimate suite probes adhering to Section 8."""
+    """Verify full ultimate suite probes adhering to Section 8.
+
+    MoE 探针需要 torch：无 torch 时它必须如实判 False（suite 里已如此实现），
+    本用例据此校验"不可执行 ⇒ 判红"而不是伪装全绿；其余三个探针照常要求 True。
+    """
     suite = get_ultimate_suite()
     rep = suite.run_all_ultimate_probes()
-    assert rep.all_probes_passed is True
     assert rep.quiet_star_probe_passed is True
-    assert rep.deepseek_moe_probe_passed is True
     assert rep.blueprint_grounding_probe_passed is True
     assert rep.pinn_surrogate_probe_passed is True
+    if _torch_available():
+        assert rep.deepseek_moe_probe_passed is True
+        assert rep.all_probes_passed is True
+    else:
+        assert rep.deepseek_moe_probe_passed is False, "MoE 探针无 torch 时必须判红"
+        assert suite.moe_layer is None
+        assert rep.all_probes_passed is False
     assert rep.basis == "measured"
     assert rep.run_id.startswith("ULTIMA_PROBE_")

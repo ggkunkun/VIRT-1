@@ -6,6 +6,7 @@ and assembly mating relationships from unknown drawing specifications.
 
 import re
 import json
+import math
 from typing import Dict, Any, List
 
 
@@ -25,7 +26,61 @@ class BlueprintInverseEngine:
         desc = blueprint_spec.get("description", "")
         dims = blueprint_spec.get("dimensions", {})
         ocr_text = blueprint_spec.get("ocr_text", "")
+        supplied_provenance = blueprint_spec.get("dimension_provenance", {})
         full_text = f"{desc} {ocr_text} {json.dumps(dims, ensure_ascii=False)}"
+
+        # Preserve where dimensions came from. A template default can still support a draft,
+        # but it must never look like a dimension read from the drawing.
+        dimension_sources: Dict[str, str] = {}
+        assumed_dimensions: List[str] = []
+        ocr_readbacks: Dict[str, str] = {}
+
+        ocr_patterns = {
+            "length_mm": r"(?:总长|全长|轴向长度|长度|长)\s*[:=：]?\s*(\d+(?:\.\d+)?)\s*(mm|毫米|inch|in|英寸)",
+            "width_mm": r"(?:宽度|宽)\s*[:=：]?\s*(\d+(?:\.\d+)?)\s*(mm|毫米|inch|in|英寸)",
+            "thickness_mm": r"(?:厚度|厚|总高|高度)\s*[:=：]?\s*(\d+(?:\.\d+)?)\s*(mm|毫米|inch|in|英寸)",
+            "hole_diameter_mm": r"(?:内径|内孔|轴孔|孔径|bore)\s*(?:[ØΦφ])?\s*[:=：]?\s*(\d+(?:\.\d+)?)\s*(mm|毫米|inch|in|英寸)",
+            "pitch_mm": r"(?:节圆|分度圆|孔距|中心距|PCD)\s*(?:直径)?\s*[:=：]?\s*(\d+(?:\.\d+)?)\s*(mm|毫米|inch|in|英寸)",
+        }
+
+        def read_ocr_dimension(name: str) -> float | None:
+            pattern = ocr_patterns.get(name)
+            if not pattern or not ocr_text:
+                return None
+            match = re.search(pattern, str(ocr_text), flags=re.IGNORECASE)
+            if not match:
+                return None
+            value = float(match.group(1))
+            unit = match.group(2).lower()
+            if unit in ("inch", "in", "英寸"):
+                value *= 25.4
+            if not math.isfinite(value) or value <= 0:
+                return None
+            ocr_readbacks[name] = match.group(0)
+            dimension_sources[name] = f"ocr_text_unverified:{match.group(0)}"
+            return value
+
+        def read_dimension(name: str, aliases: tuple[str, ...], default: float) -> float:
+            for key in aliases:
+                value = dims.get(key)
+                if value is None or value == "":
+                    continue
+                try:
+                    parsed = float(value)
+                except (TypeError, ValueError):
+                    continue
+                if math.isfinite(parsed) and parsed > 0:
+                    source = supplied_provenance.get(name) if isinstance(supplied_provenance, dict) else None
+                    dimension_sources[name] = str(source or f"dimensions.{key}")
+                    if "default" in dimension_sources[name].lower() or "assumed" in dimension_sources[name].lower():
+                        assumed_dimensions.append(name)
+                    return parsed
+            ocr_value = read_ocr_dimension(name)
+            if ocr_value is not None:
+                return ocr_value
+            assumed_dimensions.append(name)
+            dimension_sources[name] = "template_default"
+            return default
 
         # 1. Classify Category
         category = "bracket_plate"
@@ -34,18 +89,27 @@ class BlueprintInverseEngine:
                 category = cat
                 break
 
-        # 2. Extract Key Dimensions
-        length = dims.get("length") or dims.get("L") or 120.0
-        width = dims.get("width") or dims.get("W") or 80.0
-        thickness = dims.get("thickness") or dims.get("T") or dims.get("height") or dims.get("H") or 25.0
-        hole_d = dims.get("hole_d") or dims.get("bore") or 10.0
-        pitch = dims.get("pitch") or dims.get("spacing") or 50.0
+        if category in ("shaft_sleeve", "gear_flange"):
+            # In a turning part, the legacy ``length`` slot represents outer diameter;
+            # axial length is ``thickness``. Keep the OCR labels aligned with that contract.
+            unit = r"(mm|毫米|inch|in|英寸)"
+            ocr_patterns["length_mm"] = (
+                r"(?:外圆直径|外径|外圆|outer\s*diameter|OD)\s*[:=：]?\s*"
+                r"(?:[ØΦφ]\s*)?(\d+(?:\.\d+)?)\s*" + unit
+            )
+            ocr_patterns["thickness_mm"] = (
+                r"(?:总长|全长|轴向长度|长度|length)\s*[:=：]?\s*"
+                r"(\d+(?:\.\d+)?)\s*" + unit
+            )
 
-        # Number extraction heuristic if dims missing
-        nums = [float(n) for n in re.findall(r"\d+(?:\.\d+)?", full_text)]
-        if nums and not dims:
-            if len(nums) >= 3:
-                length, width, thickness = sorted(nums[-3:], reverse=True)
+        # 2. Extract Key Dimensions
+        length = read_dimension("length_mm", ("length", "L", "overall_len", "total_len", "d_outer"), 120.0)
+        width = read_dimension("width_mm", ("width", "W", "width_mm"), 80.0)
+        thickness = read_dimension(
+            "thickness_mm", ("thickness", "T", "height", "H", "overall_len", "total_len"), 25.0
+        )
+        hole_d = read_dimension("hole_diameter_mm", ("hole_d", "bore", "d_inner", "inner_diameter"), 10.0)
+        pitch = read_dimension("pitch_mm", ("pitch", "spacing", "bolt_circle_diameter"), 50.0)
 
         feature_tree = []
         equations = {}
@@ -148,12 +212,36 @@ class BlueprintInverseEngine:
                 {"mate_type": "Concentric", "ref_entity": "Hole_2", "target": "Locating_Pin_2"}
             ]
 
+        required_dimensions = (
+            ["length_mm", "thickness_mm", "hole_diameter_mm"]
+            if category in ("shaft_sleeve", "gear_flange")
+            else ["length_mm", "width_mm", "thickness_mm", "hole_diameter_mm", "pitch_mm"]
+        )
+        required_assumptions = [name for name in assumed_dimensions if name in required_dimensions]
+        evidence_status = "assumptions_present" if required_assumptions else "input_dimensions_complete"
+
         return {
             "classified_primitive": category,
             "deduced_equations": equations,
             "feature_tree": feature_tree,
             "assembly_mates": assembly_mates,
-            "target_material": blueprint_spec.get("material", "AL6061-T6")
+            "target_material": blueprint_spec.get("material", "AL6061-T6"),
+            "geometry_evidence": {
+                "status": evidence_status,
+                "verified": False,
+                "basis": "rule_inferred_feature_tree",
+                "dimension_sources": dimension_sources,
+                "ocr_readbacks": ocr_readbacks,
+                "assumed_dimensions": required_assumptions,
+                "unused_template_dimensions": [name for name in assumed_dimensions
+                                                if name not in required_dimensions],
+                "classification_basis": "keyword_classifier",
+                "note": (
+                    "模板尺寸只用于草案，必须从原图/OCR或结构化规格补齐后才能进入工程验证。"
+                    if required_assumptions else
+                    "尺寸来自结构化输入；特征树仍为规则推导，尚非 CAD 拓扑识别。"
+                ),
+            },
         }
 
     def generate_solidworks_vba_script(self, inverse_result: Dict[str, Any]) -> str:

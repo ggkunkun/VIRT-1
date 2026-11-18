@@ -1,0 +1,143 @@
+{
+  "generated_at": "2026-11-12T22:44:36+0800",
+  "basis": "measured (real Ollama generations) unless labelled otherwise",
+  "model_identity": {
+    "ollama_version": "0.40.14",
+    "model": "virtu-wm-v3:chatml",
+    "model_present": true,
+    "model_size_bytes": 4614314500
+  },
+  "upstream": {
+    "repo": "https://github.com/fudan-generative-vision/Remory",
+    "clone": "D:\\Virtu模型\\external\\Remory",
+    "commit": "683b7ba648fe91fa063291380cd107c1d836cd6c",
+    "license": "MIT",
+    "version": "0.4.0"
+  },
+  "adapter": {
+    "module": "virtu_omni/memory/remory_adapter.py",
+    "backend": "remory-protocol/text-residual-v1",
+    "model": "virtu-wm-v3:chatml",
+    "store": "D:\\Virtu模型\\runs\\remory\\memory.sqlite"
+  },
+  "compatibility_verdict": {
+    "native_soft_memory_possible": false,
+    "basis": "asserted from upstream README/docs/deployment + measured local hardware",
+    "upstream_requires": [
+      "Linux x86_64 + Python 3.11+ + CUDA 13.0",
+      "SGLang pinned revision with model hook (actor hidden states)",
+      ">= 2 x 80 GB GPUs and 100 GB disk for Qwen3.8-27B + REMORY-1.9B",
+      "released checkpoints bound to Qwen3.8-27B / GLM-5.3-Flash tokenizers"
+    ],
+    "local_facts": [
+      "Windows 11 + Ollama 0.40.14 + RTX 4050 Laptop 6141 MiB",
+      "main model virtu-wm-v3:chatml is a GGUF Qwen3 8.2B Q4_0 world model"
+    ],
+    "conclusion": "Only the compaction protocol layer can be integrated; learned soft-token weights cannot be attached to this actor."
+  },
+  "carrier_role_finding": {
+    "basis": "measured 2026-11-12",
+    "explicit_system_message": "prompt_tokens 3906 -> 71; Modelfile SYSTEM contract replaced; output changed away from world_state JSON",
+    "user_message_carrier": "prompt_tokens 3909 -> 4052; contract preserved; model emitted outer_dia_mm=160 from memory-only fact",
+    "decision": "memory carrier role=user (see TextClient.memory_message)"
+  },
+  "protocol_evidence": {
+    "basis": "measured",
+    "handle": "rm_b1bc9b8c521b903583eb3919c2d9ab3d29568376b635a124",
+    "handle_format_ok": true,
+    "prefix_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "history_after_compaction": 2,
+    "residual_items": 11,
+    "residual_sample": [
+      "[user] D160 = 160mm",
+      "[user] 厚度 = 14mm",
+      "[task] 任务开始：法兰外径 D160 = 160 mm，材质 45 钢，厚度 = 14 mm",
+      "[assistant] rc = 0",
+      "[assistant] 确认采用 D160，rc=0，sha256=abc123",
+      "[user] 主轴转速 = 1200rpm"
+    ],
+    "compression_depth": 1,
+    "sqlite_restart_resume_ok": true,
+    "memory_render_chars": 1272
+  },
+  "chained_evidence": {
+    "basis": "measured",
+    "handle": "rm_120b56b07d136d58942c1f88c96d7b8909ad355227d8b79e",
+    "previous": "rm_b1bc9b8c521b903583eb3919c2d9ab3d29568376b635a124",
+    "previous_matches_first": true,
+    "compression_depth": 2,
+    "residual_items": 15
+  },
+  "gateway_attachment": {
+    "basis": "measured",
+    "success": true,
+    "injection_count": 1,
+    "injected_handle": "rm_b1bc9b8c521b903583eb3919c2d9ab3d29568376b635a124",
+    "prompt_tokens": 4521,
+    "response_text": "{\"outer_dia_mm\": 160}",
+    "contains_160": true
+  },
+  "live_arms": [
+    {
+      "arm": "A_no_memory_control",
+      "ok": true,
+      "prompt_tokens": 3932,
+      "latency_s": 1.35,
+      "text": "{\"outer_dia_mm\": 156}",
+      "json_valid": true,
+      "top_level_key": "outer_dia_mm",
+      "contains_160": false,
+      "contains_2_1": false
+    },
+    {
+      "arm": "B_with_remory_memory",
+      "ok": true,
+      "prompt_tokens": 4521,
+      "latency_s": 1.87,
+      "text": "{\"outer_dia_mm\": 160}",
+      "json_valid": true,
+      "top_level_key": "outer_dia_mm",
+      "contains_160": true,
+      "contains_2_1": false
+    },
+    {
+      "arm": "C_chained_compaction_recall",
+      "ok": true,
+      "prompt_tokens": 4566,
+      "latency_s": 2.02,
+      "text": "{\"world_state\": {\"safety_factor\": 2.1}}",
+      "json_valid": true,
+      "top_level_key": "world_state",
+      "contains_160": false,
+      "contains_2_1": true
+    },
+    {
+      "arm": "D_contract_shape_with_memory",
+      "ok": true,
+      "prompt_tokens": 4498,
+      "latency_s": 2.81,
+      "text": "{\"world_state\": {\"outer_dia_mm\": 160, \"thickness_mm\": 14}}",
+      "json_valid": true,
+      "top_level_key": "world_state",
+      "contains_160": true,
+      "contains_2_1": false
+    }
+  ],
+  "verdict": {
+    "basis": "measured",
+    "all_arms_completed": true,
+    "injection_token_delta": 589,
+    "memory_entered_context": true,
+    "json_valid_with_memory": true,
+    "contract_preserved_with_memory": true,
+    "contract_shape_evidence": {
+      "arm": "D_contract_shape_with_memory",
+      "top_level_key": "world_state",
+      "text": "{\"world_state\": {\"outer_dia_mm\": 160, \"thickness_mm\": 14}}"
+    },
+    "recall_from_memory_only_fact": true,
+    "chained_residual_recall": true,
+    "gateway_hook_works": true,
+    "caveat": "text-residual backend; NOT upstream learned soft-memory checkpoints. Recall is a single-prompt probe, not a benchmark score; arms A/B/C use a bare-JSON recall prompt that intentionally bypasses the world_state wrapper, arm D verifies the native shape."
+  }
+}

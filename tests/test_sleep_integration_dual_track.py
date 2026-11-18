@@ -25,6 +25,19 @@ from virtu_omni.memory import (
 from scripts.run_sleep_maintenance import perform_maintenance_cycle
 
 
+@pytest.fixture(autouse=True)
+def _no_live_model_budget(monkeypatch):
+    """本文件只验 wake-step 钩子，不需要真模型。
+
+    REACT 默认走 deep_agent 真 LLM 循环，单次模型调用预算 90s，规划 + 验收
+    两步就是 180s，必然超过 ``--timeout=120``；Windows 上 pytest-timeout 会
+    直接终止整个 pytest 进程，导致全仓连跑拿不到任何 summary。把预算压到 3s
+    后引擎走「超时 -> 可见降级 -> 硬编码流水线」路径：完全离线、仍能跑完整
+    REACT 结果映射，且保住了降级分支的覆盖。
+    """
+    monkeypatch.setenv("VIRTU_REACT_BUDGET_S", "3")
+
+
 @pytest.fixture
 def clean_sleep_framework():
     d = Path(tempfile.mkdtemp(prefix="virtu_sleep_dual_"))
@@ -56,7 +69,11 @@ def test_02_super_agent_react_hooks_wake_step():
     prompt = "查询轴套的 Lamé 应力公式"
     res = agent.solve(prompt, mode=SuperAgentMode.REACT, max_steps=1)
 
-    assert res.success is True
+    # A 1-step run never reaches FINISH nor a sandbox audit, so it must not
+    # claim success. This test verifies the wake-step hook, not task success.
+    assert res.success is False
+    assert res.metrics["completed"] is False
+    assert res.metrics["audit_passed"] is None
     assert len(agent.sleep_framework.wake_buffer) == initial_wake_count + 1
 
 
@@ -112,6 +129,8 @@ def test_05_perform_maintenance_cycle_cleans_and_reports(clean_sleep_framework):
 
     assert report is not None
     assert report["consolidated_units"] >= 1
-    assert report["homeostasis_gate_passed"] is True
+    # 未注入真实模型调用器，必须诚实降级，不得假通过
+    assert report["measurement_valid"] is False
+    assert report["homeostasis_gate_passed"] is False
     # Buffer should now be cleared
     assert len(clean_sleep_framework.wake_buffer) == 0

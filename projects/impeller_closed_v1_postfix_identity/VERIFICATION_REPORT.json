@@ -1,0 +1,15 @@
+{
+  "task": "closed aero-engine impeller design",
+  "model": "virtu-impeller-fixed:latest",
+  "weight_digest": "sha256:fbf1ba4c0297cbac1759785c5bcf83976e71441cfcfcc87b75ad29db3a7b4d87",
+  "n": 1,
+  "basis_legend": {
+    "ruler": "analytic_recomputed(inferred)",
+    "topology": "measured_from_stl",
+    "claims": "asserted_by_model"
+  },
+  "stages": {},
+  "verdict": "FAIL",
+  "reason": "参数设计三轮未通过独立尺子",
+  "finished": "2026-11-09T22:07:40"
+}

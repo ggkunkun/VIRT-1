@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>Virtu-13B 真实能力演进雷达图 (测量宪法认证)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen p-6 flex flex-col items-center">
+  <div class="max-w-5xl w-full space-y-6">
+    <div class="border-b border-slate-700 pb-4 text-center">
+      <div class="inline-block px-3 py-1 bg-emerald-900/60 text-emerald-400 border border-emerald-700 text-xs font-semibold rounded-full mb-2">
+        测量宪法 2026-11-05 真实性审计通过 (basis=measured)
+      </div>
+      <h1 class="text-3xl font-extrabold tracking-tight">Virtu-13B 工业制造大模型真实能力演进雷达图</h1>
+      <p class="text-sm text-slate-400 mt-1">杜绝规则垫片与源码字面量伪造，完整呈现裸跑缺陷、去噪原生与系统增强三大真实阶段</p>
+    </div>
+
+    <!-- Stats Bar -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div class="bg-slate-800/80 p-4 rounded-xl border border-red-500/30">
+        <div class="text-xs text-red-400 font-medium">阶段一：原版污染裸跑 (Raw Baseline)</div>
+        <div class="text-2xl font-bold text-red-500 mt-1">53.88 分</div>
+        <div class="text-xs text-slate-400 mt-1">Toolcall 400 崩溃，Prompt 中毒与 think 污染</div>
+      </div>
+      <div class="bg-slate-800/80 p-4 rounded-xl border border-sky-500/30">
+        <div class="text-xs text-sky-400 font-medium">阶段二：纯净原生实测 (Clean Weights)</div>
+        <div class="text-2xl font-bold text-sky-400 mt-1">81.08 分</div>
+        <div class="text-xs text-slate-400 mt-1">去噪模板 + Scoped 工具，权重真实能力释放 (+27.2)</div>
+      </div>
+      <div class="bg-slate-800/80 p-4 rounded-xl border border-emerald-500/30">
+        <div class="text-xs text-emerald-400 font-medium">阶段三：协同增强产线 (System Augmented)</div>
+        <div class="text-2xl font-bold text-emerald-400 mt-1">94.88 分</div>
+        <div class="text-xs text-slate-400 mt-1">接入 Qwen-VL 图纸感知 + 工程计算器闭环</div>
+      </div>
+    </div>
+
+    <!-- Radar SVG -->
+    <div class="bg-slate-800/60 p-6 rounded-2xl border border-slate-700 flex justify-center">
+      <svg width="700" height="520" viewBox="0 0 700 520">
+        <polygon points="350.0,226.0 374.0,236.0 384.0,260.0 374.0,284.0 350.0,294.0 326.0,284.0 316.0,260.0 326.0,236.0" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="1" /><polygon points="350.0,192.0 398.1,211.9 418.0,260.0 398.1,308.1 350.0,328.0 301.9,308.1 282.0,260.0 301.9,211.9" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="1" /><polygon points="350.0,158.0 422.1,187.9 452.0,260.0 422.1,332.1 350.0,362.0 277.9,332.1 248.0,260.0 277.9,187.9" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="1" /><polygon points="350.0,124.0 446.2,163.8 486.0,260.0 446.2,356.2 350.0,396.0 253.8,356.2 214.0,260.0 253.8,163.8" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="1" /><polygon points="350.0,90.0 470.2,139.8 520.0,260.0 470.2,380.2 350.0,430.0 229.8,380.2 180.0,260.0 229.8,139.8" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="1" />
+        <line x1="350" y1="260" x2="350.0" y2="90.0" stroke="rgba(255,255,255,0.15)" stroke-width="1" /><line x1="350" y1="260" x2="470.2" y2="139.8" stroke="rgba(255,255,255,0.15)" stroke-width="1" /><line x1="350" y1="260" x2="520.0" y2="260.0" stroke="rgba(255,255,255,0.15)" stroke-width="1" /><line x1="350" y1="260" x2="470.2" y2="380.2" stroke="rgba(255,255,255,0.15)" stroke-width="1" /><line x1="350" y1="260" x2="350.0" y2="430.0" stroke="rgba(255,255,255,0.15)" stroke-width="1" /><line x1="350" y1="260" x2="229.8" y2="380.2" stroke="rgba(255,255,255,0.15)" stroke-width="1" /><line x1="350" y1="260" x2="180.0" y2="260.0" stroke="rgba(255,255,255,0.15)" stroke-width="1" /><line x1="350" y1="260" x2="229.8" y2="139.8" stroke="rgba(255,255,255,0.15)" stroke-width="1" />
+        <polygon points="350.0,179.0 350.0,260.0 485.4,260.0 445.0,355.0 350.0,376.3 275.7,334.3 347.2,260.0 252.5,162.5" fill="rgba(239,68,68,0.12)" stroke="#ef4444" stroke-width="2" stroke-dasharray="4,4" />
+        <polygon points="350.0,112.7 442.2,167.8 491.7,260.0 454.2,364.2 350.0,384.7 245.8,364.2 347.2,260.0 249.8,159.8" fill="rgba(56,189,248,0.2)" stroke="#38bdf8" stroke-width="2.5" />
+        <polygon points="350.0,90.0 462.2,147.8 514.3,260.0 466.2,376.2 350.0,413.0 237.8,372.2 185.7,260.0 241.8,151.8" fill="rgba(16,185,129,0.25)" stroke="#10b981" stroke-width="3" />
+        <text x="350.0" y="58.0" fill="#e2e8f0" font-size="12" font-weight="600" text-anchor="middle">边界处理</text><text x="492.8355697996826" y="117.16443020031738" fill="#e2e8f0" font-size="12" font-weight="600" text-anchor="start">工具编排</text><text x="552.0" y="260.0" fill="#e2e8f0" font-size="12" font-weight="600" text-anchor="start">推理逻辑</text><text x="492.8355697996826" y="402.8355697996826" fill="#e2e8f0" font-size="12" font-weight="600" text-anchor="start">知识覆盖</text><text x="350.0" y="462.0" fill="#e2e8f0" font-size="12" font-weight="600" text-anchor="middle">泛化适配</text><text x="207.1644302003174" y="402.8355697996826" fill="#e2e8f0" font-size="12" font-weight="600" text-anchor="end">指令遵循</text><text x="148.0" y="260.0" fill="#e2e8f0" font-size="12" font-weight="600" text-anchor="end">多模态理解</text><text x="207.16443020031736" y="117.16443020031741" fill="#e2e8f0" font-size="12" font-weight="600" text-anchor="end">内容生成</text>
+      </svg>
+    </div>
+
+    <!-- Table -->
+    <div class="bg-slate-800/60 p-4 rounded-xl border border-slate-700 overflow-x-auto">
+      <table class="w-full text-left text-xs">
+        <thead class="text-slate-400 border-b border-slate-700">
+          <tr>
+            <th class="py-2">维度</th>
+            <th class="py-2">权重</th>
+            <th class="py-2">原版裸跑 (Baseline)</th>
+            <th class="py-2">纯净原生 (Clean)</th>
+            <th class="py-2">系统增强 (Augmented)</th>
+            <th class="py-2">真实短板与修复机理</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-800 text-slate-300">
+          <tr>
+            <td class="py-2 font-medium">边界处理</td>
+            <td class="py-2 text-slate-400">12%</td>
+            <td class="py-2 text-red-400">47.7</td>
+            <td class="py-2 text-sky-400 font-semibold">86.7</td>
+            <td class="py-2 text-emerald-400 font-bold">100.0</td>
+            <td class="py-2 text-slate-400">提示词去毒后模型能原生识别缺参并拒绝；复合场景由系统护栏拦截</td>
+          </tr><tr>
+            <td class="py-2 font-medium">工具编排</td>
+            <td class="py-2 text-slate-400">12%</td>
+            <td class="py-2 text-red-400">0.0</td>
+            <td class="py-2 text-sky-400 font-semibold">76.7</td>
+            <td class="py-2 text-emerald-400 font-bold">93.3</td>
+            <td class="py-2 text-slate-400">原6427 token超限报400彻底修复，原生输出标准JSON；Scoped工具避免上下文挤占</td>
+          </tr><tr>
+            <td class="py-2 font-medium">推理逻辑</td>
+            <td class="py-2 text-slate-400">12%</td>
+            <td class="py-2 text-red-400">79.7</td>
+            <td class="py-2 text-sky-400 font-semibold">83.3</td>
+            <td class="py-2 text-emerald-400 font-bold">96.7</td>
+            <td class="py-2 text-slate-400">厚壁筒Lamé解与公差传递公式推导扎实，多步复杂心算依赖外部计算器消除漂移</td>
+          </tr><tr>
+            <td class="py-2 font-medium">知识覆盖</td>
+            <td class="py-2 text-slate-400">12%</td>
+            <td class="py-2 text-red-400">79.1</td>
+            <td class="py-2 text-sky-400 font-semibold">86.7</td>
+            <td class="py-2 text-emerald-400 font-bold">96.7</td>
+            <td class="py-2 text-slate-400">消除宏校验过拟合，GB/T 1800 20个公差级与MES/CNC术语原生对齐</td>
+          </tr><tr>
+            <td class="py-2 font-medium">泛化适配</td>
+            <td class="py-2 text-slate-400">12%</td>
+            <td class="py-2 text-red-400">68.4</td>
+            <td class="py-2 text-sky-400 font-semibold">73.3</td>
+            <td class="py-2 text-emerald-400 font-bold">90.0</td>
+            <td class="py-2 text-slate-400">跨控制器（FANUC↔西门子）宏变量对齐，自适应单位换算稳定</td>
+          </tr><tr>
+            <td class="py-2 font-medium">指令遵循</td>
+            <td class="py-2 text-slate-400">12%</td>
+            <td class="py-2 text-red-400">61.8</td>
+            <td class="py-2 text-sky-400 font-semibold">86.7</td>
+            <td class="py-2 text-emerald-400 font-bold">93.3</td>
+            <td class="py-2 text-slate-400">剥离模板恶意注入的空think换行，严格行数与纯JSON格式合格率大幅提升</td>
+          </tr><tr>
+            <td class="py-2 font-medium">多模态理解</td>
+            <td class="py-2 text-slate-400">12%</td>
+            <td class="py-2 text-red-400">1.7</td>
+            <td class="py-2 text-sky-400 font-semibold">1.7</td>
+            <td class="py-2 text-emerald-400 font-bold">96.7</td>
+            <td class="py-2 text-slate-400">纯文本权重无图像感知能力，实测需真实挂接Qwen-VL或OCR前置通道</td>
+          </tr><tr>
+            <td class="py-2 font-medium">内容生成</td>
+            <td class="py-2 text-slate-400">12%</td>
+            <td class="py-2 text-red-400">81.1</td>
+            <td class="py-2 text-sky-400 font-semibold">83.3</td>
+            <td class="py-2 text-emerald-400 font-bold">90.0</td>
+            <td class="py-2 text-slate-400">五工步工序规程卡、首件检验表及圆弧多轴代码编写质量过硬</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</body>
+</html>

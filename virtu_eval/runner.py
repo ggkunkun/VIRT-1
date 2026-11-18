@@ -25,6 +25,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from virtu_eval.arms import build_arm  # noqa: E402
 from virtu_eval.graders import score_case  # noqa: E402
+from virtu_eval import provenance as P  # noqa: E402
 
 DIM_ORDER = ["reasoning", "knowledge", "instruction", "generation",
              "multimodal", "generalization", "boundary", "toolcall"]
@@ -163,6 +164,70 @@ def tools_gate(arm_spec, cases):
         f"VIRTU_ALLOW_TOOLSLESS_TOOLCALL=1 明确豁免（豁免会写进 manifest）。")
 
 
+def _arm_model_ids(arm_spec):
+    """臂规格里可被 RunIdentity.capture 按内容寻址的构件标识。
+
+    ollama/http 臂用 model_id，hf 臂用 model_path/adapter_path。capture 对库里
+    找不到的标识只记 present=False，不会抛异常，因此新机/离线起腿照样能封指纹。
+    """
+    ids = []
+    for key in ("model_id", "model_path", "adapter_path"):
+        val = (arm_spec or {}).get(key)
+        if isinstance(val, str) and val:
+            ids.append(val)
+    return ids
+
+
+def _write_json_atomic(path, doc):
+    tmp = path + ".tmp"
+    with open(tmp, "w", encoding="utf-8") as f:
+        json.dump(doc, f, ensure_ascii=False, indent=2)
+    os.replace(tmp, path)
+
+
+def _finalize_identity(out_dir, identity_path, manifest_path, manifest,
+                       legacy, dry, identity):
+    """收腿：identity.drift() 非空即整腿作废，绝不写 results.json。
+
+    - drift 非空：manifest 标 status=voided / failed、追加 drift_log.jsonl、
+      显式标记 results.json 被抑制。本函数从不创建也从不改写 results.json，
+      所以漂移腿没有任何分数文件出炉。
+    - legacy：旧腿无 identity.json，不补造、不判漂移、不崩，保持 basis=partial。
+    - dry：演练不写身份、不判漂移。
+    """
+    if dry or legacy:
+        if legacy:
+            manifest["status"] = manifest.get("status") or "completed_legacy"
+            manifest["attribution_basis"] = "partial"
+            _write_json_atomic(manifest_path, manifest)
+        return
+    if identity is None:
+        # fail closed：没有身份就不该走到这里，绝不静默当成一条正常腿。
+        raise ValueError(f"{out_dir}: 缺少 identity.json，无法核对本腿归因")
+    drift = identity.drift()
+    if drift:
+        manifest["status"] = "voided"
+        manifest["failed"] = True
+        manifest["void_reason"] = "identity_drift"
+        manifest["attribution_basis"] = "voided"
+        manifest["drift"] = drift
+        manifest["results_json"] = "suppressed_due_to_drift"
+        log = os.path.join(out_dir, "drift_log.jsonl")
+        with open(log, "a", encoding="utf-8") as f:
+            f.write(json.dumps({
+                "at": time.strftime("%Y-%m-%dT%H:%M:%S"),
+                "run_id": identity.run_id,
+                "event": "identity_drift",
+                "drift": drift,
+                "action": "void_leg; results.json suppressed",
+            }, ensure_ascii=False) + "\n")
+        print(f"[VOIDED] {out_dir}: 身份漂移 {drift} —— 本腿分数作废，不写 results.json",
+              flush=True)
+    else:
+        manifest["status"] = "completed"
+    _write_json_atomic(manifest_path, manifest)
+
+
 def run(case_dir, arm_spec, out_dir, dims=None, tiers=None, limit_per_dim=None,
         sample_per_tier=None, temperature=0.0, seed=1234, max_tokens_cap=None,
         cap_by_tier=None, token_floor=None, dry=False, repeats=1, case_ids_file=None):
@@ -207,6 +272,40 @@ def run(case_dir, arm_spec, out_dir, dims=None, tiers=None, limit_per_dim=None,
         "arms.py": os.path.join(os.path.dirname(__file__), "arms.py"),
         "graders.py": os.path.join(os.path.dirname(__file__), "graders.py"),
     }
+    # --- P0-B 归因链：起腿用 RunIdentity.capture() 把构件/用例/判分器按内容寻址 ---
+    # 旧腿（有 manifest/raw 却从未 capture 过）不补造、不崩，走 legacy 分支并显式
+    # 标 basis=partial；resume 自己起过的腿直接 read，避免 run_id 在续跑时漂移。
+    case_hashes = {f: sha256_file(os.path.join(case_dir, f))
+                   for f in sorted(os.listdir(case_dir)) if f.endswith(".jsonl")}
+    identity_path = os.path.join(out_dir, "identity.json")
+    legacy = (not dry and (bool(done) or existing_manifest is not None)
+              and not os.path.exists(identity_path))
+    if existing_manifest is not None and existing_manifest.get("status") == "voided":
+        raise ValueError(f"{out_dir}: 本腿已因身份漂移作废（status=voided），拒绝续跑")
+    identity = None
+    if dry:
+        # 演练不产生真实证据：不写 identity.json，收腿也跳过 drift。
+        pass
+    elif legacy:
+        identity = None
+    elif os.path.exists(identity_path):
+        identity = P.RunIdentity.read(identity_path)
+    else:
+        # 用例 sha256 走 extra 而不是 case_dirs：provenance.drift() 对 cases 用
+        # (ROOT/data/benchmark).rglob(name) 取首个同名文件比对，本仓有 9 份同名
+        # boundary.jsonl，会把一条正常腿误判成"用例集已被改动"而作废。这里把用例
+        # 指纹固定进 extra（仍进 run_id 哈希）与 manifest.case_file_sha256，drift()
+        # 则专注检测它真正可靠的 Ollama 层摘要与判分器 sha256（标签重指向/换尺）。
+        identity = P.RunIdentity.capture(
+            model_ids=_arm_model_ids(arm_spec),
+            case_dirs=(),
+            ruler_files=("virtu_eval/graders.py", "virtu_eval/runner.py",
+                         "virtu_eval/arms.py"),
+            extra={"temperature": temperature, "seed": seed,
+                   "repeats": int(repeats), "max_tokens_cap": max_tokens_cap,
+                   "token_floor": token_floor,
+                   "case_dir": case_dir, "case_file_sha256": case_hashes})
+        identity.write(identity_path)
     manifest = {
         "git_sha": git_sha(),
         "harness_source_sha256": {name: sha256_file(path)
@@ -216,13 +315,19 @@ def run(case_dir, arm_spec, out_dir, dims=None, tiers=None, limit_per_dim=None,
                      "cap_by_tier": cap_by_tier, "token_floor": token_floor,
                      "sample_per_tier": sample_per_tier},
         "case_dir": case_dir,
-        "case_file_sha256": {f: sha256_file(os.path.join(case_dir, f))
-                             for f in sorted(os.listdir(case_dir)) if f.endswith(".jsonl")},
+        "case_file_sha256": case_hashes,
         "tools_gate": tools_gate(arm_spec, cases),
         "repeats": int(repeats),
         "n_cases_selected": len(cases),
         "selected_case_ids": [case["id"] for case in cases],
         "harness": "virtu_eval v1",
+        # P0-B：内容指纹写进 manifest，分数才回答得出"哪段字节产生了你"。
+        "run_id": (identity.run_id if identity is not None
+                   else (existing_manifest or {}).get("run_id")),
+        "attribution_basis": ("partial" if legacy else
+                              ("partial" if dry else "measured")),
+        "identity_legacy": bool(legacy),
+        "identity_file": "identity.json" if identity is not None else None,
     }
     if done and existing_manifest is None:
         raise ValueError("Cannot resume raw.jsonl without its original manifest.json")
@@ -377,6 +482,10 @@ def run(case_dir, arm_spec, out_dir, dims=None, tiers=None, limit_per_dim=None,
         if arm is not None:
             arm.unload()
     print(f"[done] {n} new records -> {raw_path}", flush=True)
+    # 收腿：核对起腿时封存的身份，漂移即整腿作废（status=voided、drift_log.jsonl，
+    # 且不写 results.json）。legacy 旧腿与 dry 演练由 _finalize_identity 内部处理。
+    _finalize_identity(out_dir, identity_path, manifest_path, manifest,
+                       legacy, dry, identity)
     return raw_path
 
 

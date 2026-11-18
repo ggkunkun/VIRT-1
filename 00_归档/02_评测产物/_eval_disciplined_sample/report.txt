@@ -1,0 +1,11 @@
+Virtu evaluation: bridge_deployed
+records=24 valid=False transport_errors=6
+overall_weighted=72.42
+boundary: score=77.78 n=3 pass_rate=0.6667
+generalization: score=40.0 n=3 pass_rate=0.0
+generation: score=24.52 n=3 pass_rate=0.0
+instruction: score=88.89 n=3 pass_rate=0.6667
+knowledge: score=83.33 n=3 pass_rate=0.6667
+reasoning: score=88.89 n=3 pass_rate=0.6667
+problems:
+- transport_error 占比 25.0% > 5%，本轮分数无效，需重跑

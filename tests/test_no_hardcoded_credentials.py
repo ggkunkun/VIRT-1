@@ -46,6 +46,9 @@ ALLOWED = {"changeme", "placeholder", "your_password", "redacted", "serverselect
 def candidate_files():
     """Tracked Python files plus the untracked helpers in scripts/ and repo root."""
     paths = set()
+    # 自指例外：本文件含「探测器必须响」的合成字面量（password='Sup3rSecretValue'），
+    # 把它自己纳入扫描会让这项闸门永久红，从而失去意义。只排除本文件。
+    self_path = Path(__file__).resolve()
     out = subprocess.run(["git", "ls-files", "*.py"], cwd=str(ROOT),
                          capture_output=True, text=True).stdout
     for line in out.splitlines():
@@ -55,7 +58,7 @@ def candidate_files():
                     "cloud_train_pack/*.py"):
         for hit in glob.glob(str(ROOT / pattern)):
             paths.add(Path(hit))
-    return sorted(paths)
+    return sorted(p for p in paths if p.resolve() != self_path)
 
 
 class TestDetectorIsNotBlind:
@@ -139,6 +142,7 @@ class TestRepositoryIsClean:
         env = dict(os.environ)
         env.pop("DAMODEL_PASS", None)
         env.pop("DAMODEL_PORT", None)
+        env["PYTHONIOENCODING"] = "utf-8"
         passfile = ROOT / ".damodel_pass"
         hidden = None
         if passfile.exists():  # step aside, never delete a real secret file
@@ -149,7 +153,8 @@ class TestRepositoryIsClean:
                 [sys.executable, "-c",
                  "import sys; sys.path.insert(0, r'%s'); import damodel_env; "
                  "damodel_env.load()" % (ROOT / "scripts")],
-                capture_output=True, text=True, env=env)
+                capture_output=True, text=True, env=env,
+                encoding="utf-8", errors="replace")
             assert proc.returncode != 0, "缺凭据必须非零退出，不能静默继续"
             assert "口令不得写入源码" in (proc.stdout + proc.stderr)
         finally:
@@ -177,11 +182,13 @@ class TestRepositoryIsClean:
         """
         env = dict(os.environ)
         env.pop("DAMODEL_PASS", None)
+        env["PYTHONIOENCODING"] = "utf-8"
         probe = ("import sys; sys.path.insert(0, r'%s'); import damodel_env as e; "
                  "assert e.password_for('cn-north-b.ssh.damodel.com', 44228); "
                  "e.password_for('cn-north-b.ssh.damodel.com', 1)" % (ROOT / "scripts"))
         proc = subprocess.run([sys.executable, "-c", probe], capture_output=True,
-                              text=True, env=env)
+                              text=True, env=env,
+                              encoding="utf-8", errors="replace")
         assert proc.returncode != 0, "未知端口必须失败关闭"
         assert "口令不得写入源码" in (proc.stdout + proc.stderr)
 

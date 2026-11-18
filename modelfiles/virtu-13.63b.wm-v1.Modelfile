@@ -1,0 +1,82 @@
+# FROM virtu-13.63b:latest
+
+FROM E:/ollama/models/blobs/sha256-8610e63361db3280d28f656e48ba996db26a6459ca15c2401daa99ee7ccdeed7
+TEMPLATE """
+{{- $lastUserIdx := -1 -}}
+{{- range $idx, $msg := .Messages -}}
+{{- if eq $msg.Role "user" }}{{ $lastUserIdx = $idx }}{{ end -}}
+{{- end }}
+{{- if or .System .Tools }}<|im_start|>system
+{{ if .System }}
+{{ .System }}
+{{- end }}
+{{- if .Tools }}
+
+# Tools
+
+You may call one or more functions to assist with the user query.
+
+You are provided with function signatures within <tools></tools> XML tags:
+<tools>
+{{- range .Tools }}
+{"type": "function", "function": {{ .Function }}}
+{{- end }}
+</tools>
+
+For each function call, return a json object with function name and arguments within <tool_call></tool_call> XML tags:
+<tool_call>
+{"name": <function-name>, "arguments": <args-json-object>}
+</tool_call>
+{{- end -}}
+<|im_end|>
+{{ end }}
+{{- range $i, $_ := .Messages }}
+{{- $last := eq (len (slice $.Messages $i)) 1 -}}
+{{- if eq .Role "user" }}<|im_start|>user
+{{ .Content }}
+{{- if and $.IsThinkSet (eq $i $lastUserIdx) }}
+   {{- if $.Think -}}
+      {{- " "}}/think
+   {{- else -}}
+      {{- " "}}/no_think
+   {{- end -}}
+{{- end }}<|im_end|>
+{{ else if eq .Role "assistant" }}<|im_start|>assistant
+{{ if (and $.IsThinkSet (and .Thinking (or $last (gt $i $lastUserIdx)))) -}}
+<think>{{ .Thinking }}</think>
+{{ end -}}
+{{ if .Content }}{{ .Content }}
+{{- else if .ToolCalls }}<tool_call>
+{{ range .ToolCalls }}{"name": "{{ .Function.Name }}", "arguments": {{ .Function.Arguments }}}
+{{ end }}</tool_call>
+{{- end }}{{ if not $last }}<|im_end|>
+{{ end }}
+{{- else if eq .Role "tool" }}<|im_start|>user
+<tool_response>
+{{ .Content }}
+</tool_response><|im_end|>
+{{ end }}
+{{- if and (ne .Role "assistant") $last }}<|im_start|>assistant
+{{ if and $.IsThinkSet (not $.Think) -}}
+<think>
+
+</think>
+
+{{ end -}}
+{{ end }}
+{{- end }}
+"""
+SYSTEM """你是 Virtu 工业世界模型。只输出一个 JSON 对象，首尾为 {}，顶层可含 world_state、derivation、invalid、reason；数值必须是计算结果而非算式，参数不足或非法时给 world_state:null 与 reason。直接给答案，禁止描述内部分工、禁止解释身份。
+【输出铁律】禁止输出 tool / arguments / action / function 等工具调用字段；桌面键鼠与屏幕感知属于通用工业助手标签，本标签不承担该职责。
+【闸门】safety_factor>=1.5 记 fos_gate="pass"，否则 "fail"；材料去除 delta_volume_mm3<0；collision 族已过切(gouge=true) 时 collision_risk 必须记 "high"。
+【键名】只用契约登记的带单位后缀键名，如 surface_roughness_ra_um、safety_factor、delta_volume_mm3、component_tolerances_mm、centroid_mm。
+"""
+PARAMETER stop <|im_start|>
+PARAMETER stop <|im_end|>
+PARAMETER stop <|endoftext|>
+PARAMETER temperature 0.1
+PARAMETER top_p 0.9
+PARAMETER top_k 20
+PARAMETER repeat_penalty 1.02
+PARAMETER presence_penalty 0.3
+PARAMETER min_p 0.05

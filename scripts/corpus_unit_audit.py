@@ -59,7 +59,7 @@ def dims_from_world_state(line: str):
                 "volume_stored": stored.group(1)}
     return {"shape": shape_m.group(1), "ixx": w * h ** 3 / 12.0 if shape_m.group(1) == "box"
             else math.pi * r ** 4 / 4.0,
-            "izz": l * w ** 3 / 12.0 if shape_m.group(1) == "box" else math.pi * r ** 4 / 4.0}
+            "izz": l * w ** 3 / 12.0 if shape_m.group(1) == "box" else math.pi * r ** 4 / 2.0}
 
 
 def analytic(shape, prompt) -> dict | None:
@@ -74,12 +74,15 @@ def analytic(shape, prompt) -> dict | None:
         if not m:
             return None
         r, h = (float(x) for x in m.groups())
-        return {"ixx": math.pi * r ** 4 / 4.0, "izz": math.pi * r ** 4 / 4.0}
+        # 圆柱轴线沿 z：izz 是绕轴线的极惯性矩 pi*r^4/2（与 mass_props_csg /
+        # wm_schema 定律卡同源）。旧求解器把 pi*r^4/2 挂在 y 轴、审计真值两轴
+        # 都写 /4，会把正确的 izz 判成错值并"修"回一半（2026-11-08 修）。
+        return {"ixx": math.pi * r ** 4 / 4.0, "izz": math.pi * r ** 4 / 2.0}
     return None
 
 
 def row_issue(line: str):
-    if "inertia_ixx_mm4" not in line:
+    if not FIELD_RE.search(line):
         return None
     shape_m = SHAPE_RE.search(line)
     shape = (shape_m.group(1) or shape_m.group(2)) if shape_m else None

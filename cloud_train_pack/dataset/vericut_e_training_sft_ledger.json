@@ -1,0 +1,19 @@
+{
+  "schema_version": "1.0",
+  "dataset": "vericut_e_training_sft.jsonl",
+  "output_path": "D:\\Virtu模型\\cloud_train_pack\\dataset\\vericut_e_training_sft.jsonl",
+  "output_sha256": "50f16388357b76ed19520fb2da7451792597f13c76871e3b9f0cd444fce6bdd4",
+  "count": 1480,
+  "files": {
+    "vericut_e_training_sft.jsonl": {
+      "sha256": "50f16388357b76ed19520fb2da7451792597f13c76871e3b9f0cd444fce6bdd4",
+      "rows": 1480
+    },
+    "vericut_e_training_dpo.jsonl": {
+      "sha256": "3bcc4d609e67d9861372492df10b392c827a8e3ba7ddc123f579ab5cc250645e",
+      "rows": 447
+    }
+  },
+  "source_facts_sha256": "3b3c6f7a5d989a0a91abde68fbd81d89f4cccc91d4ed24792a73b602274449b8",
+  "basis": "parser_verified"
+}

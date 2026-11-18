@@ -33,6 +33,9 @@ CANONICAL_DIR = ROOT / "modelfiles"
 DEFAULT_TAGS = {
     "virtu-moe-14b:hardened": "virtu-moe-14b.hardened.Modelfile",
     "virtu-13.63b:hardened": "virtu-13.63b.hardened.Modelfile",
+    # 统一基座（2026-11-16）：由 modelfiles/BASE/virtu_base.py 单一真源渲染，
+    # 作为现有生产标签的配置基准；纳入漂移门后，任何未同步的修改都会失败。
+    "virtu-base:unified": "BASE/virtu-base.Modelfile",
 }
 
 # Tags that must never be drifted: the ones actually served in production.

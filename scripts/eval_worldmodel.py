@@ -32,6 +32,7 @@ sys.path.insert(0, HERE)
 import build_worldmodel_sft as W
 import wm_contract as C
 from guard_hooks import apply_guard  # 推理时护栏：生成即校验，替换旧的只判分用法
+from wm_leak_audit import template_of  # 数字脱敏后的模板签名，用于模板级去污
 
 GEN_BY_FAMILY = {
     "removal": W.gen_removal_mrr,
@@ -43,15 +44,113 @@ GEN_BY_FAMILY = {
     "mass_props": W.gen_mass_props,
     "invalid": W.gen_invalid,
 }
+
+# v2 四族补齐：旧版 GEN_BY_FAMILY 只有 v1 八族，design/process/adapt_machine/
+# adapt_material 虽然在契约、验算器、护栏里全部落地，却从未进过评测器 →
+# 新族"有没有通过率"这件事一直无数据，属评测链路真实缺口。
+try:
+    import build_worldmodel_v2 as V2
+
+    def _fam_filter(gen, fam, tries=200):
+        """gen_unfamiliar_adaptation 随机返回 adapt_machine / adapt_material 之一，
+        评测需要单族样本，故按 rec['scenario']['task'] 重采样直到命中目标族。"""
+        def g(rng):
+            for _ in range(tries):
+                r = gen(rng)
+                if r and (r.get("scenario") or {}).get("task") == fam:
+                    return r
+            return None
+        return g
+
+    GEN_BY_FAMILY.update({
+        "design": V2.gen_design_from_requirement,
+        "process": V2.gen_machining_process_plan,
+        "adapt_machine": _fam_filter(V2.gen_unfamiliar_adaptation, "adapt_machine"),
+        "adapt_material": _fam_filter(V2.gen_unfamiliar_adaptation, "adapt_material"),
+    })
+except Exception as _e:  # v2 语料构建器缺失时不影响 v1 八族评测
+    print(f"[warn] v2 族评测不可用: {_e}", file=sys.stderr)
+
+# 题面改写层（FIX H10，2026-11-08）：模板级去污只能删掉「与训练集同模板」的用例，
+# 删不掉「同一套措辞」本身 —— 12 族题面全部由训练语料构建器生成，数字一换，
+# 模型仍在做「认模板 → 填数字」。改写层在**评测侧**换措辞、不换输入与期望值，
+# 让去污后的用例真正与训练分布脱钩；--no-paraphrase 可退回原始模板做对照。
+PARAPHRASE_READY = False
+try:
+    import wm_eval_paraphrase as _PARA
+
+    GEN_BY_FAMILY = {fam: _PARA.wrap(g, fam) for fam, g in GEN_BY_FAMILY.items()}
+    PARAPHRASE_READY = True
+except Exception as _e:  # 缺少改写层时评测退化为原始模板，但不静默
+    print(f"[warn] 题面改写层不可用，评测退化为原始模板: {_e}", file=sys.stderr)
+
 REL_TOL = 0.08  # 8% 相对容差
 
 # P0 修复：判分词表改为从契约单一真源导入，禁止在本文件另立一份。
 # 历史缺陷是本文件持有唯一 NUM_KEYS，而该词表从未下发给模型。
 NUM_KEYS = {fam: spec["numeric"] for fam, spec in C.KEY_SCHEMA.items()}
 GATES = {fam: list(spec["gates"].keys()) for fam, spec in C.KEY_SCHEMA.items()}
+# P-6/P-7：闸门 / 文本 / 布尔三类键一律从契约派生，本文件不再持有任何硬编码词表。
+GATE_KEYS = GATES
+TEXT_KEYS = {fam: list(spec.get("texts") or []) for fam, spec in C.KEY_SCHEMA.items()}
+BOOL_KEYS = {fam: list(spec.get("bools") or []) for fam, spec in C.KEY_SCHEMA.items()}
+NESTED_KEYS = {fam: list(spec.get("nested") or []) for fam, spec in C.KEY_SCHEMA.items()}
+# 规格子树的展平/改名表已下沉到 wm_contract（护栏与判分器共用同一口径）。
 
 
-def call_ollama(model, prompt, system, think=False, max_tokens=1024, force_json=True):
+def _norm_text(v):
+    """文本键归一：去空白/下划线/连字符，小写。用于 finish_class(H7/g6)、
+    material(Al6061 vs AL6061)、machine 型号等字面比较。"""
+    return str(v).strip().lower().replace(" ", "").replace("_", "").replace("-", "")
+
+
+def _to_bool(v):
+    """布尔键归一：兼容 True/1/"true"/"是"/"pass" 与 False/0/"false"/"否"/"fail"。"""
+    if isinstance(v, bool):
+        return v
+    if isinstance(v, (int, float)):
+        return bool(v)
+    s = str(v).strip().lower()
+    if s in ("true", "1", "yes", "y", "是", "pass", "ok"):
+        return True
+    if s in ("false", "0", "no", "n", "否", "fail", "ng"):
+        return False
+    return None
+
+
+def _merge_nested(fam, obj, flat):
+    """把顶层规格子树展平并入 world_state 视图；world_state 同名字段优先。
+
+    口径唯一真源 = wm_contract.merge_nested_top（护栏交付也用它），避免
+    「同一答案原生判 PASS、护栏后判 FAIL」的两把尺子。
+    """
+    return C.merge_nested_top(obj, flat)
+
+
+def _cmp_array(ev, pv):
+    """数组型数值键（component_tolerances_mm / centroid_mm）逐元素比对。"""
+    if not isinstance(ev, (list, tuple)) or not isinstance(pv, (list, tuple)):
+        return False
+    if len(ev) != len(pv):
+        return False
+    for a, b in zip(ev, pv):
+        try:
+            a, b = float(a), float(b)
+        except (TypeError, ValueError):
+            return False
+        if abs(a) < 1e-9:
+            if abs(b) > 1e-6:
+                return False
+        elif abs(b - a) / abs(a) > REL_TOL:
+            return False
+    return True
+
+
+REQ_TIMEOUT = 180.0
+
+
+def call_ollama(model, prompt, system, think=False, max_tokens=1024, force_json=True,
+                timeout_sec=None):
     # 关掉 Qwen3 等模型的默认思考模式（否则输出被 <think> 包裹、world_state JSON
     # 无法解析，且思考 token 会吃光 num_predict）。非思考模型会忽略 think 字段；
     # temperature=0 保持可复现。
@@ -67,7 +166,8 @@ def call_ollama(model, prompt, system, think=False, max_tokens=1024, force_json=
     # 返回 UTF-8 中文会抛 UnicodeDecodeError → stdout=None → 整题被误记为解析
     # 失败。必须显式指定 utf-8 + errors=replace。
     p = subprocess.run(["curl", "-s", "http://127.0.0.1:11434/api/generate", "-d", payload],
-                       capture_output=True, text=True, timeout=180,
+                       capture_output=True, text=True,
+                       timeout=(timeout_sec or REQ_TIMEOUT),
                        encoding="utf-8", errors="replace")
     raw = (p.stdout or "").strip()
     try:
@@ -111,6 +211,20 @@ def _flatten(d):
     return out
 
 
+def _wrap(gws):
+    """把 guard 的 final_world_state 归一成完整对象。
+
+    guard 有两种返回形态：① accept 分支回原对象（含 world_state/invalid）
+    ② derivation_solver 分支回内层 world_state 字典。必须兼容，否则
+    invalid 族（world_state=null）会被包成 {"world_state":{...}} 判成格式失败。
+    """
+    if not isinstance(gws, dict):
+        return None
+    if "world_state" in gws or "invalid" in gws:
+        return gws
+    return {"world_state": gws}
+
+
 def judge(fam, exp, full):
     """判单条：full 为完整对象（含 world_state 顶层）。返回 (ok, fmt_ok, miss)。"""
     if not isinstance(full, dict):
@@ -122,12 +236,31 @@ def judge(fam, exp, full):
         return False, False, ["<no_world_state>"]
     ews = _flatten(exp.get("world_state") or {})
     pws = _flatten(full["world_state"])
+    # P-4 修复：design 族的契约把规格键放在 world_state 之外的 design 子树
+    # （KEY_SCHEMA["design"].nested），训练样本的 world_state 里只有 volume/mass/material。
+    # 原判分器只读 world_state，于是模型的 outer_dia_mm/bore_dia_mm/... 一个都认不到，
+    # design 族恒定 100% FAIL —— 这是"判分器与契约不同源"造成的系统性假失败。
+    ews = _merge_nested(fam, exp, ews)
+    pws = _merge_nested(fam, full, pws)
     ok = True
     miss = []
     for k in NUM_KEYS[fam]:
-        if k not in ews or k not in pws:
+        # P-5 修复：期望样本没有该键 = 该题不考察该键，不得因模型"也没写"而判失败。
+        # 原实现只要 ews 缺键就 append "(missing)" 并判 FAIL，等于要求模型把
+        # 契约里全部可选键都吐出来，与契约（可选键）自相矛盾。
+        if k not in ews:
+            continue
+        if k not in pws:
             ok = False
             miss.append(f"{k}(missing)")
+            continue
+        # 契约把 component_tolerances_mm / centroid_mm 登记在 numeric 分区，
+        # 但取值是数组；旧实现无条件 float(...) 抛 TypeError，使 tolerance 与
+        # mass_props 两族「标准答案判自己」都 FAIL（100% 假失败）。
+        if isinstance(ews[k], (list, tuple)) or isinstance(pws[k], (list, tuple)):
+            if not _cmp_array(ews[k], pws[k]):
+                ok = False
+                miss.append(f"{k}(array!=)")
             continue
         try:
             ev, pv = float(ews[k]), float(pws[k])
@@ -142,11 +275,41 @@ def judge(fam, exp, full):
         elif abs(pv - ev) / abs(ev) > REL_TOL:
             ok = False
             miss.append(f"{k}({pv:g}!={ev:g})")
-    for gate in ("fos_gate", "volume_conservation", "autodiff", "tolerance_pass"):
-        if gate in ews and gate in pws:
-            if C.normalize_gate(gate, ews[gate]) != C.normalize_gate(gate, pws[gate]):
-                ok = False
-                miss.append(f"{gate}({pws[gate]}!={ews[gate]})")
+    # P-6 修复：闸门列表此前硬编码 4 个字面，契约新增闸门不会自动纳入校验（漏判）。
+    # 现从 KEY_SCHEMA 派生，且缺键纳入记账（期望有而模型没写 = 不通过）。
+    for gate in GATE_KEYS.get(fam, ()):
+        if gate not in ews:
+            continue
+        if gate not in pws:
+            ok = False
+            miss.append(f"{gate}(missing)")
+            continue
+        if C.normalize_gate(gate, ews[gate]) != C.normalize_gate(gate, pws[gate]):
+            ok = False
+            miss.append(f"{gate}({pws[gate]}!={ews[gate]})")
+    # P-7 修复：文本键与布尔键此前完全不判 → 假绿。
+    # 最典型的是 collision 族：collision_risk/gouge 才是该族的核心判定，
+    # 原判分器只比三个 Z 值，模型把 risk 写成 low、gouge 写成 false 照样 pass。
+    for k in TEXT_KEYS.get(fam, ()):
+        if k not in ews:
+            continue
+        if k not in pws:
+            ok = False
+            miss.append(f"{k}(missing)")
+            continue
+        if _norm_text(ews[k]) != _norm_text(pws[k]):
+            ok = False
+            miss.append(f"{k}({pws[k]}!={ews[k]})")
+    for k in BOOL_KEYS.get(fam, ()):
+        if k not in ews:
+            continue
+        if k not in pws:
+            ok = False
+            miss.append(f"{k}(missing)")
+            continue
+        if _to_bool(ews[k]) != _to_bool(pws[k]):
+            ok = False
+            miss.append(f"{k}({pws[k]}!={ews[k]})")
     return ok, True, miss
 
 
@@ -218,6 +381,44 @@ def extract_json(text):
     return None
 
 
+def load_train_prompts():
+    """加载 data/sft 下全部训练 JSONL 的 user prompt，供 --exclude-train 换差集。"""
+    d = os.path.join(ROOT, "data", "sft")
+    seen = set()
+    if not os.path.isdir(d):
+        return seen
+    for fn in os.listdir(d):
+        if not fn.endswith(".jsonl"):
+            continue
+        try:
+            with open(os.path.join(d, fn), encoding="utf-8") as f:
+                for line in f:
+                    line = line.strip()
+                    if not line:
+                        continue
+                    try:
+                        obj = json.loads(line)
+                    except Exception:
+                        continue
+                    for m in (obj.get("messages") or []):
+                        if m.get("role") == "user":
+                            seen.add(m.get("content", ""))
+                            break
+        except Exception:
+            continue
+    return seen
+
+
+def load_train_templates():
+    """训练集 prompt 的数字脱敏模板集合，供 --exclude-template 做模板级去污。
+
+    FIX H9 只挡「逐字重合」，挡不住「同一模板换个数字」——这类近重复同样
+    让模型走「模板 → 答案」的捷径。审计实测评测集模板级重合 16.10%，
+    远高于逐字重合的 6.83%，所以补这一层。
+    """
+    return {template_of(p) for p in load_train_prompts() if p}
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--model", default="virtu-wm-all90")
@@ -229,41 +430,125 @@ def main():
                     help="data=用数据自带 system（复现基线）; contract=纯世界模型契约; both=契约+原背景")
     ap.add_argument("--no-json-format", action="store_true",
                     help="关闭 grammar 约束（对照实验用；默认开启 format=json）")
+    # FIX H9（2026-11-08 审计）：去同源污染必须默认开启。
+    # 旧默认 False，实测 240 条评测里有 21 条（8.75%）与训练集 prompt 逐字重合，
+    # 模型只是在背题，指标被系统性高估；只有显式加 --exclude-train 才干净。
+    # 现在反过来：默认排除，需要背题口径复现基线时才加 --include-train。
+    ap.add_argument("--exclude-train", dest="exclude_train", action="store_true",
+                    default=True,
+                    help="排除与 data/sft 训练集 prompt 完全重合的用例（默认开启）")
+    ap.add_argument("--include-train", dest="exclude_train", action="store_false",
+                    help="允许训练集同源用例参与评测（复现历史基线时用，指标会偏高）")
+    # 模板级去污（在逐字去重之上再叠一层）。默认关闭：程序化生成器在模板被
+    # 大量拉黑后可能凑不够每族样本，静默缩水会污染指标可比性，因此默认只跑
+    # exact，需要干净的泛化口径时显式开启，且凑不够会打 WARN 而不是悄悄少测。
+    ap.add_argument("--exclude-template", dest="exclude_template", action="store_true",
+                    default=False,
+                    help="额外排除与训练集同模板（仅数字不同）的用例，需配合 --exclude-train")
+    ap.add_argument("--offset", type=int, default=0, help="用例分片起点（分批跑用）")
+    ap.add_argument("--limit", type=int, default=0, help="本片用例数（0=不分片）")
+    ap.add_argument("--timeout", type=float, default=180.0,
+                    help="单次 ollama 请求超时秒（显存被其他模型挤占时调大）")
+    ap.add_argument("--dry-run", action="store_true",
+                    help="只生成并打印用例分布，不调用模型（验证去污逻辑用）")
+    ap.add_argument("--no-paraphrase", dest="paraphrase", action="store_false",
+                    default=True,
+                    help="关闭题面改写，退回原始模板（与训练同措辞，仅作对照基线）")
     args = ap.parse_args()
+    if not args.paraphrase and PARAPHRASE_READY:
+        import wm_eval_paraphrase as _PARA_OFF
+
+        _PARA_OFF.ENABLED = False
+        print("[paraphrase] 已关闭：题面与训练同措辞，指标会偏高，仅用于对照")
+    elif PARAPHRASE_READY:
+        print("[paraphrase] 已开启：12 族题面换措辞、输入与期望值不变")
+    global REQ_TIMEOUT
+    REQ_TIMEOUT = float(args.timeout)
     force_json = not args.no_json_format
 
     import random
     rng = random.Random(args.seed)
+    train_prompts = load_train_prompts() if args.exclude_train else set()
+    if args.exclude_template and not args.exclude_train:
+        print("[WARN] --exclude-template 需配合 --exclude-train 生效，已自动启用逐字排除")
+        train_prompts = load_train_prompts()
+    train_tmpl = set()
+    if args.exclude_template:
+        train_tmpl = {template_of(p) for p in train_prompts if p}
+        print(f"[dedup] 模板级去污开启：训练集模板 {len(train_tmpl)} 个")
+
+    def _ptn(u: str) -> str:
+        return template_of(u) if train_tmpl else ""
+
     cases = []
     per = max(1, args.n // len(GEN_BY_FAMILY))
+    skipped = 0
+    shortfall = {}   # 族 -> 模板排除下凑不够的缺额，必须可见，不能悄悄少测
     for fam, g in GEN_BY_FAMILY.items():
+        got = 0
         for _ in range(per):
-            rec = g(rng)
+            rec = None
+            for _try in range(80):
+                rec = g(rng)
+                if rec is None:
+                    continue
+                u = rec["messages"][1]["content"]
+                if u in train_prompts or (train_tmpl and _ptn(u) in train_tmpl):
+                    skipped += 1
+                    rec = None
+                    continue
+                break
+            if rec is None:
+                continue
+            got += 1
             u = rec["messages"][1]["content"]
             sys_p = rec["messages"][0]["content"]
             exp = json.loads(rec["messages"][2]["content"])
-            cases.append((fam, u, sys_p, exp))
+            cases.append((fam, u, sys_p, exp, rec.get("scenario")))
+        if got < per:
+            shortfall[fam] = per - got
+    if args.exclude_train:
+        layer = "逐字+模板" if train_tmpl else "逐字"
+        print(f"[dedup] 跳过与训练集重合 {skipped} 例（{layer}层）；保留 {len(cases)} 例")
+    if shortfall:
+        print(f"[WARN] 以下族在去污约束下凑不够样本，指标为该族样本变少后的结果：{shortfall}")
     rng.shuffle(cases)
     cases = cases[:args.n]
+    if args.limit > 0:
+        cases = cases[args.offset:args.offset + args.limit]
+    elif args.offset:
+        cases = cases[args.offset:]
+
+    if args.dry_run:
+        # 只验用例生成与去污逻辑，不打模型：让 CI 能覆盖这段而不依赖显存。
+        from collections import Counter as _C
+        cnt = _C(c[0] for c in cases)
+        print(f"[dry-run] 用例 {len(cases)} 条，分布：{dict(sorted(cnt.items()))}")
+        for fam, u, _s, _e, _sc in cases[:3]:
+            print(f"  {fam}: {u[:80]}")
+        return 0
 
     stat = {fam: {"n": 0, "pass": 0, "raw_pass": 0, "parse_fail": 0, "fmt_ok": 0,
-                  "guard_checked": 0, "guard_blocked": 0} for fam in GEN_BY_FAMILY}
+                  "guard_checked": 0, "guard_blocked": 0, "l2_hit": 0}
+            for fam in GEN_BY_FAMILY}
     records = []
-    for fam, u, sys_p, exp in cases:
+    for fam, u, sys_p, exp, scn in cases:
         resp = call_ollama(args.model, u, C.merge_with_data_system(sys_p, args.system_mode),
                            force_json=force_json)
         raw_obj = extract_json(resp)
         stat[fam]["n"] += 1
         # —— 推理时护栏（生成即校验/纠正）——
-        # 评测用例无结构化 scenario，L2 求解器复算未启用；生产生成侧请经
-        # worldmodel_infer.generate_world_state 传入 scenario 以启用 L2 复算。
-        gres = apply_guard(resp, prompt=u, scenario=None, tol_rel=REL_TOL)
+        # A-1：评测用例携带生成器的结构化 scenario，使 L2 求解器复算分支真正启用，
+        # 评测链路与生产链路（worldmodel_infer.generate_world_state）同源。
+        gres = apply_guard(resp, prompt=u, scenario=scn, tol_rel=REL_TOL)
         stat[fam]["guard_checked"] += 1
+        layers = gres.get("layers_hit") or []
+        if scn is not None and any("L2" in str(x) for x in layers):
+            stat[fam]["l2_hit"] += 1
         if gres["action"] in ("rejected", "escalate"):
             stat[fam]["guard_blocked"] += 1
-        # guard 的 final_world_state 是内层，补回 world_state 包裹以复用统一判分
-        gws = gres.get("final_world_state")
-        guard_obj = {"world_state": gws} if isinstance(gws, dict) else None
+        # guard 的 final_world_state 形态不统一（完整对象 / 内层），统一归一
+        guard_obj = _wrap(gres.get("final_world_state"))
         # 双指标：raw=模型原生输出（真实能力）；guard=护栏纠正后（交付形态）
         ok_raw, fmt_raw, miss_raw = judge(fam, exp, raw_obj)
         ok_g, fmt_g, miss_g = (judge(fam, exp, guard_obj) if guard_obj is not None
@@ -276,11 +561,24 @@ def main():
             stat[fam]["raw_pass"] += 1
         if ok_g:
             stat[fam]["pass"] += 1
+        # 护栏在 L2 分支会把求解器参考值**全量覆盖**到 world_state，因此
+        # `pass`（护栏后）测的是求解器，不是模型。逐条记录被改写的字段，
+        # 让任何引用 `pass` 的报告都能追溯到「这是交付形态分，不是能力分」。
+        raw_ws = _ws(raw_obj) if isinstance(raw_obj, dict) else {}
+        g_ws = _ws(guard_obj) if isinstance(guard_obj, dict) else {}
+        overwrote = sorted(k for k, v in g_ws.items()
+                           if k in raw_ws and raw_ws[k] != v)
         records.append({"family": fam, "user": u, "expected": exp,
+                        "scenario_present": scn is not None,
+                        "guard_layers": layers,
                         "predicted": guard_obj or raw_obj,
                         "pass": ok_g, "raw_pass": ok_raw, "fmt_raw": fmt_raw,
                         "miss": miss_g, "miss_raw": miss_raw,
-                        "guard_action": gres["action"], "raw": resp})
+                        "guard_action": gres["action"],
+                        "solver_overwrote_fields": overwrote,
+                        "pass_basis": ("delivery_guard_corrected" if ok_g and not ok_raw
+                                       else "model_raw"),
+                        "raw": resp})
 
     # 汇总
     total_n = sum(s["n"] for s in stat.values())
@@ -300,7 +598,16 @@ def main():
     print(f"  {'OVERALL':10s} 原生通过 {total_r:3d}/{total_n:3d} {total_r/total_n*100:5.1f}%  |  "
           f"护栏后 {total_p:3d}/{total_n:3d} {total_p/total_n*100:5.1f}%  |  "
           f"格式合规 {total_f:3d}/{total_n:3d} {total_f/total_n*100:5.1f}%")
+    total_l2 = sum(s["l2_hit"] for s in stat.values())
+    scn_n = sum(1 for fam, u, sp, ex, sc in cases if sc is not None)
     print(f"  {'GUARD':10s} 护栏检查 {total_gc:3d}/{total_n:3d}  |  拦截(拒绝/升级) {total_gb:3d}")
+    print(f"  {'L2':10s} 携 scenario {scn_n:3d}/{total_n:3d}  |  求解器复算命中 {total_l2:3d}/{total_n:3d}")
+    overwritten = sum(1 for r in records if r.get("solver_overwrote_fields"))
+    print("  [口径] 原生通过 = 模型能力（唯一可归因指标）；"
+          "护栏后通过 = 交付形态，护栏会把求解器参考值全量覆盖到 world_state，"
+          "不可当作模型得分。")
+    print(f"  [口径] 本轮 {overwritten}/{total_n} 条存在求解器字段改写，"
+          "逐条字段见 solver_overwrote_fields。")
     json.dump(records, open(os.path.join(ROOT, args.out), "w", encoding="utf-8"),
               ensure_ascii=False, indent=2)
     print(f"[ok] 明细 -> {args.out}")

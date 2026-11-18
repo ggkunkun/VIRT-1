@@ -1,0 +1,19 @@
+{
+  "schema_version": "1.0",
+  "dataset": "six_software_real_assets_sft.jsonl",
+  "output_path": "D:\\Virtu模型\\cloud_train_pack\\dataset\\six_software_real_assets_sft.jsonl",
+  "output_sha256": "5f5c436bfb24094832514a2644a2f201347c6097eeca56816be67bdfd84f7317",
+  "count": 850,
+  "files": {
+    "six_software_real_assets_sft.jsonl": {
+      "sha256": "5f5c436bfb24094832514a2644a2f201347c6097eeca56816be67bdfd84f7317",
+      "rows": 850
+    },
+    "six_software_real_assets_dpo.jsonl": {
+      "sha256": "032896c5ca1c420915355fd506db6943ea9afa7fa4d472826cf473d204644854",
+      "rows": 90
+    }
+  },
+  "source_facts_sha256": "e815aa2875fe38081f7f93710f6829374c3d07c94926a880789bdd4d517c9659",
+  "basis": "parser_verified"
+}

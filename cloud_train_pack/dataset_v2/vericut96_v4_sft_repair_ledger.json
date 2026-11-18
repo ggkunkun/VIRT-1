@@ -1,0 +1,27 @@
+{
+  "corpus": "vericut96_v4_sft_repair",
+  "seed": 20261118,
+  "output_path": "D:\\Virtu模型\\cloud_train_pack\\dataset_v2\\vericut96_v4_sft_repair.jsonl",
+  "output_sha256": "aaae72e66ca79ff621f9c761bbbc0c977fc6d7a31023b4c00792c0e694838d66",
+  "rows": 504,
+  "max_tokens": 809,
+  "lame_rows": 56,
+  "coord_unit_rows": 44,
+  "preservation_rows": 44,
+  "replay_rows": 360,
+  "top_families": {
+    "pdf_curriculum_qa": 65,
+    "lame_closed_form_v4": 56,
+    "vericut_coord_unit_v4": 44,
+    "nc_safety_diagnosis": 40,
+    "setup_workoffset": 35,
+    "tool_assembly_calc": 25,
+    "vericut_official_fact_v4": 20,
+    "setup_unit_collision": 20,
+    "nc_g49_bug_fix": 20,
+    "tool_assembly_list": 20,
+    "sw_plane_preserve_v4": 16,
+    "vericut_autodiff_preserve_v4": 16
+  },
+  "generated_at": "2026-11-18 14:27:30"
+}

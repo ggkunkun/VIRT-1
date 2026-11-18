@@ -1,0 +1,111 @@
+{
+  "started": "2026-11-15 21:46:37",
+  "free_gb_before": {
+    "D": 39.44071960449219,
+    "E": 59.12088394165039
+  },
+  "basis": "measured",
+  "t1": [
+    {
+      "file": "_deploy_six_software\\virtu-six-software_v1.q4_0.gguf",
+      "tag": "virtu-six-software:v1",
+      "basis": "measured_earlier+stat",
+      "bytes": 4614301728,
+      "mtime_recorded": "2026-11-15 15:19",
+      "mtime_now": "2026-11-15 15:19",
+      "size_matches": true,
+      "recorded_sha256": "d96938fbcb6002cbeab5fb0abd713e19b0980e232cde532455c401f41cb16f91",
+      "manifest_sha256": "d96938fbcb6002cbeab5fb0abd713e19b0980e232cde532455c401f41cb16f91",
+      "blob_on_e": true,
+      "verdict": "redundant-safe-to-delete",
+      "staged_hardlink_bytes": 0
+    },
+    {
+      "file": "_deploy_six_software_v2\\virtu-six-software_v2.q4_0.gguf",
+      "tag": "virtu-six-software:v2",
+      "basis": "measured_earlier+stat",
+      "bytes": 4614301728,
+      "mtime_recorded": "2026-11-15 18:48",
+      "mtime_now": "2026-11-15 18:48",
+      "size_matches": true,
+      "recorded_sha256": "cd222214412e69d3cf525440a7551eef797ef82f10f5f27d4acf18fb8fbb587a",
+      "manifest_sha256": "cd222214412e69d3cf525440a7551eef797ef82f10f5f27d4acf18fb8fbb587a",
+      "blob_on_e": true,
+      "verdict": "redundant-safe-to-delete",
+      "staged_hardlink_bytes": 0
+    },
+    {
+      "file": "_deploy_six_software_v3\\virtu-six-software_v3.q4_0.gguf",
+      "tag": "virtu-six-software:v3",
+      "basis": "measured_earlier+stat",
+      "bytes": 4614301728,
+      "mtime_recorded": "2026-11-15 20:18",
+      "mtime_now": "2026-11-15 20:18",
+      "size_matches": true,
+      "recorded_sha256": "abd8b726fbe792dddca40115cc93f3a9f915ff7389da3e5e8f2ad07e79baa10b",
+      "manifest_sha256": "abd8b726fbe792dddca40115cc93f3a9f915ff7389da3e5e8f2ad07e79baa10b",
+      "blob_on_e": true,
+      "verdict": "redundant-safe-to-delete",
+      "staged_hardlink_bytes": 0
+    },
+    {
+      "file": "_deploy_vericut96\\virtu-vericut96_v1.q4_0.gguf",
+      "tag": "virtu-vericut96:v1",
+      "basis": "measured_earlier+stat",
+      "bytes": 4614301728,
+      "mtime_recorded": "2026-11-14 20:32",
+      "mtime_now": "2026-11-14 20:32",
+      "size_matches": true,
+      "recorded_sha256": "588ab839d9c5b49ba81ea5b68dc14ae5cdcd1f316127baa5f5c83a04a0858834",
+      "manifest_sha256": "588ab839d9c5b49ba81ea5b68dc14ae5cdcd1f316127baa5f5c83a04a0858834",
+      "blob_on_e": true,
+      "verdict": "redundant-safe-to-delete",
+      "staged_hardlink_bytes": 0
+    },
+    {
+      "file": "_deploy_vericut96_v2\\virtu-vericut96_v2.q4_0.gguf",
+      "tag": "virtu-vericut96:v2",
+      "basis": "measured_earlier+stat",
+      "bytes": 4614301728,
+      "mtime_recorded": "2026-11-15 17:42",
+      "mtime_now": "2026-11-15 17:42",
+      "size_matches": true,
+      "recorded_sha256": "4f2f8dd5a2860ee2d28c14718c90afcfbd788efcb3caa5017a20fe3cb761f4da",
+      "manifest_sha256": "4f2f8dd5a2860ee2d28c14718c90afcfbd788efcb3caa5017a20fe3cb761f4da",
+      "blob_on_e": true,
+      "verdict": "redundant-safe-to-delete",
+      "staged_hardlink_bytes": 0
+    },
+    {
+      "file": "_deploy_vericut96_v3\\virtu-vericut96_v3.q4_0.gguf",
+      "tag": "virtu-vericut96:v3",
+      "basis": "measured_earlier+stat",
+      "bytes": 4614301728,
+      "mtime_recorded": "2026-11-15 19:08",
+      "mtime_now": "2026-11-15 19:08",
+      "size_matches": true,
+      "recorded_sha256": "6945dc61900fe4d5a6e4c104a9c07182778cfbea9e1151a311fee7f3f8e71ee9",
+      "manifest_sha256": "6945dc61900fe4d5a6e4c104a9c07182778cfbea9e1151a311fee7f3f8e71ee9",
+      "blob_on_e": true,
+      "verdict": "redundant-safe-to-delete",
+      "staged_hardlink_bytes": 0
+    },
+    {
+      "file": "_deploy_vericut_e\\virtu-vericut-e_latest.q4_0.gguf",
+      "tag": "virtu-vericut-e:latest",
+      "basis": "measured_earlier+stat",
+      "bytes": 4614301728,
+      "mtime_recorded": "2026-11-15 20:02",
+      "mtime_now": "2026-11-15 20:02",
+      "size_matches": true,
+      "recorded_sha256": "acf02db26c451bc6d23b9edc880ce1e16460e8c8f11caa9d8958473ea4833836",
+      "manifest_sha256": "acf02db26c451bc6d23b9edc880ce1e16460e8c8f11caa9d8958473ea4833836",
+      "blob_on_e": true,
+      "verdict": "redundant-safe-to-delete",
+      "staged_hardlink_bytes": 0
+    }
+  ],
+  "t2": [],
+  "mode": "dry-run",
+  "evidence_json": "D:\\Virtu模型\\benchmarks\\d_model_space_cleanup\\cleanup_20261115_214637.json"
+}

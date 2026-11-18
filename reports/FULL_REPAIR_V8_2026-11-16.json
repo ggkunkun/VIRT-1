@@ -1,0 +1,58 @@
+{
+  "generated_at": "2026-11-17 14:18:59",
+  "tag": "virtu-six-software:v8-repair",
+  "basis": "measured",
+  "corpus_sha256": "11cbeb7ea077a419d3533df01f03418ff18c39821383e12f4acfdc8a2cfb178c",
+  "corpus_rows": 661,
+  "rounds": [
+    {
+      "tag": "virtu-six-software:v8-repair",
+      "round": 1,
+      "passed": 7,
+      "total": 10,
+      "failed": {
+        "sw_coordinate_probe": "wrong_normal_axis:front",
+        "lame_stress_probe": "missing_sigma_theta_33.33",
+        "fanuc_g71_safety_probe": "G70,M30"
+      }
+    },
+    {
+      "tag": "virtu-six-software:v8-repair",
+      "round": 2,
+      "passed": 7,
+      "total": 10,
+      "failed": {
+        "sw_coordinate_probe": "wrong_normal_axis:front",
+        "lame_stress_probe": "missing_sigma_theta_33.33",
+        "fanuc_g71_safety_probe": "G70,M30"
+      }
+    },
+    {
+      "tag": "virtu-six-software:v8-repair",
+      "round": 3,
+      "passed": 7,
+      "total": 10,
+      "failed": {
+        "sw_coordinate_probe": "wrong_normal_axis:front",
+        "lame_stress_probe": "missing_sigma_theta_33.33",
+        "vericut_autodiff_probe": "swapped_meaning:red"
+      }
+    }
+  ],
+  "gate": {
+    "rule": "连测最差值做门禁 (project §8.2)",
+    "v8_rounds_passed": [
+      7,
+      7,
+      7
+    ],
+    "worst_passed": 7,
+    "worst_total": 10,
+    "worst_round": 1,
+    "worst_failed": {
+      "sw_coordinate_probe": "wrong_normal_axis:front",
+      "lame_stress_probe": "missing_sigma_theta_33.33",
+      "fanuc_g71_safety_probe": "G70,M30"
+    }
+  }
+}

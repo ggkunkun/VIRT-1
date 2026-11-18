@@ -1,0 +1,18 @@
+{
+  "report_sha256": "e06468c49a1186df0497c1d853f8b50ee191a4acc48a0a00d1d0e07caac9e555",
+  "artifacts": {
+    "analysis_audit.json": "01a5277502174fe1538183d2e8413544bdd79171ed207a4e900071998fb8a588",
+    "cad_audit.json": "9b4d45d8f03175cab61307d079d9131410173bfeb71b2e81b80d96ba97c6319a",
+    "cad_render.png": "da28b14b51382cd0ffda151519b8f215a3e9406bc384981e1e8c43ef072cc423",
+    "drawing_audit.json": "7170795b0e02e770e8d334f7d5c4690c4ea19b5381ca99e69c0dac9c55822101",
+    "drawing_render.png": "82204bd9d7fc45bdd5eca34f5d41a197255fe48b5a7332c54dc55b44ac5293a5",
+    "impeller_closed.step": "439e066fa800d7c2a66b44c457d24e5f8a9622a6dad77db536a3cbd430df8154",
+    "impeller_closed.stl": "46da7d456ab820b7d46c65fab724798c6269493e87d0fe0e80ec93779813ba9a",
+    "impeller_closed_2d.dxf": "1ec3c750cb07eeaac69402737b62fa4bb42a9e05d95977747a9994cc7b35bdc5",
+    "params_frozen.json": "894179c6738e2d73b5f5dfcf648eeecff1eca1305353c5b70878324ec9a7896b",
+    "proctor_log.jsonl": "56426ecd88714526dea319a809f5df2645789f06ec7926245b571d3caea33863",
+    "STRUCTURAL_REVIEW.json": "5e4487e9eacbb3d44a53d717385d4e6624e8182d8c4786a682add4e7feceb3d5",
+    "STRUCTURAL_REVIEW_planC.json": "5b1f0acfef120d150924639745f7e0bccd035a0b064ca840c4ba239264042927",
+    "VERIFICATION_REPORT.json": "e06468c49a1186df0497c1d853f8b50ee191a4acc48a0a00d1d0e07caac9e555"
+  }
+}

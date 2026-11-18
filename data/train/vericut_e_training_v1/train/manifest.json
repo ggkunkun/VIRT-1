@@ -1,0 +1,33 @@
+{
+  "catalog_path": "D:\\Virtu模型\\data\\train\\vericut_e_training_v1\\catalog\\e_training_catalog.json",
+  "train_jsonl": "D:\\Virtu模型\\data\\train\\vericut_e_training_v1\\train\\vericut_e_training_agent_sft.jsonl",
+  "train_rows": 495,
+  "train_sha256": "fb632153e2ae0a4714518c637c47e7c8b226ff38572797afebef578e52023274",
+  "holdout_jsonl": "D:\\Virtu模型\\data\\train\\vericut_e_training_v1\\holdout\\vericut_e_training_holdout.jsonl",
+  "holdout_rows": 120,
+  "holdout_sha256": "14201d037cf83de590d188bead878d2f31ef9e6b848999352c4e4b109a40d146",
+  "dpo_jsonl": "D:\\Virtu模型\\data\\train\\vericut_e_training_v1\\dpo\\vericut_e_training_dpo.jsonl",
+  "dpo_rows": 104,
+  "dpo_sha256": "7c9ecd5dd88327e4fa2246c06e48b0032de1fdccc75a11ae99c58e99daabbc2f",
+  "counts": {
+    "total_unique_files": 1186,
+    "pdfs": 90,
+    "projects": 80,
+    "machines": 45,
+    "controls": 31,
+    "tool_libs": 65,
+    "nc_programs": 83,
+    "other": 792
+  },
+  "holdout_session_groups": [
+    "6",
+    "15",
+    "22",
+    "24",
+    "105",
+    "109",
+    "255",
+    "502"
+  ],
+  "disjoint_sha_verified": true
+}

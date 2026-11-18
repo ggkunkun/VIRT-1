@@ -1,0 +1,22 @@
+{
+  "pass": true,
+  "volume_mm3": 365780.24,
+  "mass_g": 1620.41,
+  "watertight": true,
+  "envelope_xy_ok": true,
+  "envelope_z_ok": true,
+  "envelope_fraction": 0.1552,
+  "topology": {
+    "z_shroud": 74.0,
+    "z_hub": 4.0,
+    "z_mid": 40.5,
+    "shroud_ring": true,
+    "hub_ring": true,
+    "mid_ring": false,
+    "mid_islands": 12,
+    "violations": []
+  },
+  "fabrication": [],
+  "claimed_volume": 366154.26,
+  "claimed_mass": 1622.06
+}

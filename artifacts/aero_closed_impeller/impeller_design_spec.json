@@ -1,0 +1,148 @@
+{
+  "part": "AE-CI-258 航空发动机闭式离心叶轮",
+  "sample_document": "NASA NTRS 19750003125, Jansen & Kirschner 1974, 'Impeller blade design method for centrifugal compressors'",
+  "sample_csv": "D:\\Virtu模型\\artifacts\\nasa_1975_impeller_sample_params.csv",
+  "design_basis": "直纹面叶片：前缘为径向线元、尾缘为轴向线元、零 lean；轮毂-轮盖线性厚度锥度",
+  "derived": {
+    "overall_height_mm": 74.85,
+    "discharge_diameter_mm": 258.06,
+    "inlet_eye_diameter_mm": 169.16,
+    "inlet_hub_diameter_mm": 76.2,
+    "channel_height_exit_mm": 13.69,
+    "b2_consistency_passed": true,
+    "blade_pitch_deg": 22.5,
+    "blade_wrap_deg": -13.67
+  },
+  "physical_cross_checks": [
+    {
+      "check": "U2 = omega × r",
+      "radius_mm": 129.03,
+      "calculated_m_s": 377.0,
+      "sample_m_s": 377.0,
+      "deviation_pct": 0.004,
+      "passed": true
+    },
+    {
+      "check": "U1s = omega × r",
+      "radius_mm": 84.58,
+      "calculated_m_s": 247.1,
+      "sample_m_s": 247.1,
+      "deviation_pct": 0.006,
+      "passed": true
+    },
+    {
+      "check": "U1h = omega × r",
+      "radius_mm": 38.1,
+      "calculated_m_s": 111.3,
+      "sample_m_s": 111.3,
+      "deviation_pct": 0.014,
+      "passed": true
+    }
+  ],
+  "all_checks_passed": true,
+  "fields": [
+    {
+      "field": "blade_count",
+      "value": 16,
+      "unit": "-",
+      "source": "NASA 1975 sample (Fig.5)",
+      "confidence": "high"
+    },
+    {
+      "field": "r2_discharge_radius",
+      "value": 129.03,
+      "unit": "mm",
+      "source": "NASA 1975 sample 5.08 in",
+      "confidence": "high（U2 交叉验证通过）"
+    },
+    {
+      "field": "r1s_shroud_radius",
+      "value": 84.58,
+      "unit": "mm",
+      "source": "NASA 1975 sample 3.33 in",
+      "confidence": "high（U1s 交叉验证通过）"
+    },
+    {
+      "field": "r1h_hub_radius",
+      "value": 38.1,
+      "unit": "mm",
+      "source": "NASA 1975 sample 1.50 in",
+      "confidence": "high（U1h 交叉验证通过）"
+    },
+    {
+      "field": "b2_exit_width",
+      "value": 13.69,
+      "unit": "mm",
+      "source": "NASA 1975 sample 0.539 in",
+      "confidence": "high（与型线自洽：出口流道高 = b2）"
+    },
+    {
+      "field": "axial_length",
+      "value": 69.85,
+      "unit": "mm",
+      "source": "NASA 1975 sample 2.75 in",
+      "confidence": "high"
+    },
+    {
+      "field": "beta2_exit_blade_angle",
+      "value": -25.0,
+      "unit": "deg(相对径向)",
+      "source": "NASA 1975 sample 图5题注 25-degree backslope",
+      "confidence": "medium（OCR 原值缺失，取后弯 25°）"
+    },
+    {
+      "field": "blade_thickness_hub",
+      "value": 3.81,
+      "unit": "mm",
+      "source": "NASA 1975 sample 0.15 in",
+      "confidence": "high"
+    },
+    {
+      "field": "blade_thickness_shroud",
+      "value": 1.27,
+      "unit": "mm",
+      "source": "NASA 1975 sample 0.05 in",
+      "confidence": "high"
+    },
+    {
+      "field": "beta1_inlet_blade_angle",
+      "value": -12.0,
+      "unit": "deg",
+      "source": "engineering assumption（样本未给，按 16 叶片不干涉反推）",
+      "confidence": "low"
+    },
+    {
+      "field": "bore_radius",
+      "value": 12.5,
+      "unit": "mm",
+      "source": "engineering assumption Φ25 H7",
+      "confidence": "low"
+    },
+    {
+      "field": "hub_base_thickness",
+      "value": 6.0,
+      "unit": "mm",
+      "source": "engineering assumption",
+      "confidence": "low"
+    },
+    {
+      "field": "cover_wall",
+      "value": 5.0,
+      "unit": "mm",
+      "source": "engineering assumption（闭式化所需）",
+      "confidence": "low"
+    },
+    {
+      "field": "meridian_control_points",
+      "value": "HUB_CTRL/SHROUD_CTRL",
+      "unit": "-",
+      "source": "engineering assumption（样本只给端点，型线为重构）",
+      "confidence": "low"
+    }
+  ],
+  "explicit_uncertainties": [
+    "β2 原值为 OCR 缺失项，按题注 '25-degree backslope' 取值，需原图复核",
+    "子午型线控制点为重构结果，样本仅给 r1h/r1s/r2/b2/L 端点",
+    "轴孔/轮盘背厚/轮盖壁厚为工程假设，样本为开式叶轮气动件"
+  ]
+}

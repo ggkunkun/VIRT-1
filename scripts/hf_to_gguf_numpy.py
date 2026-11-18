@@ -47,7 +47,8 @@ VT_STRING, VT_ARRAY, VT_UINT64, VT_INT64, VT_FLOAT64 = 8, 9, 10, 11, 12
 # ggml tensor types
 TT_F32, TT_F16, TT_Q4_0 = 0, 1, 2
 
-# llama.cpp llama_ftype：MOSTLY_Q4_0 = 2
+# llama.cpp llama_ftype：MOSTLY_F16 = 1, MOSTLY_Q4_0 = 2
+FILE_TYPE_F16 = 1
 FILE_TYPE_Q4_0 = 2
 GGML_QNT_VERSION = 2
 
@@ -268,7 +269,7 @@ def gguf_dims(hf_shape: tuple) -> tuple:
 # --------------------------------------------------------------------------- #
 # metadata 构造
 # --------------------------------------------------------------------------- #
-def build_metadata(model: Path, cfg: dict, tokcfg: dict, tokenizer: dict) -> bytes:
+def build_metadata(model: Path, cfg: dict, tokcfg: dict, tokenizer: dict, out_dtype: str = "q4_0") -> bytes:
     h = cfg["hidden_size"]
     nl = cfg["num_hidden_layers"]
     nh = cfg["num_attention_heads"]
@@ -315,13 +316,16 @@ def build_metadata(model: Path, cfg: dict, tokcfg: dict, tokenizer: dict) -> byt
     pad = 151643
     chat_tpl = tokcfg.get("chat_template") or ""
 
+    ftype = FILE_TYPE_F16 if out_dtype == "f16" else FILE_TYPE_Q4_0
+    qlabel = "F16" if out_dtype == "f16" else "Q4_0"
+
     parts = [
         kv_str("general.architecture", "qwen3"),
         kv_str("general.name", model.name.replace("_", "-")),
         kv_str("general.description",
-               "Qwen3 architecture checkpoint, Q4_0 GGUF"),
+               f"Qwen3 architecture checkpoint, {qlabel} GGUF"),
         kv_u32("general.quantization_version", GGML_QNT_VERSION),
-        kv_u32("general.file_type", FILE_TYPE_Q4_0),
+        kv_u32("general.file_type", ftype),
         kv_u32("general.alignment", GGUF_DEFAULT_ALIGNMENT),
         kv_u32("qwen3.block_count", nl),
         kv_u32("qwen3.context_length", ctx),
@@ -353,7 +357,9 @@ def build_metadata(model: Path, cfg: dict, tokcfg: dict, tokenizer: dict) -> byt
 # --------------------------------------------------------------------------- #
 # 主转换
 # --------------------------------------------------------------------------- #
-def convert(model: Path, out: Path) -> dict:
+def convert(model: Path, out: Path, out_dtype: str = "q4_0") -> dict:
+    if out_dtype not in ("q4_0", "f16"):
+        raise ValueError(f"不支持的 out_dtype: {out_dtype}")
     cfg = json.loads((model / "config.json").read_text(encoding="utf-8"))
     tokcfg = json.loads((model / "tokenizer_config.json").read_text(encoding="utf-8"))
     tokenizer = json.loads((model / "tokenizer.json").read_text(encoding="utf-8"))
@@ -370,7 +376,7 @@ def convert(model: Path, out: Path) -> dict:
         wmap = {k: "model.safetensors" for k in reader.entries.keys()}
         reader.close()
 
-    meta_bytes, n_kv, n_tokens, n_merges = build_metadata(model, cfg, tokcfg, tokenizer)
+    meta_bytes, n_kv, n_tokens, n_merges = build_metadata(model, cfg, tokcfg, tokenizer, out_dtype=out_dtype)
 
     # 按 GGUF 友好顺序排列：embed -> blk.0..N -> output_norm -> output
     def sort_key(name):
@@ -408,10 +414,14 @@ def convert(model: Path, out: Path) -> dict:
         for d in shape:
             nelem *= d
         if len(shape) >= 2:
-            if nelem % Q4_0_BLOCK != 0:
-                raise ValueError(f"{hf} 元素数 {nelem} 不是 32 倍数，无法 Q4_0")
-            gtype = TT_Q4_0
-            nbytes = nelem // Q4_0_BLOCK * Q4_0_BYTES
+            if out_dtype == "f16":
+                gtype = TT_F16
+                nbytes = nelem * 2
+            else:
+                if nelem % Q4_0_BLOCK != 0:
+                    raise ValueError(f"{hf} 元素数 {nelem} 不是 32 倍数，无法 Q4_0")
+                gtype = TT_Q4_0
+                nbytes = nelem // Q4_0_BLOCK * Q4_0_BYTES
         else:
             gtype = TT_F32
             nbytes = nelem * 4
@@ -471,6 +481,17 @@ def convert(model: Path, out: Path) -> dict:
                     f32 = raw_to_f32(raw, dtype)
                     of.write(quantize_q4_0(f32))
                     pos += cnt
+            elif gtype == TT_F16:
+                pos = 0
+                while pos < nelem:
+                    cnt = min(CHUNK_ELEMS, nelem - pos)
+                    raw = r.read_range(hf, pos, cnt)
+                    f32 = raw_to_f32(raw, dtype)
+                    f16 = f32.astype(np.float16)
+                    if not np.all(np.isfinite(f16)):
+                        raise ValueError(f"{hf} 转 F16 出现溢出或非有限值")
+                    of.write(f16.tobytes())
+                    pos += cnt
             else:
                 pos = 0
                 while pos < nelem:
@@ -505,7 +526,7 @@ def convert(model: Path, out: Path) -> dict:
         "header_bytes": data_start,
         "data_bytes": data_size,
         "file_bytes": actual,
-        "quantization": "Q4_0",
+        "quantization": "F16" if out_dtype == "f16" else "Q4_0",
         "architecture": "qwen3",
         "unmapped": unaligned,
     }
@@ -553,6 +574,8 @@ def main() -> None:
     p = argparse.ArgumentParser(description="纯 numpy HF safetensors -> GGUF Q4_0")
     p.add_argument("--model", default="checkpoints/virtu_merged")
     p.add_argument("--out", default="checkpoints/virtu-q4_0.gguf")
+    p.add_argument("--dtype", choices=["q4_0", "f16"], default="q4_0",
+                   help="输出权重类型：默认 q4_0，或 f16 供 llama-quantize 量化")
     p.add_argument("--check", action="store_true", help="只跑自测，不转换")
     args = p.parse_args()
     if args.check:
@@ -564,7 +587,7 @@ def main() -> None:
         raise SystemExit(f"[convert] 模型目录不存在: {model}")
     self_test()
     print()
-    receipt = convert(model, out)
+    receipt = convert(model, out, out_dtype=args.dtype)
     print("\n[convert] 完成:", json.dumps(receipt, ensure_ascii=False, indent=2))
     receipt_path = out.with_suffix(".gguf.receipt.json")
     receipt_path.write_text(json.dumps(receipt, ensure_ascii=False, indent=2), encoding="utf-8")

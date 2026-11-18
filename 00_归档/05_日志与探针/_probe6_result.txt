@@ -1,0 +1,5 @@
+find_software_window(solidworks)= None elapsed=170.7s
+diagnose(solidworks)= {'status': 'process_running_no_window', 'software': 'solidworks', 'pids': [4596, 22588], 'embedding_pids': [], 'note': 'Process alive but no visible window (minimized to tray / other desktop / startup splash). Check window station and visibility before GUI automation.'} elapsed=257.9s
+type_text('')= {'status': 'typed', 'length': 0, 'note': 'empty text, no input sent'} elapsed=0.0s
+dismiss_all_dialogs= {'status': 'timeout', 'message': 'agent_chain_executor.preflight_apps() did not return within 12s; skipped (no dialogs force-closed by this call).'} elapsed=12.0s
+diagnose(sscnc)= {'status': 'not_running', 'software': 'sscnc', 'pids': [], 'embedding_pids': [], 'note': 'Software not running.'} elapsed=310.2s

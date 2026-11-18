@@ -632,6 +632,9 @@ def gen_targeted_reasoning(n_samples: int = 700, seed: int = 103) -> List[Dict[s
             f"经 CAE 有限元分析测得零件危险截面最大第一主应力/等效应力 σ_max = {sigma_max} MPa。\n"
             f"请计算安全系数 FOS 并判定是否达到工业安全标准（标准要求 FOS ≥ 1.5）。"
         )
+        # 先用常量承接含反斜杠的 LaTeX 片段，避免 f-string 表达式内含反斜杠（3.10/3.11 非法）
+        _fos_pass_note = "$\\ge 1.5$（合格，满足结构安全要求）"
+        _fos_fail_note = "$< 1.5$（不合格，存在塑性变形失效风险，需增加壁厚或优化圆角截面）"
         ans = (
             f"有限元强度校核与安全系数判定推导：\n"
             f"1. **安全系数（Factor of Safety）计算公式**：\n"
@@ -639,7 +642,7 @@ def gen_targeted_reasoning(n_samples: int = 700, seed: int = 103) -> List[Dict[s
             f"2. 代入材质屈服极限与实测最大等效应力：\n"
             f"   $$FOS = \\frac{{{ys}}}{{{sigma_max}}} \\approx {fos:.4f}$$\n"
             f"3. **合规性判定**（门禁标准 $FOS \\ge 1.5$）：\n"
-            f"   当前安全系数为 {fos:.2f} {'$\\ge 1.5$（合格，满足结构安全要求）' if is_safe else '$< 1.5$（不合格，存在塑性变形失效风险，需增加壁厚或优化圆角截面）'}。\n"
+            f"   当前安全系数为 {fos:.2f} {_fos_pass_note if is_safe else _fos_fail_note}。\n"
             f"结论：安全系数 FOS = {fos:.4f}，判定结果为：{'合格 (PASS)' if is_safe else '不合格 (FAIL)'}。"
         )
         samples.append({

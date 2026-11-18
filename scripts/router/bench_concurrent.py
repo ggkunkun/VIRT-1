@@ -23,6 +23,13 @@ import threading
 import statistics
 import urllib.request
 
+ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+if ROOT not in sys.path:
+    sys.path.insert(0, ROOT)
+from bridges.bridge_security import ensure_service_token
+
+ROUTER_TOKEN = ensure_service_token("router", "ROUTER_AUTH_TOKEN")
+
 # ---- 混合题库 (已知标签, 用于校验路由准确率) ----
 EXPERT = [
     "用 UG 怎么把一个曲面拆成两块好分开加工？",
@@ -58,7 +65,8 @@ def post(url, payload, timeout=300):
         os.environ.pop(k, None)
     req = urllib.request.Request(
         url, data=json.dumps(payload).encode("utf-8"),
-        headers={"Content-Type": "application/json"})
+        headers={"Content-Type": "application/json",
+                 "Authorization": f"Bearer {ROUTER_TOKEN}"})
     with urllib.request.urlopen(req, timeout=timeout) as r:
         return json.load(r)
 
@@ -173,7 +181,10 @@ def main():
     for k in ("http_proxy", "https_proxy", "HTTP_PROXY", "HTTPS_PROXY"):
         os.environ.pop(k, None)
     try:
-        h = json.load(urllib.request.urlopen(args.base + "/health", timeout=8))
+        req = urllib.request.Request(
+            args.base + "/health",
+            headers={"Authorization": f"Bearer {ROUTER_TOKEN}"})
+        h = json.load(urllib.request.urlopen(req, timeout=8))
         print(f"[bench] health ok={h.get('ok')} fast={h.get('fast_ready')} hard={h.get('hard_ready')} embed={h.get('embed_ready')}")
         if not h.get("ok"):
             print("[bench] ABORT: 后端模型未就绪"); sys.exit(2)

@@ -1,0 +1,14 @@
+{
+  "pass": true,
+  "entities": 53,
+  "layers": [
+    "CENTER",
+    "DIM",
+    "OUTLINE",
+    "TITLE_BLOCK"
+  ],
+  "circles": 3,
+  "dimensions": 5,
+  "curve_entities": 31,
+  "checks": []
+}

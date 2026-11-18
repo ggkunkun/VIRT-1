@@ -1,0 +1,248 @@
+{
+  "purpose": "2026-11-08 全面补齐短板后的统一生产构件（工程层补齐，权重未改）",
+  "basis": "asserted + 逐层 sha256 可核验",
+  "system_source": "checkpoints/PRODUCTION_SYSTEM_702B.txt",
+  "system_sha256": "sha256:7f997deb7e1bee7ec81225655fc1e91dbc416beaf9c571ae4d9ac654d19107fb",
+  "system_contains_case_answers": false,
+  "template_sha256": "sha256:f1d1e53e60190985ad25a6ddc7fb90e7895d33bb939e3041454b1dd5fa47c4dd",
+  "template_source": "checkpoints/virtu-v3-all90.Modelfile",
+  "params": "num_ctx=8192, temperature=0, seed=1234, num_predict=512, repeat_penalty=1.15",
+  "weight_training": "未做；权重层 sha256 与 11-07/11-08 评测时完全相同",
+  "built": [
+    {
+      "tag": "virtu-max:01068725",
+      "model_layer": "sha256:0106872590e5b4fbf7a5a7c08452e9109faec91ebfce612af15906b216233ef5",
+      "model_bytes": 8320185248,
+      "system_layer": "sha256:7f997deb7e1bee7ec81225655fc1e91dbc416beaf9c571ae4d9ac654d19107fb",
+      "system_bytes": 702,
+      "template_layer": "sha256:f1d1e53e60190985ad25a6ddc7fb90e7895d33bb939e3041454b1dd5fa47c4dd",
+      "modelfile": "modelfiles/prod/virtu-max-01068725.Modelfile",
+      "modelfile_sha256": "5aa0dbd14a7721bae5902fdd8f46e14326be00f9651c9ca7b017165a15828c6f",
+      "source_aliases": [
+        "virtu-moe-14b:01068725",
+        "virtu-moe-14b:fast",
+        "virtu-moe-14b:latest",
+        "virtu-moe-14b:perfect",
+        "virtu-moe-14b:real-clean",
+        "virtu-moe-14b:semantic"
+      ],
+      "blob_path": "E:/ollama/models/blobs/sha256-0106872590e5b4fbf7a5a7c08452e9109faec91ebfce612af15906b216233ef5",
+      "create_rc": 0,
+      "create_ok": true
+    },
+    {
+      "tag": "virtu-max:a2103c68",
+      "model_layer": "sha256:a2103c68d9e881ac3655ce271902997cdc8eb5c35da3803261f25f5364e52d7a",
+      "model_bytes": 8320185248,
+      "system_layer": "sha256:7f997deb7e1bee7ec81225655fc1e91dbc416beaf9c571ae4d9ac654d19107fb",
+      "system_bytes": 702,
+      "template_layer": "sha256:f1d1e53e60190985ad25a6ddc7fb90e7895d33bb939e3041454b1dd5fa47c4dd",
+      "modelfile": "modelfiles/prod/virtu-max-a2103c68.Modelfile",
+      "modelfile_sha256": "17d1fcc571bd59b41d283aa81f7ef9b735cc288e65081d6c00edddad5b74e5a4",
+      "source_aliases": [
+        "virtu-moe-14b:a2103c68",
+        "virtu-moe-14b:hardened",
+        "virtu-moe-14b:out-opt",
+        "virtu-moe-14b:out-opt-sys"
+      ],
+      "blob_path": "E:/ollama/models/blobs/sha256-a2103c68d9e881ac3655ce271902997cdc8eb5c35da3803261f25f5364e52d7a",
+      "create_rc": 0,
+      "create_ok": true
+    },
+    {
+      "tag": "virtu-max:8610e633",
+      "model_layer": "sha256:8610e63361db3280d28f656e48ba996db26a6459ca15c2401daa99ee7ccdeed7",
+      "model_bytes": 8314589728,
+      "system_layer": "sha256:7f997deb7e1bee7ec81225655fc1e91dbc416beaf9c571ae4d9ac654d19107fb",
+      "system_bytes": 702,
+      "template_layer": "sha256:f1d1e53e60190985ad25a6ddc7fb90e7895d33bb939e3041454b1dd5fa47c4dd",
+      "modelfile": "modelfiles/prod/virtu-max-8610e633.Modelfile",
+      "modelfile_sha256": "74f3c4f3256b51feb5b964795716b28b051ab0c5436bec3aa9307a106a45142f",
+      "source_aliases": [
+        "virtu-13.63b-q4_0:latest",
+        "virtu-13.63b:perfect",
+        "virtu-13.63b:real-clean",
+        "virtu-13.63b:wm-v1",
+        "virtu-13b:gold",
+        "virtu-internet-enhanced:latest"
+      ],
+      "blob_path": "E:/ollama/models/blobs/sha256-8610e63361db3280d28f656e48ba996db26a6459ca15c2401daa99ee7ccdeed7",
+      "create_rc": 0,
+      "create_ok": true
+    },
+    {
+      "tag": "virtu-max:b68a251f",
+      "model_layer": "sha256:b68a251f92cdd02859588300dcac5c77507d61b12bb68d22d6e1c8eee3bb89f1",
+      "model_bytes": 6714278816,
+      "system_layer": "sha256:7f997deb7e1bee7ec81225655fc1e91dbc416beaf9c571ae4d9ac654d19107fb",
+      "system_bytes": 702,
+      "template_layer": "sha256:f1d1e53e60190985ad25a6ddc7fb90e7895d33bb939e3041454b1dd5fa47c4dd",
+      "modelfile": "modelfiles/prod/virtu-max-b68a251f.Modelfile",
+      "modelfile_sha256": "2df5954817bd21a3651b9e59f0ccd8bc97662955b06a77624d8064df507ab740",
+      "source_aliases": [
+        "virtu-moe-14b:q3km"
+      ],
+      "blob_path": "E:/ollama/models/blobs/sha256-b68a251f92cdd02859588300dcac5c77507d61b12bb68d22d6e1c8eee3bb89f1",
+      "create_rc": 0,
+      "create_ok": true
+    },
+    {
+      "tag": "virtu-max:154d486a",
+      "model_layer": "sha256:154d486ae5d87675f032f1792fd9a88c8ff6255457c18f309edb5b9b2cd65dbd",
+      "model_bytes": 6318050848,
+      "system_layer": "sha256:7f997deb7e1bee7ec81225655fc1e91dbc416beaf9c571ae4d9ac654d19107fb",
+      "system_bytes": 702,
+      "template_layer": "sha256:f1d1e53e60190985ad25a6ddc7fb90e7895d33bb939e3041454b1dd5fa47c4dd",
+      "modelfile": "modelfiles/prod/virtu-max-154d486a.Modelfile",
+      "modelfile_sha256": "c7fab5053d1f94971ade12599b9a140d1e3295c38172cf5310efa786f54f84d6",
+      "source_aliases": [
+        "virtu-13.63b:asym",
+        "virtu-13.63b:hardened",
+        "virtu-13.63b:latest"
+      ],
+      "blob_path": "E:/ollama/models/blobs/sha256-154d486ae5d87675f032f1792fd9a88c8ff6255457c18f309edb5b9b2cd65dbd",
+      "create_rc": 0,
+      "create_ok": true
+    },
+    {
+      "tag": "virtu-max:a3de86cd",
+      "model_layer": "sha256:a3de86cd1c132c822487ededd47a324c50491393e6565cd14bafa40d0b8e686f",
+      "model_bytes": 5225374496,
+      "system_layer": "sha256:7f997deb7e1bee7ec81225655fc1e91dbc416beaf9c571ae4d9ac654d19107fb",
+      "system_bytes": 702,
+      "template_layer": "sha256:f1d1e53e60190985ad25a6ddc7fb90e7895d33bb939e3041454b1dd5fa47c4dd",
+      "modelfile": "modelfiles/prod/virtu-max-a3de86cd.Modelfile",
+      "modelfile_sha256": "048721285f5f6a9fa0d61d21a358c77a6bc9966cf72289516e8e0af6094f1723",
+      "source_aliases": [
+        "qwen3:8b"
+      ],
+      "blob_path": "E:/ollama/models/blobs/sha256-a3de86cd1c132c822487ededd47a324c50491393e6565cd14bafa40d0b8e686f",
+      "create_rc": 0,
+      "create_ok": true
+    },
+    {
+      "tag": "virtu-max:293cdac3",
+      "model_layer": "sha256:293cdac3e52f6340208967b743ee4a1d67684a24f8a8f011849423e34c1ed9c2",
+      "model_bytes": 4614301760,
+      "system_layer": "sha256:7f997deb7e1bee7ec81225655fc1e91dbc416beaf9c571ae4d9ac654d19107fb",
+      "system_bytes": 702,
+      "template_layer": "sha256:f1d1e53e60190985ad25a6ddc7fb90e7895d33bb939e3041454b1dd5fa47c4dd",
+      "modelfile": "modelfiles/prod/virtu-max-293cdac3.Modelfile",
+      "modelfile_sha256": "74e2abe37bac6328620bd0dc8cd0da7ed4150df70887c0dd0e2fb0fc586f5b30",
+      "source_aliases": [
+        "virtu-v3-all90-q4_0:latest",
+        "virtu-v3-all90:perfect",
+        "virtu-v3:hardened",
+        "virtu-wm-v3:latest"
+      ],
+      "blob_path": "E:/ollama/models/blobs/sha256-293cdac3e52f6340208967b743ee4a1d67684a24f8a8f011849423e34c1ed9c2",
+      "create_rc": 0,
+      "create_ok": true
+    },
+    {
+      "tag": "virtu-max:c3b78c77",
+      "model_layer": "sha256:c3b78c7735c9ac1f0b16cbbb5babc809f2c99e71c9a76043d39dbae8ce448749",
+      "model_bytes": 4614297600,
+      "system_layer": "sha256:7f997deb7e1bee7ec81225655fc1e91dbc416beaf9c571ae4d9ac654d19107fb",
+      "system_bytes": 702,
+      "template_layer": "sha256:f1d1e53e60190985ad25a6ddc7fb90e7895d33bb939e3041454b1dd5fa47c4dd",
+      "modelfile": "modelfiles/prod/virtu-max-c3b78c77.Modelfile",
+      "modelfile_sha256": "14a6cf3fa778dbc2024d386763e6d7b3d20692b5475c02159a0a78e2cd98c57b",
+      "source_aliases": [
+        "virtu-comprehensive:fast",
+        "virtu-comprehensive:perfect",
+        "virtu-comprehensive:q3",
+        "virtu-comprehensive:think",
+        "virtu-disciplined:v1"
+      ],
+      "blob_path": "E:/ollama/models/blobs/sha256-c3b78c7735c9ac1f0b16cbbb5babc809f2c99e71c9a76043d39dbae8ce448749",
+      "create_rc": 0,
+      "create_ok": true
+    },
+    {
+      "tag": "virtu-max:df83b71e",
+      "model_layer": "sha256:df83b71eeacef0a041f7cc4b4fabe94bce71e9e7141d080f0d2597121977c044",
+      "model_bytes": 4614297600,
+      "system_layer": "sha256:7f997deb7e1bee7ec81225655fc1e91dbc416beaf9c571ae4d9ac654d19107fb",
+      "system_bytes": 702,
+      "template_layer": "sha256:f1d1e53e60190985ad25a6ddc7fb90e7895d33bb939e3041454b1dd5fa47c4dd",
+      "modelfile": "modelfiles/prod/virtu-max-df83b71e.Modelfile",
+      "modelfile_sha256": "34bab68338c061f5dd26a1f230894c8fa9c36a8a12666e726a742b4b65e7daef",
+      "source_aliases": [
+        "virtu-dense-merged:q4_0",
+        "virtu-production:latest",
+        "virtu-production:perfect"
+      ],
+      "blob_path": "E:/ollama/models/blobs/sha256-df83b71eeacef0a041f7cc4b4fabe94bce71e9e7141d080f0d2597121977c044",
+      "create_rc": 0,
+      "create_ok": true
+    },
+    {
+      "tag": "virtu-max:97a7eb76",
+      "model_layer": "sha256:97a7eb763837c37d07f89e03ee2a636d38ce8516dec628b3e3e724ceae5d3dd6",
+      "model_bytes": 4614297600,
+      "system_layer": "sha256:7f997deb7e1bee7ec81225655fc1e91dbc416beaf9c571ae4d9ac654d19107fb",
+      "system_bytes": 702,
+      "template_layer": "sha256:f1d1e53e60190985ad25a6ddc7fb90e7895d33bb939e3041454b1dd5fa47c4dd",
+      "modelfile": "modelfiles/prod/virtu-max-97a7eb76.Modelfile",
+      "modelfile_sha256": "093275ce070bd557e4b31b264caa42fa80f64a355fb183d56ca256d6f2766029",
+      "source_aliases": [
+        "virtu-dense-merged-v2:q4_0"
+      ],
+      "blob_path": "E:/ollama/models/blobs/sha256-97a7eb763837c37d07f89e03ee2a636d38ce8516dec628b3e3e724ceae5d3dd6",
+      "create_rc": 0,
+      "create_ok": true
+    },
+    {
+      "tag": "virtu-max:36f5d7bd",
+      "model_layer": "sha256:36f5d7bd63578bbfb41d8cb0d46c4eda615cb29d0795bbc5f1cd5665c100828a",
+      "model_bytes": 4614297600,
+      "system_layer": "sha256:7f997deb7e1bee7ec81225655fc1e91dbc416beaf9c571ae4d9ac654d19107fb",
+      "system_bytes": 702,
+      "template_layer": "sha256:f1d1e53e60190985ad25a6ddc7fb90e7895d33bb939e3041454b1dd5fa47c4dd",
+      "modelfile": "modelfiles/prod/virtu-max-36f5d7bd.Modelfile",
+      "modelfile_sha256": "c24be0614453b76a9c7fc8c5953cdd56295841bca4d9202f2b0e96c30337da0e",
+      "source_aliases": [
+        "virtu-dense-ties:q4"
+      ],
+      "blob_path": "E:/ollama/models/blobs/sha256-36f5d7bd63578bbfb41d8cb0d46c4eda615cb29d0795bbc5f1cd5665c100828a",
+      "create_rc": 0,
+      "create_ok": true
+    },
+    {
+      "tag": "virtu-max:183715c4",
+      "model_layer": "sha256:183715c435899236895da3869489cc30ac241476b4971a20285b1a462818a5b4",
+      "model_bytes": 986048512,
+      "system_layer": "sha256:7f997deb7e1bee7ec81225655fc1e91dbc416beaf9c571ae4d9ac654d19107fb",
+      "system_bytes": 702,
+      "template_layer": "sha256:f1d1e53e60190985ad25a6ddc7fb90e7895d33bb939e3041454b1dd5fa47c4dd",
+      "modelfile": "modelfiles/prod/virtu-max-183715c4.Modelfile",
+      "modelfile_sha256": "f9b148cfe87e4e0babddc970850fa67add2c088091a451b2134c02e312370b97",
+      "source_aliases": [
+        "virtu-probe:test"
+      ],
+      "blob_path": "E:/ollama/models/blobs/sha256-183715c435899236895da3869489cc30ac241476b4971a20285b1a462818a5b4",
+      "create_rc": 0,
+      "create_ok": true
+    }
+  ],
+  "skipped": [
+    {
+      "sha": "9f5c34f33f05",
+      "bytes": 27260863392,
+      "aliases": [
+        "virtu-moe-14b:bf16"
+      ],
+      "reason": "权重 27.3 GB > 6GB 显存可承载范围"
+    },
+    {
+      "sha": "daec91ffb5dd",
+      "bytes": 1157671200,
+      "aliases": [
+        "bge-m3:latest"
+      ],
+      "reason": "embedding 模型，无 completion 能力"
+    }
+  ],
+  "ollama_create_run": true
+}

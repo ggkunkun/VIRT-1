@@ -229,6 +229,10 @@ print(f"  Execution Time: {cad_time_ms:.2f} ms")
 # 3. SOLIDWORKS 2021 三维参数化建模与宏代码 (3D Parametric CAD)
 # =============================================================================
 t0_sw = time.perf_counter()
+# VBA 字符串内需反斜杠双写；先在 f-string 外算好，避免 f-string 表达式含反斜杠
+_sw_part_path_escaped = os.path.join(
+    OUT_DIR, '02_SOLIDWORKS_2021_Stepped_Drive_Sleeve.SLDPRT'
+).replace('\\', '\\\\')
 sw_vba_code = f'''Attribute VB_Name = "SteppedDriveSleeveModel"
 ' ==============================================================================
 ' SOLIDWORKS 2021 Parametric Automation Macro
@@ -325,7 +329,7 @@ Sub main()
     ' 设定材料属性 40Cr
     Part.SetMaterialPropertyName2 "Default", "solidworks materials.sldmat", "40Cr"
     Part.EditRebuild3
-    Part.SaveAs3 "{os.path.join(OUT_DIR, '02_SOLIDWORKS_2021_Stepped_Drive_Sleeve.SLDPRT').replace('\\', '\\\\')}", 0, 2
+    Part.SaveAs3 "{_sw_part_path_escaped}", 0, 2
 End Sub
 '''
 sw_macro_path = os.path.join(OUT_DIR, "02_SOLIDWORKS_2021_Stepped_Drive_Sleeve.swb")

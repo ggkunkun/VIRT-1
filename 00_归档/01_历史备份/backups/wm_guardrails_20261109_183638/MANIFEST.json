@@ -1,0 +1,53 @@
+{
+  "created": "20261109_183638",
+  "root": "D:\\Virtu模型",
+  "files": {
+    "scripts/anti_hallucination_guard.py": {
+      "exists": true,
+      "bytes": 81891,
+      "sha256": "117567f9505021f8a3b2ab714187f06a0dfe26caa72d42ccb00b082edfc2a7e3"
+    },
+    "scripts/wm_ci_gate.py": {
+      "exists": true,
+      "bytes": 5788,
+      "sha256": "df13d3776f5ea1e43129146fdf2ece5f46f45145eaaaa5390e966e9078614559"
+    },
+    "scripts/wm_holdout_regression.py": {
+      "exists": true,
+      "bytes": 17056,
+      "sha256": "348d8a30d935cc7d6c4bbcefc8173ee4e56752ec6e5d8e343128d89d006d5034"
+    },
+    "scripts/wm_eval_paraphrase.py": {
+      "exists": true,
+      "bytes": 23666,
+      "sha256": "ab7fe24ad2280c571c276411c174478a5ff0c7588033710c7895c0b8d813452a"
+    },
+    "scripts/wm_eval_purity.py": {
+      "exists": true,
+      "bytes": 7455,
+      "sha256": "6b9a80db4ec4624c100668df031e844ae3bb2307886c4487ce2e09ae4038e32a"
+    },
+    "scripts/wm_vuln_regression.py": {
+      "exists": true,
+      "bytes": 10646,
+      "sha256": "ed22ad31f745e4c7010a8bbf59c412c16cdd1810a60f7d5adb03c10a3c7d4f90"
+    },
+    "scripts/train_world_model_final.py": {
+      "exists": true,
+      "bytes": 18534,
+      "sha256": "8d994b9c43354e3544570c0f1bb98b0f871cc7bea88643aebdb48fa5666ec4c1"
+    },
+    "data/sft_rebalanced/wm_train_cap12_v2.unitfix.jsonl": {
+      "exists": true,
+      "bytes": 15656709,
+      "sha256": "51353fbd5e2a133bf3eb715c9c6c0cde64d43e11f81dabc0ecc2e45cc618a1f1"
+    },
+    "data/holdout/wm_holdout_v1.jsonl": {
+      "exists": true,
+      "bytes": 4967,
+      "sha256": "e9feb960b0f71247ac3d44dd4dcf08644c16960e11a381cee8e767e88446c38f"
+    }
+  },
+  "git_head": "f3952314deb8adc67e22a5252add1b83f7df53f1",
+  "git_status_dirty": true
+}

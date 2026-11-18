@@ -432,10 +432,12 @@ class OllamaNativeArm:
         never matched.
         """
         from virtu_eval import mem_budget as mb
-        home = os.path.expanduser("~")
-        root = next((p for p in (os.environ.get("OLLAMA_MODELS"),
-                                 os.path.join(home, ".ollama", "models"),
-                                 r"E:\ollama\models") if p and os.path.isdir(p)), None)
+        # Store resolution follows mem_budget.models_dir (empty dirs are not
+        # stores); E: stays as a tertiary fallback for this box's old layout.
+        candidates = [mb.models_dir(), r"E:\ollama\models"]
+        root = next((p for p in candidates
+                     if p and (os.path.isdir(os.path.join(p, "manifests"))
+                               or os.path.isdir(os.path.join(p, "manifests-v2")))), None)
         if root is None:
             return {"error": "no ollama model store found"}
         try:

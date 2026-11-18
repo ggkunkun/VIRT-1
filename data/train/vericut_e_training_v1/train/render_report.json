@@ -1,0 +1,37 @@
+{
+  "dataset": "data\\train\\vericut_e_training_v1\\train\\vericut_e_training_agent_sft.jsonl",
+  "base": "checkpoints\\_base_qwen3_8b",
+  "total": 495,
+  "passed": 495,
+  "failed": 0,
+  "pass_rate": 1.0,
+  "failures_by_stage": {},
+  "failure_samples": [],
+  "token_stats": {
+    "min": 184,
+    "p50": 489,
+    "p90": 2119,
+    "p95": 2137,
+    "p99": 2211,
+    "max": 2224,
+    "mean": 1122.2,
+    "total_tokens": 555478,
+    "total_loss_tokens": 128449,
+    "truncated_at_max_length": 0,
+    "truncated_ratio": 0.0,
+    "max_length": 4096
+  },
+  "role_stats": {
+    "assistant": 953,
+    "total_rounds": 2401
+  },
+  "loss_ratio_mean": 0.4063,
+  "elapsed_sec": 17.5,
+  "checks": {
+    "C1_json_structure": "PASS",
+    "C2_template_render": "PASS",
+    "C3_mask_construction": "PASS",
+    "C4_loss_mask_scope": "PASS",
+    "C5_tool_call_integrity": "PASS"
+  }
+}

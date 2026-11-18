@@ -26,8 +26,14 @@ class CADCAMVisionBridge:
     def __init__(self):
         self.has_cv2 = HAS_CV2
 
-    def _read_image(self, path: str, flags: int = cv2.IMREAD_COLOR):
+    def _read_image(self, path: str, flags: int = None):
         """Robust image reader supporting Unicode/Chinese file paths on Windows."""
+        if not HAS_CV2:
+            # 审计修复：默认参数曾直接写 cv2.IMREAD_COLOR，未装 OpenCV 时
+            # 连 import 都会抛 NameError，整条视觉链无法降级。
+            return None
+        if flags is None:
+            flags = cv2.IMREAD_COLOR
         try:
             data = np.fromfile(path, dtype=np.uint8)
             return cv2.imdecode(data, flags)
@@ -88,9 +94,22 @@ class CADCAMVisionBridge:
                 "gouge_percentage": gouge_ratio,
                 "excess_pixels": blue_count,
                 "excess_percentage": excess_ratio,
+                "green_pixels": green_count,
+                "machined_pixels": int(machined_pixels),
                 "in_tolerance_percentage": in_tolerance_ratio,
             },
+            # 审计 §4-4：triage_autodiff.py 读的是扁平字段。此前只给嵌套 metrics，
+            # 消费端 .get("red_pixels", 0) 恒读 0 导致每次都判 AD-EMPTY-FIELD。
+            # 两套键同时输出，保持旧消费方向后兼容。
+            "gouge_pixels": red_count,
+            "excess_pixels": blue_count,
+            "green_pixels": green_count,
+            "machined_pixels": int(machined_pixels),
+            "gouge_percentage": gouge_ratio,
+            "excess_percentage": excess_ratio,
+            "in_tolerance_percentage": in_tolerance_ratio,
             "safety_verdict": verdict,
+            "verdict": verdict,
             "engineering_recommendation": recommendation
         }
 
@@ -176,3 +195,39 @@ class CADCAMVisionBridge:
             "alarm_pixels": alarm_pixels,
             "system_mode": "AUTO_OR_MEM" if not has_alarm else "INTERRUPTED_BY_ALARM"
         }
+
+    # ------------------------------------------------------------------
+    # 统一视觉入口（审计 §4-3：super_agent 曾调用不存在的 analyze_inspection）
+    # ------------------------------------------------------------------
+    VISION_TASK_METHODS = {
+        "autodiff_inspection": "inspect_vericut_autodiff",
+        "vericut_autodiff": "inspect_vericut_autodiff",
+        "blueprint_analysis": "analyze_drawing_blueprint",
+        "drawing_blueprint": "analyze_drawing_blueprint",
+        "cnc_screen_perception": "inspect_cnc_screen",
+        "cnc_screen": "inspect_cnc_screen",
+    }
+
+    def analyze_inspection(self, task: str = "autodiff_inspection", image_path: str = "") -> dict:
+        """Single dispatch point for every vision task.
+
+        Keeps ``cadcam_visual_inspect``, ``super_agent.facet_screen_control`` and any
+        script on one routing table so the tool surface cannot drift out of sync with
+        the methods actually implemented here.
+        """
+        if not image_path:
+            return {
+                "status": "error",
+                "verdict_code": "MISSING_IMAGE_PATH",
+                "task": task,
+                "supported_tasks": sorted(self.VISION_TASK_METHODS),
+            }
+        method_name = self.VISION_TASK_METHODS.get(str(task))
+        if not method_name:
+            return {
+                "status": "error",
+                "verdict_code": "UNKNOWN_VISION_TASK",
+                "task": task,
+                "supported_tasks": sorted(self.VISION_TASK_METHODS),
+            }
+        return getattr(self, method_name)(image_path)

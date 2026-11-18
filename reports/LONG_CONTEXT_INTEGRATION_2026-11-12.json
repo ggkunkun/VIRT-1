@@ -1,0 +1,335 @@
+{
+  "generated_at": "2026-11-12T23:12:42+0800",
+  "basis": "measured (real Ollama /api/chat generations) unless labelled otherwise",
+  "github_sources": [
+    {
+      "repo": "https://github.com/ggml-org/llama.cpp",
+      "role": "q8_0 KV cache, flash attention, context-shift, YaRN CLI",
+      "local_evidence": "Ollama server.log llama-server command line"
+    },
+    {
+      "repo": "https://github.com/ollama/ollama",
+      "role": "OLLAMA_KV_CACHE_TYPE / OLLAMA_FLASH_ATTENTION / num_ctx options",
+      "local_evidence": "ollama serve --help + per-request options"
+    },
+    {
+      "repo": "https://github.com/microsoft/LLMLingua",
+      "role": "prompt compression with protected structural tokens (concept)",
+      "local_path": "external/LLMLingua/README.md",
+      "commit": "01b9e9481d7395e1e83a48df4a062b11f6304325"
+    },
+    {
+      "repo": "https://github.com/mit-han-lab/streaming-llm",
+      "role": "attention sinks / rolling KV (concept; llama.cpp context-shift analogue)",
+      "local_path": "external/streaming-llm/README.md",
+      "commit": "2e5042606d69933d88fbf909bd77907456b9b4dd"
+    }
+  ],
+  "runtime_evidence": {
+    "basis": "measured from Ollama server.log",
+    "latest_llama_server_cmd": "E:\\\\OllamaApp\\\\lib\\\\ollama\\\\llama-server.exe --model C:\\\\Users\\\\Administrator\\\\.ollama\\\\models\\\\blobs\\\\sha256-293cdac3e52f6340208967b743ee4a1d67684a24f8a8f011849423e34c1ed9c2 --port 64937 --host 127.0.0.1 --no-webui --offline -c 8192 -np 1 --log-verbosity 4 --no-log-prefix --no-log-timestamps --load-mode none --cache-type-k q8_0 --cache-type-v q8_0 --flash-attn on -b 512 -ub 512 --context-shift --keep 4",
+    "q8_0_kv": true,
+    "flash_attention": true,
+    "context_shift": true,
+    "n_ctx_train": "40960"
+  },
+  "model_manifest": {
+    "basis": "measured from ollama show --modelfile",
+    "model": "virtu-wm-v3:longctx",
+    "num_ctx": 32768,
+    "num_gpu": 16,
+    "system_contract_preserved": true
+  },
+  "physical_matrix": {
+    "basis": "measured",
+    "report": "D:\\Virtu模型\\reports\\OLLAMA_CONTEXT_MATRIX_2026-11-12.json",
+    "max_ok_num_ctx": 32768
+  },
+  "corpus": {
+    "basis": "measured",
+    "segments": 45,
+    "chars": 6536,
+    "chunks": 46,
+    "needle": "167.3",
+    "needle_segment_index": 22,
+    "store_stats": {
+      "documents": 1,
+      "chunks": 46,
+      "total_chars": 6446
+    }
+  },
+  "module": {
+    "file": "virtu_omni/context/long_context.py",
+    "backend": "github-grounded/long-context-v1",
+    "retrieval_query": "最终确认 法兰外径 外径 FOS 安全系数",
+    "retrieved_sources": [
+      {
+        "doc": "process_minutes",
+        "idx": 22,
+        "score": 5.8903
+      },
+      {
+        "doc": "process_minutes",
+        "idx": 0,
+        "score": 0.1953
+      },
+      {
+        "doc": "process_minutes",
+        "idx": 1,
+        "score": 0.1953
+      },
+      {
+        "doc": "process_minutes",
+        "idx": 2,
+        "score": 0.1953
+      }
+    ],
+    "estimated_packet_tokens": 457,
+    "input_budget_tokens_5120": 696,
+    "retrieved_chunks": 4,
+    "budget_exceeded": false
+  },
+  "arms": [
+    {
+      "arm": "A_bruteforce_5120",
+      "model": "virtu-wm-v3:chatml",
+      "num_ctx": 5120,
+      "gpu_before_mib": 3304,
+      "extra_meta": {},
+      "ok": false,
+      "error": "HTTPError: HTTP Error 400: Bad Request",
+      "latency_s": 7.33,
+      "gpu_after_mib": 2270
+    },
+    {
+      "arm": "B_full_32768",
+      "model": "virtu-wm-v3:longctx",
+      "num_ctx": 32768,
+      "gpu_before_mib": 2270,
+      "extra_meta": {},
+      "ok": true,
+      "prompt_tokens": 8692,
+      "completion_tokens": 14,
+      "latency_s": 21.76,
+      "total_ms": 21755.5,
+      "load_ms": 6368.7,
+      "text": "{\"outer_dia_mm\": 167.3}",
+      "json_valid": true,
+      "top_level_key": "outer_dia_mm",
+      "needle_recalled": true,
+      "gpu_after_mib": 3316
+    },
+    {
+      "arm": "C_module_5120",
+      "model": "virtu-wm-v3:chatml",
+      "num_ctx": 5120,
+      "gpu_before_mib": 3316,
+      "extra_meta": {
+        "backend": "github-grounded/long-context-v1",
+        "model": "virtu-wm-v3:chatml",
+        "physical_ctx": 5120,
+        "retrieval_query": "最终确认 法兰外径 外径 FOS 安全系数",
+        "input_budget_tokens": 696,
+        "estimated_packet_tokens": 457,
+        "budget_exceeded": false,
+        "retrieved_chunks": 4,
+        "sources": [
+          {
+            "doc": "process_minutes",
+            "idx": 22,
+            "score": 5.8903
+          },
+          {
+            "doc": "process_minutes",
+            "idx": 0,
+            "score": 0.1953
+          },
+          {
+            "doc": "process_minutes",
+            "idx": 1,
+            "score": 0.1953
+          },
+          {
+            "doc": "process_minutes",
+            "idx": 2,
+            "score": 0.1953
+          }
+        ],
+        "compression": [
+          {
+            "original_chars": 110,
+            "compressed_chars": 110,
+            "kept_lines": 1,
+            "total_lines": 1,
+            "ratio": 1.0
+          },
+          {
+            "original_chars": 140,
+            "compressed_chars": 140,
+            "kept_lines": 1,
+            "total_lines": 1,
+            "ratio": 1.0
+          },
+          {
+            "original_chars": 140,
+            "compressed_chars": 140,
+            "kept_lines": 1,
+            "total_lines": 1,
+            "ratio": 1.0
+          },
+          {
+            "original_chars": 140,
+            "compressed_chars": 140,
+            "kept_lines": 1,
+            "total_lines": 1,
+            "ratio": 1.0
+          }
+        ],
+        "fit_attempts": [
+          {
+            "round": 0,
+            "estimated_tokens": 457,
+            "per_chunk_chars": 358,
+            "fits": true
+          }
+        ],
+        "store_stats": {
+          "documents": 1,
+          "chunks": 46,
+          "total_chars": 6446
+        }
+      },
+      "ok": true,
+      "prompt_tokens": 4473,
+      "completion_tokens": 14,
+      "latency_s": 14.31,
+      "total_ms": 14308.5,
+      "load_ms": 6096.4,
+      "text": "{\"outer_dia_mm\": 167.3}",
+      "json_valid": true,
+      "top_level_key": "outer_dia_mm",
+      "needle_recalled": true,
+      "gpu_after_mib": 2292
+    },
+    {
+      "arm": "D_module_32768",
+      "model": "virtu-wm-v3:longctx",
+      "num_ctx": 32768,
+      "gpu_before_mib": 2292,
+      "extra_meta": {
+        "backend": "github-grounded/long-context-v1",
+        "model": "virtu-wm-v3:chatml",
+        "physical_ctx": 5120,
+        "retrieval_query": "最终确认 法兰外径 外径 FOS 安全系数",
+        "input_budget_tokens": 696,
+        "estimated_packet_tokens": 457,
+        "budget_exceeded": false,
+        "retrieved_chunks": 4,
+        "sources": [
+          {
+            "doc": "process_minutes",
+            "idx": 22,
+            "score": 5.8903
+          },
+          {
+            "doc": "process_minutes",
+            "idx": 0,
+            "score": 0.1953
+          },
+          {
+            "doc": "process_minutes",
+            "idx": 1,
+            "score": 0.1953
+          },
+          {
+            "doc": "process_minutes",
+            "idx": 2,
+            "score": 0.1953
+          }
+        ],
+        "compression": [
+          {
+            "original_chars": 110,
+            "compressed_chars": 110,
+            "kept_lines": 1,
+            "total_lines": 1,
+            "ratio": 1.0
+          },
+          {
+            "original_chars": 140,
+            "compressed_chars": 140,
+            "kept_lines": 1,
+            "total_lines": 1,
+            "ratio": 1.0
+          },
+          {
+            "original_chars": 140,
+            "compressed_chars": 140,
+            "kept_lines": 1,
+            "total_lines": 1,
+            "ratio": 1.0
+          },
+          {
+            "original_chars": 140,
+            "compressed_chars": 140,
+            "kept_lines": 1,
+            "total_lines": 1,
+            "ratio": 1.0
+          }
+        ],
+        "fit_attempts": [
+          {
+            "round": 0,
+            "estimated_tokens": 457,
+            "per_chunk_chars": 358,
+            "fits": true
+          }
+        ],
+        "store_stats": {
+          "documents": 1,
+          "chunks": 46,
+          "total_chars": 6446
+        }
+      },
+      "ok": true,
+      "prompt_tokens": 4473,
+      "completion_tokens": 14,
+      "latency_s": 14.53,
+      "total_ms": 14503.0,
+      "load_ms": 6283.4,
+      "text": "{\"outer_dia_mm\": 167.3}",
+      "json_valid": true,
+      "top_level_key": "outer_dia_mm",
+      "needle_recalled": true,
+      "gpu_after_mib": 3304
+    }
+  ],
+  "gateway_attachment": {
+    "basis": "measured",
+    "success": true,
+    "injection_count": 1,
+    "prompt_tokens": 4470,
+    "text": "{\"outer_dia_mm\": 167.3}",
+    "needle_recalled": true
+  },
+  "verdict": {
+    "basis": "measured",
+    "all_generation_arms_ok": true,
+    "negative_control_rejected_as_expected": true,
+    "bruteforce_5120_recalled": false,
+    "full_32768_recalled": true,
+    "module_5120_recalled": true,
+    "module_32768_recalled": true,
+    "module_token_saving_vs_full": 4219,
+    "module_vs_full_same_window_latency_saving_s": 7.23,
+    "gateway_hook_live_ok": true,
+    "latency_basis": "B vs D use the same 32768 model (hot); C switches to the 5120 model and includes a reload, so B vs C latency is not an apples-to-apples comparison."
+  },
+  "caveats": [
+    "NOT a new attention architecture and NOT LLMLingua's trained compressor: retrieval is BM25-lite over SQLite chunks and compression is deterministic.",
+    "YaRN beyond the model's native 40960 is NOT enabled (Ollama 0.40.14 does not expose rope scaling; static YaRN degrades short prompts).",
+    "Single needle-in-a-haystack probe, not a long-context benchmark. Concurrency, q4_0 KV, >40960 contexts and multi-needle recall are untested.",
+    "First run exposed a real defect: an English-only query retrieved Chinese draft chunks (model answered 153). Fixed with domain-token expansion plus an explicit retrieval_query; tests/test_long_context.py covers the regression.",
+    "The main model is a strict world-model; recall is judged by whether the unique value 167.3 appears in its JSON output."
+  ]
+}

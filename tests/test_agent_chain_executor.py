@@ -85,8 +85,21 @@ def test_vericut_silent_run_is_blocked_not_executed(tmp_path, monkeypatch):
     assert rep["error"] and "training_sessions" in " ".join(rep["notes"])
 
 
+def _install_fake_nx_exe(tmp_path, monkeypatch):
+    """让存在性门放行：这些测试验证的是「回读判定逻辑」，不是 NX 是否安装。
+
+    本机 run_journal.exe 不在硬编码 E: 路径上；若不绕过存在性门，stage_nx 会
+    提前返回 run_journal.exe not found，subprocess.run 桩根本不被调用，
+    测试就退化成「检测 NX 装没装」而非「检测取证门」。
+    """
+    exe = tmp_path / "run_journal.exe"
+    exe.write_bytes(b"")
+    monkeypatch.setattr(ace, "NX_RUN_JOURNAL", str(exe))
+
+
 def test_nx_requires_journal_result_file(tmp_path, monkeypatch):
     out = str(tmp_path)
+    _install_fake_nx_exe(tmp_path, monkeypatch)
     monkeypatch.setattr(ace.subprocess, "run", _stub_run("Execution was successful."))
     rep = ace.stage_nx({"d_outer": 53.0, "d_inner": 14.0, "overall_len": 45.0}, out)
     assert rep["status"] == "blocked"          # RC=0 但没有回读文件
@@ -95,6 +108,7 @@ def test_nx_requires_journal_result_file(tmp_path, monkeypatch):
 
 def test_nx_reads_back_measured_geometry(tmp_path, monkeypatch):
     out = str(tmp_path)
+    _install_fake_nx_exe(tmp_path, monkeypatch)
 
     def fake(cmd, *a, **kw):
         json.dump({"status": "OK", "feature_count": 2, "part_exists": True,
@@ -108,6 +122,26 @@ def test_nx_reads_back_measured_geometry(tmp_path, monkeypatch):
     assert rep["status"] == "executed"
     assert rep["metrics"]["part_bytes"] == 121821
     assert "-45.0" in rep["metrics"]["bbox_raw"]
+
+
+def test_nx_missing_executable_fails_closed(tmp_path, monkeypatch):
+    """反证：run_journal.exe 不存在 ⇒ 必须 blocked 且绝不调用 subprocess（fail-closed）。
+
+    若有人删掉存在性门，本用例会因 calls 非空 / status 变 executed 而翻红。
+    """
+    out = str(tmp_path)
+    monkeypatch.setattr(ace, "NX_RUN_JOURNAL", str(tmp_path / "absent.exe"))
+    calls = []
+
+    def spy(cmd, *a, **kw):
+        calls.append(cmd)
+        return types.SimpleNamespace(returncode=0, stdout=b"", stderr=b"")
+
+    monkeypatch.setattr(ace.subprocess, "run", spy)
+    rep = ace.stage_nx({"d_outer": 53.0, "d_inner": 14.0, "overall_len": 45.0}, out)
+    assert rep["status"] == "blocked"
+    assert "not found" in rep["error"]
+    assert calls == []          # 门禁必须在派发 subprocess 之前拦截
 
 
 def test_sw_verdict_needs_volume_within_analytic_band(tmp_path, monkeypatch):
@@ -274,6 +308,7 @@ def test_stage_cimco_abspath_before_handing_to_editor(tmp_path, monkeypatch):
     monkeypatch.setattr(ace.subprocess, "check_output", lambda *a, **k: "")
     nc = tmp_path / "04_CIMCO_Edit_2026.nc"
     nc.write_text("O2026\nG00 X53.0 Z2.0\nM30\n", encoding="gbk")
+    monkeypatch.chdir(tmp_path.parent)
     rel_nc = os.path.relpath(str(nc), os.getcwd())
     ace.stage_cimco(rel_nc, str(tmp_path))
     assert seen.get("arg") == os.path.abspath(str(nc))

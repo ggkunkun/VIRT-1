@@ -47,41 +47,29 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(me
 logger = logging.getLogger("verify_virtu_sleep")
 
 
-def get_model_caller() -> Callable[[str], str]:
-    """Returns a robust live model caller connecting directly to Ollama virtu-disciplined:v1."""
-    def _call(prompt: str) -> str:
-        for attempt in range(3):
-            try:
-                ollama_payload = {
-                    "model": "virtu-disciplined:v1",
-                    "messages": [{"role": "user", "content": prompt}],
-                    "stream": False,
-                    "options": {"temperature": 0.0, "num_predict": 300},
-                }
-                req = urllib.request.Request(
-                    "http://127.0.0.1:11434/api/chat",
-                    data=json.dumps(ollama_payload).encode("utf-8"),
-                    headers={"Content-Type": "application/json"},
-                )
-                resp = urllib.request.urlopen(req, timeout=60)
-                data = json.loads(resp.read().decode("utf-8"))
-                return data["message"]["content"].strip()
-            except Exception as e:
-                logger.warning(f"Ollama attempt {attempt+1}/3 failed ({e}), retrying in 2s...")
-                time.sleep(2)
-        return "ERROR: Model query failed after 3 attempts"
+def get_model_caller() -> Tuple[Optional[Callable[[str], str]], str]:
+    """解析真实模型调用器与标签；不可用时返回 (None, reason)，绝不返回伪装答案。
 
-    return _call
+    旧实现重试 3 次后把 "ERROR: ..." 当正常应答返回，是历史假 provenance 的根因。
+    """
+    from virtu_omni.memory.sleep_framework import build_ollama_model_caller
+    return build_ollama_model_caller()
 
 
 def main():
     logger.info("=== Starting Virtu x Google Sleep Framework Live Verification ===")
     start_time = time.time()
-    caller = get_model_caller()
+    caller, model_label = get_model_caller()
+    if caller is None:
+        logger.error(f"Aborting: no real model caller ({model_label}); refusing to emit a measured verdict.")
+        return 1
 
     # Verify model connectivity
     probe_response = caller("一句话介绍你的定位。")
-    logger.info(f"Model connectivity verified: '{probe_response[:80]}...'")
+    if probe_response.startswith("ERROR:"):
+        logger.error(f"Aborting: model probe failed: {probe_response}")
+        return 1
+    logger.info(f"Model connectivity verified ({model_label}): '{probe_response[:80]}...'")
 
     # Content-addressed run identity
     src_path = WORKSPACE_DIR / "virtu_omni" / "memory" / "sleep_framework.py"
@@ -93,7 +81,9 @@ def main():
 
     out_dir = WORKSPACE_DIR / "runs" / "sleep_framework"
     out_dir.mkdir(parents=True, exist_ok=True)
-    framework = VirtuSleepFramework(model_caller=caller, output_dir=out_dir)
+    framework = VirtuSleepFramework(
+        model_caller=caller, model_caller_label=model_label, output_dir=out_dir
+    )
 
     # -------------------------------------------------------------
     # Stage 0: Pre-Sleep Baseline Evaluation (Historical Anchors)
@@ -143,14 +133,13 @@ def main():
         t0 = time.time()
         resp = caller(t["prompt"])
         dt = time.time() - t0
-        tokens_p = len(t["prompt"]) // 2
-        tokens_c = len(resp) // 2
+        # AGENTS.md §8.1: 未拿到执行器实测 token 数，一律写 "unmeasured"
         exp = framework.record_wake_step(
             prompt=t["prompt"],
             completion=resp,
             verified_facts=t["facts"],
-            tokens_prompt=tokens_p,
-            tokens_completion=tokens_c,
+            tokens_prompt="unmeasured",
+            tokens_completion="unmeasured",
         )
         logger.info(f"  Recorded wake step {exp.id} (receipt: {exp.receipt_hash[:10]}, latency: {dt:.2f}s)")
 
@@ -176,6 +165,24 @@ def main():
     cf_rate = sleep_report["catastrophic_forgetting_rate"]
     compression = sleep_report["average_token_compression"]
     dream_pass_rate = sleep_report["dream_oracle_pass_rate"]
+    report_basis = sleep_report["basis"]
+    token_basis = sleep_report["token_basis"]
+    dream_basis = sleep_report["dream_evidence_basis"]
+    measurement_valid = sleep_report["measurement_valid"]
+
+    def _pct(v):
+        return f"{v*100:.1f}%" if isinstance(v, (int, float)) else "unmeasured"
+
+    def _verdict(ok):
+        return "PASS" if ok else "FAIL"
+
+    g_stability = stability >= 0.95
+    g_cf = cf_rate <= 0.05
+    g_plasticity = plasticity >= 0.90
+    g_compression = isinstance(compression, (int, float)) and compression >= 0.70
+    g_dream = dream_pass_rate >= 0.80
+    g_probe = bool(mutation_result["probe_passed"])
+    g_gate = bool(sleep_report["homeostasis_gate_passed"] and measurement_valid and g_probe)
 
     verdict_summary = {
         "metadata": {
@@ -183,8 +190,8 @@ def main():
             "paper_grounding": "Language Models Need Sleep: Learning to Self-Modify and Consolidate Memories (arXiv:2606.03979)",
             "timestamp": datetime.datetime.now().isoformat(),
             "run_id": run_id,
-            "model": "virtu-cad-cam-10b / virtu-disciplined:v1",
-            "basis": "measured",
+            "model": model_label,
+            "basis": report_basis,
             "source_code_sha256": src_sha256,
             "total_duration_seconds": round(total_duration, 2),
         },
@@ -192,41 +199,42 @@ def main():
             "pre_sleep_anchor_score": {
                 "value": pre_baseline_score,
                 "n": len(anchor_cases),
-                "basis": "measured",
+                "basis": report_basis,
             },
             "post_sleep_stability_score": {
                 "value": stability,
                 "n": sleep_report["wake_experiences_processed"] + len(anchor_cases),
-                "basis": "measured",
+                "basis": report_basis,
             },
             "catastrophic_forgetting_rate": {
                 "value": cf_rate,
                 "threshold": "<= 0.05",
-                "basis": "measured",
+                "basis": report_basis,
             },
             "plasticity_score": {
                 "value": plasticity,
                 "n": sleep_report["consolidated_units"],
-                "basis": "measured",
+                "basis": report_basis,
             },
             "token_compression_ratio": {
                 "value": compression,
                 "threshold": ">= 0.70",
-                "basis": "measured",
+                "basis": token_basis,
             },
             "dream_oracle_verification_rate": {
                 "value": dream_pass_rate,
                 "n": sleep_report["dreams_generated"],
-                "basis": "measured",
+                "basis": dream_basis,
             },
             "rule_4_mutation_probe_passed": {
                 "value": mutation_result["probe_passed"],
-                "basis": "measured",
+                "basis": report_basis,
             },
             "overall_sleep_gate_passed": {
-                "value": sleep_report["homeostasis_gate_passed"] and mutation_result["probe_passed"],
-                "basis": "measured",
+                "value": g_gate,
+                "basis": report_basis,
             },
+            "thresholds": sleep_report["thresholds"],
         },
         "phase_breakdown": {
             "wake_phase": {
@@ -235,7 +243,7 @@ def main():
             },
             "sleep_phase_1_consolidation": {
                 "units_consolidated": sleep_report["consolidated_units"],
-                "token_compression_pct": round(compression * 100, 2),
+                "token_compression_pct": _pct(compression),
             },
             "sleep_phase_2_dreaming": {
                 "counterfactual_dreams_generated": sleep_report["dreams_generated"],
@@ -265,23 +273,24 @@ def main():
     md_content = f"""# Virtu Foundation Model x Google Sleep Framework 实测验证报告
 
 > **论文参照**: Google Research, *"Language Models Need Sleep: Learning to Self-Modify and Consolidate Memories"* (arXiv:2606.03979 / 2026)  
-> **实测对象**: `virtu-cad-cam-10b` (运行于 `virtu-disciplined:v1` 后端)  
+> **实测对象**: `{model_label}`  
 > **运行标识 (Run ID)**: `{run_id}`  
 > **测量时间**: {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}  
-> **测量宪法口径**: 全量实测 (`basis="measured"`)，无字面量伪造，通过反向变异探针 (Mutation Probe) 证伪闸门。
+> **测量宪法口径**: basis=`{report_basis}`，token=`{token_basis}`，dream=`{dream_basis}`，证据有效=`{measurement_valid}`；未测项一律标 unmeasured，不伪造，门禁以绝对阈值判定。
 
 ---
 
 ## 1. 核心实测结论
 
-| 核心指标 | 实测数值 (Measured) | 目标阈值 | 测量样本量 $n$ | 判定结论 |
+| 核心指标 | 实测数值 | 目标阈值（权威值见 JSON thresholds） | 测量样本量 $n$ | 判定结论 |
 | :--- | :---: | :---: | :---: | :---: |
-| **突触稳态保持率 (Stability / Retention)** | **{stability*100:.1f}%** | $\\ge 60.0\%$ | {len(anchor_cases)} 锚点 | **PASS (无退化)** |
-| **灾难性遗忘率 (Catastrophic Forgetting)** | **{cf_rate*100:.1f}%** | $\\le 5.0\%$ | {len(anchor_cases)} 锚点 | **PASS (遗忘抑制)** |
-| **新知识可塑性 (Plasticity)** | **{plasticity*100:.1f}%** | $\\ge 80.0\%$ | {sleep_report['consolidated_units']} 规则 | **PASS (有效固化)** |
-| **记忆上下文压缩率 (Knowledge Seeding)** | **{compression*100:.1f}%** | $\\ge 70.0\%$ | 3 条交互经验 | **PASS (大幅降冗)** |
-| **梦境物理自验证合格率 (Dreaming)** | **{dream_pass_rate*100:.1f}%** | $\\ge 50.0\%$ | {sleep_report['dreams_generated']} 个梦境题 | **PASS (闭环自愈)** |
-| **宪法第4条反向变异探针 (Mutation Probe)** | **通过 (100% 拦截坏样本)** | 必须判红 | 1 组破坏性样本 | **PASS (闸门可证伪)** |
+| **突触稳态保持率 (Stability / Retention)** | **{stability*100:.1f}%** | $\\ge 60.0\\%$ | {len(anchor_cases)} 锚点 | **{_verdict(g_stability)}** |
+| **灾难性遗忘率 (Catastrophic Forgetting)** | **{cf_rate*100:.1f}%** | $\\le 5.0\\%$ | {len(anchor_cases)} 锚点 | **{_verdict(g_cf)}** |
+| **新知识可塑性 (Plasticity)** | **{plasticity*100:.1f}%** | $\\ge 80.0\\%$ | {sleep_report['consolidated_units']} 规则 | **{_verdict(g_plasticity)}** |
+| **记忆上下文压缩率 (Knowledge Seeding)** | **{_pct(compression)}** | $\\ge 70.0\\%$ | 3 条交互经验 | **{_verdict(g_compression)}** |
+| **梦境物理自验证合格率 (Dreaming)** | **{dream_pass_rate*100:.1f}%** | $\\ge 50.0\\%$ | {sleep_report['dreams_generated']} 个梦境题 | **{_verdict(g_dream)}** |
+| **宪法第4条反向变异探针 (Mutation Probe)** | **{_verdict(g_probe)}** | 必须判红 | 1 组破坏性样本 | **{_verdict(g_probe)}** |
+| **总门禁（含证据有效性）** | **{_verdict(g_gate)}** | 必须全绿 | 1 轮 | **{_verdict(g_gate)}** |
 
 ---
 
@@ -298,7 +307,7 @@ def main():
 ### B. 睡眠巩固期 (Sleep Phase)
 1. **阶段 1：记忆巩固与知识播种 (Knowledge Seeding)**:
    - 将松散对话轨迹压缩成严密的一阶工程不变量与物理公式；
-   - 实测上下文 Token 压缩率达到 **{compression*100:.1f}%**，有效根除无效思考与注意力漂移。
+   - 实测上下文 Token 压缩率达到 **{_pct(compression)}**，有效根除无效思考与注意力漂移。
 2. **阶段 2：梦境合成与物理自验证 (Counterfactual Dreaming)**:
    - 自动生成扰动参数的反事实工程变异题（内径、外径、线速度、切削深度扰动）；
    - 调度 Virtu 模型求解，并经确定性物理执行器（Lamé 理论闭式解、切削动力学公式）严苛仲裁；
@@ -330,7 +339,7 @@ def main():
     print(f"Post-Sleep Stability:      {stability*100:.1f}% (Zero Catastrophic Forgetting)")
     print(f"Catastrophic Forgetting:   {cf_rate*100:.1f}%")
     print(f"Plasticity Score:          {plasticity*100:.1f}%")
-    print(f"Context Token Compression: {compression*100:.1f}%")
+    print(f"Context Token Compression: {_pct(compression)}")
     print(f"Dream Oracle Pass Rate:    {dream_pass_rate*100:.1f}%")
     print(f"Mutation Probe Passed:     {mutation_result['probe_passed']}")
     print(f"Overall Sleep Gate:        {'PASSED' if verdict_summary['empirical_metrics']['overall_sleep_gate_passed']['value'] else 'FAILED'}")

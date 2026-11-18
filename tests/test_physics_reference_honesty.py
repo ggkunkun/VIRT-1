@@ -50,11 +50,17 @@ class TestSolverUnits(unittest.TestCase):
     def test_cylinder_inertia_matches_pi_r4_over_4(self):
         r, h = 75.9, 56.9
         V, centroid, (Ix, Iy, Iz) = mass_props_csg("cylinder", {"r": r, "h": h}, 0.00785)
+        # 轴线沿 z：绕直径轴 x/y 均为 pi*r^4/4，绕轴线 z 的极惯性矩为 pi*r^4/2。
+        # 旧约定把 pi*r^4/2 挂在 Iy、Iz 拿直径轴值（小一倍），与 wm_schema 定律卡
+        # inertia_izz_mm4=pi*r^4/2 冲突；2026-11-08 修正后三轴全部钉住。
         self.assertAlmostEqual(Ix, math.pi * r ** 4 / 4.0, places=2)
-        self.assertAlmostEqual(Iy, math.pi * r ** 4 / 2.0, places=2)
+        self.assertAlmostEqual(Iy, math.pi * r ** 4 / 4.0, places=2)
+        self.assertAlmostEqual(Iz, math.pi * r ** 4 / 2.0, places=2)
         # the old bug grew with h (mm^5); a true section moment must not
-        V2, _, (Ix2, _, _) = mass_props_csg("cylinder", {"r": r, "h": h * 2}, 0.00785)
+        V2, _, (Ix2, Iy2, Iz2) = mass_props_csg("cylinder", {"r": r, "h": h * 2}, 0.00785)
         self.assertAlmostEqual(Ix, Ix2, places=2, msg="Ixx 随高度变化说明它不是截面惯性矩")
+        self.assertAlmostEqual(Iy, Iy2, places=2)
+        self.assertAlmostEqual(Iz, Iz2, places=2)
 
 
 class TestAuditIsNotVacuous(unittest.TestCase):
@@ -110,12 +116,21 @@ class TestAuditIsNotVacuous(unittest.TestCase):
 
 class TestTrainerWiring(unittest.TestCase):
     def test_trainers_gate_units_before_reading_data(self):
-        for rel in ("scripts/train_qwen3_8b_qlora.py", "cloud_train_pack/train_turnkey.py"):
+        for rel in (
+            "scripts/train_qwen3_8b_qlora.py",
+            "scripts/train_world_model_final.py",
+            "cloud_train_pack/train_turnkey.py",
+            "cloud_train_pack/train_turnkey_worldmodel.py",
+        ):
             text = io.open(ROOT / rel, encoding="utf-8", errors="ignore").read()
             self.assertIn("corpus_unit_audit", text, f"{rel} 未接量纲闸")
             body = text[text.index("parse_args("):]
-            self.assertLess(body.index("assert_units_clean"), body.index("load_dataset")
-                            if "load_dataset" in body else body.index("assert_units_clean") + 1,
+            load_at = min(
+                (body.index(m) for m in ("load_dataset", "load_wm_dataset", "AutoTokenizer.from_pretrained")
+                 if m in body),
+                default=body.index("assert_units_clean") + 1,
+            )
+            self.assertLess(body.index("assert_units_clean"), load_at,
                             f"{rel} 的量纲闸在读语料之后")
 
 
@@ -142,8 +157,10 @@ class TestPhysicsReferenceHonest(unittest.TestCase):
         state = recompute({"task": "fea_fos", "Sy": 355.0, "sigma": 300.0})
         self.assertIn("fos_gate", state,
                       "FOS>=1.5 的闸门谓词不在参照里，world_state_verified 就永远判不到它")
+        # 字面以 wm_contract.KEY_SCHEMA 为唯一真源（pass/fail 短字面）；
+        # 判分语义不变：FOS=235/198=1.187<1.5 必须判 fail。
         self.assertEqual(recompute({"task": "fea_fos", "Sy": 235.0, "sigma": 198.0})["fos_gate"],
-                         "FAIL")
+                         "fail")
 
     def test_the_gate_predicate_is_actually_charged_when_wrong(self):
         from virtu_eval.graders import score_case

@@ -1,0 +1,126 @@
+{
+ "generated": "2026-11-12",
+ "basis": "measured",
+ "method": "逐行 json.loads + tools/messages 形状 + role 合法 + tool_call_id 配对 + arguments JSON 解析；全部通过",
+ "dataset_dir": "d:\\Virtu模型\\knowledge_base\\six_software\\training\\datasets",
+ "total_records": 260,
+ "invalid_records": 0,
+ "repair": {
+  "original_records": 271,
+  "kept": 260,
+  "structurally_repaired": 213,
+  "dropped": 11,
+  "drop_reason": "原始行截断或语义残缺，无法在保持内容真实的前提下修复",
+  "backups": "*.jsonl.bak_repair_20261112"
+ },
+ "files": {
+  "autocad_holdout.jsonl": {
+   "valid_records": 7,
+   "roles": {
+    "system": 7,
+    "user": 7,
+    "assistant": 13,
+    "tool": 6
+   }
+  },
+  "autocad_train.jsonl": {
+   "valid_records": 38,
+   "roles": {
+    "system": 38,
+    "user": 39,
+    "assistant": 80,
+    "tool": 41
+   }
+  },
+  "cimco_holdout.jsonl": {
+   "valid_records": 9,
+   "roles": {
+    "system": 9,
+    "user": 9,
+    "assistant": 18,
+    "tool": 9
+   }
+  },
+  "cimco_train.jsonl": {
+   "valid_records": 35,
+   "roles": {
+    "system": 35,
+    "user": 35,
+    "assistant": 69,
+    "tool": 34
+   }
+  },
+  "nx_holdout.jsonl": {
+   "valid_records": 8,
+   "roles": {
+    "system": 8,
+    "user": 8,
+    "assistant": 14,
+    "tool": 6
+   }
+  },
+  "nx_train.jsonl": {
+   "valid_records": 31,
+   "roles": {
+    "system": 31,
+    "user": 31,
+    "assistant": 65,
+    "tool": 34
+   }
+  },
+  "solidworks_holdout.jsonl": {
+   "valid_records": 8,
+   "roles": {
+    "system": 8,
+    "user": 8,
+    "assistant": 16,
+    "tool": 8
+   }
+  },
+  "solidworks_train.jsonl": {
+   "valid_records": 36,
+   "roles": {
+    "system": 36,
+    "user": 37,
+    "assistant": 79,
+    "tool": 42
+   }
+  },
+  "sscnc_holdout.jsonl": {
+   "valid_records": 8,
+   "roles": {
+    "system": 8,
+    "user": 8,
+    "assistant": 16,
+    "tool": 8
+   }
+  },
+  "sscnc_train.jsonl": {
+   "valid_records": 35,
+   "roles": {
+    "system": 35,
+    "user": 35,
+    "assistant": 76,
+    "tool": 41
+   }
+  },
+  "vericut_holdout.jsonl": {
+   "valid_records": 8,
+   "roles": {
+    "system": 8,
+    "user": 8,
+    "assistant": 17,
+    "tool": 9
+   }
+  },
+  "vericut_train.jsonl": {
+   "valid_records": 37,
+   "roles": {
+    "system": 37,
+    "user": 37,
+    "assistant": 77,
+    "tool": 40
+   }
+  }
+ }
+}

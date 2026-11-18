@@ -14,11 +14,14 @@ from __future__ import annotations
 
 import json
 import os
+import secrets
 import sys
 import unittest
+from unittest.mock import patch
 from pathlib import Path
 from http.server import HTTPServer
 import threading
+import urllib.error
 import urllib.request
 
 WORKSPACE_ROOT = Path(__file__).resolve().parent.parent
@@ -35,24 +38,64 @@ from virtu_omni.ai_scratch import (
     AIScratchTutor,
 )
 from virtu_omni.agent.skill_writer_and_memory import SkillWriterAndMemory
-from scripts.workbuddy_virtu_bridge import OpenAIBaseHandler
+from scripts import workbuddy_virtu_bridge as bridge
 
 
 class TestAIScratchIntegration(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.scratch = VirtuAIScratch.get_instance()
-        # Start Bridge HTTP Server on temporary port
-        cls.test_port = 8013
-        cls.server = HTTPServer(("127.0.0.1", cls.test_port), OpenAIBaseHandler)
-        cls.server_thread = threading.Thread(target=cls.server.serve_forever, daemon=True)
-        cls.server_thread.start()
+        cls.test_token = secrets.token_urlsafe(32)
+        token_patch = patch.object(bridge, "_BRIDGE_TOKEN", cls.test_token)
+        cls.addClassCleanup(token_patch.stop)
+        token_patch.start()
+
+        # Keep credentials and proxy settings local to this test server.
+        cls.opener = urllib.request.build_opener(urllib.request.ProxyHandler({}))
+        cls.server = HTTPServer(("127.0.0.1", 0), bridge.OpenAIBaseHandler)
+        cls.addClassCleanup(cls.server.server_close)
+        cls.test_port = cls.server.server_address[1]
         cls.base_url = f"http://127.0.0.1:{cls.test_port}"
+        cls.server_thread = threading.Thread(
+            target=cls.server.serve_forever, kwargs={"poll_interval": 0.05}, daemon=True
+        )
+        cls.server_thread.start()
+        cls.addClassCleanup(cls._stop_server)
 
     @classmethod
-    def tearDownClass(cls):
+    def _stop_server(cls):
         cls.server.shutdown()
-        cls.server.server_close()
+        cls.server_thread.join(timeout=5)
+        if cls.server_thread.is_alive():
+            raise AssertionError("Test bridge thread did not stop")
+
+    def _open(self, request, *, authenticate=True):
+        self.assertTrue(request.full_url.startswith(f"{self.base_url}/"))
+        if authenticate:
+            request.add_header("Authorization", f"Bearer {self.test_token}")
+        return self.opener.open(request, timeout=10)
+
+    def test_00_workbuddy_bridge_requires_authentication(self):
+        """Missing and invalid credentials must still fail for GET and POST."""
+        for path, payload in (
+            ("/v1/ai-scratch/curriculum", None),
+            ("/v1/ai-scratch/first-principles/autograd", b"{}"),
+        ):
+            for authorization in (None, f"Bearer {self.test_token}-invalid"):
+                with self.subTest(path=path, credentials="missing" if authorization is None else "invalid"):
+                    headers = {"Content-Type": "application/json"}
+                    if authorization is not None:
+                        headers["Authorization"] = authorization
+                    req = urllib.request.Request(
+                        f"{self.base_url}{path}", data=payload, headers=headers
+                    )
+                    with self.assertRaises(urllib.error.HTTPError) as caught:
+                        with self._open(req, authenticate=False):
+                            pass
+                    with caught.exception as response:
+                        self.assertEqual(response.code, 401)
+                        data = json.loads(response.read().decode("utf-8"))
+                        self.assertEqual(data["error"]["type"], "authentication_error")
 
     def test_01_curriculum_indexing_and_discovery(self):
         """Verify 20 phases and 542 lessons are properly discovered and structured."""
@@ -164,14 +207,14 @@ class TestAIScratchIntegration(unittest.TestCase):
         """Verify Bridge HTTP REST API endpoints (/v1/ai-scratch/*)."""
         # 1. GET /v1/ai-scratch/curriculum
         req = urllib.request.Request(f"{self.base_url}/v1/ai-scratch/curriculum")
-        with urllib.request.urlopen(req) as resp:
+        with self._open(req) as resp:
             self.assertEqual(resp.status, 200)
             data = json.loads(resp.read().decode("utf-8"))
             self.assertEqual(data.get("total_phases"), 20)
 
         # 2. GET /v1/ai-scratch/diagnostic
         req = urllib.request.Request(f"{self.base_url}/v1/ai-scratch/diagnostic")
-        with urllib.request.urlopen(req) as resp:
+        with self._open(req) as resp:
             self.assertEqual(resp.status, 200)
             data = json.loads(resp.read().decode("utf-8"))
             self.assertTrue(data.get("ok"))
@@ -184,7 +227,7 @@ class TestAIScratchIntegration(unittest.TestCase):
             data=post_data,
             headers={"Content-Type": "application/json"},
         )
-        with urllib.request.urlopen(req) as resp:
+        with self._open(req) as resp:
             self.assertEqual(resp.status, 200)
             data = json.loads(resp.read().decode("utf-8"))
             self.assertTrue(data.get("ok"))
@@ -197,7 +240,7 @@ class TestAIScratchIntegration(unittest.TestCase):
             data=answers_payload,
             headers={"Content-Type": "application/json"},
         )
-        with urllib.request.urlopen(req) as resp:
+        with self._open(req) as resp:
             self.assertEqual(resp.status, 200)
             data = json.loads(resp.read().decode("utf-8"))
             self.assertTrue(data.get("ok"))

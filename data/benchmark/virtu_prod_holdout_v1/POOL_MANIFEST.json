@@ -1,0 +1,89 @@
+{
+  "pool": "virtu_prod_holdout_v1",
+  "generated_by": "scripts/build_prod_holdout.py",
+  "seed": 20261108,
+  "n_cases": 210,
+  "dimensions": [
+    "reasoning",
+    "knowledge",
+    "instruction",
+    "generation",
+    "generalization",
+    "boundary",
+    "toolcall"
+  ],
+  "files": {
+    "reasoning": {
+      "n": 30,
+      "sha256": "edf9f7e57c88112bb7512d0cf11134578f92482a158d5f1c0dd5c8b6c1872e06",
+      "by_tier": {
+        "easy": 9,
+        "medium": 15,
+        "hard": 6
+      }
+    },
+    "knowledge": {
+      "n": 30,
+      "sha256": "2f5f9ab95bd3bbcd59c0bcad8b96086cdf051d76c82b856f3e93d23c71b00c78",
+      "by_tier": {
+        "easy": 9,
+        "medium": 15,
+        "hard": 6
+      }
+    },
+    "instruction": {
+      "n": 30,
+      "sha256": "e3d1699c457bd158d847d1771eb666d1d922c832f02ca5c2f6663b473aa5e30b",
+      "by_tier": {
+        "easy": 9,
+        "medium": 15,
+        "hard": 6
+      }
+    },
+    "generation": {
+      "n": 30,
+      "sha256": "9d07101cb134c3590c1230b9504da92161847803f7e8354b16301d357d32b23d",
+      "by_tier": {
+        "easy": 9,
+        "medium": 15,
+        "hard": 6
+      }
+    },
+    "generalization": {
+      "n": 30,
+      "sha256": "76edbb0c1c689b3308d5183b1406b827850e8f10dc65515ca1f344967f2d3ba0",
+      "by_tier": {
+        "easy": 9,
+        "medium": 15,
+        "hard": 6
+      }
+    },
+    "boundary": {
+      "n": 30,
+      "sha256": "655650fb8be8f92ce177968c054182f6a805f6e82b79003163d76c70f4abcfeb",
+      "by_tier": {
+        "easy": 9,
+        "medium": 15,
+        "hard": 6
+      }
+    },
+    "toolcall": {
+      "n": 30,
+      "sha256": "2440bde5b6efd02d9cf8a13b6411ef638109baf3f0b4c20659a260700cd478e6",
+      "by_tier": {
+        "easy": 9,
+        "medium": 15,
+        "hard": 6
+      }
+    }
+  },
+  "disjointness_audit": {
+    "banned_term_hits": [],
+    "jaccard_ge_0_30": [],
+    "gold_value_in_corpus": [],
+    "corpus_chars": 1561849,
+    "pass": true
+  },
+  "purpose": "2026-11-08 强化后终评的独立留出题；不得用于训练或写进任何 system 提示词",
+  "not_for": "与 11-07/11-08 被污染的 blind_test 池合并计分"
+}

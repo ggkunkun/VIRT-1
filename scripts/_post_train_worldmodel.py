@@ -23,6 +23,8 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import _ssh_damodel as S
+from build_wm_modelfile import render_modelfile
+import wm_contract as _wm_contract
 
 PY = os.path.join(ROOT, ".venv", "Scripts", "python.exe")
 # 产物族参数化：默认 v1（virtu_wm_all90），v2 用环境变量覆盖即可复用同一收尾链路
@@ -33,16 +35,7 @@ REMOTE_OUT = f"/root/virtu_train/checkpoints/{TAG}"
 LOCAL_ADAPTER = os.path.join(ROOT, "checkpoints", TAG)
 LOCAL_MERGED = os.path.join(ROOT, "checkpoints", TAG + "_merged")
 LOCAL_GGUF = os.path.join(ROOT, "checkpoints", f"{MODEL_ID}-q4_0.gguf")
-SYSTEM_PROMPT = (
-    "你是 Virtu 制造世界模型（World Model）。给定制造场景的结构化输入"
-    "（毛坯/工件几何、刀具、切削参数、工艺指令、G 代码），你输出可被 CAD/CAE/CAM "
-    "工具链回灌验证的【世界状态预测】JSON：材料去除量与几何变化 ΔV、表面粗糙度 Ra、"
-    "关键 von Mises 应力与安全系数 FOS、刀轨碰撞/过切风险、公差配合与 Auto-Diff 颜色判定。"
-    "缺少必要工程参数（刀具直径、材质、进给、切深）时明确指出缺失项，不臆测数值；"
-    "所有数值带单位、可复算。需要精确几何/应力求解时通过工业工具调用。"
-    "当收到【草案】+【校验器反馈】时，必须按参考值更正并在 correction 字段说明错误类型与修正量；"
-    "设计任务输出可直接驱动 CAD 的 design 规格；给定现场物性表时严格用该表计算。"
-)
+SYSTEM_PROMPT = _wm_contract.SYSTEM
 
 
 def run_local(cmd, timeout=1800):
@@ -139,19 +132,13 @@ def quantize():
 
 
 def register():
-    r = subprocess.run("ollama list", shell=True, capture_output=True, text=True)
+    r = subprocess.run(["ollama", "list"], shell=False, capture_output=True, text=True)
     if MODEL_ID in r.stdout:
         print("[4] ollama 模型已存在，跳过 create")
     else:
         mf = os.path.join(ROOT, "checkpoints", f"{MODEL_ID}.Modelfile")
-        with open(mf, "w", encoding="utf-8") as f:
-            f.write(f"FROM {LOCAL_GGUF}\n\n")
-            f.write(
-                'TEMPLATE """{{ if .System }}system\n{{ .System }}\n{{ end }}'
-                '{{ if .Prompt }}user\n{{ .Prompt }}\n{{ end }}assistant\n{{ .Response }}"""\n\n'
-            )
-            f.write(f'SYSTEM """{SYSTEM_PROMPT}"""\n\n')
-            f.write("PARAMETER num_ctx 4096\nPARAMETER temperature 0.1\nPARAMETER top_p 0.95\n")
+        with open(mf, "w", encoding="utf-8", newline="\n") as f:
+            f.write(render_modelfile(LOCAL_GGUF))
         run_local(f'ollama create {MODEL_ID} -f "{mf}"')
     add_arm()
 

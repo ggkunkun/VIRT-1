@@ -1,0 +1,54 @@
+{
+ "case_id": "generation-e01",
+ "dimension": "generation",
+ "tier": "easy",
+ "tags": "[\"gcode\", \"lathe\", \"chamfer\"]",
+ "prompt": "用 FANUC 车削 ISO/G 格式写一个程序: 毛坯为 Ø30 棒料, 只对端面外圆边缘车 45 度倒角 C2。程序头用 G97 S600 M03, 刀具 T0101, 倒角进给 F0.1, 结束用 M30。只输出程序本身, 不要解释。",
+ "gold": "{\"answer\": \"O0001\\nG97 S600 M03\\nT0101\\nG0 X26 Z2\\nG1 Z0 F0.1\\nG1 X30 Z-2\\nG0 X50 Z50\\nM30\", \"derivation\": \"倒角 C2 即 2mm×45°: 起点 X=30-2×2=26, Z=0; 终点 X=30, Z=-2。\"}",
+ "max_tokens": "256",
+ "response": "",
+ "reasoning": "null",
+ "score": "25.0",
+ "criteria": "[{\"key\": \"gcode\", \"type\": \"gcode_structure\", \"weight\": 1.0, \"passed\": false, \"evidence\": \"missing:no_program_header,no_axis_word,no_feed,no_end_of_program\"}, {\"key\": \"motion\", \"type\": \"regex_all\", \"weight\": 2.0, \"passed\": false, \"evidence\": \"unmatched=['G1\\\\\\\\s*X30\\\\\\\\s*Z-2', 'G1\\\\\\\\s*Z0\\\\\\\\s*F0\\\\\\\\.1']\"}, {\"key\": \"no_drill\", \"type\": \"regex_none\", \"weight\": 1.0, \"passed\": true, \"evidence\": \"no forbidden pattern\"}]",
+ "verdict": "transport_error",
+ "tool_calls": "null",
+ "native_tool_call": "false",
+ "gen": "{\"elapsed_s\": null, \"prompt_tokens\": null, \"completion_tokens\": null, \"finish_reason\": null, \"peak_vram_gb\": null, \"error\": \"URLError:<urlopen error [WinError 10061] 由于目标计算机积极拒绝，无法连接。>\", \"arm\": \"http:virtu-cad-cam-10b@http://127.0.0.1:8000/v1\", \"attempts\": 2}"
+}
+---
+{
+ "case_id": "generation-e02",
+ "dimension": "generation",
+ "tier": "easy",
+ "tags": "[\"gcode\", \"mill\", \"drilling\"]",
+ "prompt": "用 FANUC 铣床 ISO/G 格式写程序: 在 Ø50 法兰盘顶面中心钻 Ø20 孔, 孔深 15mm。工件原点 G54 在顶面中心, 安全高度 Z5, 快速定位后以 F80 钻入, 退刀到 Z50, 结束 M30。只输出程序本身。",
+ "gold": "{\"answer\": \"O0002\\nG54 G90\\nS800 M03\\nT02\\nG0 X0 Y0 Z5\\nG1 Z-15 F80\\nG0 Z50\\nM30\", \"derivation\": \"孔位于中心 X0 Y0; 深度 15mm 从顶面起算, 故槽底 Z=-15。\"}",
+ "max_tokens": "256",
+ "response": "",
+ "reasoning": "null",
+ "score": "25.0",
+ "criteria": "[{\"key\": \"gcode\", \"type\": \"gcode_structure\", \"weight\": 1.0, \"passed\": false, \"evidence\": \"missing:no_program_header,no_axis_word,no_feed,no_end_of_program\"}, {\"key\": \"motion\", \"type\": \"regex_all\", \"weight\": 2.0, \"passed\": false, \"evidence\": \"unmatched=['G1\\\\\\\\s*Z-15\\\\\\\\s*F80', 'X0\\\\\\\\s*Y0\\\\\\\\s*Z5']\"}, {\"key\": \"no_comp\", \"type\": \"literal_none\", \"weight\": 1.0, \"passed\": true, \"evidence\": \"no forbidden term\"}]",
+ "verdict": "transport_error",
+ "tool_calls": "null",
+ "native_tool_call": "false",
+ "gen": "{\"elapsed_s\": null, \"prompt_tokens\": null, \"completion_tokens\": null, \"finish_reason\": null, \"peak_vram_gb\": null, \"error\": \"URLError:<urlopen error [WinError 10061] 由于目标计算机积极拒绝，无法连接。>\", \"arm\": \"http:virtu-cad-cam-10b@http://127.0.0.1:8000/v1\", \"attempts\": 2}"
+}
+---
+{
+ "case_id": "generation-e03",
+ "dimension": "generation",
+ "tier": "easy",
+ "tags": "[\"process-card\", \"turning\"]",
+ "prompt": "为 45 钢 Ø40×100 短轴的车削工艺卡输出前三道工序。已知: 10 锯床下料 Ø45×105 (设备 GB400 锯床, 圆锯片, 检验长度 105±1); 20 粗车外圆至 Ø40.5 (车床 CKA6156, T0101 外圆车刀, S800 F0.3, 检验直径余量 0.5±0.1); 30 钻中心孔 A2 (CKA6156, 中心钻 A2, S500 F0.1, 检验 60 度角)。表头一行依次为 工序号 工序内容 设备 刀具 切削参数 检验项, 之后每道工序一行。只输出表格。",
+ "gold": "{\"answer\": \"工序号 工序内容 设备 刀具 切削参数 检验项\\n10 锯床下料 Ø45×105 GB400 圆锯片 - 长度 105±1\\n20 粗车外圆至 Ø40.5 CKA6156 T0101 外圆车刀 S800 F0.3 直径余量 0.5±0.1\\n30 钻中心孔 A2 CKA6156 中心钻 A2 S500 F0.1 中心孔 60 度\", \"derivation\": \"工序行 3 行, 对应题干给定的 10/20/30 三道工序; 表头 6 槽来自题干。\"}",
+ "max_tokens": "256",
+ "response": "",
+ "reasoning": "null",
+ "score": "0.0",
+ "criteria": "[{\"key\": \"slots_order\", \"type\": \"ordered_contains\", \"weight\": 2.0, \"passed\": false, \"evidence\": \"'工序号' absent\"}, {\"key\": \"op_rows\", \"type\": \"count_between\", \"weight\": 2.0, \"passed\": false, \"evidence\": \"count=0 expected[3,3]\"}, {\"key\": \"tools\", \"type\": \"literal_all\", \"weight\": 1.0, \"passed\": false, \"evidence\": \"missing=['T0101', 'S800', '中心钻']\"}]",
+ "verdict": "transport_error",
+ "tool_calls": "null",
+ "native_tool_call": "false",
+ "gen": "{\"elapsed_s\": null, \"prompt_tokens\": null, \"completion_tokens\": null, \"finish_reason\": null, \"peak_vram_gb\": null, \"error\": \"URLError:<urlopen error [WinError 10061] 由于目标计算机积极拒绝，无法连接。>\", \"arm\": \"http:virtu-cad-cam-10b@http://127.0.0.1:8000/v1\", \"attempts\": 2}"
+}
+---

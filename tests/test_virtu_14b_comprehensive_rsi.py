@@ -42,7 +42,7 @@ def test_14b_arm_profile_binding():
     assert spec["model_id"] == "virtu-moe-14b:latest"
     assert spec["num_gpu"] == 20
     assert spec["num_ctx"] == 8192
-    assert len(spec["tools"]) == 16
+    assert len(spec["tools"]) == 17
     assert spec["tools_dimensions"] == ["toolcall"]
 
 

@@ -1,0 +1,8 @@
+{
+  "report_sha256": "688d0e5a3c68c0a3bc20b9543330f72137ef55254fd457b3bd19cbd99c9e092e",
+  "artifacts": {
+    "proctor_log.jsonl": "9e5412d5c4b8f62cf7ca53dfc9c32ba2b4891ca9ea79badce94090fc75a921af",
+    "transcript.jsonl": "95cb44a91b06221f021256cc7c3ac95c70278e8dbcab5b8f1619220acade4f0c",
+    "VERIFICATION_REPORT.json": "688d0e5a3c68c0a3bc20b9543330f72137ef55254fd457b3bd19cbd99c9e092e"
+  }
+}

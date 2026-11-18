@@ -1,9 +1,0 @@
-{
-  "version": 1,
-  "files": {
-    "inference.json": "d02c0e2689eaa93478e58486e89f22cbd3e619918c197cb30ef04f9abd2155ca",
-    "receipt.json": "ea2ae43ee7ae8b70eaa4c0073b468d655ca63f7322e73721161b084f11507032"
-  },
-  "sources": {},
-  "review_sha256": "b84168188bab17c24e520abaf3b9be281df85f19a03e790b4126bf40b84bb65e"
-}

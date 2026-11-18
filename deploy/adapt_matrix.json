@@ -1,0 +1,292 @@
+[
+ {
+  "size_gb": 5.88,
+  "kind": "13b_q3km",
+  "names": [
+   "virtu-max:154d486a",
+   "virtu-13.63b:hardened",
+   "virtu-13.63b:latest",
+   "virtu-13.63b:asym"
+  ],
+  "rep": "virtu-13.63b:asym",
+  "best_tps": 20.7,
+  "decision": {
+   "tier": "S",
+   "num_gpu": 99,
+   "num_ctx": 8192,
+   "note": "13B q3_K_M，基本可整装进 6GB 显存"
+  }
+ },
+ {
+  "size_gb": 7.74,
+  "kind": "13b_q4",
+  "names": [
+   "virtu-max:8610e633",
+   "virtu-internet-enhanced:latest",
+   "virtu-13.63b:perfect",
+   "virtu-13.63b:real-clean",
+   "virtu-13.63b-q4_0:latest",
+   "virtu-13b:gold",
+   "virtu-13.63b:wm-v1"
+  ],
+  "rep": "virtu-13.63b-q4_0:latest",
+  "best_tps": 3.97,
+  "decision": {
+   "tier": "B",
+   "num_gpu": 36,
+   "num_ctx": 8192,
+   "note": "13B Q4_0 超出显存，最佳仅 36 层 offload"
+  }
+ },
+ {
+  "size_gb": 4.3,
+  "kind": "8b",
+  "names": [
+   "virtu-max:36f5d7bd",
+   "virtu-dense-ties:q4"
+  ],
+  "rep": "virtu-dense-ties:q4",
+  "best_tps": 37.74,
+  "decision": {
+   "tier": "S",
+   "num_gpu": 99,
+   "num_ctx": 8192,
+   "note": "8B 密集模型，全量 offload，本机最流畅档"
+  }
+ },
+ {
+  "size_gb": 4.36,
+  "kind": "8b",
+  "names": [
+   "qwen2.5:7b-instruct-q4_K_M"
+  ],
+  "rep": "qwen2.5:7b-instruct-q4_K_M",
+  "best_tps": 37.09,
+  "decision": {
+   "tier": "S",
+   "num_gpu": 99,
+   "num_ctx": 8192,
+   "note": "8B 密集模型，全量 offload，本机最流畅档"
+  }
+ },
+ {
+  "size_gb": 4.3,
+  "kind": "8b",
+  "names": [
+   "virtu-max:df83b71e",
+   "virtu-production:perfect",
+   "virtu-production:latest",
+   "virtu-dense-merged:q4_0"
+  ],
+  "rep": "virtu-production:latest",
+  "best_tps": 36.89,
+  "decision": {
+   "tier": "S",
+   "num_gpu": 99,
+   "num_ctx": 8192,
+   "note": "8B 密集模型，全量 offload，本机最流畅档"
+  }
+ },
+ {
+  "size_gb": 4.3,
+  "kind": "8b",
+  "names": [
+   "virtu-max:97a7eb76",
+   "virtu-dense-merged-v2:q4_0"
+  ],
+  "rep": "virtu-dense-merged-v2:q4_0",
+  "best_tps": 36.35,
+  "decision": {
+   "tier": "S",
+   "num_gpu": 99,
+   "num_ctx": 8192,
+   "note": "8B 密集模型，全量 offload，本机最流畅档"
+  }
+ },
+ {
+  "size_gb": 4.3,
+  "kind": "8b",
+  "names": [
+   "virtu-max:c3b78c77",
+   "virtu-comprehensive:perfect",
+   "virtu-comprehensive:fast",
+   "virtu-comprehensive:q3",
+   "virtu-comprehensive:think",
+   "virtu-disciplined:v1",
+   "virtu-comprehensive:latest",
+   "virtu-master:latest",
+   "virtu-test-nothink:latest",
+   "virtu-frozen:comp_v5",
+   "virtu-ties-v1:latest",
+   "virtu-test-tool:latest"
+  ],
+  "rep": "virtu-max:c3b78c77",
+  "best_tps": 36.05,
+  "decision": {
+   "tier": "S",
+   "num_gpu": 99,
+   "num_ctx": 8192,
+   "note": "8B 密集模型，全量 offload，本机最流畅档"
+  }
+ },
+ {
+  "size_gb": 4.3,
+  "kind": "8b",
+  "names": [
+   "virtu-max:293cdac3",
+   "virtu-v3:hardened",
+   "virtu-v3-all90:perfect",
+   "virtu-v3-all90-q4_0:latest",
+   "virtu-wm-v3:latest"
+  ],
+  "rep": "virtu-v3:hardened",
+  "best_tps": 33.55,
+  "decision": {
+   "tier": "S",
+   "num_gpu": 99,
+   "num_ctx": 8192,
+   "note": "8B 密集模型，全量 offload，本机最流畅档"
+  }
+ },
+ {
+  "size_gb": 25.39,
+  "kind": "moe_bf16",
+  "names": [
+   "virtu-moe-14b:bf16"
+  ],
+  "rep": "virtu-moe-14b:bf16",
+  "best_tps": null,
+  "decision": {
+   "tier": "X",
+   "num_gpu": 0,
+   "num_ctx": 2048,
+   "note": "25GB bf16 超出 16GB 内存，本机不可用"
+  }
+ },
+ {
+  "size_gb": 6.25,
+  "kind": "moe_q3km",
+  "names": [
+   "virtu-max:b68a251f",
+   "virtu-moe-14b:q3km"
+  ],
+  "rep": "virtu-moe-14b:q3km",
+  "best_tps": 21.36,
+  "decision": {
+   "tier": "S",
+   "num_gpu": 34,
+   "num_ctx": 4096,
+   "note": "MoE 14B q3_K_M，激活参数少，13B 级最优"
+  }
+ },
+ {
+  "size_gb": 7.75,
+  "kind": "moe_q4",
+  "names": [
+   "virtu-max:a2103c68",
+   "virtu-moe-14b:hardened",
+   "virtu-moe-14b:out-opt-sys",
+   "virtu-moe-14b:out-opt",
+   "virtu-moe-14b:a2103c68"
+  ],
+  "rep": "virtu-moe-14b:hardened",
+  "best_tps": 2.28,
+  "decision": {
+   "tier": "X",
+   "num_gpu": 36,
+   "num_ctx": 4096,
+   "note": "MoE 14B Q4 在本机严重劣化，建议改用 q3_K_M"
+  }
+ },
+ {
+  "size_gb": 7.75,
+  "kind": "moe_q4",
+  "names": [
+   "virtu-max:01068725",
+   "virtu-moe-14b:perfect",
+   "virtu-moe-14b:real-clean",
+   "virtu-moe-14b:fast",
+   "virtu-moe-14b:latest",
+   "virtu-moe-14b:01068725",
+   "virtu-moe-14b:semantic"
+  ],
+  "rep": "virtu-max:01068725",
+  "best_tps": null,
+  "decision": {
+   "tier": "X",
+   "num_gpu": 36,
+   "num_ctx": 4096,
+   "note": "MoE 14B Q4 在本机严重劣化，建议改用 q3_K_M"
+  }
+ },
+ {
+  "size_gb": 0.92,
+  "kind": "other",
+  "names": [
+   "virtu-max:183715c4",
+   "virtu-probe:test",
+   "virtu-extreme-256k:latest",
+   "qwen2.5:1.5b"
+  ],
+  "rep": "qwen2.5:1.5b",
+  "best_tps": 109.68,
+  "decision": {
+   "tier": "?",
+   "note": "未分类"
+  }
+ },
+ {
+  "size_gb": 4.87,
+  "kind": "other",
+  "names": [
+   "virtu-max:a3de86cd",
+   "qwen3:8b"
+  ],
+  "rep": "qwen3:8b",
+  "best_tps": 32.07,
+  "decision": {
+   "tier": "?",
+   "note": "未分类"
+  }
+ },
+ {
+  "size_gb": 1.08,
+  "kind": "other",
+  "names": [
+   "bge-m3:latest"
+  ],
+  "rep": "bge-m3:latest",
+  "best_tps": null,
+  "decision": {
+   "tier": "?",
+   "note": "未分类"
+  }
+ },
+ {
+  "size_gb": 1.8,
+  "kind": "other",
+  "names": [
+   "virtu-longctx:latest",
+   "qwen2.5:3b"
+  ],
+  "rep": "virtu-longctx:latest",
+  "best_tps": null,
+  "decision": {
+   "tier": "?",
+   "note": "未分类"
+  }
+ },
+ {
+  "size_gb": 0.26,
+  "kind": "other",
+  "names": [
+   "nomic-embed-text:latest"
+  ],
+  "rep": "nomic-embed-text:latest",
+  "best_tps": null,
+  "decision": {
+   "tier": "?",
+   "note": "未分类"
+  }
+ }
+]

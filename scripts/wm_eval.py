@@ -38,7 +38,9 @@ def normalize_expr(s: str) -> str:
     t = t.replace("×", "*").replace("÷", "/").replace("−", "-").replace("–", "-")
     t = t.replace("^", "**").replace("²", "**2").replace("³", "**3").replace("π", "pi")
     t = re.sub(r"(?<=\d)\s*(?=[a-zA-Z_])", "*", t)   # 2pi -> 2*pi（罕见）
-    t = re.sub(r"(\))\s*\(", r")\1(", t)
+    # 相邻括号隐式乘法 "(2)(3)" -> "(2)*(3)"。旧替换 r")\1(" 把捕获的右括号
+    # 又写了一遍，产出 "(2))(3)" 直接解析失败（实测 safe_eval('(2)(3)')=None）。
+    t = re.sub(r"\)\s*\(", ")*(", t)
     return t
 
 
@@ -198,6 +200,7 @@ def _selftest() -> int:
         ("pi*(28.7)^4/4", 532865.33),
         ("sqrt(0.072^2 + 0.09^2)", 0.1153698),
         ("215 / 190.2", 1.130389),
+        ("(2)(3)", 6.0),
         ("-DOC*WOC*L", None),
     ]
     for expr, want in cases:

@@ -1,0 +1,68 @@
+[
+  {
+    "file": "data\\sft\\virtu_worldmodel.jsonl",
+    "n_in": 610,
+    "n_out": 610,
+    "duplicates_dropped": 0,
+    "answers_normalized": 0,
+    "answers_relabeled": 0,
+    "actions": {}
+  },
+  {
+    "file": "data\\sft\\virtu_worldmodel_autocad.jsonl",
+    "n_in": 1,
+    "n_out": 1,
+    "duplicates_dropped": 0,
+    "answers_normalized": 0,
+    "answers_relabeled": 0,
+    "actions": {}
+  },
+  {
+    "file": "data\\sft\\virtu_worldmodel_collision_patch.jsonl",
+    "n_in": 600,
+    "n_out": 600,
+    "duplicates_dropped": 0,
+    "answers_normalized": 0,
+    "answers_relabeled": 0,
+    "actions": {}
+  },
+  {
+    "file": "data\\sft\\virtu_worldmodel_distilled.jsonl",
+    "n_in": 395,
+    "n_out": 395,
+    "duplicates_dropped": 0,
+    "answers_normalized": 184,
+    "answers_relabeled": 0,
+    "actions": {
+      "gate_enum:fos_gate": 82,
+      "gate_enum:volume_conservation": 102
+    }
+  },
+  {
+    "file": "data\\sft\\virtu_worldmodel_train.jsonl",
+    "n_in": 396,
+    "n_out": 396,
+    "duplicates_dropped": 0,
+    "answers_normalized": 184,
+    "answers_relabeled": 0,
+    "actions": {
+      "gate_enum:fos_gate": 82,
+      "gate_enum:volume_conservation": 102
+    }
+  },
+  {
+    "file": "data\\sft\\virtu_worldmodel_v2.jsonl",
+    "n_in": 2025,
+    "n_out": 2025,
+    "duplicates_dropped": 0,
+    "answers_normalized": 184,
+    "answers_relabeled": 0,
+    "actions": {
+      "gate_enum:fos_gate": 82,
+      "gate_enum:volume_conservation": 102
+    }
+  },
+  {
+    "verify": []
+  }
+]

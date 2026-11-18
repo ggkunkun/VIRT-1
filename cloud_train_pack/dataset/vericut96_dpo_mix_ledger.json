@@ -1,0 +1,44 @@
+{
+  "corpus": "vericut96_dpo_mix",
+  "seed": 20261114,
+  "vericut_dpo_rows": 104,
+  "sources": {
+    "vericut_sft": {
+      "path": "D:\\Virtu模型\\data\\train\\vericut_e_training_v1\\train\\vericut_e_training_agent_sft.jsonl",
+      "sha256": "fb632153e2ae0a4714518c637c47e7c8b226ff38572797afebef578e52023274",
+      "rows": 495,
+      "weight": 2
+    },
+    "vericut_dpo": {
+      "path": "D:\\Virtu模型\\data\\train\\vericut_e_training_v1\\dpo\\vericut_e_training_dpo.jsonl",
+      "sha256": "7c9ecd5dd88327e4fa2246c06e48b0032de1fdccc75a11ae99c58e99daabbc2f",
+      "rows": 104
+    },
+    "engine_replay": {
+      "path": "D:\\Virtu模型\\data\\train\\virtu_engine_agent_v1\\train\\virtu_engine_agent_v1.jsonl",
+      "sha256": "8735ded829c1476bf90673af91249623e322938cbf23de5c2a55dbe4232ca512",
+      "rows": 900
+    },
+    "text_replay": {
+      "path": "D:\\Virtu模型\\data\\train\\virtu_v3\\train\\virtu_v3_text_sft.jsonl",
+      "sha256": "30ff1a23a2d9e9e49381e2ecc46e6cf8cd8c9aa6c1a0c3bddecb16b0341ca553",
+      "rows": 300
+    },
+    "concise_dpo": {
+      "path": "D:\\Virtu模型\\cloud_train_pack\\dataset\\dpo_concise_pairs.jsonl",
+      "sha256": "eb521ada440e0534481bf8ab85c9f79ac86396780046d320390b5c2eb666cc2e",
+      "rows": 30
+    },
+    "safety_dpo": {
+      "path": "D:\\Virtu模型\\cloud_train_pack\\dataset\\safety_boundary_dpo_pairs.jsonl",
+      "sha256": "3a0210e040db93e88af2c4764b9f2cbc33a434cdea21b9ce32a09692ac6a5850",
+      "rows": 28
+    }
+  },
+  "output_path": "D:\\Virtu模型\\cloud_train_pack\\dataset\\vericut96_dpo_mix.jsonl",
+  "output_name": "vericut96_dpo_mix.jsonl",
+  "output_sha256": "20ca52c5bcbd6a92c96fce4dea938b62ea438355db14aef97cbd6bc6f373d371",
+  "size_bytes": 178034,
+  "rows": 162,
+  "generated_at": "2026-11-14 18:07:59"
+}

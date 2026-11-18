@@ -1,0 +1,9 @@
+cimco.validate_macro OK status= success keys= ['status', 'is_valid', 'errors', 'variables_count', 'variables', 'line_count']
+sscnc.calculate_offsets OK status= success keys= ['status', 'wcs_target', 'offsets']
+autocad.create_dxf OK status= success keys= ['status', 'dxf_path', 'entities_count']
+solidworks.connect OK status= connected keys= ['status', 'type']
+nx.run_journal_missing OK status= error keys= ['status', 'message']
+vericut.run_simulation_missing OK status= error keys= ['status', 'message']
+orchestrator.preflight OK status= None keys= ['total_software', 'ready_count', 'running_count', 'all_ready', 'software']
+tool_defs OK count= 9
+DONE

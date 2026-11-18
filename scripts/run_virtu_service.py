@@ -17,8 +17,8 @@ if ROOT not in sys.path:
 # auto paths must use trained artifacts; never silently serve the untrained base.
 os.environ["VIRTU_BACKEND"] = "vllm_http"
 os.environ["VIRTU_VLLM_URL"] = "http://127.0.0.1:11434/v1"
-os.environ["VIRTU_VLLM_MODEL"] = os.getenv("VIRTU_VLLM_MODEL", "virtu-moe-14b")
-os.environ["VIRTU_TOOL_MODEL"] = os.getenv("VIRTU_TOOL_MODEL", "virtu-moe-14b")
+os.environ["VIRTU_VLLM_MODEL"] = os.getenv("VIRTU_VLLM_MODEL", "virtu-ties-v1:latest")
+os.environ["VIRTU_TOOL_MODEL"] = os.getenv("VIRTU_TOOL_MODEL", "virtu-ties-v1:latest")
 os.environ.setdefault("VIRTU_MAX_TOKENS", "1024")
 os.environ.setdefault("VIRTU_TEMPERATURE", "0.3")
 

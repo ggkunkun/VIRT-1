@@ -3,6 +3,7 @@
 from __future__ import annotations
 import math
 import os
+import time
 from typing import Dict, Any, List, Optional, Iterator
 import torch
 from torch.optim import AdamW
@@ -71,7 +72,8 @@ class DistributedCodeTrainer:
             ckpt_path,
         )
         self.saved_checkpoints.append(ckpt_path)
-        print(f"[Trainer] Checkpoint successfully saved to: {ckpt_path} (Val Loss: {val_loss:.4f})")
+        val_repr = f"{val_loss:.4f}" if val_loss is not None else "unmeasured"
+        print(f"[Trainer] Checkpoint successfully saved to: {ckpt_path} (Val Loss: {val_repr})")
         return ckpt_path
 
     def train_steps(
@@ -94,6 +96,7 @@ class DistributedCodeTrainer:
             lr = self.get_learning_rate(self.global_step)
             self.set_learning_rate(lr)
 
+            t0 = time.perf_counter()
             self.optimizer.zero_grad()
             outputs = self.model(input_ids=input_ids, labels=labels)
             loss = outputs["loss"]
@@ -101,24 +104,23 @@ class DistributedCodeTrainer:
 
             torch.nn.utils.clip_grad_norm_(self.model.parameters(), max_norm=1.0)
             self.optimizer.step()
+            step_elapsed = time.perf_counter() - t0
 
             loss_val = loss.item()
             accumulated_loss += loss_val
 
-            # Periodic validation and checkpointing
+            # 无独立验证集 ⇒ val_loss 未测。禁止用 train_loss*0.98 冒充验证损失（§8 测量宪法）。
             val_loss = None
             if step % checkpoint_interval == 0 or step == total_steps:
-                val_loss = loss_val * 0.98  # Validation evaluation
                 self.save_checkpoint(self.global_step, val_loss=val_loss, train_loss=loss_val)
 
-            tokens_per_sec = (input_ids.numel()) / 0.05
+            tokens_per_sec = input_ids.numel() / max(step_elapsed, 1e-9)
             self.monitor.record_step(
                 step=self.global_step,
                 train_loss=loss_val,
                 lr=lr,
                 throughput=tokens_per_sec,
                 val_loss=val_loss,
-                gpu_utilization=88.5,
             )
 
         return {

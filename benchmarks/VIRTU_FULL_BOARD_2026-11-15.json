@@ -1,0 +1,489 @@
+{
+  "title": "Virtu 训练完成后主力模型全面测评（2026-11-15）",
+  "generated_at": "2026-11-15T20:36:22+0800",
+  "subject": {
+    "primary": "virtu-vericut96:v2",
+    "baseline": "virtu-master-fixed:latest"
+  },
+  "identity": {
+    "models": {
+      "virtu-vericut96:v2": {
+        "tags_digest": "cc70716d5f09c35fd668b55b88aa5ddff51c82935aaf577415c5a6683fc7e4cc",
+        "served_layers": {
+          "model": "sha256:4f2f8dd5a2860ee2d28c14718c90afcfbd788efcb3caa5017a20fe3cb761f4da",
+          "model_bytes": 4614301728,
+          "template": "sha256:2f7055ebdd3fdb524063dfe0f46cd93f085d302822e290717f1aeaaaef45e620",
+          "template_bytes": 1784,
+          "system": "sha256:2f4e97d791de80426c7bc8b33f8b9dbb6c70f18d87f8beba5da74cfb8f155161",
+          "system_bytes": 380,
+          "parameters": "sha256:f1eef96f6317330e8d9ee9ab405d8b88ecb8197936b59313edc151cbf097e479",
+          "parameters_bytes": 127,
+          "manifest_digest": "sha256:6553c1ef955b37c76202f8b233b7225d4dbd799042ea03145995181af69ad32f"
+        }
+      },
+      "virtu-vericut-e:latest": {
+        "tags_digest": "9d9f8aa57ee75ccd35cd602f3d8bb62d2d94d23d651f57bb1579f3a1b9f502d9",
+        "served_layers": {
+          "model": "sha256:877b9fa521ac83505f52281308d35680ea6a5a0529b1b9aaca01a7d1e760a1e1",
+          "model_bytes": 4614301728,
+          "template": "sha256:2f7055ebdd3fdb524063dfe0f46cd93f085d302822e290717f1aeaaaef45e620",
+          "template_bytes": 1784,
+          "system": "sha256:2f4e97d791de80426c7bc8b33f8b9dbb6c70f18d87f8beba5da74cfb8f155161",
+          "system_bytes": 380,
+          "parameters": "sha256:f1eef96f6317330e8d9ee9ab405d8b88ecb8197936b59313edc151cbf097e479",
+          "parameters_bytes": 127,
+          "manifest_digest": "sha256:6553c1ef955b37c76202f8b233b7225d4dbd799042ea03145995181af69ad32f"
+        }
+      },
+      "virtu-six-software:v1": {
+        "tags_digest": "a4c03edb3af06b761b10d5cf4f1f55f08b0ff087874af88f7e86c344c6eb97a0",
+        "served_layers": {
+          "model": "sha256:d96938fbcb6002cbeab5fb0abd713e19b0980e232cde532455c401f41cb16f91",
+          "model_bytes": 4614301728,
+          "template": "sha256:2f7055ebdd3fdb524063dfe0f46cd93f085d302822e290717f1aeaaaef45e620",
+          "template_bytes": 1784,
+          "system": "sha256:2f4e97d791de80426c7bc8b33f8b9dbb6c70f18d87f8beba5da74cfb8f155161",
+          "system_bytes": 380,
+          "parameters": "sha256:f1eef96f6317330e8d9ee9ab405d8b88ecb8197936b59313edc151cbf097e479",
+          "parameters_bytes": 127,
+          "manifest_digest": "sha256:6553c1ef955b37c76202f8b233b7225d4dbd799042ea03145995181af69ad32f"
+        }
+      },
+      "virtu-master-fixed:latest": {
+        "tags_digest": "cffbe5db49462c0519be44fc0ba233b669b081ca4c1fb0ff9d55861be08e6faa",
+        "served_layers": {
+          "model": "sha256:2602f6fc0023fc4654caa040f35871b76d7760d6a55e78bf964f3949688e0d05",
+          "model_bytes": 4614301728,
+          "template": "sha256:2f7055ebdd3fdb524063dfe0f46cd93f085d302822e290717f1aeaaaef45e620",
+          "template_bytes": 1784,
+          "system": "sha256:2f4e97d791de80426c7bc8b33f8b9dbb6c70f18d87f8beba5da74cfb8f155161",
+          "system_bytes": 380,
+          "parameters": "sha256:f1eef96f6317330e8d9ee9ab405d8b88ecb8197936b59313edc151cbf097e479",
+          "parameters_bytes": 127,
+          "manifest_digest": "sha256:6553c1ef955b37c76202f8b233b7225d4dbd799042ea03145995181af69ad32f"
+        }
+      },
+      "qwen3:8b": {
+        "tags_digest": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41",
+        "served_layers": {
+          "model": "sha256:a3de86cd1c132c822487ededd47a324c50491393e6565cd14bafa40d0b8e686f",
+          "model_bytes": 5225374496,
+          "template": "sha256:ae370d884f108d16e7cc8fd5259ebc5773a0afa6e078b11f4ed7e39a27e0dfc4",
+          "template_bytes": 1723,
+          "parameters": "sha256:cff3f395ef3756ab63e58b0ad1b32bb6f802905cae1472e6a12034e4246fbbdb",
+          "parameters_bytes": 120,
+          "manifest_digest": "sha256:05a61d37b08453e59290add468e3bb2f688e23a01e967fecb0e2fa41218cea76"
+        }
+      }
+    },
+    "training_receipts": {
+      "deployment_receipt_virtu-master-fixed_latest.json": {
+        "tag": "virtu-master-fixed:latest",
+        "status": "PROBE_FAILED",
+        "deployed_at": null,
+        "gguf_sha256": null,
+        "adapter_sha256": null,
+        "dataset_sha256": null
+      },
+      "deployment_receipt_virtu-six-software_v1.json": {
+        "tag": "virtu-six-software:v1",
+        "status": "PROBE_FAILED",
+        "deployed_at": "2026-11-15 15:20:54",
+        "gguf_sha256": "d96938fbcb6002cbeab5fb0abd713e19b0980e232cde532455c401f41cb16f91",
+        "adapter_sha256": "a316c2142feeb837d8b5348288e1b1ac4f1578ece99ece19d1f4e272b0df5def",
+        "dataset_sha256": "5f5c436bfb24094832514a2644a2f201347c6097eeca56816be67bdfd84f7317"
+      },
+      "deployment_receipt_virtu-vericut-e_latest.json": {
+        "tag": "virtu-vericut-e:latest",
+        "status": "PROBE_FAILED",
+        "deployed_at": "2026-11-15 17:00:07",
+        "gguf_sha256": "877b9fa521ac83505f52281308d35680ea6a5a0529b1b9aaca01a7d1e760a1e1",
+        "adapter_sha256": "8250cbf0cf53046d7418b8a46fbb394e3eb7f2e8d680a39cf487679952440425",
+        "dataset_sha256": "72c3b9b797e183db880b86dd4b5dc860b8a7e4cb745ba82dfc0facc5e7afdbfb"
+      },
+      "deployment_receipt_virtu-vericut96_v1.json": {
+        "tag": "virtu-vericut96:v1",
+        "status": "PROBE_FAILED",
+        "deployed_at": "2026-11-14 20:36:32",
+        "gguf_sha256": "588ab839d9c5b49ba81ea5b68dc14ae5cdcd1f316127baa5f5c83a04a0858834",
+        "adapter_sha256": "53e80e9002a019f1866927c8c5a0a441f4c36eb5fe435f5ea476259033c0558b",
+        "dataset_sha256": "20ca52c5bcbd6a92c96fce4dea938b62ea438355db14aef97cbd6bc6f373d371"
+      },
+      "deployment_receipt_virtu-vericut96_v2.json": {
+        "tag": "virtu-vericut96:v2",
+        "status": "PROBE_FAILED",
+        "deployed_at": "2026-11-15 17:44:04",
+        "gguf_sha256": "4f2f8dd5a2860ee2d28c14718c90afcfbd788efcb3caa5017a20fe3cb761f4da",
+        "adapter_sha256": "fea8b4a485f6a5a6b1fe285129e1d93d0c99acd5a3a9f1ef75d46a87ea275822",
+        "dataset_sha256": "e95bdd2067138b5f93277a938e2ed71c784bb14cffa6a73a0d37bd9683b9b7f0"
+      }
+    },
+    "ruler_sha256": {
+      "virtu_eval/graders.py": "5024fe5cfc85b6ac1792256fdc22b5ecfa66e3bf72698c48feea8399cfd7224c",
+      "virtu_eval/runner.py": "058da6dde22a83e571be976f6ac51f0c58de25158f9b76501fd74d335168bf1d",
+      "virtu_eval/arms.py": "0c2158c5b835d28fc370569acb79bf28cf85438ac0864739223098e3287a0d85",
+      "scripts/run_domain_ab.py": "916557c9e787df65e1d46d14291f5d825ad385e5b0d50227317776ac9b5ae6c8",
+      "scripts/eval_all_models_live.py": "a2ba4778e744444aa9ac8205bf9cbcd9435ac9315bc2c35708a1f0a9720f1adb",
+      "scripts/eval_vericut_e_training.py": "ab65bbbdbc47772f1c6dd90d848da4b0341aba758f02daecacbda6a0d24c06bd",
+      "cloud_train_pack/deploy_trained_adapter.py": "f7631522625da20ae2e447826e334fada7c37f780d1627f381ad4cf1b3bce67d"
+    },
+    "evidence": "runs/eval_full_board_20261115/identity.json"
+  },
+  "drift": {
+    "primary_unchanged": true,
+    "retargeted_tags": [
+      "virtu-vericut-e:latest: 9d9f8aa57ee7 -> 92323c5d1dde"
+    ],
+    "new_tags_during_chain": [
+      "virtu-vericut96:v3",
+      "virtu-six-software:v2",
+      "virtu-six-software:v3"
+    ],
+    "note": "被测构件按内容寻址；vericut-e 腿成绩只归属起链时的 9d9f8aa5… 构件"
+  },
+  "gates": {
+    "basis": "measured",
+    "probe_mutation_pytest": 0,
+    "probe_mutation_passed": 10,
+    "holdout_gold_selftest": 0,
+    "gold_cases": 105,
+    "passed": true,
+    "evidence": "runs/eval_full_board_20261115/gates_phase.json"
+  },
+  "boards": {
+    "targeted_probes": {
+      "virtu-vericut96:v2": {
+        "basis": "measured",
+        "n": 10,
+        "passed": 6,
+        "pass_rate_pct": 60.0,
+        "failed_probes": [
+          "lame_stress_probe",
+          "fanuc_g71_safety_probe",
+          "vericut_autodiff_probe",
+          "vericut_coordinate_unit_probe"
+        ],
+        "evidence": "runs/eval_full_board_20261115/targeted_phase.json",
+        "run_id": "f7631522625da20a"
+      },
+      "virtu-vericut-e:latest": {
+        "basis": "measured",
+        "n": 10,
+        "passed": 7,
+        "pass_rate_pct": 70.0,
+        "failed_probes": [
+          "sw_coordinate_probe",
+          "lame_stress_probe",
+          "vericut_autodiff_probe"
+        ],
+        "evidence": "runs/eval_full_board_20261115/targeted_phase.json",
+        "run_id": "f7631522625da20a"
+      },
+      "virtu-six-software:v1": {
+        "basis": "measured",
+        "n": 10,
+        "passed": 6,
+        "pass_rate_pct": 60.0,
+        "failed_probes": [
+          "sw_coordinate_probe",
+          "lame_stress_probe",
+          "fanuc_g71_safety_probe",
+          "vericut_autodiff_probe"
+        ],
+        "evidence": "runs/eval_full_board_20261115/targeted_phase.json",
+        "run_id": "f7631522625da20a"
+      },
+      "virtu-master-fixed:latest": {
+        "basis": "measured",
+        "n": 10,
+        "passed": 7,
+        "pass_rate_pct": 70.0,
+        "failed_probes": [
+          "lame_stress_probe",
+          "fanuc_g71_safety_probe",
+          "vericut_autodiff_probe"
+        ],
+        "evidence": "runs/eval_full_board_20261115/targeted_phase.json",
+        "run_id": "f7631522625da20a"
+      },
+      "qwen3:8b": {
+        "basis": "measured",
+        "n": 10,
+        "passed": 7,
+        "pass_rate_pct": 70.0,
+        "failed_probes": [
+          "lame_stress_probe",
+          "vericut_autodiff_probe",
+          "vericut_coordinate_unit_probe"
+        ],
+        "evidence": "runs/eval_full_board_20261115/targeted_phase.json",
+        "run_id": "f7631522625da20a"
+      }
+    },
+    "domain24_keyword": {
+      "virtu-vericut96:v2": {
+        "basis": "measured",
+        "n": 24,
+        "mean_score": 31.6,
+        "median_score": 0.0,
+        "mean_tok_s": 21.54,
+        "transport_errors": 0,
+        "grader_version": "slot_exact_v2",
+        "alternate_grader_mean_inferred": 69.45,
+        "note": "slot_exact_v2 精确槽位口径；绝对分不可作能力结论，只作同尺相对比较",
+        "evidence": "runs/eval_full_board_20261115/domain24/summary.json",
+        "raw_evidence": "runs/eval_full_board_20261115/domain24/raw.jsonl",
+        "run_id": "272de1cb84b1de5b"
+      },
+      "virtu-vericut-e:latest": {
+        "basis": "measured",
+        "n": 24,
+        "mean_score": 33.33,
+        "median_score": 33.3,
+        "mean_tok_s": 20.01,
+        "transport_errors": 0,
+        "grader_version": "slot_exact_v2",
+        "alternate_grader_mean_inferred": 75.01,
+        "note": "slot_exact_v2 精确槽位口径；绝对分不可作能力结论，只作同尺相对比较",
+        "evidence": "runs/eval_full_board_20261115/domain24/summary.json",
+        "raw_evidence": "runs/eval_full_board_20261115/domain24/raw.jsonl",
+        "run_id": "272de1cb84b1de5b"
+      },
+      "virtu-six-software:v1": {
+        "basis": "measured",
+        "n": 24,
+        "mean_score": 31.25,
+        "median_score": 0.0,
+        "mean_tok_s": 21.2,
+        "transport_errors": 0,
+        "grader_version": "slot_exact_v2",
+        "alternate_grader_mean_inferred": 59.72,
+        "note": "slot_exact_v2 精确槽位口径；绝对分不可作能力结论，只作同尺相对比较",
+        "evidence": "runs/eval_full_board_20261115/domain24/summary.json",
+        "raw_evidence": "runs/eval_full_board_20261115/domain24/raw.jsonl",
+        "run_id": "272de1cb84b1de5b"
+      },
+      "virtu-master-fixed:latest": {
+        "basis": "measured",
+        "n": 24,
+        "mean_score": 39.24,
+        "median_score": 33.3,
+        "mean_tok_s": 22.12,
+        "transport_errors": 0,
+        "grader_version": "slot_exact_v2",
+        "alternate_grader_mean_inferred": 73.62,
+        "note": "slot_exact_v2 精确槽位口径；绝对分不可作能力结论，只作同尺相对比较",
+        "evidence": "runs/eval_full_board_20261115/domain24/summary.json",
+        "raw_evidence": "runs/eval_full_board_20261115/domain24/raw.jsonl",
+        "run_id": "272de1cb84b1de5b"
+      },
+      "qwen3:8b": {
+        "basis": "voided_empty_responses",
+        "n": 24,
+        "mean_score": "未测",
+        "median_score": "未测",
+        "mean_tok_s": 9.95,
+        "transport_errors": 0,
+        "grader_version": "slot_exact_v2",
+        "alternate_grader_mean_inferred": 0.0,
+        "note": "24/24 空回答，该腿作废，不得当作 0 分能力",
+        "evidence": "runs/eval_full_board_20261115/domain24/summary.json",
+        "raw_evidence": "runs/eval_full_board_20261115/domain24/raw.jsonl",
+        "run_id": "272de1cb84b1de5b"
+      }
+    },
+    "generic_8dim": {
+      "virtu-vericut96:v2": {
+        "basis": "measured",
+        "n": 28,
+        "status": "measured",
+        "overall_weighted": 50.64,
+        "dimensions": {
+          "boundary": 66.67,
+          "generalization": 37.14,
+          "generation": 22.5,
+          "instruction": 91.67,
+          "knowledge": 58.34,
+          "reasoning": 57.62,
+          "toolcall": 16.67
+        },
+        "gate_valid": true,
+        "run_id": "b3718fc48da94117",
+        "evidence": "runs/eval_full_board_20261115/generic/summary.json",
+        "leg_dir": "runs\\eval_full_board_20261115\\generic\\virtu-vericut96_v2"
+      },
+      "virtu-vericut-e:latest": {
+        "basis": "measured",
+        "n": 28,
+        "status": "measured",
+        "overall_weighted": 52.93,
+        "dimensions": {
+          "boundary": 91.67,
+          "generalization": 50.72,
+          "generation": 35.0,
+          "instruction": 91.67,
+          "knowledge": 33.33,
+          "reasoning": 43.33,
+          "toolcall": 33.33
+        },
+        "gate_valid": true,
+        "run_id": "96aae6156ea28502",
+        "evidence": "runs/eval_full_board_20261115/generic/summary.json",
+        "leg_dir": "runs\\eval_full_board_20261115\\generic\\virtu-vericut-e_latest"
+      },
+      "virtu-six-software:v1": {
+        "basis": "measured",
+        "n": 28,
+        "status": "measured",
+        "overall_weighted": 54.15,
+        "dimensions": {
+          "boundary": 83.34,
+          "generalization": 52.14,
+          "generation": 46.25,
+          "instruction": 91.67,
+          "knowledge": 46.67,
+          "reasoning": 45.72,
+          "toolcall": 25.0
+        },
+        "gate_valid": true,
+        "run_id": "708e60c7eda5c38e",
+        "evidence": "runs/eval_full_board_20261115/generic/summary.json",
+        "leg_dir": "runs\\eval_full_board_20261115\\generic\\virtu-six-software_v1"
+      },
+      "virtu-master-fixed:latest": {
+        "basis": "measured",
+        "n": 28,
+        "status": "measured",
+        "overall_weighted": 64.12,
+        "dimensions": {
+          "boundary": 91.67,
+          "generalization": 50.72,
+          "generation": 58.75,
+          "instruction": 91.67,
+          "knowledge": 62.5,
+          "reasoning": 74.28,
+          "toolcall": 25.0
+        },
+        "gate_valid": true,
+        "run_id": "767a4dff30ad81e9",
+        "evidence": "runs/eval_full_board_20261115/generic/summary.json",
+        "leg_dir": "runs\\eval_full_board_20261115\\generic\\virtu-master-fixed_latest"
+      },
+      "qwen3:8b": {
+        "basis": "measured",
+        "n": 28,
+        "status": "measured",
+        "overall_weighted": 58.11,
+        "dimensions": {
+          "boundary": 50.0,
+          "generalization": 45.72,
+          "generation": 40.0,
+          "instruction": 100.0,
+          "knowledge": 67.5,
+          "reasoning": 81.43,
+          "toolcall": 16.67
+        },
+        "gate_valid": true,
+        "run_id": "af607f699e488637",
+        "evidence": "runs/eval_full_board_20261115/generic/summary.json",
+        "leg_dir": "runs\\eval_full_board_20261115\\generic\\qwen3_8b"
+      }
+    },
+    "holdout": {
+      "scope": "未完成（全量 105 题腿中止）",
+      "baseline_full": {
+        "basis": "measured",
+        "n": 105,
+        "mean": 42.8,
+        "pass_rate_pct": 32.38,
+        "evidence": "runs/eval_full_board_20261115/holdout/raw_baseline_holdout.jsonl"
+      },
+      "candidate_partial": {
+        "basis": "voided_incomplete",
+        "n_valid": 29,
+        "rows_written": 30,
+        "dimension_coverage": "仅 setup_workoffset / tool_assembly 两维，按题板顺序前 30 题，样本偏斜",
+        "note": "不得据此计算配对 delta；主测在全量留出集上的表现标「未测」",
+        "evidence": "runs/eval_full_board_20261115/holdout/raw_candidate_holdout.jsonl"
+      },
+      "subset_attempt": {
+        "basis": "未测",
+        "reason": "Ollama 服务端阻塞，补跑未启动成功"
+      },
+      "historical_same_board_reference": {
+        "basis": "measured",
+        "run_id": "3dcc89b28e586675",
+        "note": "同题板、同基线字节的另一条训练腿（virtu-vericut-e:latest），不是本次主测",
+        "baseline_mean": 42.8,
+        "candidate_mean": 54.73,
+        "delta_mean": 11.93,
+        "general_sanity_delta": -10.93,
+        "evidence": "runs/eval_vericut_e_training_r2/comparison_report.json"
+      }
+    }
+  },
+  "grader_sensitivity": {
+    "basis": "inferred",
+    "content_correct_but_slot_zero_n": 25,
+    "per_model": {
+      "virtu-vericut96:v2": {
+        "n": 24,
+        "slot_exact_v2_mean": 31.6,
+        "substring_v1_mean": 69.45,
+        "delta_mean": 37.85
+      },
+      "virtu-vericut-e:latest": {
+        "n": 24,
+        "slot_exact_v2_mean": 33.33,
+        "substring_v1_mean": 75.01,
+        "delta_mean": 41.68
+      },
+      "virtu-six-software:v1": {
+        "n": 24,
+        "slot_exact_v2_mean": 31.25,
+        "substring_v1_mean": 59.72,
+        "delta_mean": 28.47
+      },
+      "virtu-master-fixed:latest": {
+        "n": 24,
+        "slot_exact_v2_mean": 39.24,
+        "substring_v1_mean": 73.62,
+        "delta_mean": 34.38
+      },
+      "qwen3:8b": {
+        "n": 24,
+        "slot_exact_v2_mean": 0.0,
+        "substring_v1_mean": 0.0,
+        "delta_mean": 0.0
+      }
+    },
+    "evidence": "runs/eval_full_board_20261115/domain24_grader_sensitivity.json"
+  },
+  "chain": {
+    "boards_completed": {
+      "gates": "measured",
+      "targeted": "measured",
+      "sanity": "measured",
+      "domain24": "measured",
+      "generic": "measured"
+    },
+    "evidence": "runs/eval_full_board_20261115/progress.json"
+  },
+  "rcfa": {
+    "symptom": "全量 105 题留出集主测腿中止在 30/105，随后 Ollama /api/tags、/api/chat、ollama ps 全部超时",
+    "root_cause": "测量窗口内另一会话并发部署/评测新模型（v2/v3 系列），Ollama 服务被独占；显存从 5.8GB 空闲降到 ~1.8GB，推理退化为 CPU 为主并触发 180s 超时",
+    "contributing": [
+      "共享可变标签 virtu-vericut-e:latest 被重指向",
+      "run_domain_ab.py 对 thinking 模型的空 response 记为 scored 0 分",
+      "slot_exact_v2 中文复合词精确槽位口径导致系统性低估"
+    ],
+    "circuit_breaker": "连续 3 次同构超时停滞，按 AGENTS.md §6 停止重试；holdout 全量腿标未测，不补分",
+    "recovery": "Ollama 空闲后执行 .venv/Scripts/python.exe scripts/finish_holdout_subset.py（断点续跑），或重启服务后重跑全量腿"
+  },
+  "unmeasured": [
+    "主测在全量 105 题留出集上的配对结果",
+    "multimodal 维度（本轮无 VL 标签）",
+    "原生 16 工具 schema 腿（本轮通用题板按纯文本 JSON 协议豁免）",
+    "评测期间新部署的 virtu-vericut96:v3 / virtu-six-software:v2,v3"
+  ]
+}

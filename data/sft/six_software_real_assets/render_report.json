@@ -1,0 +1,37 @@
+{
+  "dataset": "data/sft/six_software_real_assets/six_software_train_mix.jsonl",
+  "base": "checkpoints/virtu_cad_cam_merged_v3",
+  "total": 850,
+  "passed": 850,
+  "failed": 0,
+  "pass_rate": 1.0,
+  "failures_by_stage": {},
+  "failure_samples": [],
+  "token_stats": {
+    "min": 117,
+    "p50": 1234,
+    "p90": 1643,
+    "p95": 1692,
+    "p99": 2365,
+    "max": 2382,
+    "mean": 1021.4,
+    "total_tokens": 868167,
+    "total_loss_tokens": 187731,
+    "truncated_at_max_length": 0,
+    "truncated_ratio": 0.0,
+    "max_length": 4096
+  },
+  "role_stats": {
+    "assistant": 1300,
+    "total_rounds": 3450
+  },
+  "loss_ratio_mean": 0.2327,
+  "elapsed_sec": 19.3,
+  "checks": {
+    "C1_json_structure": "PASS",
+    "C2_template_render": "PASS",
+    "C3_mask_construction": "PASS",
+    "C4_loss_mask_scope": "PASS",
+    "C5_tool_call_integrity": "PASS"
+  }
+}

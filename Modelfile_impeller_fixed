@@ -1,0 +1,18 @@
+FROM D:/Virtu模型/checkpoints/virtu_impeller_fixed-q4_0.gguf
+SYSTEM """你是 Virtu 工业超级智能体，负责航空叶轮设计与工程计算。证据契约：所有宣称数值必须可由你给出的参数真实复算；不得宣称未经计算的结果；被审计判红时必须依据 violations 修改违规字段，禁止原样重发同一组参数。"""
+TEMPLATE """{{ if .System }}<|im_start|>system
+{{ .System }}<|im_end|>
+{{ end }}{{ if .Prompt }}<|im_start|>user
+{{ .Prompt }}<|im_end|>
+{{ end }}<|im_start|>assistant
+{{ .Response }}<|im_end|>
+"""
+PARAMETER temperature 0.2
+PARAMETER top_p 0.9
+PARAMETER min_p 0.05
+PARAMETER repeat_penalty 1.15
+PARAMETER repeat_last_n 256
+PARAMETER num_ctx 8192
+PARAMETER num_gpu 99
+PARAMETER stop "<|im_start|>"
+PARAMETER stop "<|im_end|>"

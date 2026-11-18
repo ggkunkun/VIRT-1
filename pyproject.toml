@@ -17,17 +17,134 @@ dependencies = [
     "pyyaml>=6.0.0",
     "pillow>=10.0.0",
     "opencv-python-headless>=4.9",
+    # 以下为运行时被广泛 import、原 requirements.txt 有而 pyproject 漏声明的包：
+    "numpy>=1.26.0",
+    "requests>=2.31.0",
+    "psutil>=5.9.0",
+    "rich>=13.7.0",
+    # search_engine.py 顶层 import bs4；此前三份依赖清单全部漏声明。
+    "beautifulsoup4>=4.12.0",
+    # 核心包运行时的真实硬依赖（此前散落未声明，干净环境 pip install -e . 后必然 ImportError）：
+    #   virtu_omni\reasoning\brep_grammar_dsl.py         -> shapely
+    #   virtu_omni\reasoning\neuro_symbolic_geometry.py  -> sympy
+    #   virtu_omni\serving\server.py                    -> starlette
+    "shapely>=2.0.0",
+    "sympy>=1.12",
+    "starlette>=0.37.0",
+]
+
+# ---------------------------------------------------------------------------
+# 唯一依赖真源：所有可选依赖按用途分组。CI 只需 `pip install -e .[dev]`，
+# 不会拉取 GPU / Windows / 工业重型包。三个 GPU requirements 文件仍保留，
+# 供 scripts/bootstrap_*_train.sh 与 make_cloud_bundle.py 按原路径引用。
+# ---------------------------------------------------------------------------
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+    "flake8>=7.0.0",
+    "build>=1.0.0",
+]
+gpu = [
+    "transformers>=4.51.0",
+    "accelerate>=1.0.0",
+    "peft>=0.14.0",
+    "datasets>=3.0.0",
+    "trl>=0.9.0",
+    "gguf>=0.6.0",
+    "bitsandbytes>=0.43.0",
+    "safetensors>=0.4.0",
+    "sentencepiece>=0.2.0",
+    "protobuf>=4.25.0",
+    "huggingface-hub>=0.24.0",
+    "modelscope>=1.18.0",
+    "av>=12.0.0",
+    # flash-attn 需 --no-build-isolation 单独安装，见 requirements-gpu.txt
+]
+l40s = [
+    "transformers==4.51.0",
+    "peft==0.14.0",
+    "bitsandbytes>=0.45.0,<0.46",
+    "datasets>=3.0.0",
+    "accelerate>=1.0.0",
+    "sentencepiece",
+    "protobuf",
+    "safetensors",
+    "huggingface-hub",
+    "modelscope",
+    # 与 requirements-l40s.txt 对齐；flash-attn 可选，默认走 sdpa
+]
+v100 = [
+    "transformers==4.51.0",
+    "peft==0.14.0",
+    "bitsandbytes>=0.45.0,<0.46",
+    "datasets>=3.0.0",
+    "accelerate>=1.0.0",
+    "sentencepiece",
+    "protobuf",
+    "safetensors",
+    "huggingface-hub",
+    "modelscope",
+    # 与 requirements-v100.txt 对齐；V100 无 bf16、禁装 flash-attn
+]
+windows = [
+    "pywin32>=306; sys_platform == 'win32'",
+    "pyautogui>=0.9.54; sys_platform == 'win32'",
+    # humanoid_controller / visual_grounding_engine 的屏幕捕获与 UI 自动化依赖
+    "mss>=9.0.0; sys_platform == 'win32'",
+    "uiautomation>=2.0.0; sys_platform == 'win32'",
+    "windmouse>=0.1.0; sys_platform == 'win32'",
+]
+industrial = [
+    "ezdxf>=1.1.0",
+    "paramiko>=3.4.0",
+    "matplotlib>=3.8.0",
+    "build123d>=0.6.0",
+    "cadquery-ocp>=7.7.0",  # 顶层 import 名为 OCP
+    # virtu_omni\rea\inspector.py 反汇编所需
+    "capstone>=5.0.0",
+]
+ocr = [
+    # virtu_omni\engine\visual_grounding_engine.py 的 OCR 后端（含 onnxruntime，体积较大）
+    "rapidocr-onnxruntime>=1.3.0",
+]
+llm-runtime = [
+    # virtu_real_backend.py 的本地 GGUF 推理后端（需 C++ 工具链编译）
+    "llama-cpp-python>=0.2.0",
+    # 本机以 1.1.0 安装；若走私有 index 需另行配置源
+    "hindsight-client>=1.1.0",
+]
+
+# 无法通过 PyPI 声明的本地依赖（安装前须人工就位，否则对应链路静默降级）：
+#   harness2          -> 由 harness2_src/ 以 editable 方式安装（pip install -e harness2_src）
+#   Virtu（私有仓库）  -> smelt_loader.py 依赖的外部私有仓，非 PyPI 发行包
+
+[tool.setuptools]
+# 根目录散落的本地模块：核心包（virtu_omni / bridges）在运行时直接 import 它们，
+# 但 packages.find 只收集包目录，不打进发行物。此前全靠 site-packages\virtu.pth
+# 手写一行仓库根路径才能 import，干净环境下必然 ImportError。
+# 这里显式声明为顶层 py-module，改为 `pip install -e .` 后即可正常导入。
+py-modules = [
+    "agent_chain_executor",   # virtu_omni.agent.super_agent 等直接 import
+    "virtu_real_backend",     # virtu_omni\serving\prompt_equations.py 直接 import
+    "win_input",              # agent_chain_executor.py 直接 import
 ]
 
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["virtu_omni*", "virtu_code*", "virtu_eval*", "virtu_edge*", "bridges*"]
-exclude = ["tests*", "data*", "logs*", "runs*", "work*", "models*", "skills*", "scratch*", "external*", "artifacts*", "templates*", "checkpoints*", "gpu_handoff*", "harness2_src*"]
+# .venv / 3GB 产物目录必须剪枝：setuptools 默认 namespaces = true 会遍历整棵树，
+# 在 3.0 GB 仓库上会把 editable 安装拖到几十分钟甚至挂死。
+exclude = ["tests*", "data*", "logs*", "runs*", "work*", "models*", "skills*", "scratch*", "external*", "artifacts*", "templates*", "checkpoints*", "gpu_handoff*", "harness2_src*", ".venv*", "backups*", "cloud_*", "damodel_*", "_*"]
+# 只认常规包（含 __init__.py），避免把任意目录当成隐式命名空间包
+namespaces = false
 
 [tool.pytest.ini_options]
 pythonpath = ["."]
 testpaths = ["tests"]
-addopts = "-s --basetemp=.pytest_tmp_fix -o tmp_path_retention_policy=none"
+# 不再把 basetemp 指到工作区内（.pytest_tmp_fix）：
+# 本机安全删除垫片对工作区内目录 rmtree 会拒绝并抛错，导致所有用例 ERROR。
+# 改用 pytest 默认的系统临时目录；tmp_path_retention_policy=none 仍保证跑完即清理。
+addopts = "-s -o tmp_path_retention_policy=none"
 filterwarnings = [
     "ignore::DeprecationWarning",
     "ignore::UserWarning",

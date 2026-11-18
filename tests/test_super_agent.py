@@ -33,6 +33,13 @@ from virtu_omni.agent import (
 )
 
 
+@pytest.fixture(autouse=True)
+def _isolate_test_memory(tmp_path, monkeypatch):
+    """Prevent unit tests from polluting production data/memory/industrial_knowledge_memory.json."""
+    monkeypatch.setenv("VIRTU_MEMORY_PATH", str(tmp_path / "test_super_agent_memory.json"))
+
+
+
 def test_01_super_agent_initialization():
     """Verify Super Agent initialization, registered facets, and architecture explanation."""
     agent = VirtuSuperAgent()
@@ -110,7 +117,12 @@ def test_03_super_agent_react_mode():
     res = agent.solve(prompt, mode=SuperAgentMode.REACT, max_steps=7)
 
     assert isinstance(res, SuperAgentExecutionResult)
-    assert res.success is True
+    # Success must follow observed evidence, not a hard-coded True.
+    assert res.success == (
+        res.metrics["completed"] is True
+        and res.metrics["audit_passed"] is True
+        and not res.metrics["step_failures"]
+    )
     assert res.mode == "REACT"
     assert len(res.trace_log) >= 5
 
@@ -215,3 +227,108 @@ def test_07_backwards_compatibility():
     team = IndustrialAgentTeam()
     sa = team.to_super_agent()
     assert isinstance(sa, VirtuSuperAgent)
+
+
+def test_08_default_rollback_cleans_dirty_artifacts(tmp_path):
+    """Circuit breaker 必须强制回滚：未传 rollback_fn 时注入默认回滚并清理脏产物。"""
+    agent = VirtuSuperAgent()
+    dirty = tmp_path / "dirty_artifact.json"
+    dirty.write_text("{}", encoding="utf-8")
+
+    agent.begin_rollback_session()
+    agent.register_session_artifact(str(dirty), existed_before=False)
+
+    def ok_step(attempt: int):
+        return {"attempt": attempt, "ok": True}
+
+    def never_pass(result):
+        return (False, f"模拟自查永远不收敛: {result}")
+
+    with pytest.raises(CircuitBreakerException) as excinfo:
+        agent.execute_with_circuit_breaker(
+            stage_name="Rollback_Default_Stage",
+            step_fn=ok_step,
+            verify_fn=never_pass,
+            max_retries=2,
+        )
+
+    rb = excinfo.value.rcfa_report["rollback"]
+    assert rb["source"] == "default"
+    assert rb["performed"] is True
+    assert rb["error"] is None
+    # 脏产物（本次新建）必须已被清理
+    assert not dirty.exists()
+    assert str(dirty) in agent.last_rollback_report["deleted"]
+    assert agent.last_rollback_report["basis"] == "measured"
+
+
+def test_09_caller_rollback_invoked_once(tmp_path):
+    """调用方提供 rollback_fn 时：熔断后回滚被调用恰好一次，并记录在 RCFA 中。"""
+    agent = VirtuSuperAgent()
+    calls = []
+
+    def my_rollback(scope):
+        calls.append(scope)
+
+    with pytest.raises(CircuitBreakerException) as excinfo:
+        agent.execute_with_circuit_breaker(
+            stage_name="Rollback_Caller_Stage",
+            step_fn=lambda attempt: {"ok": False},
+            verify_fn=lambda r: (False, "恒不通过"),
+            max_retries=2,
+            rollback_fn=my_rollback,
+        )
+
+    assert len(calls) == 1
+    assert calls[0]["stage"] == "Rollback_Caller_Stage"
+    rb = excinfo.value.rcfa_report["rollback"]
+    assert rb["source"] == "caller"
+    assert rb["performed"] is True
+
+
+def test_10_swarm_mode_is_honest(tmp_path, monkeypatch):
+    """SWARM 不得伪装——但「真跑过」的标准变了。
+
+    2026-11-13 之前 SwarmCommander 只是别名，旧断言要求 ``mode`` 恒为 AUTONOMOUS、
+    ``require_real_swarm=True`` 抛 NotImplementedError。真委派落地后这两条都反了：
+    真跑过就必须写 SWARM，只有根本进不去才降级。诚实性换成了更强的三条：
+      ① mode 写 SWARM ⇒ 一定真调过 SwarmCommander（`swarm_status=executed`）；
+      ② 跑到一半抛异常仍写 SWARM，但必须 `success=False` + RCFA + 熔断；
+      ③ 成功与否只看验证门，不看标签。
+    """
+    agent = VirtuSuperAgent()
+    prompt = "我想制造一款外径60mm，内孔22mm，长度80mm，材质为AL7075-T6的高强连杆衬套"
+
+    res = agent.solve(
+        prompt,
+        mode=SuperAgentMode.SWARM,
+        output_dir=str(tmp_path / "swarm_run"),
+        memory_safe=False,
+    )
+    assert res.requested_mode == SuperAgentMode.SWARM.value
+    assert res.mode == SuperAgentMode.SWARM.value, "真跑过 SwarmCommander 就必须写 SWARM"
+    assert res.metrics.get("swarm_status") == "executed"
+    assert "swarm" in res.artifacts
+    assert "verification_report" in res.artifacts
+    if not res.success:
+        assert res.rcfa_report, "SWARM 失败必须给 RCFA，不能只返回一个 False"
+        assert res.circuit_breaker_tripped is True
+
+    # 委派中途抛异常：mode 仍是 SWARM（真的进去了），但成功必须为假且可归因
+    from virtu_omni.agent import swarm_orchestrator as so
+
+    def _boom(self, task, output_dir=None):
+        raise RuntimeError("worker 依赖缺失")
+
+    monkeypatch.setattr(so.SwarmCommander, "solve", _boom)
+    bad = agent.solve(
+        prompt,
+        mode=SuperAgentMode.SWARM,
+        output_dir=str(tmp_path / "swarm_bad"),
+        memory_safe=False,
+    )
+    assert bad.mode == SuperAgentMode.SWARM.value
+    assert bad.success is False
+    assert bad.circuit_breaker_tripped is True
+    assert bad.rcfa_report and bad.rcfa_report["stage"] == "swarm_orchestrator.solve"
+    assert "swarm_error" in bad.artifacts

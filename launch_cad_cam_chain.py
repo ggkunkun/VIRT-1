@@ -120,7 +120,7 @@ def proc_running(basename):
     if not basename or basename.endswith(".bat"):
         return True
     try:
-        out = subprocess.check_output(["tasklist", "/FO", "CSV"], shell=True,
+        out = subprocess.check_output(["tasklist", "/FO", "CSV"], shell=False,
                                       encoding="gbk", errors="ignore")
         for r in csv.reader(io.StringIO(out)):
             if r and r[0].lower() == basename.lower():

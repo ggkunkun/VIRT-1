@@ -9,8 +9,9 @@ while train_turnkey quietly falls back to another corpus when --data does not re
 
 What this adds on top (the verified path does not check these):
   * layout conformance: exactly one *.jsonl under train/, manifest.json one level up;
-  * a length gate: the corpus measures est p95 ~2091 tokens while the trainer defaults to
-    max_len 2048, which would truncate assistant labels -- the job is refused before any GPU hour;
+  * a length gate: the corpus measures est p95 ~5580 tokens (contract expanded 2026-11-08)
+    while the trainer defaults to max_len 2048, which would truncate assistant labels --
+    the job is refused before any GPU hour; MODES max_len is set above p95+128;
   * a ruler re-check: a random sample of staged rows must still score 100 under
     derivation_verified/physics_invariant, so a corpus cannot drift away from the eval it feeds;
   * receipt verification: rows, max_len, status and data_file must match what we staged.
@@ -50,11 +51,14 @@ def rel_posix(path):
 TRAINER = "scripts/train_virtu_v100.py"
 
 MODES = {
-    "v100": {"base": "$WORKDIR/models/Qwen3-8B", "max_len": 3072, "epochs": 3, "bs": 1,
-             "accum": 32, "hours": 3, "tok_per_s": 1814.0, "cny_per_hour": 1.98,
+    # max_len 6144：契约扩容（定律卡+非法负例+全键词表）后语料实测 est p95=5580，
+    # 3072 会截断 assistant 定稿段（长度闸实测拒绝）。hours 按 2400*p95*epochs/tok_s
+    # 推导：v100 ≈6.2h、l40s ≈2.1h，各留余量；费用仍远低于 ¥50 上限。
+    "v100": {"base": "$WORKDIR/models/Qwen3-8B", "max_len": 6144, "epochs": 3, "bs": 1,
+             "accum": 32, "hours": 7, "tok_per_s": 1814.0, "cny_per_hour": 1.98,
              "extra": [], "note": "V100-32GB, sm_70 无 bf16 -> fp16/nf4；1814 padded tok/s 为实测锚点"},
-    "l40s": {"base": "$WORKDIR/models/Qwen3-8B", "max_len": 3072, "epochs": 2, "bs": 2,
-             "accum": 8, "hours": 2, "tok_per_s": 3600.0, "cny_per_hour": 3.2,
+    "l40s": {"base": "$WORKDIR/models/Qwen3-8B", "max_len": 6144, "epochs": 2, "bs": 2,
+             "accum": 8, "hours": 3, "tok_per_s": 3600.0, "cny_per_hour": 3.2,
              "extra": [], "note": "L40S-48GB bf16"},
 }
 
@@ -256,4 +260,8 @@ def main():
 
 
 if __name__ == "__main__":
+    # GBK 控制台打不出 ¥（U+00A5）：成本行曾直接 UnicodeEncodeError 崩掉预检出口。
+    for _s in (sys.stdout, sys.stderr):
+        if hasattr(_s, "reconfigure"):
+            _s.reconfigure(encoding="utf-8", errors="replace")
     raise SystemExit(main())

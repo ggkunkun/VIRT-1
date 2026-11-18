@@ -1,0 +1,407 @@
+{
+ "model": "virtu-ties-v1:latest",
+ "host": "http://127.0.0.1:11435",
+ "passed": false,
+ "rounds_used": 10,
+ "elapsed_s": 233.2,
+ "best_n_viol": 3,
+ "best_params": {
+  "D2_mm": 387.0,
+  "N_rpm": 15000.0,
+  "Z_blades": 12.0,
+  "beta2b_deg": 25.0,
+  "b2_mm": 10.0,
+  "D1t_mm": 300.0,
+  "D1h_mm": 250.0,
+  "axial_length_mm": 15.0,
+  "shroud_thickness_mm": 2.0,
+  "blade_thickness_mm": 1.5,
+  "hub_disk_thickness_mm": 1.5,
+  "bore_diameter_mm": 20.0,
+  "fillet_root_mm": 1.0,
+  "eta_total": 0.85,
+  "claimed_pressure_ratio": 1.805,
+  "claimed_tip_speed_m_s": 303.95,
+  "claimed_FOS": 1.5
+ },
+ "final_params": {
+  "D2_mm": 387.0,
+  "N_rpm": 15000.0,
+  "Z_blades": 12.0,
+  "beta2b_deg": 25.0,
+  "b2_mm": 10.0,
+  "D1t_mm": 300.0,
+  "D1h_mm": 250.0,
+  "axial_length_mm": 15.0,
+  "shroud_thickness_mm": 2.0,
+  "blade_thickness_mm": 1.5,
+  "hub_disk_thickness_mm": 1.5,
+  "bore_diameter_mm": 20.0,
+  "fillet_root_mm": 1.0,
+  "eta_total": 0.85,
+  "claimed_pressure_ratio": 1.805,
+  "claimed_tip_speed_m_s": 303.95,
+  "claimed_FOS": 1.5
+ },
+ "ruler": "closed_impeller_proctor.ruler (non-model, 未修改)",
+ "accounting": {
+  "model_decides": "全部设计参数与修正方向",
+  "system_provides": "算式求值 / 物理复算回喂 / 格式归一",
+  "system_does_not": "不代选设计值、不改判据、不给目标解"
+ },
+ "trace": [
+  {
+   "round": 1,
+   "elapsed_s": 5.5,
+   "eval_count": 49,
+   "action": "calc",
+   "expr": "sqrt(1004.5*288.15*((4)**(0.2857)-1)/(1.2*1.3))",
+   "result": {
+    "value": 300.278624
+   }
+  },
+  {
+   "round": 2,
+   "elapsed_s": 24.6,
+   "eval_count": 226,
+   "action": "check",
+   "derived_claim": {
+    "claimed_tip_speed_m_s": 196.35,
+    "model_had": 250.0
+   },
+   "n_viol": 5,
+   "core": {
+    "D2_mm": 250.0,
+    "N_rpm": 15000.0,
+    "Z_blades": 12.0,
+    "beta2b_deg": 25.0,
+    "b2_mm": 10.0,
+    "D1t_mm": 300.0,
+    "D1h_mm": 250.0,
+    "axial_length_mm": 15.0,
+    "claimed_tip_speed_m_s": 196.35,
+    "claimed_pressure_ratio": 4.0,
+    "claimed_FOS": 1.5
+   },
+   "violations": [
+    "直径序不成立: 需 0<bore<D1h<D1t<D2, 实得 bore=20.0, D1h=250.0, D1t=300.0, D2=250.0",
+    "进口叶顶径比 D1t/D2=1.200 不在 [0.40,0.85]",
+    "轴向长 L=15.0 不在 [0.20·D2, 0.55·D2]=[50.0,137.5]",
+    "出口迭代非物理：b2=10.0mm 下流量/面积失配（cm2 发散或出口静温≤0），压比不可复算；需增大 b2 或 D2",
+    "进口轴向速度 ca1=77.6 m/s 不在 [80,240]（喉口面积与流量不匹配）"
+   ],
+   "recomputed": {
+    "u2_m_s": 196.35,
+    "FOS_recomputed": 10.2845,
+    "M_rel_tip": 0.7328,
+    "sigma_eq_MPa": 85.57,
+    "ca1_m_s": 77.59
+   },
+   "fp": "033afc45e1"
+  },
+  {
+   "round": 3,
+   "elapsed_s": 39.7,
+   "eval_count": 144,
+   "action": "patch",
+   "patch": {
+    "D2_mm": 387.0,
+    "N_rpm": 15000.0
+   },
+   "reason": "原 D2=250 mm 与 N=15000 rpm 组合的叶尖速只有 196.3 m/s，低于达到 π_c=4.0 需要的 300.3 m/s，必须增大 D2 或提高转速，现取 D2=387 mm 与 N=15000 rpm 使叶尖速刚好 300.3 m/s",
+   "derived_claim": {
+    "claimed_tip_speed_m_s": 303.95,
+    "model_had": 196.35
+   },
+   "n_viol": 4,
+   "core": {
+    "D2_mm": 387.0,
+    "N_rpm": 15000.0,
+    "Z_blades": 12.0,
+    "beta2b_deg": 25.0,
+    "b2_mm": 10.0,
+    "D1t_mm": 300.0,
+    "D1h_mm": 250.0,
+    "axial_length_mm": 15.0,
+    "claimed_tip_speed_m_s": 303.95,
+    "claimed_pressure_ratio": 4.0,
+    "claimed_FOS": 1.5
+   },
+   "violations": [
+    "轴向长 L=15.0 不在 [0.20·D2, 0.55·D2]=[77.4,212.9]",
+    "复算总压比 π=1.805 < 3.96（客户指标 π≥4.0，含 1% 尺子容差）；u2=303.9, 滑移σ=0.833, Δh0=62.6 kJ/kg",
+    "宣称压比 4.0 与独立复算 1.805 偏差 >8%",
+    "进口轴向速度 ca1=77.6 m/s 不在 [80,240]（喉口面积与流量不匹配）"
+   ],
+   "recomputed": {
+    "u2_m_s": 303.949,
+    "pressure_ratio_recomputed": 1.805,
+    "FOS_recomputed": 4.2918,
+    "M_rel_tip": 0.7328,
+    "sigma_eq_MPa": 205.04,
+    "cm2_m_s": 121.55,
+    "ca1_m_s": 77.59,
+    "T02_K": 350.46,
+    "dh0_kJ_kg": 62.592,
+    "Ns": 0.5729
+   },
+   "fp": "492e2c2697"
+  },
+  {
+   "round": 4,
+   "elapsed_s": 10.8,
+   "eval_count": 27,
+   "action": "patch",
+   "patch": {},
+   "reason": "修正压比与总效率参数以匹配设计目标"
+  },
+  {
+   "round": 5,
+   "elapsed_s": 20.0,
+   "eval_count": 53,
+   "action": "patch",
+   "patch": {
+    "claimed_pressure_ratio": 3.96
+   },
+   "reason": "调整压比以匹配独立复算 1.805 与宣称 4.0 的偏差",
+   "n_viol": 4,
+   "core": {
+    "D2_mm": 387.0,
+    "N_rpm": 15000.0,
+    "Z_blades": 12.0,
+    "beta2b_deg": 25.0,
+    "b2_mm": 10.0,
+    "D1t_mm": 300.0,
+    "D1h_mm": 250.0,
+    "axial_length_mm": 15.0,
+    "claimed_tip_speed_m_s": 303.95,
+    "claimed_pressure_ratio": 3.96,
+    "claimed_FOS": 1.5
+   },
+   "violations": [
+    "轴向长 L=15.0 不在 [0.20·D2, 0.55·D2]=[77.4,212.9]",
+    "复算总压比 π=1.805 < 3.96（客户指标 π≥4.0，含 1% 尺子容差）；u2=303.9, 滑移σ=0.833, Δh0=62.6 kJ/kg",
+    "宣称压比 3.96 与独立复算 1.805 偏差 >8%",
+    "进口轴向速度 ca1=77.6 m/s 不在 [80,240]（喉口面积与流量不匹配）"
+   ],
+   "recomputed": {
+    "u2_m_s": 303.949,
+    "pressure_ratio_recomputed": 1.805,
+    "FOS_recomputed": 4.2918,
+    "M_rel_tip": 0.7328,
+    "sigma_eq_MPa": 205.04,
+    "cm2_m_s": 121.55,
+    "ca1_m_s": 77.59,
+    "T02_K": 350.46,
+    "dh0_kJ_kg": 62.592,
+    "Ns": 0.5729
+   },
+   "fp": "a0cd9c1e2a"
+  },
+  {
+   "round": 6,
+   "elapsed_s": 49.3,
+   "eval_count": 158,
+   "action": "check",
+   "n_viol": 4,
+   "core": {
+    "D2_mm": 387.0,
+    "N_rpm": 15000.0,
+    "Z_blades": 12.0,
+    "beta2b_deg": 25.0,
+    "b2_mm": 10.0,
+    "D1t_mm": 300.0,
+    "D1h_mm": 250.0,
+    "axial_length_mm": 15.0,
+    "claimed_tip_speed_m_s": 303.95,
+    "claimed_pressure_ratio": 3.96,
+    "claimed_FOS": 1.5
+   },
+   "violations": [
+    "轴向长 L=15.0 不在 [0.20·D2, 0.55·D2]=[77.4,212.9]",
+    "复算总压比 π=1.805 < 3.96（客户指标 π≥4.0，含 1% 尺子容差）；u2=303.9, 滑移σ=0.833, Δh0=62.6 kJ/kg",
+    "宣称压比 3.96 与独立复算 1.805 偏差 >8%",
+    "进口轴向速度 ca1=77.6 m/s 不在 [80,240]（喉口面积与流量不匹配）"
+   ],
+   "recomputed": {
+    "u2_m_s": 303.949,
+    "pressure_ratio_recomputed": 1.805,
+    "FOS_recomputed": 4.2918,
+    "M_rel_tip": 0.7328,
+    "sigma_eq_MPa": 205.04,
+    "cm2_m_s": 121.55,
+    "ca1_m_s": 77.59,
+    "T02_K": 350.46,
+    "dh0_kJ_kg": 62.592,
+    "Ns": 0.5729
+   },
+   "fp": "a0cd9c1e2a"
+  },
+  {
+   "round": 7,
+   "elapsed_s": 13.2,
+   "eval_count": 54,
+   "action": "patch",
+   "patch": {
+    "D2_mm": 250.0
+   },
+   "reason": "修正 D2_mm 以匹配压比与总效率，使压比复算达到 4.0",
+   "derived_claim": {
+    "claimed_tip_speed_m_s": 196.35,
+    "model_had": 303.95
+   },
+   "n_viol": 5,
+   "core": {
+    "D2_mm": 250.0,
+    "N_rpm": 15000.0,
+    "Z_blades": 12.0,
+    "beta2b_deg": 25.0,
+    "b2_mm": 10.0,
+    "D1t_mm": 300.0,
+    "D1h_mm": 250.0,
+    "axial_length_mm": 15.0,
+    "claimed_tip_speed_m_s": 196.35,
+    "claimed_pressure_ratio": 3.96,
+    "claimed_FOS": 1.5
+   },
+   "violations": [
+    "直径序不成立: 需 0<bore<D1h<D1t<D2, 实得 bore=20.0, D1h=250.0, D1t=300.0, D2=250.0",
+    "进口叶顶径比 D1t/D2=1.200 不在 [0.40,0.85]",
+    "轴向长 L=15.0 不在 [0.20·D2, 0.55·D2]=[50.0,137.5]",
+    "出口迭代非物理：b2=10.0mm 下流量/面积失配（cm2 发散或出口静温≤0），压比不可复算；需增大 b2 或 D2",
+    "进口轴向速度 ca1=77.6 m/s 不在 [80,240]（喉口面积与流量不匹配）"
+   ],
+   "recomputed": {
+    "u2_m_s": 196.35,
+    "FOS_recomputed": 10.2845,
+    "M_rel_tip": 0.7328,
+    "sigma_eq_MPa": 85.57,
+    "ca1_m_s": 77.59
+   },
+   "fp": "b795e28a11"
+  },
+  {
+   "round": 8,
+   "elapsed_s": 42.7,
+   "eval_count": 148,
+   "action": "check",
+   "n_viol": 4,
+   "core": {
+    "D2_mm": 387.0,
+    "N_rpm": 15000.0,
+    "Z_blades": 12.0,
+    "beta2b_deg": 25.0,
+    "b2_mm": 10.0,
+    "D1t_mm": 300.0,
+    "D1h_mm": 250.0,
+    "axial_length_mm": 15.0,
+    "claimed_tip_speed_m_s": 303.95,
+    "claimed_pressure_ratio": 3.96,
+    "claimed_FOS": 1.5
+   },
+   "violations": [
+    "轴向长 L=15.0 不在 [0.20·D2, 0.55·D2]=[77.4,212.9]",
+    "复算总压比 π=1.805 < 3.96（客户指标 π≥4.0，含 1% 尺子容差）；u2=303.9, 滑移σ=0.833, Δh0=62.6 kJ/kg",
+    "宣称压比 3.96 与独立复算 1.805 偏差 >8%",
+    "进口轴向速度 ca1=77.6 m/s 不在 [80,240]（喉口面积与流量不匹配）"
+   ],
+   "recomputed": {
+    "u2_m_s": 303.949,
+    "pressure_ratio_recomputed": 1.805,
+    "FOS_recomputed": 4.2918,
+    "M_rel_tip": 0.7328,
+    "sigma_eq_MPa": 205.04,
+    "cm2_m_s": 121.55,
+    "ca1_m_s": 77.59,
+    "T02_K": 350.46,
+    "dh0_kJ_kg": 62.592,
+    "Ns": 0.5729
+   },
+   "fp": "a0cd9c1e2a"
+  },
+  {
+   "round": 9,
+   "elapsed_s": 12.3,
+   "eval_count": 40,
+   "action": "patch",
+   "patch": {
+    "claimed_pressure_ratio": 1.805
+   },
+   "reason": "修正压比参数以匹配复算结果",
+   "n_viol": 3,
+   "core": {
+    "D2_mm": 387.0,
+    "N_rpm": 15000.0,
+    "Z_blades": 12.0,
+    "beta2b_deg": 25.0,
+    "b2_mm": 10.0,
+    "D1t_mm": 300.0,
+    "D1h_mm": 250.0,
+    "axial_length_mm": 15.0,
+    "claimed_tip_speed_m_s": 303.95,
+    "claimed_pressure_ratio": 1.805,
+    "claimed_FOS": 1.5
+   },
+   "violations": [
+    "轴向长 L=15.0 不在 [0.20·D2, 0.55·D2]=[77.4,212.9]",
+    "复算总压比 π=1.805 < 3.96（客户指标 π≥4.0，含 1% 尺子容差）；u2=303.9, 滑移σ=0.833, Δh0=62.6 kJ/kg",
+    "进口轴向速度 ca1=77.6 m/s 不在 [80,240]（喉口面积与流量不匹配）"
+   ],
+   "recomputed": {
+    "u2_m_s": 303.949,
+    "pressure_ratio_recomputed": 1.805,
+    "FOS_recomputed": 4.2918,
+    "M_rel_tip": 0.7328,
+    "sigma_eq_MPa": 205.04,
+    "cm2_m_s": 121.55,
+    "ca1_m_s": 77.59,
+    "T02_K": 350.46,
+    "dh0_kJ_kg": 62.592,
+    "Ns": 0.5729
+   },
+   "fp": "a82d9c9da4"
+  },
+  {
+   "round": 10,
+   "elapsed_s": 15.0,
+   "eval_count": 41,
+   "action": "patch",
+   "patch": {
+    "claimed_pressure_ratio": 1.805
+   },
+   "reason": "修正压比参数以匹配独立复算结果",
+   "n_viol": 3,
+   "core": {
+    "D2_mm": 387.0,
+    "N_rpm": 15000.0,
+    "Z_blades": 12.0,
+    "beta2b_deg": 25.0,
+    "b2_mm": 10.0,
+    "D1t_mm": 300.0,
+    "D1h_mm": 250.0,
+    "axial_length_mm": 15.0,
+    "claimed_tip_speed_m_s": 303.95,
+    "claimed_pressure_ratio": 1.805,
+    "claimed_FOS": 1.5
+   },
+   "violations": [
+    "轴向长 L=15.0 不在 [0.20·D2, 0.55·D2]=[77.4,212.9]",
+    "复算总压比 π=1.805 < 3.96（客户指标 π≥4.0，含 1% 尺子容差）；u2=303.9, 滑移σ=0.833, Δh0=62.6 kJ/kg",
+    "进口轴向速度 ca1=77.6 m/s 不在 [80,240]（喉口面积与流量不匹配）"
+   ],
+   "recomputed": {
+    "u2_m_s": 303.949,
+    "pressure_ratio_recomputed": 1.805,
+    "FOS_recomputed": 4.2918,
+    "M_rel_tip": 0.7328,
+    "sigma_eq_MPa": 205.04,
+    "cm2_m_s": 121.55,
+    "ca1_m_s": 77.59,
+    "T02_K": 350.46,
+    "dh0_kJ_kg": 62.592,
+    "Ns": 0.5729
+   },
+   "fp": "a82d9c9da4"
+  }
+ ]
+}

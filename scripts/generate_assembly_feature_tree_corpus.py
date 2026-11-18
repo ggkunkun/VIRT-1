@@ -1,4 +1,4 @@
-"""Dataset Generator for Non-Standard Automation Design Agent.
+r"""Dataset Generator for Non-Standard Automation Design Agent.
 
 Extracts ground-truth domain assets from:
 1. e:\迅雷下载\100台3C、锂电自动化设备量产图纸

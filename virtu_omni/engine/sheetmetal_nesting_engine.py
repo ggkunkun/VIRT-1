@@ -1,40 +1,57 @@
 # -*- coding: utf-8 -*-
 """sheetmetal_nesting_engine.py — 二维真形状排样优化与激光/等离子下料利用率计算引擎.
 
-参考顶级工业算法体系 (CGAL / Shapely / Deepnest / Sindri)：
-1. 零件几何多边形与矩形包络封装 (NestingPart)
-2. 标准板料库与余料管理 (SheetStock: 1000x2000, 1250x2500, 1500x3000 mm)
-3. 改进型最低水平线 / 启发式左底填充算法 (Bottom-Left-Fill, BLF)
-   - 支持 0°/90° 双向自适应旋转
-   - 自动预留割缝安全间隙 (Kerf Spacing >= 5mm) 与板材边缘余量 (Margin >= 10mm)
-4. 原材料利用率计算 (Material Utilization Rate >= 80%~88%)
-5. 自动导出排样 DXF 工程图 (ezdxf) 与激光切割加工清单
+算法体系（shapely 多边形几何，非矩形包络近似）：
+1. 零件几何：显式轮廓多边形（contour）优先；无轮廓时退化为长×宽矩形。
+2. 标准板料库与余料管理 (SheetStock: 1000x2000, 1250x2500, 1500x3000 mm)。
+3. 底左填充 (Bottom-Left-Fill)：候选位置取自板边与已 placement 顶点 + 割缝偏移，
+   支持 0/90/180/270 四向旋转，碰撞判定用多边形距离（含 kerf 间隙）与重叠面积双重检查。
+4. 利用率按零件真实轮廓面积计算（不是包络矩形面积）。
+5. verify_nesting_layout：独立 oracle，复算重叠/间隙/包含/利用率，空集判红。
+6. 自动导出排样 DXF 工程图 (ezdxf)，绘制真实轮廓。
 """
 
 from __future__ import annotations
 import os
 import math
-import json
 import time
 from typing import List, Dict, Any, Tuple, Optional
 from dataclasses import dataclass, field, asdict
 
 import ezdxf
+from shapely.geometry import Polygon
+from shapely.affinity import rotate as sh_rotate, translate as sh_translate
+
+_EPS = 1e-9
 
 
 @dataclass
 class NestingPart:
-    """待排样零件规格。"""
+    """待排样零件规格。contour 为真形状轮廓（mm，任意简单多边形）；缺省用长×宽矩形。"""
     part_id: str
     length: float                      # 外形长 (mm)
     width: float                       # 外形宽 (mm)
     quantity: int = 1                  # 需求数量
     material: str = "SS304"
     thickness: float = 2.0
+    contour: Optional[List[Tuple[float, float]]] = None
     placed_positions: List[Tuple[float, float, float]] = field(default_factory=list)  # (x, y, rotation_deg)
+
+    def polygon(self) -> Polygon:
+        if self.contour and len(self.contour) >= 3:
+            poly = Polygon(self.contour)
+            if not poly.is_valid or poly.area <= _EPS:
+                raise ValueError(f"零件 {self.part_id} 轮廓非法（自交或零面积）")
+        else:
+            poly = Polygon([(0, 0), (self.length, 0),
+                            (self.length, self.width), (0, self.width)])
+        minx, miny = poly.bounds[0], poly.bounds[1]
+        return sh_translate(poly, -minx, -miny)
 
     @property
     def unit_area(self) -> float:
+        if self.contour and len(self.contour) >= 3:
+            return float(Polygon(self.contour).area)
         return self.length * self.width
 
     @property
@@ -66,8 +83,26 @@ class SheetStock:
         return self.width - 2 * self.edge_margin
 
 
+def _orientations(poly: Polygon, allow_rotation: bool) -> List[Tuple[float, Polygon]]:
+    angles = [0.0, 90.0, 180.0, 270.0] if allow_rotation else [0.0]
+    out: List[Tuple[float, Polygon]] = []
+    seen = set()
+    for ang in angles:
+        p = sh_rotate(poly, ang, origin=(0, 0)) if ang else poly
+        minx, miny = p.bounds[0], p.bounds[1]
+        p = sh_translate(p, -minx, -miny)
+        # Dedup by actual vertex set: bounds+area collide for L-shapes whose
+        # four rotations share the same envelope, silently dropping interlock.
+        key = tuple(sorted((round(x, 6), round(y, 6)) for x, y in p.exterior.coords))
+        if key in seen:
+            continue
+        seen.add(key)
+        out.append((ang, p))
+    return out
+
+
 class SheetMetalNestingEngine:
-    """钣金排样与利用率优化引擎。"""
+    """钣金排样与利用率优化引擎（真形状多边形 BLF）。"""
 
     def __init__(self, stock: Optional[SheetStock] = None):
         self.stock = stock or SheetStock()
@@ -77,24 +112,21 @@ class SheetMetalNestingEngine:
         t0 = time.perf_counter()
         stock = self.stock
 
-        # 展平成单个待摆放实例，按面积降序排列 (启发式贪心策略：大件先行)
         flat_instances: List[Dict[str, Any]] = []
         for p in parts:
+            poly = p.polygon()
             for i in range(p.quantity):
                 flat_instances.append({
                     "part_id": p.part_id,
                     "inst_id": f"{p.part_id}_{i+1}",
-                    "len": p.length,
-                    "wid": p.width,
-                    "area": p.unit_area
+                    "poly": poly,
+                    "area": float(poly.area),
                 })
         flat_instances.sort(key=lambda x: x["area"], reverse=True)
 
         placed_items: List[Dict[str, Any]] = []
         unplaced_items: List[Dict[str, Any]] = []
-
-        # 占据矩形区列表 (已占用区域，含安全割缝间距)
-        occupied_boxes: List[Tuple[float, float, float, float]] = []  # (x1, y1, x2, y2)
+        placed_polys: List[Polygon] = []
 
         kerf = stock.kerf_spacing
         margin = stock.edge_margin
@@ -102,77 +134,66 @@ class SheetMetalNestingEngine:
         max_y = stock.width - margin
 
         for inst in flat_instances:
-            pl_len = inst["len"]
-            pl_wid = inst["wid"]
+            orientations = _orientations(inst["poly"], allow_rotation)
+            best = None  # (y, x, orient_idx, angle, poly)
+            candidate_xs = {margin}
+            candidate_ys = {margin}
+            for pp in placed_polys:
+                for vx, vy in pp.exterior.coords:
+                    if vx + kerf < max_x:
+                        candidate_xs.add(round(vx + kerf, 6))
+                    if vy + kerf < max_y:
+                        candidate_ys.add(round(vy + kerf, 6))
+            xs = sorted(candidate_xs)
+            ys = sorted(candidate_ys)
 
-            placed = False
-            best_pos: Optional[Tuple[float, float, float]] = None
-            best_y = float("inf")
-            best_x = float("inf")
-
-            # 候选旋转角度：0度 或 90度
-            orientations = [(pl_len, pl_wid, 0.0)]
-            if allow_rotation and abs(pl_len - pl_wid) > 1e-3:
-                orientations.append((pl_wid, pl_len, 90.0))
-
-            # 网格步长扫描 (采样候选底角)
-            candidate_xs = [margin] + [b[2] + kerf for b in occupied_boxes if b[2] + kerf < max_x]
-            candidate_ys = [margin] + [b[3] + kerf for b in occupied_boxes if b[3] + kerf < max_y]
-            candidate_xs = sorted(list(set(candidate_xs)))
-            candidate_ys = sorted(list(set(candidate_ys)))
-
-            for cur_y in candidate_ys:
-                for cur_x in candidate_xs:
-                    for w_cand, h_cand, rot_cand in orientations:
-                        x2 = cur_x + w_cand
-                        y2 = cur_y + h_cand
-
-                        # 超出板料边界判定
-                        if x2 > max_x or y2 > max_y:
+            for cur_y in ys:
+                for cur_x in xs:
+                    for oi, (ang, opoly) in enumerate(orientations):
+                        w_cand, h_cand = opoly.bounds[2], opoly.bounds[3]
+                        if cur_x + w_cand > max_x + _EPS or cur_y + h_cand > max_y + _EPS:
                             continue
-
-                        # 干涉重叠碰撞检测 (AABB Collision)
+                        cand = sh_translate(opoly, cur_x, cur_y)
                         collision = False
-                        for ox1, oy1, ox2, oy2 in occupied_boxes:
-                            if not (x2 <= ox1 - kerf or cur_x >= ox2 + kerf or
-                                    y2 <= oy1 - kerf or cur_y >= oy2 + kerf):
+                        for pp in placed_polys:
+                            if cand.distance(pp) < kerf - 1e-6:
                                 collision = True
                                 break
-
-                        if not collision:
-                            # 优先采用 Y 最小 (最下方)、其次 X 最小 (最左侧) 的紧凑排布
-                            if (cur_y < best_y) or (abs(cur_y - best_y) < 1e-4 and cur_x < best_x):
-                                best_x = cur_x
-                                best_y = cur_y
-                                best_pos = (cur_x, cur_y, rot_cand, w_cand, h_cand)
-                                placed = True
-                    if placed and best_y == margin:
-                        # 已经在最底层找到位置，不必继续向上查找
+                            if cand.intersection(pp).area > 1e-6:
+                                collision = True
+                                break
+                        if collision:
+                            continue
+                        score = (cur_y, cur_x, oi)
+                        if best is None or score < best[0]:
+                            best = (score, ang, cand)
+                    if best is not None and best[0][0] <= margin + _EPS:
                         break
-                if placed:
+                if best is not None and best[0][0] <= margin + _EPS:
                     break
 
-            if best_pos:
-                bx, by, brot, bw, bh = best_pos
-                occupied_boxes.append((bx, by, bx + bw, by + bh))
+            if best is not None:
+                (by, bx, _), brot, cand = best
+                placed_polys.append(cand)
+                minx, miny, maxx, maxy = cand.bounds
                 placed_items.append({
                     "part_id": inst["part_id"],
                     "inst_id": inst["inst_id"],
                     "x": round(bx, 2),
                     "y": round(by, 2),
-                    "width": round(bw, 2),
-                    "height": round(bh, 2),
+                    "width": round(maxx - minx, 2),
+                    "height": round(maxy - miny, 2),
                     "rotation_deg": brot,
-                    "area": inst["area"]
+                    "area": inst["area"],
+                    "contour": [(round(px, 4), round(py, 4))
+                                for px, py in cand.exterior.coords[:-1]],
                 })
             else:
-                unplaced_items.append(inst)
+                unplaced_items.append({k: inst[k] for k in ("part_id", "inst_id", "area")})
 
-        # 计算材料利用率
         net_part_area = sum(item["area"] for item in placed_items)
         utilization_rate = (net_part_area / stock.total_area) * 100.0
 
-        # 计算紧凑包络尺寸
         bounding_length = max((item["x"] + item["width"] for item in placed_items), default=0.0)
         bounding_width = max((item["y"] + item["height"] for item in placed_items), default=0.0)
         local_nesting_area = max(1.0, bounding_length * bounding_width)
@@ -182,6 +203,7 @@ class SheetMetalNestingEngine:
 
         return {
             "status": "success" if not unplaced_items else "partial",
+            "nesting_mode": "true_shape" if any(p.contour for p in parts) else "rectangular",
             "stock_spec": asdict(stock),
             "total_requested_parts": len(flat_instances),
             "placed_count": len(placed_items),
@@ -197,35 +219,30 @@ class SheetMetalNestingEngine:
         }
 
     def export_nesting_dxf(self, nesting_result: Dict[str, Any], output_path: str) -> str:
-        """导出排样工程图 DXF 文件。"""
+        """导出排样工程图 DXF 文件（真实轮廓）。"""
         doc = ezdxf.new("R2018")
         msp = doc.modelspace()
 
-        # 图层
-        doc.layers.add("STOCK_FRAME", color=1, linetype="CONTINUOUS")  # 红色 母板外框
-        doc.layers.add("PARTS_CUT", color=7, linetype="CONTINUOUS")    # 白色 零件切割线
-        doc.layers.add("PART_TEXT", color=3, linetype="CONTINUOUS")    # 绿色 零件代号与编号
-        doc.layers.add("DIM_INFO", color=4, linetype="CONTINUOUS")     # 青色 统计信息
+        doc.layers.add("STOCK_FRAME", color=1, linetype="CONTINUOUS")
+        doc.layers.add("PARTS_CUT", color=7, linetype="CONTINUOUS")
+        doc.layers.add("PART_TEXT", color=3, linetype="CONTINUOUS")
+        doc.layers.add("DIM_INFO", color=4, linetype="CONTINUOUS")
 
         stock = nesting_result["stock_spec"]
         sl = stock["length"]
         sw = stock["width"]
 
-        # 1. 绘制原材料母板边界
         msp.add_lwpolyline([(0, 0), (sl, 0), (sl, sw), (0, sw)], close=True, dxfattribs={"layer": "STOCK_FRAME"})
 
-        # 2. 绘制每个排样就位的零件轮廓
         for item in nesting_result.get("placed_items", []):
             x = item["x"]
             y = item["y"]
             w = item["width"]
             h = item["height"]
-            pts = [(x, y), (x + w, y), (x + w, y + h), (x, y + h)]
+            pts = item.get("contour") or [(x, y), (x + w, y), (x + w, y + h), (x, y + h)]
             msp.add_lwpolyline(pts, close=True, dxfattribs={"layer": "PARTS_CUT"})
-            # 标注零件 ID
             msp.add_text(f"{item['inst_id']}", dxfattribs={"layer": "PART_TEXT", "height": min(12.0, h * 0.3)}).set_placement((x + 2, y + 2))
 
-        # 3. 标题与利用率抬头
         rate = nesting_result.get("overall_utilization_rate", 0.0)
         local_rate = nesting_result.get("local_bounding_utilization", 0.0)
         placed_n = nesting_result.get("placed_count", 0)
@@ -235,3 +252,54 @@ class SheetMetalNestingEngine:
         os.makedirs(os.path.dirname(os.path.abspath(output_path)), exist_ok=True)
         doc.saveas(output_path)
         return output_path
+
+
+def verify_nesting_layout(nesting_result: Dict[str, Any]) -> Dict[str, Any]:
+    """独立 oracle：从落盘轮廓复算重叠/割缝间隙/板边包含/利用率。空集判红。"""
+    violations: List[str] = []
+    stock = nesting_result.get("stock_spec") or {}
+    sl = float(stock.get("length", 0))
+    sw = float(stock.get("width", 0))
+    margin = float(stock.get("edge_margin", 0))
+    kerf = float(stock.get("kerf_spacing", 0))
+    items = nesting_result.get("placed_items") or []
+    if not items:
+        violations.append("empty_layout: 无已摆放零件，不得判合格")
+
+    polys: List[Polygon] = []
+    for item in items:
+        pts = item.get("contour")
+        if pts and len(pts) >= 3:
+            poly = Polygon(pts)
+        else:
+            x, y, w, h = item["x"], item["y"], item["width"], item["height"]
+            poly = Polygon([(x, y), (x + w, y), (x + w, y + h), (x, y + h)])
+        if not poly.is_valid or poly.area <= _EPS:
+            violations.append(f"invalid_polygon: {item.get('inst_id')}")
+        polys.append(poly)
+        minx, miny, maxx, maxy = poly.bounds
+        if minx < margin - 1e-6 or miny < margin - 1e-6 or \
+                maxx > sl - margin + 1e-6 or maxy > sw - margin + 1e-6:
+            violations.append(f"out_of_stock: {item.get('inst_id')} bounds={poly.bounds}")
+
+    for i in range(len(polys)):
+        for j in range(i + 1, len(polys)):
+            inter = polys[i].intersection(polys[j]).area
+            if inter > 1e-6:
+                violations.append(f"overlap: {items[i].get('inst_id')} x {items[j].get('inst_id')} area={inter:.4f}")
+            elif polys[i].distance(polys[j]) < kerf - 1e-6:
+                violations.append(f"kerf_gap: {items[i].get('inst_id')} x {items[j].get('inst_id')} dist={polys[i].distance(polys[j]):.4f} < {kerf}")
+
+    net_area = sum(p.area for p in polys)
+    recomputed = (net_area / (sl * sw)) * 100.0 if sl * sw > 0 else 0.0
+    reported = float(nesting_result.get("overall_utilization_rate", 0.0))
+    if abs(recomputed - reported) > 0.05:
+        violations.append(f"utilization_mismatch: reported={reported} recomputed={recomputed:.4f}")
+
+    return {
+        "passed": not violations,
+        "violations": violations,
+        "recomputed_utilization_pct": round(recomputed, 4),
+        "checked_parts": len(polys),
+        "basis": "measured",
+    }

@@ -1,0 +1,61 @@
+{
+  "started": "2026-11-16 19:12:06",
+  "free_gb_before": {
+    "D": 38.21232223510742,
+    "E": 59.11653137207031
+  },
+  "basis": "measured",
+  "idle_gate": {
+    "ok": true,
+    "waited_s": 185.4,
+    "busy": [],
+    "loaded": []
+  },
+  "t1": [
+    {
+      "file": "_deploy_six_software\\virtu-six-software_v1.q4_0.gguf",
+      "tag": "virtu-six-software:v1",
+      "verdict": "already-absent",
+      "staged_hardlink_bytes": 0
+    },
+    {
+      "file": "_deploy_six_software_v2\\virtu-six-software_v2.q4_0.gguf",
+      "tag": "virtu-six-software:v2",
+      "verdict": "already-absent",
+      "staged_hardlink_bytes": 0
+    },
+    {
+      "file": "_deploy_six_software_v3\\virtu-six-software_v3.q4_0.gguf",
+      "tag": "virtu-six-software:v3",
+      "verdict": "already-absent",
+      "staged_hardlink_bytes": 0
+    },
+    {
+      "file": "_deploy_vericut96\\virtu-vericut96_v1.q4_0.gguf",
+      "tag": "virtu-vericut96:v1",
+      "verdict": "already-absent",
+      "staged_hardlink_bytes": 0
+    },
+    {
+      "file": "_deploy_vericut96_v2\\virtu-vericut96_v2.q4_0.gguf",
+      "tag": "virtu-vericut96:v2",
+      "verdict": "already-absent",
+      "staged_hardlink_bytes": 0
+    },
+    {
+      "file": "_deploy_vericut96_v3\\virtu-vericut96_v3.q4_0.gguf",
+      "tag": "virtu-vericut96:v3",
+      "verdict": "already-absent",
+      "staged_hardlink_bytes": 0
+    },
+    {
+      "file": "_deploy_vericut_e\\virtu-vericut-e_latest.q4_0.gguf",
+      "tag": "virtu-vericut-e:latest",
+      "verdict": "already-absent",
+      "staged_hardlink_bytes": 0
+    }
+  ],
+  "t2": [],
+  "aborted": "idle-lost-before-t2",
+  "evidence_json": "D:\\Virtu模型\\benchmarks\\d_model_space_cleanup\\cleanup_20261116_191514.json"
+}

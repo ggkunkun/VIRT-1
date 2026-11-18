@@ -1,0 +1,5 @@
+CMD: E:\windows64\commands\vericut.bat batch vcp=E:\vc_impeller_run\AE_CLOSED_IMPELLER_VERICUT.vcproject LGFILNAM=D:\Virtu模型\artifacts\aero_closed_impeller\vericut_batch.log auto-diff=E:/vc_impeller_run/autodiff.rpt
+project=E:\vc_impeller_run\AE_CLOSED_IMPELLER_VERICUT.vcproject
+elapsed_s=12.0 log_exists=False done_marker=False proc_rc=0
+log_bytes=0 autodiff=E:/vc_impeller_run/autodiff.rpt
+error_lines=0

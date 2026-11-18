@@ -40,8 +40,10 @@ Virtu 世界模型 · 最终版训练脚本（自主思考 / 自主决策）
 LORA_R / LORA_ALPHA / SEED / RESUME_ADAPTER 均可覆盖默认值。
 """
 import argparse
+import glob
 import json
 import os
+import random
 import subprocess
 import sys
 import time
@@ -60,8 +62,27 @@ from transformers import (  # noqa: E402
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
+for _p in (HERE, ROOT):
+    if _p not in sys.path:
+        sys.path.insert(0, _p)
+
+import wm_contract as _wm_contract  # noqa: E402
+
 DATA_DIR = os.path.join(ROOT, "data", "sft")
+# virtu_final_train.jsonl 是冻结证据（tests/test_physics_reference_honesty.py
+# 钉住 3017 行 / 255 条 mm^5 坏靶，用来证明量纲审计非空转），--build 不得覆写它。
 FINAL_DATA = os.path.join(DATA_DIR, "virtu_final_train.jsonl")
+BUILD_DATA = os.path.join(DATA_DIR, "virtu_wm_final_train.jsonl")
+# 默认训练数据：重平衡 + 量纲修复版（2026-11-09 切换）。
+# 理由有两个，缺一不可：
+#   1) 旧 FINAL_DATA 带 455 条 inertia_*_mm4 靶值错误（mm^5 数值被标成 mm4），
+#      直接喂进去等于训练模型记住错靶，量纲闸 assert_units_clean 会在开训前 fail-closed；
+#   2) 旧集模板多样性偏低（401 个模板簇），重平衡版 1327 簇 / 7828 行，覆盖旧集 100%。
+# .unitfix.clean 版在 .unitfix 基础上经 virtu_eval/contamination_check.py 剔除 592 条评测硬泄漏
+# （7828 -> 7236 行），同时通过 assert_no_leak 与 assert_units_clean 双重门禁。
+# 原始 wm_train_cap12_v2.jsonl 与 wm_train_cap12_v2.unitfix.jsonl 保留作审计留痕，不删。
+REBALANCED_DATA = os.path.join(ROOT, "data", "sft_rebalanced",
+                               "wm_train_cap12_v2.unitfix.clean.jsonl")
 
 SYS_DEFAULT = (
     "你是 Virtu 自主制造世界模型智能体。面对任务先思考(think)、规划(plan)、"
@@ -70,14 +91,192 @@ SYS_DEFAULT = (
 )
 
 
+class ListDataset(torch.utils.data.Dataset):
+    """轻量 Dataset 容器，消除对 huggingface `datasets` 包的硬依赖。"""
+
+    def __init__(self, items):
+        self.items = list(items)
+
+    def __len__(self):
+        return len(self.items)
+
+    def __getitem__(self, idx):
+        return self.items[idx]
+
+    def train_test_split(self, test_size=0.03, seed=20261103):
+        idx = list(range(len(self.items)))
+        rng = random.Random(seed)
+        rng.shuffle(idx)
+        n_test = max(1, int(round(len(idx) * float(test_size)))) if idx else 0
+        test_set = set(idx[:n_test])
+        train_items = [self.items[i] for i in range(len(self.items)) if i not in test_set]
+        test_items = [self.items[i] for i in idx[:n_test]]
+        return {"train": ListDataset(train_items), "test": ListDataset(test_items)}
+
+
+def resolve_base_path(base_arg: str) -> str:
+    """优先复用本机/云端已有 Qwen3-8B 目录，避免离线或无网时 AutoTokenizer 失败。"""
+    if os.path.isdir(base_arg) and os.path.exists(os.path.join(base_arg, "config.json")):
+        return base_arg
+    cands = [
+        os.path.join(ROOT, "checkpoints", "_base_qwen3_8b"),
+        "/root/models/Qwen3-8B",
+        "/root/autodl-tmp/models/Qwen3-8B",
+        "/root/public-storage/model/Qwen/Qwen3-8B",
+        "/data/models/Qwen3-8B",
+    ]
+    hf_pat = os.path.expandvars(
+        r"C:\Users\Administrator\.cache\huggingface\hub\models--Qwen--Qwen3-8B\snapshots\*"
+    )
+    cands.extend(sorted(glob.glob(hf_pat)))
+    cands.extend(sorted(glob.glob(os.path.expanduser(
+        "~/.cache/huggingface/hub/models--Qwen--Qwen3-8B/snapshots/*"
+    ))))
+    for c in cands:
+        if os.path.isdir(c) and os.path.exists(os.path.join(c, "config.json")):
+            return c
+    return base_arg
+
+
 # ----------------------------------------------------------------------------
-# 精度 / 序列化（与已验证的 v3 训练器同源，保证行为一致）
+# 精度 / 多 Schema 归一 / 坏轮次 Loss 屏蔽 / 序列化
 # ----------------------------------------------------------------------------
 def pick_precision():
     if not torch.cuda.is_available():
         return "fp16", torch.float16
     major, _minor = torch.cuda.get_device_capability(0)
     return ("bf16", torch.bfloat16) if major >= 8 else ("fp16", torch.float16)
+
+
+def _normalize_legacy_gates_in_text(text: str) -> str:
+    if not isinstance(text, str) or not text:
+        return ""
+    return (text.replace('"FOS>=1.5_pass"', '"pass"')
+                .replace('"FOS<1.5_FAIL"', '"fail"')
+                .replace('"pass_cut_negative"', '"pass"'))
+
+
+def _is_error_feedback_turn(m: dict) -> bool:
+    """判断一条 tool / user 消息是否是对上一轮 assistant 错误尝试的拒绝或报错反馈。"""
+    role = m.get("role", "")
+    c = str(m.get("content", ""))
+    if role == "tool":
+        if any(tok in c for tok in (
+            '"status": "FAILED"', '"status": "rejected"', '"ok": false',
+            '"warning": "载荷单位可疑', '"violations":', '"error_type":',
+        )):
+            return True
+    elif role == "user":
+        if "【教师诊断与指导】" in c or "存在严重冲突" in c:
+            return True
+    return False
+
+
+def normalize_item_messages(item: dict) -> list[dict] | None:
+    """将重平衡语料中的 9 种 schema 统一转为规范 messages，并自动标注坏轮次 loss=False。
+
+    修复缺陷：
+      1) 旧实现只识别 messages 与 instruction/input/output，导致 prompt+chosen (144)、
+         prompt_messages+chosen (5)、family+inputs+outputs (290) 共 439 条退化为
+         空 user / 空 assistant，教模型输出空串；
+      2) 多轮自纠错轨迹（recover_agent 1000x 单位错误首轮、cad_loop_repair_annotate 几何干涉首轮、
+         Student-Teacher 初次失败轮）旧实现未设 loss=False，把错误示范一并算进正样本梯度；
+      3) 历史遗留的长闸门字面量（FOS>=1.5_pass / FOS<1.5_FAIL / pass_cut_negative）统一归一为 pass/fail。
+    """
+    raw_msgs = item.get("messages")
+    if isinstance(raw_msgs, list) and raw_msgs:
+        msgs = [dict(m) for m in raw_msgs if isinstance(m, dict)]
+    elif isinstance(item.get("prompt_messages"), list) and item.get("chosen"):
+        msgs = [dict(m) for m in item["prompt_messages"] if isinstance(m, dict)]
+        msgs.append({"role": "assistant", "content": str(item["chosen"])})
+    elif item.get("prompt") and item.get("chosen"):
+        chosen_s = str(item["chosen"])
+        sys_p = _wm_contract.SYSTEM if '"world_state"' in chosen_s else SYS_DEFAULT
+        msgs = [
+            {"role": "system", "content": sys_p},
+            {"role": "user", "content": str(item["prompt"])},
+            {"role": "assistant", "content": chosen_s},
+        ]
+    elif item.get("instruction") or item.get("output"):
+        inst = str(item.get("instruction", "")).strip()
+        inp = str(item.get("input", "")).strip()
+        out = str(item.get("output", "")).strip()
+        if not inst or not out:
+            return None
+        uc = f"{inst}\n【输入参数与背景】: {inp}" if inp else inst
+        msgs = [
+            {"role": "system", "content": SYS_DEFAULT},
+            {"role": "user", "content": uc},
+            {"role": "assistant", "content": out},
+        ]
+    elif "inputs" in item and "outputs" in item:
+        inp_obj = item.get("inputs")
+        out_obj = item.get("outputs")
+        fam = item.get("family", "")
+        if not isinstance(out_obj, dict) or not out_obj:
+            return None
+        clean_out = {k: v for k, v in out_obj.items() if not str(k).startswith("_")}
+        if fam == "invalid" or clean_out.get("invalid") is True:
+            ans_obj = {
+                "invalid": True,
+                "world_state": None,
+                "reason": str(clean_out.get("reason") or "invalid_input"),
+                "violated_constraints": list(clean_out.get("violated_constraints")
+                                             or [str(clean_out.get("reason") or "invalid_input")]),
+            }
+        else:
+            ans_obj = {"world_state": clean_out}
+        user_txt = (inp_obj.get("prompt")
+                    if isinstance(inp_obj, dict) and isinstance(inp_obj.get("prompt"), str)
+                    else f"仿真器输入：{json.dumps(inp_obj, ensure_ascii=False)}")
+        msgs = [
+            {"role": "system", "content": _wm_contract.SYSTEM},
+            {"role": "user", "content": user_txt},
+            {"role": "assistant", "content": json.dumps(ans_obj, ensure_ascii=False)},
+        ]
+    else:
+        return None
+
+    # 归一文本中的旧闸门枚举，并识别多轮错误示范轮次
+    last_only = bool(item.get("last_assistant_only", False))
+    # 若对话中出现【教师诊断与指导】，其前面的所有 student assistant 轮均为初次错误尝试，全部 mask
+    teacher_diag_idx = -1
+    for i, m in enumerate(msgs):
+        if m.get("role") == "user" and "【教师诊断与指导】" in str(m.get("content", "")):
+            teacher_diag_idx = i
+            break
+
+    asst_indices = [i for i, m in enumerate(msgs) if m.get("role") == "assistant"]
+    if not asst_indices:
+        return None
+    last_asst_idx = asst_indices[-1]
+
+    has_trainable_asst = False
+    for i, m in enumerate(msgs):
+        if isinstance(m.get("content"), str):
+            m["content"] = _normalize_legacy_gates_in_text(m["content"])
+        if m.get("role") != "assistant":
+            continue
+        has_text = bool(str(m.get("content", "")).strip())
+        has_tc = bool(m.get("tool_calls"))
+        if not has_text and not has_tc:
+            return None
+        # 判断本轮 assistant 是否应屏蔽 loss
+        mask_this = (m.get("loss") is False)
+        if last_only and i != last_asst_idx:
+            mask_this = True
+        if teacher_diag_idx > 0 and i < teacher_diag_idx:
+            mask_this = True
+        if i + 1 < len(msgs) and _is_error_feedback_turn(msgs[i + 1]):
+            mask_this = True
+        if mask_this:
+            m["loss"] = False
+        else:
+            has_trainable_asst = True
+
+    if not has_trainable_asst:
+        return None
+    return msgs
 
 
 def serialize_message(m, tokenizer):
@@ -99,22 +298,19 @@ def serialize_message(m, tokenizer):
 
 
 def format_sample(item, tokenizer, max_len):
-    messages = item.get("messages")
+    messages = normalize_item_messages(item)
     if not messages:
-        inst = item.get("instruction", "")
-        inp = item.get("input", "")
-        out = item.get("output", "")
-        uc = f"{inst}\n【输入参数与背景】: {inp}" if inp else inst
-        messages = [{"role": "system", "content": SYS_DEFAULT},
-                    {"role": "user", "content": uc},
-                    {"role": "assistant", "content": out}]
+        return None
     input_ids, labels, has_assistant = [], [], False
+    masked_asst_turns = 0
     for m in messages:
         seg = serialize_message(m, tokenizer)
-        if m.get("role") == "assistant":
+        if m.get("role") == "assistant" and m.get("loss") is not False:
             has_assistant = True
             labels.extend(seg)
         else:
+            if m.get("role") == "assistant":
+                masked_asst_turns += 1
             labels.extend([-100] * len(seg))
         input_ids.extend(seg)
     if not has_assistant:
@@ -128,14 +324,16 @@ def format_sample(item, tokenizer, max_len):
         tail = max_len - head
         input_ids = input_ids[:head] + input_ids[-tail:]
         labels = labels[:head] + labels[-tail:]
+    if not any(x != -100 for x in labels):
+        return None
     return {"input_ids": input_ids, "labels": labels,
-            "attention_mask": [1] * len(input_ids), "_truncated": truncated}
+            "attention_mask": [1] * len(input_ids),
+            "_truncated": truncated, "_masked_asst_turns": masked_asst_turns}
 
 
 def load_dataset(path, tokenizer, max_len):
-    from datasets import Dataset
     items = [json.loads(l) for l in open(path, encoding="utf-8") if l.strip()]
-    out, dropped, truncated = [], 0, 0
+    out, dropped, truncated, masked_turns = [], 0, 0, 0
     for it in items:
         s = format_sample(it, tokenizer, max_len)
         if s is None:
@@ -143,10 +341,11 @@ def load_dataset(path, tokenizer, max_len):
             continue
         if s.pop("_truncated", False):
             truncated += 1
+        masked_turns += s.pop("_masked_asst_turns", 0)
         out.append(s)
     print(f"[Dataset] raw={len(items)} usable={len(out)} dropped={dropped} "
-          f"head+tail_truncated={truncated}")
-    return Dataset.from_list(out)
+          f"head+tail_truncated={truncated} masked_bad_asst_turns={masked_turns}")
+    return ListDataset(out)
 
 
 def find_latest_checkpoint(out_dir):
@@ -215,44 +414,62 @@ def build_final_data(n_agentic, with_replay):
         counts[os.path.basename(p)] = n
 
     os.makedirs(DATA_DIR, exist_ok=True)
-    with open(FINAL_DATA, "w", encoding="utf-8") as f:
+    with open(BUILD_DATA, "w", encoding="utf-8") as f:
         for d in recs:
             f.write(json.dumps(d, ensure_ascii=False) + "\n")
-    print(f"[ok] 合并 {len(recs)} 条 -> {FINAL_DATA}")
+    # 量纲闸：合并产物里任何 mm^5 冒充 mm^4 的靶值都不得进入训练
+    #（另两个训练器早已接闸，本训练器此前漏接，默认数据恰好带 255 条坏靶）。
+    import corpus_unit_audit
+    corpus_unit_audit.assert_units_clean(BUILD_DATA)
+    print(f"[ok] 合并 {len(recs)} 条 -> {BUILD_DATA}")
     print(f"[sources] {json.dumps(counts, ensure_ascii=False)}")
-    return FINAL_DATA
+    return BUILD_DATA
 
 
 # ----------------------------------------------------------------------------
 def selftest(args, tokenizer):
     print("=================== SELFTEST ===================")
-    samples = []
-    with open(args.data, encoding="utf-8") as f:
-        for line in f:
-            if len(samples) >= 6:
-                break
-            if line.strip():
-                samples.append(json.loads(line))
+    items = [json.loads(l) for l in open(args.data, encoding="utf-8") if l.strip()]
+    usable = dropped = truncated = masked_turns = legacy_gates = 0
     max_tok = 0
-    for i, s in enumerate(samples):
-        msgs = s.get("messages", [])
+    for i, s in enumerate(items):
+        msgs = normalize_item_messages(s)
+        if msgs is None:
+            dropped += 1
+            continue
+        for m in msgs:
+            if m.get("role") == "assistant" and m.get("loss") is not False:
+                c = str(m.get("content", ""))
+                if any(g in c for g in ("FOS>=1.5_pass", "FOS<1.5_FAIL", "pass_cut_negative")):
+                    legacy_gates += 1
         fs = format_sample(s, tokenizer, args.max_len)
         if fs is None:
-            print(f"  sample[{i}] 无 assistant 轮 -> 会被丢弃")
+            dropped += 1
             continue
+        usable += 1
+        if fs.get("_truncated"):
+            truncated += 1
+        masked_turns += fs.get("_masked_asst_turns", 0)
         n_loss = sum(1 for x in fs["labels"] if x != -100)
         n_asst = sum(1 for m in msgs if m.get("role") == "assistant")
         max_tok = max(max_tok, len(fs["input_ids"]))
-        print(f"  sample[{i}] roles={[m['role'] for m in msgs]} "
-              f"asst_turns={n_asst} tokens={len(fs['input_ids'])} loss_tokens={n_loss}")
+        if i < 6:
+            print(f"  sample[{i}] roles={[m['role'] for m in msgs]} "
+                  f"asst_turns={n_asst} masked={fs.get('_masked_asst_turns', 0)} "
+                  f"tokens={len(fs['input_ids'])} loss_tokens={n_loss}")
+    print(f"  total={len(items)} usable={usable} dropped={dropped} "
+          f"truncated={truncated} masked_bad_asst_turns={masked_turns} "
+          f"legacy_gates_remaining={legacy_gates}")
     print(f"  tokenizer vocab_size={tokenizer.vocab_size}  max_tokens={max_tok} (max_len={args.max_len})")
+    if dropped > 0 or legacy_gates > 0:
+        raise SystemExit(f"[FATAL] selftest failed: dropped={dropped}, legacy_gates={legacy_gates}")
     print("=================== SELFTEST OK ===================")
 
 
 def main():
     ap = argparse.ArgumentParser(description="Virtu 世界模型最终版训练（自主思考/决策）")
     ap.add_argument("--base", default=os.environ.get("BASE", os.environ.get("BASE_DIR", "Qwen/Qwen3-8B")))
-    ap.add_argument("--data", default=os.environ.get("DATA", FINAL_DATA))
+    ap.add_argument("--data", default=os.environ.get("DATA", REBALANCED_DATA))
     ap.add_argument("--out", default=os.environ.get("OUT", "checkpoints/virtu_wm_auto"))
     ap.add_argument("--lora_r", type=int, default=int(os.environ.get("LORA_R", "32")))
     ap.add_argument("--lora_alpha", type=int, default=int(os.environ.get("LORA_ALPHA", "64")))
@@ -274,9 +491,13 @@ def main():
 
     set_seed(args.seed)
 
-    # 0) 数据：需要则构建；不存在则自动构建
-    if args.build or not os.path.exists(args.data):
+    # 0) 数据：需要则构建；不存在则报错拒绝静默回退
+    if args.build:
         args.data = build_final_data(args.n_agentic, with_replay=not args.no_replay)
+    elif not os.path.exists(args.data):
+        raise SystemExit(f"[FATAL] 指定数据集不存在，拒绝静默回退: {args.data}")
+
+    args.base = resolve_base_path(args.base)
 
     print("=" * 62)
     print("  Virtu 世界模型 · 最终版训练（自主思考/决策）")
@@ -287,6 +508,12 @@ def main():
     print(f"  hyper     = lr={args.lr} epochs={args.epochs} bs={args.bs} accum={args.accum}")
     print(f"  resume    = {args.resume_adapter}")
     print("=" * 62)
+
+    # 泄漏闸 + 量纲闸（加载路径）：开训/加载分词器前必须先过双重门禁
+    from virtu_eval.contamination_check import assert_no_leak
+    import corpus_unit_audit
+    assert_no_leak(args.data)
+    corpus_unit_audit.assert_units_clean(args.data)
 
     tokenizer = AutoTokenizer.from_pretrained(args.base, trust_remote_code=True)
     if tokenizer.pad_token is None:

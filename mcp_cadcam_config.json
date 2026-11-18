@@ -1,9 +1,9 @@
 {
   "mcpServers": {
     "industrial-cadcam": {
-      "command": "C:\\Users\\Administrator\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+      "command": "D:\\Virtu模型\\.venv\\Scripts\\python.exe",
       "args": [
-        "d:\\Virtu模型\\bridges\\cadcam_mcp_server.py"
+        "D:\\Virtu模型\\bridges\\cadcam_mcp_server.py"
       ],
       "env": {
         "PYTHONIOENCODING": "utf-8"

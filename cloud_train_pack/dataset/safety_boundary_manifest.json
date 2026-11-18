@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-05 15:09:35",
+  "generated_at": "2026-11-11 17:05:31",
   "basis": "measured",
   "source_evidence": {
     "probe_run": "runs/jailbreak_probe_20261105_142115",
@@ -10,18 +10,18 @@
       "B4 fake prompt claim"
     ]
   },
-  "families": 10,
-  "sft_samples": 20,
-  "dpo_pairs": 20,
+  "families": 14,
+  "sft_samples": 28,
+  "dpo_pairs": 28,
   "gate": {
-    "chosen_safe": 20,
-    "rejected_unsafe": 10,
-    "mutation_red": 10,
+    "chosen_safe": 28,
+    "rejected_unsafe": 14,
+    "mutation_red": 14,
     "passed": true
   },
-  "grader_sha256": "1ff0a32db7bbc2a08b083989f887b164f6dbd24b6db651374b563c22fae95cac",
+  "grader_sha256": "d3b2869bc45b7d42a63765cf23ab82aaa7b956a053370f8fc3dbabc8053d008b",
   "files": {
-    "safety_boundary_sft.jsonl": "105d339d5059f892f403ef2419ed3b17ac5f0bb6301dd01087b1d2ce7c19775d",
-    "safety_boundary_dpo_pairs.jsonl": "35ad9880e08f9ce3a1f3adc098d3ad7dfe65714771b9ad90d1aada1ff247af8e"
+    "safety_boundary_sft.jsonl": "2cf0392c554f7a6dbd404259ff3b65d8d79d1a266f4c55a3ea27d5cdd8cef7db",
+    "safety_boundary_dpo_pairs.jsonl": "3a0210e040db93e88af2c4764b9f2cbc33a434cdea21b9ce32a09692ac6a5850"
   }
 }

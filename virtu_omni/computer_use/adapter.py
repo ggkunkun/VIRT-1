@@ -173,6 +173,13 @@ class VirtuComputerUse:
             post_capture = self.perception.capture_screen()
 
         profile = self.get_screen_profile()
+
+        # 诚实性：全部步骤都被闸门抑制时不能报"完成"。旧实现无条件
+        # status=COMPLETED，等于把"一次都没发"说成"做了"（违反 AGENTS.md §5/§8）。
+        inputs_sent = sum(1 for s in step_results if s["result"].get("input_sent"))
+        simulated_steps = [s for s in step_results if s["result"].get("dry_run")]
+        all_suppressed = bool(step_results) and inputs_sent == 0 and bool(simulated_steps)
+
         return {
             "ok": all(s["result"].get("ok", False) for s in step_results),
             "goal": goal,
@@ -185,7 +192,9 @@ class VirtuComputerUse:
             "steps": step_results,
             "pre_action_state": pre_capture,
             "post_action_state": post_capture,
-            "status": "COMPLETED",
+            "status": "COMPLETED_SIMULATED" if all_suppressed else "COMPLETED",
+            "simulated": all_suppressed,
+            "input_sent_steps": inputs_sent,
         }
 
     def get_desktop_summary(self) -> Dict[str, Any]:

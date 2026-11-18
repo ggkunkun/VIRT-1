@@ -1,0 +1,22 @@
+{"id": "HO-REM-01", "task": "removal", "prompt": "现场核算去除量：切深 2mm，切宽 5mm，行程 100mm，进给速度 400mm/min，45钢，求去除体积、质量与材料去除率。", "inputs": {"doc": 2.0, "woc": 5.0, "L": 100.0, "vf": 400.0, "rho": 0.00785}}
+{"id": "HO-REM-02", "task": "removal", "prompt": "铝合金件粗铣，切深 1.5mm，切宽 3mm，刀具行程 250mm，进给 250mm/min，按 6061 密度算切屑质量。", "inputs": {"doc": 1.5, "woc": 3.0, "L": 250.0, "vf": 250.0, "rho": 0.0027}}
+{"id": "HO-MAS-01", "task": "mass_props", "prompt": "装配体三个零件的体积分别是 120000、80000、45000 立方毫米，材料 45 钢，折算总质量。", "inputs": {"parts": [120000.0, 80000.0, 45000.0], "rho": 0.00785}}
+{"id": "HO-MAS-02", "task": "mass_props", "prompt": "两个铝件体积 30000 与 15000 mm3，密度 2.70e-3 g/mm3，求体积合计与质量。", "inputs": {"parts": [30000.0, 15000.0], "rho": 0.0027}}
+{"id": "HO-ROU-01", "task": "roughness", "prompt": "精车表面粗糙度预估：进给 0.2 mm/r，刀尖圆弧半径 0.8 mm，45钢。", "inputs": {"f": 0.2, "r_eps": 0.8}}
+{"id": "HO-ROU-02", "task": "roughness", "prompt": "精加工 Ra 预估，每转进给 0.1mm，刀尖 R0.4mm，材料 6061。", "inputs": {"f": 0.1, "r_eps": 0.4}}
+{"id": "HO-FOS-01", "task": "fea_fos", "prompt": "支架强度校核：屈服强度 355 MPa，峰值应力 200 MPa，给安全系数并判断能否放行。", "inputs": {"Sy": 355.0, "sigma": 200.0}}
+{"id": "HO-FOS-02", "task": "fea_fos", "prompt": "Q235 件屈服 235 MPa，计算峰值应力 200 MPa，安全系数够不够？", "inputs": {"Sy": 235.0, "sigma": 200.0}}
+{"id": "HO-COL-01", "task": "collision", "prompt": "五轴退刀校核：安全面 Z50，快速定位最低 Z45，毛坯顶面 Z40，判碰撞风险。", "inputs": {"z_safe": 50.0, "z_min_rapid": 45.0, "stock_top": 40.0}}
+{"id": "HO-COL-02", "task": "collision", "prompt": "刀柄干涉检查：安全面 Z30，快速下刀到 Z25，毛坯顶面 Z35，出风险等级与过切判断。", "inputs": {"z_safe": 30.0, "z_min_rapid": 25.0, "stock_top": 35.0}}
+{"id": "HO-TOL-01", "task": "tolerance", "prompt": "孔轴配合计算：公差链 [0.02, 0.015]，上偏差 0.05，下偏差 0.02，给最坏情况半宽、RSS 半宽与配合间隙。", "inputs": {"tols": [0.02, 0.015], "upper_dev": 0.05, "lower_dev": 0.02}}
+{"id": "HO-TOL-02", "task": "tolerance", "prompt": "配合公差分析，公差链 [0.03, 0.02, 0.01]，上偏差 0.01，下偏差 0.04，判过盈还是间隙。", "inputs": {"tols": [0.03, 0.02, 0.01], "upper_dev": 0.01, "lower_dev": 0.04}}
+{"id": "HO-DES-01", "task": "design", "prompt": "法兰设计：外径 197.6 mm，内孔 80 mm，厚 25 mm，6 个 φ8.6 螺栓孔，45钢，出体积与质量。", "inputs": {"r_out": 98.8, "r_bore": 40.0, "t": 25.0, "n_holes": 6, "r_hole": 4.3, "rho": 0.00785}}
+{"id": "HO-DES-02", "task": "design", "prompt": "端盖建模需求：外径 120 mm，中心孔 50 mm，厚度 18 mm，4 个 φ6.6 孔，6061 铝，求体积和质量。", "inputs": {"r_out": 60.0, "r_bore": 25.0, "t": 18.0, "n_holes": 4, "r_hole": 3.3, "rho": 0.0027}}
+{"id": "HO-PRO-01", "task": "process", "prompt": "工序卡参数：直径 50 mm，车削长度 120 mm，背吃刀量 1.5 mm，进给 0.2 mm/r，切削速度 180 m/min，刀尖 R0.8。", "inputs": {"D": 50.0, "L": 120.0, "ap": 1.5, "f": 0.2, "vc": 180.0, "r_eps": 0.8}}
+{"id": "HO-PRO-02", "task": "process", "prompt": "车削工艺核算，工件直径 80 mm，加工长度 200 mm，ap 2.5 mm，f 0.15 mm/r，vc 150 m/min，刀尖圆弧 1.2 mm。", "inputs": {"D": 80.0, "L": 200.0, "ap": 2.5, "f": 0.15, "vc": 150.0, "r_eps": 1.2}}
+{"id": "HO-ADM-01", "task": "adapt_material", "prompt": "原来 45 钢的件换 6061 铝，屈服 235 MPa，工作应力 150 MPa，重新评估安全系数。", "inputs": {"Sy": 235.0, "sigma": 150.0}}
+{"id": "HO-ADM-02", "task": "adapt_material", "prompt": "材料换牌号后复核强度：屈服 205 MPa，峰值应力 180 MPa，能不能放行。", "inputs": {"Sy": 205.0, "sigma": 180.0}}
+{"id": "HO-MAC-01", "task": "adapt_machine", "prompt": "机床能力校验：刀具直径 40 mm，切削速度 200 m/min，机床最高 8000 r/min，看转速是否超限。", "inputs": {"D": 40.0, "vc": 200.0, "n_max": 8000.0}}
+{"id": "HO-MAC-02", "task": "adapt_machine", "prompt": "小孔钻削，直径 10 mm，切削速度 300 m/min，主轴上限 8000 r/min，判能不能干。", "inputs": {"D": 10.0, "vc": 300.0, "n_max": 8000.0}}
+{"id": "HO-GEO-01", "task": "geom_delta", "prompt": "特征体积 15000 mm3，改前总体积 200000 mm3，算改动后体积变化。", "inputs": {"feature_vol": 15000.0, "before": 200000.0}}
+{"id": "HO-GEO-02", "task": "geom_delta", "prompt": "挖掉一个体积 800 立方毫米的特征，原模型 50000 立方毫米，出前后体积与增删量。", "inputs": {"feature_vol": 800.0, "before": 50000.0}}

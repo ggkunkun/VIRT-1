@@ -109,7 +109,8 @@ class VirtuREA:
         # Check node
         node_available = False
         try:
-            res = subprocess.run(["node", "-v"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, timeout=3)
+            res = subprocess.run(["node", "-v"], stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                                 text=True, timeout=3, encoding="utf-8", errors="replace")
             node_available = res.returncode == 0
         except Exception:
             pass

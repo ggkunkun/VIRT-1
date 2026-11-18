@@ -1,5 +1,16 @@
-"""Virtu Hindsight & Builtin Working Memory Package."""
+"""Virtu Hindsight, Builtin Working Memory & Remory compaction package."""
 
+from virtu_omni.memory.remory_adapter import (
+    DEFAULT_MODEL as REMORY_DEFAULT_MODEL,
+    BACKEND_ID as REMORY_BACKEND_ID,
+    Checkpoint as RemoryCheckpoint,
+    MemoryStore as RemoryMemoryStore,
+    TextClient as RemoryTextClient,
+    RemoryHarness,
+    RemorySession,
+    OllamaChatBackend,
+    attach_to_gateway,
+)
 from virtu_omni.memory.hindsight_adapter import (
     VirtuHindsightMemory,
     MemoryType,
@@ -25,9 +36,19 @@ from virtu_omni.memory.sleep_framework import (
     DreamEngine,
     SynapticHomeostasis,
     get_sleep_framework,
+    build_ollama_model_caller,
 )
 
 __all__ = [
+    "REMORY_DEFAULT_MODEL",
+    "REMORY_BACKEND_ID",
+    "RemoryCheckpoint",
+    "RemoryMemoryStore",
+    "RemoryTextClient",
+    "RemoryHarness",
+    "RemorySession",
+    "OllamaChatBackend",
+    "attach_to_gateway",
     "VirtuHindsightMemory",
     "MemoryType",
     "MemoryUnit",
@@ -48,4 +69,5 @@ __all__ = [
     "DreamEngine",
     "SynapticHomeostasis",
     "get_sleep_framework",
+    "build_ollama_model_caller",
 ]

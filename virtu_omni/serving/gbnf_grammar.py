@@ -220,8 +220,10 @@ def validate_gcode_syntax(code: str) -> Tuple[bool, List[str]]:
             if has_linear_motion and active_feedrate is None:
                 errors.append(f"Line {idx}: Cutting move {current_motion_modal} without active feedrate (F)")
 
-        # High-speed plunge sentinel (G00 with negative Z plunge into stock)
-        if current_motion_modal == "G00" and "Z" in line_words and line_words["Z"] < -0.01:
+        # High-speed plunge sentinel: only a pure Z rapid is unambiguous.
+        # A lathe block like "G42 G00 X[#102] Z-46" moves along the OD, not into stock.
+        has_x = ("X" in line_words) or bool(re.search(r"[Xx]\s*[\[#]", raw_line))
+        if current_motion_modal == "G00" and "Z" in line_words and line_words["Z"] < -0.01 and not has_x:
             errors.append(
                 f"Line {idx}: CRITICAL SAFETY VIOLATION - Rapid plunge G00 into material (Z={line_words['Z']} < 0)"
             )

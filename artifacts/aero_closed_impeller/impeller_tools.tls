@@ -1,0 +1,132 @@
+<?xml version="1.0"?>
+<CGTechToolLibrary Version="9.6">
+  <Information>
+    <InfoUserName>CGTech</InfoUserName>
+    <InfoDateTime>Thu Apr 03 09:14:59 2025</InfoDateTime>
+    <InfoVericutVersion></InfoVericutVersion>
+  </Information>
+  <Tools>
+    <Tool ID="1" Units="Millimeter">
+      <Description>D16 Flat Endmill (roughing)</Description>
+      <Type>Milling</Type>
+      <CoolantThru>0</CoolantThru>
+      <GageCompId>Tool Origin</GageCompId>
+      <GagePoint>
+        <X>0.0000</X>
+        <Y>0.0000</Y>
+        <Z>55.0000</Z>
+      </GagePoint>
+      <Cutter>
+        <SOR ID="T1" ParentID="HOLDER1" Insert="no" DRILLMILL="FALSE">
+          <Pt>
+            <X>0.0000</X>
+            <Z>0.0000</Z>
+          </Pt>
+          <Pt>
+            <X>8.0000</X>
+            <Z>0.0000</Z>
+          </Pt>
+          <Pt>
+            <X>8.0000</X>
+            <Z>40.0000</Z>
+          </Pt>
+          <Pt>
+            <X>8.0000</X>
+            <Z>55.0000</Z>
+          </Pt>
+          <Pt>
+            <X>0.0000</X>
+            <Z>55.0000</Z>
+          </Pt>
+          <Origin>
+            <X>0</X>
+            <Y>0</Y>
+            <Z>0</Z>
+          </Origin>
+          <FluteLength>40</FluteLength>
+          <ShankDiameter>0</ShankDiameter>
+          <SpindleDirection>CW</SpindleDirection>
+          <TeethCount>4</TeethCount>
+        </SOR>
+        <Holder ID="HOLDER1">
+          <SOR ID="HOLDER1" ParentID="" Insert="no" DRILLMILL="FALSE">
+            <Pt><X>0</X><Z>0</Z></Pt>
+            <Pt><X>5</X><Z>0</Z></Pt>
+            <Pt><X>5</X><Z>40</Z></Pt>
+            <Pt><X>0</X><Z>40</Z></Pt>
+            <Origin><X>0</X><Y>0</Y><Z>0</Z></Origin>
+          </SOR>
+        </Holder>
+      </Cutter>
+      <DrivenPoint ID="1">
+        <AttachCompId>T1</AttachCompId>
+        <Type>0</Type>
+        <X>0</X><Y>0</Y><Z>0</Z>
+      </DrivenPoint>
+    </Tool>
+    <Tool ID="2" Units="Millimeter">
+      <Description>D8 Ball-nose, D5 neck, 70mm reach (5-axis finish)</Description>
+      <Type>Milling</Type>
+      <CoolantThru>0</CoolantThru>
+      <GageCompId>Tool Origin</GageCompId>
+      <GagePoint>
+        <X>0.0000</X>
+        <Y>0.0000</Y>
+        <Z>70.0000</Z>
+      </GagePoint>
+      <Cutter>
+        <SOR ID="T2" ParentID="HOLDER2" Insert="no" DRILLMILL="FALSE">
+          <Pt>
+            <X>0.0000</X>
+            <Z>0.0000</Z>
+          </Pt>
+          <Pt>
+            <X>4.0000</X>
+            <Z>4.0000</Z>
+          </Pt>
+          <Pt>
+            <X>2.5000</X>
+            <Z>8.0000</Z>
+          </Pt>
+          <Pt>
+            <X>2.5000</X>
+            <Z>70.0000</Z>
+          </Pt>
+          <Pt>
+            <X>0.0000</X>
+            <Z>70.0000</Z>
+          </Pt>
+          <Arc>
+            <X>0.0000</X>
+            <Z>0.0000</Z>
+            <Radius>4.0000</Radius>
+          </Arc>
+          <Origin>
+            <X>0</X>
+            <Y>0</Y>
+            <Z>0</Z>
+          </Origin>
+          <FluteLength>15</FluteLength>
+          <ShankDiameter>0</ShankDiameter>
+          <SpindleDirection>CW</SpindleDirection>
+          <TeethCount>4</TeethCount>
+        </SOR>
+        <Holder ID="HOLDER2">
+          <SOR ID="HOLDER2" ParentID="" Insert="no" DRILLMILL="FALSE">
+            <Pt><X>0</X><Z>0</Z></Pt>
+            <Pt><X>5</X><Z>0</Z></Pt>
+            <Pt><X>5</X><Z>40</Z></Pt>
+            <Pt><X>0</X><Z>40</Z></Pt>
+            <Origin><X>0</X><Y>0</Y><Z>0</Z></Origin>
+          </SOR>
+        </Holder>
+      </Cutter>
+      <DrivenPoint ID="1">
+        <AttachCompId>T2</AttachCompId>
+        <Type>0</Type>
+        <X>0</X><Y>0</Y><Z>0</Z>
+      </DrivenPoint>
+    </Tool>
+
+  </Tools>
+</CGTechToolLibrary>

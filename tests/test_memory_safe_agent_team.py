@@ -12,6 +12,9 @@ if WORKSPACE_DIR not in sys.path:
 
 from virtu_omni.agent.process_memory_reclaimer import ProcessMemoryReclaimer
 from virtu_omni.agent.agent_team import IndustrialAgentTeam
+from test_reclaimer_baseline import isolated_reclaimer
+
+pytestmark = pytest.mark.usefixtures("isolated_reclaimer")
 
 
 def test_process_memory_reclaimer_telemetry():
@@ -53,8 +56,9 @@ def test_execute_step_with_memory_guard(tmp_path):
     assert os.path.exists(sample_file)
 
 
-def test_industrial_agent_team_memory_safe_solve(tmp_path):
+def test_industrial_agent_team_memory_safe_solve(tmp_path, monkeypatch):
     """验证多智能体团队端到端任务执行，每步落盘，关停软件，零孤儿进程。"""
+    monkeypatch.setenv("VIRTU_MEMORY_PATH", str(tmp_path / "test_mem.json"))
     team = IndustrialAgentTeam()
     out_dir = str(tmp_path / "agent_team_run")
     prompt = "我想制造一款精密成型轮模 材质Cr12MoV 外径53mm 轴孔14mm 宽度45mm"
@@ -90,31 +94,16 @@ def test_industrial_agent_team_memory_safe_solve(tmp_path):
     assert "阶段递进与内存回收流水线" in report_text
     assert "内存净回收" in report_text
 
-    # 确证无 CAD/CAM 软件滞留
-    reclaimer = ProcessMemoryReclaimer()
+    # 确证本次会话没有留下孤儿 CAD/CAM 进程。
+    # 注意：这里断言的是"本会话产生且未关闭"的进程，而不是"全机器没有 CAD 进程"——
+    # 后者会把用户自己开着的 SolidWorks/AutoCAD 当成失败（reclaimer 按设计
+    # 只回收开工后新出现的进程，动手前已在运行的实例一律不碰）。
+    reclaimer = team.reclaimer
     for sw in ["solidworks", "nx", "autocad", "cimco", "vericut", "sscnc"]:
-        procs = reclaimer.find_target_processes(sw)
-        assert len(procs) == 0, f"软件 {sw} 仍有未关闭的滞留进程: {procs}"
+        orphans = reclaimer.orphan_processes(sw)
+        assert len(orphans) == 0, f"软件 {sw} 仍有本会话未关闭的孤儿进程: {orphans}"
 
 
 if __name__ == "__main__":
-    import tempfile
-    import pathlib
-    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
-    p = pathlib.Path(tempfile.mkdtemp())
-    print(">>> 运行单元测试 1: 内存状态感知与工作集净化...")
-    test_process_memory_reclaimer_telemetry()
-    print("    [PASS] 内存感知与工作集净化正常")
-
-    print(">>> 运行单元测试 2: 单步任务落盘与内存守护闭环...")
-    test_execute_step_with_memory_guard(p / "t2")
-    print("    [PASS] 单步落盘与内存守卫正常")
-
-    print(">>> 运行单元测试 3: 工业智能体团队全链路内存安全协同...")
-    test_industrial_agent_team_memory_safe_solve(p / "t3")
-    print("    [PASS] 团队端到端任务全阶段落盘与软件释放验证通过")
-
-    print("\n==========================================")
-    print("✅ 全部 3 项阶段内存安全测试 100% 通过！")
-    print("==========================================")
+    raise SystemExit(pytest.main([__file__, "-q"]))
 

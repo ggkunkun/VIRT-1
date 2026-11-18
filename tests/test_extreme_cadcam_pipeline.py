@@ -55,3 +55,44 @@ def test_extreme_pipeline_circuit_breaker_triggered(tmp_path):
     assert rcfa["attempts_exhausted"] == 1
     assert "CIRCUIT_BREAKER_TRIGGERED" in rcfa["action_taken"]
     assert len(rcfa["remedy_recommendations"]) > 0
+
+
+@pytest.mark.parametrize("dialect,ext", [
+    ("fanuc", "nc"), ("siemens", "mpf"), ("heidenhain", "h"),
+])
+def test_extreme_pipeline_multidialect_post(tmp_path, dialect, ext):
+    """P1b：极限链加工阶段按 dialect 发射真实控制器 NC，三道门全绿且产物落盘。"""
+    pipeline = ExtremeCADCAMPipeline()
+    wish = "精密轴承套圈外圆加工，材质Cr12MoV，外径53，孔径14，总长45，圆角3"
+    res = pipeline.run_full_lifecycle(wish, out_root=str(tmp_path), max_attempts=3, dialect=dialect)
+
+    assert res["status"] == "success", res.get("rcfa_report")
+    mach = res["stages"]["machining"]
+    assert mach["dialect"] == dialect
+    assert os.path.exists(mach["dialect_nc_path"])
+    assert mach["dialect_nc_path"].endswith("." + ext)
+    pp = mach["post_process"]
+    assert pp["status"] == "passed"
+    assert pp["dialect_gate_passed"] is True
+    assert pp["coord_gate_passed"] is True
+    assert pp["basis"] == "measured"
+    # 坐标一致性门：三方言最大偏差都在容差内
+    for d, err in pp["coord_max_err_mm"].items():
+        assert err is not None and err <= 1e-3, (d, err)
+    # 发射的 NC 含该方言特征关键字
+    nc_text = open(mach["dialect_nc_path"], encoding="utf-8").read()
+    if dialect == "siemens":
+        assert "CYCLE81(" in nc_text
+    elif dialect == "heidenhain":
+        assert "BEGIN PGM" in nc_text and "CYCL DEF 200" in nc_text
+    else:
+        assert nc_text.startswith("%") and "M30" in nc_text
+
+
+def test_extreme_pipeline_unknown_dialect_aborts(tmp_path):
+    """未知方言必须在加工阶段被拒（熔断），不得静默回退。"""
+    pipeline = ExtremeCADCAMPipeline()
+    wish = "精密轴承套圈外圆加工，材质Cr12MoV，外径53，孔径14，总长45"
+    res = pipeline.run_full_lifecycle(wish, out_root=str(tmp_path), max_attempts=1, dialect="mazak")
+    assert res["status"] == "circuit_breaker_aborted"
+    assert res["rcfa_report"]["failed_stage"] == "machining"

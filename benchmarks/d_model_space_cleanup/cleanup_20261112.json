@@ -1,0 +1,92 @@
+{
+  "timestamp": "2026-11-12",
+  "authorization": "user: 按你的建议执行",
+  "scope": "D:\\Virtu模型 冗余 GGUF 清理 + 字节相同分片硬链接去重",
+  "basis": "measured",
+  "free_before_gb_D": 117.25,
+  "free_after_gb_D": 140.64,
+  "reclaimed_gb_D": 23.38,
+  "gate": {
+    "method": "T1 from scripts/d_model_space_cleanup.py: D-side sha256 == E-side ollama blob name == blob bytes on disk; nlink == 1; exclusive open OK; no active virtu/ollama process",
+    "all_passed": true
+  },
+  "execution_notes": [
+    "Remove-Item is wrapped by a tool-layer safe-delete hook that routes files to the Recycle Bin; CJK path in the trash channel causes a false SAFE_DELETE_FAIL_CLOSED / trash-failed report, but the move actually succeeds. Verified via $I metadata (deletion timestamps 2026-11-12 12:19-12:20) and file-absence checks.",
+    "Because Recycle Bin items still occupy D:, only the 5 items created by this run (4 GGUF + 1 shard, 23.38 GB) were purged; the 5 pre-existing user items (udisk .done/.log/.txt, <=2.6 KB) were left untouched.",
+    "Free space measured by Win32_LogicalDisk: 117.25 GB -> 140.64 GB, delta 23.38 GB, exactly matching purged bytes."
+  ],
+  "t1_removed_recoverable_from_e_blob": [
+    {
+      "path": "cloud_train_pack/output_13b/virtu-13.63b-q4_0.gguf",
+      "bytes": 8314589728,
+      "sha256": "8610e63361db3280d28f656e48ba996db26a6459ca15c2401daa99ee7ccdeed7",
+      "e_blob": "E:\\ollama\\models\\blobs\\sha256-8610e63361db3280d28f656e48ba996db26a6459ca15c2401daa99ee7ccdeed7",
+      "nlink_before": 1,
+      "verdict": "redundant-safe-to-delete"
+    },
+    {
+      "path": "models/virtu-13b/virtu-13.63b-asym-q3km.gguf",
+      "bytes": 6318050848,
+      "sha256": "154d486ae5d87675f032f1792fd9a88c8ff6255457c18f309edb5b9b2cd65dbd",
+      "e_blob": "E:\\ollama\\models\\blobs\\sha256-154d486ae5d87675f032f1792fd9a88c8ff6255457c18f309edb5b9b2cd65dbd",
+      "nlink_before": 1,
+      "verdict": "redundant-safe-to-delete"
+    },
+    {
+      "path": "checkpoints/virtu-v3-all90-q4_0.gguf",
+      "bytes": 4614301760,
+      "sha256": "293cdac3e52f6340208967b743ee4a1d67684a24f8a8f011849423e34c1ed9c2",
+      "e_blob": "E:\\ollama\\models\\blobs\\sha256-293cdac3e52f6340208967b743ee4a1d67684a24f8a8f011849423e34c1ed9c2",
+      "nlink_before": 1,
+      "verdict": "redundant-safe-to-delete"
+    },
+    {
+      "path": "checkpoints/virtu_impeller_fixed-q4_0.gguf",
+      "bytes": 4614301760,
+      "sha256": "fbf1ba4c0297cbac1759785c5bcf83976e71441cfcfcc87b75ad29db3a7b4d87",
+      "e_blob": "E:\\ollama\\models\\blobs\\sha256-fbf1ba4c0297cbac1759785c5bcf83976e71441cfcfcc87b75ad29db3a7b4d87",
+      "nlink_before": 1,
+      "verdict": "redundant-safe-to-delete"
+    }
+  ],
+  "hardlink_dedup": [
+    {
+      "path": "checkpoints/impeller_fixed_merged/model-00005-of-00005.safetensors",
+      "canonical": "checkpoints/virtu_ties_v1/model-00005-of-00005.safetensors",
+      "sha256": "20C2D6366AB85C90786CCDD829CD2B9E7D30EF3B2EBBB998280E7E4014B542FF",
+      "nlink_before": 1,
+      "nlink_after": 3,
+      "command": "fsutil hardlink create <path> <canonical>",
+      "verified": "file exists; sha256 unchanged"
+    }
+  ],
+  "finding_correction": {
+    "item": "virtu_ties_v1 与 virtu_cad_cam_merged_v3 的 5 个分片",
+    "earlier_claim": "byte-identical duplicate wasting 15.27 GB",
+    "measured_truth": "already a hardlink pair (nlink=2 on all 5 shards); physically stored once. The 15.27 GB was logical-size double counting, not reclaimable space.",
+        "shards_verified": "5/5 full SHA256 equal"
+  },
+  "not_executed": [
+    {
+      "item": "delete 3 sets of 8B merged HF weights to keep only base + LoRA adapters",
+      "reason": "PROVENANCE.json red_lines_untouched / red_lines_preserved explicitly retain _base_qwen3_8b, virtu_ties_v1, virtu_cad_cam_merged_v3; train_sft_local.py defaults to virtu_cad_cam_merged_v3, deploy_local_sft.py to virtu_ties_v1. Requires explicit authorization to override.",
+      "physical_footprint_note": "3 independent 15.27 GB copies exist (_base_qwen3_8b, impeller_fixed_merged, ties/cad_cam shared pair) = ~45.8 GB physical"
+    },
+    {
+      "item": "delete virtu_moe_14b_hf (25.40 GB)",
+      "reason": "listed in red_lines_preserved of space_cleanup_2026_11_08_phase2; validated MoE foundation"
+    }
+  ],
+  "red_lines_preserved": [
+    "_base_qwen3_8b",
+    "virtu_ties_v1",
+    "virtu_cad_cam_merged_v3",
+    "virtu_moe_14b_hf",
+    "all core LoRA adapters",
+    "models/Qwen3-VL-2B-Instruct",
+    ".venv",
+    ".tmp.driveupload"
+  ],
+  "restore": "Copy-Item -LiteralPath <e_blob> -Destination <path> (byte-identical; blob names are content sha256)",
+  "evidence": "benchmarks/d_model_space_cleanup"
+}

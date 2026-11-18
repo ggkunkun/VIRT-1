@@ -15,6 +15,122 @@ import os
 import sys
 import subprocess
 import shutil
+import glob
+
+
+# ---------------------------------------------------------------------------
+# NX 12.0 程序树动态发现（2026-11-16）
+# ---------------------------------------------------------------------------
+# 历史坑：NX 的介质曾放在 E:\BaiduNetdiskDownload\...，E 盘清理后该路径连同
+# D:\_E盘归档_2026-11-14\nx12_package 一起消失，而 software_registry 的
+# known_binaries / nx_bridge 的 NX_BASE 都是硬编码 ⇒ 六软件预检里 NX 永远
+# is_ready=False，4 个 toolchain_access_modes 用例红。
+# 改成「注册表 → 网盘/归档目录 → 桌面快捷方式目标」三级发现，介质搬家也不会再腐坏。
+
+#: NX 程序树在磁盘上的典型容器目录（按优先级）
+NX_SEARCH_ROOTS = (
+    r"D:\BaiduNetdiskDownload",
+    r"E:\BaiduNetdiskDownload",
+    r"D:\_E盘归档_2026-11-14",
+    r"D:\_E盘归档_2026-11-15",
+    r"D:\BaiduNetdiskDownload\NX 12.0.2.9",
+)
+
+#: NX 程序树的判定标志：NXBIN\run_journal.exe（NxOpen Python journal 入口）
+NX_TREE_MARKER = os.path.join("NXBIN", "run_journal.exe")
+
+
+def _nx_registry_base_dir() -> str:
+    """从注册表读 UGII_BASE_DIR（NX 官方安装路径记录点）。"""
+    try:
+        import winreg
+        with winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE,
+                             r"SOFTWARE\Siemens\NX\CurrentVersion") as k:
+            val, _t = winreg.QueryValueEx(k, "UGII_BASE_DIR")
+            if val:
+                return str(val)
+    except Exception:
+        pass
+    return ""
+
+
+def _nx_shortcut_base_dir() -> str:
+    """从桌面快捷方式目标反推 NX 程序树根。"""
+    try:
+        sc = resolve_entry("nx")
+        target = sc.get("target_path") or ""
+        if not target:
+            return ""
+        # 目标可能是 <base>\NX\CH_NX.BAT 或 <base>\NX\NXBIN\run_journal.exe
+        cur = os.path.dirname(target)
+        for _ in range(5):
+            if os.path.exists(os.path.join(cur, NX_TREE_MARKER)):
+                return cur
+            parent = os.path.dirname(cur)
+            if parent == cur:
+                break
+            cur = parent
+    except Exception:
+        pass
+    return ""
+
+
+def discover_nx_base_dirs(max_depth: int = 4) -> list:
+    """发现本机所有可用的 NX 12 程序树根目录（已存在的才算）。
+
+    顺序：注册表 → 桌面快捷方式 → 已知容器目录下的递归查找。
+    """
+    found = []
+
+    def _add(path):
+        if not path:
+            return
+        path = os.path.normpath(path)
+        if path in found:
+            return
+        if os.path.exists(os.path.join(path, NX_TREE_MARKER)):
+            found.append(path)
+
+    _add(_nx_registry_base_dir())
+    _add(_nx_shortcut_base_dir())
+
+    for root in NX_SEARCH_ROOTS:
+        if not os.path.isdir(root):
+            continue
+        # 先看已知层级（NX 12.0.2.9\NX12.2.9waigua\NX12.2.9\NX）
+        pattern = os.path.join(root, "**", NX_TREE_MARKER)
+        try:
+            hits = glob.glob(pattern, recursive=True)
+        except Exception:
+            hits = []
+        for hit in hits[:8]:
+            _add(os.path.dirname(os.path.dirname(hit)))
+        # 深度受限的兜底遍历（glob 在超大树上很慢）
+        if not hits and max_depth > 0:
+            for cur, dirs, _files in os.walk(root):
+                depth = cur[len(root):].count(os.sep)
+                if depth >= max_depth:
+                    dirs[:] = []
+                if os.path.exists(os.path.join(cur, NX_TREE_MARKER)):
+                    _add(cur)
+                    dirs[:] = []
+    return found
+
+
+def discover_nx_binaries() -> list:
+    """NX 程序树里可执行文件候选（run_journal / ugraf / 启动器）。"""
+    out = []
+    for base in discover_nx_base_dirs():
+        for rel in (os.path.join("NXBIN", "run_journal.exe"),
+                    os.path.join("UGII", "ugraf.exe"),
+                    os.path.join("NXBIN", "ugraf.exe"),
+                    os.path.join("..", "中文版NX12.0.exe"),
+                    "中文版NX12.0.exe"):
+            p = os.path.normpath(os.path.join(base, rel))
+            if os.path.exists(p) and p not in out:
+                out.append(p)
+    return out
+
 
 # Canonical desktop shortcut locations as referenced by user
 DESKTOP_SHORTCUTS = {
@@ -24,6 +140,69 @@ DESKTOP_SHORTCUTS = {
     "autocad": r"C:\Users\Public\Desktop\AutoCAD 2026 - 简体中文 (Simplified Chinese).lnk",
     "vericut": r"C:\Users\Public\Desktop\Vericut 9.6.lnk",
     "nx": r"C:\Users\Administrator\Desktop\中文版NX12.0.lnk",
+}
+
+
+def entry_candidates(key: str) -> list:
+    """Return desktop entry candidates for a software key, in priority order.
+
+    A desktop entry is not guaranteed to stay a ``.lnk``: users routinely
+    replace a shortcut with a direct ``.exe`` (this host did exactly that for
+    NX), and entries may live on the user desktop or the public desktop. The
+    registry therefore probes .lnk and same-stem .exe across both desktops
+    instead of pinning one file path.
+    """
+    primary = DESKTOP_SHORTCUTS.get(key)
+    if not primary:
+        return []
+    stem, _ext = os.path.splitext(primary)
+    name_lnk = os.path.basename(primary)
+    name_exe = os.path.basename(stem) + ".exe"
+    dirs = [
+        os.path.dirname(primary),
+        r"C:\Users\Public\Desktop",
+        os.path.join(os.path.expanduser("~"), "Desktop"),
+    ]
+    out = [primary, stem + ".exe"]
+    for d in dirs:
+        for name in (name_lnk, name_exe):
+            p = os.path.join(d, name)
+            if p not in out:
+                out.append(p)
+    return out
+
+
+def resolve_entry(key: str) -> dict:
+    """Resolve the first existing desktop entry (.lnk or direct executable)."""
+    canonical = normalize_software_key(key)
+    for cand in entry_candidates(canonical):
+        if os.path.exists(cand):
+            info = resolve_shortcut(cand)
+            info["entry_path"] = cand
+            return info
+    return {
+        "shortcut_path": DESKTOP_SHORTCUTS.get(canonical),
+        "entry_path": None,
+        "exists": False,
+        "target_path": None,
+        "working_directory": None,
+        "arguments": None,
+        "target_exists": False,
+    }
+
+#: 「软件名 + action」直派 → 规范工具名。REST / CLI 两条直派通道共用同一张表，
+#: 保证同一个软件在两条通道上落到同一道闸门、同一个风险等级。
+DISPATCH_SOFTWARE_TOOL = {
+    "solidworks": "cadcam_solidworks_model",
+    "sw": "cadcam_solidworks_model",
+    "nx": "cadcam_nx_journal",
+    "siemens_nx": "cadcam_nx_journal",
+    "autocad": "cadcam_autocad_draw",
+    "acad": "cadcam_autocad_draw",
+    "cimco": "cadcam_cimco_validate",
+    "cimco_edit": "cadcam_cimco_validate",
+    "vericut": "cadcam_vericut_simulate",
+    "sscnc": "cadcam_sscnc_control",
 }
 
 # Alias mappings for user friendliness
@@ -128,6 +307,14 @@ SOFTWARE_SPECS = {
             r"E:\BaiduNetdiskDownload\NX 12.0.2.9\NX12.2.9waigua\NX12.2.9\NX\NXBIN\run_journal.exe",
             r"E:\BaiduNetdiskDownload\NX 12.0.2.9\NX12.2.9waigua\NX12.2.9\NX\UGII\ugraf.exe",
             r"E:\BaiduNetdiskDownload\NX 12.0.2.9\NX12.2.9waigua\NX12.2.9\中文版NX12.0.exe",
+            r"D:\_E盘归档_2026-11-14\nx12_package\NX12.2.9waigua\NX12.2.9\NX\NXBIN\run_journal.exe",
+            r"D:\_E盘归档_2026-11-14\nx12_package\NX12.2.9waigua\NX12.2.9\NX\UGII\ugraf.exe",
+            r"D:\_E盘归档_2026-11-14\nx12_package\NX12.2.9waigua\NX12.2.9\NX\NXBIN\ugraf.exe",
+            r"D:\_E盘归档_2026-11-14\nx12_package\NX12.2.9waigua\NX12.2.9\中文版NX12.0.exe",
+            # 2026-11-16：网盘客户端已把介质拉到 D: 盘（此前 E: 盘清理时被删）
+            r"D:\BaiduNetdiskDownload\NX 12.0.2.9\NX12.2.9waigua\NX12.2.9\NX\NXBIN\run_journal.exe",
+            r"D:\BaiduNetdiskDownload\NX 12.0.2.9\NX12.2.9waigua\NX12.2.9\NX\UGII\ugraf.exe",
+            r"D:\BaiduNetdiskDownload\NX 12.0.2.9\NX12.2.9waigua\NX12.2.9\中文版NX12.0.exe",
         ],
         "process_names": ["ugraf.exe", "run_journal.exe"],
         "com_prog_id": None,
@@ -171,6 +358,16 @@ def resolve_shortcut(lnk_path: str, use_cache: bool = True) -> dict:
         "target_exists": False,
     }
     if not res["exists"]:
+        _SHORTCUT_CACHE[lnk_path] = res
+        return res
+
+    # A direct executable / launcher is its own target — no shell link to unwrap.
+    # Returning it here keeps every consumer (health check, NX tree discovery,
+    # MCP schemas) working when the desktop entry is an .exe instead of a .lnk.
+    if lnk_path.lower().endswith((".exe", ".bat", ".cmd")):
+        res["target_path"] = lnk_path
+        res["working_directory"] = os.path.dirname(lnk_path)
+        res["target_exists"] = True
         _SHORTCUT_CACHE[lnk_path] = res
         return res
 
@@ -303,13 +500,19 @@ def get_software_health(key: str, running_procs: dict = None) -> dict:
     if running_procs is None:
         running_procs = get_running_processes()
 
-    # Shortcut info
-    sc_info = resolve_shortcut(spec["shortcut"])
+    # Desktop entry info (accepts .lnk or a direct .exe; probes both desktops)
+    sc_info = resolve_entry(canonical)
 
     # Locate executable binary
     binary_found = None
+    known = list(spec["known_binaries"])
+    if canonical == "nx":
+        # 动态发现：NX 介质搬家/清理后不再依赖硬编码路径（2026-11-16）
+        for b in discover_nx_binaries():
+            if b not in known:
+                known.append(b)
     # Prioritize direct executable binaries over installer shortcuts
-    for b in spec["known_binaries"]:
+    for b in known:
         if os.path.exists(b):
             binary_found = b
             break
@@ -334,7 +537,7 @@ def get_software_health(key: str, running_procs: dict = None) -> dict:
         "display_name": spec["display_name"],
         "category": spec["category"],
         "shortcut_present": sc_info["exists"],
-        "shortcut_path": spec["shortcut"],
+        "shortcut_path": sc_info.get("entry_path") or spec["shortcut"],
         "resolved_target": sc_info["target_path"],
         "binary_found": binary_found,
         "is_ready": is_ready,

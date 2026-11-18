@@ -596,5 +596,245 @@
         ]
       }
     }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "desktop.capture_screen",
+      "description": "高精度截取当前屏幕或指定工业软件窗口，用于UI状态检测与视觉质检。",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "software": {
+            "type": "string",
+            "description": "目标工业软件名称（如 solidworks, autocad, sscnc, cimco, vericut, nx）"
+          },
+          "output_path": {
+            "type": "string",
+            "description": "截图保存的绝对路径"
+          }
+        },
+        "required": []
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "desktop.click_element",
+      "description": "在屏幕指定坐标执行鼠标点击、双击或右击，操控CAD界面控件或数控面板按钮。",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "x": {
+            "type": "integer",
+            "description": "屏幕水平坐标 X"
+          },
+          "y": {
+            "type": "integer",
+            "description": "屏幕垂直坐标 Y"
+          },
+          "button": {
+            "type": "string",
+            "enum": [
+              "left",
+              "right",
+              "middle"
+            ],
+            "default": "left"
+          },
+          "double": {
+            "type": "boolean",
+            "default": false
+          }
+        },
+        "required": [
+          "x",
+          "y"
+        ]
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "desktop.mouse_move",
+      "description": "精准移动鼠标光标至目标坐标位置。",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "x": {
+            "type": "integer",
+            "description": "目标水平坐标 X"
+          },
+          "y": {
+            "type": "integer",
+            "description": "目标垂直坐标 Y"
+          }
+        },
+        "required": [
+          "x",
+          "y"
+        ]
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "desktop.mouse_drag",
+      "description": "按住鼠标键从起点拖拽至终点，实现CAD视图框选或窗口拖动。",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "start_x": {
+            "type": "integer",
+            "description": "起点坐标 X"
+          },
+          "start_y": {
+            "type": "integer",
+            "description": "起点坐标 Y"
+          },
+          "end_x": {
+            "type": "integer",
+            "description": "终点坐标 X"
+          },
+          "end_y": {
+            "type": "integer",
+            "description": "终点坐标 Y"
+          },
+          "button": {
+            "type": "string",
+            "enum": [
+              "left",
+              "right",
+              "middle"
+            ],
+            "default": "left"
+          }
+        },
+        "required": [
+          "start_x",
+          "start_y",
+          "end_x",
+          "end_y"
+        ]
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "desktop.mouse_scroll",
+      "description": "在指定位置滚动鼠标滚轮，进行CAD模型视图缩放或列表滚动。",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "clicks": {
+            "type": "integer",
+            "description": "滚动格数（正数向上放大，负数向下缩小）"
+          },
+          "x": {
+            "type": "integer",
+            "description": "鼠标停留横坐标"
+          },
+          "y": {
+            "type": "integer",
+            "description": "鼠标停留纵坐标"
+          }
+        },
+        "required": [
+          "clicks"
+        ]
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "desktop.type_text",
+      "description": "向当前活动窗口输入文本内容（经剪贴板注入，支持长文本与特殊符号）。",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string",
+            "description": "待输入的文本内容"
+          }
+        },
+        "required": [
+          "text"
+        ]
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "desktop.press_hotkey",
+      "description": "向当前活动窗口发送键盘组合键或功能键（如 ctrl,s、alt,f4、f5、esc、enter）。",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "keys": {
+            "type": "string",
+            "description": "逗号分隔的按键序列（如 ctrl,s）"
+          }
+        },
+        "required": [
+          "keys"
+        ]
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "desktop.focus_software",
+      "description": "激活并聚焦指定的工业软件主窗口，确保按键与鼠标输入有效。",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "software": {
+            "type": "string",
+            "description": "目标工业软件标识（如 solidworks, acad, sscnc, cimco, vericut, nx）"
+          }
+        },
+        "required": [
+          "software"
+        ]
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "desktop.inspect_window",
+      "description": "检测并诊断指定软件主窗口的句柄、标题与位置信息。",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "software": {
+            "type": "string",
+            "description": "目标软件名称"
+          }
+        },
+        "required": [
+          "software"
+        ]
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "desktop.dismiss_dialogs",
+      "description": "自动检测并点掉遮挡CAD/CAM主界面的阻塞性模态提示弹窗。",
+      "parameters": {
+        "type": "object",
+        "properties": {},
+        "required": []
+      }
+    }
   }
 ]

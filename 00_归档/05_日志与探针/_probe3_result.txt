@@ -1,0 +1,7 @@
+system_powershell_subprocess OK 2.2s status= None keys= ['rc', 'out', 'err']
+  total_visible_windows= 3
+enum_windows OK 0.0s status= None keys= ['sw_windows', 'total']
+find_software_window(solidworks) OK 0.0s repr= None
+import agent_chain_executor OK has_preflight_apps= True
+preflight_apps_timed OK 545.1s status= None keys= ['AutoCAD', 'SOLIDWORKS', 'CIMCO Edit']
+DONE

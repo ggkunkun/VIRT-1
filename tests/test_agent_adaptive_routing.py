@@ -209,6 +209,28 @@ class TestAgentDirectRouting(unittest.TestCase):
         self.assertNotIn("L2", text)
         self.assertNotIn("L3", text)
 
+    def test_13_policy_blocked_result_is_not_success_and_halts_cascade(self):
+        """反证闸门：status='blocked'（审批缺失/越界拦截）必须判失败且终止容灾级联，不得假装 SUCCESS 或换通道绕过。"""
+        old_env = os.environ.pop("VIRTU_TOOL_APPROVAL", None)
+        try:
+            rep = self.agent.solve(
+                "向AutoCAD发送LISP脚本",
+                modality="FUNCTION_CALLING",
+                target_software="autocad",
+                action="send_lisp",
+                params={"action": "send_lisp", "code": '(command "_.CIRCLE" "0,0" "10")'},
+            )
+            self.assertFalse(rep.success)
+            self.assertIsNone(rep.executed_modality)
+            self.assertEqual(len(rep.execution_attempts), 1,
+                             "策略性拒绝必须终止级联，不得换通道重试绕过审批")
+            self.assertEqual(rep.execution_attempts[0]["status"], "BLOCKED")
+            self.assertEqual(rep.result_data.get("status"), "blocked")
+            self.assertEqual(rep.result_data.get("verdict_code"), "TOOL_APPROVAL_REQUIRED")
+        finally:
+            if old_env is not None:
+                os.environ["VIRTU_TOOL_APPROVAL"] = old_env
+
 
 if __name__ == "__main__":
     unittest.main()

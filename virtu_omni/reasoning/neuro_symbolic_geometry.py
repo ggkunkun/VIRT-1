@@ -53,6 +53,7 @@ class ConstraintType(str, enum.Enum):
     DISTANCE_EUCLIDEAN = "DISTANCE_EUCLIDEAN"
     RADIUS = "RADIUS"
     DIAMETER = "DIAMETER"
+    EQUAL_RADIUS = "EQUAL_RADIUS"
     CONCENTRIC = "CONCENTRIC"
     TANGENT_LINE_CIRCLE = "TANGENT_LINE_CIRCLE"
     FIXED_ORIGIN = "FIXED_ORIGIN"
@@ -172,6 +173,14 @@ class AlphaGeometrySymbolicEngine:
                 cid = c.target_ids[0]
                 d_val = c.value if c.value is not None else 0.0
                 equations.append(symbolic_vars[f"{cid}_r"] - d_val / 2.0)
+
+            elif t == ConstraintType.EQUAL_RADIUS:
+                if len(c.target_ids) >= 2:
+                    c1, c2 = c.target_ids[0], c.target_ids[1]
+                    equations.append(symbolic_vars[f"{c1}_r"] - symbolic_vars[f"{c2}_r"])
+                elif c.value is not None:
+                    cid = c.target_ids[0]
+                    equations.append(symbolic_vars[f"{cid}_r"] - c.value)
 
             elif t == ConstraintType.CONCENTRIC:
                 c1, c2 = c.target_ids[0], c.target_ids[1]

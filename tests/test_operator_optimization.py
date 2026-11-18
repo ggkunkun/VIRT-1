@@ -16,6 +16,9 @@ import tempfile
 import unittest
 from pathlib import Path
 
+import pytest
+# torch 是可选训练依赖：无 torch 的推理主机上跳过本模块，而不是让收集阶段中断。
+pytest.importorskip("torch")
 import torch
 
 from virtu_omni.agent.super_agent import VirtuSuperAgent
@@ -197,7 +200,11 @@ class TestOperatorOptimization(unittest.TestCase):
         agent = VirtuSuperAgent()
         res = agent.run_operator_self_optimization(seq_lens=[64], num_warmup=3, num_trials=5)
 
-        self.assertTrue(res["success"])
+        self.assertTrue(
+            res["success"],
+            f"算子自优化未通过：invalidated_legs={res.get('invalidated_legs')} "
+            f"precision_failures={res.get('precision_failures')}",
+        )
         self.assertIn("overall_speedup", res)
         self.assertIn("memory_reduction_pct", res)
         self.assertTrue(Path(res["report_md"]).exists())

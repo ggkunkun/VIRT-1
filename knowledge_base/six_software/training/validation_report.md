@@ -240,3 +240,40 @@ python -c "import json,sys; [print(i, 'OK' if json.loads(l) else 'FAIL') for i,l
 - **271 条语料全量静态结构校验通过**：12 文件行数=期望、`"tool_call_id","` 坏模式 0 命中、id↔tool_call_id 配对平衡、尾部 fastest_route 记录 arguments 转义与多轮链结构正常。
 - **残留问题**：无 C1–C5 类缺陷；fastest-methods 目录 9/9 文件齐备（归并总表与选型矩阵已由组织者补写）。
 - **仍待办**：权威 `validate_render_dataset.py` 渲染校验与逐行 `json.loads` 须在有 python 的 shell 会话执行（本静态报告不替代）。
+
+---
+
+## 11. 2026-11-12 实测修复与复验（取代前述"待办"）
+
+> 本节为实测（basis=measured），与上文 2026-11-04 的纯静态结论冲突时以本节为准。
+
+### 11.1 缺陷确认
+
+- 全目录 12 文件 271 条记录，逐行 `json.loads` 仅 **47/271（17.28%）** 通过；其余为生成期 JSON 转义/结构缺陷：缺对象闭合 `}`、缺数组闭合 `]`、`"function"` 键缺失、`content` 值未加引号、`arguments` 截断、`"content">` 冒号写成 `>`。
+
+### 11.2 修复动作
+
+- 逐行结构修复（不重写内容、不伪造字段）：保留可无损修复的记录并重排为严格 JSONL；原始文件备份为 `*.jsonl.bak_repair_20261112`。
+- 修复工具：`scratch/repair_six_datasets.py`；复验工具：`scratch/validate_six_datasets.py`。
+
+### 11.3 实测结果
+
+| 文件 | 原始 | 保留 | 丢弃 |
+|---|---:|---:|---:|
+| solidworks_train.jsonl | 38 | 36 | 2 |
+| solidworks_holdout.jsonl | 8 | 8 | 0 |
+| autocad_train.jsonl | 38 | 38 | 0 |
+| autocad_holdout.jsonl | 8 | 7 | 1 |
+| nx_train.jsonl | 36 | 31 | 5 |
+| nx_holdout.jsonl | 9 | 8 | 1 |
+| cimco_train.jsonl | 36 | 35 | 1 |
+| cimco_holdout.jsonl | 9 | 9 | 0 |
+| vericut_train.jsonl | 37 | 37 | 0 |
+| vericut_holdout.jsonl | 8 | 8 | 0 |
+| sscnc_train.jsonl | 36 | 35 | 1 |
+| sscnc_holdout.jsonl | 8 | 8 | 0 |
+| **合计** | **271** | **260** | **11** |
+
+- 保留 260 条全部通过：`json.loads` + `tools/messages` 形状 + role 合法 + `tool_call_id` 配对 + `arguments` JSON 解析；**有效率 100.00%**。
+- 丢弃 11 条均为原始行截断或语义残缺（如 arguments 中途断裂、content 无闭合），不做猜测性补全。
+- 机器可读报告：`authoritative_validation_report_2026-11-12.json`；清单计数已同步至 `manifest.json`。

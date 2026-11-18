@@ -12,6 +12,9 @@ Verifies:
 
 import os
 import sys
+import pytest
+# torch 是可选训练依赖：无 torch 的推理主机上跳过本模块，而不是让收集阶段中断。
+pytest.importorskip("torch")
 import torch
 import pytest
 

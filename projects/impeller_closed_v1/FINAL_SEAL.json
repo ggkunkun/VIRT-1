@@ -1,0 +1,19 @@
+{
+  "report_sha256": "fc207f36b9972fb722d05435fba44f0c4a20982604165883f1a1f0fff093f2b3",
+  "artifacts": {
+    "analysis_audit.json": "01a5277502174fe1538183d2e8413544bdd79171ed207a4e900071998fb8a588",
+    "cad_audit.json": "84b45279ee3afae438882e9cd416594f16ac2e97147321c21e4441c023dd111d",
+    "cad_render.png": "5b8b3114b03e809f892dcf2ab56b3d6ef3da1d0506db25f15a657c99be7fb0ed",
+    "drawing_audit.json": "7170795b0e02e770e8d334f7d5c4690c4ea19b5381ca99e69c0dac9c55822101",
+    "drawing_render.png": "f5ea82afc6c01f55528efea21f01d9ff8ff265927d359914c704e8942c56229b",
+    "impeller_closed.step": "1945b48a670ad8d8b400fab5cc4a7617f8b185c3091dbeb6eace5a5de6b8fe51",
+    "impeller_closed.stl": "10e1a5f88cc92335d680349a8503e30559cffc417adf712cfc03a8ac211cd242",
+    "impeller_closed_2d.dxf": "457874c4f7f30f73baca6fd23d1f4aa78d8700d7111f87714ce2ce04f3824bc7",
+    "LAYER1_ABLATION_REPORT.json": "7892d2c00ab85f23f05c15f81aaaf6c0d434860a97fca53497cb48e692f19b08",
+    "proctor_log.crashed1.jsonl": "05da2b013679db2b3bb6b774504b20c0d01a183620c8caa72e4ca60f5f4913d2",
+    "proctor_log.jsonl": "6fc23ce3a459a4e656f386eb8fae1f97d856fb0b5f67ae44635ad9accf66e629",
+    "transcript.crashed1.jsonl": "bbdb2fa1f66148e8bdb06167184b7d1e0efb97a1f09d487c7d8496a6ddb0969d",
+    "transcript.jsonl": "effeda624450368b423a8296379148c7e8f4191dc57b5c0272cc569522f4f694",
+    "VERIFICATION_REPORT.json": "fc207f36b9972fb722d05435fba44f0c4a20982604165883f1a1f0fff093f2b3"
+  }
+}

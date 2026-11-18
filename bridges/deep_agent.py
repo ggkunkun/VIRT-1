@@ -25,6 +25,7 @@ import argparse
 import ast
 import hashlib
 import json
+import os
 import re
 import sys
 import time
@@ -48,13 +49,85 @@ MAX_REPLANS = 2
 WRITE_MODES = {"launch", "launch_executable", "start", "stop", "kill", "resize", "switch", "close"}
 READ_ONLY_HINT = ("controlstatus", "list", "get", "status", "query", "screen")
 
+# 执行期机械核对（mechanical_check）的停用词：这些词在任何观察里都能撞到，
+# 一旦作为"预期关键词"就把闸门变成空转的证据。审计要求闸门必须可证伪。
+CHECK_STOPWORDS = {
+    "fail", "failed", "fails", "failure", "error", "errors", "err", "exception",
+    "process", "processes", "proc", "program", "app", "application", "window", "windows",
+    "ok", "okay", "success", "successful", "succeed", "done", "finished", "complete",
+    "completed", "pass", "passed", "yes", "no", "true", "false", "null", "none", "nil",
+    "result", "results", "output", "data", "info", "information", "status", "state",
+    "value", "values", "test", "check", "checked", "met", "not_met", "unknown",
+    "should", "must", "will", "would", "could", "have", "has", "had", "been", "being",
+    "this", "that", "these", "those", "then", "than", "and", "but", "not", "with",
+    "from", "into", "over", "also", "only", "want", "need", "make", "sure", "some",
+    "show", "shown", "list", "listed", "get", "got", "set", "the", "for", "are", "was",
+    "return", "returns", "returned", "response", "request", "message", "msg", "log",
+}
+
+
+# --------------------------------------------------------------------------- config
+# 审计问题（中）：num_ctx / num_predict / timeout 全为硬编码字面量，换模型或换长上下文
+# 任务时必须改源码。现改为「模块默认值 + 环境变量 + configure() 显式覆盖」三层，
+# 运行时可见、可调、可回退，且默认值与历史行为完全一致（不改变既有语义）。
+AGENT_CONFIG: dict = {}
+
+
+def _env_int(name: str, default: int) -> int:
+    try:
+        return int(os.environ.get(name, "") or default)
+    except (TypeError, ValueError):
+        return default
+
+
+def load_config(overrides: dict | None = None) -> dict:
+    """叠加配置：内置默认 < 环境变量 < 显式 overrides。"""
+    cfg = {
+        "num_ctx": _env_int("VIRTU_DEEP_NUM_CTX", 8192),
+        "num_predict_act": _env_int("VIRTU_DEEP_NUM_PREDICT_ACT", 256),
+        "num_predict_verify": _env_int("VIRTU_DEEP_NUM_PREDICT_VERIFY", 500),
+        "num_predict_plan": _env_int("VIRTU_DEEP_NUM_PREDICT_PLAN", 900),
+        "chat_timeout_s": _env_int("VIRTU_DEEP_CHAT_TIMEOUT_S", 600),
+        # 步数上限可配置：审计 §2.2 指出 6 步与规划上限耦合会把合法长任务判非法
+        "max_steps": _env_int("VIRTU_DEEP_MAX_STEPS", MAX_STEPS),
+        "digest_head_chars": _env_int("VIRTU_DEEP_DIGEST_HEAD", 240),
+        "digest_tail_chars": _env_int("VIRTU_DEEP_DIGEST_TAIL", 240),
+        "digest_key_lines": _env_int("VIRTU_DEEP_DIGEST_KEY_LINES", 12),
+    }
+    if overrides:
+        for k, v in overrides.items():
+            if v is not None:
+                cfg[k] = v
+    return cfg
+
+
+def configure(overrides: dict | None = None) -> dict:
+    """进程级设置一次，供 CLI / super_agent / 测试复用。"""
+    AGENT_CONFIG.clear()
+    AGENT_CONFIG.update(load_config(overrides))
+    return dict(AGENT_CONFIG)
+
+
+def cfg(key: str):
+    if not AGENT_CONFIG:
+        AGENT_CONFIG.update(load_config())
+    return AGENT_CONFIG[key]
+
 
 # --------------------------------------------------------------------------- model io
 def chat(model: str, messages: list, tools: list | None = None, *,
-         think: bool = False, num_predict: int = 256, num_ctx: int = 4096,
-         temperature: float = 0.1, timeout: int = 600,
+         think: bool = False, num_predict: int | None = None, num_ctx: int | None = None,
+         temperature: float = 0.1, timeout: int | None = None,
          format_schema: dict | None = None) -> tuple[dict, float]:
-    payload = {"model": model, "stream": False, "think": think, "keep_alive": "10m",
+    # 上下文与生成长度由配置驱动（环境变量 / configure()），不再硬编码在签名里
+    if num_predict is None:
+        num_predict = cfg("num_predict_act")
+    if num_ctx is None:
+        num_ctx = cfg("num_ctx")
+    if timeout is None:
+        timeout = cfg("chat_timeout_s")
+    payload = {"model": model, "stream": False, "think": think,
+               "keep_alive": os.environ.get("VIRTU_KEEP_ALIVE", "2m"),
                "options": {"num_ctx": num_ctx, "temperature": temperature,
                            "num_predict": num_predict, "num_gpu": 99},
                "messages": messages}
@@ -111,6 +184,16 @@ def parse_json_loose(text: str) -> tuple[dict | None, str]:
 
 def sha256(s: str) -> str:
     return hashlib.sha256(s.encode("utf-8")).hexdigest()
+
+
+def content_run_id(task: str, model: str, schemas: list[dict]) -> str:
+    """纯内容指纹 run_id：同输入必得同 run_id。
+
+    不得掺入 ``time.time()`` 等时间量——那会让「同输入是否复现」「同 run 去重」
+    「按 run_id 回查」全部失效（AGENTS.md §8.2 内容寻址）。
+    """
+    payload = f"{task}|{model}|{json.dumps(schemas, sort_keys=True, ensure_ascii=False)}"
+    return sha256(payload)[:16]
 
 
 def is_write_action(tool: str, args: dict, schemas: list[dict]) -> bool:
@@ -182,8 +265,9 @@ def validate_plan(plan: dict, schemas: list[dict]) -> list[str]:
     steps = plan.get("steps")
     if not isinstance(steps, list) or not steps:
         return ["steps 缺失或为空"]
-    if len(steps) > MAX_STEPS:
-        v.append(f"steps 数量 {len(steps)} 超过上限 {MAX_STEPS}")
+    max_steps = int(cfg("max_steps"))
+    if len(steps) > max_steps:
+        v.append(f"steps 数量 {len(steps)} 超过上限 {max_steps}")
     byname = {t["name"]: (t.get("inputSchema") or {}) for t in schemas}
     seen_write = False
     for i, st in enumerate(steps, 1):
@@ -353,7 +437,7 @@ def plan_stage(client, schemas: list[dict], task: str, env_facts: str,
     msg = [{"role": "system", "content": sys_p},
            {"role": "user", "content": f"可用工具（参数清单来自真实 schema，* 为必填）：\n{brief}\n\n环境事实：\n{env_facts}\n\n任务：{task}"}]
     # 语法约束解码：结构化 JSON 由 Ollama grammar 保证，不再依赖模型自由生成括号嵌套
-    resp, el = chat(model, msg, think=False, num_predict=800, num_ctx=3072,
+    resp, el = chat(model, msg, think=False, num_predict=cfg("num_predict_plan"), num_ctx=cfg("num_ctx"),
                     temperature=0.2, format_schema=PLAN_SCHEMA)
     content = (resp.get("message") or {}).get("content") or ""
     thinking = (resp.get("message") or {}).get("thinking") or ""
@@ -386,7 +470,7 @@ def plan_stage(client, schemas: list[dict], task: str, env_facts: str,
             {"role": "assistant", "content": content[:3000]},
             {"role": "user", "content": "你的计划未通过校验，逐条修正后只输出修正版 JSON：\n- "
                                         + "\n- ".join(viol)}]
-        resp2, el2 = chat(model, fix_msg, think=False, num_predict=800, num_ctx=3072,
+        resp2, el2 = chat(model, fix_msg, think=False, num_predict=cfg("num_predict_plan"), num_ctx=cfg("num_ctx"),
                           temperature=0.1, format_schema=PLAN_SCHEMA)
         c2 = (resp2.get("message") or {}).get("content") or ""
         plan2, how2 = parse_json_loose(c2)
@@ -409,7 +493,8 @@ def plan_stage(client, schemas: list[dict], task: str, env_facts: str,
 
 # --------------------------------------------------------------------------- act stage
 def act_stage(client, schemas: list[dict], tools_ollama: list[dict], plan: dict,
-              step: dict, history: list[dict], task: str, model: str) -> dict:
+              step: dict, history: list[dict], task: str, model: str,
+              env_facts: str = "") -> dict:
     def fmt_obs(h):
         return f"[step{h['step']}] {h['tool']}{json.dumps(h['args'], ensure_ascii=False)} -> {h['observation'][:700]}"
 
@@ -425,9 +510,10 @@ def act_stage(client, schemas: list[dict], tools_ollama: list[dict], plan: dict,
   · met=上一步达到预期；not_met=没达到；first=仅第 1 步可用（后续步骤禁用）。
   · 证据必须逐字来自观察文本，禁止改写、禁止编造；first 时证据写 无。
 第二段如需补充可直接发起工具调用；不发起也没关系，执行器会严格按计划调用工具。不要再写解释文字。"""
+    env_block = f"环境事实与约束：\n{env_facts[:1200]}\n\n" if (env_facts or "").strip() else ""
     msg = [{"role": "system", "content": sys_p},
-           {"role": "user", "content": f"总任务：{task}\n\n已有观察：\n{obs_txt}\n\n现在执行第 {step['id']} 步。"}]
-    resp, el = chat(model, msg, tools_ollama, think=False, num_predict=180, temperature=0.1)
+           {"role": "user", "content": f"总任务：{task}\n\n{env_block}已有观察：\n{obs_txt}\n\n现在执行第 {step['id']} 步。"}]
+    resp, el = chat(model, msg, tools_ollama, think=False, num_predict=cfg("num_predict_act"), temperature=0.1)
     msgobj = resp.get("message") or {}
     content = msgobj.get("content") or ""
     calls = msgobj.get("tool_calls") or []
@@ -459,19 +545,95 @@ def mechanical_check(step: dict, history: list[dict]) -> dict:
     """确定性执行期核对：从 expect 抽关键词，在上一步观察里找逐字命中。
 
     取代让 13.63B 临场引用观察原文（v5 实测 4/5 步引用了不存在的片段）。
+
+    审计问题（中）：原实现"命中即 met"，而 expect 里出现 fail / error / process
+    这类通用词时，观察里随手都能撞到，闸门等于空转。现加三道约束：
+      1. 停用词过滤：通用词不进关键词集；全部被过滤 -> 判定不可证伪（not_met）；
+      2. 同句共现：至少 2 个不同关键词落在同一行（同一句）才算命中；
+      3. 单词兜底：只剩 1 个关键词时，该行必须同时带数字（实测值），否则不算命中。
     """
     if not history:
         return {"verdict": "first", "cited": "无"}
     last = history[-1]["observation"]
     expect = str(step.get("expect") or "")
-    toks = re.findall(r"[A-Za-z_][A-Za-z0-9_.\-]{2,}", expect)
-    hit = [t for t in toks if t.lower() in last.lower()]
-    return {"verdict": "met" if hit else "not_met",
-            "cited": hit[0] if hit else last[:60].strip(),
-            "expect_keywords": toks[:8]}
+    raw = re.findall(r"[A-Za-z_][A-Za-z0-9_.\-]{2,}", expect)
+    toks = [t for t in raw if t.lower() not in CHECK_STOPWORDS and not t.isdigit()]
+    # 去重且保序
+    seen = set()
+    toks = [t for t in toks if not (t.lower() in seen or seen.add(t.lower()))]
+    if not toks:
+        return {"verdict": "not_met", "cited": last[:60].strip(),
+                "expect_keywords": raw[:8], "reason": "expect 无有效关键词（均为通用停用词），闸门不可证伪"}
+    best_line, best_hits = "", []
+    for line in last.splitlines():
+        low = line.lower()
+        hits = [t for t in toks if t.lower() in low]
+        if len(hits) > len(best_hits):
+            best_line, best_hits = line.strip(), hits
+    if len(toks) >= 2:
+        met = len(best_hits) >= 2
+        reason = ("same_line_cooccurrence" if met
+                  else "关键词未同句共现（仅 %d/%d 命中）" % (len(best_hits), len(toks)))
+    else:
+        met = bool(best_hits) and bool(re.search(r"\d", best_line))
+        reason = "single_keyword_with_measured_value" if met else "单词命中缺少实测值"
+    return {"verdict": "met" if met else "not_met",
+            "cited": (best_line[:80] if met else last[:60].strip()),
+            "expect_keywords": toks[:8], "reason": reason}
 
 
-def verify_stage(model: str, task: str, criteria: list, history: list[dict]) -> dict:
+def make_step_digest(step: dict, observation: str, rec: dict | None = None) -> dict:
+    """审计问题（中）：原实现把每步观察硬截断到 [:300]，长输出（HWND 树）的尾部证据
+    与关键行丢失。改为结构化压缩：保留目标、工具、参数摘要、头、尾、关键行、判定。"""
+    rec = rec or {}
+    head_n = int(cfg("digest_head_chars"))
+    tail_n = int(cfg("digest_tail_chars"))
+    key_n = int(cfg("digest_key_lines"))
+    obs = str(observation or "")
+    lines = [ln.strip() for ln in obs.splitlines() if ln.strip()]
+    kws = set()
+    for t in re.findall(r"[A-Za-z_][A-Za-z0-9_.\-]{2,}", str(step.get("expect") or "")):
+        if t.lower() not in CHECK_STOPWORDS:
+            kws.add(t.lower())
+    key_lines = [ln[:160] for ln in lines
+                 if any(k in ln.lower() for k in kws)][:key_n] if kws else []
+    if not key_lines:                      # 没有 expect 关键词时，退化为首尾之外的"信息量行"
+        key_lines = [ln[:160] for ln in lines if len(ln) > 40][:key_n]
+    args = step.get("args") or {}
+    args_digest = json.dumps(args, ensure_ascii=False, sort_keys=True)[:200]
+    return {
+        "step": step.get("id"),
+        "goal": (step.get("intent") or "")[:160],
+        "tool": step.get("tool"),
+        "args_digest": args_digest,
+        "obs_head": obs[:head_n],
+        "obs_tail": obs[-tail_n:] if len(obs) > head_n else "",
+        "obs_chars": len(obs),
+        "key_lines": key_lines,
+        "verdict": rec.get("judge", {}).get("verdict") or rec.get("outcome") or "",
+    }
+
+
+def render_digests(history: list[dict], digests: dict | None = None) -> str:
+    """把结构化摘要渲染成验收上下文：头 + 尾 + 关键行，不再靠固定截断。"""
+    out = []
+    for h in history:
+        d = (digests or {}).get(h["step"])
+        if not d:
+            out.append(f"[{h['step']}] {h['observation'][:300]}")
+            continue
+        block = [f"[{h['step']}] goal={d['goal']} tool={d['tool']} args={d['args_digest']}",
+                 f"  head: {d['obs_head']}"]
+        if d.get("obs_tail"):
+            block.append(f"  tail: {d['obs_tail']}")
+        if d.get("key_lines"):
+            block.append("  key: " + " / ".join(d["key_lines"]))
+        out.append("\n".join(block))
+    return "\n".join(out)
+
+
+def verify_stage(model: str, task: str, criteria: list, history: list[dict],
+                 digests: dict | None = None) -> dict:
     # 长工具输出（如 HWND 树）里的关键行常在尾部，只给头部会让验收看不到证据。
     # 按 criteria 关键词做确定性命中摘要，把关键行送到模型面前。
     kws = set()
@@ -484,7 +646,8 @@ def verify_stage(model: str, task: str, criteria: list, history: list[dict]) -> 
         for line in h["observation"].splitlines():
             if line.strip() and any(k in line.lower() for k in kws) and len(hit_lines) < 14:
                 hit_lines.append(f"[{h['step']}] {line.strip()[:160]}")
-    obs = "\n".join(f"[{h['step']}] {h['observation'][:300]}" for h in history)
+    # 审计问题（中）：原来是每步固定 [:300] 截断；改为结构化 StepDigest 渲染
+    obs = render_digests(history, digests)
     if hit_lines:
         obs += "\n\n关键命中行（优先作为 evidence 逐字引用）：\n" + "\n".join(hit_lines)
     sys_p = """你是验收员。逐条判断 success_criteria 是否被证据支持。
@@ -495,7 +658,7 @@ def verify_stage(model: str, task: str, criteria: list, history: list[dict]) -> 
 3. 只输出 JSON 对象，不要 markdown 代码块，不要解释。"""
     msg = [{"role": "system", "content": sys_p},
            {"role": "user", "content": f"任务：{task}\n\n验收标准：\n" + "\n".join(f"- {c}" for c in criteria) + f"\n\n观察记录：\n{obs or '（无）'}"}]
-    resp, el = chat(model, msg, think=False, num_predict=500, temperature=0.0)
+    resp, el = chat(model, msg, think=False, num_predict=cfg("num_predict_verify"), temperature=0.0)
     content = (resp.get("message") or {}).get("content") or ""
     data, how = parse_json_loose(content)
     items = [(data or {}).get("items") or []][0]
@@ -519,30 +682,75 @@ def verify_stage(model: str, task: str, criteria: list, history: list[dict]) -> 
 
 
 # --------------------------------------------------------------------------- orchestrator
+def _ensure_run_ctx(run_ctx, *fingerprint_parts):
+    """run 上下文透传：调用方（super_agent / agent_team）传下来就一直用同一个 run_id，
+    否则按内容指纹新建物理独立的 run。导入失败时退化为本地最小实现，保证 CLI 可用。"""
+    try:
+        sys.path.insert(0, str(ROOT))
+        from virtu_omni.agent.run_context import ensure_ctx
+        return ensure_ctx(run_ctx, *fingerprint_parts)
+    except Exception:                              # pragma: no cover
+        class _Ctx:
+            def __init__(self, rid):
+                self.run_id = rid
+
+            def child(self, span, step=None):
+                return self
+
+            def with_step(self, step):
+                return self
+
+            def log(self, *a, **k):
+                return None
+
+            def to_dict(self):
+                return {"run_id": self.run_id}
+
+            def elapse_ms(self):
+                return 0.0
+        rid = run_ctx.get("run_id") if isinstance(run_ctx, dict) else None
+        return _Ctx(rid or content_run_id(*fingerprint_parts))
+
+
 def run(task: str, model: str = DEFAULT_MODEL, tools_whitelist: str = DEFAULT_TOOLS,
         env_facts: str = "", out_dir: Path | None = None,
         use_act_model: bool = False, plan_cache: str | None = None,
-        skill_only: bool = False, actions: str | None = None) -> dict:
-    if skill_only and MagicHandAdapter is None:
-        raise RuntimeError("magic_hand_adapter 不可用，无法启用 --skill-only")
+        skill_only: bool = False, actions: str | None = None,
+        config: dict | None = None, run_ctx=None, tool_adapter=None) -> dict:
+    """tool_adapter: 外部注入的工具适配器（需实现 schemas() / call(name,args) / calls / restore()）。
+    super_agent 用它把 facet 暴露成工具，从而复用本文件的真 LLM 循环（审计项 §1.6）。"""
+    if config:
+        configure(config)
+    ctx = _ensure_run_ctx(run_ctx, task, model)
+    if tool_adapter is not None:
+        skill_only = True                    # 走 adapter 分支：不启 MCP 服务
+        adapter = tool_adapter
+    else:
+        if skill_only and MagicHandAdapter is None:
+            raise RuntimeError("magic_hand_adapter 不可用，无法启用 --skill-only")
+        adapter = MagicHandAdapter(out_dir) if skill_only else None
     client = None if skill_only else WindowsMCPClient(tools_whitelist)
-    adapter = MagicHandAdapter(out_dir) if skill_only else None
     trace = {"task": task, "model": model, "basis": "measured", "env_facts": env_facts,
-             "tool_source": "magic-hand-windows skill" if skill_only else "windows-mcp",
+             "tool_source": ("injected-adapter" if tool_adapter is not None else
+                             ("magic-hand-windows skill" if skill_only else "windows-mcp")),
              "execution_mode": "plan_driven_deterministic" if not use_act_model else "model_per_step",
-             "guards": [], "steps": [], "history": []}
+             "guards": [], "steps": [], "history": [], "digests": {},
+             "run_context": ctx.to_dict(), "config": dict(AGENT_CONFIG)}
     t_start = time.time()
     consecutive_fail = 0
     replans = 0
     sig_seen: dict[str, int] = {}
     write_counter = 0
+    # 上游（super_agent / agent_team）透传下来的 run_id 优先，保证跨层可串
+    inherited_rid = (run_ctx.get("run_id") if isinstance(run_ctx, dict)
+                     else getattr(run_ctx, "run_id", None))
     try:
         if skill_only:
             schemas = (slim_schemas([a.strip() for a in actions.split(",") if a.strip()])
                        if actions else adapter.schemas())
             tools_ollama = mcp_to_ollama_tools(schemas)
             trace.update({
-                "run_id": sha256(f"{task}|{model}|{json.dumps(schemas, sort_keys=True)}|{time.time()}")[:16],
+                "run_id": inherited_rid or content_run_id(task, model, schemas),
                 "skill": "magic-hand-windows", "skill_scripts_dir": str(SCRIPTS),
                 "mcp_server": None, "server_argv": None,
                 "mcp_tools": [t["name"] for t in schemas],
@@ -555,7 +763,7 @@ def run(task: str, model: str = DEFAULT_MODEL, tools_whitelist: str = DEFAULT_TO
             schemas = client.list_tools()
             tools_ollama = mcp_to_ollama_tools(schemas)
             trace.update({
-                "run_id": sha256(f"{task}|{model}|{json.dumps(schemas, sort_keys=True)}|{time.time()}")[:16],
+                "run_id": inherited_rid or content_run_id(task, model, schemas),
                 "mcp_server": client.server_info, "server_argv": client.argv,
                 "mcp_tools": [t["name"] for t in schemas],
                 "ollama_tools_count": len(tools_ollama),
@@ -583,6 +791,8 @@ def run(task: str, model: str = DEFAULT_MODEL, tools_whitelist: str = DEFAULT_TO
         steps = plan.get("steps") or []
         trace["plan_valid"] = p["valid"]
         trace["plan_steps"] = len(steps)
+        ctx.child("plan").log("plan_ready", valid=p["valid"], steps=len(steps),
+                              used=p["used"], duration_ms=p.get("elapsed_s", 0) * 1000)
         print(f"[deep] P 完成 valid={p['valid']} used={p['used']} "
               f"steps={len(steps)} violations={p['violations'][:3]} "
               f"elapsed={p['elapsed_s']}s", flush=True)
@@ -604,7 +814,7 @@ def run(task: str, model: str = DEFAULT_MODEL, tools_whitelist: str = DEFAULT_TO
             # 模型在这一步的职责只剩"读懂上一步观察"，避免 13.63B 偶发不发调用就整步作废。
             if use_act_model:
                 a = act_stage(client, schemas, tools_ollama, plan, step,
-                              trace["history"], task, model)
+                              trace["history"], task, model, env_facts=env_facts)
             else:
                 chk = mechanical_check(step, trace["history"])
                 a = {"stage": "act", "elapsed_s": 0.0,
@@ -635,10 +845,11 @@ def run(task: str, model: str = DEFAULT_MODEL, tools_whitelist: str = DEFAULT_TO
                                             "enforced": {"tool": name, "args": args}})
             sig = sig_of(name, args)
             is_write = is_write_action(name, args, schemas)
-            planned_write = any(is_write_action(st.get("tool", ""), st.get("args") or {}, schemas)
-                                for st in steps if st.get("tool") == name)
-            # 闸门 1：计划外的写操作，拒绝
-            if is_write and not planned_write:
+            # 闸门 1：写操作前必须已有观察证据（history 非空）。
+            # 原判据 planned_write 恒为真（当前 step 自身即计入），导致本闸门不可达；
+            # 现补 history 条件，使"计划首步直接写"这类最危险路径真正被拒，且不误杀
+            # Process.list -> Process.kill 这类合法序列（后者执行时 history 已有观察）。
+            if is_write and not trace["history"]:
                 rec.update({"outcome": "blocked_write_not_in_plan", "tool": name, "args": args})
                 trace["guards"].append({"guard": "unplanned_write", "step": step["id"],
                                         "tool": name, "args": args})
@@ -664,20 +875,31 @@ def run(task: str, model: str = DEFAULT_MODEL, tools_whitelist: str = DEFAULT_TO
                         "observation": out["text"][:2500]})
             trace["history"].append({"step": step["id"], "tool": name, "args": args,
                                      "observation": out["text"][:2500]})
+            # 上下文结构化压缩：每步产出 StepDigest，验收与后续步骤按摘要取证据
+            trace["digests"][step["id"]] = make_step_digest(step, out["text"], rec)
+            rec["digest"] = trace["digests"][step["id"]]
             trace["steps"].append(rec)
+            ctx.child("act").log("step_executed", step=step["id"], tool=name,
+                                 is_error=out["is_error"],
+                                 duration_ms=(out.get("exec_s") or 0) * 1000)
             print(f"[deep] A step{step['id']}: {name}{json.dumps(args, ensure_ascii=False)[:90]}"
                   f" -> {out['text'][:110]!r}", flush=True)
-            consecutive_fail = 0
+            # 连续失败熔断必须把"工具执行失败"计入，否则 is_error=True 反而把计数清零，
+            # 熔断只能被闸门拦截触发，真正的执行失败永远熔不断（阶段二 C 组补丁）。
+            consecutive_fail = (consecutive_fail + 1) if out["is_error"] else 0
         # ---- verify
         print("[deep] V 验收中 ...", flush=True)
         criteria = plan.get("success_criteria") or []
-        trace["verify"] = verify_stage(model, task, criteria, trace["history"]) if criteria else {"items": []}
+        trace["verify"] = (verify_stage(model, task, criteria, trace["history"], trace.get("digests"))
+                            if criteria else {"items": []})
         print(f"[deep] V 完成 items={len(trace['verify'].get('items') or [])}", flush=True)
         items = trace["verify"].get("items") or []
         trace["criteria_met"] = sum(1 for i in items if i.get("met") == "yes")
         trace["criteria_total"] = len(items)
         trace["criteria_unsupported"] = sum(1 for i in items if i.get("met") in ("unsupported", "unknown"))
         trace["success"] = bool(items) and trace["criteria_met"] == len(items) and trace.get("plan_valid")
+        ctx.child("verify").log("verify_done", items=len(items),
+                                met=trace["criteria_met"], success=trace["success"])
         # ---- 反穷举指标
         executed = [s for s in trace["steps"] if s.get("outcome") == "executed"]
         trace["metrics"] = {
@@ -694,6 +916,13 @@ def run(task: str, model: str = DEFAULT_MODEL, tools_whitelist: str = DEFAULT_TO
             "check_evidence_applied": sum(1 for s in trace["steps"] if s.get("judge", {}).get("applicable")),
             "check_invalid": sum(1 for s in trace["steps"]
                                  if s.get("judge", {}).get("cited_ok") is False),
+            # 上下文压缩的可观测指标：摘要替代固定截断后，进入验收的字符量可度量
+            "context_digest_chars": sum(
+                len(d.get("obs_head", "")) + len(d.get("obs_tail", ""))
+                + sum(len(k) for k in (d.get("key_lines") or []))
+                for d in trace["digests"].values()
+            ),
+            "context_raw_chars": sum(len(h["observation"]) for h in trace["history"]),
         }
         trace["brute_force_index"] = round(
             trace["metrics"]["executed_calls"] / max(1, trace["metrics"]["unique_actions"]), 3)

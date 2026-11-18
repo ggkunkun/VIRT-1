@@ -14,12 +14,17 @@ import json
 import argparse
 from typing import Optional, Dict, Any, Tuple
 
-# Add humanoid_controller to path
-HUMANOID_SCRIPTS = r"C:\Users\Administrator\.gemini\config\skills\humanoid-computer-control\scripts"
-if HUMANOID_SCRIPTS not in sys.path:
-    sys.path.insert(0, HUMANOID_SCRIPTS)
-
-import humanoid_controller as hc
+# humanoid_controller 解析顺序：包内同源副本 → 环境变量 VIRTU_HUMANOID_SCRIPTS → 历史私有 skill 目录
+try:  # 作为 virtu_omni.engine 子模块导入时优先使用包内副本（与私有副本 SHA-256 完全一致）
+    from . import humanoid_controller as hc
+except ImportError:  # 脚本直跑（无包上下文）时回退外部路径
+    HUMANOID_SCRIPTS = os.environ.get(
+        "VIRTU_HUMANOID_SCRIPTS",
+        r"C:\Users\Administrator\.gemini\config\skills\humanoid-computer-control\scripts",
+    )
+    if HUMANOID_SCRIPTS not in sys.path:
+        sys.path.insert(0, HUMANOID_SCRIPTS)
+    import humanoid_controller as hc  # noqa: E402
 
 
 class CADViewportNavigator:

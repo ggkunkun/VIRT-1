@@ -1,5 +1,5 @@
 {
-  "timestamp": 1793894004.1806142,
+  "timestamp": 1794583296.2575026,
   "engine": "Virtu Harness 2",
   "k": 1,
   "mode": "parallel",
@@ -45,10 +45,10 @@
           "Correctly matched material SS304",
           "Verified parametric code synthesis"
         ],
-        "wall_time_s": 1.955
+        "wall_time_s": 7.957
       },
       "chosen_label": "agg1",
-      "chosen_dir": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\tmpsaozei84\\pipeline_runs\\runs\\virtu_cad_cam-virtu-agg1\\cad-sleeve-01\\harnesses\\executions\\virtu_cad_cam-virtu-agg1\\cad-sleeve-01\\agg1"
+      "chosen_dir": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\tmpqfxc8amx\\pipeline_runs\\runs\\virtu_cad_cam-virtu-agg1\\cad-sleeve-01\\harnesses\\executions\\virtu_cad_cam-virtu-agg1\\cad-sleeve-01\\agg1"
     },
     "shaft-cr12mov-04": {
       "task_id": "shaft-cr12mov-04",
@@ -64,13 +64,13 @@
           "Correctly matched material Cr12MoV",
           "Verified parametric code synthesis"
         ],
-        "wall_time_s": 2.559
+        "wall_time_s": 7.105
       },
       "chosen_label": "agg1",
-      "chosen_dir": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\tmpsaozei84\\pipeline_runs\\runs\\virtu_cad_cam-virtu-agg1\\shaft-cr12mov-04\\harnesses\\executions\\virtu_cad_cam-virtu-agg1\\shaft-cr12mov-04\\agg1"
+      "chosen_dir": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\tmpqfxc8amx\\pipeline_runs\\runs\\virtu_cad_cam-virtu-agg1\\shaft-cr12mov-04\\harnesses\\executions\\virtu_cad_cam-virtu-agg1\\shaft-cr12mov-04\\agg1"
     }
   },
-  "elapsed_s": 97.74,
+  "elapsed_s": 192.39,
   "total_tasks": 2,
   "passed_tasks": 2,
   "pass_rate": 100.0

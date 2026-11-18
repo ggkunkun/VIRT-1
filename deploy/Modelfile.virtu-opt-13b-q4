@@ -1,0 +1,14 @@
+# 本机适配版：virtu-opt-13b-q4
+# 基线模型：virtu-13.63b:latest
+# 实测：10.8 tok/s（RTX 4050 Laptop 6GB / i5-12450H / 16GB RAM）
+# num_gpu=36  num_ctx=8192  —— 由参数扫描定位的最优点，请勿随意增大 num_gpu
+FROM virtu-13.63b:perfect
+
+PARAMETER num_gpu 28
+PARAMETER num_ctx 8192
+PARAMETER num_batch 256
+PARAMETER num_thread 10
+PARAMETER temperature 0.1
+PARAMETER top_p 0.85
+PARAMETER top_k 40
+PARAMETER repeat_penalty 1.15

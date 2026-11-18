@@ -1,0 +1,118 @@
+{
+  "IMPELLER_SPEC.json": {
+    "size_bytes": 1485,
+    "sha256": "70f1139ff3116f694762b45df0bec1b08f99ca4736b44c9b17c2a5f67449eeb4"
+  },
+  "MODEL_MCP_FINAL_VERIFICATION_VERDICT.json": {
+    "size_bytes": 1410,
+    "sha256": "759be463e924383badc9eb659337935d1f7fb85500d71410abab4dce1558dccf"
+  },
+  "MODEL_MCP_SIMULATION_VERIFICATION_LOG.jsonl": {
+    "size_bytes": 5822,
+    "sha256": "e1841e5d1575e2c9024973bfd26c2ae8c1d87c8bfa46dea9b6b27e9faa2e4b93"
+  },
+  "MODEL_MOUSE_CONTROL_LOG.jsonl": {
+    "size_bytes": 11829,
+    "sha256": "ef9d9f98589e83753cc0fd936f97fab411354699ebaff6f1aa23e3fae67476f8"
+  },
+  "SUPERVISOR_AUDIT_LOG.jsonl": {
+    "size_bytes": 16574,
+    "sha256": "f954fbb08fe6f76fba5be1cd00a05830704f421b4ef782296fd8fea989f21725"
+  },
+  "impeller_2d_drawing.dxf": {
+    "size_bytes": 19588,
+    "sha256": "a2596db0fb893879a457135ea29b2c057b8bb3aa5d455a8a2a5a454c5367430b"
+  },
+  "impeller_3d_cad.step": {
+    "size_bytes": 141300,
+    "sha256": "bf926ba8dee63cb0f40422f4faeea0743e0fffcc405c364a0945b4cb47815361"
+  },
+  "impeller_3d_cad.stl": {
+    "size_bytes": 144584,
+    "sha256": "4f2b6da3650e68e11af2f2a62a98820fc2fb13bcdecd3616488836b6fb665f64"
+  },
+  "impeller_5axis_milling.nc": {
+    "size_bytes": 146,
+    "sha256": "035e5543b2d68d84a3fb7055028e121eeb67a305eba20957e29753f2e86eb31d"
+  },
+  "impeller_cae_report.json": {
+    "size_bytes": 148,
+    "sha256": "af23046e3d123dfdb05586d06a8450cd934077f878ffac29cf46e1f3853c8b0a"
+  },
+  "impeller_cae_stress.png": {
+    "size_bytes": 85940,
+    "sha256": "47f00fccd77ad19cbf67145f7de486f17c36211c3606c044297f4dd2d17898d3"
+  },
+  "impeller_turning.nc": {
+    "size_bytes": 106,
+    "sha256": "fae889b2185d812e66c42cb275aebb75486df599a6d80d3accda687526fa532f"
+  },
+  "make_2d_drawing.py": {
+    "size_bytes": 1665,
+    "sha256": "10d8c93344989a02d029e6a7e61fbbb20f77eca9d369711c4b72f9ce3ed2df15"
+  },
+  "make_3d_cad.py": {
+    "size_bytes": 832,
+    "sha256": "7cf87773e12551038e238b9ff8262b8e1741c0d09bcc284048eaf7d2337dc269"
+  },
+  "make_cam_toolpaths.py": {
+    "size_bytes": 1072,
+    "sha256": "3f9bd740d0eda26724824882dde75f0ed9481a5dcd31084b50330353ca3db9c5"
+  },
+  "mcp_agent_state.json": {
+    "size_bytes": 8351,
+    "sha256": "f238d181081d83fc9c0d92d42001abe1d00da401de808831467b737964ce9b1a"
+  },
+  "mouse_agent_state.json": {
+    "size_bytes": 12006,
+    "sha256": "3a6fb3bbba9a7ba753a54f582fd09ee512777d6c171956cf3f4830e7ee730955"
+  },
+  "run_cae_analysis.py": {
+    "size_bytes": 1545,
+    "sha256": "a5493a0724e7d027529caa52e3ae873e3f27997422c62168e5f9c17ef816d6f1"
+  },
+  "stage5_vericut_simulation.py": {
+    "size_bytes": 1101,
+    "sha256": "03858c9b0e80644a34bd7034504ffa4036fefaea31baa322e36610fd50779211"
+  },
+  "vericut_full_demonstration.gif": {
+    "size_bytes": 654002,
+    "sha256": "cdbf453e73be29ed66f9dcbca204eef0b2e079630ad0db2380d6d09923abfb1c"
+  },
+  "vericut_simulation_report.json": {
+    "size_bytes": 929,
+    "sha256": "a2404ffaea4f0385dc8bda3cfe917f15ce0a25672023fc9b2f833f3d3955d116"
+  },
+  "vericut_simulation_screenshot.png": {
+    "size_bytes": 1097641,
+    "sha256": "1fecbde35f421ea8caf21bedc92dd4755ee1dd356b9e78d88958a5eda04bc1e6"
+  },
+  "vericut_step4_screenshot.png": {
+    "size_bytes": 381951,
+    "sha256": "beda6a637d1d44514b74fa7082bf3b9ae1c94ebafb94d387b3f948b2102967d4"
+  },
+  "demo_frames\\demo_frame_01_machine_ready.png": {
+    "size_bytes": 400674,
+    "sha256": "795772af1bd9cb44283cc07b5c1aadd78021cda18c49043b337baec4861e1458"
+  },
+  "demo_frames\\demo_frame_02_cutting_in_progress.png": {
+    "size_bytes": 436473,
+    "sha256": "ba32e4ec06da18321bcbea9fac09b4f0b42dc86bc24fc6bf96f07d48058546a6"
+  },
+  "demo_frames\\demo_frame_03_milling_side_slot.png": {
+    "size_bytes": 420435,
+    "sha256": "a6fdead37b3a682c1cd5ba4c2fac958e21403ac690edd666bffdc9e07f5fb68f"
+  },
+  "demo_frames\\demo_frame_04_machining_complete.png": {
+    "size_bytes": 419232,
+    "sha256": "5d25811b50de9722a1d1bc2740258d28ac2bf52616bcadd6a5f29e64e0e070e7"
+  },
+  "demo_frames\\frame_01_welcome_closed.png": {
+    "size_bytes": 303049,
+    "sha256": "d49339adb742db73129f62978c80580d2ba87da0eba927332d0385e3c72aa259"
+  },
+  "demo_frames\\frame_02_play_attempt_modal_blocked.png": {
+    "size_bytes": 304123,
+    "sha256": "4a3397357c7fd0b5d6a16ce6121fb947c0cdd5df62c3eef39131f5ad41e6cc61"
+  }
+}

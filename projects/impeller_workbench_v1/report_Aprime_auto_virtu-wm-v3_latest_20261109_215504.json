@@ -1,0 +1,127 @@
+{
+ "route": "A'",
+ "mode": "auto",
+ "model": "virtu-wm-v3:latest",
+ "host": "http://127.0.0.1:11434",
+ "passed": true,
+ "elapsed_s": 9.2,
+ "model_free_degrees": {
+  "Z_blades": 12,
+  "beta2b_deg": 25,
+  "eta_total": 0.85,
+  "D2_mm": 220,
+  "N_rpm": 40000,
+  "b2_ratio": 0.09
+ },
+ "chosen_candidate": {
+  "id": "A",
+  "policy": "锁 D2=220 mm，反解 N=40301 rpm",
+  "n_viol": 0
+ },
+ "final_params": {
+  "D2_mm": 220.0,
+  "N_rpm": 40300.5,
+  "Z_blades": 12,
+  "beta2b_deg": 25.0,
+  "b2_mm": 19.8,
+  "D1t_mm": 174.32,
+  "D1h_mm": 93.14,
+  "axial_length_mm": 82.5,
+  "shroud_thickness_mm": 2.0,
+  "blade_thickness_mm": 1.8,
+  "hub_disk_thickness_mm": 2.0,
+  "bore_diameter_mm": 22.0,
+  "fillet_root_mm": 1.2,
+  "eta_total": 0.85,
+  "claimed_pressure_ratio": 4.01,
+  "claimed_tip_speed_m_s": 464.23,
+  "claimed_FOS": 1.84
+ },
+ "final_violations": [],
+ "ruler": "closed_impeller_proctor.ruler (non-model, 未修改)",
+ "accounting": {
+  "model_decides": "Z_blades / beta2b_deg / b2 比值假设 / eta_total / 候选接受权",
+  "solver_derives": "axial_length_mm（区间中值）、D1t_mm/D1h_mm（由 ca1 目标反解喉口面积）、b2_mm（由比值 × D2）、claimed_*（由 ruler 复算派生）",
+  "system_does_not": "不改判据、不放宽 ruler、不参与合格判定"
+ },
+ "error": null,
+ "trace": [
+  {
+   "stage": "free",
+   "elapsed_s": 6.0,
+   "eval_count": 78,
+   "raw_head": "{\"action\":\"free\",\"free\":{\"Z_blades\":12,\"beta2b_deg\":25,\"eta_total\":0.85,\"D2_mm\":220,\"N_rpm\":40000,\"b2_ratio\":0.09},\"reason\":\"在离心叶轮设计手册约束内随机抽样生成的初始自由度\"}",
+   "free": {
+    "Z_blades": 12,
+    "beta2b_deg": 25,
+    "eta_total": 0.85,
+    "D2_mm": 220,
+    "N_rpm": 40000,
+    "b2_ratio": 0.09
+   },
+   "reason": "在离心叶轮设计手册约束内随机抽样生成的初始自由度"
+  },
+  {
+   "stage": "solver_candidates",
+   "candidates": [
+    {
+     "id": "A",
+     "policy": "锁 D2=220 mm，反解 N=40301 rpm",
+     "n_viol": 0,
+     "params": {
+      "D2_mm": 220.0,
+      "N_rpm": 40300.5,
+      "Z_blades": 12,
+      "beta2b_deg": 25.0,
+      "b2_mm": 19.8,
+      "D1t_mm": 174.32,
+      "D1h_mm": 93.14,
+      "axial_length_mm": 82.5,
+      "shroud_thickness_mm": 2.0,
+      "blade_thickness_mm": 1.8,
+      "hub_disk_thickness_mm": 2.0,
+      "bore_diameter_mm": 22.0,
+      "fillet_root_mm": 1.2,
+      "eta_total": 0.85,
+      "claimed_pressure_ratio": 4.01,
+      "claimed_tip_speed_m_s": 464.23,
+      "claimed_FOS": 1.84
+     }
+    },
+    {
+     "id": "B",
+     "policy": "锁 N=40000 rpm，反解 D2=222 mm",
+     "n_viol": 0,
+     "params": {
+      "D2_mm": 221.54,
+      "N_rpm": 40000.0,
+      "Z_blades": 12,
+      "beta2b_deg": 25.0,
+      "b2_mm": 19.94,
+      "D1t_mm": 175.63,
+      "D1h_mm": 95.57,
+      "axial_length_mm": 83.08,
+      "shroud_thickness_mm": 2.0,
+      "blade_thickness_mm": 1.8,
+      "hub_disk_thickness_mm": 2.0,
+      "bore_diameter_mm": 22.15,
+      "fillet_root_mm": 1.2,
+      "eta_total": 0.85,
+      "claimed_pressure_ratio": 4.01,
+      "claimed_tip_speed_m_s": 463.99,
+      "claimed_FOS": 1.842
+     }
+    }
+   ]
+  },
+  {
+   "stage": "decide",
+   "elapsed_s": 3.2,
+   "eval_count": 32,
+   "raw_head": "{\"action\": \"accept\", \"choice\": \"A\", \"reason\": \"设计参数在允许公差内，且无违反约束项。\"}",
+   "action": "accept",
+   "choice": "A",
+   "reason": "设计参数在允许公差内，且无违反约束项。"
+  }
+ ]
+}

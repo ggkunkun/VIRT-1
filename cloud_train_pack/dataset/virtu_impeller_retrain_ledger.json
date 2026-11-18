@@ -1,0 +1,10 @@
+{
+  "total": 2946,
+  "repairloop_unique": 420,
+  "repairloop_x": 2,
+  "repairloop_rows": 840,
+  "hardened_rows": 2106,
+  "contamination_hard_leaks": 0,
+  "unit_gate": "pass",
+  "note": "8.2B 根因重训：全链路修复轨迹(840，坏解轮 loss=False) + 叶轮T1-T4与通用回放(2106)"
+}

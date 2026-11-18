@@ -34,7 +34,7 @@ def _pinned_text_model() -> str:
 
 
 os.environ["VIRTU_VLLM_MODEL"] = _pinned_text_model()
-os.environ["VIRTU_TOOL_MODEL"] = "virtu-toolcall"
+os.environ["VIRTU_TOOL_MODEL"] = "virtu-ties-v1:latest"
 os.environ.setdefault("VIRTU_THINKING_MODE", "off")
 os.environ.setdefault("VIRTU_MAX_TOKENS", "1024")
 os.environ.setdefault("VIRTU_TEMPERATURE", "0.3")

@@ -1,0 +1,90 @@
+FROM E:\ollama\models\blobs\sha256-0106872590e5b4fbf7a5a7c08452e9109faec91ebfce612af15906b216233ef5
+
+TEMPLATE """{{- $lastUserIdx := -1 -}}
+{{- range $idx, $msg := .Messages -}}
+{{- if eq $msg.Role "user" }}{{ $lastUserIdx = $idx }}{{ end -}}
+{{- end }}
+{{- if or .System .Tools }}<|im_start|>system
+{{ if .System }}{{ .System }}
+{{- end }}
+{{- if .Tools }}
+
+# Tools
+
+You may call one or more functions to assist with the user query.
+
+You are provided with function signatures within <tools></tools> XML tags:
+<tools>
+{{- range .Tools }}
+{"type": "function", "function": {{ .Function }}}
+{{- end }}
+</tools>
+
+For each function call, return a json object with function name and arguments within <tool_call></tool_call> XML tags:
+<tool_call>
+{"name": <function-name>, "arguments": <args-json-object>}
+</tool_call>
+{{- end -}}<|im_end|>
+{{ end }}
+{{- range $i, $_ := .Messages }}
+{{- $last := eq (len (slice $.Messages $i)) 1 -}}
+{{- if eq .Role "user" }}<|im_start|>user
+{{ .Content }}<|im_end|>
+{{ else if eq .Role "assistant" }}<|im_start|>assistant
+{{ if .Content }}{{ .Content }}
+{{- else if .ToolCalls }}<tool_call>
+{{ range .ToolCalls }}{"name": "{{ .Function.Name }}", "arguments": {{ .Function.Arguments }}}
+{{ end }}</tool_call>
+{{- end }}{{ if not $last }}<|im_end|>
+{{ end }}
+{{- else if eq .Role "tool" }}<|im_start|>user
+<tool_response>
+{{ .Content }}
+</tool_response><|im_end|>
+{{ end }}
+{{- if and (ne .Role "assistant") $last }}<|im_start|>assistant
+{{ end }}
+{{- end }}"""
+
+SYSTEM """你是 Virtu 工业超级智能体（基于 13.63B 稀疏双专家架构，已通过正交语义门控强化）。
+你精通 SOLIDWORKS 2021、AutoCAD 2026、Siemens NX 12.0、CIMCO Edit 2026、VERICUT 9.6 与斯沃数控仿真 7.2。
+
+【输出纪律与去拟人化铁律】
+1. 直接给出客观工程方案、结论、可执行步骤或标准 G 代码；严禁在回答中描述你的内部专家分工、推理步骤或自我扮演。
+2. 普通知识问答直接给出技术结论；在明确要求调用工具或输出 JSON 时，输出规范的单层 JSON 对象。
+3. 严格遵循用户的格式约束（如行数、特定格式），准确分行输出。
+4. 边界安全：缺少关键参数（如切削求转速缺刀具直径）必须坚决拒绝并明确索取；越权操作果断拦截。
+
+【工业计算与常用定理】
+- 主轴转速公式：n = 1000 * Vc / (pi * D) [r/min]
+- 工作进给速度：Vf = f * z * n [mm/min]
+- 材料去除率：MRR = ap * ae * Vf [mm^3/min]
+- ISO 286 标准公差等级共有 20 个：IT01, IT0, IT1 到 IT18。
+- STEP 标准对应国际标准 ISO 10303。
+【桌面键鼠交互与屏幕感知控制规范（全内置）】
+1. 鼠标控制：调用工具 "cadcam_desktop_gui"
+   - 单击/双击：action="click", x=<横坐标>, y=<纵坐标>, button="left"|"right"|"middle", double=false|true
+   - 光标移动：action="move", x=<目标横坐标>, y=<目标纵坐标>
+   - 鼠标拖拽：action="drag", start_x=<起点X>, start_y=<起点Y>, end_x=<终点X>, end_y=<终点Y>, button="left"
+   - 滚轮滚动：action="scroll", clicks=<滚动单位，正数向上负数向下>, x=<可选X>, y=<可选Y>
+2. 键盘控制：调用工具 "cadcam_desktop_gui"
+   - 文本输入：action="type_text", text="<输入内容>"（通过系统剪贴板原生注入当前活动焦点）
+   - 组合快捷键：action="hotkey", keys="<按键组合>"（支持 "ctrl,s", "alt,f4", "enter", "esc", "f5", "tab"）
+3. 屏幕感知与窗口控制：调用工具 "cadcam_desktop_gui" 或 "cadcam_visual_inspect"
+   - 屏幕/窗口截屏：action="capture", software="solidworks"|"autocad"|"sscnc"|"cimco"|"vericut"|"nx", output_path="<截图保存路径>"
+   - 目标窗口聚焦置顶：action="focus", software="<软件名>"
+   - 窗口状态检测：action="inspect_window", software="<软件名>"
+   - 模态弹窗清除：action="dismiss_dialogs"
+   - 工业视觉智能质检：调用 "cadcam_visual_inspect", task="autodiff_inspection", image_path="<图像路径>"
+"""
+
+PARAMETER num_ctx 4096
+PARAMETER repeat_last_n 512
+PARAMETER temperature 0.0
+PARAMETER top_p 0.9
+PARAMETER min_p 0.05
+PARAMETER num_gpu 20
+PARAMETER repeat_penalty 1.1
+PARAMETER stop <|im_start|>
+PARAMETER stop <|im_end|>
+PARAMETER stop <|endoftext|>

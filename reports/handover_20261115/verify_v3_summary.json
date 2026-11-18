@@ -1,0 +1,70 @@
+{
+  "purpose": "接手 Antigravity 会话后的独立复测（不写共享凭证）",
+  "generated_at": "2026-11-15 21:57:11",
+  "grader_sha256_imported": "48c8230eaafb29bb25f1687e05417ffd5b29f03db2a9c9a1a2103b97eece871d",
+  "grader_sha256_disk_at_start": "48c8230eaafb29bb25f1687e05417ffd5b29f03db2a9c9a1a2103b97eece871d",
+  "rounds": [
+    {
+      "round": 1,
+      "tag": "virtu-six-software:v3",
+      "started_at": "2026-11-15 21:52:58",
+      "runtime_s": 71.7,
+      "basis": "measured",
+      "run_id": "93f3f6ea73e1e1ae",
+      "measurement_version": "probes-2026-11-15-v2",
+      "grader_sha256_imported": "48c8230eaafb29bb25f1687e05417ffd5b29f03db2a9c9a1a2103b97eece871d",
+      "grader_sha256_disk_start": "48c8230eaafb29bb25f1687e05417ffd5b29f03db2a9c9a1a2103b97eece871d",
+      "grader_sha256_disk_end": "48c8230eaafb29bb25f1687e05417ffd5b29f03db2a9c9a1a2103b97eece871d",
+      "tags_digest_before": "ed409a5e45d807ec188369bcd92c26fe8e8be3e7338ee60104404f282c8edd92",
+      "tags_digest_after": "ed409a5e45d807ec188369bcd92c26fe8e8be3e7338ee60104404f282c8edd92",
+      "drifted": false,
+      "error": null,
+      "probes_total": 7,
+      "probes_passed": 5,
+      "passed_names": [
+        "show_template_gate",
+        "chat_liveness_probe",
+        "native_tool_call_probe",
+        "anti_degenerate_sanity_probe",
+        "fanuc_g71_safety_probe"
+      ],
+      "failed": {
+        "sw_coordinate_probe": "missing_normal:front",
+        "lame_stress_probe": "missing_sigma_theta_33.33"
+      }
+    },
+    {
+      "round": 2,
+      "tag": "virtu-six-software:v3",
+      "started_at": "2026-11-15 21:54:10",
+      "runtime_s": 181.2,
+      "basis": "measured",
+      "run_id": "58a084c97d46b824",
+      "measurement_version": "probes-2026-11-15-v2",
+      "grader_sha256_imported": "48c8230eaafb29bb25f1687e05417ffd5b29f03db2a9c9a1a2103b97eece871d",
+      "grader_sha256_disk_start": "48c8230eaafb29bb25f1687e05417ffd5b29f03db2a9c9a1a2103b97eece871d",
+      "grader_sha256_disk_end": "48c8230eaafb29bb25f1687e05417ffd5b29f03db2a9c9a1a2103b97eece871d",
+      "tags_digest_before": "ed409a5e45d807ec188369bcd92c26fe8e8be3e7338ee60104404f282c8edd92",
+      "tags_digest_after": "ed409a5e45d807ec188369bcd92c26fe8e8be3e7338ee60104404f282c8edd92",
+      "drifted": false,
+      "error": null,
+      "probes_total": 7,
+      "probes_passed": 7,
+      "passed_names": [
+        "show_template_gate",
+        "chat_liveness_probe",
+        "native_tool_call_probe",
+        "anti_degenerate_sanity_probe",
+        "sw_coordinate_probe",
+        "lame_stress_probe",
+        "fanuc_g71_safety_probe"
+      ],
+      "failed": {}
+    }
+  ],
+  "pass_counts": [
+    5,
+    7
+  ],
+  "stable_all_pass": false
+}

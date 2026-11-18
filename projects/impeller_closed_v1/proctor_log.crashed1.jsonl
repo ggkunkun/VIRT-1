@@ -1,0 +1,3 @@
+{"ts": "2026-11-09T17:57:12", "event": "IDENTITY", "data": {"model": "virtu-ties-v1:latest", "weight_layer_digest": "sha256:c3b78c7735c9ac1f0b16cbbb5babc809f2c99e71c9a76043d39dbae8ce448749", "port": 11435, "note": "virtu-ties-v1/comprehensive/master 三标签同权重 blob c3b78c77"}}
+{"ts": "2026-11-09T17:57:12", "event": "STAGE_A_START", "data": {"brief_sha256": "f87b23ad2511477a"}}
+{"ts": "2026-11-09T17:57:37", "event": "MODEL_CALL", "data": {"tag": "design_attempt1", "elapsed_s": 24.71, "eval_count": 407, "tok_per_s": 17.02}}

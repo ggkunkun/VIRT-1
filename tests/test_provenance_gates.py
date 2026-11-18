@@ -14,13 +14,13 @@ import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-TMP_ROOT = ROOT / "runs" / "eval" / "_test_tmp"
+# 见 tests/test_eval_in_situ_gate.py：仓库内临时目录会被宿主 safe-delete 垫片
+# 的批量删除阈值误伤，统一放系统 TEMP。
+TMP_ROOT = Path(tempfile.gettempdir()) / "virtu_eval_test_tmp"
 
 
 def _tmp_root():
-    # scratch/ is a shared sweep target on this box (emptied 2026-11-05, taking
-    # probe scripts with it); test temporaries live under runs/eval and are created
-    # on demand so a cleaned directory cannot turn into a fake red.
+    # 按需创建，目录被清理也不会变成假红。
     TMP_ROOT.mkdir(parents=True, exist_ok=True)
     return str(TMP_ROOT)
 

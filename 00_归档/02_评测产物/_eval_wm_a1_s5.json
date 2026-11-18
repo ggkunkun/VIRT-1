@@ -1,0 +1,180 @@
+[
+  {
+    "family": "mass_props",
+    "user": "预测box（长 l=188.1 mm，宽 w=43.3 mm，高 h=72.1 mm）的质量属性：体积、质量、质心坐标、绕质心惯性矩 Ixx 与 Izz。材料 45钢。",
+    "expected": {
+      "world_state": {
+        "shape": "box",
+        "volume_mm3": 587235.03,
+        "mass_g": 4609.795,
+        "centroid_mm": [
+          94.05,
+          21.65,
+          36.05
+        ],
+        "inertia_ixx_mm4": 1352422.68,
+        "inertia_izz_mm4": 1272539.4,
+        "solver": "analytic_csg"
+      },
+      "verification": {
+        "formula": "V=l*w*h (box) | V=π r^2 h (cyl); m=ρV; centroid=几何中心; I_box=截面两边之积×高^3/12 (mm^4), I_cyl=πr^4/4 与 πr^4/2 (mm^4)",
+        "checks": [
+          "V>0",
+          "m>0"
+        ]
+      }
+    },
+    "scenario_present": true,
+    "guard_layers": [],
+    "predicted": {
+      "world_state": {
+        "mass_props": {
+          "volume_mm3": 568905.2,
+          "mass_g": 4471.5
+        },
+        "centroid_mm": [
+          94.05,
+          21.65,
+          36.05
+        ],
+        "inertia_mm4": {
+          "Ixx": 12945250,
+          "Izz": 28444450
+        },
+        "volume_mm3": 587235.0329999999,
+        "mass_g": 4609.795009049999,
+        "inertia_ixx_mm4": 1352422.6776083328,
+        "inertia_izz_mm4": 1272539.4024749997
+      }
+    },
+    "pass": true,
+    "raw_pass": true,
+    "fmt_raw": true,
+    "miss": [],
+    "miss_raw": [],
+    "guard_action": "accept",
+    "raw": "{\"world_state\": {\"mass_props\": {\"volume_mm3\": 568905.2, \"mass_g\": 4471.5}, \"centroid_mm\": [94.05, 21.65, 36.05], \"inertia_mm4\": {\"Ixx\": 12945250, \"Izz\": 28444450}}, \"derivation\": {\"mass_props.volume_mm3\": \"l*w*h = 188.1*43.3*72.1\", \"mass_props.mass_g\": \"volume_mm3*rho = 568905.2*(7.85/1000)\", \"centroid_mm.x\": \"l/2 = 188.1/2\", \"centroid_mm.y\": \"w/2 = 43.3/2\", \"centroid_mm.z\": \"h/2 = 72.1/2\", \"inertia_mm4.Ixx\": \"b*h^3/12 = 43.3*(72.1)^3/12\", \"inertia_mm4.Izz\": \"l*w^3/12 = 188.1*(43.3)^3/12\"}, \"verification\": {\"source\": \"cad.inertial_properties\", \"resolved\": true}}"
+  },
+  {
+    "family": "invalid",
+    "user": "未提供材料类型，要求预测去除质量。",
+    "expected": {
+      "world_state": null,
+      "invalid": true,
+      "reason": "missing_material",
+      "expected_action": "拒绝并列出缺失/非法项，不输出臆测数值"
+    },
+    "scenario_present": false,
+    "guard_layers": [],
+    "predicted": {
+      "world_state": null,
+      "invalid": true,
+      "reason": "missing_material"
+    },
+    "pass": true,
+    "raw_pass": true,
+    "fmt_raw": true,
+    "miss": [],
+    "miss_raw": [],
+    "guard_action": "accept",
+    "raw": "{\"world_state\": null, \"invalid\": true, \"reason\": \"missing_material\"}"
+  },
+  {
+    "family": "invalid",
+    "user": "切削深度 DOC=-2 mm，其余参数正常。",
+    "expected": {
+      "world_state": null,
+      "invalid": true,
+      "reason": "negative_cut_depth",
+      "expected_action": "拒绝并列出缺失/非法项，不输出臆测数值"
+    },
+    "scenario_present": false,
+    "guard_layers": [],
+    "predicted": {
+      "world_state": null,
+      "invalid": true,
+      "reason": "negative_cut_depth: 切削深度 DOC=-2 mm 为负值，违反物理约束"
+    },
+    "pass": true,
+    "raw_pass": true,
+    "fmt_raw": true,
+    "miss": [],
+    "miss_raw": [],
+    "guard_action": "accept",
+    "raw": "{\"world_state\": null, \"invalid\": true, \"reason\": \"negative_cut_depth: 切削深度 DOC=-2 mm 为负值，违反物理约束\"}"
+  },
+  {
+    "family": "fea_fos",
+    "user": "黄铜H62构件，屈服强度 Sy=200 MPa，FEA 算得峰值 von Mises 应力 σ_vm=132.0 MPa。预测安全系数并判定 FOS≥1.5 是否通过。",
+    "expected": {
+      "world_state": {
+        "material": "黄铜H62",
+        "yield_strength_mpa": 200.0,
+        "peak_von_mises_mpa": 132.0,
+        "safety_factor": 1.52,
+        "fos_gate": "FOS>=1.5_pass"
+      },
+      "verification": {
+        "formula": "FOS=Sy/sigma_vm",
+        "checks": [
+          "FOS>=1.5"
+        ]
+      }
+    },
+    "scenario_present": true,
+    "guard_layers": [
+      "L2_SOLVER"
+    ],
+    "predicted": {
+      "world_state": {
+        "safety_factor": 1.5151515151515151,
+        "fos_gate": "FOS>=1.5_PASS",
+        "peak_von_mises_mpa": 132.0
+      }
+    },
+    "pass": true,
+    "raw_pass": true,
+    "fmt_raw": true,
+    "miss": [],
+    "miss_raw": [],
+    "guard_action": "corrected",
+    "raw": "{\"world_state\": {\"safety_factor\": 1.515, \"fos_gate\": \"pass\"}, \"derivation\": {\"safety_factor\": \"(200)/(132.0)\"} }"
+  },
+  {
+    "family": "roughness",
+    "user": "车削外圆，每转进给 f=0.354 mm/rev，刀尖圆弧半径 r_ε=1.2 mm。预测加工表面粗糙度 Ra（μm）与对应粗糙度等级。",
+    "expected": {
+      "world_state": {
+        "feed_per_rev_mm": 0.354,
+        "nose_radius_mm": 1.2,
+        "surface_roughness_ra_um": 13.1,
+        "finish_class": "粗加工"
+      },
+      "verification": {
+        "formula": "Ra[um]=1000*f^2/(8*r_eps)",
+        "checks": [
+          "ra>0"
+        ]
+      }
+    },
+    "scenario_present": true,
+    "guard_layers": [
+      "L2_SOLVER"
+    ],
+    "predicted": {
+      "world_state": {
+        "surface_roughness_ra_um": 13.053749999999999,
+        "roughness_grade": "Ra 16-32 μm (Grade 4)"
+      }
+    },
+    "pass": true,
+    "raw_pass": false,
+    "fmt_raw": true,
+    "miss": [],
+    "miss_raw": [
+      "surface_roughness_ra_um(16.9!=13.1)"
+    ],
+    "guard_action": "corrected",
+    "raw": "{\"world_state\": {\"surface_roughness_ra_um\": 16.9, \"roughness_grade\": \"Ra 16-32 μm (Grade 4)\"}, \"derivation\": {\"surface_roughness_ra_um\": \"1000*f*f/(8*r_eps) = 1000*(0.354)^2/(8*1.2)\", \"roughness_grade\": \"按 Ra 16-32 μm 划分等级为 Grade 4\"}}"
+  }
+]

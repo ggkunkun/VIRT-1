@@ -1,0 +1,22 @@
+{
+ "model": "virtu-ties-v1:latest",
+ "host": "http://127.0.0.1:11434",
+ "passed": false,
+ "rounds_used": 10,
+ "elapsed_s": 2.1,
+ "best_n_viol": null,
+ "best_params": null,
+ "final_params": {},
+ "ruler": "closed_impeller_proctor.ruler (non-model, 未修改)",
+ "accounting": {
+  "model_decides": "全部设计参数与修正方向",
+  "system_provides": "算式求值 / 物理复算回喂 / 格式归一",
+  "system_does_not": "不代选设计值、不改判据、不给目标解"
+ },
+ "trace": [
+  {
+   "round": 1,
+   "error": "URLError: <urlopen error [WinError 10061] 由于目标计算机积极拒绝，无法连接。>"
+  }
+ ]
+}

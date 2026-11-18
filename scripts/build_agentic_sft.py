@@ -56,11 +56,14 @@ def _j(o):
     return json.dumps(o, ensure_ascii=False)
 
 
-def traj(family, user, turns, final):
+def traj(family, user, turns, final, mask_turn_indices=()):
     msgs = [{"role": "system", "content": AGENT_SYSTEM},
             {"role": "user", "content": user}]
-    for a, t in turns:
-        msgs.append({"role": "assistant", "content": _j(a)})
+    for idx, (a, t) in enumerate(turns):
+        asst_msg = {"role": "assistant", "content": _j(a)}
+        if idx in mask_turn_indices:
+            asst_msg["loss"] = False
+        msgs.append(asst_msg)
         if t is not None:
             msgs.append({"role": "tool", "content": _j(t)})
     msgs.append({"role": "assistant", "content": _j(final)})
@@ -69,7 +72,6 @@ def traj(family, user, turns, final):
 
 def _flange_mass(r_out, r_bore, t, n, r_hole, rho):
     V = math.pi * (r_out ** 2 - r_bore ** 2) * t - n * math.pi * r_hole ** 2 * t
-    V = max(V, 1.0)
     return V, V * rho
 
 
@@ -87,7 +89,7 @@ def gen_fea_agent(rng):
         return None
     sigma = fem["peak_von_mises_mpa"]
     fos = m["Sy"] / sigma if sigma > 0 else float("inf")
-    gate = "FOS>=1.5_pass" if fos >= 1.5 else "FOS<1.5_FAIL"
+    gate = "pass" if fos >= 1.5 else "fail"
 
     user = (f"【任务】校核悬臂梁强度。材料 {mat}（Sy={m['Sy']} MPa, E={m['E']:.0f} MPa），"
             f"截面 {b}×{h} mm，悬臂长 {L} mm，自由端集中载荷 {F} N。要求 FOS≥1.5。")
@@ -138,7 +140,7 @@ def gen_removal_agent(rng):
                                  "resulting_mass_g": round(remaining, 4)}}
     a2 = {"think": f"去除 {removed:.2f} mm³ -> ΔV={-removed:.2f}<0，守恒成立。",
           "verify": {"delta_volume_mm3": round(-removed, 3),
-                     "volume_conservation": "pass_cut_negative"},
+                     "volume_conservation": "pass"},
           "action": {"tool": "finalize", "args": {}}}
     t2 = {"ok": True}
     final = {"world_state": {"material_removed_mm3": round(removed, 3),
@@ -146,7 +148,7 @@ def gen_removal_agent(rng):
                              "removed_mass_g": round(removed_mass, 4),
                              "resulting_mass_g": round(remaining, 4),
                              "delta_volume_mm3": round(-removed, 3),
-                             "volume_conservation": "pass_cut_negative"},
+                             "volume_conservation": "pass"},
              "decision": "参数可用，预计去除量与余量如 world_state",
              "verification": {"formula": "MRR=DOC·WOC·vf; V=DOC·WOC·L",
                               "checks": ["dV<0", "mass_conservation"]}}
@@ -163,6 +165,10 @@ def gen_design_agent(rng):
     d_hole = round(rng.uniform(6, 20), 1)
     pcd = round((d_out + d_bore) / 2 * rng.uniform(0.82, 0.95), 1)
     V, mass = _flange_mass(d_out / 2, d_bore / 2, t, n, d_hole / 2, rho)
+    if V <= 0 or (pcd - d_hole <= d_bore + 2.0) or (pcd + d_hole >= d_out - 2.0):
+        pcd = round((d_out + d_bore) / 2.0, 1)
+        d_hole = round(max(4.0, min(d_hole, (d_out - d_bore) * 0.35)), 1)
+        V, mass = _flange_mass(d_out / 2, d_bore / 2, t, n, d_hole / 2, rho)
 
     user = (f"【任务】设计 {mat} 法兰：外径 φ{d_out}，中心孔 φ{d_bore}，厚 {t} mm，"
             f"{n}×φ{d_hole} 螺栓孔 @ φ{pcd} 节圆。输出 CAD 设计规格与质量属性。")
@@ -256,7 +262,7 @@ def gen_recover_agent(rng):
                                  "tip_deflection_mm": fem_ok["tip_deflection_mm"]}}
     a3 = {"think": f"修正后 σ={sigma} MPa，FOS={fos:.3f}。",
           "verify": {"safety_factor": round(fos, 3),
-                     "gate": "FOS>=1.5_pass" if fos >= 1.5 else "FOS<1.5_FAIL",
+                     "gate": "pass" if fos >= 1.5 else "fail",
                      "check": "unit fix + FOS=Sy/σ"},
           "action": {"tool": "finalize", "args": {}}}
     t3 = {"ok": True}
@@ -264,11 +270,11 @@ def gen_recover_agent(rng):
                              "peak_von_mises_mpa": sigma,
                              "tip_deflection_mm": fem_ok["tip_deflection_mm"],
                              "safety_factor": round(fos, 3),
-                             "fos_gate": "FOS>=1.5_pass" if fos >= 1.5 else "FOS<1.5_FAIL"},
+                             "fos_gate": "pass" if fos >= 1.5 else "fail"},
              "decision": "通过" if fos >= 1.5 else "不通过，需加强",
              "correction": {"error_type": "unit_error", "from": f"{F_kN} N", "to": f"{F_N:.0f} N"},
              "verification": {"formula": "FOS=Sy/σ", "checks": ["unit_fixed", "FOS>=1.5"]}}
-    return traj("recover_agent", user, [(a1, t1), (a2, t2), (a3, t3)], final)
+    return traj("recover_agent", user, [(a1, t1), (a2, t2), (a3, t3)], final, mask_turn_indices=(0,))
 
 
 OOD = [
@@ -294,7 +300,7 @@ def gen_ood_agent(rng):
     t2 = {"ok": True}
     final = {"world_state": {"material": m["name"], "yield_strength_mpa": m["Sy"],
                              "peak_von_mises_mpa": sigma, "safety_factor": round(fos, 3),
-                             "fos_gate": "FOS>=1.5_pass" if fos >= 1.5 else "FOS<1.5_FAIL"},
+                             "fos_gate": "pass" if fos >= 1.5 else "fail"},
              "adaptation": {"used_provided_spec": True, "source": "user_supplied_table"},
              "decision": "通过" if fos >= 1.5 else "不通过，需加强",
              "verification": {"formula": "FOS=Sy/σ (Sy 来自现场表)", "checks": ["FOS>=1.5"]}}

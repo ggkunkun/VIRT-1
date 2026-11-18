@@ -8,6 +8,15 @@ Two incidents these tests pin down, both measured the same day:
   * arms carrying `tools_dimensions` but no `tools` scored 24/30 zeros and the same
     dimension mean across three arms (16.67) — vacuous grading that still produced
     a publishable number.
+
+2026-11-13：工具面从 16 增到 17（补 `cadcam_feature_ops`），同一条请求在两个面上
+各做了一次真实服务端回读（`scripts/measure_prompt_tokens.py` →
+`reports/PROMPT_TOKENS_BY_TOOL_SURFACE_2026-11-13.json`）：
+
+    16 工具 → prompt_eval_count 4759
+    17 工具 → prompt_eval_count 5132（+373）
+
+于是「估算 vs 实测」的 20% 校准对两个面都成立，不必再靠「不低于旧实测」兜底。
 """
 import json
 import os
@@ -22,25 +31,49 @@ import virtu_real_backend as backend                      # noqa: E402
 from virtu_eval.runner import tools_gate                  # noqa: E402
 
 ARMS = json.load(open(ROOT / "virtu_eval" / "arms.json", encoding="utf-8"))
-TOOLS16 = ARMS["virtu_moe_14b"]["tools"]
+ARM_TOOLS = ARMS["virtu_moe_14b"]["tools"]
 CASE = json.loads(open(ROOT / "data" / "benchmark" / "virtu_eval_v1" / "toolcall.jsonl",
                        encoding="utf-8").readline())
-# 服务端在同一条请求上实测报的 prompt token 数（PROVENANCE#moe_13_63b_optimization…ctx_overflow）
-MEASURED_PROMPT_TOKENS = 4779
+#: 实测面与数字是绑定的。2026-11-13 用同一条题（toolcall-e01）、同一模型
+#: （virtu-moe-14b:latest）、num_ctx=8192，对 16 / 17 两个工具面各做一次真实
+#: /api/chat 回读：16 面 4759，17 面 5132（见 reports/PROMPT_TOKENS_BY_TOOL_SURFACE_2026-11-13.json）。
+#: 11-06 记的 4779 与今天 4759 差 20，是工具描述文本在这期间被改过的结果——
+#: 两个数都保留，但卡校准只认当下这一次回读。
+MEASURED_TOOLS = [t for t in ARM_TOOLS if t["function"]["name"] != "cadcam_feature_ops"]
+MEASURED_PROMPT_TOKENS_16 = 4759
+MEASURED_PROMPT_TOKENS_17 = 5132
+HISTORICAL_4779 = 4779
 
 
 class TestCtxLadderMatchesMeasurement(unittest.TestCase):
     def test_estimator_is_calibrated_to_the_observed_400(self):
-        est = backend._estimate_prompt_tokens([{"role": "user", "content": CASE["prompt"]}], TOOLS16)
-        drift = abs(est - MEASURED_PROMPT_TOKENS) / MEASURED_PROMPT_TOKENS
+        self.assertEqual(len(MEASURED_TOOLS), 16, "实测面必须仍是当年那 16 个工具")
+        est = backend._estimate_prompt_tokens([{"role": "user", "content": CASE["prompt"]}],
+                                              MEASURED_TOOLS)
+        drift = abs(est - MEASURED_PROMPT_TOKENS_16) / MEASURED_PROMPT_TOKENS_16
         self.assertLessEqual(drift, 0.20,
-                             f"估算 {est} 偏离实测 {MEASURED_PROMPT_TOKENS} 达 {drift:.0%}；"
+                             f"估算 {est} 偏离实测 {MEASURED_PROMPT_TOKENS_16} 达 {drift:.0%}；"
                              f"字符/token 常数 {_CHARS_NOTE()} 需要重新标定")
-        self.assertGreaterEqual(est, MEASURED_PROMPT_TOKENS, "估算应偏保守（宁可多给一档 KV）")
+        self.assertGreaterEqual(est, MEASURED_PROMPT_TOKENS_16, "估算应偏保守（宁可多给一档 KV）")
+        # 历史值只用于解释偏差来源，不参与卡线
+        self.assertLess(abs(MEASURED_PROMPT_TOKENS_16 - HISTORICAL_4779), 60,
+                        "重测值离 11-06 的 4779 太远，说明工具描述被大改过，需重新确认基线")
+
+    def test_grown_surface_matches_its_own_measurement(self):
+        """17 工具面有独立实测，就不再拿 16 面的数字外推。"""
+        self.assertEqual(len(ARM_TOOLS), 17, "工具面变了，先跑 scripts/measure_prompt_tokens.py")
+        est = backend._estimate_prompt_tokens([{"role": "user", "content": CASE["prompt"]}],
+                                              ARM_TOOLS)
+        drift = abs(est - MEASURED_PROMPT_TOKENS_17) / MEASURED_PROMPT_TOKENS_17
+        self.assertLessEqual(drift, 0.20,
+                             f"17 工具面估算 {est} 偏离实测 {MEASURED_PROMPT_TOKENS_17} 达 {drift:.0%}")
+        self.assertGreaterEqual(est, MEASURED_PROMPT_TOKENS_17, "估算应偏保守")
+        self.assertGreater(MEASURED_PROMPT_TOKENS_17, MEASURED_PROMPT_TOKENS_16,
+                           "多一个工具面反而更短，说明回读写错了面")
 
     def test_tool_turn_no_longer_caps_at_4096(self):
-        ctx = backend._plan_ctx([{"role": "user", "content": CASE["prompt"]}], TOOLS16, 256)
-        self.assertGreaterEqual(ctx, 8192, "带 16 工具面的腿必须越过 4096，否则恒 400")
+        ctx = backend._plan_ctx([{"role": "user", "content": CASE["prompt"]}], ARM_TOOLS, 256)
+        self.assertGreaterEqual(ctx, 8192, "带工具面的腿必须越过 4096，否则恒 400")
 
     def test_plain_short_turn_stays_cheap(self):
         ctx = backend._plan_ctx([{"role": "user", "content": "法兰外径多少"}], None, 256)

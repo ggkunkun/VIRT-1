@@ -324,6 +324,11 @@ def execute_plan(plan: Dict[str, Any], step_path: str,
         out["ops_executed"].append(rec)
         if rec.get("error") or rec.get("ok") is False:
             out["status"] = "partial"
+    # 「partial」意味着有部分成功，0 步成功不能叫 partial（2026-11-13 复查）
+    _failed = [r for r in out["ops_executed"] if r.get("error") or r.get("ok") is False]
+    if _failed and len(_failed) == len(out["ops_executed"]):
+        out["status"] = "error"
+        out["message"] = "全部 op 均失败（执行器不自动补齐），无任何特征落地"
     out["final_mass"] = _mass(doc)
     return out
 

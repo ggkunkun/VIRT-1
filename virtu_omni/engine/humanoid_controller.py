@@ -53,6 +53,39 @@ attach_interactive_desktop()
 user32 = ctypes.windll.user32
 kernel32 = ctypes.windll.kernel32
 
+# ---------------------------------------------------------------------------
+# 输入闸门（fail-closed）
+# ---------------------------------------------------------------------------
+# 本模块是全仓最容易"抢鼠标"的一条通道：默认 human 模式，一次移动会以 120Hz
+# 连发几十个绝对坐标事件。两个 agent 同时进来，光标就在两条轨迹之间来回抽动。
+# 因此这里必须经过统一仲裁器：默认拒绝、并发排队、执行中有人介入就让位。
+_GUARD = None
+_GUARD_ERROR = None
+
+
+def _guard():
+    """懒加载 input_guard；加载失败时返回 None，调用方必须按 fail-closed 处理。"""
+    global _GUARD, _GUARD_ERROR
+    if _GUARD is not None or _GUARD_ERROR is not None:
+        return _GUARD
+    try:
+        _root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+        if _root not in sys.path:
+            sys.path.insert(0, _root)
+        from virtu_omni.computer_use import input_guard as g
+        _GUARD = g
+    except Exception as exc:      # pragma: no cover - 仅在环境残缺时触发
+        _GUARD_ERROR = str(exc)
+    return _GUARD
+
+
+def _deny_no_guard(action: str) -> dict:
+    return {"ok": False, "status": "blocked", "action": action,
+            "verdict_code": "INPUT_GUARD_UNAVAILABLE",
+            "detail": "输入闸门不可用（%s），按 fail-closed 拒绝发送键鼠事件" % _GUARD_ERROR,
+            "input_sent": False}
+
+
 ULONG_PTR = ctypes.c_ulonglong if ctypes.sizeof(ctypes.c_void_p) == 8 else ctypes.c_ulong
 
 class MOUSEINPUT(ctypes.Structure):
@@ -254,6 +287,17 @@ class HumanoidKinematics:
             return [(end[0], end[1])]
 
 
+def get_virtual_bounds() -> Tuple[int, int, int, int]:
+    """虚拟桌面矩形 (x0, y0, x1, y1)；多屏时 x0/y0 可能是负数。"""
+    x0 = user32.GetSystemMetrics(76)   # SM_XVIRTUALSCREEN
+    y0 = user32.GetSystemMetrics(77)   # SM_YVIRTUALSCREEN
+    w = user32.GetSystemMetrics(78)    # SM_CXVIRTUALSCREEN
+    h = user32.GetSystemMetrics(79)    # SM_CYVIRTUALSCREEN
+    if w <= 0 or h <= 0:
+        return (0, 0, user32.GetSystemMetrics(0), user32.GetSystemMetrics(1))
+    return (x0, y0, x0 + w, y0 + h)
+
+
 class HumanoidMouse:
     """High-speed, human-like mouse controller."""
 
@@ -262,153 +306,275 @@ class HumanoidMouse:
         self.sw, self.sh = get_screen_size()
 
     def _to_normalized_absolute(self, x: int, y: int) -> Tuple[int, int]:
-        """Convert pixel coordinates to Win32 SendInput 0..65535 absolute coordinate system."""
-        # 65535 / screen_dimension
-        norm_x = int((x * 65536) / self.sw)
-        norm_y = int((y * 65536) / self.sh)
-        return norm_x, norm_y
+        """Convert pixel coordinates to Win32 SendInput 0..65535 absolute coordinate system.
 
-    def move_to(self, target_x: int, target_y: int, duration: Optional[float] = None, speed: float = 1.0):
+        分三处修正（旧实现在高分屏/副屏上会稳定偏几像素，点击落到相邻控件）：
+        1. 分母是 ``(宽度 - 1)``，不是宽度：65535 对应最后一个像素。
+        2. 基准是**虚拟桌面原点**，不是 (0,0)：副屏坐标可能是负数。
+        3. 结果夹在 0..65535，避免越界被系统截断到屏幕角落。
+        """
+        vx0, vy0, vx1, vy1 = get_virtual_bounds()
+        w = max(1, (vx1 - vx0) - 1)
+        h = max(1, (vy1 - vy0) - 1)
+        norm_x = int(round((x - vx0) * 65535 / w))
+        norm_y = int(round((y - vy0) * 65535 / h))
+        return max(0, min(65535, norm_x)), max(0, min(65535, norm_y))
+
+    @staticmethod
+    def _blocked(result: dict) -> dict:
+        result.setdefault("input_sent", False)
+        result.setdefault("dry_run", False)
+        return result
+
+    def move_to(self, target_x: int, target_y: int, duration: Optional[float] = None,
+                speed: float = 1.0) -> dict:
         """Move cursor to target coordinates organically or instantly."""
+        g = _guard()
+        if g is None:
+            return _deny_no_guard("move")
+
         start_x, start_y = get_cursor_pos()
         dist = math.hypot(target_x - start_x, target_y - start_y)
-        
         if dist < 2:
-            return
+            return {"ok": True, "action": "move", "status": "noop",
+                    "reason": "cursor already at target", "input_sent": False}
 
-        if self.mode == "warp":
-            # Sub-0.1ms warp movement
-            nx, ny = self._to_normalized_absolute(target_x, target_y)
-            inp = INPUT(
-                type=INPUT_MOUSE,
-                u=_INPUT_UNION(mi=MOUSEINPUT(dx=nx, dy=ny, mouseData=0, dwFlags=MOUSEEVENTF_MOVE | MOUSEEVENTF_ABSOLUTE, time=0, dwExtraInfo=0))
+        with g.input_session("move", x=target_x, y=target_y, require_bounds=True,
+                             agent="humanoid") as ctx:
+            if ctx["dry_run"]:
+                return self._blocked({
+                    "ok": True, "action": "move", "status": "simulated",
+                    "x": target_x, "y": target_y, "dry_run": True,
+                    "verdict_code": ctx.get("verdict_code"),
+                    "note": ctx.get("reason"),
+                })
+
+            if self.mode == "warp":
+                # Sub-0.1ms warp movement
+                nx, ny = self._to_normalized_absolute(target_x, target_y)
+                send_inputs([INPUT(
+                    type=INPUT_MOUSE,
+                    u=_INPUT_UNION(mi=MOUSEINPUT(dx=nx, dy=ny, mouseData=0,
+                                                 dwFlags=MOUSEEVENTF_MOVE | MOUSEEVENTF_ABSOLUTE,
+                                                 time=0, dwExtraInfo=0))
+                )])
+                return {"ok": True, "action": "move", "status": "executed",
+                        "x": target_x, "y": target_y, "dry_run": False, "input_sent": True}
+
+            # Human organic mode
+            if duration is None:
+                duration = HumanoidKinematics.fitts_duration(dist, speed_multiplier=speed)
+            # 防呆：调用方传 duration=30 时旧代码会生成 3600 个点、连发 30 秒，
+            # 期间操作者完全失去鼠标控制权。上限 1.2s。
+            duration = max(0.05, min(1.2, float(duration)))
+
+            path = HumanoidKinematics.generate_minimum_jerk_path(
+                (start_x, start_y),
+                (target_x, target_y),
+                duration=duration,
+                tremor_sigma=0.65
             )
-            send_inputs([inp])
-            return
 
-        # Human organic mode
-        if duration is None:
-            duration = HumanoidKinematics.fitts_duration(dist, speed_multiplier=speed)
+            t_start = time.perf_counter()
+            elapsed = 0.0
+            aborted = None
 
-        path = HumanoidKinematics.generate_minimum_jerk_path(
-            (start_x, start_y),
-            (target_x, target_y),
-            duration=duration,
-            tremor_sigma=0.65
-        )
+            for px, py, dt in path:
+                target_time = elapsed + dt
+                nx, ny = self._to_normalized_absolute(px, py)
+                send_inputs([INPUT(
+                    type=INPUT_MOUSE,
+                    u=_INPUT_UNION(mi=MOUSEINPUT(dx=nx, dy=ny, mouseData=0,
+                                                 dwFlags=MOUSEEVENTF_MOVE | MOUSEEVENTF_ABSOLUTE,
+                                                 time=0, dwExtraInfo=0))
+                )])
 
-        t_start = time.perf_counter()
-        elapsed = 0.0
-        
-        for px, py, dt in path:
-            target_time = elapsed + dt
-            nx, ny = self._to_normalized_absolute(px, py)
-            inp = INPUT(
-                type=INPUT_MOUSE,
-                u=_INPUT_UNION(mi=MOUSEINPUT(dx=nx, dy=ny, mouseData=0, dwFlags=MOUSEEVENTF_MOVE | MOUSEEVENTF_ABSOLUTE, time=0, dwExtraInfo=0))
-            )
-            send_inputs([inp])
-            
-            # High-resolution timing sync
-            elapsed += dt
-            curr_elapsed = time.perf_counter() - t_start
-            sleep_needed = target_time - curr_elapsed
-            if sleep_needed > 0.001:
-                time.sleep(sleep_needed)
+                # High-resolution timing sync
+                elapsed += dt
+                curr_elapsed = time.perf_counter() - t_start
+                sleep_needed = target_time - curr_elapsed
+                if sleep_needed > 0.001:
+                    time.sleep(sleep_needed)
 
-        # Micro-settling dwell (humans decelerate to zero before clicking)
-        time.sleep(random.uniform(0.015, 0.035))
+                # 轨迹途中光标偏离我方预期 → 有别的写入者（并发 agent / 操作者真鼠标）。
+                # 继续走完只会两边互相拉扯，这里立即让位。
+                if g.foreign_motion((px, py)):
+                    aborted = "foreign_cursor_writer"
+                    print("[humanoid] move aborted: cursor moved by another writer",
+                          file=sys.stderr)
+                    break
 
-    def click(self, x: Optional[int] = None, y: Optional[int] = None, button: str = "left", clicks: int = 1):
+            if aborted is None:
+                # Micro-settling dwell (humans decelerate to zero before clicking)
+                time.sleep(random.uniform(0.015, 0.035))
+
+        return {"ok": True, "action": "move", "status": "executed",
+                "x": target_x, "y": target_y, "aborted": aborted,
+                "dry_run": False, "input_sent": True}
+
+    def click(self, x: Optional[int] = None, y: Optional[int] = None, button: str = "left",
+              clicks: int = 1) -> dict:
         """Execute organic mouse click with realistic down-up dwell."""
         if x is not None and y is not None:
-            self.move_to(x, y)
+            moved = self.move_to(x, y)
+            if moved.get("status") == "simulated":
+                return moved          # 移动都没发，点击同样不发
 
-        flag_down = MOUSEEVENTF_LEFTDOWN
-        flag_up = MOUSEEVENTF_LEFTUP
-        if button == "right":
-            flag_down, flag_up = MOUSEEVENTF_RIGHTDOWN, MOUSEEVENTF_RIGHTUP
-        elif button == "middle":
-            flag_down, flag_up = MOUSEEVENTF_MIDDLEDOWN, MOUSEEVENTF_MIDDLEUP
+        g = _guard()
+        if g is None:
+            return _deny_no_guard("click")
 
-        for i in range(clicks):
-            # Button Down
-            inp_down = INPUT(type=INPUT_MOUSE, u=_INPUT_UNION(mi=MOUSEINPUT(dx=0, dy=0, mouseData=0, dwFlags=flag_down, time=0, dwExtraInfo=0)))
-            send_inputs([inp_down])
+        with g.input_session("click", x=x, y=y, agent="humanoid") as ctx:
+            if ctx["dry_run"]:
+                return self._blocked({
+                    "ok": True, "action": "click", "status": "simulated",
+                    "x": x, "y": y, "button": button, "clicks": clicks,
+                    "dry_run": True, "verdict_code": ctx.get("verdict_code"),
+                    "note": ctx.get("reason"),
+                })
 
-            # Organic dwell duration (mean 65ms, std 10ms in human mode, 5ms in warp mode)
-            dwell = random.gauss(0.065, 0.010) if self.mode == "human" else 0.005
-            dwell = max(0.035, min(0.095, dwell))
-            time.sleep(dwell)
+            flag_down = MOUSEEVENTF_LEFTDOWN
+            flag_up = MOUSEEVENTF_LEFTUP
+            if button == "right":
+                flag_down, flag_up = MOUSEEVENTF_RIGHTDOWN, MOUSEEVENTF_RIGHTUP
+            elif button == "middle":
+                flag_down, flag_up = MOUSEEVENTF_MIDDLEDOWN, MOUSEEVENTF_MIDDLEUP
 
-            # Button Up
-            inp_up = INPUT(type=INPUT_MOUSE, u=_INPUT_UNION(mi=MOUSEINPUT(dx=0, dy=0, mouseData=0, dwFlags=flag_up, time=0, dwExtraInfo=0)))
-            send_inputs([inp_up])
+            for i in range(max(1, int(clicks))):
+                try:
+                    send_inputs([INPUT(type=INPUT_MOUSE, u=_INPUT_UNION(
+                        mi=MOUSEINPUT(dx=0, dy=0, mouseData=0, dwFlags=flag_down,
+                                      time=0, dwExtraInfo=0)))])
+                    dwell = random.gauss(0.065, 0.010) if self.mode == "human" else 0.005
+                    dwell = max(0.035, min(0.095, dwell))
+                    time.sleep(dwell)
+                finally:
+                    # 任何中断都补 UP：否则左键留在按下态，用户一动就是拖选
+                    send_inputs([INPUT(type=INPUT_MOUSE, u=_INPUT_UNION(
+                        mi=MOUSEINPUT(dx=0, dy=0, mouseData=0, dwFlags=flag_up,
+                                      time=0, dwExtraInfo=0)))])
 
-            if i < clicks - 1:
-                # Inter-click gap for double click
-                gap = random.uniform(0.08, 0.14) if self.mode == "human" else 0.01
-                time.sleep(gap)
+                if i < clicks - 1:
+                    gap = random.uniform(0.08, 0.14) if self.mode == "human" else 0.01
+                    time.sleep(gap)
 
-    def double_click(self, x: Optional[int] = None, y: Optional[int] = None):
+        return {"ok": True, "action": "click", "status": "executed",
+                "x": x, "y": y, "button": button, "clicks": clicks,
+                "dry_run": False, "input_sent": True}
+
+    def double_click(self, x: Optional[int] = None, y: Optional[int] = None) -> dict:
         """Perform natural double click."""
-        self.click(x=x, y=y, button="left", clicks=2)
+        return self.click(x=x, y=y, button="left", clicks=2)
 
-    def right_click(self, x: Optional[int] = None, y: Optional[int] = None):
+    def right_click(self, x: Optional[int] = None, y: Optional[int] = None) -> dict:
         """Perform natural right click."""
-        self.click(x=x, y=y, button="right", clicks=1)
+        return self.click(x=x, y=y, button="right", clicks=1)
 
-    def drag(self, start_x: int, start_y: int, end_x: int, end_y: int, button: str = "left", duration: Optional[float] = None):
+    def drag(self, start_x: int, start_y: int, end_x: int, end_y: int,
+             button: str = "left", duration: Optional[float] = None) -> dict:
         """Execute smooth click-and-drag with drag-load momentum."""
-        self.move_to(start_x, start_y)
-        time.sleep(random.uniform(0.02, 0.04))
+        g = _guard()
+        if g is None:
+            return _deny_no_guard("drag")
 
-        flag_down = MOUSEEVENTF_LEFTDOWN if button == "left" else MOUSEEVENTF_RIGHTDOWN
-        flag_up = MOUSEEVENTF_LEFTUP if button == "left" else MOUSEEVENTF_RIGHTUP
+        moved = self.move_to(start_x, start_y)
+        if moved.get("status") == "simulated":
+            return moved
 
-        # Press down
-        send_inputs([INPUT(type=INPUT_MOUSE, u=_INPUT_UNION(mi=MOUSEINPUT(dx=0, dy=0, mouseData=0, dwFlags=flag_down, time=0, dwExtraInfo=0)))])
-        time.sleep(random.uniform(0.03, 0.06))
+        with g.input_session("drag", x=end_x, y=end_y, require_bounds=True,
+                             agent="humanoid") as ctx:
+            if ctx["dry_run"]:
+                return self._blocked({
+                    "ok": True, "action": "drag", "status": "simulated",
+                    "from": [start_x, start_y], "to": [end_x, end_y],
+                    "dry_run": True, "verdict_code": ctx.get("verdict_code"),
+                    "note": ctx.get("reason"),
+                })
 
-        # Drag trajectory (slightly heavier feeling, 1.25x duration)
-        dist = math.hypot(end_x - start_x, end_y - start_y)
-        if duration is None:
-            duration = HumanoidKinematics.fitts_duration(dist, speed_multiplier=1.25)
+            time.sleep(random.uniform(0.02, 0.04))
 
-        path = HumanoidKinematics.generate_minimum_jerk_path(
-            (start_x, start_y), (end_x, end_y), duration=duration, tremor_sigma=0.8, overshoot=False
-        )
+            flag_down = MOUSEEVENTF_LEFTDOWN if button == "left" else MOUSEEVENTF_RIGHTDOWN
+            flag_up = MOUSEEVENTF_LEFTUP if button == "left" else MOUSEEVENTF_RIGHTUP
 
-        for px, py, dt in path:
-            nx, ny = self._to_normalized_absolute(px, py)
-            send_inputs([INPUT(type=INPUT_MOUSE, u=_INPUT_UNION(mi=MOUSEINPUT(dx=nx, dy=ny, mouseData=0, dwFlags=MOUSEEVENTF_MOVE | MOUSEEVENTF_ABSOLUTE, time=0, dwExtraInfo=0)))])
-            time.sleep(dt)
+            # Press down；以下全部用 try/finally 包住，异常/中断必须松手
+            send_inputs([INPUT(type=INPUT_MOUSE, u=_INPUT_UNION(
+                mi=MOUSEINPUT(dx=0, dy=0, mouseData=0, dwFlags=flag_down,
+                              time=0, dwExtraInfo=0)))])
+            aborted = None
+            try:
+                time.sleep(random.uniform(0.03, 0.06))
 
-        time.sleep(random.uniform(0.03, 0.06))
-        # Release
-        send_inputs([INPUT(type=INPUT_MOUSE, u=_INPUT_UNION(mi=MOUSEINPUT(dx=0, dy=0, mouseData=0, dwFlags=flag_up, time=0, dwExtraInfo=0)))])
+                dist = math.hypot(end_x - start_x, end_y - start_y)
+                if duration is None:
+                    duration = HumanoidKinematics.fitts_duration(dist, speed_multiplier=1.25)
+                duration = max(0.05, min(1.5, float(duration)))
 
-    def scroll(self, amount: int, x: Optional[int] = None, y: Optional[int] = None):
+                path = HumanoidKinematics.generate_minimum_jerk_path(
+                    (start_x, start_y), (end_x, end_y), duration=duration,
+                    tremor_sigma=0.8, overshoot=False
+                )
+
+                for px, py, dt in path:
+                    nx, ny = self._to_normalized_absolute(px, py)
+                    send_inputs([INPUT(type=INPUT_MOUSE, u=_INPUT_UNION(
+                        mi=MOUSEINPUT(dx=nx, dy=ny, mouseData=0,
+                                      dwFlags=MOUSEEVENTF_MOVE | MOUSEEVENTF_ABSOLUTE,
+                                      time=0, dwExtraInfo=0)))])
+                    time.sleep(dt)
+                    if g.foreign_motion((px, py)):
+                        aborted = "foreign_cursor_writer"
+                        break
+
+                time.sleep(random.uniform(0.03, 0.06))
+            finally:
+                send_inputs([INPUT(type=INPUT_MOUSE, u=_INPUT_UNION(
+                    mi=MOUSEINPUT(dx=0, dy=0, mouseData=0, dwFlags=flag_up,
+                                  time=0, dwExtraInfo=0)))])
+
+        return {"ok": True, "action": "drag", "status": "executed",
+                "from": [start_x, start_y], "to": [end_x, end_y], "aborted": aborted,
+                "dry_run": False, "input_sent": True}
+
+    def scroll(self, amount: int, x: Optional[int] = None, y: Optional[int] = None) -> dict:
         """Execute realistic mouse wheel scroll with inertia."""
+        g = _guard()
+        if g is None:
+            return _deny_no_guard("scroll")
+
         if x is not None and y is not None:
-            self.move_to(x, y)
+            moved = self.move_to(x, y)
+            if moved.get("status") == "simulated":
+                return moved
 
-        # In Windows, 1 click = 120 units
-        step_dir = 1 if amount > 0 else -1
-        total_steps = abs(amount)
+        with g.input_session("scroll", x=x, y=y, agent="humanoid") as ctx:
+            if ctx["dry_run"]:
+                return self._blocked({
+                    "ok": True, "action": "scroll", "status": "simulated",
+                    "amount": amount, "dry_run": True,
+                    "verdict_code": ctx.get("verdict_code"), "note": ctx.get("reason"),
+                })
 
-        if self.mode == "warp":
-            inp = INPUT(type=INPUT_MOUSE, u=_INPUT_UNION(mi=MOUSEINPUT(dx=0, dy=0, mouseData=amount * 120, dwFlags=MOUSEEVENTF_WHEEL, time=0, dwExtraInfo=0)))
-            send_inputs([inp])
-            return
+            # In Windows, 1 click = 120 units
+            step_dir = 1 if amount > 0 else -1
+            total_steps = abs(int(amount))
 
-        # Human inertia scrolling: rapid initial pulses followed by gradual decay
-        for i in range(total_steps):
-            inp = INPUT(type=INPUT_MOUSE, u=_INPUT_UNION(mi=MOUSEINPUT(dx=0, dy=0, mouseData=step_dir * 120, dwFlags=MOUSEEVENTF_WHEEL, time=0, dwExtraInfo=0)))
-            send_inputs([inp])
-            # Cadence decay
-            delay = 0.025 + (i / max(1, total_steps)) * 0.045 + random.uniform(0.005, 0.02)
-            time.sleep(delay)
+            if self.mode == "warp":
+                send_inputs([INPUT(type=INPUT_MOUSE, u=_INPUT_UNION(
+                    mi=MOUSEINPUT(dx=0, dy=0, mouseData=amount * 120,
+                                  dwFlags=MOUSEEVENTF_WHEEL, time=0, dwExtraInfo=0)))])
+                return {"ok": True, "action": "scroll", "status": "executed",
+                        "amount": amount, "dry_run": False, "input_sent": True}
+
+            # Human inertia scrolling: rapid initial pulses followed by gradual decay
+            for i in range(total_steps):
+                send_inputs([INPUT(type=INPUT_MOUSE, u=_INPUT_UNION(
+                    mi=MOUSEINPUT(dx=0, dy=0, mouseData=step_dir * 120,
+                                  dwFlags=MOUSEEVENTF_WHEEL, time=0, dwExtraInfo=0)))])
+                delay = 0.025 + (i / max(1, total_steps)) * 0.045 + random.uniform(0.005, 0.02)
+                time.sleep(delay)
+
+        return {"ok": True, "action": "scroll", "status": "executed",
+                "amount": amount, "dry_run": False, "input_sent": True}
 
 
 class HumanoidKeyboard:
@@ -447,74 +613,187 @@ class HumanoidKeyboard:
         inp = INPUT(type=INPUT_KEYBOARD, u=_INPUT_UNION(ki=KEYBDINPUT(wVk=vk, wScan=0, dwFlags=KEYEVENTF_KEYUP, time=0, dwExtraInfo=0)))
         send_inputs([inp])
 
-    def press(self, key_name: str):
+    def press(self, key_name: str) -> dict:
         """Press a single key with realistic hold dwell."""
         vk = self._vk_from_name(key_name)
         if not vk:
-            return
-        self.key_down(vk)
-        dwell = random.uniform(0.035, 0.070) if self.mode == "human" else 0.005
-        time.sleep(dwell)
-        self.key_up(vk)
+            return {"ok": False, "action": "press", "error": "unmapped key: %s" % key_name}
 
-    def hotkey(self, *keys):
+        g = _guard()
+        if g is None:
+            return _deny_no_guard("press")
+
+        with g.input_session("press", agent="humanoid") as ctx:
+            if ctx["dry_run"]:
+                return self._blocked({"ok": True, "action": "press", "status": "simulated",
+                                      "key": key_name, "dry_run": True,
+                                      "verdict_code": ctx.get("verdict_code")})
+            try:
+                self.key_down(vk)
+                dwell = random.uniform(0.035, 0.070) if self.mode == "human" else 0.005
+                time.sleep(dwell)
+            finally:
+                self.key_up(vk)
+        return {"ok": True, "action": "press", "status": "executed", "key": key_name,
+                "dry_run": False, "input_sent": True}
+
+    @staticmethod
+    def _blocked(result: dict) -> dict:
+        result.setdefault("input_sent", False)
+        result.setdefault("dry_run", False)
+        return result
+
+    def hotkey(self, *keys) -> dict:
         """Execute multi-key shortcut with natural key press/release staging."""
         vks = [self._vk_from_name(k) for k in keys if self._vk_from_name(k) is not None]
         if not vks:
-            return
+            return {"ok": False, "action": "hotkey", "error": "no mappable keys"}
 
-        # Sequential down
-        for vk in vks:
-            self.key_down(vk)
-            time.sleep(random.uniform(0.015, 0.030) if self.mode == "human" else 0.002)
+        g = _guard()
+        if g is None:
+            return _deny_no_guard("hotkey")
 
-        time.sleep(random.uniform(0.04, 0.08) if self.mode == "human" else 0.005)
+        with g.input_session("hotkey", target="focused-window", agent="humanoid") as ctx:
+            if ctx["dry_run"]:
+                return self._blocked({"ok": True, "action": "hotkey", "status": "simulated",
+                                      "keys": list(keys), "dry_run": True,
+                                      "verdict_code": ctx.get("verdict_code")})
 
-        # Reverse sequential up
-        for vk in reversed(vks):
-            self.key_up(vk)
-            time.sleep(random.uniform(0.010, 0.025) if self.mode == "human" else 0.002)
+            # Sequential down；异常也必须逆序抬起，不能把 Ctrl/Alt 留在按下态
+            pressed = []
+            try:
+                for vk in vks:
+                    self.key_down(vk)
+                    pressed.append(vk)
+                    time.sleep(random.uniform(0.015, 0.030) if self.mode == "human" else 0.002)
+                time.sleep(random.uniform(0.04, 0.08) if self.mode == "human" else 0.005)
+            finally:
+                for vk in reversed(pressed):
+                    self.key_up(vk)
+                    time.sleep(random.uniform(0.010, 0.025) if self.mode == "human" else 0.002)
 
-    def type_text(self, text: str):
+        return {"ok": True, "action": "hotkey", "status": "executed", "keys": list(keys),
+                "dry_run": False, "input_sent": True}
+
+    def type_text(self, text: str) -> dict:
         """
         Type text naturally. Non-ASCII / Chinese strings automatically bridge to
         high-speed Unicode clipboard paste to ensure 100% fidelity without IME dropouts.
+
+        注意：剪贴板路径会**覆盖操作者当前剪贴板内容**，这也是一种"抢夺"。
+        未获授权时不执行；执行时先备份，结束后恢复。
         """
-        has_unicode = any(ord(c) > 127 for c in text)
-        if has_unicode or len(text) > 40:
-            # Clipboard injection
+        g = _guard()
+        if g is None:
+            return _deny_no_guard("type_text")
+
+        with g.input_session("type_text", target="focused-control", agent="humanoid") as ctx:
+            if ctx["dry_run"]:
+                return self._blocked({"ok": True, "action": "type_text", "status": "simulated",
+                                      "length": len(text), "dry_run": True,
+                                      "verdict_code": ctx.get("verdict_code")})
+
+            has_unicode = any(ord(c) > 127 for c in text)
+            if has_unicode or len(text) > 40:
+                # Clipboard injection
+                backup = self._clipboard_backup()
+                try:
+                    user32.OpenClipboard(0)
+                    user32.EmptyClipboard()
+                    text_bytes = (text + '\0').encode('utf-16le')
+                    h_mem = kernel32.GlobalAlloc(0x0042, len(text_bytes))
+                    ptr = kernel32.GlobalLock(h_mem)
+                    ctypes.cdll.msvcrt.memcpy(ctypes.c_void_p(ptr), text_bytes, len(text_bytes))
+                    kernel32.GlobalUnlock(h_mem)
+                    CF_UNICODETEXT = 13
+                    user32.SetClipboardData(CF_UNICODETEXT, h_mem)
+                    user32.CloseClipboard()
+                    time.sleep(0.03)
+                    self.hotkey_nested("ctrl", "v")
+                    return {"ok": True, "action": "type_text", "status": "executed",
+                            "length": len(text), "channel": "clipboard", "dry_run": False,
+                            "input_sent": True}
+                except Exception as exc:
+                    return {"ok": False, "action": "type_text", "stage": "clipboard",
+                            "error": str(exc), "input_sent": False}
+                finally:
+                    self._clipboard_restore(backup)
+
+            # Direct character typing
+            for char in text:
+                code = ord(char)
+                inp_down = INPUT(type=INPUT_KEYBOARD, u=_INPUT_UNION(ki=KEYBDINPUT(wVk=0, wScan=code, dwFlags=KEYEVENTF_UNICODE, time=0, dwExtraInfo=0)))
+                send_inputs([inp_down])
+                dwell = random.uniform(0.025, 0.055) if self.mode == "human" else 0.002
+                time.sleep(dwell)
+                inp_up = INPUT(type=INPUT_KEYBOARD, u=_INPUT_UNION(ki=KEYBDINPUT(wVk=0, wScan=code, dwFlags=KEYEVENTF_UNICODE | KEYEVENTF_KEYUP, time=0, dwExtraInfo=0)))
+                send_inputs([inp_up])
+
+                # Inter-key log-normal cadence
+                interval = random.gauss(0.045, 0.015) if self.mode == "human" else 0.002
+                interval = max(0.020, min(0.110, interval))
+                time.sleep(interval)
+
+        return {"ok": True, "action": "type_text", "status": "executed",
+                "length": len(text), "channel": "unicode", "dry_run": False, "input_sent": True}
+
+    def hotkey_nested(self, *keys) -> None:
+        """会话内再发组合键（不重新申请租约，避免自锁）。"""
+        vks = [self._vk_from_name(k) for k in keys if self._vk_from_name(k) is not None]
+        pressed = []
+        try:
+            for vk in vks:
+                self.key_down(vk)
+                pressed.append(vk)
+                time.sleep(0.01)
+            time.sleep(0.02)
+        finally:
+            for vk in reversed(pressed):
+                self.key_up(vk)
+                time.sleep(0.01)
+
+    @staticmethod
+    def _clipboard_backup():
+        """尽力备份文本型剪贴板；失败返回 None（不阻断输入）。"""
+        try:
+            user32.OpenClipboard(0)
             try:
-                user32.OpenClipboard(0)
-                user32.EmptyClipboard()
-                text_bytes = (text + '\0').encode('utf-16le')
-                h_mem = kernel32.GlobalAlloc(0x0042, len(text_bytes))
-                ptr = kernel32.GlobalLock(h_mem)
-                ctypes.cdll.msvcrt.memcpy(ctypes.c_void_p(ptr), text_bytes, len(text_bytes))
-                kernel32.GlobalUnlock(h_mem)
                 CF_UNICODETEXT = 13
-                user32.SetClipboardData(CF_UNICODETEXT, h_mem)
+                if not user32.IsClipboardFormatAvailable(CF_UNICODETEXT):
+                    return None
+                h = user32.GetClipboardData(CF_UNICODETEXT)
+                if not h:
+                    return None
+                ptr = kernel32.GlobalLock(h)
+                if not ptr:
+                    return None
+                try:
+                    return ctypes.wstring_at(ptr)
+                finally:
+                    kernel32.GlobalUnlock(h)
+            finally:
                 user32.CloseClipboard()
-                time.sleep(0.03)
-                self.hotkey("ctrl", "v")
-                return
-            except Exception:
-                pass
+        except Exception:
+            return None
 
-        # Direct character typing
-        for char in text:
-            code = ord(char)
-            # Unicode SendInput
-            inp_down = INPUT(type=INPUT_KEYBOARD, u=_INPUT_UNION(ki=KEYBDINPUT(wVk=0, wScan=code, dwFlags=KEYEVENTF_UNICODE, time=0, dwExtraInfo=0)))
-            send_inputs([inp_down])
-            dwell = random.uniform(0.025, 0.055) if self.mode == "human" else 0.002
-            time.sleep(dwell)
-            inp_up = INPUT(type=INPUT_KEYBOARD, u=_INPUT_UNION(ki=KEYBDINPUT(wVk=0, wScan=code, dwFlags=KEYEVENTF_UNICODE | KEYEVENTF_KEYUP, time=0, dwExtraInfo=0)))
-            send_inputs([inp_up])
-
-            # Inter-key log-normal cadence
-            interval = random.gauss(0.045, 0.015) if self.mode == "human" else 0.002
-            interval = max(0.020, min(0.110, interval))
-            time.sleep(interval)
+    @staticmethod
+    def _clipboard_restore(text) -> None:
+        if text is None:
+            return
+        try:
+            user32.OpenClipboard(0)
+            try:
+                user32.EmptyClipboard()
+                data = (text + '\0').encode('utf-16le')
+                h_mem = kernel32.GlobalAlloc(0x0042, len(data))
+                ptr = kernel32.GlobalLock(h_mem)
+                ctypes.cdll.msvcrt.memcpy(ctypes.c_void_p(ptr), data, len(data))
+                kernel32.GlobalUnlock(h_mem)
+                user32.SetClipboardData(13, h_mem)
+            finally:
+                user32.CloseClipboard()
+        except Exception:
+            pass
 
 
 class FastScreenPerception:
@@ -686,15 +965,29 @@ def main():
     controller_kb = HumanoidKeyboard(mode=args.mode)
     res = {"success": True, "command": args.command, "mode": args.mode}
 
+    def _absorb(r):
+        """把执行器的 status/input_sent/dry_run 透出到 CLI 结果。
+
+        旧 CLI 只看 ``success``：闸门拒绝时也打印 "Success: True"，脚本侧会
+        以为鼠标真的动了。现在 input_sent=False 会被明确标出来。
+        """
+        if isinstance(r, dict):
+            for k in ("status", "input_sent", "dry_run", "verdict_code", "aborted", "error"):
+                if r.get(k) is not None:
+                    res[k] = r.get(k)
+            if r.get("ok") is False:
+                res["success"] = False
+        return r
+
     t0 = time.perf_counter()
 
     try:
         if args.command == "move":
-            controller_mouse.move_to(args.x, args.y, duration=args.duration)
+            _absorb(controller_mouse.move_to(args.x, args.y, duration=args.duration))
             res["target"] = [args.x, args.y]
 
         elif args.command == "click":
-            controller_mouse.click(x=args.x, y=args.y, button=args.button, clicks=args.clicks)
+            _absorb(controller_mouse.click(x=args.x, y=args.y, button=args.button, clicks=args.clicks))
             res["clicked"] = {"x": args.x, "y": args.y, "button": args.button, "clicks": args.clicks}
 
         elif args.command == "click-element":
@@ -704,25 +997,25 @@ def main():
                 res["error"] = f"Element not found: name={args.name}, class={args.class_name}"
             else:
                 tx, ty = grounding.sample_human_target_coordinate(bounds)
-                controller_mouse.click(x=tx, y=ty, button=args.button)
+                _absorb(controller_mouse.click(x=tx, y=ty, button=args.button))
                 res["element_bounds"] = bounds
                 res["sampled_target"] = [tx, ty]
 
         elif args.command == "drag":
-            controller_mouse.drag(args.from_x, args.from_y, args.to_x, args.to_y, duration=args.duration)
+            _absorb(controller_mouse.drag(args.from_x, args.from_y, args.to_x, args.to_y, duration=args.duration))
             res["dragged"] = {"from": [args.from_x, args.from_y], "to": [args.to_x, args.to_y]}
 
         elif args.command == "scroll":
-            controller_mouse.scroll(args.amount, x=args.x, y=args.y)
+            _absorb(controller_mouse.scroll(args.amount, x=args.x, y=args.y))
             res["scrolled"] = args.amount
 
         elif args.command == "type":
-            controller_kb.type_text(args.text)
+            _absorb(controller_kb.type_text(args.text))
             res["typed"] = args.text
 
         elif args.command == "hotkey":
             keys = [k.strip() for k in args.keys.split(",")]
-            controller_kb.hotkey(*keys)
+            _absorb(controller_kb.hotkey(*keys))
             res["hotkey"] = keys
 
         elif args.command == "capture":
@@ -739,10 +1032,17 @@ def main():
         res["success"] = False
         res["error"] = str(e)
 
+    if res.get("input_sent") is False:
+        res["note"] = ("键鼠事件未发送：%s。设 VIRTU_DESKTOP_INPUT=1 才允许真实输入。"
+                       % (res.get("verdict_code") or res.get("status") or "suppressed"))
+
     if args.json:
         print(json.dumps(res, ensure_ascii=False))
     else:
-        print(f"Executed {args.command} in {res.get('latency_ms', 0)}ms. Success: {res['success']}")
+        print(f"Executed {args.command} in {res.get('latency_ms', 0)}ms. "
+              f"Success: {res['success']}, input_sent: {res.get('input_sent', True)}")
+        if res.get("note"):
+            print("  " + res["note"], file=sys.stderr)
 
 
 if __name__ == "__main__":

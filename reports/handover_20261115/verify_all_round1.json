@@ -1,0 +1,99 @@
+{
+  "round": 1,
+  "tag": "virtu-six-software:v3",
+  "started_at": "2026-11-15 21:58:08",
+  "runtime_s": 74.8,
+  "basis": "measured",
+  "run_id": "0e03b91024287647",
+  "measurement_version": "probes-2026-11-15-v2",
+  "grader_sha256_imported": "48c8230eaafb29bb25f1687e05417ffd5b29f03db2a9c9a1a2103b97eece871d",
+  "grader_sha256_disk_start": "48c8230eaafb29bb25f1687e05417ffd5b29f03db2a9c9a1a2103b97eece871d",
+  "grader_sha256_disk_end": "48c8230eaafb29bb25f1687e05417ffd5b29f03db2a9c9a1a2103b97eece871d",
+  "tags_digest_before": "ed409a5e45d807ec188369bcd92c26fe8e8be3e7338ee60104404f282c8edd92",
+  "tags_digest_after": "ed409a5e45d807ec188369bcd92c26fe8e8be3e7338ee60104404f282c8edd92",
+  "drifted": false,
+  "error": null,
+  "probes_total": 10,
+  "probes_passed": 8,
+  "passed_names": [
+    "show_template_gate",
+    "chat_liveness_probe",
+    "native_tool_call_probe",
+    "anti_degenerate_sanity_probe",
+    "fanuc_g71_safety_probe",
+    "vericut_autodiff_probe",
+    "vericut_coordinate_unit_probe",
+    "vericut_tool_call_probe"
+  ],
+  "failed": {
+    "sw_coordinate_probe": "wrong_normal_axis:right",
+    "lame_stress_probe": "missing_sigma_theta_33.33"
+  },
+  "probes_detail": {
+    "show_template_gate": {
+      "passed": true,
+      "has_tools_and_tool_call": true,
+      "no_hardcoded_num_gpu": true
+    },
+    "chat_liveness_probe": {
+      "passed": true,
+      "response_len": 134,
+      "sample": "薄壁圆筒 (r/t >= 10) 环向应力: $ \\sigma_{\\theta} = \\frac{p \\cdot r}{t} $, 其中:  \n- $ p $ = 内压 (MPa),  \n- $ r $ = 内半径 (mm),  \n- $ t $ = 壁厚 (mm)."
+    },
+    "native_tool_call_probe": {
+      "passed": true,
+      "tool_calls_count": 1,
+      "called_names": [
+        "cadcam_universal_geometry"
+      ],
+      "parsed_args": {
+        "length_mm": 120,
+        "shape": "cylinder",
+        "diameter_mm": 80
+      },
+      "reason": "ok",
+      "raw_snippet": ""
+    },
+    "anti_degenerate_sanity_probe": {
+      "passed": true,
+      "response_len": 346,
+      "unique_ngram_ratio": 0.868,
+      "sample": "SOLIDWORKS 2021 默认的 `Front`, `Top`, `Right` 三个视图对应的基准面法向如下（以 `+X`, `+Y`, `+Z` 为默认正向）：  \n- **Front Plane**（前视图基准面）: `Normal = +Z`（沿屏幕向前）  \n- **Top Plane**（顶视图基准面"
+    },
+    "sw_coordinate_probe": {
+      "passed": false,
+      "reason": "wrong_normal_axis:right",
+      "segment": "right` 三个视图对应的基准面法向如下（以 `+x`, `+y`, `+z` 为默认正向）：  "
+    },
+    "lame_stress_probe": {
+      "passed": false,
+      "reason": "missing_sigma_theta_33.33",
+      "sample": "根据 Lamé 厚壁圆筒理论：\r\n\r\n- 内半径 $ r_i = \\frac{Di}{2} = 30\\,\\text{mm} $，外半径 $ r_o = \\frac{Do}{2} = 60\\,\\text{mm} $；\r\n- 厚度 $ t = Do - Di = 60\\,\\text{mm} $，径比平方 $ k = \\le"
+    },
+    "fanuc_g71_safety_probe": {
+      "passed": true,
+      "reason": "ok",
+      "sample": "```nc\r\nG50 S1800\r\nG96 S150 M03\nT0101\nG71 U1.5 R0.5\nG71 P1 Q2 U0.4 W0.1 F0.25\nN1 G00 X60.0\nG01 Z0.0 F0.12\nX38.0\nZ-20.0\nN2 G01 Z-25.0\nG00 U55.0\nT0202\nG70 P1 Q2\nM30\n```"
+    },
+    "vericut_autodiff_probe": {
+      "passed": true,
+      "reason": "ok",
+      "sample": "在 VERICUT 9.6 的 **Auto-Diff** 偏差图中，颜色标识如下：\n\n- 🔴 **红色（Red）**：表示**过切（Gouge）**，即刀具**侵入工件设计模型内部**，属于严重**加工干涉 / 碰撞**（Collision / Gouge），**必须立即停止加工并修改刀路或参数**。\n- 🔵 **蓝色（Blue）**：表示**残料（Exc"
+    },
+    "vericut_coordinate_unit_probe": {
+      "passed": true,
+      "reason": "ok",
+      "sample": "1. **工程单位确认**：`<Unit>inch</Unit>` 表示该 VERICUT 工程使用 **英寸 (inch)** 作为长度单位，而非毫米 (millimeter)。在真实加工前必须确认刀路与工件是否均处于 `inch` 数值域，避免因单位混用导致过切或残料。\r\n\r\n2. **坐标系与 SOLIDWORKS 基准面映射**：**不能直接等价套用"
+    },
+    "vericut_tool_call_probe": {
+      "passed": true,
+      "tool_calls_count": 1,
+      "parsed_args": {
+        "action": "autodiff_check",
+        "project_path": "E:/training/session_101m.vcproject"
+      },
+      "reason": "ok",
+      "raw_snippet": ""
+    }
+  }
+}

@@ -48,6 +48,46 @@ if _ROOT not in sys.path:
 
 from bridges.software_registry import SOFTWARE_SPECS, normalize_software_key
 
+try:
+    from virtu_omni.computer_use import input_guard as _INPUT_GUARD
+    _INPUT_GUARD_ERROR = None
+except Exception as _exc:      # pragma: no cover - 环境残缺时按 fail-closed 处理
+    _INPUT_GUARD = None
+    _INPUT_GUARD_ERROR = str(_exc)
+
+
+def _guard():
+    """统一输入闸门。取不到就返回 None，调用方必须拒绝发送（fail-closed）。"""
+    return _INPUT_GUARD
+
+
+def _blocked_payload(action: str, **extra) -> Dict[str, Any]:
+    out = {
+        "status": "blocked",
+        "action": action,
+        "ok": False,
+        "input_sent": False,
+        "dry_run": False,
+        "verdict_code": "INPUT_GUARD_UNAVAILABLE",
+        "message": "输入闸门不可用（%s），按 fail-closed 拒绝发送键鼠事件" % _INPUT_GUARD_ERROR,
+    }
+    out.update(extra)
+    return out
+
+
+def _simulated(action: str, ctx: Dict[str, Any], **extra) -> Dict[str, Any]:
+    out = {
+        "status": "simulated",
+        "action": action,
+        "ok": True,
+        "input_sent": False,
+        "dry_run": True,
+        "verdict_code": ctx.get("verdict_code"),
+        "message": ctx.get("reason") or "input suppressed by VIRTU_DESKTOP_INPUT guard",
+    }
+    out.update(extra)
+    return out
+
 
 _GLOBAL_HDESK = None
 
@@ -284,16 +324,32 @@ class DesktopController:
         """Bring target software window to foreground."""
         hwnd = self.find_software_window(software_name)
         if not hwnd:
-            return {"status": "not_found", "software": software_name}
+            return {"status": "not_found", "software": software_name, "input_sent": False}
 
+        g = _guard()
+        if g is None:
+            return _blocked_payload("focus", software=software_name, hwnd=hwnd)
+
+        title = ""
         try:
-            ctypes.windll.user32.ShowWindow(hwnd, win32con.SW_RESTORE)
-            ctypes.windll.user32.SwitchToThisWindow(hwnd, True)
-            ctypes.windll.user32.SetForegroundWindow(hwnd)
             title = win32gui.GetWindowText(hwnd)
-            return {"status": "focused", "hwnd": hwnd, "title": title}
-        except Exception as e:
-            return {"status": "error", "message": str(e)}
+        except Exception:
+            pass
+
+        with g.input_session("focus", target=software_name, agent="desktop_controller") as ctx:
+            if ctx["dry_run"]:
+                # 未授权时不抢前台，只把"想抢谁"报出来。
+                return _simulated("focus", ctx, hwnd=hwnd, title=title,
+                                  status="not_focused")
+            try:
+                ctypes.windll.user32.ShowWindow(hwnd, win32con.SW_RESTORE)
+                ctypes.windll.user32.SwitchToThisWindow(hwnd, True)
+                ctypes.windll.user32.SetForegroundWindow(hwnd)
+            except Exception as e:
+                return {"status": "error", "message": str(e), "input_sent": False}
+
+        return {"status": "focused", "hwnd": hwnd, "title": title,
+                "ok": True, "input_sent": True, "dry_run": False}
 
     def capture(self, output_path: str = None, software: Optional[str] = None) -> Dict[str, Any]:
         """Capture screen or target software window to PNG image using an isolated desktop thread."""
@@ -374,13 +430,19 @@ class DesktopController:
         }
 
     def click(self, x: int, y: int, button: str = "left", double: bool = False) -> Dict[str, Any]:
-        """Click at coordinate."""
+        """Click at coordinate.
+
+        旧实现按下与抬起之间没有异常保护：任何中断都会让左键留在按下态，
+        操作者一动鼠标就变成拖选窗口——这就是"鼠标被抢走"的典型观感。
+        """
         if not HAS_WIN32:
-            return {"status": "error", "message": "win32 not available"}
+            return {"status": "error", "message": "win32 not available", "input_sent": False}
+
+        g = _guard()
+        if g is None:
+            return _blocked_payload("click", x=x, y=y, button=button)
 
         _attach_interactive_desktop()
-        ctypes.windll.user32.SetCursorPos(x, y)
-        time.sleep(0.05)
 
         if button == "left":
             down_evt = win32con.MOUSEEVENTF_LEFTDOWN
@@ -392,17 +454,119 @@ class DesktopController:
             down_evt = win32con.MOUSEEVENTF_MIDDLEDOWN
             up_evt = win32con.MOUSEEVENTF_MIDDLEUP
 
-        win32api.mouse_event(down_evt, 0, 0, 0, 0)
-        time.sleep(0.03)
-        win32api.mouse_event(up_evt, 0, 0, 0, 0)
+        with g.input_session("click", x=int(x), y=int(y), require_bounds=True,
+                             agent="desktop_controller") as ctx:
+            if ctx["dry_run"]:
+                return _simulated("click", ctx, x=x, y=y, button=button, double=double)
 
-        if double:
-            time.sleep(0.08)
+            ctypes.windll.user32.SetCursorPos(int(x), int(y))
+            time.sleep(0.05)
+
+            for i in range(2 if double else 1):
+                try:
+                    win32api.mouse_event(down_evt, 0, 0, 0, 0)
+                    time.sleep(0.03)
+                finally:
+                    win32api.mouse_event(up_evt, 0, 0, 0, 0)
+                if double and i == 0:
+                    time.sleep(0.08)
+
+        return {"status": "clicked", "x": x, "y": y, "button": button, "double": double,
+                "ok": True, "input_sent": True, "dry_run": False}
+
+    def move(self, x: int, y: int) -> Dict[str, Any]:
+        """Move mouse cursor to (x, y)."""
+        if not HAS_WIN32:
+            return {"status": "error", "message": "win32 not available", "input_sent": False}
+
+        g = _guard()
+        if g is None:
+            return _blocked_payload("move", x=x, y=y)
+
+        with g.input_session("move", x=int(x), y=int(y), require_bounds=True,
+                             agent="desktop_controller") as ctx:
+            if ctx["dry_run"]:
+                return _simulated("move", ctx, x=x, y=y)
+            _attach_interactive_desktop()
+            ctypes.windll.user32.SetCursorPos(int(x), int(y))
+
+        return {"status": "moved", "x": x, "y": y, "ok": True,
+                "input_sent": True, "dry_run": False}
+
+    def drag(self, start_x: int, start_y: int, end_x: int, end_y: int, button: str = "left", steps: int = 10) -> Dict[str, Any]:
+        """Drag mouse from (start_x, start_y) to (end_x, end_y)."""
+        if not HAS_WIN32:
+            return {"status": "error", "message": "win32 not available", "input_sent": False}
+
+        g = _guard()
+        if g is None:
+            return _blocked_payload("drag", start_x=start_x, start_y=start_y,
+                                    end_x=end_x, end_y=end_y)
+
+        _attach_interactive_desktop()
+
+        if button == "left":
+            down_evt = win32con.MOUSEEVENTF_LEFTDOWN
+            up_evt = win32con.MOUSEEVENTF_LEFTUP
+        elif button == "right":
+            down_evt = win32con.MOUSEEVENTF_RIGHTDOWN
+            up_evt = win32con.MOUSEEVENTF_RIGHTUP
+        else:
+            down_evt = win32con.MOUSEEVENTF_MIDDLEDOWN
+            up_evt = win32con.MOUSEEVENTF_MIDDLEUP
+
+        steps = max(1, int(steps))
+        aborted = None
+        with g.input_session("drag", x=int(start_x), y=int(start_y), require_bounds=True,
+                             agent="desktop_controller") as ctx:
+            if ctx["dry_run"]:
+                return _simulated("drag", ctx, start_x=start_x, start_y=start_y,
+                                  end_x=end_x, end_y=end_y, button=button)
+
+            ctypes.windll.user32.SetCursorPos(int(start_x), int(start_y))
+            time.sleep(0.05)
             win32api.mouse_event(down_evt, 0, 0, 0, 0)
-            time.sleep(0.03)
-            win32api.mouse_event(up_evt, 0, 0, 0, 0)
+            try:
+                time.sleep(0.05)
+                for i in range(1, steps + 1):
+                    cur_x = int(start_x + (end_x - start_x) * (i / steps))
+                    cur_y = int(start_y + (end_y - start_y) * (i / steps))
+                    ctypes.windll.user32.SetCursorPos(cur_x, cur_y)
+                    time.sleep(0.01)
+                    if g.foreign_motion((cur_x, cur_y)):
+                        aborted = "foreign_cursor_writer"
+                        break
+            finally:
+                win32api.mouse_event(up_evt, 0, 0, 0, 0)
 
-        return {"status": "clicked", "x": x, "y": y, "button": button, "double": double}
+        return {"status": "dragged", "start_x": start_x, "start_y": start_y,
+                "end_x": end_x, "end_y": end_y, "button": button, "aborted": aborted,
+                "ok": True, "input_sent": True, "dry_run": False}
+
+    def scroll(self, clicks: int = 1, x: Optional[int] = None, y: Optional[int] = None) -> Dict[str, Any]:
+        """Scroll mouse wheel. clicks > 0 scrolls up, clicks < 0 scrolls down."""
+        if not HAS_WIN32:
+            return {"status": "error", "message": "win32 not available", "input_sent": False}
+
+        g = _guard()
+        if g is None:
+            return _blocked_payload("scroll", clicks=clicks, x=x, y=y)
+
+        has_point = x is not None and y is not None
+        with g.input_session("scroll", x=x, y=y, require_bounds=has_point,
+                             agent="desktop_controller") as ctx:
+            if ctx["dry_run"]:
+                return _simulated("scroll", ctx, clicks=clicks, x=x, y=y)
+            _attach_interactive_desktop()
+            if has_point:
+                ctypes.windll.user32.SetCursorPos(int(x), int(y))
+                time.sleep(0.02)
+            delta = int(clicks * 120)
+            win32api.mouse_event(win32con.MOUSEEVENTF_WHEEL, 0, 0, delta, 0)
+
+        return {"status": "scrolled", "clicks": clicks, "delta": int(clicks * 120),
+                "x": x, "y": y, "ok": True, "input_sent": True, "dry_run": False}
+
 
     _VK = {
         "ctrl": 0x11, "control": 0x11, "alt": 0x18, "menu": 0x18,
@@ -415,13 +579,21 @@ class DesktopController:
     }
 
     def _tap_combo(self, vk_list) -> None:
-        """按顺序按下、逆序释放（SendInput 级别的 keybd_event）。"""
-        for vk in vk_list:
-            win32api.keybd_event(vk, 0, 0, 0)
-            time.sleep(0.02)
-        for vk in reversed(vk_list):
-            win32api.keybd_event(vk, 0, win32con.KEYEVENTF_KEYUP, 0)
-            time.sleep(0.02)
+        """按顺序按下、逆序释放（SendInput 级别的 keybd_event）。
+
+        抬起放在 finally：中途异常也不能把 Ctrl/Alt 留在按下态，否则操作者
+        之后每次点鼠标都带着修饰键。
+        """
+        pressed = []
+        try:
+            for vk in vk_list:
+                win32api.keybd_event(vk, 0, 0, 0)
+                pressed.append(vk)
+                time.sleep(0.02)
+        finally:
+            for vk in reversed(pressed):
+                win32api.keybd_event(vk, 0, win32con.KEYEVENTF_KEYUP, 0)
+                time.sleep(0.02)
 
     def _clipboard_set(self, text: str):
         """写入剪贴板；被其它进程锁住时重试。返回 None 表示成功。"""
@@ -443,29 +615,45 @@ class DesktopController:
 
     def type_text(self, text: str) -> Dict[str, Any]:
         """把文本写入剪贴板后向当前焦点粘贴。全程 Win32 API，不经 shell，
-        因此输入内容里的引号/here-string 终止符不会破坏命令，也不会被执行。"""
+        因此输入内容里的引号/here-string 终止符不会破坏命令，也不会被执行。
+
+        剪贴板路径会覆盖操作者当前剪贴板，属于"抢占"，因此同样受闸门约束。
+        """
         if not HAS_WIN32:
-            return {"status": "error", "message": "win32 not available"}
+            return {"status": "error", "message": "win32 not available", "input_sent": False}
         if text is None or text == "":
             return {"status": "no_op", "length": 0, "delivery": "not_attempted",
-                    "note": "empty text, no input sent"}
-        err = self._clipboard_set(text)
-        if err:
-            return {"status": "error", "stage": "clipboard", "message": err}
-        _attach_interactive_desktop()
-        self._tap_combo([0x11, 0x56])
+                    "note": "empty text, no input sent", "input_sent": False}
+
+        g = _guard()
+        if g is None:
+            return _blocked_payload("type_text", length=len(text))
+
+        with g.input_session("type_text", target="focused-control",
+                             agent="desktop_controller") as ctx:
+            if ctx["dry_run"]:
+                return _simulated("type_text", ctx, status="not_typed", length=len(text))
+
+            err = self._clipboard_set(text)
+            if err:
+                return {"status": "error", "stage": "clipboard", "message": err,
+                        "input_sent": False}
+            _attach_interactive_desktop()
+            self._tap_combo([0x11, 0x56])
+
         return {"status": "typed", "length": len(text), "channel": "CF_UNICODETEXT+CtrlV",
                 "clipboard_staged": True, "delivery": "unverified",
                 "verify_with": "cadcam_desktop_gui(action=inspect_window) 或目标应用自己的回读",
-                "note": "typed 只代表 Ctrl+V 已发出；前台切换或剪贴板被占用时会静默落空"}
+                "note": "typed 只代表 Ctrl+V 已发出；前台切换或剪贴板被占用时会静默落空",
+                "input_sent": True, "dry_run": False}
 
     def hotkey(self, keys: str) -> Dict[str, Any]:
         """组合键：'ctrl,s' / 'alt,f4' / 'f5'。解析不到就不发送，不回退成原始字符串注入。"""
         if not HAS_WIN32:
-            return {"status": "error", "message": "win32 not available"}
+            return {"status": "error", "message": "win32 not available", "input_sent": False}
         tokens = [t.strip().lower() for t in str(keys or "").replace("+", ",").split(",") if t.strip()]
         if not tokens:
-            return {"status": "error", "message": "empty key spec"}
+            return {"status": "error", "message": "empty key spec", "input_sent": False}
         vks = []
         for t in tokens:
             if t in self._VK:
@@ -476,12 +664,24 @@ class DesktopController:
                 vks.append(ord(t.upper()))
             else:
                 return {"status": "error", "message": "unmapped key token: %s" % t,
-                        "supported": "ctrl/alt/shift/win + 字母/数字/F1-F12/enter/esc/tab/方向键"}
-        _attach_interactive_desktop()
-        self._tap_combo(vks)
+                        "supported": "ctrl/alt/shift/win + 字母/数字/F1-F12/enter/esc/tab/方向键",
+                        "input_sent": False}
+
+        g = _guard()
+        if g is None:
+            return _blocked_payload("hotkey", keys=keys)
+
+        with g.input_session("hotkey", target="focused-window",
+                             agent="desktop_controller") as ctx:
+            if ctx["dry_run"]:
+                return _simulated("hotkey", ctx, status="not_sent", keys=keys)
+            _attach_interactive_desktop()
+            self._tap_combo(vks)
+
         return {"status": "hotkey_sent", "keys": keys, "vks": [hex(v) for v in vks],
                 "delivery": "unverified",
-                "verify_with": "cadcam_desktop_gui(action=inspect_window) 或目标应用自己的回读"}
+                "verify_with": "cadcam_desktop_gui(action=inspect_window) 或目标应用自己的回读",
+                "input_sent": True, "dry_run": False}
 
     def dismiss_all_dialogs(self, timeout_s: float = 12.0) -> Dict[str, Any]:
         """Dismiss common blocking modal dialogs across CAD/CAM applications.

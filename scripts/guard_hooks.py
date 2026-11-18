@@ -98,21 +98,35 @@ def apply_guard(
     """
     gr = guard_world_state(raw_response, prompt, scenario, tol_rel, require_evidence, execution_receipt)
     obj, _err = parse_json_candidate(raw_response)
+    binding_risk = check_scenario_binding(prompt, scenario)
+
+    # FIX H5（2026-11-08 审计）：scenario 与 prompt 不同源时，recompute 用的是「错参数」，
+    # 出来的 corrected 会把模型原本正确答案静默改错（实测 2.25 -> 6.25），而旧实现
+    # 只把 binding_risk 当提示字段、照样返回 corrected，调用侧必然采信错值。
+    # 现在：绑定不可信 => 禁止下发 corrected，降级为 escalate，交上游修正 scenario。
+    action = gr.action
+    issues = list(gr.issues)
+    if binding_risk is not None and action == "corrected":
+        action = "escalate"
+        issues = issues + ["场景绑定不可信，复算参考值不予采信：" + binding_risk]
     # 优先用护栏纠正/归一化后的结果（corrected 总是 world_state 包裹，含裸字段归一化）；
     # 仅当 corrected 缺失且解析成功时回退到原 parse。
-    if isinstance(gr.corrected, dict):
+    if action == "corrected" and isinstance(gr.corrected, dict):
         final = gr.corrected
     elif gr.action == "accept" and isinstance(obj, dict):
         final = obj
     else:
         final = obj  # rejected/escalate：保留原 parse（可能 None），由上游决定
     return {
-        "action": gr.action,
-        "issues": gr.issues,
-        "layers_hit": gr.layers_hit,
+        "action": action,
+        "issues": issues,
+        "layers_hit": list(gr.layers_hit),
         "provenance": gr.provenance,
         "final_world_state": final,
-        "binding_risk": check_scenario_binding(prompt, scenario),
+        "binding_risk": binding_risk,
+        # FIX H5：certified=False 表示「本次裁决未建立在可信的 scenario/prompt 绑定上」，
+        # 调用侧不得把它当作已校验结论对外播报。
+        "certified": bool(binding_risk is None and getattr(gr, "certified", True)),
     }
 
 
@@ -159,6 +173,12 @@ def selftest() -> int:
     wrong_sc = {"task": "roughness", "inputs": {"f": 0.12, "r_eps": 1.0}}  # 与 prompt 不一致
     out = apply_guard(clean, prompt="f=0.12, r_eps=0.8", scenario=wrong_sc)
     check("E6 scenario binding risk detected", out["binding_risk"] is not None)
+    # FIX H5 反证：绑定不可信时不得下发 corrected，更不能把 2.25 覆盖成错值
+    check("FIX H5 binding_risk -> escalate not corrected", out["action"] == "escalate")
+    _ws = (out["final_world_state"] or {}).get("world_state", {})
+    check("FIX H5 correct answer not overwritten",
+          abs(_ws.get("surface_roughness_ra_um", 0) - 2.25) < 1e-6)
+    check("FIX H5 certified=False on binding risk", out["certified"] is False)
 
     print(f"\n[selftest] {ok}/{total} PASS")
     return 0 if ok == total else 1

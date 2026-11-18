@@ -1,0 +1,9 @@
+{
+  "snapshot_at": "2026-11-15 21:52:50",
+  "purpose": "接手时现场保全（并发会话会覆盖共享凭证）",
+  "grader_sha256": "48c8230eaafb29bb25f1687e05417ffd5b29f03db2a9c9a1a2103b97eece871d",
+  "main_receipt_status": "PROBE_FAILED",
+  "main_receipt_grader_sha256": "9ce6f48068b96d370d1ac10084fdb5b30b6aaf8f7acd15ce51fe5bd630454a43",
+  "antigravity_session": "2e2f3be3-1525-4b53-b60b-50c916013d31",
+  "antigravity_termination": "HTTP 429 RESOURCE_EXHAUSTED / AI credits balance too low (step 1375)"
+}

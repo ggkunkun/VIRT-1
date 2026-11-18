@@ -37,8 +37,23 @@ from dataclasses import asdict, dataclass, field
 from pathlib import Path
 from typing import Any, Callable, Dict, List, Optional, Tuple, Union
 
-import torch
-import torch.nn as nn
+try:  # PyTorch is optional on inference-only hosts; the dataclasses below do not need it.
+    import torch  # type: ignore[import-not-found]
+    import torch.nn as nn  # type: ignore[import-not-found]
+
+    TORCH_AVAILABLE = True
+except ModuleNotFoundError:  # pragma: no cover - exercised on inference-only hosts
+    torch = None  # type: ignore[assignment]
+    nn = None  # type: ignore[assignment]
+    TORCH_AVAILABLE = False
+
+
+def _require_torch(operation: str) -> None:
+    if not TORCH_AVAILABLE:
+        raise RuntimeError(
+            f"{operation} requires PyTorch, which is not installed in this interpreter. "
+            "Dataclasses (TaskVector / MergeProvenance) remain importable without torch."
+        )
 
 WORKSPACE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 if WORKSPACE_DIR not in sys.path:
@@ -140,6 +155,7 @@ class VirtuTaskArithmeticEngine:
         task_vectors: List[TaskVector],
     ) -> Tuple[Dict[str, torch.Tensor], MergeProvenance]:
         """Fuses multiple task vectors into base weights with zero interference."""
+        _require_torch("merge_task_vectors()")
         t_start = time.time()
         fused_weights: Dict[str, torch.Tensor] = {}
         domains = [tv.domain for tv in task_vectors]

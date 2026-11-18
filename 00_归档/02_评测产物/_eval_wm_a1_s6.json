@@ -1,0 +1,201 @@
+[
+  {
+    "family": "geom_delta",
+    "user": "在工件上切除一个沉槽，特征体积 4986.0 mm^3，切除前工件体积 135704.0 mm^3。预测切除后几何体积变化 ΔV 与切除后体积，并校验体积守恒。",
+    "expected": {
+      "world_state": {
+        "feature": "沉槽",
+        "feature_volume_mm3": 4986.0,
+        "delta_volume_mm3": -4986.0,
+        "before_volume_mm3": 135704.0,
+        "after_volume_mm3": 130718.0,
+        "volume_conservation": "pass_cut_negative"
+      },
+      "verification": {
+        "formula": "dV = -V_feature (切除为负)",
+        "checks": [
+          "dV<0",
+          "after=before+dV"
+        ]
+      }
+    },
+    "scenario_present": true,
+    "guard_layers": [],
+    "predicted": {
+      "world_state": {
+        "delta_volume_mm3": -4986.0,
+        "after_volume_mm3": 130718.0,
+        "volume_conservation": "pass_cut_negative",
+        "feature_volume_mm3": 4986.0,
+        "before_volume_mm3": 135704.0
+      }
+    },
+    "pass": true,
+    "raw_pass": true,
+    "fmt_raw": true,
+    "miss": [],
+    "miss_raw": [],
+    "guard_action": "accept",
+    "raw": "{\"world_state\": {\"delta_volume_mm3\": -4986.0, \"after_volume_mm3\": 130718.0, \"volume_conservation\": \"pass\"}, \"derivation\": {\"delta_volume_mm3\": \"-4986.0\", \"after_volume_mm3\": \"135704.0-4986.0\"}, \"verification\": {\"source\": \"volume_formula\", \"resolved\": true}}"
+  },
+  {
+    "family": "removal",
+    "user": "毛坯体积 383016 mm^3，材料 45钢，密度 7.8 g/cm^3。用端铣刀单刀路：切削深度 DOC=3.75 mm，切削宽度 WOC=7.23 mm，进给速度 vf=1075 mm/min，刀路长度 L=49.0 mm。预测去除量与余下质量。",
+    "expected": {
+      "world_state": {
+        "material_removed_mm3": 1329.0,
+        "mrr_mm3_per_min": 29150.0,
+        "removed_mass_g": 10.4,
+        "resulting_mass_g": 3000.0,
+        "delta_volume_mm3": -1329.0,
+        "volume_conservation": "pass_cut_negative"
+      },
+      "verification": {
+        "formula": "MRR=DOC*WOC*vf; V_removed=DOC*WOC*L; m=rho*V",
+        "checks": [
+          "dV<0",
+          "mrr>0"
+        ]
+      }
+    },
+    "scenario_present": true,
+    "guard_layers": [
+      "L2_SOLVER"
+    ],
+    "predicted": {
+      "world_state": {
+        "material_removed_mm3": 1328.5125,
+        "resulting_mass_g": 2996.246776875,
+        "volume_conservation": "pass_cut_negative",
+        "mrr_mm3_per_min": 29145.9375,
+        "removed_mass_g": 10.428823125,
+        "delta_volume_mm3": -1328.5125
+      }
+    },
+    "pass": true,
+    "raw_pass": false,
+    "fmt_raw": true,
+    "miss": [],
+    "miss_raw": [
+      "material_removed_mm3(12068.2!=1329)",
+      "mrr_mm3_per_min(missing)",
+      "resulting_mass_g(299.97!=3000)",
+      "delta_volume_mm3(missing)"
+    ],
+    "guard_action": "corrected",
+    "raw": "{\"world_state\": {\"material_removed_mm3\": 12068.25, \"resulting_mass_g\": 299.97, \"volume_conservation\": \"pass\"}, \"derivation\": {\"material_removed_mm3\": \"(DOC)*(WOC)*(L) = (3.75)*(7.23)*(49.0)\", \"resulting_mass_g\": \"((383016)*(0.0078)) - ((383016 - 12068.25)*(0.0078))\"}, \"verification\": {\"source\": \"volume_formula\", \"resolved\": true}}"
+  },
+  {
+    "family": "invalid",
+    "user": "未提供材料类型，要求预测去除质量。",
+    "expected": {
+      "world_state": null,
+      "invalid": true,
+      "reason": "missing_material",
+      "expected_action": "拒绝并列出缺失/非法项，不输出臆测数值"
+    },
+    "scenario_present": false,
+    "guard_layers": [],
+    "predicted": {
+      "world_state": null,
+      "invalid": true,
+      "reason": "missing_material"
+    },
+    "pass": true,
+    "raw_pass": true,
+    "fmt_raw": true,
+    "miss": [],
+    "miss_raw": [],
+    "guard_action": "accept",
+    "raw": "{\"world_state\": null, \"invalid\": true, \"reason\": \"missing_material\"}"
+  },
+  {
+    "family": "tolerance",
+    "user": "尺寸链含 2 个组成环，半公差分别为 [0.093, 0.034] mm（基本尺寸 54.1 mm）。孔轴偏差：上偏差 +0.045 mm，下偏差 -0.02 mm。用极值法与统计法（RSS）给出封闭环公差带半宽，并判定配合性质与等级。",
+    "expected": {
+      "world_state": {
+        "component_tolerances_mm": [
+          0.093,
+          0.034
+        ],
+        "closed_loop_worstcase_halfwidth_mm": 0.127,
+        "closed_loop_rss_halfwidth_mm": 0.09902,
+        "basic_size_mm": 54.1,
+        "fit_clearance_mm": 0.065,
+        "tolerance_fit": "间隙配合",
+        "fit_class": "H7/g6",
+        "tolerance_pass": true
+      },
+      "verification": {
+        "formula": "WC=sum(ti); RSS=sqrt(sum(ti^2))",
+        "checks": [
+          "WC>=RSS"
+        ]
+      }
+    },
+    "scenario_present": true,
+    "guard_layers": [],
+    "predicted": {
+      "world_state": {
+        "closed_loop_worstcase_halfwidth_mm": 0.127,
+        "closed_loop_rss_halfwidth_mm": 0.09902019995940223,
+        "tolerance_pass": true,
+        "fit_clearance_mm": 0.065
+      }
+    },
+    "pass": true,
+    "raw_pass": false,
+    "fmt_raw": true,
+    "miss": [],
+    "miss_raw": [
+      "fit_clearance_mm(missing)"
+    ],
+    "guard_action": "accept",
+    "raw": "{\"world_state\": {\"closed_loop_worstcase_halfwidth_mm\": 0.127, \"closed_loop_rss_halfwidth_mm\": 0.099, \"tolerance_pass\": true}, \"derivation\": {\"closed_loop_worstcase_halfwidth_mm\": \"0.093+0.034\", \"closed_loop_rss_halfwidth_mm\": \"sqrt(0.093^2+0.034^2)\", \"tolerance_pass\": \"abs(0.127-0.099) < 0.15*0.099\"}, \"verification\": {\"source\": \"tolerance_rules\", \"resolved\": true}}"
+  },
+  {
+    "family": "collision",
+    "user": "分析一段 FANUC 加工程序：安全平面 Z=13.1 mm，某 G00 快速移动段最低 Z=6.7 mm，毛坯顶面 Z=10.7 mm。预测碰撞/过切风险与 VERICUT Auto-Diff 颜色（红=过切，黄=风险，绿=合格）。",
+    "expected": {
+      "world_state": {
+        "safe_plane_z_mm": 13.1,
+        "rapid_min_z_mm": 6.7,
+        "stock_top_z_mm": 10.7,
+        "collision_risk": "high",
+        "gouge": true,
+        "autodiff": "red"
+      },
+      "verification": {
+        "formula": "risk = (Z_rapid_min < Z_safe) AND (Z_rapid_min < Z_stock_top+1)；gouge = (Z_rapid_min < Z_stock_top)",
+        "checks": [
+          "no_gouge"
+        ]
+      }
+    },
+    "scenario_present": true,
+    "guard_layers": [
+      "L0_SHAPE",
+      "L1_GROUND",
+      "L2_SOLVER"
+    ],
+    "predicted": {
+      "world_state": {
+        "collision_risk": "high",
+        "autodiff": "red",
+        "safe_plane_z_mm": 13.1,
+        "rapid_min_z_mm": 6.7,
+        "stock_top_z_mm": 10.7,
+        "gouge": true
+      }
+    },
+    "pass": true,
+    "raw_pass": false,
+    "fmt_raw": true,
+    "miss": [],
+    "miss_raw": [
+      "autodiff(green!=red)"
+    ],
+    "guard_action": "corrected",
+    "raw": "{\"world_state\": {\"collision_risk\": \"none\", \"autodiff\": \"green\"}, \"derivation\": {\"collision_risk\": \"rapid_min_z_mm=6.7 < safe_plane_z_mm=13.1 → penetration_depth = 6.7-13.1 = -6.4 mm (safe); gouge = rapid_min_z_mm=6.7 < stock_top_z_mm=10.7 → gouge = true\", \"autodiff\": \"gouge=true → red\"}, \"verification\": {\"source\": \"cadcam_autodiff_rules\", \"resolved\": true}}"
+  }
+]

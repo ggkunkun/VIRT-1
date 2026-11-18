@@ -23,6 +23,7 @@ Virtu 路由网关 —— 3B 快通道 + 8B 工业深度推理
 import os
 import sys
 import json
+import hmac
 import argparse
 import urllib.request
 import urllib.error
@@ -37,6 +38,85 @@ if _ollama_host and not _ollama_host.lower().startswith(("http://", "https://"))
     _ollama_host = "http://" + _ollama_host
 OLLAMA_HOST = _ollama_host.rstrip("/")
 ROUTER_PORT = int(os.environ.get("ROUTER_PORT", "11435"))
+
+# --- V-04 修复：网关默认只监听回环，CORS 不再放行任意来源 -------------------
+# 旧实现：serve() 固定 HTTPServer(("0.0.0.0", port)) 且每个响应都带
+# Access-Control-Allow-Origin: *，等于把局域网内任意浏览器/主机都变成可用客户端。
+ROUTER_HOST = os.environ.get("VIRTU_ROUTER_HOST", "127.0.0.1").strip() or "127.0.0.1"
+ROUTER_TOKEN = os.environ.get("VIRTU_ROUTER_TOKEN", "").strip()
+ROUTER_ALLOW_REMOTE_ENV = "VIRTU_ROUTER_ALLOW_REMOTE"
+ROUTER_CORS_ENV = "VIRTU_ROUTER_CORS_ORIGINS"
+# V-04 补强：旧实现"没设 VIRTU_ROUTER_TOKEN 就不校验"，等于默认无鉴权——
+# 本机任意进程（含被钓鱼页面触发的本地请求）都能白嫖网关并读取对话内容。
+# 现在默认强制：环境变量没给令牌时自动生成一份落盘（0600），客户端从这里读；
+# 仅在显式 VIRTU_ROUTER_AUTH=off 时才关闭校验（用于受控的本地调试）。
+ROUTER_AUTH_ENV = "VIRTU_ROUTER_AUTH"
+ROUTER_TOKEN_FILE = os.path.join(
+    os.path.dirname(os.path.abspath(__file__)), "runs", "router", "router_token.txt")
+
+
+def _auth_mode():
+    return "off" if str(os.environ.get(ROUTER_AUTH_ENV) or "").strip().lower() == "off" else "enforce"
+
+
+def router_token():
+    """返回当前生效令牌：环境变量优先，否则本地令牌文件（首次自动生成）。"""
+    if ROUTER_TOKEN:
+        return ROUTER_TOKEN
+    try:
+        if os.path.isfile(ROUTER_TOKEN_FILE):
+            with open(ROUTER_TOKEN_FILE, "r", encoding="utf-8") as fh:
+                stored = fh.read().strip()
+            if stored:
+                return stored
+    except OSError:
+        pass
+    import secrets as _secrets
+    token = _secrets.token_urlsafe(32)
+    try:
+        os.makedirs(os.path.dirname(ROUTER_TOKEN_FILE), exist_ok=True)
+        with open(ROUTER_TOKEN_FILE, "w", encoding="utf-8") as fh:
+            fh.write(token)
+        try:
+            os.chmod(ROUTER_TOKEN_FILE, 0o600)
+        except OSError:
+            pass
+    except OSError:
+        return ""
+    return token
+MAX_BODY_BYTES = 8 * 1024 * 1024
+
+
+def _is_loopback_host(host: str) -> bool:
+    return str(host or "").strip().lower() in ("127.0.0.1", "localhost", "::1")
+
+
+def _allowed_origins():
+    raw = os.environ.get(ROUTER_CORS_ENV, "").strip()
+    if raw:
+        return [x.strip().rstrip("/") for x in raw.split(",") if x.strip()]
+    return ["http://localhost", "http://127.0.0.1", "https://localhost", "https://127.0.0.1"]
+
+
+def cors_origin(origin):
+    """命中白名单则回显该来源，否则不返回 CORS 头（浏览器即拒绝跨域读取）。"""
+    if not origin:
+        return None
+    cand = str(origin).strip().rstrip("/")
+    for pat in _allowed_origins():
+        if cand == pat or cand.startswith(pat + ":"):
+            return cand
+    return None
+
+
+def validate_router_bind(host: str):
+    if _is_loopback_host(host):
+        return True, ""
+    if os.environ.get(ROUTER_ALLOW_REMOTE_ENV) != "1":
+        return False, "拒绝绑定非回环地址 %s：需要显式设置 %s=1" % (host, ROUTER_ALLOW_REMOTE_ENV)
+    if not ROUTER_TOKEN:
+        return False, "拒绝绑定非回环地址 %s：必须设置 VIRTU_ROUTER_TOKEN" % host
+    return True, ""
 
 FAST_MODEL = "qwen2.5:3b"
 PRO_MODEL = "virtu-comprehensive:latest"
@@ -118,6 +198,15 @@ def ollama_generate(model, prompt, system=None, stream=True, keep_alive="10m",
             pass
     if options_override:
         opts.update(options_override)
+
+    # 所有模型统一联网：检索实时资料注入 prompt。
+    # 结构化输出（format=json）不注入，避免污染受约束的 JSON 语法。
+    if not format:
+        try:
+            from virtu_omni.internet.augmentation import augment_prompt
+            prompt, _citations = augment_prompt(prompt)
+        except Exception:
+            pass
 
     payload = {
         "model": model,
@@ -233,14 +322,34 @@ class Handler(BaseHTTPRequestHandler):
         self.send_response(code)
         self.send_header("Content-Type", ctype)
         self.send_header("Content-Length", str(len(body)))
-        self.send_header("Access-Control-Allow-Origin", "*")
+        allowed = cors_origin(self.headers.get("Origin"))
+        if allowed:
+            self.send_header("Access-Control-Allow-Origin", allowed)
+            self.send_header("Vary", "Origin")
         self.end_headers()
         self.wfile.write(body)
+
+    def _authorized(self):
+        """默认强制校验（V-04）。仅 VIRTU_ROUTER_AUTH=off 时才关闭。"""
+        if _auth_mode() == "off":
+            return True
+        expected = router_token()
+        if not expected:
+            return False  # 拿不到令牌 -> fail-closed
+        header = str(self.headers.get("Authorization") or "")
+        if header.lower().startswith("bearer "):
+            supplied = header[7:].strip()
+        else:
+            supplied = str(self.headers.get("X-Virtu-Token") or "").strip()
+        return bool(supplied) and hmac.compare_digest(supplied, expected)
 
     def do_GET(self):
         p = urlparse(self.path)
         if p.path in ("/", "/health"):
             self._send(200, json.dumps({"status": "ok", "router": "virtu"}))
+            return
+        if not self._authorized():
+            self._send(401, json.dumps({"error": "unauthorized"}))
             return
         if p.path == "/v1/models":
             self._send(200, json.dumps({
@@ -257,7 +366,17 @@ class Handler(BaseHTTPRequestHandler):
 
     def do_POST(self):
         p = urlparse(self.path)
-        length = int(self.headers.get("Content-Length", 0))
+        if not self._authorized():
+            self._send(401, json.dumps({"error": "unauthorized"}))
+            return
+        try:
+            length = int(self.headers.get("Content-Length", 0) or 0)
+        except (TypeError, ValueError):
+            self._send(400, json.dumps({"error": "bad content-length"}))
+            return
+        if length > MAX_BODY_BYTES:
+            self._send(413, json.dumps({"error": "payload too large"}))
+            return
         raw = self.rfile.read(length) if length else b"{}"
         try:
             payload = json.loads(raw.decode("utf-8") or "{}")
@@ -317,7 +436,10 @@ class Handler(BaseHTTPRequestHandler):
         self.send_response(200)
         self.send_header("Content-Type", "text/event-stream")
         self.send_header("Cache-Control", "no-cache")
-        self.send_header("Access-Control-Allow-Origin", "*")
+        allowed = cors_origin(self.headers.get("Origin"))
+        if allowed:
+            self.send_header("Access-Control-Allow-Origin", allowed)
+            self.send_header("Vary", "Origin")
         self.end_headers()
         try:
             gen = ollama_generate(model, prompt, system=system, stream=True,
@@ -347,6 +469,13 @@ class Handler(BaseHTTPRequestHandler):
         model_req = payload.get("model", "virtu-auto")
         force = model_req if model_req in MODEL_ALIAS else None
         model = pick_model(prompt, force)
+        # 与 ollama_generate 同一条联网策略：所有模型都注入实时检索资料
+        if not payload.get("format"):
+            try:
+                from virtu_omni.internet.augmentation import augment_prompt
+                payload["prompt"], _citations = augment_prompt(prompt)
+            except Exception:
+                pass
         # 直接转发到 Ollama，但把 model 替换为实际选定模型
         payload["model"] = model
         payload.setdefault("keep_alive", "10m")
@@ -366,9 +495,16 @@ class Handler(BaseHTTPRequestHandler):
         pass  # 静默
 
 
-def serve(port):
-    srv = HTTPServer(("0.0.0.0", port), Handler)
-    print(f"[Virtu路由] OpenAI 兼容网关已启动: http://127.0.0.1:{port}")
+def serve(port, host=None):
+    host = (host or ROUTER_HOST).strip() or "127.0.0.1"
+    ok, reason = validate_router_bind(host)
+    if not ok:
+        print(f"[Virtu路由][错误] {reason}", file=sys.stderr)
+        raise SystemExit(2)
+    srv = HTTPServer((host, port), Handler)
+    print(f"[Virtu路由] OpenAI 兼容网关已启动: http://{host}:{port}")
+    if ROUTER_TOKEN:
+        print("[Virtu路由] 已启用 Bearer 令牌校验（VIRTU_ROUTER_TOKEN）")
     print(f"[Virtu路由] 后端 Ollama: {OLLAMA_HOST}")
     print(f"[Virtu路由] 默认快通道: {FAST_MODEL} | 工业模型: {PRO_MODEL}")
     print(f"[Virtu路由] 前端 API base 设为 http://127.0.0.1:{port} ，模型选 virtu-auto / virtu-fast / virtu-pro")

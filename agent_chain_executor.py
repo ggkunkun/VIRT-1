@@ -46,7 +46,7 @@ def sscnc_hwnd():
     import csv
     import io
     pids = []
-    out = subprocess.check_output(["tasklist", "/FO", "CSV", "/NH"], shell=True,
+    out = subprocess.check_output(["tasklist", "/FO", "CSV", "/NH"], shell=False,
                                   encoding="gbk", errors="ignore")
     for row in csv.reader(io.StringIO(out)):
         if row and row[0].lower() == "sscnc.exe":
@@ -2254,10 +2254,22 @@ def stage_vericut(project_path, out_dir, timeout=600, gui=True):
 
 def _wtext(hwnd, n=200, ms=400):
     """跨进程取窗口文字必须带超时：对方一旦卡在模态框/安全提示上，
-    GetWindowText 会永久阻塞（实测整条链卡死在 CIMCO 阶段）。"""
+    GetWindowText 会永久阻塞（实测整条链卡死在 CIMCO 阶段）。
+
+    注意：hwnd 必须先用 IsWindow 校验。对 HWND 0（桌面窗口）发 WM_GETTEXT
+    会走跨进程缓冲区编组，实测直接把调用进程打崩（访问冲突，退出码 127），
+    而不是像预期那样"立刻返回"。
+    """
     import ctypes
+    try:
+        hwnd = int(hwnd or 0)
+    except (TypeError, ValueError):
+        return "<无效窗口句柄>"
+    user32 = ctypes.windll.user32
+    if hwnd <= 0 or not user32.IsWindow(hwnd):
+        return "<无效窗口句柄>"
     buf = ctypes.create_unicode_buffer(n + 1)
-    ok = ctypes.windll.user32.SendMessageTimeoutW(
+    ok = user32.SendMessageTimeoutW(
         hwnd, 0x000D, n + 1, buf, 0x0002, ms)      # WM_GETTEXT, SMTO_ABORTIFHUNG
     return (buf.value if ok else "<取文本超时>")[:n]
 
@@ -2287,7 +2299,8 @@ EXPRESSIONS = %(expressions)r
 D_OUTER = %(d_outer).3f
 D_BORE = %(d_bore).3f
 LENGTH = %(length).3f
-GROOVE_Z = %(groove_z)s
+GROOVE_SPEC = %(groove_spec)s
+GROOVE_ORDER = %(groove_order)s
 GROOVE_W = %(groove_w).3f
 
 d = {"api_signatures": {}}
@@ -2330,21 +2343,46 @@ try:
     bore = uf.ModlFeatures.CreateCyl1(neg_sign, [0.0, 0.0, 0.0], "%%.3f" %% (LENGTH + 10.0), "%%.3f" %% D_BORE, [0.0, 0.0, -1.0])
     d["cyl_tag"], d["bore_tag"] = int(cyl), int(bore)
 
-    # 圆弧槽：UF 无 CreateTorus；试高亮 API 的 TorusBuilder，不成则如实记录（不做「切断式」假几何）
+    # 圆弧槽：NX 12 无 torus builder；用 UF 原生 BALL_END_GROOVE 在圆柱面上成槽。
+    # 面替换顺序敏感：两端先做、中间最后做（实测 3/3 成功；0,1,2 顺序第 3 槽报
+    # "Original face can not be replaced."）。失败如实记录，不伪造几何。
     groove = []
-    for zc in GROOVE_Z:
-        rec = {"z": zc}
+    outer_r = D_OUTER / 2.0
+
+    def _pick_outer_face(z):
         try:
-            tb = wp.Features.CreateTorusBuilder(None)
-            rec["builder"] = str(type(tb))
-            rec["attrs"] = [a for a in dir(tb) if a.lower() in
-                            ("majorradius", "minorradius", "toruscenter", "axes", "expression")][:8]
+            body_now = [b for b in wp.Bodies][0]
+        except Exception:
+            return None
+        for f in body_now.GetFaces():
             try:
-                tb.Destroy()
+                data = uf.Modeling.AskFaceData(f.Tag)
+                if int(data[0]) != 16 or abs(float(data[4]) - outer_r) > 1e-3:
+                    continue
+                box = data[3]
+                if box[2] - 1e-3 <= z <= box[5] + 1e-3:
+                    return int(f.Tag)
             except Exception:
-                pass
+                continue
+        return None
+
+    ordered = [GROOVE_SPEC[i] for i in GROOVE_ORDER if 0 <= i < len(GROOVE_SPEC)]
+    for zc, ball_dia in ordered:
+        rec = {"z": zc, "ball_dia": ball_dia}
+        try:
+            face = _pick_outer_face(zc)
+            rec["face"] = face
+            if face is None:
+                rec["err"] = "no cylindrical outer face at z"
+            else:
+                tag = uf.ModlFeatures.CreateBallGroove(
+                    [outer_r, 0.0, zc], [-1.0, 0.0, 0.0],
+                    "%%.3f" %% ball_dia, "%%.3f" %% GROOVE_W, face)
+                rec["feature_tag"] = int(tag)
+                rec["ok"] = True
+                uf.Modeling.Update()
         except Exception as ex:
-            rec["torus_builder_err"] = repr(ex)[:180]
+            rec["err"] = repr(ex)[:180]
         groove.append(rec)
     d["groove_notes"] = groove
 
@@ -2442,49 +2480,90 @@ def stage_nx(spec, out_dir, timeout=420):
     d_out = float(spec.get("d_outer", 53.0))
     d_bore = float(spec.get("d_inner", 14.0))
     length = float(spec.get("overall_len", 45.0))
-    pitch = length / 4.0
-    groove_z = [round(-pitch * i, 3) for i in (1, 2, 3)]
-    src = _NX_JOURNAL_TMPL % {
-        "part_path": part.replace("\\", "/"),
-        "result_path": result.replace("\\", "/"),
-        "template": NX_TEMPLATE,
-        "expressions": [
-            "D_OUTER = %.3f" % d_out,
-            "D_BORE = %.3f" % d_bore,
-            "TOTAL_LENGTH = %.3f" % length,
-            "GROOVE_PITCH = %.3f" % pitch,
-        ],
-        "d_outer": d_out, "d_bore": d_bore, "length": length,
-        "groove_z": groove_z, "groove_w": 6.0,
-    }
-    open(journal, "w", encoding="utf-8").write(src)
+    radii = [float(r) for r in (spec.get("groove_radii") or []) if float(r) > 0]
+    n_grooves = max(1, min(int(spec.get("num_grooves") or spec.get("num_features") or 3), 6))
+    if radii:
+        radii = radii[:n_grooves]
+        n_grooves = len(radii)
+    else:
+        radii = [float(spec.get("fillet_r", 3.0))] * n_grooves
+    pitch = length / (n_grooves + 1.0)
+    groove_spec = [(round(-pitch * (i + 1), 3), round(2.0 * r, 3)) for i, r in enumerate(radii)]
+
     if not os.path.exists(NX_RUN_JOURNAL):
         return _evidence("nx", "blocked", "run_journal.exe", error="run_journal.exe not found")
 
-    t0 = time.time()
-    p = subprocess.run([NX_RUN_JOURNAL, journal], env=nx_env(),
-                       cwd=os.path.join(NX_BASE, "NXBIN"),
-                       capture_output=True, timeout=timeout)
-    elapsed = round(time.time() - t0, 1)
-    stdout = p.stdout.decode("gbk", "ignore")
-    stderr = p.stderr.decode("gbk", "ignore")
-    if not os.path.exists(result):
+    n = len(groove_spec)
+    base = list(range(n))
+    raw_orders = [base]
+    if n >= 2:
+        raw_orders.append(list(reversed(base)))
+    if n >= 3:
+        raw_orders.append(base[::2] + base[1::2])
+        raw_orders.append(base[1::2] + base[::2])
+    seen, candidates = set(), []
+    for o in raw_orders:
+        key = tuple(o)
+        if key not in seen:
+            seen.add(key)
+            candidates.append(o)
+
+    best = None
+    attempts = []
+    for order in candidates:
+        src = _NX_JOURNAL_TMPL % {
+            "part_path": part.replace("\\", "/"),
+            "result_path": result.replace("\\", "/"),
+            "template": NX_TEMPLATE,
+            "expressions": [
+                "D_OUTER = %.3f" % d_out,
+                "D_BORE = %.3f" % d_bore,
+                "TOTAL_LENGTH = %.3f" % length,
+                "GROOVE_PITCH = %.3f" % pitch,
+            ],
+            "d_outer": d_out, "d_bore": d_bore, "length": length,
+            "groove_spec": groove_spec, "groove_order": order, "groove_w": 6.0,
+        }
+        open(journal, "w", encoding="utf-8").write(src)
+        t0 = time.time()
+        p = subprocess.run([NX_RUN_JOURNAL, journal], env=nx_env(),
+                           cwd=os.path.join(NX_BASE, "NXBIN"),
+                           capture_output=True, timeout=timeout)
+        elapsed = round(time.time() - t0, 1)
+        stdout = p.stdout.decode("gbk", "ignore")
+        stderr = p.stderr.decode("gbk", "ignore")
+        if not os.path.exists(result):
+            attempts.append({"order": order, "error": "no result rc=%s stderr=%s" % (p.returncode, stderr[:200])})
+            continue
+        d = json.load(open(result, encoding="utf-8"))
+        notes = d.get("groove_notes") or []
+        ok_count = sum(1 for g in notes if g.get("ok"))
+        attempts.append({"order": order, "ok": ok_count, "n": n})
+        if best is None or ok_count > best["ok"]:
+            best = {"ok": ok_count, "d": d, "order": order, "elapsed": elapsed,
+                    "rc": p.returncode, "stdout": stdout}
+        if n == 0 or ok_count == n:
+            break
+
+    if best is None:
         return _evidence("nx", "blocked", "run_journal.exe (headless)",
-                         error="journal 未写出结果文件 rc=%s stderr=%s" % (p.returncode, stderr[:400]),
-                         notes=["elapsed=%ss" % elapsed, stdout[:300]])
-    d = json.load(open(result, encoding="utf-8"))
+                         error="journal 未写出任何结果文件", notes=attempts)
+    d = best["d"]
     status = "executed" if d.get("status") == "OK" and d.get("part_exists") else "blocked"
     return _evidence("nx", status, "run_journal.exe (headless, no GUI)",
-                     metrics={"elapsed_s": elapsed, "rc": p.returncode,
+                     metrics={"elapsed_s": best["elapsed"], "rc": best["rc"],
                               "feature_count": d.get("feature_count"),
                               "expressions": d.get("expressions"),
                               "part_bytes": d.get("part_bytes"),
                               "body_tag": d.get("body_tag"),
                               "bbox_raw": d.get("bbox_raw"),
-                              "groove_notes": d.get("groove_notes")},
+                              "groove_notes": d.get("groove_notes"),
+                              "groove_order": best["order"],
+                              "groove_attempts": attempts},
                      files=[f for f in (part, result, journal) if os.path.exists(f)],
                      error=d.get("error") or d.get("save_err") or d.get("update_err"),
-                     notes=["api_signatures=%s" % json.dumps(d.get("api_signatures", {}))[:400]])
+                     notes=["api_signatures=%s" % json.dumps(d.get("api_signatures", {}))[:400],
+                            "groove_order_used=%s attempts=%s" % (best["order"], attempts)])
 
 
 VERICUT_SAMPLE = r"E:\samples\All\force_turning_generic_2_axis_lathe_turret_fan15t_mm.vcproject"

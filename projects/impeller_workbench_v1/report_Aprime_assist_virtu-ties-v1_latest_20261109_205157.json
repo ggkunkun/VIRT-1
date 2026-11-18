@@ -1,0 +1,148 @@
+{
+ "route": "A'",
+ "mode": "assist",
+ "model": "virtu-ties-v1:latest",
+ "host": "http://127.0.0.1:11435",
+ "passed": true,
+ "elapsed_s": 34.4,
+ "model_free_degrees": {
+  "Z_blades": 10.0,
+  "beta2b_deg": 30.0,
+  "eta_total": 0.85,
+  "D2_mm": 150.0,
+  "N_rpm": 15000.0
+ },
+ "chosen_candidate": {
+  "id": "B",
+  "policy": "锁 N=15000 rpm，反解 D2=579 mm",
+  "n_viol": 0
+ },
+ "final_params": {
+  "D2_mm": 578.63,
+  "N_rpm": 15000.0,
+  "Z_blades": 10,
+  "beta2b_deg": 30.0,
+  "b2_mm": 52.08,
+  "D1t_mm": 468.35,
+  "D1h_mm": 444.57,
+  "axial_length_mm": 216.99,
+  "shroud_thickness_mm": 2.0,
+  "blade_thickness_mm": 1.8,
+  "hub_disk_thickness_mm": 2.0,
+  "bore_diameter_mm": 57.86,
+  "fillet_root_mm": 1.2,
+  "eta_total": 0.85,
+  "claimed_pressure_ratio": 4.01,
+  "claimed_tip_speed_m_s": 454.45,
+  "claimed_FOS": 1.92
+ },
+ "final_violations": [],
+ "ruler": "closed_impeller_proctor.ruler (non-model, 未修改)",
+ "accounting": {
+  "model_decides": "Z_blades / beta2b_deg / b2 比值假设 / eta_total / 候选接受权",
+  "solver_derives": "axial_length_mm（区间中值）、D1t_mm/D1h_mm（由 ca1 目标反解喉口面积）、b2_mm（由比值 × D2）、claimed_*（由 ruler 复算派生）",
+  "system_does_not": "不改判据、不放宽 ruler、不参与合格判定"
+ },
+ "error": null,
+ "trace": [
+  {
+   "stage": "model_params",
+   "elapsed_s": 29.9,
+   "eval_count": 424,
+   "raw_head": "{\"action\":\"check\",\"params\":{\"D2_mm\":150,\"N_rpm\":15000,\"Z_blades\":10,\"beta2b_deg\":30,\"b2_mm\":20,\"D1t_mm\":200,\"D1h_mm\":150,\"axial_length_mm\":10,\"shroud_thickness_mm\":1.5,\"blade_thickness_mm\":1.5,\"hub_disk_thickness_mm\":2.0,\"bore_diameter_mm\":100,\"fillet_root_mm\":1.0,\"eta_total\":0.85,\"claimed_pressure_ratio\":4.0,\"claimed_tip_speed_m_s\":265,\"claimed_FOS\":1.8,\"design_rationale\":\"基于压比目标和效率估算叶尖速度，分配 D2=1",
+   "model_params": {
+    "D2_mm": 150.0,
+    "N_rpm": 15000.0,
+    "Z_blades": 10.0,
+    "beta2b_deg": 30.0,
+    "b2_mm": 20.0,
+    "D1t_mm": 200.0,
+    "D1h_mm": 150.0,
+    "axial_length_mm": 10.0,
+    "shroud_thickness_mm": 1.5,
+    "blade_thickness_mm": 1.5,
+    "hub_disk_thickness_mm": 2.0,
+    "bore_diameter_mm": 100.0,
+    "fillet_root_mm": 1.0,
+    "eta_total": 0.85,
+    "claimed_pressure_ratio": 4.0,
+    "claimed_tip_speed_m_s": 265.0,
+    "claimed_FOS": 1.8,
+    "design_rationale": 2.0
+   },
+   "missing": [],
+   "n_viol_model_alone": 7,
+   "violations_model_alone": [
+    "直径序不成立: 需 0<bore<D1h<D1t<D2, 实得 bore=100.0, D1h=150.0, D1t=200.0, D2=150.0",
+    "出口流道宽比 b2/D2=0.1333 不在 [0.02,0.10]",
+    "进口叶顶径比 D1t/D2=1.333 不在 [0.40,0.85]",
+    "轴向长 L=10.0 不在 [0.20·D2, 0.55·D2]=[30.0,82.5]",
+    "轴向长 L=10.0 < 轮毂盘+盖盘+出口叶高之和 23.5",
+    "宣称叶尖速 265.0 与复算 u2=117.8 m/s 偏差 >1%",
+    "出口迭代非物理：b2=20.0mm 下流量/面积失配（cm2 发散或出口静温≤0），压比不可复算；需增大 b2 或 D2"
+   ]
+  },
+  {
+   "stage": "solver_candidates",
+   "candidates": [
+    {
+     "id": "A",
+     "policy": "锁 D2=150 mm，反解 N=53046 rpm",
+     "n_viol": 1,
+     "params": {
+      "D2_mm": 150.0,
+      "N_rpm": 53045.5,
+      "Z_blades": 10,
+      "beta2b_deg": 30.0,
+      "b2_mm": 13.5,
+      "D1t_mm": 119.1,
+      "D1h_mm": 24.03,
+      "axial_length_mm": 56.25,
+      "shroud_thickness_mm": 2.0,
+      "blade_thickness_mm": 1.8,
+      "hub_disk_thickness_mm": 2.0,
+      "bore_diameter_mm": 15.0,
+      "fillet_root_mm": 1.2,
+      "eta_total": 0.85,
+      "claimed_pressure_ratio": 2.425,
+      "claimed_tip_speed_m_s": 416.62,
+      "claimed_FOS": 2.284
+     }
+    },
+    {
+     "id": "B",
+     "policy": "锁 N=15000 rpm，反解 D2=579 mm",
+     "n_viol": 0,
+     "params": {
+      "D2_mm": 578.63,
+      "N_rpm": 15000.0,
+      "Z_blades": 10,
+      "beta2b_deg": 30.0,
+      "b2_mm": 52.08,
+      "D1t_mm": 468.35,
+      "D1h_mm": 444.57,
+      "axial_length_mm": 216.99,
+      "shroud_thickness_mm": 2.0,
+      "blade_thickness_mm": 1.8,
+      "hub_disk_thickness_mm": 2.0,
+      "bore_diameter_mm": 57.86,
+      "fillet_root_mm": 1.2,
+      "eta_total": 0.85,
+      "claimed_pressure_ratio": 4.01,
+      "claimed_tip_speed_m_s": 454.45,
+      "claimed_FOS": 1.92
+     }
+    }
+   ]
+  },
+  {
+   "stage": "decide",
+   "elapsed_s": 4.4,
+   "eval_count": 31,
+   "raw_head": "{\"action\": \"accept\", \"choice\": \"B\", \"reason\": \"压比达标，其他参数在合理范围内\"}",
+   "action": "accept",
+   "choice": "B",
+   "reason": "压比达标，其他参数在合理范围内"
+  }
+ ]
+}

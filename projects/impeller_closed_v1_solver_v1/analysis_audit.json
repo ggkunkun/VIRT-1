@@ -1,0 +1,31 @@
+{
+  "pass": true,
+  "model_result": {
+    "u2_m_s": 495.158,
+    "pressure_ratio": 4.01,
+    "M_rel_tip": 1.08,
+    "FOS": 1.6172,
+    "sigma_eq_MPa": 544.16,
+    "T02_K": 463.58,
+    "dh0_kJ_kg": 176.219,
+    "cm2_m_s": 145.46,
+    "slip_sigma": 0.8328,
+    "Ns": 0.8696,
+    "method": "analytic_recomputed(由冻结参数解析复算，判别式见 closed_impeller_proctor.ruler)",
+    "ruler_violations": []
+  },
+  "ruler_values": {
+    "u2_m_s": 495.158,
+    "slip_sigma": 0.8328,
+    "dh0_kJ_kg": 176.219,
+    "pressure_ratio_recomputed": 4.01,
+    "cm2_m_s": 145.46,
+    "sigma_eq_MPa": 544.16,
+    "FOS_recomputed": 1.6172,
+    "ca1_m_s": 135.0,
+    "M_rel_tip": 1.08,
+    "Ns": 0.8696,
+    "T02_K": 463.58
+  },
+  "discrepancies": []
+}

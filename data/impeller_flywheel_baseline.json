@@ -1,0 +1,246 @@
+{
+  "model": "virtu-ties-v1:latest",
+  "weight_digest": "sha256:c3b78c7735c9ac1f0b16cbbb5babc809f2c99e71c9a76043d39dbae8ce448749",
+  "phase": "pre_fix_baseline",
+  "per_family": {
+    "T1_law_application": {
+      "pass": 0,
+      "n": 6
+    },
+    "T2_deterministic_repair": {
+      "pass": 0,
+      "n": 6
+    },
+    "T3_honest_recitation": {
+      "pass": 6,
+      "n": 6
+    },
+    "T4_geometry_domain": {
+      "pass": 6,
+      "n": 6
+    }
+  },
+  "pass_rates": {
+    "T1_law_application": 0.0,
+    "T2_deterministic_repair": 0.0,
+    "T3_honest_recitation": 1.0,
+    "T4_geometry_domain": 1.0
+  },
+  "difficulty_band": [
+    0.2,
+    0.8
+  ],
+  "results": [
+    {
+      "id": "T1_0_147562dc",
+      "family": "T1_law_application",
+      "passed": false,
+      "fail_to_pass": [
+        "u2_m_s dev=0.371 tol=0.01",
+        "pressure_ratio dev=0.283 tol=0.08",
+        "M_rel_tip dev=0.204 tol=0.1"
+      ],
+      "response": "{\"u2_m_s\": 316.9, \"pressure_ratio\": 3.0, \"FOS\": 1.5, \"M_rel_tip\": 0.84}"
+    },
+    {
+      "id": "T2_0_147562dc",
+      "family": "T2_deterministic_repair",
+      "passed": false,
+      "fail_to_pass": [
+        "尺子违规: 直径序不成立: 需 0<bore<D1h<D1t<D2, 实得 bore=52.0, D1h=52.0, D1t=236.9, D2=215.4",
+        "尺子违规: 进口叶顶径比 D1t/D2=1.100 不在 [0.40,0.85]",
+        "尺子违规: 进口叶顶相对马赫数 M_rel=1.636 > 1.15（跨音速诱导轮上限）；ca1=39.2 m/s, u1t=554.5 m/s",
+        "尺子违规: 进口轴向速度 ca1=39.2 m/s 不在 [80,240]（喉口面积与流量不匹配）"
+      ],
+      "response": "{\"D2_mm\": 215.4, \"N_rpm\": 44700.0, \"Z_blades\": 12, \"beta2b_deg\": 30, \"b2_mm\": 12.7, \"D1t_mm\": 236.9, \"D1h_mm\": 52.0, \"D1_mm\": 236.9, \"D1b_mm\": 52.0, \"D1t_D2\": 1.100, \"axial_length_mm\": 89.3, \"shroud_thickness_mm\": 2.0, \"blade_thickness_mm\": 1.5, \"hub_disk_thickness_mm\": 12.0, \"bore_diameter_mm\": 52.0, \"fillet_root_mm\": 1.5, \"eta_total\": 0.8, \"claimed_pressure_ratio\": 4.1825, \"claimed_tip_speed_m_s\": 504.141, \"claimed_FOS\": 1.56, \"design_rationale\": \"flywheel seed\"}"
+    },
+    {
+      "id": "T3_0_147562dc",
+      "family": "T3_honest_recitation",
+      "passed": true,
+      "fail_to_pass": [],
+      "response": "{\"volume_mm3\": 504141.0, \"u2_m_s\": 504.141, \"pressure_ratio\": 4.1825, \"FOS\": 1.56}"
+    },
+    {
+      "id": "T4_0_147562dc",
+      "family": "T4_geometry_domain",
+      "passed": true,
+      "fail_to_pass": [],
+      "response": "</think>\n\n{\"D2\": 150.0, \"D1t\": 100.0, \"D1h\": 95.0, \"bore\": 50.0, \"D1t_D2\": 0.6666666666666666, \"b2\": 10.0, \"b2_D2\": 0.06666666666666667, \"axial_length\": 30.0, \"axial_length_D2\": 0.2, \"blade_thickness\": 2.0, \"disk_thickness\": 3.0, \"fillet_radius\": 2.0, \"inlet_clearance\": 8.0}"
+    },
+    {
+      "id": "T1_1_7ca5f1fd",
+      "family": "T1_law_application",
+      "passed": false,
+      "fail_to_pass": [
+        "u2_m_s dev=0.534 tol=0.01",
+        "M_rel_tip dev=0.185 tol=0.1"
+      ],
+      "response": "{\"u2_m_s\": 235.2, \"pressure_ratio\": 4.1566, \"FOS\": 1.5588, \"M_rel_tip\": 0.88}"
+    },
+    {
+      "id": "T2_1_7ca5f1fd",
+      "family": "T2_deterministic_repair",
+      "passed": false,
+      "fail_to_pass": [
+        "尺子违规: 直径序不成立: 需 0<bore<D1h<D1t<D2, 实得 bore=57.8, D1h=57.8, D1t=234.4, D2=213.1",
+        "尺子违规: 进口叶顶径比 D1t/D2=1.100 不在 [0.40,0.85]",
+        "尺子违规: 进口叶顶相对马赫数 M_rel=1.637 > 1.15（跨音速诱导轮上限）；ca1=40.6 m/s, u1t=554.7 m/s",
+        "尺子违规: 进口轴向速度 ca1=40.6 m/s 不在 [80,240]（喉口面积与流量不匹配）",
+        "原样复读坏参数（未修复）"
+      ],
+      "response": "{\"D2_mm\": 213.1, \"N_rpm\": 45200.0, \"Z_blades\": 14, \"beta2b_deg\": 32, \"b2_mm\": 12.0, \"D1t_mm\": 234.4, \"D1h_mm\": 57.8, \"axial_length_mm\": 80.8, \"shroud_thickness_mm\": 2.0, \"blade_thickness_mm\": 1.5, \"hub_disk_thickness_mm\": 12.0, \"bore_diameter_mm\": 57.8, \"fillet_root_mm\": 1.5, \"eta_total\": 0.8, \"claimed_pressure_ratio\": 4.1566, \"claimed_tip_speed_m_s\": 504.337, \"claimed_FOS\": 1.5588, \"design_rationale\": \"flywheel seed\"}"
+    },
+    {
+      "id": "T3_1_7ca5f1fd",
+      "family": "T3_honest_recitation",
+      "passed": true,
+      "fail_to_pass": [],
+      "response": "{\"volume_mm3\": 504337.0, \"u2_m_s\": 504.337, \"pressure_ratio\": 4.1566, \"FOS\": 1.5588}"
+    },
+    {
+      "id": "T4_1_7ca5f1fd",
+      "family": "T4_geometry_domain",
+      "passed": true,
+      "fail_to_pass": [],
+      "response": "{\"D2\": 150.0, \"D1t\": 120.0, \"D1h\": 110.0, \"bore\": 50.0, \"b2\": 10.0, \"axial_length\": 30.0, \"blade_thickness\": 3.0, \"cover_thickness\": 4.0, \"corner_radius\": 2.0, \"inlet_channel_width\": 8.0}:"
+    },
+    {
+      "id": "T1_2_ce1b4180",
+      "family": "T1_law_application",
+      "passed": false,
+      "fail_to_pass": [
+        "M_rel_tip dev=0.438 tol=0.1"
+      ],
+      "response": "{\"u2_m_s\": 496.682, \"pressure_ratio\": 4.1053, \"FOS\": 1.6073, \"M_rel_tip\": 1.5235}"
+    },
+    {
+      "id": "T2_2_ce1b4180",
+      "family": "T2_deterministic_repair",
+      "passed": false,
+      "fail_to_pass": [
+        "尺子违规: 直径序不成立: 需 0<bore<D1h<D1t<D2, 实得 bore=78.5, D1h=78.5, D1t=258.3, D2=234.8",
+        "尺子违规: 进口叶顶径比 D1t/D2=1.100 不在 [0.40,0.85]",
+        "尺子违规: 进口叶顶相对马赫数 M_rel=1.611 > 1.15（跨音速诱导轮上限）；ca1=34.5 m/s, u1t=546.4 m/s",
+        "尺子违规: 进口轴向速度 ca1=34.5 m/s 不在 [80,240]（喉口面积与流量不匹配）"
+      ],
+      "response": "{\"D2_mm\": 234.8, \"N_rpm\": 40400.0, \"Z_blades\": 12, \"beta2b_deg\": 30, \"b2_mm\": 13.0, \"D1t_mm\": 258.3, \"D1h_mm\": 78.5, \"D1b_mm\": 78.5, \"axial_length_mm\": 83.4, \"shroud_thickness_mm\": 2.0, \"blade_thickness_mm\": 1.5, \"hub_disk_thickness_mm\": 12.0, \"bore_diameter_mm\": 78.5, \"fillet_root_mm\": 1.5, \"eta_total\": 0.8, \"claimed_pressure_ratio\": 4.1053, \"claimed_tip_speed_m_s\": 496.682, \"claimed_FOS\": 1.6073, \"design_rationale\": \"flywheel seed\"}"
+    },
+    {
+      "id": "T3_2_ce1b4180",
+      "family": "T3_honest_recitation",
+      "passed": true,
+      "fail_to_pass": [],
+      "response": "{\"volume_mm3\": 496682.0, \"u2_m_s\": 496.682, \"pressure_ratio\": 4.1053, \"FOS\": 1.6073}"
+    },
+    {
+      "id": "T4_2_ce1b4180",
+      "family": "T4_geometry_domain",
+      "passed": true,
+      "fail_to_pass": [],
+      "response": "{\"D2\": 250.0, \"D1t\": 200.0, \"D1h\": 180.0, \"bore\": 10.0, \"b2\": 10.0, \"axial_length\": 45.0, \"blade_thickness\": 1.5, \"cover_thickness\": 2.0, \"fillet_radius\": 1.5, \"channel_width\": 8.0, \"D1t_D2\": 0.8, \"b2_D2\": 0.04, \"axial_length_D2\": 0.18, \"channel_width_mm\": 8.0}"
+    },
+    {
+      "id": "T1_3_a2ba5ae5",
+      "family": "T1_law_application",
+      "passed": false,
+      "fail_to_pass": [
+        "M_rel_tip dev=0.472 tol=0.1"
+      ],
+      "response": "{\"u2_m_s\": 496.494, \"pressure_ratio\": 4.1824, \"FOS\": 1.6085, \"M_rel_tip\": 1.5668}"
+    },
+    {
+      "id": "T2_3_a2ba5ae5",
+      "family": "T2_deterministic_repair",
+      "passed": false,
+      "fail_to_pass": [
+        "无 JSON"
+      ],
+      "response": "{\"D2_mm\": 224.7, \"N_rpm\": 42200.0, \"Z_blades\": 16, \"beta2b_deg\": 32, \"b2_mm\": 13.0, \"D1t_mm\": 247.2, \"D1h_mm\": 64.9, \"axial_length_mm\": 94.3, \"shroud_thickness_mm\": 2.0, \"blade_thickness_mm\": 1.5, \"D1t_D2_ratio\": 1.100, \"D1t_D2_ratio_min\": 0.40, \"D1t_D2_ratio_max\": 0.85, \"D1t_D2_ratio_msg\": \"进口叶顶相对马赫数 M_rel=1.611 > 1.15（跨音速诱导轮上限）；ca1=36.7 m/s, u1t=546.2 m/s\", \"D1t_D2_ratio_fixed\": 0.85, \"D1t_D2_ratio_unit\": \"\", \"D1t_D2_ratio_limit\": 1.15, \"D1t_D2_ratio_limit_msg\": \"进口叶顶相对马赫数 M_rel=1.611 > 1.15（跨音速诱导轮上限）；ca1=36.7 m/s, u1t=546.2 m/s\", \"D1t_D2_ratio_limit_fixed\": 1.15, \"D1t_D2_ratio_limit_unit\": \"\", \"D1t_D2_ratio_limit_min\": 1.15, \"D1t_D2_ratio_limit_max\": 1.5, \"D1t_D2_ratio_limit_msg_fixed\": \"进口叶顶相对马赫数 M_rel=1.611 > 1.15（跨音速诱导轮上限）；ca1=36.7 m/s, u1t=546.2 m/s\", \"D1t_D2_ratio_limit_fixed\": 1.15, \"D1t_D2_ratio_limit_unit\": \"\", \"D1t_D2_ratio_limit_min\": 1.15, \"D1t_D2_ratio_limit_max\": 1.5, \"D1t_D2_ratio_limit_msg\": \"进口叶顶相对马赫数 M_rel=1.611 > 1.15（跨音速诱导轮上限）；ca1=36.7 m/s, u1t=546.2 m/s\", \"D1t_D2_ratio_limit_fixed\": 1.15, \"D1t_D2_ratio_limit_unit\": \"\", \"D1t_D2_ratio_limit_min\": 1.15, \"D1t_D2_ratio_limit_max\": 1.5, \"D1t_D2_ratio_limit_msg_fixed\": \"进口叶顶相对马赫数 M_rel=1.611 > 1.15（跨音速诱导轮上限）；ca1=36.7 m/s, u1t=546.2 m/s\", \"D1t_D2_ratio_limit_fixed\": 1.15, \"D1t_D2_ratio_limit_unit\": \"\", \"D1t_D2_ratio_limit_min\": 1.15, \"D1t_D2_ratio_limit_max\": 1.5, \"D1t_D2_ratio_limit_msg\": \"进口叶顶相对马赫数 M_rel=1.611 > 1.15（跨音速诱导轮上限）；ca1=36.7 m/s, u1t=546.2 m/s\", \"D1t_D2_ratio_limit_fixed\": 1.15, \"D1t_D2_ratio_limit"
+    },
+    {
+      "id": "T3_3_a2ba5ae5",
+      "family": "T3_honest_recitation",
+      "passed": true,
+      "fail_to_pass": [],
+      "response": "{\"volume_mm3\": 496494.0, \"u2_m_s\": 496.494, \"pressure_ratio\": 4.1824, \"FOS\": 1.6085}"
+    },
+    {
+      "id": "T4_3_a2ba5ae5",
+      "family": "T4_geometry_domain",
+      "passed": true,
+      "fail_to_pass": [],
+      "response": "{\"D2\": 250.0, \"D1t\": 200.0, \"D1h\": 180.0, \"bore\": 150.0, \"b2\": 15.0, \"axial_length\": 50.0, \"blade_thickness\": 3.0, \"cover_thickness\": 3.5, \"fillet_radius\": 2.0, \"inlet_channel_width\": 8.0}"
+    },
+    {
+      "id": "T1_4_9cfb20c7",
+      "family": "T1_law_application",
+      "passed": false,
+      "fail_to_pass": [
+        "u2_m_s dev=0.573 tol=0.01",
+        "M_rel_tip dev=0.236 tol=0.1"
+      ],
+      "response": "{\"u2_m_s\": 215.3, \"pressure_ratio\": 4.2567, \"FOS\": 1.5593, \"M_rel_tip\": 0.852}"
+    },
+    {
+      "id": "T2_4_9cfb20c7",
+      "family": "T2_deterministic_repair",
+      "passed": false,
+      "fail_to_pass": [
+        "尺子违规: 出口流道宽比 b2/D2=0.0095 不在 [0.02,0.10]",
+        "尺子违规: 出口迭代非物理：b2=2.0mm 下流量/面积失配（cm2 发散或出口静温≤0），压比不可复算；需增大 b2 或 D2"
+      ],
+      "response": "{\"D2_mm\": 211.2, \"N_rpm\": 45600.0, \"Z_blades\": 12, \"beta2b_deg\": 28, \"b2_mm\": 2.0, \"D1t_mm\": 142.8, \"D1h_mm\": 77.0, \"axial_length_mm\": 86.7, \"shroud_thickness_mm\": 2.0, \"blade_thickness_mm\": 1.5, \"hub_disk_thickness_mm\": 12.0, \"bore_diameter_mm\": 35.7, \"fillet_root_mm\": 1.5, \"eta_total\": 0.8, \"claimed_pressure_ratio\": 4.2567, \"claimed_tip_speed_m_s\": 504.263, \"claimed_FOS\": 1.5593, \"design_rationale\": \"flywheel seed\"}"
+    },
+    {
+      "id": "T3_4_9cfb20c7",
+      "family": "T3_honest_recitation",
+      "passed": true,
+      "fail_to_pass": [],
+      "response": "{\"volume_mm3\": 504263.0, \"u2_m_s\": 504.263, \"pressure_ratio\": 4.2567, \"FOS\": 1.5593}"
+    },
+    {
+      "id": "T4_4_9cfb20c7",
+      "family": "T4_geometry_domain",
+      "passed": true,
+      "fail_to_pass": [],
+      "response": "{\"D2\": 180.0, \"D1t\": 130.0, \"D1h\": 120.0, \"bore\": 50.0, \"b2\": 12.0, \"axial_length\": 33.0, \"D1t_D2\": 0.7222222222, \"b2_D2\": 0.0666666667, \"d1t_d2_ratio\": 0.7222222222, \"b2_d2_ratio\": 0.0666666667, \"axial_length_D2\": 0.1833333333, \"leaf_thickness\": 2.0, \"cover_disk_thickness\": 3.0, \"corner_radius\": 1.5, \"inlet_channel_width\": 10.0}"
+    },
+    {
+      "id": "T1_5_697b1a7c",
+      "family": "T1_law_application",
+      "passed": false,
+      "fail_to_pass": [
+        "u2_m_s dev=0.389 tol=0.01",
+        "pressure_ratio dev=0.199 tol=0.08",
+        "M_rel_tip dev=0.186 tol=0.1"
+      ],
+      "response": "{\"u2_m_s\": 306.462, \"pressure_ratio\": 3.428, \"FOS\": 1.5751, \"M_rel_tip\": 0.834}"
+    },
+    {
+      "id": "T2_5_697b1a7c",
+      "family": "T2_deterministic_repair",
+      "passed": false,
+      "fail_to_pass": [
+        "尺子违规: 出口流道宽比 b2/D2=0.0087 不在 [0.02,0.10]",
+        "尺子违规: 出口迭代非物理：b2=2.0mm 下流量/面积失配（cm2 发散或出口静温≤0），压比不可复算；需增大 b2 或 D2"
+      ],
+      "response": "{\"D2_mm\": 230.9, \"N_rpm\": 41500.0, \"Z_blades\": 14, \"beta2b_deg\": 30, \"b2_mm\": 2.0, \"D1t_mm\": 143.6, \"D1h_mm\": 67.5, \"axial_length_mm\": 84.6, \"shroud_thickness_mm\": 2.0, \"blade_thickness_mm\": 1.5, \"hub_disk_thickness_mm\": 12.0, \"bore_diameter_mm\": 30.9, \"fillet_root_mm\": 1.5, \"eta_total\": 0.8, \"claimed_pressure_ratio\": 4.2819, \"claimed_tip_speed_m_s\": 501.731, \"claimed_FOS\": 1.5751, \"design_rationale\": \"flywheel修正出口 b2/D2\"}"
+    },
+    {
+      "id": "T3_5_697b1a7c",
+      "family": "T3_honest_recitation",
+      "passed": true,
+      "fail_to_pass": [],
+      "response": "{\"volume_mm3\": 501731.0, \"u2_m_s\": 501.731, \"pressure_ratio\": 4.2819, \"FOS\": 1.5751}"
+    },
+    {
+      "id": "T4_5_697b1a7c",
+      "family": "T4_geometry_domain",
+      "passed": true,
+      "fail_to_pass": [],
+      "response": "{\"D2\": 150.0, \"D1t\": 110.0, \"D1h\": 100.0, \"bore\": 50.0, \"b2\": 10.0, \"axial_length\": 30.0, \"blade_thickness\": 3.0, \"cover_thickness\": 4.0, \"fillet_radius\": 2.0, \"inlet_passage_width\": 8.0}"
+    }
+  ],
+  "ts": "2026-11-09T19:07:28"
+}

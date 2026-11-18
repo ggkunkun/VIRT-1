@@ -31,6 +31,13 @@ from virtu_omni.agent import (
 )
 
 
+@pytest.fixture(autouse=True)
+def _isolate_test_memory(tmp_path, monkeypatch):
+    """Prevent unit tests from polluting production data/memory/industrial_knowledge_memory.json."""
+    monkeypatch.setenv("VIRTU_MEMORY_PATH", str(tmp_path / "test_industrial_memory.json"))
+
+
+
 def test_headless_sandbox_vba():
     verifier = HeadlessSandboxVerifier()
     
@@ -149,9 +156,20 @@ def test_industrial_agent_team_solve():
     team = IndustrialAgentTeam()
     res = team.solve("我想制造一款外径60mm，内孔22mm，长度80mm，材质为AL7075-T6的高强连杆衬套")
 
-    assert res["status"] == "SUCCESS"
+    # 团队级 status 必须由 7 步子智能体真实 status 聚合得出（不得是写死的字面量）
+    assert res["status"] in ("SUCCESS", "PARTIAL")
+    assert res["status"] == team.aggregate_team_status(res["per_agent_status"])
+    assert len(res["per_agent_status"]) == 7
+    assert set(res["per_agent_status"]) == set(IndustrialAgentTeam.ROLE_ORDER)
     assert res["runtime_seconds"] > 0
     assert len(res["team_collaboration_log"]) == 7
+
+    # 报告不得再把"零孤儿进程滞留"写成未实测的模板断言
+    with open(res["report_path"], "r", encoding="utf-8") as f:
+        report_text = f.read()
+    assert "零孤儿进程滞留" not in report_text
+    assert "残留进程实测" in report_text
+    assert res["residual_processes"]["basis"] in ("measured", "partially_unmeasured", "unmeasured")
 
     # Check ChiefArchitectAgent output
     arch = res["architecture"]
@@ -178,11 +196,14 @@ def test_industrial_agent_team_solve():
     audit = res["sandbox_audit"]
     assert audit["passed"] is True
     assert "verified_sw_vba" in audit
+    assert audit.get("sandbox_verification", {}).get("passed") is True
 
     # Check EvolutionAndMemoryAgent output
     mem = res["memory_evolution"]
     assert mem["status"] == "COMPLETED"
     assert mem["memory_id"].startswith("EXP_")
+    assert mem.get("skills_provenance", {}).get("passed") is True
+    assert mem["skills_provenance"]["verified_skills"] >= 15
 
 
 def test_bridge_has_no_fake_synthesis_fallback():
@@ -193,3 +214,101 @@ def test_bridge_has_no_fake_synthesis_fallback():
     assert "def _synthesize_response" not in src
     assert "100% PASS" not in src
     assert "沙箱仿真校验" not in src
+
+
+def test_aggregate_team_status_rules():
+    """团队级状态聚合规则：全 COMPLETED→SUCCESS；任一 FAILED→FAILED；其余→PARTIAL。"""
+    agg = IndustrialAgentTeam.aggregate_team_status
+    all_done = {k: "COMPLETED" for k in IndustrialAgentTeam.ROLE_ORDER}
+    assert agg(all_done) == "SUCCESS"
+
+    one_failed = dict(all_done)
+    one_failed["AuditorAndSandboxAgent"] = "FAILED"
+    assert agg(one_failed) == "FAILED"
+
+    one_pending = dict(all_done)
+    one_pending["MachiningAndToolpathAgent"] = "RUNNING"
+    assert agg(one_pending) == "PARTIAL"
+
+    # fail-closed：status 缺失（UNKNOWN）不得被算作完成
+    one_unknown = dict(all_done)
+    one_unknown["ChiefArchitectAgent"] = "UNKNOWN"
+    assert agg(one_unknown) == "PARTIAL"
+
+
+def test_industrial_agent_team_reports_failure_when_audit_fails():
+    """反证用例：注入审计失败 → 团队级 status 必须 != SUCCESS。
+
+    修复前 solve() 末尾为字面量 return {"status": "SUCCESS"}，本用例必红。
+    """
+    team = IndustrialAgentTeam()
+    real_run = team.auditor_agent.run
+    calls = {"n": 0}
+
+    def fake_audit_run(payload):
+        calls["n"] += 1
+        real = dict(real_run(payload))
+        real["status"] = "FAILED"
+        real["passed"] = False
+        return real
+
+    team.auditor_agent.run = fake_audit_run
+    try:
+        res = team.solve("失败路径注入测试：外径60mm 内孔22mm 高强连杆衬套", memory_safe=False)
+    finally:
+        team.auditor_agent.run = real_run
+
+    assert calls["n"] == 1
+    assert res["per_agent_status"]["AuditorAndSandboxAgent"] == "FAILED"
+    assert res["status"] != "SUCCESS"
+    assert res["status"] == "FAILED"
+    assert res["audit_passed"] is False
+    with open(res["report_path"], "r", encoding="utf-8") as f:
+        assert "FAILED" in f.read()
+
+
+def test_skills_provenance_detects_tampering(tmp_path):
+    """反证用例：篡改技能文件字节后，verify_skills_provenance() 必须判红并报告 sha256 mismatch。"""
+    import hashlib
+    fake_skills = tmp_path / "skills"
+    skill_dir = fake_skills / "tampered-skill"
+    skill_dir.mkdir(parents=True, exist_ok=True)
+    skill_md = skill_dir / "SKILL.md"
+    original_bytes = b"# Original Skill\n"
+    skill_md.write_bytes(original_bytes)
+    expected_sha = hashlib.sha256(original_bytes).hexdigest()
+
+    prov = {
+        "skills": {
+            "tampered-skill": {
+                "name": "tampered-skill",
+                "install_path": "skills/tampered-skill",
+                "files": [
+                    {
+                        "path": "SKILL.md",
+                        "bytes": len(original_bytes),
+                        "sha256": expected_sha,
+                    }
+                ],
+            }
+        }
+    }
+    prov_path = fake_skills / "SKILLS_PROVENANCE.json"
+    prov_path.write_text(json.dumps(prov, ensure_ascii=False, indent=2), encoding="utf-8")
+
+    mem = SkillWriterAndMemory(
+        memory_path=str(tmp_path / "mem.json"),
+        skills_root=str(fake_skills),
+    )
+    ok_res = mem.verify_skills_provenance()
+    assert ok_res["passed"] is True
+    assert ok_res["verified_skills"] == 1
+    assert ok_res["mismatches"] == []
+
+    # 植入坏样本：篡改 SKILL.md 内容
+    skill_md.write_bytes(b"# Tampered Skill\n")
+    bad_res = mem.verify_skills_provenance()
+    assert bad_res["passed"] is False
+    assert bad_res["verified_skills"] == 0
+    assert any("sha256 mismatch" in m for m in bad_res["mismatches"])
+

@@ -1,0 +1,7 @@
+[
+ {"model": "virtu-v3:hardened", "profiles": [{"num_gpu": 99, "num_ctx": 8192}, {"num_gpu": 24, "num_ctx": 8192}, {"num_gpu": 18, "num_ctx": 8192}]},
+ {"model": "virtu-13.63b:hardened", "profiles": [{"num_gpu": 99, "num_ctx": 8192}, {"num_gpu": 28, "num_ctx": 8192}, {"num_gpu": 20, "num_ctx": 8192}]},
+ {"model": "virtu-moe-14b:q3km", "profiles": [{"num_gpu": 99, "num_ctx": 8192}, {"num_gpu": 28, "num_ctx": 8192}, {"num_gpu": 20, "num_ctx": 8192}]},
+ {"model": "virtu-13.63b-q4_0:latest", "profiles": [{"num_gpu": 99, "num_ctx": 8192}, {"num_gpu": 24, "num_ctx": 8192}]},
+ {"model": "qwen3:8b", "profiles": [{"num_gpu": 99, "num_ctx": 8192}]}
+]

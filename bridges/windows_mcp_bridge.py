@@ -34,7 +34,7 @@ ROOT = Path(__file__).resolve().parent.parent
 SERVER_DIR = ROOT / "external" / "windows-mcp"
 SERVER_PY = SERVER_DIR / ".venv" / "Scripts" / "python.exe"
 DEFAULT_TOOLS = "ControlStatus,Process,App"   # 只读为主 + 应用启动；不默认放开 PowerShell/Registry
-DEFAULT_MODEL = "virtu-moe-14b:a2103c68"
+DEFAULT_MODEL = os.environ.get("VIRTU_AGENT_MODEL", "virtu-ties-v1:latest")
 OLLAMA = "http://127.0.0.1:11434"
 PROTOCOL_VERSION = "2025-06-18"
 _http = urllib.request.build_opener(urllib.request.ProxyHandler({}))
@@ -217,10 +217,11 @@ def drop_tool_leg_prose(resp):
     return resp
 
 
-def ollama_chat(model, messages, tools, num_ctx=3072, num_predict=256):
-    payload = {"model": model, "stream": False, "think": False, "keep_alive": "10m",
+def ollama_chat(model, messages, tools, num_ctx=8192, num_predict=256):
+    payload = {"model": model, "stream": False, "think": False,
+               "keep_alive": os.environ.get("VIRTU_KEEP_ALIVE", "2m"),
                "options": {"num_ctx": num_ctx, "temperature": 0.1,
-                           "num_predict": num_predict, "num_gpu": 30},
+                           "num_predict": num_predict, "num_gpu": 99},
                "messages": messages, "tools": tools}
     req = urllib.request.Request(
         OLLAMA + "/api/chat",

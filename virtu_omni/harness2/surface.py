@@ -135,6 +135,12 @@ DEFAULT_LONG_TERM_MEMORY = r"""# Virtu 工业制造长期记忆库 (Long-Term Me
 4. **Steel45 (45号调质优质碳素结构钢)**：硬度 HB 220~250，通用轴类模具底座，切速 $120 \sim 180\text{m/min}$。
 5. **Cr12MoV (冷作模具钢)**：高耐磨性，淬透性极好，热处理后硬度 HRC 58~62，用于冲裁与微型冷挤压轮模。
 
+### 跨工业软件坐标系与理论公式隔离规范 (Coordinate & Formula Invariants)
+- **SOLIDWORKS 2021 坐标系 (Y-up，严禁与 CNC Z-up 混淆)**：默认世界 Y 轴朝上；标准法向写为 `+Z / +Y / +X`（禁写 `Z+`）：Front Plane（前视基准面）= XY 平面，法向 `+Z (0, 0, 1)`；Top Plane（上视基准面）= XZ 平面，法向 `+Y (0, 1, 0)`；Right Plane（右视基准面）= YZ 平面，法向 `+X (1, 0, 0)`。
+- **VERICUT 9.6 / Siemens NX / CNC 坐标系 (Z-up / G54)**：机床主轴与默认工作空间通常为 `Up=Z+`（具体以 `.vcproject` Setup/Component 节点实测为准）；G54 为工件编程坐标系；XML 的 `Unit="inch"` 与 `"millimeter"` 须按工程实际严格区分；Auto-Diff 严格按红→蓝→绿分条写完即止（红色=过切/Gouge 致命停机，禁混入 excess material；蓝色=残料/Excess material；绿色=合格/In-tolerance，绿色结尾禁续写红色标题）。
+- **Lamé 厚壁圆筒闭式解 (严禁误用薄壁公式)**：直径比 `K = Do / Di`、平方比 `k = K^2 = (Do / Di)^2`（无量纲比值，严禁标注 MPa），内壁环向应力 `σ_θ = Pi * (k + 1) / (k - 1)`（k 已平方，禁写成 `(k^2+1)/(k^2-1)`），内壁径向应力 `σ_r = -Pi`（受压为负），von Mises 等效应力 `σ_vm = sqrt(σ_θ^2 - σ_θ*σ_r + σ_r^2)`，安全系数 `FOS = σ_y / σ_vm >= 1.5`。
+- **FANUC 车削 G71/G70 安全规范**：必须包含 `T0101`（含刀补号）、`G50 S_` 限速、`G96 S_ M03`、`M30`；定位点须在毛坯外（如 Ø60 棒料用 `G0 X62.0 Z2.0`），严禁 `G00` 负向 `Z` 扎刀（禁止 `G0 ... Z-`）；两行复合循环格式严格为 `G71 U1.5 R0.5` 与 `G71 P10 Q20 U0.4 W0.1 F0.25`（第二行同样以 `G71` 开头且带 `P_ Q_ U_ W_ F_`），后接 `N10 ... N20` 轮廓与 `G70 P10 Q20`。
+
 ### 历史调优经验与踩坑记录 (Accumulated Lessons)
 - [Lesson-001] 在 SOLIDWORKS 2021 VBA 宏中添加方程式时，若字符串内包含双引号必须双重转义，例如 `swEqnMgr.AddEquation 0, "\"D_Outer\" = 110.0"`，否则产生 Run-time error 13。
 - [Lesson-002] CIMCO FANUC Macro B 宏程序中，G71 粗车复合循环第二行 `G71 P... Q... U... W... F...` 中的 `U` 为单边径向余量，而 `X` 终点坐标为直径编程，混淆将导致过切两倍余量。

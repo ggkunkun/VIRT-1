@@ -1,0 +1,130 @@
+{
+  "generated_at": "2026-11-12T22:57:55+0800",
+  "basis": "measured (real Ollama /api/generate requests, f16 KV cache, no service restart)",
+  "model": "virtu-wm-v3:chatml",
+  "endpoint": "http://127.0.0.1:11434",
+  "num_gpu_layers": 16,
+  "runtime_env": {
+    "OLLAMA_FLASH_ATTENTION": "1",
+    "OLLAMA_KV_CACHE_TYPE": "q8_0",
+    "OLLAMA_CONTEXT_LENGTH": "<unset>"
+  },
+  "rows": [
+    {
+      "requested_num_ctx": 5120,
+      "num_gpu_layers": 16,
+      "gpu_before": {
+        "used_mib": 2230,
+        "free_mib": 3691
+      },
+      "ok": true,
+      "latency_s": 26.42,
+      "prompt_eval_count": 3912,
+      "eval_count": 7,
+      "total_duration_ms": 25905.9,
+      "response_excerpt": "{\"world_state\": {}}",
+      "gpu_after": {
+        "used_mib": 0,
+        "free_mib": 5920
+      },
+      "ollama_ps_context": null
+    },
+    {
+      "requested_num_ctx": 8192,
+      "num_gpu_layers": 16,
+      "gpu_before": {
+        "used_mib": 0,
+        "free_mib": 5920
+      },
+      "ok": true,
+      "latency_s": 77.26,
+      "prompt_eval_count": 3912,
+      "eval_count": 7,
+      "total_duration_ms": 77082.4,
+      "response_excerpt": "{\"world_state\": {}}",
+      "gpu_after": {
+        "used_mib": 0,
+        "free_mib": 5920
+      },
+      "ollama_ps_context": null
+    },
+    {
+      "requested_num_ctx": 12288,
+      "num_gpu_layers": 16,
+      "gpu_before": {
+        "used_mib": 0,
+        "free_mib": 5920
+      },
+      "ok": true,
+      "latency_s": 97.99,
+      "prompt_eval_count": 3912,
+      "eval_count": 7,
+      "total_duration_ms": 97850.5,
+      "response_excerpt": "{\"world_state\": {}}",
+      "gpu_after": {
+        "used_mib": 2524,
+        "free_mib": 3397
+      },
+      "ollama_ps_context": 12288
+    },
+    {
+      "requested_num_ctx": 16384,
+      "num_gpu_layers": 16,
+      "gpu_before": {
+        "used_mib": 2524,
+        "free_mib": 3397
+      },
+      "ok": true,
+      "latency_s": 21.79,
+      "prompt_eval_count": 3912,
+      "eval_count": 7,
+      "total_duration_ms": 21661.6,
+      "response_excerpt": "{\"world_state\": {}}",
+      "gpu_after": {
+        "used_mib": 2680,
+        "free_mib": 3241
+      },
+      "ollama_ps_context": 16384
+    },
+    {
+      "requested_num_ctx": 24576,
+      "num_gpu_layers": 16,
+      "gpu_before": {
+        "used_mib": 2680,
+        "free_mib": 3241
+      },
+      "ok": true,
+      "latency_s": 21.8,
+      "prompt_eval_count": 3912,
+      "eval_count": 7,
+      "total_duration_ms": 21642.2,
+      "response_excerpt": "{\"world_state\": {}}",
+      "gpu_after": {
+        "used_mib": 2992,
+        "free_mib": 2929
+      },
+      "ollama_ps_context": 24576
+    },
+    {
+      "requested_num_ctx": 32768,
+      "num_gpu_layers": 16,
+      "gpu_before": {
+        "used_mib": 2992,
+        "free_mib": 2929
+      },
+      "ok": true,
+      "latency_s": 19.56,
+      "prompt_eval_count": 3912,
+      "eval_count": 7,
+      "total_duration_ms": 19366.4,
+      "response_excerpt": "{\"world_state\": {}}",
+      "gpu_after": {
+        "used_mib": 3304,
+        "free_mib": 2617
+      },
+      "ollama_ps_context": 32768
+    }
+  ],
+  "max_ok_num_ctx": 32768,
+  "note": "A short prompt only tests KV allocation, NOT long-context recall quality. Ollama may silently fall back to CPU KV offload; check latency and GPU memory."
+}

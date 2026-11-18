@@ -1,0 +1,195 @@
+{
+  "summary_meta": {
+    "generated_by": "scripts/eval_all_models_live.py",
+    "case_dir": "data\\benchmark\\virtu_eval_v1",
+    "case_file_sha256": {
+      "boundary.jsonl": "d0171f2c012609f9ba205c8c070392229a94be40089c5377bb9d980c93a06d7f",
+      "generalization.jsonl": "4f5c114b9b047446b7158e8c7b78586001988a3bd95f9144dc6c09f5fa357f41",
+      "generation.jsonl": "3ac2ff57f2eb52a7ac77d7fc0878135fdd5bb9a9e5b7e12ec7c9e727eadefa5c",
+      "instruction.jsonl": "88aa16f29a2a1b592d8bc7c8c5ee6a2204957d8336d73a02743b81f645505285",
+      "knowledge.jsonl": "3546c40f3ce82a75369e119d61caab2f3373b7fec6613cede70fa5b11d819b5f",
+      "multimodal.jsonl": "baa7fd372ee49868d5bbdc4d67c73a3f77d43200d35db8d501f3b6cf9744b543",
+      "reasoning.jsonl": "3f84a8ca2fb6f5500cd4ce1f31766533d08e13ebf781360b7ee9990d12ff237b",
+      "toolcall.jsonl": "f758f28420f3baed1e3914192ebced6c6a48055ce2d70a1e8748957cd0b52a1a"
+    },
+    "grader_sha256": "5024fe5cfc85b6ac1792256fdc22b5ecfa66e3bf72698c48feea8399cfd7224c",
+    "runner_sha256": "058da6dde22a83e571be976f6ac51f0c58de25158f9b76501fd74d335168bf1d",
+    "dims": [
+      "reasoning",
+      "knowledge",
+      "instruction",
+      "generation",
+      "generalization",
+      "boundary",
+      "toolcall"
+    ],
+    "unmeasured_dims": [
+      "multimodal"
+    ],
+    "scoring_contract": "case=命中权重/总权重x100; dim=有效用例得分算术平均; overall=sum(维度分x维度权重)/sum(权重); transport_error/dry_run 不计入均值，其余判据照实计分",
+    "params": {
+      "per_dim": 2,
+      "tiers": "easy,medium",
+      "sample": {
+        "easy": 2,
+        "medium": 2
+      },
+      "max_tokens": 384,
+      "num_ctx": 4096,
+      "temperature": 0.0,
+      "seed": 1234,
+      "timeout": 180
+    },
+    "started": "2026-11-16T19:14:19+0800",
+    "ollama_endpoint": "http://127.0.0.1:11434",
+    "last_update": "2026-11-16T19:14:19+0800"
+  },
+  "accepted": {
+    "virtu-six-software:v3": {
+      "run_id": "b478b63c00150074",
+      "model_digest": "35cd9e06c40e6a4faf4bd567da68d0ecdb58058f432cf543492bc9ff2b7ca69b",
+      "model_tag": "virtu-six-software:v3",
+      "dimensions": {
+        "toolcall": {
+          "score": 33.33,
+          "n": 4,
+          "n_truncated": 0
+        },
+        "reasoning": {
+          "score": 57.62,
+          "n": 4,
+          "n_truncated": 0
+        },
+        "knowledge": {
+          "score": 62.5,
+          "n": 4,
+          "n_truncated": 0
+        },
+        "instruction": {
+          "score": 91.67,
+          "n": 4,
+          "n_truncated": 0
+        },
+        "boundary": {
+          "score": 75.0,
+          "n": 4,
+          "n_truncated": 0
+        },
+        "generation": {
+          "score": 35.0,
+          "n": 4,
+          "n_truncated": 0
+        },
+        "generalization": {
+          "score": 50.72,
+          "n": 4,
+          "n_truncated": 0
+        }
+      },
+      "overall_weighted": 58.04,
+      "gate": {
+        "expected_cases": 28,
+        "recorded_cases": 28,
+        "malformed_lines": 0,
+        "transport_errors": 0,
+        "transport_rate": 0.0,
+        "valid": true,
+        "problems": []
+      },
+      "rows": 28,
+      "raw_sha256": "28e935ae3d4efc024ac2a479761a10ae6b60ff466927322a3be9f223fef578b9",
+      "raw_path": "runs/eval_v3_law_20261116/generic/virtu-six-software_v3/raw.jsonl",
+      "leg_dir": "runs/eval_v3_law_20261116/generic/virtu-six-software_v3",
+      "seal": {
+        "raw_sha256": "28e935ae3d4efc024ac2a479761a10ae6b60ff466927322a3be9f223fef578b9",
+        "rows": 28,
+        "sealed_at": "2026-11-16T19:26:00",
+        "owner": "eval_all_models_live"
+      },
+      "case_file_sha256": {
+        "boundary.jsonl": "d0171f2c012609f9ba205c8c070392229a94be40089c5377bb9d980c93a06d7f",
+        "generalization.jsonl": "4f5c114b9b047446b7158e8c7b78586001988a3bd95f9144dc6c09f5fa357f41",
+        "generation.jsonl": "3ac2ff57f2eb52a7ac77d7fc0878135fdd5bb9a9e5b7e12ec7c9e727eadefa5c",
+        "instruction.jsonl": "88aa16f29a2a1b592d8bc7c8c5ee6a2204957d8336d73a02743b81f645505285",
+        "knowledge.jsonl": "3546c40f3ce82a75369e119d61caab2f3373b7fec6613cede70fa5b11d819b5f",
+        "multimodal.jsonl": "baa7fd372ee49868d5bbdc4d67c73a3f77d43200d35db8d501f3b6cf9744b543",
+        "reasoning.jsonl": "3f84a8ca2fb6f5500cd4ce1f31766533d08e13ebf781360b7ee9990d12ff237b",
+        "toolcall.jsonl": "f758f28420f3baed1e3914192ebced6c6a48055ce2d70a1e8748957cd0b52a1a"
+      },
+      "grader_sha256": "5024fe5cfc85b6ac1792256fdc22b5ecfa66e3bf72698c48feea8399cfd7224c",
+      "tools_gate": {
+        "applicable": true,
+        "schema_exposed": false,
+        "verdict": "waived_text_json_protocol",
+        "note": "toolcall 用例的判分锚定响应文本中的 JSON 字面量；本轮未注入工具 schema，分数不得当作原生 tool-calling 能力、也不得与历史 16 工具腿比较"
+      },
+      "served_layers": {
+        "model": "sha256:abd8b726fbe792dddca40115cc93f3a9f915ff7389da3e5e8f2ad07e79baa10b",
+        "model_bytes": 4614301728,
+        "template": "sha256:2f7055ebdd3fdb524063dfe0f46cd93f085d302822e290717f1aeaaaef45e620",
+        "template_bytes": 1784,
+        "system": "sha256:2f4e97d791de80426c7bc8b33f8b9dbb6c70f18d87f8beba5da74cfb8f155161",
+        "system_bytes": 380,
+        "parameters": "sha256:f1eef96f6317330e8d9ee9ab405d8b88ecb8197936b59313edc151cbf097e479",
+        "parameters_bytes": 127,
+        "manifest_digest": "sha256:6553c1ef955b37c76202f8b233b7225d4dbd799042ea03145995181af69ad32f"
+      },
+      "verdicts": {
+        "pass": 8,
+        "partial": 18,
+        "fail_all_criteria": 2
+      },
+      "aliases": [
+        "virtu-six-software:v3"
+      ],
+      "family": "其它/实验",
+      "wall_s": 700.9
+    }
+  },
+  "rejected": {},
+  "self_test": [
+    {
+      "name": "篡改单题分数（重封缄+伪摘要）",
+      "caught": true,
+      "reason": "维度 boundary 现场复算 50.0 != 记录 75.0"
+    },
+    {
+      "name": "删除一行（覆盖不全）",
+      "caught": true,
+      "reason": "完整性闸门判红: ['记录数 27 < 计划用例数 28（覆盖不全）']"
+    },
+    {
+      "name": "删除封缄",
+      "caught": true,
+      "reason": "封缄校验失败: leg: 未封缄，不得发布（谁写的、写完有没有人动过，都无从证明）"
+    },
+    {
+      "name": "植入 3 条 transport_error",
+      "caught": true,
+      "reason": "完整性闸门判红: ['transport_error 占比 10.7% > 5%，本轮分数无效，需重跑']"
+    },
+    {
+      "name": "抹掉一行 served_layers 身份",
+      "caught": true,
+      "reason": "存在无 served_layers 身份指纹的记录"
+    }
+  ],
+  "snapshots": [
+    {
+      "at": "2026-11-16T19:14:19+0800",
+      "phase": "start",
+      "tags": {
+        "virtu-six-software:v4-local-repair": "9654750663184e4c932f8c5909b31d67a790e88ea20f1c620b7e8d8b8277241d",
+        "virtu-six-software:v3": "35cd9e06c40e6a4faf4bd567da68d0ecdb58058f432cf543492bc9ff2b7ca69b"
+      }
+    },
+    {
+      "at": "2026-11-16T19:26:00+0800",
+      "phase": "end",
+      "tags": {
+        "virtu-six-software:v4-local-repair": "9654750663184e4c932f8c5909b31d67a790e88ea20f1c620b7e8d8b8277241d",
+        "virtu-six-software:v3": "35cd9e06c40e6a4faf4bd567da68d0ecdb58058f432cf543492bc9ff2b7ca69b"
+      }
+    }
+  ]
+}

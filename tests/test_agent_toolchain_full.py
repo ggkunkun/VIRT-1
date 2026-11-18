@@ -34,6 +34,8 @@ from bridges.software_registry import (
     DESKTOP_SHORTCUTS,
     SOFTWARE_SPECS,
     diagnose_all,
+    entry_candidates,
+    resolve_entry,
     resolve_shortcut,
     normalize_software_key
 )
@@ -62,20 +64,24 @@ class TestAgentToolchainFull(unittest.TestCase):
             cls.httpd.server_close()
 
     def test_01_all_six_desktop_shortcuts(self):
-        """Verify the exact 6 desktop shortcuts requested by the user exist and resolve."""
-        user_shortcuts = {
-            "solidworks": r"c:\Users\Public\Desktop\SOLIDWORKS 2021.lnk",
-            "autocad": r"c:\Users\Public\Desktop\AutoCAD 2026 - 简体中文 (Simplified Chinese).lnk",
-            "sscnc": r"c:\Users\Public\Desktop\斯沃数控仿真软件.lnk",
-            "vericut": r"c:\Users\Public\Desktop\Vericut 9.6.lnk",
-            "cimco": r"c:\Users\Public\Desktop\CIMCO Edit 2026.lnk",
-            "nx": r"c:\Users\Administrator\Desktop\中文版NX12.0.lnk",
-        }
-        for sw_key, lnk in user_shortcuts.items():
-            self.assertTrue(os.path.exists(lnk), f"Shortcut does not exist: {lnk}")
-            res = resolve_shortcut(lnk)
-            self.assertTrue(res["exists"])
-            self.assertIsNotNone(res["target_path"], f"Failed to resolve target for {lnk}")
+        """6 大软件的桌面入口必须可解析 —— .lnk 与直连 .exe 同等有效。
+
+        入口形态会漂移（本机 NX 的桌面入口就已被换成 中文版NX12.0.exe），
+        因此断言"能解析到一个真实存在的入口"，而不是钉死某一个 .lnk 路径。
+        """
+        for sw_key in DESKTOP_SHORTCUTS:
+            info = resolve_entry(sw_key)
+            self.assertTrue(
+                info["exists"],
+                f"[{sw_key}] 桌面入口缺失，候选={entry_candidates(sw_key)}",
+            )
+            self.assertIsNotNone(
+                info["target_path"], f"[{sw_key}] 入口无法解析出目标：{info.get('entry_path')}"
+            )
+            self.assertTrue(
+                info["target_exists"],
+                f"[{sw_key}] 入口目标不存在：{info['target_path']}",
+            )
 
         diag = diagnose_all()
         self.assertEqual(diag["total_software"], 6)
@@ -174,9 +180,16 @@ class TestAgentToolchainFull(unittest.TestCase):
         for d in defs:
             self.assertEqual(d["type"], "function")
             fn = d["function"]
-            self.assertTrue(fn["name"].startswith("cadcam_"))
+            # 工具名分两个已注册族：cadcam_*（六软件执行链）与 desktop_*（桌面控制族，
+            # 由 bridges/desktop_gate.py 单独审批）。原来只断言 cadcam_ 前缀，新增
+            # desktop_* 族后会把合法工具判红；此处放宽为"属于已注册族"，同时补上
+            # 原先缺失的 schema 完整性检查（缺 properties 的工具等于没法定参数）。
+            self.assertTrue(fn["name"].startswith(("cadcam_", "desktop_")),
+                            "未注册的工具名前缀: %s" % fn["name"])
             self.assertIn("description", fn)
             self.assertIn("parameters", fn)
+            self.assertEqual(fn["parameters"].get("type"), "object")
+            self.assertIsInstance(fn["parameters"].get("properties"), dict)
 
         # Execute tool call
         res = execute_tool_call("cadcam_sscnc_control", {

@@ -159,7 +159,7 @@ def run_cleanup(dry_run=True, apply_lzx=False):
         for t in targets:
             if os.path.exists(t):
                 print(f"  压缩中: {t} ...")
-                subprocess.run(f'compact /c /s /exe:lzx "{t}"', shell=True)
+                subprocess.run(["compact", "/c", "/s", "/exe:lzx", str(t)], shell=False)
 
 
 if __name__ == "__main__":

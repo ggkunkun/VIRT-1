@@ -1,0 +1,64 @@
+{
+ "timestamp": "2026-11-14 23:19:17",
+ "authorization": "user: 按你的建议执行 (2026-11-14 22:43)",
+ "basis": "measured",
+ "method": "T3 reversible archive: copy -> verify(file count+bytes+sampled sha256) -> rename -> junction -> probe -> remove backup -> purge recycle residuals",
+ "correction_to_previous_estimate": {
+  "earlier_claim": "5 merged 8B snapshots = 76.3 GB reclaimable",
+  "measured_truth": "logical double counting; virtu_ties_v1 <-> virtu_cad_cam_merged_v3 are hardlinked (plus impeller shard 5). D:\\Virtu模型 logical 133.20 GB but unique physical 116.73 GB; 16.47 GB was hardlink sharing.",
+  "red_lines": "PROVENANCE.json red_lines_untouched/preserved retain _base_qwen3_8b, virtu_ties_v1, virtu_cad_cam_merged_v3, virtu_moe_14b_hf, core LoRA, Qwen3-VL-2B, .venv; not touched."
+ },
+ "archived": [
+  {
+   "original_path": "D:\\Virtu模型\\checkpoints\\_deploy_vericut96\\merged_hf",
+   "e_copy": "E:\\moved_from_D\\checkpoints\\_deploy_vericut96\\merged_hf",
+   "junction": true,
+   "files_via_junction": 14,
+   "files_on_e": 14,
+   "data_device_matches_E": true
+  },
+  {
+   "original_path": "D:\\Virtu模型\\checkpoints\\impeller_fixed_merged",
+   "e_copy": "E:\\moved_from_D\\checkpoints\\impeller_fixed_merged",
+   "junction": true,
+   "files_via_junction": 14,
+   "files_on_e": 14,
+   "data_device_matches_E": true
+  }
+ ],
+ "recycle_bin_items_purged": 2,
+ "files_deleted_permanently": 28,
+ "d_free_before_gb": 37.12,
+ "d_free_after_gb": 66.5,
+ "reclaimed_gb": 29.38,
+ "note_on_delta": "29.38 GB physical (15.27 + 14.11): impeller shard 5 is a 3-way hardlink, its cluster stays on D via the other two paths.",
+ "red_lines_intact": [
+  {
+   "redline": "_base_qwen3_8b",
+   "intact": true
+  },
+  {
+   "redline": "virtu_ties_v1",
+   "intact": true
+  },
+  {
+   "redline": "virtu_cad_cam_merged_v3",
+   "intact": true
+  },
+  {
+   "redline": "virtu_moe_14b_hf",
+   "intact": true
+  },
+  {
+   "redline": "models\\Qwen3-VL-2B-Instruct",
+   "intact": true
+  }
+ ],
+ "serving_gguf_intact_gb": 4.3,
+ "ollama_served_models": [],
+ "free_now_gb": {
+  "D": 66.5,
+  "E": 51.84
+ },
+ "rollback": "benchmarks/d_model_space_cleanup/rollback_20261114_archive.py"
+}

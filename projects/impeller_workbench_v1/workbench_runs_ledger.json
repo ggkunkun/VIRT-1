@@ -1,0 +1,345 @@
+{
+ "model": "virtu-ties-v1:latest",
+ "ruler": "closed_impeller_proctor.ruler",
+ "generated": "2026-11-09",
+ "runs": [
+  {
+   "report": "report_virtu-ties-v1_latest_20261109_191431.json",
+   "model": "virtu-ties-v1:latest",
+   "rounds": 1,
+   "passed": false,
+   "best_n_viol": null,
+   "viol_trajectory": [],
+   "best_core": {
+    "D2_mm": null,
+    "N_rpm": null,
+    "Z_blades": null,
+    "beta2b_deg": null,
+    "b2_mm": null,
+    "D1t_mm": null,
+    "D1h_mm": null,
+    "axial_length_mm": null,
+    "claimed_tip_speed_m_s": null,
+    "claimed_pressure_ratio": null,
+    "eta_total": null
+   },
+   "had_final": false
+  },
+  {
+   "report": "report_virtu-ties-v1_latest_20261109_192431.json",
+   "model": "virtu-ties-v1:latest",
+   "rounds": 2,
+   "passed": false,
+   "best_n_viol": 1,
+   "viol_trajectory": [
+    1,
+    1
+   ],
+   "best_core": {
+    "D2_mm": null,
+    "N_rpm": null,
+    "Z_blades": null,
+    "beta2b_deg": null,
+    "b2_mm": null,
+    "D1t_mm": null,
+    "D1h_mm": null,
+    "axial_length_mm": null,
+    "claimed_tip_speed_m_s": null,
+    "claimed_pressure_ratio": null,
+    "eta_total": null
+   },
+   "had_final": false
+  },
+  {
+   "report": "report_virtu-ties-v1_latest_20261109_192823.json",
+   "model": "virtu-ties-v1:latest",
+   "rounds": 3,
+   "passed": false,
+   "best_n_viol": 4,
+   "viol_trajectory": [
+    4,
+    4
+   ],
+   "best_core": {
+    "D2_mm": 150.0,
+    "N_rpm": 12000.0,
+    "Z_blades": 10.0,
+    "beta2b_deg": 25.0,
+    "b2_mm": 10.0,
+    "D1t_mm": 200.0,
+    "D1h_mm": 150.0,
+    "axial_length_mm": 50.0,
+    "claimed_tip_speed_m_s": 235.0,
+    "claimed_pressure_ratio": 4.2,
+    "eta_total": 0.85
+   },
+   "had_final": true
+  },
+  {
+   "report": "report_virtu-ties-v1_latest_20261109_193751.json",
+   "model": "virtu-ties-v1:latest",
+   "rounds": 10,
+   "passed": false,
+   "best_n_viol": 4,
+   "viol_trajectory": [
+    5,
+    5,
+    4,
+    4,
+    5,
+    5,
+    4,
+    4,
+    5,
+    4
+   ],
+   "best_core": {
+    "D2_mm": 120.0,
+    "N_rpm": 20000.0,
+    "Z_blades": 10.0,
+    "beta2b_deg": 25.0,
+    "b2_mm": 3.0,
+    "D1t_mm": 100.0,
+    "D1h_mm": 100.0,
+    "axial_length_mm": 25.0,
+    "claimed_tip_speed_m_s": 235.0,
+    "claimed_pressure_ratio": 4.0,
+    "eta_total": 0.85
+   },
+   "had_final": true
+  },
+  {
+   "report": "report_virtu-ties-v1_latest_20261109_194837.json",
+   "model": "virtu-ties-v1:latest",
+   "rounds": 12,
+   "passed": false,
+   "best_n_viol": 6,
+   "viol_trajectory": [
+    8,
+    7,
+    6,
+    6,
+    6,
+    8,
+    8,
+    7,
+    7,
+    7
+   ],
+   "best_core": {
+    "D2_mm": 120.0,
+    "N_rpm": 12000.0,
+    "Z_blades": 12.0,
+    "beta2b_deg": 45.0,
+    "b2_mm": 25.0,
+    "D1t_mm": 180.0,
+    "D1h_mm": 180.0,
+    "axial_length_mm": 30.0,
+    "claimed_tip_speed_m_s": 235.0,
+    "claimed_pressure_ratio": 4.0,
+    "eta_total": 0.8
+   },
+   "had_final": true
+  },
+  {
+   "report": "report_virtu-ties-v1_latest_20261109_200413.json",
+   "model": "virtu-ties-v1:latest",
+   "rounds": 10,
+   "passed": false,
+   "best_n_viol": 3,
+   "viol_trajectory": [
+    5,
+    4,
+    4,
+    4,
+    5,
+    4,
+    3,
+    3
+   ],
+   "best_core": {
+    "D2_mm": 387.0,
+    "N_rpm": 15000.0,
+    "Z_blades": 12.0,
+    "beta2b_deg": 25.0,
+    "b2_mm": 10.0,
+    "D1t_mm": 300.0,
+    "D1h_mm": 250.0,
+    "axial_length_mm": 15.0,
+    "claimed_tip_speed_m_s": 303.95,
+    "claimed_pressure_ratio": 1.805,
+    "eta_total": 0.85
+   },
+   "had_final": true
+  },
+  {
+   "report": "report_virtu-ties-v1_latest_20261109_201106.json",
+   "model": "virtu-ties-v1:latest",
+   "rounds": 12,
+   "passed": false,
+   "best_n_viol": 4,
+   "viol_trajectory": [
+    6,
+    4,
+    5,
+    6,
+    6,
+    6,
+    5,
+    5,
+    6,
+    6
+   ],
+   "best_core": {
+    "D2_mm": 250.0,
+    "N_rpm": 15000.0,
+    "Z_blades": 10.0,
+    "beta2b_deg": 30.0,
+    "b2_mm": 2.0,
+    "D1t_mm": 200.0,
+    "D1h_mm": 180.0,
+    "axial_length_mm": 5.0,
+    "claimed_tip_speed_m_s": 196.35,
+    "claimed_pressure_ratio": 4.0,
+    "eta_total": 0.85
+   },
+   "had_final": true
+  },
+  {
+   "report": "report_virtu-ties-v1_latest_20261109_202011.json",
+   "model": "virtu-ties-v1:latest",
+   "rounds": 12,
+   "passed": false,
+   "best_n_viol": 4,
+   "viol_trajectory": [
+    4,
+    4,
+    4,
+    5,
+    5,
+    6,
+    6,
+    6,
+    6,
+    6
+   ],
+   "best_core": {
+    "D2_mm": 100.0,
+    "N_rpm": 12000.0,
+    "Z_blades": 12.0,
+    "beta2b_deg": 30.0,
+    "b2_mm": 10.0,
+    "D1t_mm": 150.0,
+    "D1h_mm": 100.0,
+    "axial_length_mm": 15.0,
+    "claimed_tip_speed_m_s": 62.83,
+    "claimed_pressure_ratio": 4.0,
+    "eta_total": 0.85
+   },
+   "had_final": true
+  }
+ ],
+ "route_a_prime": {
+  "generated": "2026-11-09",
+  "accounting": "合格结果归确定性求解器，不计入模型裸能力（模型自由度=复读示例，见 ROUTE_APRIME_REPORT.md §4）",
+  "runs": [
+   {
+    "report": "report_Aprime_assist_virtu-ties-v1_latest_20261109_204942.json",
+    "mode": "assist",
+    "passed": false,
+    "elapsed_s": 456.2,
+    "model_free_degrees": {
+     "Z_blades": 12,
+     "beta2b_deg": 25.0,
+     "eta_total": 0.85,
+     "D2_mm": 100.0,
+     "N_rpm": 12000.0
+    },
+    "chosen_candidate": {
+     "id": "B",
+     "policy": "锁 N=12000 rpm，反解 D2=600 mm",
+     "n_viol": 1
+    },
+    "n_viol_final": 1,
+    "core": {
+     "D2_mm": 600.0,
+     "N_rpm": 12000.0,
+     "beta2b_deg": 25.0,
+     "Z_blades": 12,
+     "b2_mm": 54.0,
+     "D1t_mm": 510.0,
+     "D1h_mm": 488.25,
+     "axial_length_mm": 225.0,
+     "claimed_pressure_ratio": 2.803,
+     "claimed_tip_speed_m_s": 376.99,
+     "claimed_FOS": 2.5
+    }
+   },
+   {
+    "report": "report_Aprime_assist_virtu-ties-v1_latest_20261109_205157.json",
+    "mode": "assist",
+    "passed": true,
+    "elapsed_s": 34.4,
+    "model_free_degrees": {
+     "Z_blades": 10.0,
+     "beta2b_deg": 30.0,
+     "eta_total": 0.85,
+     "D2_mm": 150.0,
+     "N_rpm": 15000.0
+    },
+    "chosen_candidate": {
+     "id": "B",
+     "policy": "锁 N=15000 rpm，反解 D2=579 mm",
+     "n_viol": 0
+    },
+    "n_viol_final": 0,
+    "core": {
+     "D2_mm": 578.63,
+     "N_rpm": 15000.0,
+     "beta2b_deg": 30.0,
+     "Z_blades": 10,
+     "b2_mm": 52.08,
+     "D1t_mm": 468.35,
+     "D1h_mm": 444.57,
+     "axial_length_mm": 216.99,
+     "claimed_pressure_ratio": 4.01,
+     "claimed_tip_speed_m_s": 454.45,
+     "claimed_FOS": 1.92
+    }
+   },
+   {
+    "report": "report_Aprime_auto_virtu-ties-v1_latest_20261109_203927.json",
+    "mode": "auto",
+    "passed": true,
+    "elapsed_s": 21.9,
+    "model_free_degrees": {
+     "Z_blades": 12,
+     "beta2b_deg": 25,
+     "eta_total": 0.85,
+     "D2_mm": 220,
+     "N_rpm": 40000,
+     "b2_ratio": 0.09
+    },
+    "chosen_candidate": {
+     "id": "A",
+     "policy": "锁 D2=220 mm，反解 N=40301 rpm",
+     "n_viol": 0
+    },
+    "n_viol_final": 0,
+    "core": {
+     "D2_mm": 220.0,
+     "N_rpm": 40300.5,
+     "beta2b_deg": 25.0,
+     "Z_blades": 12,
+     "b2_mm": 19.8,
+     "D1t_mm": 174.32,
+     "D1h_mm": 93.14,
+     "axial_length_mm": 82.5,
+     "claimed_pressure_ratio": 4.01,
+     "claimed_tip_speed_m_s": 464.23,
+     "claimed_FOS": 1.84
+    }
+   }
+  ]
+ }
+}

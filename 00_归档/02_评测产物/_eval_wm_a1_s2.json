@@ -1,0 +1,225 @@
+[
+  {
+    "family": "removal",
+    "user": "毛坯体积 180035 mm^3，材料 45钢，密度 7.8 g/cm^3。用端铣刀单刀路：切削深度 DOC=3.73 mm，切削宽度 WOC=9.21 mm，进给速度 vf=777 mm/min，刀路长度 L=129.1 mm。预测去除量与余下质量。",
+    "expected": {
+      "world_state": {
+        "material_removed_mm3": 4435.0,
+        "mrr_mm3_per_min": 26690.0,
+        "removed_mass_g": 34.8,
+        "resulting_mass_g": 1380.0,
+        "delta_volume_mm3": -4435.0,
+        "volume_conservation": "pass_cut_negative"
+      },
+      "verification": {
+        "formula": "MRR=DOC*WOC*vf; V_removed=DOC*WOC*L; m=rho*V",
+        "checks": [
+          "dV<0",
+          "mrr>0"
+        ]
+      }
+    },
+    "scenario_present": true,
+    "guard_layers": [],
+    "predicted": {
+      "world_state": {
+        "material_removed_mm3": 4435.011030000001,
+        "resulting_mass_g": 1378.4599134144999,
+        "volume_conservation": "pass_cut_negative",
+        "mrr_mm3_per_min": 26692.514100000004,
+        "removed_mass_g": 34.814836585500004,
+        "delta_volume_mm3": -4435.011030000001
+      }
+    },
+    "pass": true,
+    "raw_pass": false,
+    "fmt_raw": true,
+    "miss": [],
+    "miss_raw": [
+      "mrr_mm3_per_min(missing)",
+      "delta_volume_mm3(missing)"
+    ],
+    "guard_action": "accept",
+    "raw": "{\"world_state\": {\"material_removed_mm3\": 4568.0, \"resulting_mass_g\": 1295.0, \"volume_conservation\": \"pass\"}, \"derivation\": {\"material_removed_mm3\": \"(DOC)*(WOC)*(L) = (3.73)*(9.21)*(129.1)\", \"resulting_mass_g\": \"((180035)*(0.0078)) - ((4568.0)*(0.0078))\"}, \"verification\": {\"source\": \"volume_formula\", \"resolved\": true}}"
+  },
+  {
+    "family": "tolerance",
+    "user": "尺寸链含 4 个组成环，半公差分别为 [0.073, 0.024, 0.036, 0.07] mm（基本尺寸 74.8 mm）。孔轴偏差：上偏差 +0.045 mm，下偏差 -0.004 mm。用极值法与统计法（RSS）给出封闭环公差带半宽，并判定配合性质与等级。",
+    "expected": {
+      "world_state": {
+        "component_tolerances_mm": [
+          0.073,
+          0.024,
+          0.036,
+          0.07
+        ],
+        "closed_loop_worstcase_halfwidth_mm": 0.203,
+        "closed_loop_rss_halfwidth_mm": 0.11,
+        "basic_size_mm": 74.8,
+        "fit_clearance_mm": 0.049,
+        "tolerance_fit": "间隙配合",
+        "fit_class": "H7/g6",
+        "tolerance_pass": true
+      },
+      "verification": {
+        "formula": "WC=sum(ti); RSS=sqrt(sum(ti^2))",
+        "checks": [
+          "WC>=RSS"
+        ]
+      }
+    },
+    "scenario_present": true,
+    "guard_layers": [
+      "L1_GROUND",
+      "L2_SOLVER"
+    ],
+    "predicted": {
+      "world_state": {
+        "closed_loop_worstcase_halfwidth_mm": 0.203,
+        "closed_loop_rss_halfwidth_mm": 0.11000454536063499,
+        "tolerance_fit": "过渡配合",
+        "fit_clearance_mm": 0.049
+      }
+    },
+    "pass": true,
+    "raw_pass": false,
+    "fmt_raw": true,
+    "miss": [],
+    "miss_raw": [
+      "closed_loop_worstcase_halfwidth_mm(0.123!=0.203)",
+      "closed_loop_rss_halfwidth_mm(0.086!=0.11)",
+      "fit_clearance_mm(missing)"
+    ],
+    "guard_action": "corrected",
+    "raw": "{\"world_state\": {\"closed_loop_worstcase_halfwidth_mm\": 0.123, \"closed_loop_rss_halfwidth_mm\": 0.086, \"tolerance_fit\": \"过渡配合\"}, \"derivation\": {\"closed_loop_worstcase_halfwidth_mm\": \"sum([0.073, 0.024, 0.036, 0.07])\", \"closed_loop_rss_halfwidth_mm\": \"sqrt(0.073^2+0.024^2+0.036^2+0.07^2)\", \"tolerance_fit\": \"上偏差-下偏差 = 0.045-(-0.004) = 0.049 mm > 半公差 0.086 mm → 过渡配合\"}, \"verification\": {\"source\": \"tolerancing_rules\", \"resolved\": true}}"
+  },
+  {
+    "family": "geom_delta",
+    "user": "在工件上切除一个通孔，特征体积 2846.0 mm^3，切除前工件体积 89581.0 mm^3。预测切除后几何体积变化 ΔV 与切除后体积，并校验体积守恒。",
+    "expected": {
+      "world_state": {
+        "feature": "通孔",
+        "feature_volume_mm3": 2846.0,
+        "delta_volume_mm3": -2846.0,
+        "before_volume_mm3": 89581.0,
+        "after_volume_mm3": 86735.0,
+        "volume_conservation": "pass_cut_negative"
+      },
+      "verification": {
+        "formula": "dV = -V_feature (切除为负)",
+        "checks": [
+          "dV<0",
+          "after=before+dV"
+        ]
+      }
+    },
+    "scenario_present": true,
+    "guard_layers": [],
+    "predicted": {
+      "world_state": {
+        "delta_volume_mm3": -2846.0,
+        "after_volume_mm3": 86735.0,
+        "volume_conservation": "pass_cut_negative",
+        "feature_volume_mm3": 2846.0,
+        "before_volume_mm3": 89581.0
+      }
+    },
+    "pass": true,
+    "raw_pass": true,
+    "fmt_raw": true,
+    "miss": [],
+    "miss_raw": [],
+    "guard_action": "accept",
+    "raw": "{\"world_state\": {\"delta_volume_mm3\": -2846.0, \"after_volume_mm3\": 86735.0, \"volume_conservation\": \"pass\"}, \"derivation\": {\"delta_volume_mm3\": \"-(2846.0)\", \"after_volume_mm3\": \"89581.0-2846.0\", \"volume_conservation\": \"abs(-2846.0) < 89581.0 ? 'pass' : 'fail'\"}, \"verification\": {\"source\": \"volume_formula\", \"resolved\": true}}"
+  },
+  {
+    "family": "tolerance",
+    "user": "尺寸链含 2 个组成环，半公差分别为 [0.065, 0.015] mm（基本尺寸 85.7 mm）。孔轴偏差：上偏差 +0.014 mm，下偏差 -0.021 mm。用极值法与统计法（RSS）给出封闭环公差带半宽，并判定配合性质与等级。",
+    "expected": {
+      "world_state": {
+        "component_tolerances_mm": [
+          0.065,
+          0.015
+        ],
+        "closed_loop_worstcase_halfwidth_mm": 0.08,
+        "closed_loop_rss_halfwidth_mm": 0.06671,
+        "basic_size_mm": 85.7,
+        "fit_clearance_mm": 0.035,
+        "tolerance_fit": "间隙配合",
+        "fit_class": "H7/g6",
+        "tolerance_pass": true
+      },
+      "verification": {
+        "formula": "WC=sum(ti); RSS=sqrt(sum(ti^2))",
+        "checks": [
+          "WC>=RSS"
+        ]
+      }
+    },
+    "scenario_present": true,
+    "guard_layers": [
+      "L2_SOLVER"
+    ],
+    "predicted": {
+      "world_state": {
+        "closed_loop_worstcase_halfwidth_mm": 0.08,
+        "closed_loop_rss_halfwidth_mm": 0.06670832032063168,
+        "tolerance_pass": true,
+        "fit_clearance_mm": 0.035
+      }
+    },
+    "pass": true,
+    "raw_pass": false,
+    "fmt_raw": true,
+    "miss": [],
+    "miss_raw": [
+      "fit_clearance_mm(0.039!=0.035)"
+    ],
+    "guard_action": "corrected",
+    "raw": "{\"world_state\": {\"closed_loop_worstcase_halfwidth_mm\": 0.08, \"closed_loop_rss_halfwidth_mm\": 0.067, \"tolerance_pass\": true, \"fit_clearance_mm\": 0.039}, \"derivation\": {\"closed_loop_worstcase_halfwidth_mm\": \"0.065+0.015\", \"closed_loop_rss_halfwidth_mm\": \"sqrt(0.065^2+0.015^2)\", \"tolerance_pass\": \"0.039>0\"}, \"verification\": {\"source\": \"tolerance_rules\", \"resolved\": true}}"
+  },
+  {
+    "family": "collision",
+    "user": "分析一段 FANUC 加工程序：安全平面 Z=6.2 mm，某 G00 快速移动段最低 Z=0.9 mm，毛坯顶面 Z=0.7 mm。预测碰撞/过切风险与 VERICUT Auto-Diff 颜色（红=过切，黄=风险，绿=合格）。",
+    "expected": {
+      "world_state": {
+        "safe_plane_z_mm": 6.2,
+        "rapid_min_z_mm": 0.9,
+        "stock_top_z_mm": 0.7,
+        "collision_risk": "high",
+        "gouge": false,
+        "autodiff": "yellow"
+      },
+      "verification": {
+        "formula": "risk = (Z_rapid_min < Z_safe) AND (Z_rapid_min < Z_stock_top+1)；gouge = (Z_rapid_min < Z_stock_top)",
+        "checks": [
+          "no_gouge"
+        ]
+      }
+    },
+    "scenario_present": true,
+    "guard_layers": [
+      "L0_SHAPE",
+      "L2_SOLVER"
+    ],
+    "predicted": {
+      "world_state": {
+        "collision_risk": "high",
+        "autodiff": "yellow",
+        "safe_plane_z_mm": 6.2,
+        "rapid_min_z_mm": 0.9,
+        "stock_top_z_mm": 0.7,
+        "gouge": false
+      }
+    },
+    "pass": true,
+    "raw_pass": false,
+    "fmt_raw": true,
+    "miss": [],
+    "miss_raw": [
+      "autodiff(red!=yellow)"
+    ],
+    "guard_action": "corrected",
+    "raw": "{\"world_state\": {\"collision_risk\": \"gouge\", \"autodiff\": \"red\"}, \"derivation\": {\"collision_risk\": \"rapid_min_z_mm < stock_top_z_mm ? 'gouge' : 'none'\", \"autodiff\": \"gouge ? 'red' : (risk > 0.5 ? 'yellow' : 'green')\"}, \"verification\": {\"source\": \"cadcam_autodiff_rules\", \"resolved\": true}}"
+  }
+]

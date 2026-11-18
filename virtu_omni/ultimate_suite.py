@@ -30,7 +30,22 @@ if WORKSPACE_DIR not in sys.path:
     sys.path.insert(0, WORKSPACE_DIR)
 
 from virtu_omni.reasoning.quiet_star_sandbox import QuietStarSelfHealingSandbox, SilentHealingAuditReport
-from virtu_omni.models.deepseek_moe_architecture import VirtuDeepSeekMoELayer
+
+# The DeepSeek-MoE layer is defined on top of ``torch.nn.Module`` and therefore
+# cannot be imported on an inference-only host. It is one optional probe of this
+# suite, not a prerequisite for the sandbox / grounding / PINN facets, so the
+# import is guarded and its unavailability is reported honestly (probe = False)
+# instead of breaking every consumer of ``virtu_omni.ultimate_suite``.
+try:
+    from virtu_omni.models.deepseek_moe_architecture import VirtuDeepSeekMoELayer
+
+    _MOE_UNAVAILABLE_REASON: Optional[str] = None
+except ModuleNotFoundError as exc:  # pragma: no cover - host without torch
+    if not (exc.name == "torch" or (exc.name or "").startswith("torch.")):
+        raise
+    VirtuDeepSeekMoELayer = None  # type: ignore[assignment]
+    _MOE_UNAVAILABLE_REASON = f"ModuleNotFoundError: No module named {exc.name!r}"
+
 from virtu_omni.vision.blueprint_spatial_grounding import (
     BlueprintSpatialGroundingEngine,
     BlueprintGroundedElement,
@@ -78,7 +93,16 @@ class VirtuUltimateSuite:
         """Rule 4: Execute mutation probes across all four ultimate frontier components."""
         t0 = time.time()
         p1 = self.sandbox.falsifiable_quiet_star_probe()
-        p2 = self.moe_layer.falsifiable_moe_probe()
+        if self.moe_layer is None:
+            # Falsifiable honesty: an un-runnable probe is a failed probe, never
+            # a silently-passing one.
+            logger.warning(
+                "DeepSeek-MoE probe cannot run on this host (%s); reporting False.",
+                _MOE_UNAVAILABLE_REASON,
+            )
+            p2 = False
+        else:
+            p2 = self.moe_layer.falsifiable_moe_probe()
         p3 = self.grounding_engine.falsifiable_grounding_probe()
         p4 = self.pinn_engine.falsifiable_pinn_probe()
 

@@ -1,0 +1,6 @@
+A_tasklist_FI elapsed=0.16s result_len=19
+B_tasklist_full_capture elapsed=0.62s result_len=15134
+C_tasklist_checkoutput elapsed=0.67s result_len=15134
+D_checkoutput_enc_nowin elapsed=0.63s result_len=-1
+E_powershell_getprocess elapsed=0.47s result_len=231
+DONE

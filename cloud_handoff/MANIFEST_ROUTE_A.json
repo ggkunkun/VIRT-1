@@ -33,8 +33,8 @@
       "sha256": "7f8b2758302c326c9bd60064722122d4f99c962fd86d2311deaca749829aba7e"
     },
     "scripts/build_capability_sft.py": {
-      "bytes": 41796,
-      "sha256": "983cf40e2a43b88a287600e4d9a2324e8e793d71799f10f18309f43bf36bbcca"
+      "bytes": 51223,
+      "sha256": "a304c40856fe33a2c7e48bf70c162a193324a400c4a1e273294bdd2569532307"
     },
     "scripts/build_fix_text_corpus.py": {
       "bytes": 16306,
@@ -65,11 +65,11 @@
   "hardware": "NVIDIA L40S 48GB (Ada sm_89), bf16 + tf32, unquantized base, max_len 4096",
   "note": "flash-attn is optional; the trainer falls back to sdpa and never needs it.",
   "budget_cap_cny": 50,
-  "updated_at": "2026-11-01 19:54:57",
+  "updated_at": "2026-11-14 17:13:13",
   "bundle": {
     "path": "cloud_handoff/virtu_bundle_route_A.tar.gz",
-    "bytes": 2504664,
-    "sha256": "9c95dcda6da9d2155b57acd0becf78c84233c509fcdbdca8ba60a4ba8bcdd26f",
+    "bytes": 2507629,
+    "sha256": "265cd85cfc82d9623b23f0fdf4f5c1565a696fdbfa8cf7b794cad2eb7b4e7d3f",
     "extract_root": "virtu/"
   },
   "remote_one_liner": "tar xzf virtu_bundle_route_A.tar.gz -C ~ && bash ~/virtu/scripts/bootstrap_l40s_train.sh",

@@ -1,0 +1,124 @@
+{
+  "deliverable": "D:\\Virtu模型\\runs\\cloud_pull_six-software-v2_20261115_195913\\six_software_v2_deliverable.tar.gz",
+  "adapter_sha256": "8723c1e834e294350c827a0acd9859bcabb77a3a0474a7f8d68022304501d78a",
+  "dataset_sha256": "f9000d74fb9e1d900dfda5171e380aa0d422823ed57ba765af59606d0ffb33e4",
+  "base_dir": "D:\\Virtu模型\\checkpoints\\_base_qwen3_8b",
+  "base_spec": {
+    "hidden_size": 4096,
+    "num_hidden_layers": 36,
+    "vocab_size": 151936
+  },
+  "merge_weight": 1.0,
+  "merge_mode": "delta",
+  "gguf_path": "D:\\Virtu模型\\checkpoints\\_deploy_six_software_v3\\virtu-six-software_v3.q4_0.gguf",
+  "gguf_sha256": "abd8b726fbe792dddca40115cc93f3a9f915ff7389da3e5e8f2ad07e79baa10b",
+  "modelfile_path": "D:\\Virtu模型\\checkpoints\\_deploy_six_software_v3\\virtu-six-software_v3.Modelfile",
+  "modelfile_sha256": "193eec07750f39b87b80b0686c72447f1d30546bcd8220e1cb38d7ae438cd53c",
+  "deployed_at": "2026-11-15 20:27:37",
+  "status": "PROBE_FAILED",
+  "verified_only": true,
+  "tag": "virtu-six-software:v3",
+  "probe_profile": "all",
+  "raw_all_passed": false,
+  "basis": "measured_dual_track",
+  "measurement_version": "probes-2026-11-15-v2",
+  "grader_sha256": "9ce6f48068b96d370d1ac10084fdb5b30b6aaf8f7acd15ce51fe5bd630454a43",
+  "probes": {
+    "show_template_gate": {
+      "passed": true,
+      "has_tools_and_tool_call": true,
+      "no_hardcoded_num_gpu": true
+    },
+    "chat_liveness_probe": {
+      "passed": true,
+      "response_len": 150,
+      "sample": "薄壁圆筒（r/t >= 10）环向应力（hoop stress）：  \n$$ \\sigma_{\\theta} = \\frac{p \\cdot r}{t} $$  \n- $ p $：内压，MPa；$ r $：半径，mm；$ t $：壁厚，mm；$ \\sigma_{\\theta} $：环向应力，MPa。"
+    },
+    "native_tool_call_probe": {
+      "passed": true,
+      "tool_calls_count": 1,
+      "called_names": [
+        "cadcam_universal_geometry"
+      ],
+      "parsed_args": {
+        "diameter_mm": 80,
+        "length_mm": 120,
+        "shape": "cylinder"
+      },
+      "reason": "ok",
+      "raw_snippet": ""
+    },
+    "anti_degenerate_sanity_probe": {
+      "passed": true,
+      "response_len": 203,
+      "unique_ngram_ratio": 0.803,
+      "sample": "SOLIDWORKS 2021 默认基准面法向（未旋转坐标系）：\r\n- **Front Plane (前视基准面)**：`Normal = [0, 1, 0]`（+Y 轴，面向屏幕）\r\n- **Top Plane (上视基准面)**：`Normal = [0, 0, 1]`（+Z 轴，向上）\r\n- **Right Pl"
+    },
+    "sw_coordinate_probe": {
+      "passed": false,
+      "reason": "missing_normal:front",
+      "segment": "front plane (前视基准面)**：`normal = [0, 1, 0]`（+y 轴，面向屏幕）\r"
+    },
+    "lame_stress_probe": {
+      "passed": false,
+      "reason": "missing_sigma_theta_33.33",
+      "sample": "根据 Lamé 厚壁圆筒理论：\r\n\r\n- 内半径 $ r_i = \\frac{Di}{2} = 30\\,\\text{mm} $，外半径 $ r_o = \\frac{Do}{2} = 60\\,\\text{mm} $；\r\n- 压力比平方项：$ \\frac{Pi}{Pi} \\cdot \\left(\\frac{r_i}{r_o"
+    },
+    "fanuc_g71_safety_probe": {
+      "passed": false,
+      "reason": "valid_F>0,unsafe_G00_negative_Z_plunge",
+      "sample": "```nc\r\n%\r\nO1007 (FANUC ISO/G G71-G70 STEP-AXIS)\nG50 S1800\nG96 S150 M03\nT0101\nG0 X62.5 Z2.0\nG71 U1.5 W0.1 R0.5\nG71 P1 Q2 U0.4 W0.02 R0.1\nN1 G0 X38.0\nN2 G0 Z-25.0\nG00 T0202\nG00 X62.5"
+    },
+    "vericut_autodiff_probe": {
+      "passed": true,
+      "reason": "ok",
+      "sample": "在 VERICUT 9.6 的 **Auto-Diff** 偏差图中，颜色标识了刀路轨迹与目标模型的偏差状态，具体含义如下：\n\n---\n\n### ✅ Auto-Diff 偏差图颜色定义：\n| 颜色 | 含义 | 说明 |\n|------|------|------|\n| **红色 (Red)** | **过切 (Gouge)** | 刀具**切入工件内部**"
+    },
+    "vericut_coordinate_unit_probe": {
+      "passed": true,
+      "reason": "ok",
+      "sample": "（1）**工程单位是 inch（英寸）**，不是 millimeter（毫米）。  \nVERICUT 的 `<Unit>` 标签若为 `inch`，代表工程制图采用英制单位（英寸），而非公制毫米（mm）。在进行仿真前必须确认单位制式并统一换算。  \n\n（2）**不能直接等价套用 SOLIDWORKS 2021 默认的前/上/右基准面（Front/Top/Ri",
+      "truncated": true
+    },
+    "vericut_tool_call_probe": {
+      "passed": true,
+      "tool_calls_count": 1,
+      "parsed_args": {
+        "action": "autodiff_check",
+        "project_path": "E:/training/session_101m.vcproject"
+      },
+      "reason": "ok",
+      "raw_snippet": ""
+    }
+  },
+  "verified_at": "2026-11-15 21:40:09",
+  "memory_augmented_probes": {
+    "sw_coordinate_probe": {
+      "passed": true,
+      "reason": "ok",
+      "sample": "SOLIDWORKS 2021 默认基准面法向（世界坐标系，Y-up）如下：\r\n- **Front Plane**（前视基准面）= XY 平面，法向 `+Z` (0, 0, 1)；\r\n- **Top Plane**（上视基准面）= XZ 平面，法向 `+Y` (0, 1, 0)；\r\n- **Right Plane**（"
+    },
+    "lame_stress_probe": {
+      "passed": true,
+      "reason": "ok",
+      "sample": "根据 Lamé 厚壁圆筒闭式解（**禁用薄壁公式 Pi*Di/(2t)**）：  \n- 比值平方 $ k = \\left(\\frac{D_o}{D_i}\\right)^2 = \\left(\\frac{120}{60}\\right)^2 = 4.00 $  \n- 内壁环向应力（受拉为正）：$ \\sigma_\\theta ",
+      "truncated": true
+    },
+    "fanuc_g71_safety_probe": {
+      "passed": false,
+      "reason": "unsafe_G00_negative_Z_plunge",
+      "sample": "O1101 (FANUC ISO/G G71/G70 STEP-STOCK AXLE D60)\r\nG50 S1800  (Set Max RPM: 1800)\nG96 S150 M03 (CNC ISO/G - G0/G1 positive X+ direction, M03 spindle CW)\nT0101 (Tool T01 D01 - 4-flute"
+    },
+    "vericut_autodiff_probe": {
+      "passed": false,
+      "reason": "swapped_meaning:green",
+      "segment": "- **绿色 (green) = 公差内合格 / in-tolerance（可放行）**：偏差在**允许公差范围内**，且无红色过切干涉，表示**加工几何与表面"
+    },
+    "vericut_coordinate_unit_probe": {
+      "passed": true,
+      "reason": "ok",
+      "sample": "(1) 工程 XML 实测声明为 `<Unit>inch</Unit>`，故该 VERICUT 工程单位是 **英寸 (inch)**，非毫米 (millimeter)。在 Auto-Diff 三色比对前必须确认图形与报表单位一致后再定性结论（不能直接将 inch 条目归类为绿色公差内合格）。\r\n\r\n(2) 该 Z-up / G54 坐标系 **不能** 直"
+    }
+  },
+  "memory_augmented_all_passed": false
+}

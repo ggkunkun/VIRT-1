@@ -29,9 +29,17 @@ import shutil
 import subprocess
 import sys
 import tarfile
+import tempfile
 import time
 from pathlib import Path
+from types import SimpleNamespace
 from typing import Any, Dict, List, Optional, Tuple
+
+try:
+    from transformers import TrainerCallback
+except ImportError:
+    class TrainerCallback:  # type: ignore[no-redef]
+        pass
 
 os.environ.setdefault("TOKENIZERS_PARALLELISM", "false")
 os.environ.setdefault("PYTORCH_CUDA_ALLOC_CONF", "expandable_segments:True")
@@ -132,6 +140,27 @@ def sha256_file(path: str | Path) -> str:
     return h.hexdigest()
 
 
+class TimeBudgetCallback(TrainerCallback):
+    """时间预算防超时守卫：触发时标记 budget_stopped 并保存断点安全停机。"""
+    def __init__(self, max_minutes: float):
+        self.max_seconds = max_minutes * 60.0 if max_minutes > 0 else float("inf")
+        self.start_time = time.time()
+        self.budget_stopped = False
+
+    def on_step_end(self, args, state, control, **kwargs):
+        elapsed = time.time() - self.start_time
+        if elapsed > self.max_seconds:
+            log(f"[TimeBudgetGuard] 达到时间上限 ({elapsed/60:.1f}m > {self.max_seconds/60:.1f}m)，保存并停机！")
+            self.budget_stopped = True
+            control.should_training_stop = True
+            control.should_save = True
+
+
+def safe_torch_load(path: str | Path, map_location: str = "cpu"):
+    import torch
+    return torch.load(str(path), map_location=map_location, weights_only=True)
+
+
 def detect_gpu_hardware() -> Dict[str, Any]:
     """探测当前云端 GPU 型号与可用显存。"""
     try:
@@ -150,6 +179,48 @@ def detect_gpu_hardware() -> Dict[str, Any]:
         return {"name": "Unknown", "count": 1, "total_gb": 24.0, "dtype": "bfloat16"}
 
 
+def assert_13b_base_identity(base_path: str) -> dict:
+    """校验 13.63B/14B 基座非 Instruct 且架构维度满足 13B+ 要求 (h>=4096, L>=36)。"""
+    if not base_path:
+        raise RuntimeError("[FATAL] 13.63B 基座路径为空")
+    norm = str(base_path).replace("\\", "/").lower()
+    if "instruct" in norm:
+        raise RuntimeError(f"[FATAL] 拒绝将 Instruct 模型作为 13.63B 基座: {base_path}")
+    cfg_path = os.path.join(base_path, "config.json")
+    if not os.path.exists(cfg_path):
+        raise RuntimeError(f"[FATAL] 基座缺少 config.json: {cfg_path}")
+    with open(cfg_path, "r", encoding="utf-8") as f:
+        cfg = json.load(f)
+    if "instruct" in str(cfg.get("_name_or_path", "")).lower():
+        raise RuntimeError(f"[FATAL] config.json[_name_or_path] 包含 Instruct: {cfg.get('_name_or_path')}")
+    hidden = int(cfg.get("hidden_size") or 0)
+    layers = int(cfg.get("num_hidden_layers") or 0)
+    if hidden < 4096 or layers < 36:
+        raise RuntimeError(f"[FATAL] 基座维度过小，非 13.63B/14B 基座: h={hidden}, L={layers} ({base_path})")
+    return cfg
+
+
+def assert_safe_adapter_dir(adapter_dir: Path) -> Path:
+    """验证 LoRA 适配器包含安全权重 (.safetensors) 且无 Instruct 误配。"""
+    adapter_dir = Path(adapter_dir)
+    if not adapter_dir.is_dir():
+        raise RuntimeError(f"[FATAL] 适配器目录不存在: {adapter_dir}")
+    st_file = adapter_dir / "adapter_model.safetensors"
+    bin_file = adapter_dir / "adapter_model.bin"
+    if st_file.exists():
+        if st_file.stat().st_size <= 0:
+            raise RuntimeError(f"[FATAL] 空适配器权重文件: {st_file}")
+    elif bin_file.exists():
+        # 仅允许 weights_only=True 安全读取
+        safe_torch_load(bin_file, map_location="cpu")
+    else:
+        raise RuntimeError(f"[FATAL] 适配器目录缺少 adapter_model.safetensors: {adapter_dir}")
+    acfg_path = adapter_dir / "adapter_config.json"
+    if not acfg_path.exists():
+        raise RuntimeError(f"[FATAL] 适配器缺少 adapter_config.json: {acfg_path}")
+    return st_file if st_file.exists() else bin_file
+
+
 def resolve_13b_base_model(specified: Optional[str] = None) -> str:
     """定位或自动下载 Virtu-13.63B / 14B 工业基座模型。"""
     search_paths = [
@@ -158,7 +229,6 @@ def resolve_13b_base_model(specified: Optional[str] = None) -> str:
         os.environ.get("VIRTU_13B_BASE_PATH"),
         str(ROOT / "checkpoints" / "_base_virtu_13b"),
         "/model/ModelScope/Qwen/Qwen2.5-14B",
-        "/model/ModelScope/Qwen/Qwen2.5-14B-Instruct",
         "/root/public-storage/model/Qwen3-14B",
         "/root/public-storage/model/Qwen2.5-14B",
         "/root/models/Qwen3-14B",
@@ -166,11 +236,10 @@ def resolve_13b_base_model(specified: Optional[str] = None) -> str:
         "/root/models/Virtu-13.63B",
         "/root/autodl-tmp/models/Qwen3-14B",
         "/mnt/models/Qwen3-14B",
-        "Qwen/Qwen3-14B",
-        "Qwen/Qwen2.5-14B"
     ]
     for p in search_paths:
         if p and os.path.exists(p) and os.path.exists(os.path.join(p, "config.json")):
+            assert_13b_base_identity(p)
             log(f"Virtu-13.63B 基座模型已定位: {p}")
             return p
 
@@ -276,7 +345,8 @@ def run_stage1_sft_13b(
     lora_dropout: float = 0.05,
     max_seq_len: int = 2048,
     smoke: bool = False,
-) -> Path:
+    max_hours: float = 2.5,
+) -> Tuple[Path, bool]:
     log("=" * 70)
     log("  阶段 2/5: Virtu-13.63B QLoRA SFT 微调启动")
     log(f"  Base={base_model_path} | Dataset={Path(sft_dataset_path).name}")
@@ -380,18 +450,20 @@ def run_stage1_sft_13b(
         optim="paged_adamw_8bit"
     )
 
+    budget_cb = TimeBudgetCallback(max_hours * 60.0)
     trainer = SFTTrainer(
         model=model,
         train_dataset=dataset,
         processing_class=tokenizer,
-        args=training_args
+        args=training_args,
+        callbacks=[budget_cb],
     )
 
     t0 = time.time()
     train_result = trainer.train()
     elapsed = time.time() - t0
     final_loss = train_result.training_loss
-    log(f"阶段 1 SFT 完成: 耗时 {elapsed:.1f} 秒 | 最终 Loss: {final_loss:.4f}")
+    log(f"阶段 1 SFT 完成: 耗时 {elapsed:.1f} 秒 | 最终 Loss: {final_loss:.4f} | budget_stopped={budget_cb.budget_stopped}")
 
     adapter_save_dir.mkdir(parents=True, exist_ok=True)
     trainer.model.save_pretrained(str(adapter_save_dir))
@@ -404,6 +476,8 @@ def run_stage1_sft_13b(
         "epochs": epochs,
         "final_loss": round(float(final_loss), 4),
         "elapsed_seconds": round(elapsed, 1),
+        "stopped_by_time_budget": bool(budget_cb.budget_stopped),
+        "status": "TIME_BUDGET_STOPPED" if budget_cb.budget_stopped else "COMPLETED",
         "timestamp": time.strftime("%Y-%m-%d %H:%M:%S")
     }
     with open(adapter_save_dir / "sft_receipt.json", "w", encoding="utf-8") as f:
@@ -414,7 +488,7 @@ def run_stage1_sft_13b(
     gc.collect()
     torch.cuda.empty_cache()
     log(f"SFT Adapter 保存成功: {adapter_save_dir}")
-    return adapter_save_dir
+    return adapter_save_dir, bool(budget_cb.budget_stopped)
 
 
 # ==============================================================================
@@ -431,12 +505,14 @@ def run_stage2_dpo_13b(
     epochs: float = 1.0,
     max_length: int = 2048,
     smoke: bool = False,
-) -> Path:
+    max_hours: float = 2.5,
+) -> Tuple[Path, bool]:
     log("=" * 70)
     log("  阶段 3/5: Virtu-13.63B DPO 偏好对齐启动")
     log(f"  SFT Adapter={sft_adapter_path} | Dataset={Path(dpo_dataset_path).name}")
     log(f"  超参数: Beta={beta} | LR={learning_rate} | Epochs={epochs} | Smoke={smoke}")
     log("=" * 70)
+    assert_safe_adapter_dir(Path(sft_adapter_path))
 
     import torch
     from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig, TrainingArguments, Trainer
@@ -531,30 +607,41 @@ def run_stage2_dpo_13b(
         optim="paged_adamw_8bit"
     )
 
+    budget_cb = TimeBudgetCallback(max_hours * 60.0)
     trainer = DPOTrainer(
         model=model,
         ref_model=None,  # PEFT 模式自动通过 disable_adapter 实现零显存参考模型
         train_dataset=dpo_data,
         processing_class=tokenizer,
-        args=dpo_args
+        args=dpo_args,
+        callbacks=[budget_cb],
     )
 
     t0 = time.time()
     train_result = trainer.train()
     elapsed = time.time() - t0
     final_loss = train_result.training_loss
-    log(f"阶段 2 DPO 完成: 耗时 {elapsed:.1f} 秒 | 最终 Loss: {final_loss:.4f}")
+    log(f"阶段 2 DPO 完成: 耗时 {elapsed:.1f} 秒 | 最终 Loss: {final_loss:.4f} | budget_stopped={budget_cb.budget_stopped}")
 
     dpo_save_dir.mkdir(parents=True, exist_ok=True)
     trainer.model.save_pretrained(str(dpo_save_dir))
     tokenizer.save_pretrained(str(dpo_save_dir))
+    with open(dpo_save_dir / "dpo_receipt.json", "w", encoding="utf-8") as f:
+        json.dump({
+            "stage": "dpo_13b",
+            "final_loss": round(float(final_loss), 4),
+            "elapsed_seconds": round(elapsed, 1),
+            "stopped_by_time_budget": bool(budget_cb.budget_stopped),
+            "status": "TIME_BUDGET_STOPPED" if budget_cb.budget_stopped else "COMPLETED",
+            "timestamp": time.strftime("%Y-%m-%d %H:%M:%S"),
+        }, f, indent=2, ensure_ascii=False)
 
     del model, base_model, trainer
     import gc
     gc.collect()
     torch.cuda.empty_cache()
     log(f"DPO Adapter 保存成功: {dpo_save_dir}")
-    return dpo_save_dir
+    return dpo_save_dir, bool(budget_cb.budget_stopped)
 
 
 # ==============================================================================
@@ -599,6 +686,7 @@ def run_stage4_export_13b(
     log("=" * 70)
     log("  阶段 5/5: 权重合并、13.63B GGUF 导出与交付打包")
     log("=" * 70)
+    assert_safe_adapter_dir(Path(adapter_path))
 
     import torch
     import gc
@@ -647,7 +735,6 @@ def run_stage4_export_13b(
         f.write("PARAMETER top_p 0.85\n")
         f.write("PARAMETER top_k 40\n")
         f.write("PARAMETER repeat_penalty 1.15\n")
-        f.write('PARAMETER stop "<|im_start|>"\n')
         f.write('PARAMETER stop "<|im_end|>"\n')
         f.write('PARAMETER stop "<|endoftext|>"\n\n')
         f.write('TEMPLATE """\n' + OFFICIAL_QWEN_TOOL_TEMPLATE + '\n"""\n\n')
@@ -680,6 +767,99 @@ def run_stage4_export_13b(
     return tar_path
 
 
+def write_training_summary(
+    output_dir: Path,
+    *,
+    stage: str,
+    base_model: str,
+    budget_stopped: bool,
+    sft_adapter: Optional[Path] = None,
+    dpo_adapter: Optional[Path] = None,
+    deliverable_tar: Optional[Path] = None,
+) -> Path:
+    summary = {
+        "model_brand": "Virtu-13.63B",
+        "stage": stage,
+        "base_model": base_model,
+        "stopped_by_time_budget": bool(budget_stopped),
+        "status": "TIME_BUDGET_STOPPED" if budget_stopped else "COMPLETED",
+        "sft_adapter": str(sft_adapter) if sft_adapter else None,
+        "dpo_adapter": str(dpo_adapter) if dpo_adapter else None,
+        "deliverable_tar": str(deliverable_tar) if deliverable_tar else None,
+        "completed_at": time.strftime("%Y-%m-%d %H:%M:%S"),
+    }
+    out_path = Path(output_dir) / "training_summary.json"
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    with open(out_path, "w", encoding="utf-8") as f:
+        json.dump(summary, f, indent=2, ensure_ascii=False)
+    return out_path
+
+
+def run_selftest() -> int:
+    """离线零 GPU 自检：ChatML + .Tools 模板、TimeBudgetCallback、training_summary 收据、安全适配器校验与数据门。"""
+    assert ".Tools" in OFFICIAL_QWEN_TOOL_TEMPLATE and "<tools>" in OFFICIAL_QWEN_TOOL_TEMPLATE
+    assert "<tool_call>" in OFFICIAL_QWEN_TOOL_TEMPLATE
+
+    with tempfile.TemporaryDirectory(prefix="virtu_13b_selftest_") as td:
+        td_path = Path(td)
+        # 1. 基座门禁正反测试
+        b14 = td_path / "Qwen3-14B"
+        b14.mkdir(parents=True, exist_ok=True)
+        with open(b14 / "config.json", "w", encoding="utf-8") as f:
+            json.dump({"_name_or_path": "Qwen/Qwen3-14B", "hidden_size": 5120, "num_hidden_layers": 40}, f)
+        assert_13b_base_identity(str(b14))
+
+        b7_inst = td_path / "Qwen2.5-7B-Instruct"
+        b7_inst.mkdir(parents=True, exist_ok=True)
+        with open(b7_inst / "config.json", "w", encoding="utf-8") as f:
+            json.dump({"_name_or_path": "Qwen/Qwen2.5-7B-Instruct", "hidden_size": 3584, "num_hidden_layers": 28}, f)
+        try:
+            assert_13b_base_identity(str(b7_inst))
+            raise AssertionError("assert_13b_base_identity 未拦截 7B-Instruct")
+        except RuntimeError:
+            pass
+
+        # 2. TimeBudgetCallback + training_summary.json
+        cb = TimeBudgetCallback(max_minutes=1e-6)
+        assert cb.budget_stopped is False
+        time.sleep(0.01)
+        ctrl = SimpleNamespace(should_training_stop=False, should_save=False)
+        cb.on_step_end(None, None, ctrl)
+        assert cb.budget_stopped is True and ctrl.should_training_stop and ctrl.should_save
+
+        s_path = write_training_summary(
+            td_path, stage="all", base_model=str(b14), budget_stopped=True
+        )
+        s_data = json.loads(s_path.read_text(encoding="utf-8"))
+        assert s_data["status"] == "TIME_BUDGET_STOPPED" and s_data["stopped_by_time_budget"] is True
+
+        # 3. 安全适配器目录校验
+        ad_dir = td_path / "adapter_13b_sft"
+        ad_dir.mkdir(parents=True, exist_ok=True)
+        try:
+            assert_safe_adapter_dir(ad_dir)
+            raise AssertionError("assert_safe_adapter_dir 未拦截空适配器")
+        except RuntimeError:
+            pass
+        (ad_dir / "adapter_model.safetensors").write_bytes(b"safetensors-ok")
+        (ad_dir / "adapter_config.json").write_text('{"r": 32}', encoding="utf-8")
+        assert_safe_adapter_dir(ad_dir)
+
+        # 4. 防污染与单位门禁加载校验
+        scripts_dir = str(ROOT / "scripts")
+        if scripts_dir not in sys.path:
+            sys.path.insert(0, scripts_dir)
+        from virtu_eval.contamination_check import assert_no_leak
+        from corpus_unit_audit import assert_units_clean
+        sample_f = td_path / "sample.jsonl"
+        sample_f.write_text(json.dumps({"messages": [{"role": "user", "content": "校核刚体转轴强度"}, {"role": "assistant", "content": "tau = T / Wp"}]}, ensure_ascii=False) + "\n", encoding="utf-8")
+        assert_no_leak(str(sample_f))
+        assert_units_clean(str(sample_f))
+
+    log("[SELFTEST] PASS: 13B base_gate / time_budget / summary / safe_adapter / leak+unit")
+    return 0
+
+
 def main():
     parser = argparse.ArgumentParser(description="Virtu-13.63B 工业大模型全流程极速训练与交付")
     parser.add_argument("--base", type=str, default=None, help="13.63B 基座模型路径")
@@ -687,23 +867,42 @@ def main():
     parser.add_argument("--epochs", type=float, default=1.5, help="SFT 训练轮次")
     parser.add_argument("--lr", type=float, default=1.2e-4, help="SFT 学习率")
     parser.add_argument("--dpo_lr", type=float, default=4e-6, help="DPO 学习率")
+    parser.add_argument("--max-hours", type=float, default=2.5, help="单阶段最大时间预算 (小时)")
     parser.add_argument("--smoke", action="store_true", help="冒烟测试模式 (极速执行少量 step 验证全链路)")
+    parser.add_argument("--selftest", action="store_true", help="运行零 GPU 离线逻辑自检")
     args = parser.parse_args()
+
+    if args.selftest:
+        raise SystemExit(run_selftest())
 
     output_dir = OUTPUT_DIR
     output_dir.mkdir(parents=True, exist_ok=True)
     adapter_sft = output_dir / "adapter_13b_sft"
     adapter_dpo = output_dir / "adapter_13b_dpo"
+    deliverable_tar = None
+    any_budget_stopped = False
 
     if args.stage in ("all", "calibrate"):
         run_stage0_calibrate_gates(output_dir)
         if args.stage == "calibrate":
+            write_training_summary(output_dir, stage=args.stage, base_model="", budget_stopped=False)
             log("🎉 门控校准阶段单独执行完成！")
             return
 
     gpu_info = detect_gpu_hardware()
     base_model = resolve_13b_base_model(args.base)
     sft_data, dpo_data = ensure_13b_datasets()
+
+    scripts_dir = str(ROOT / "scripts")
+    if scripts_dir not in sys.path:
+        sys.path.insert(0, scripts_dir)
+    from virtu_eval.contamination_check import assert_no_leak
+    from corpus_unit_audit import assert_units_clean
+    assert_no_leak(sft_data)
+    assert_units_clean(sft_data)
+    if os.path.exists(dpo_data):
+        assert_no_leak(dpo_data)
+        assert_units_clean(dpo_data)
 
     if args.stage in ("all", "router"):
         run_stage1_router_warmup(
@@ -715,29 +914,33 @@ def main():
         )
 
     if args.stage in ("all", "sft"):
-        adapter_sft = run_stage1_sft_13b(
+        adapter_sft, sft_stopped = run_stage1_sft_13b(
             base_model_path=base_model,
             sft_dataset_path=sft_data,
             output_dir=output_dir,
             gpu_info=gpu_info,
             epochs=args.epochs,
             learning_rate=args.lr,
-            smoke=args.smoke
+            smoke=args.smoke,
+            max_hours=args.max_hours,
         )
+        any_budget_stopped = any_budget_stopped or sft_stopped
 
-    if args.stage in ("all", "dpo"):
+    if args.stage in ("all", "dpo") and not any_budget_stopped:
         input_adapter = adapter_sft if adapter_sft.exists() else (output_dir / "adapter_13b_sft")
-        adapter_dpo = run_stage2_dpo_13b(
+        adapter_dpo, dpo_stopped = run_stage2_dpo_13b(
             base_model_path=base_model,
             sft_adapter_path=input_adapter,
             dpo_dataset_path=dpo_data,
             output_dir=output_dir,
             gpu_info=gpu_info,
             learning_rate=args.dpo_lr,
-            smoke=args.smoke
+            smoke=args.smoke,
+            max_hours=args.max_hours,
         )
+        any_budget_stopped = any_budget_stopped or dpo_stopped
 
-    if args.stage in ("all", "eval"):
+    if args.stage in ("all", "eval") and not any_budget_stopped:
         eval_adapter = adapter_dpo if (adapter_dpo / "adapter_model.safetensors").exists() else adapter_sft
         run_stage3_eval_13b(
             base_model_path=base_model,
@@ -746,13 +949,26 @@ def main():
             smoke=args.smoke
         )
 
-    if args.stage in ("all", "export"):
+    if args.stage in ("all", "export") and not any_budget_stopped:
         export_adapter = adapter_dpo if (adapter_dpo / "adapter_model.safetensors").exists() else adapter_sft
-        run_stage4_export_13b(
+        deliverable_tar = run_stage4_export_13b(
             base_model_path=base_model,
             adapter_path=export_adapter,
             output_dir=output_dir
         )
+
+    summary_path = write_training_summary(
+        output_dir,
+        stage=args.stage,
+        base_model=base_model,
+        budget_stopped=any_budget_stopped,
+        sft_adapter=adapter_sft if adapter_sft.exists() else None,
+        dpo_adapter=adapter_dpo if adapter_dpo.exists() else None,
+        deliverable_tar=deliverable_tar,
+    )
+    log(f"训练总凭据已落盘: {summary_path} | budget_stopped={any_budget_stopped}")
+    if any_budget_stopped:
+        raise SystemExit(3)
 
     log("🎉 Virtu-13.63B 全流程任务圆满完成！")
 

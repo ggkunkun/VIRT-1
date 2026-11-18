@@ -1,0 +1,731 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""scripts/train_vericut_local_qlora.py — RTX 4050 6GB 本机 QLoRA (r=32/alpha=64) 增量微调。
+
+严格遵循 AGENTS.md §5 / §6 / §8：
+  1. 复用 cloud_train_pack/train_turnkey.py::format_chatml_sample，确保与云端 100% 同构的
+     Qwen3 ChatML + <tools> 渲染及 assistant-only loss 掩码 (-100 屏蔽 system/user/tool)。
+  2. 强制前置执行防污染 (assert_no_leak) 与单位审计 (assert_units_clean)，并检验底座维度 (4096/36/151936)。
+  3. 从 train_mix 按固定哈希划出 ~8% 内部验证集 (dev_split)，实测训练前/后 dev_loss，绝不触碰 holdout。
+  4. 严格维持 r=32, lora_alpha=64 与全仓现有 LoRA 适配器兼容，产物随后经 scripts/merge_numpy.py 流式合并。
+"""
+from __future__ import annotations
+
+import argparse
+import gc
+import hashlib
+import json
+import math
+import os
+import sys
+import time
+from pathlib import Path
+from typing import Any, Dict, List, Optional, Tuple
+
+os.environ.setdefault("CUDA_VISIBLE_DEVICES", "0")
+os.environ.setdefault("PYTORCH_CUDA_ALLOC_CONF", "garbage_collection_threshold:0.6,max_split_size_mb:64")
+os.environ.setdefault("TOKENIZERS_PARALLELISM", "false")
+
+ROOT = Path(__file__).resolve().parent.parent
+for p in (str(ROOT), str(ROOT / "scripts"), str(ROOT / "cloud_train_pack")):
+    if p not in sys.path:
+        sys.path.insert(0, p)
+
+from corpus_unit_audit import assert_units_clean  # noqa: E402
+from train_turnkey import TARGET_MODULES, format_chatml_sample  # noqa: E402
+from virtu_eval.contamination_check import assert_no_leak  # noqa: E402
+
+
+def _sha256_file(path: Path) -> str:
+    h = hashlib.sha256()
+    with open(path, "rb") as f:
+        while chunk := f.read(1 << 16):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def _assert_qwen3_8b_dims(base_dir: Path) -> dict:
+    cfg_p = base_dir / "config.json"
+    if not cfg_p.is_file():
+        raise SystemExit(f"[FATAL] Missing config.json in base model: {base_dir}")
+    cfg = json.loads(cfg_p.read_text(encoding="utf-8"))
+    exp = {"hidden_size": 4096, "num_hidden_layers": 36, "vocab_size": 151936}
+    for k, v in exp.items():
+        if cfg.get(k) != v:
+            raise SystemExit(f"[FATAL] Base model dim mismatch: {k}={cfg.get(k)} != {v}")
+    return cfg
+
+
+def prepare_splits(
+    data_path: Path, tokenizer, max_length: int, dev_mod: int = 12
+) -> Tuple[List[dict], List[dict], dict]:
+    """Tokenize and format with assistant-only loss mask, split into train vs internal dev."""
+    train_items: List[dict] = []
+    dev_items: List[dict] = []
+    skipped = 0
+    lengths: List[int] = []
+    truncated_assistant = 0
+
+    with open(data_path, encoding="utf-8") as f:
+        for idx, line in enumerate(f):
+            line = line.strip()
+            if not line:
+                continue
+            rec = json.loads(line)
+            enc = format_chatml_sample(rec, tokenizer, max_length=max_length)
+            if not enc:
+                skipped += 1
+                continue
+            n_tok = len(enc["input_ids"])
+            n_loss = sum(1 for x in enc["labels"] if x != -100)
+            if n_loss < 2:
+                truncated_assistant += 1
+                continue
+            lengths.append(n_tok)
+            if idx % dev_mod == 0:
+                dev_items.append(enc)
+            else:
+                train_items.append(enc)
+
+    lengths.sort()
+    stats = {
+        "train_count": len(train_items),
+        "dev_count": len(dev_items),
+        "skipped": skipped,
+        "truncated_assistant": truncated_assistant,
+        "max_length": max_length,
+        "tok_p50": lengths[len(lengths) // 2] if lengths else 0,
+        "tok_p95": lengths[int(len(lengths) * 0.95)] if lengths else 0,
+        "tok_max": lengths[-1] if lengths else 0,
+    }
+    return train_items, dev_items, stats
+
+
+def _get_vocab_chunk_ce():
+    import torch
+    import torch.nn.functional as F
+
+    class _PinnedVocabChunkedCE(torch.autograd.Function):
+        @staticmethod
+        def forward(ctx, x, w_cpu, targets, chunk_vocab: int):
+            dev = x.device
+            V = w_cpu.size(0)
+            N = x.size(0)
+            m = torch.full((N,), float("-inf"), device=dev, dtype=torch.float32)
+            s_exp = torch.zeros((N,), device=dev, dtype=torch.float32)
+            t_log = torch.zeros((N,), device=dev, dtype=torch.float32)
+            xb = x.to(w_cpu.dtype)
+            with torch.no_grad():
+                for st in range(0, V, chunk_vocab):
+                    ed = min(st + chunk_vocab, V)
+                    wc = w_cpu[st:ed].to(dev, non_blocking=False)
+                    lc = F.linear(xb, wc).float()
+                    cm = lc.max(dim=-1).values
+                    nm = torch.maximum(m, cm)
+                    s_exp = s_exp * torch.exp(m - nm) + torch.exp(lc - nm.unsqueeze(-1)).sum(dim=-1)
+                    m = nm
+                    mt = (targets >= st) & (targets < ed)
+                    if mt.any():
+                        t_log[mt] = lc[mt, targets[mt] - st]
+            lse = m + torch.log(s_exp)
+            ctx.save_for_backward(x, targets, lse)
+            ctx.w_cpu = w_cpu
+            ctx.chunk_vocab = chunk_vocab
+            return (lse - t_log).mean()
+
+        @staticmethod
+        def backward(ctx, grad_out):
+            if not ctx.needs_input_grad[0]:
+                return None, None, None, None
+            x, targets, lse = ctx.saved_tensors
+            w_cpu = ctx.w_cpu
+            chunk_vocab = ctx.chunk_vocab
+            dev = x.device
+            V, N = w_cpu.size(0), x.size(0)
+            xb = x.to(w_cpu.dtype)
+            gx = torch.zeros_like(x, dtype=torch.float32)
+            with torch.no_grad():
+                for st in range(0, V, chunk_vocab):
+                    ed = min(st + chunk_vocab, V)
+                    wc = w_cpu[st:ed].to(dev, non_blocking=False)
+                    pc = torch.exp(F.linear(xb, wc).float() - lse.unsqueeze(-1))
+                    mt = (targets >= st) & (targets < ed)
+                    if mt.any():
+                        rows = torch.nonzero(mt, as_tuple=False).squeeze(-1)
+                        pc[rows, targets[mt] - st] -= 1.0
+                    gx.add_(torch.matmul(pc.to(w_cpu.dtype), wc).float())
+                gx.mul_(grad_out.float() / float(N))
+            return gx.to(x.dtype), None, None, None
+
+    return _PinnedVocabChunkedCE
+
+
+def _pack_large_act(t):
+    import torch
+
+    if t.is_cuda and t.numel() * t.element_size() >= 1_000_000 and not isinstance(t, torch.nn.Parameter):
+        return ("c", t.device, t.cpu())
+    return ("k", None, t)
+
+
+def _unpack_large_act(p):
+    return p[2].to(p[1], non_blocking=False) if p[0] == "c" else p[2]
+
+
+def _compute_loss_chunked(
+    model,
+    ids,
+    mask,
+    lab,
+    embed_tokens_cpu=None,
+    lm_head_w_cpu=None,
+    ce_chunk: int = 256,
+    ce_vocab_chunk: int = 0,
+):
+    """Memory-bounded LM loss without materializing full [B, L, vocab_size] fp32 logits in VRAM."""
+    import torch
+    import torch.nn.functional as F
+
+    # PeftModelForCausalLM -> .base_model (LoraModel) -> .model (Qwen3ForCausalLM) -> .model (Qwen3Model)
+    inner_causal = model.base_model.model if hasattr(model, "base_model") else model
+    trunk = inner_causal.model
+    dev = mask.device
+    seq_len = int(ids.size(1))
+    # 单样本无 padding 时传 attention_mask=None，触发 PyTorch Flash/Efficient SDPA (O(L) 显存)
+    eff_mask = None if (mask.size(0) == 1 and bool((mask == 1).all().item())) else mask
+    vocab_chunk = ce_vocab_chunk or (2048 if seq_len > 768 else 4096)
+    # 2026-11-15 修复 v3：原阈值 `seq_len > 768` 让 dev/训练里的短中样本走"激活全留 GPU"
+    # 路径，在 6 GB WDDM 上把 eval 顶到 OOM（repro_step3 实测崩在 torch.log(s_exp)，
+    # 报 CUDA unknown error + Memory allocation failure；r1 的 0xC0000005 是同处原生崩溃变体）。
+    # probe 之所以稳，是因为它只取最长 5 条、全部 >768 走了 offload。
+    # 现统一在梯度模式下启用 offload（只改激活存放位置，不改数值），代价是慢一些。
+    use_act_offload = torch.is_grad_enabled()
+    ctx = (
+        torch.autograd.graph.saved_tensors_hooks(_pack_large_act, _unpack_large_act)
+        if use_act_offload
+        else torch.enable_grad()
+        if torch.is_grad_enabled()
+        else torch.no_grad()
+    )
+
+    with ctx:
+        if embed_tokens_cpu is not None:
+            with torch.no_grad():
+                inputs_embeds = embed_tokens_cpu(ids.cpu()).to(dev, non_blocking=False)
+            if torch.is_grad_enabled():
+                inputs_embeds = inputs_embeds.detach().requires_grad_(True)
+            out = trunk(inputs_embeds=inputs_embeds, attention_mask=eff_mask, use_cache=False)
+        else:
+            out = trunk(input_ids=ids, attention_mask=eff_mask, use_cache=False)
+
+        hidden = out[0][:, :-1, :]  # [B, L-1, H]
+        shift_lab = lab[:, 1:]      # [B, L-1]
+
+        valid_mask = shift_lab != -100
+        total_valid = valid_mask.sum()
+        if total_valid.item() == 0:
+            return hidden.sum() * 0.0
+
+        active_hidden = hidden[valid_mask]          # [N_valid, H]
+        active_labels = shift_lab[valid_mask]       # [N_valid]
+
+        if lm_head_w_cpu is not None:
+            ce_fn = _get_vocab_chunk_ce()
+            return ce_fn.apply(active_hidden, lm_head_w_cpu, active_labels, vocab_chunk)
+
+    lm_head = inner_causal.get_output_embeddings()
+    loss_sum = active_hidden.new_zeros((), dtype=torch.float32)
+    n_active = active_hidden.size(0)
+    for start in range(0, n_active, ce_chunk):
+        end = min(start + ce_chunk, n_active)
+        logits_chunk = lm_head(active_hidden[start:end].to(lm_head.weight.dtype)).float()
+        loss_sum = loss_sum + F.cross_entropy(logits_chunk, active_labels[start:end], reduction="sum")
+    return loss_sum / total_valid
+
+
+def eval_loss(
+    model,
+    items: List[dict],
+    device,
+    embed_tokens_cpu=None,
+    lm_head_w_cpu=None,
+    max_items: int = 0,
+    log_every: int = 8,
+) -> float:
+    """dev 基线评估。
+
+    2026-11-15 修复 v2：no_grad 路径在本机二次原生崩溃（rc=0xC0000005，r1 日志止于
+    [LoRA]、零 [eval] 心跳），而 probe 的带梯度 forward+backward 路径多次全过。
+    结论：6GB WDDM 下 bitsandbytes 4-bit + pinned lm_head 分块 CE 的 no_grad 内核路径
+    不稳定。现改为带梯度评估：逐条 loss.backward() 后立即 zero_grad(set_to_none=True)
+    丢弃梯度，显存水位与 probe 完全一致（峰值实测 5128MB < 6GB），loss 数值不变。
+    v1 修复（逐条心跳 + 周期 empty_cache + max_items 限制）保留。
+    """
+    import torch
+
+    if not items:
+        return 0.0
+    use_items = items[:max_items] if max_items and max_items > 0 else items
+    # train 标志使 gradient checkpointing 生效（与 probe 已验证安全的路径完全一致）；
+    # 仅单独关闭 dropout 模块，保证评估 loss 数值确定性。
+    model.train()
+    for mod in model.modules():
+        if isinstance(mod, torch.nn.Dropout):
+            mod.eval()
+    total_loss = 0.0
+    total_toks = 0
+    id_dev = "cpu" if embed_tokens_cpu is not None else device
+    for i, ex in enumerate(use_items, 1):
+        ids = torch.tensor([ex["input_ids"]], dtype=torch.long, device=id_dev)
+        mask = torch.tensor([ex["attention_mask"]], dtype=torch.long, device=device)
+        lab = torch.tensor([ex["labels"]], dtype=torch.long, device=device)
+        n_valid = int((lab != -100).sum().item())
+        if n_valid == 0:
+            continue
+        loss = _compute_loss_chunked(
+            model, ids, mask, lab,
+            embed_tokens_cpu=embed_tokens_cpu,
+            lm_head_w_cpu=lm_head_w_cpu,
+        )
+        loss.backward()  # 走 probe 已验证的带梯度内核路径，规避 no_grad 下 bnb 原生崩溃
+        total_loss += float(loss.detach().item()) * n_valid
+        total_toks += n_valid
+        model.zero_grad(set_to_none=True)  # 立即丢弃梯度，显存水位回到 probe 级别
+        del ids, mask, lab, loss
+        torch.cuda.empty_cache()  # 每条后回收分块 CE 的临时块，避免碎片把 124 条 eval 拖崩
+        if log_every and (i % log_every == 0 or i == len(use_items)):
+            print(
+                f"  [eval {i}/{len(use_items)}] running_mean="
+                f"{(total_loss / max(1, total_toks)):.4f} "
+                f"vram={torch.cuda.memory_allocated()/1024**2:.0f}MB",
+                flush=True,
+            )
+            torch.cuda.empty_cache()
+    return round(total_loss / max(1, total_toks), 6)
+
+
+def run_selftest(base_dir: Path, data_path: Path) -> int:
+    from transformers import AutoTokenizer
+
+    _assert_qwen3_8b_dims(base_dir)
+    tok = AutoTokenizer.from_pretrained(str(base_dir), trust_remote_code=True)
+    assert_no_leak(str(data_path))
+    assert_units_clean(str(data_path))
+    tr, dv, st = prepare_splits(data_path, tok, max_length=1792)
+    assert st["train_count"] > 100 and st["dev_count"] > 10, f"Unexpected split counts: {st}"
+    assert st["truncated_assistant"] == 0, f"Assistant truncated: {st}"
+    print("[LOCAL_QLORA_SELFTEST] PASS:", json.dumps(st, ensure_ascii=False))
+    return 0
+
+
+def main(argv=None) -> int:
+    ap = argparse.ArgumentParser(description="RTX 4050 6GB 本机 QLoRA SFT 训练 (r=32/alpha=64)")
+    ap.add_argument("--base", default=str(ROOT / "checkpoints" / "virtu_cad_cam_merged_v3"))
+    ap.add_argument("--data", default=str(ROOT / "data" / "sft" / "vericut_e_training" / "vericut_e_train_mix.jsonl"))
+    ap.add_argument("--out", default=str(ROOT / "checkpoints" / "vericut_e_training_local_lora"))
+    ap.add_argument("--epochs", type=float, default=1.0)
+    ap.add_argument("--max-steps", type=int, default=0, help=">0 时限制更新步数 (optimizer steps)")
+    ap.add_argument("--lr", type=float, default=1.5e-4)
+    ap.add_argument("--lora-r", type=int, default=32)
+    ap.add_argument("--lora-alpha", type=int, default=64)
+    ap.add_argument("--lora-dtype", choices=("bf16", "fp32"), default="bf16")
+    ap.add_argument("--grad-accum", type=int, default=8)
+    ap.add_argument("--max-length", type=int, default=1536)
+    ap.add_argument("--seed", type=int, default=20261114)
+    ap.add_argument("--save-every", type=int, default=15, help="每 N 次优化器更新落盘中断可续训检查点 (0=不保存)")
+    ap.add_argument("--resume", action="store_true", help="从 <out>/_ckpt_latest 恢复断点继续训练")
+    ap.add_argument("--dev-max-items", type=int, default=0,
+                    help=">0 时 dev 评估只取前 N 条（6GB 显存保命用，0=全量 124 条）")
+    ap.add_argument("--probe", action="store_true", help="仅用最长 5 条样本探测峰値显存与耗时，不落盘适配器")
+    ap.add_argument("--selftest", action="store_true")
+    args = ap.parse_args(argv)
+
+    base_dir = Path(args.base)
+    data_path = Path(args.data)
+    if args.selftest:
+        return run_selftest(base_dir, data_path)
+
+    _assert_qwen3_8b_dims(base_dir)
+    assert_no_leak(str(data_path))
+    assert_units_clean(str(data_path))
+    data_sha = _sha256_file(data_path)
+
+    import random
+    import shutil
+    import torch
+    from bitsandbytes.optim import AdamW8bit
+    from peft import LoraConfig, PeftModel, TaskType, get_peft_model
+    from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig, set_seed
+
+    if not torch.cuda.is_available():
+        raise SystemExit("[FATAL] CUDA unavailable")
+    set_seed(args.seed)
+    rng = random.Random(args.seed)
+
+    tokenizer = AutoTokenizer.from_pretrained(str(base_dir), trust_remote_code=True)
+    if tokenizer.pad_token is None:
+        tokenizer.pad_token = tokenizer.eos_token
+
+    train_items, dev_items, data_stats = prepare_splits(data_path, tokenizer, max_length=args.max_length)
+    print(f"[Data] sha={data_sha[:16]} stats={json.dumps(data_stats, ensure_ascii=False)}")
+
+    # 绕过 transformers 5.22 在 4-bit 加载期的 caching_allocator_warmup 缺陷
+    try:
+        import transformers.modeling_utils as _mu
+        _mu.caching_allocator_warmup = lambda *a, **k: None
+    except Exception:
+        pass
+
+    from accelerate.hooks import remove_hook_from_submodules
+
+    bnb = BitsAndBytesConfig(
+        load_in_4bit=True,
+        bnb_4bit_quant_type="nf4",
+        bnb_4bit_compute_dtype=torch.bfloat16,
+        bnb_4bit_use_double_quant=True,
+        llm_int8_enable_fp32_cpu_offload=True,
+    )
+    # 6GB WDDM 显存防爆协议: 36 层 4-bit 放 GPU (~3.42GB), embed_tokens + lm_head (各 1.16GB bf16) 留 CPU 内存
+    # 严禁 prepare_model_for_kbit_training 把 2.32GB bf16 embedding/lm_head 强制升维到 4.64GB fp32!
+    split_device_map = {
+        "model.embed_tokens": "cpu",
+        "model.layers": 0,
+        "model.norm": 0,
+        "model.rotary_emb": 0,
+        "lm_head": "cpu",
+    }
+    print(f"[Model] Loading 4-bit NF4 trunk@cuda:0 + embed/lm_head@cpu from {base_dir} ...", flush=True)
+    model = AutoModelForCausalLM.from_pretrained(
+        str(base_dir),
+        quantization_config=bnb,
+        dtype=torch.bfloat16,
+        low_cpu_mem_usage=True,
+        device_map=split_device_map,
+        attn_implementation="sdpa",
+        trust_remote_code=True,
+    )
+    remove_hook_from_submodules(model)
+    # 严禁把 1D LayerNorm 权重大批量升成 fp32：实测会把 6GB WDDM 显存下的残差/归一化激活放大导致 OOM
+    for p in model.parameters():
+        p.requires_grad = False
+
+    embed_tokens_cpu = model.model.embed_tokens
+    lm_head_w_cpu = model.lm_head.weight.data.pin_memory()
+    torch.cuda.empty_cache()
+    print(
+        f"[Model] Loaded GPU alloc={torch.cuda.memory_allocated()/1024**2:.1f}MB | "
+        f"embed={embed_tokens_cpu.weight.dtype}@{embed_tokens_cpu.weight.device} | "
+        f"lm_head={lm_head_w_cpu.dtype}@{lm_head_w_cpu.device}(pinned={lm_head_w_cpu.is_pinned()})",
+        flush=True,
+    )
+
+    model.gradient_checkpointing_enable(gradient_checkpointing_kwargs={"use_reentrant": False})
+    model.config.use_cache = False
+
+    out_dir = Path(args.out)
+    ckpt_dir = out_dir / "_ckpt_latest"
+    resumed_state: Optional[dict] = None
+    if args.resume and (ckpt_dir / "ckpt_state.json").is_file() and (ckpt_dir / "adapter_model.safetensors").is_file():
+        cand_state = json.loads((ckpt_dir / "ckpt_state.json").read_text(encoding="utf-8"))
+        if (
+            cand_state.get("dataset_sha256") == data_sha
+            and cand_state.get("seed") == args.seed
+            and cand_state.get("max_length") == args.max_length
+            and cand_state.get("grad_accum") == args.grad_accum
+            and float(cand_state.get("epochs", -1)) == float(args.epochs)
+        ):
+            # 修复 2026-11-16: 底模用 split_device_map 加载(embed/lm_head@cpu)，
+            # 残留的 hf_device_map 会让 peft.from_pretrained 触发 accelerate.dispatch_model，
+            # 在无 offload_dir 时抛 ValueError。本脚本已用 remove_hook_from_submodules
+            # 手动管理设备布局(仅 trunk 在 GPU, embed/lm_head 在 CPU)，这里清除该属性
+            # 使 adapter 原位加载，避免 peft 二次 dispatch 把权重搬回 GPU 导致 OOM。
+            if hasattr(model, "hf_device_map"):
+                delattr(model, "hf_device_map")
+            model = PeftModel.from_pretrained(model, str(ckpt_dir), is_trainable=True,
+                                              autocast_adapter_dtype=False)
+            resumed_state = cand_state
+            print(f"[Resume] Loaded adapter checkpoint step={cand_state['upd']} micro={cand_state['micro']}", flush=True)
+        else:
+            print("[Resume] Checkpoint metadata mismatch; starting fresh LoRA.", flush=True)
+
+    if resumed_state is None:
+        lora_cfg = LoraConfig(
+            r=args.lora_r,
+            lora_alpha=args.lora_alpha,
+            lora_dropout=0.05,
+            target_modules=TARGET_MODULES,
+            bias="none",
+            task_type=TaskType.CAUSAL_LM,
+        )
+        model = get_peft_model(model, lora_cfg)
+
+    if args.lora_dtype == "bf16":
+        for p in model.parameters():
+            if p.requires_grad:
+                p.data = p.data.to(torch.bfloat16)
+    trainable_p, all_p = model.get_nb_trainable_parameters()
+    print(f"[LoRA] r={args.lora_r}, alpha={args.lora_alpha}, dtype={args.lora_dtype} | trainable={trainable_p:,}/{all_p:,}", flush=True)
+
+    device = torch.device("cuda:0")
+    params = [p for p in model.parameters() if p.requires_grad]
+    opt = AdamW8bit(params, lr=args.lr, weight_decay=0.01)
+    if resumed_state is not None and (ckpt_dir / "optimizer.pt").is_file():
+        try:
+            opt.load_state_dict(torch.load(str(ckpt_dir / "optimizer.pt"), map_location="cpu", weights_only=False))
+            print("[Resume] Restored AdamW8bit optimizer state.", flush=True)
+        except Exception as exc:
+            print(f"[Resume] Optimizer state skipped ({exc}); continuing with restored LoRA weights.", flush=True)
+
+    if args.probe:
+        longest = sorted(train_items, key=lambda x: len(x["input_ids"]), reverse=True)[:5]
+        torch.cuda.reset_peak_memory_stats()
+        t_p = time.time()
+        model.train()
+        opt.zero_grad(set_to_none=True)
+        for i, ex in enumerate(longest):
+            t_s = time.time()
+            ids = torch.tensor([ex["input_ids"]], dtype=torch.long, device="cpu")
+            mask = torch.tensor([ex["attention_mask"]], dtype=torch.long, device=device)
+            lab = torch.tensor([ex["labels"]], dtype=torch.long, device=device)
+            loss = _compute_loss_chunked(
+                model, ids, mask, lab,
+                embed_tokens_cpu=embed_tokens_cpu,
+                lm_head_w_cpu=lm_head_w_cpu,
+            )
+            loss.backward()
+            loss_val = float(loss.detach().cpu())
+            del ids, mask, lab, loss
+            torch.cuda.empty_cache()
+            print(
+                f"  [probe {i+1}/5] seq_len={len(ex['input_ids'])} loss={loss_val:.4f} "
+                f"step_dt={time.time()-t_s:.2f}s peak_vram={torch.cuda.max_memory_allocated()/1024**2:.1f}MB",
+                flush=True,
+            )
+        opt.step()
+        opt.zero_grad(set_to_none=True)
+        print(
+            f"[PROBE PASS] 5 longest steps in {time.time()-t_p:.1f}s | "
+            f"max_alloc={torch.cuda.max_memory_allocated()/1024**2:.1f}MB | "
+            f"max_reserved={torch.cuda.max_memory_reserved()/1024**2:.1f}MB",
+            flush=True,
+        )
+        return 0
+
+    if resumed_state is not None and isinstance(resumed_state.get("dev_loss_start"), (int, float)):
+        dev_loss_start = float(resumed_state["dev_loss_start"])
+        print(f"[Eval@Resume] dev_loss_start={dev_loss_start:.4f} (restored from ckpt)", flush=True)
+    else:
+        dev_loss_start = eval_loss(
+            model, dev_items, device,
+            embed_tokens_cpu=embed_tokens_cpu,
+            lm_head_w_cpu=lm_head_w_cpu,
+            max_items=args.dev_max_items,
+        )
+        print(f"[Eval@Start] dev_loss_start={dev_loss_start:.4f} "
+              f"(n={min(len(dev_items), args.dev_max_items) if args.dev_max_items > 0 else len(dev_items)})",
+              flush=True)
+
+    # 构建完整调度步数
+    all_steps_pool: List[dict] = []
+    n_full_epochs = int(math.floor(args.epochs))
+    frac = args.epochs - n_full_epochs
+    for ep in range(n_full_epochs):
+        ep_items = list(train_items)
+        rng.shuffle(ep_items)
+        all_steps_pool.extend(ep_items)
+    if frac > 1e-6:
+        ep_items = list(train_items)
+        rng.shuffle(ep_items)
+        all_steps_pool.extend(ep_items[: max(1, int(round(len(ep_items) * frac)))])
+
+    total_micro = len(all_steps_pool)
+    total_updates = max(1, (total_micro + args.grad_accum - 1) // args.grad_accum)
+    if args.max_steps > 0:
+        total_updates = min(total_updates, args.max_steps)
+        all_steps_pool = all_steps_pool[: total_updates * args.grad_accum]
+    warmup = max(2, int(total_updates * 0.08))
+
+    def _lr_at(upd: int) -> float:
+        if upd < warmup:
+            return args.lr * (upd + 1) / warmup
+        prog = (upd - warmup) / max(1, total_updates - warmup)
+        return args.lr * (0.1 + 0.9 * 0.5 * (1.0 + math.cos(math.pi * min(1.0, prog))))
+
+    torch.cuda.reset_peak_memory_stats()
+    t0 = time.time()
+    prev_elapsed = float(resumed_state.get("elapsed_s", 0.0)) if resumed_state else 0.0
+    model.train()
+    opt.zero_grad(set_to_none=True)
+
+    micro = int(resumed_state.get("micro", 0)) if resumed_state else 0
+    upd = int(resumed_state.get("upd", 0)) if resumed_state else 0
+    win_loss = 0.0
+    win_cnt = 0
+    loss_history: List[dict] = list(resumed_state.get("loss_history", [])) if resumed_state else []
+
+    def _save_ckpt(cur_micro: int, cur_upd: int) -> None:
+        tmp_dir = out_dir / "_ckpt_tmp"
+        if tmp_dir.exists():
+            shutil.rmtree(tmp_dir, ignore_errors=True)
+        tmp_dir.mkdir(parents=True, exist_ok=True)
+        model.save_pretrained(str(tmp_dir))
+        torch.save(opt.state_dict(), str(tmp_dir / "optimizer.pt"))
+        state_obj = {
+            "micro": cur_micro,
+            "upd": cur_upd,
+            "loss_history": loss_history,
+            "dev_loss_start": dev_loss_start,
+            "dataset_sha256": data_sha,
+            "max_length": args.max_length,
+            "grad_accum": args.grad_accum,
+            "epochs": args.epochs,
+            "seed": args.seed,
+            "elapsed_s": round(prev_elapsed + (time.time() - t0), 1),
+        }
+        (tmp_dir / "ckpt_state.json").write_text(json.dumps(state_obj, ensure_ascii=False, indent=2), encoding="utf-8")
+        if ckpt_dir.exists():
+            shutil.rmtree(ckpt_dir, ignore_errors=True)
+        tmp_dir.rename(ckpt_dir)
+
+    for idx, ex in enumerate(all_steps_pool):
+        if idx < micro:
+            continue
+        seq_len = len(ex["input_ids"])
+        loss_val: Optional[float] = None
+        for attempt in range(2):
+            ids = torch.tensor([ex["input_ids"]], dtype=torch.long, device="cpu")
+            mask = torch.tensor([ex["attention_mask"]], dtype=torch.long, device=device)
+            lab = torch.tensor([ex["labels"]], dtype=torch.long, device=device)
+            loss = None
+            try:
+                loss = _compute_loss_chunked(
+                    model, ids, mask, lab,
+                    embed_tokens_cpu=embed_tokens_cpu,
+                    lm_head_w_cpu=lm_head_w_cpu,
+                )
+                if not torch.isfinite(loss):
+                    del ids, mask, lab, loss
+                    loss_val = None
+                    break
+                (loss / args.grad_accum).backward()
+                loss_val = float(loss.detach().cpu())
+                del ids, mask, lab, loss
+                break
+            except Exception as exc:
+                is_oom = isinstance(exc, torch.OutOfMemoryError) or "out of memory" in str(exc).lower()
+                del ids, mask, lab, loss
+                gc.collect()
+                torch.cuda.empty_cache()
+                if is_oom and attempt == 0:
+                    print(f"[OOM-Retry] idx={idx} seq_len={seq_len} retrying after empty_cache() ...", flush=True)
+                    continue
+                opt.zero_grad(set_to_none=True)
+                out_dir.mkdir(parents=True, exist_ok=True)
+                fail_receipt = {
+                    "status": "OOM_ABORTED" if is_oom else "FAILED",
+                    "error": f"{type(exc).__name__}: {exc}",
+                    "failed_idx": idx,
+                    "failed_seq_len": seq_len,
+                    "last_saved_micro": micro,
+                    "last_saved_upd": upd,
+                    "peak_vram_allocated_mb": round(torch.cuda.max_memory_allocated() / 1024**2, 1),
+                }
+                (out_dir / "training_receipt.json").write_text(
+                    json.dumps(fail_receipt, ensure_ascii=False, indent=2), encoding="utf-8"
+                )
+                raise
+
+        if loss_val is None:
+            micro = idx + 1
+            continue
+        if seq_len > 640:
+            torch.cuda.empty_cache()
+        # 微步心跳：原生崩溃（如 0xC0000005）无 Python 栈，靠它定位最后一条成功样本
+        if micro % 8 == 0:
+            print(
+                f"  [micro {micro}/{len(all_steps_pool)}] idx={idx} seq_len={seq_len} "
+                f"loss={loss_val:.4f} vram={torch.cuda.memory_allocated()/1024**2:.0f}MB",
+                flush=True,
+            )
+        win_loss += loss_val
+        win_cnt += 1
+        micro = idx + 1
+
+        if micro % args.grad_accum == 0 or micro == len(all_steps_pool):
+            cur_lr = _lr_at(upd)
+            for pg in opt.param_groups:
+                pg["lr"] = cur_lr
+            torch.nn.utils.clip_grad_norm_(params, 1.0)
+            opt.step()
+            opt.zero_grad(set_to_none=True)
+            upd += 1
+            avg_l = win_loss / max(1, win_cnt)
+            loss_history.append({"step": upd, "loss": round(avg_l, 5), "lr": round(cur_lr, 8)})
+            win_loss = 0.0
+            win_cnt = 0
+            if upd % 10 == 0 or upd == 1 or upd == total_updates:
+                elapsed = prev_elapsed + (time.time() - t0)
+                eta = ((time.time() - t0) / max(1, upd - (resumed_state.get("upd", 0) if resumed_state else 0))) * max(0, total_updates - upd)
+                print(
+                    f"[Train] step={upd}/{total_updates} loss={avg_l:.4f} lr={cur_lr:.2e} "
+                    f"vram_peak={torch.cuda.max_memory_allocated()/1024**2:.0f}MB elapsed={elapsed:.0f}s eta={eta:.0f}s",
+                    flush=True,
+                )
+            if args.save_every > 0 and upd % args.save_every == 0 and upd < total_updates:
+                _save_ckpt(micro, upd)
+                print(f"[Ckpt] saved step={upd}/{total_updates} micro={micro}", flush=True)
+            if micro % (args.grad_accum * 4) == 0:
+                gc.collect()
+            torch.cuda.empty_cache()
+
+    dev_loss_end = eval_loss(
+        model, dev_items, device,
+        embed_tokens_cpu=embed_tokens_cpu,
+        lm_head_w_cpu=lm_head_w_cpu,
+        max_items=args.dev_max_items,
+    )
+    print(f"[Eval@End] dev_loss_end={dev_loss_end:.4f} (delta={dev_loss_end - dev_loss_start:+.4f})", flush=True)
+
+    out_dir = Path(args.out)
+    out_dir.mkdir(parents=True, exist_ok=True)
+    model.save_pretrained(str(out_dir))
+    tokenizer.save_pretrained(str(out_dir))
+
+    adapter_file = out_dir / "adapter_model.safetensors"
+    receipt = {
+        "status": "COMPLETED",
+        "basis": "measured",
+        "base_model": str(base_dir),
+        "dataset": str(data_path),
+        "dataset_sha256": data_sha,
+        "data_stats": data_stats,
+        "lora_r": args.lora_r,
+        "lora_alpha": args.lora_alpha,
+        "lora_dtype": args.lora_dtype,
+        "max_length": args.max_length,
+        "epochs": args.epochs,
+        "grad_accum": args.grad_accum,
+        "optimizer_steps": upd,
+        "micro_steps": micro,
+        "lr": args.lr,
+        "seed": args.seed,
+        "dev_loss_start": dev_loss_start,
+        "dev_loss_end": dev_loss_end,
+        "train_loss_first": loss_history[0]["loss"] if loss_history else None,
+        "train_loss_last": loss_history[-1]["loss"] if loss_history else None,
+        "loss_history": loss_history,
+        "peak_vram_allocated_mb": round(torch.cuda.max_memory_allocated() / 1024**2, 1),
+        "peak_vram_reserved_mb": round(torch.cuda.max_memory_reserved() / 1024**2, 1),
+        "resumed_from_step": int(resumed_state.get("upd", 0)) if resumed_state else 0,
+        "runtime_seconds": round(prev_elapsed + (time.time() - t0), 1),
+        "adapter_sha256": _sha256_file(adapter_file) if adapter_file.is_file() else None,
+    }
+    (out_dir / "training_receipt.json").write_text(json.dumps(receipt, ensure_ascii=False, indent=2), encoding="utf-8")
+    if ckpt_dir.exists():
+        shutil.rmtree(ckpt_dir, ignore_errors=True)
+    print("[SAVED]", str(out_dir))
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

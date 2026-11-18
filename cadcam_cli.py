@@ -37,6 +37,7 @@ Usage Examples:
 import os
 import sys
 import json
+import time
 import argparse
 
 if sys.platform == "win32":
@@ -50,9 +51,13 @@ ROOT = os.path.dirname(os.path.abspath(__file__))
 if ROOT not in sys.path:
     sys.path.insert(0, ROOT)
 
-from bridges.software_registry import diagnose_all, SOFTWARE_SPECS
+from bridges.software_registry import (
+    diagnose_all, SOFTWARE_SPECS, DISPATCH_SOFTWARE_TOOL,
+)
 from bridges.six_software_orchestrator import SixSoftwareOrchestrator
-from bridges.tool_calling_specs import get_cadcam_tool_definitions, execute_tool_call
+from bridges.tool_calling_specs import (
+    get_cadcam_tool_definitions, execute_tool_call, approval_gate,
+)
 from bridges.desktop_controller import DesktopController
 
 
@@ -97,14 +102,40 @@ def cmd_dispatch(args):
     if args.script:
         params["script_path"] = args.script
 
+    # Consent gate: CLI 直派必须与 REST /v1/cadcam/dispatch 落在同一道闸门上。
+    # 之前这里直接 orch.dispatch()，是全工具链唯一能绕过审批的入口。
+    dispatch_tool = DISPATCH_SOFTWARE_TOOL.get(
+        str(args.software).strip().lower(), "cadcam_dispatch"
+    )
+    gate_payload = dict(params)
+    gate_payload.update({"action": args.action, "software": args.software})
+    blocked = approval_gate(dispatch_tool, gate_payload)
+    if blocked is not None:
+        print(json.dumps(blocked, ensure_ascii=False, indent=2))
+        return 2
+
+    t0 = time.perf_counter()
     res = orch.dispatch(args.software, args.action, params)
+    elapsed_ms = round((time.perf_counter() - t0) * 1000.0, 3)
+    if isinstance(res, dict):
+        res.setdefault("execution_time_ms", elapsed_ms)
+        if "data" not in res:
+            res["data"] = {k: v for k, v in res.items()
+                           if k not in ("status", "data", "execution_time_ms",
+                                        "verdict_code", "detail", "note")}
     print(json.dumps(res, ensure_ascii=False, indent=2))
-    return 0 if res.get("status") not in ("error", "failed") else 1
+    return 0 if res.get("status") not in ("error", "failed", "blocked") else 1
 
 
 def cmd_chain(args):
     orch = SixSoftwareOrchestrator()
     skip = tuple(args.skip.split(",")) if args.skip else ()
+    # 与 REST /v1/chain/run 同一道闸门：全流水线会驱动软件并写盘，默认需显式授权。
+    gate_payload = {"wish": args.wish, "out_root": args.output, "skip": list(skip)}
+    blocked = approval_gate("cadcam_run_full_chain", gate_payload)
+    if blocked is not None:
+        print(json.dumps(blocked, ensure_ascii=False, indent=2))
+        return 2
     print(f"Starting full CAD/CAM manufacturing chain for wish: {args.wish}")
     res = orch.run_full_chain(args.wish, out_root=args.output, skip=skip)
     print(json.dumps(res, ensure_ascii=False, indent=2))

@@ -1,0 +1,83 @@
+{
+  "tag": "virtu-six-software:v4-local-repair",
+  "round": 1,
+  "started_at": "2026-11-16 19:15:30",
+  "runtime_s": 337.6,
+  "tags_digest_before": "9654750663184e4c932f8c5909b31d67a790e88ea20f1c620b7e8d8b8277241d",
+  "tags_digest_after": "9654750663184e4c932f8c5909b31d67a790e88ea20f1c620b7e8d8b8277241d",
+  "drifted": false,
+  "error": null,
+  "total": 10,
+  "passed": 8,
+  "failed": {
+    "lame_stress_probe": "missing_sigma_theta_33.33",
+    "vericut_autodiff_probe": "missing_color:blue"
+  },
+  "probes_detail": {
+    "show_template_gate": {
+      "passed": true,
+      "has_tools_and_tool_call": true,
+      "no_hardcoded_num_gpu": true
+    },
+    "chat_liveness_probe": {
+      "passed": true,
+      "response_len": 230,
+      "sample": "薄壁圆筒（内半径 $ r_i $，外半径 $ r_o \\approx r_i $，壁厚 $ t = r_o - r_i $，内压 $ p $）环向应力（circumferential, longitudinal）：  \n- 环向拉应力 (hoop): $ \\sigma_{\\text{hoop}} = \\frac{p}{"
+    },
+    "native_tool_call_probe": {
+      "passed": true,
+      "tool_calls_count": 1,
+      "called_names": [
+        "cadcam_universal_geometry"
+      ],
+      "parsed_args": {
+        "shape": "cylinder",
+        "diameter_mm": 80,
+        "length_mm": 120
+      },
+      "reason": "ok",
+      "raw_snippet": ""
+    },
+    "anti_degenerate_sanity_probe": {
+      "passed": true,
+      "response_len": 189,
+      "unique_ngram_ratio": 0.984,
+      "sample": "SOLIDWORKS 2021 默认基准面及其法向（+X、+Y、+Z 轴）如下：\r\n\r\n- **Front Plane**（前视基准面）：`XY` 平面，法向 `+Z`（垂直屏幕朝外）。\r\n- **Top Plane**（上视基准面）：`XZ` 平面，法向 `+Y`（水平向右）。\r\n- **Right Plane**（"
+    },
+    "sw_coordinate_probe": {
+      "passed": true,
+      "reason": "ok",
+      "sample": "SOLIDWORKS 2021 默认基准面及其法向（+X、+Y、+Z 轴）如下：\r\n\r\n- **Front Plane**（前视基准面）：`XY` 平面，法向 `+Z`（垂直屏幕朝外）。\r\n- **Top Plane**（上视基准面）：`XZ` 平面，法向 `+Y`（水平向右）。\r\n- **Right Plane**（"
+    },
+    "lame_stress_probe": {
+      "passed": false,
+      "reason": "missing_sigma_theta_33.33",
+      "sample": "- 内壁环向拉应力 (σ_θ = P_i * (D_o^2 + D_i^2) / (D_o^2 - D_i^2))：**30.00 MPa**（受内压张开）；\r\n- 内壁径向压应力 (σ_r = -P_i)：**-20.00 MPa**（指向筒内）。"
+    },
+    "fanuc_g71_safety_probe": {
+      "passed": true,
+      "reason": "ok",
+      "sample": "O1007\r\nG50 S1800\r\nG96 S150 M03\r\nT0101\r\nG00 X62.0 Z2.0\r\nG71 U1.5 R0.75\r\nG71 P1 Q2 U0.4 W0.1 F0.25\r\nN1 G00 X38.0\r\nG01 Z0.0 F0.12\r\nX62.0 Z-20.0\r\nN2 G01 Z-45.0\r\nG00 X92.0 Z80.0 T0202\r\n"
+    },
+    "vericut_autodiff_probe": {
+      "passed": false,
+      "reason": "missing_color:blue",
+      "sample": "在 VERICUT 9.6 的 Auto-Diff 偏差图中，颜色代表刀具路径与设计模型的偏差情况：\r\n\r\n- **红色（Red）**：过切（Gouge），表示刀具切入了零件内部，切除过多，属于致命制造错误，必须立即停机排查并修正 NC 跑偏、刀路参数或刀具半径补偿。"
+    },
+    "vericut_coordinate_unit_probe": {
+      "passed": true,
+      "reason": "ok",
+      "sample": "(1) 工程 XML 明确声明 `<Unit>inch</Unit>`，因此该工程采用 **英寸 (inch)** 作为长度单位，不是毫米 (millimeter)。在 VERICUT 中，`inch` 对应英制单位（1 inch = 25.4 mm），而 `millimeter` 才代表公制毫米。\r\n\r\n(2) **不能直接等价套用 SOLIDWORKS "
+    },
+    "vericut_tool_call_probe": {
+      "passed": true,
+      "tool_calls_count": 1,
+      "parsed_args": {
+        "action": "autodiff_check",
+        "project_path": "E:/training/session_101m.vcproject"
+      },
+      "reason": "ok",
+      "raw_snippet": ""
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "part_name": "High-Pressure Turbine Rotor Blade Stage-2",
+  "material": "CMSX-4 Single Crystal Superalloy",
+  "rated_speed_rpm": 15200,
+  "angular_velocity_rad_s": 1591.74,
+  "gas_temperature_c": 750.0,
+  "yield_strength_mpa": 960.0,
+  "max_von_mises_stress_mpa": 512.4,
+  "safety_factor_fos": 1.87,
+  "aerospace_margin_pass": true,
+  "volume_conservation_mm3": 31699.99,
+  "blade_mass_g": 275.79
+}

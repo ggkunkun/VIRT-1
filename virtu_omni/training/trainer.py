@@ -19,6 +19,7 @@ from torch.optim import AdamW
 from virtu_omni.config import VirtuOmniConfig
 from virtu_omni.models.architecture import VirtuOmni10B
 from virtu_omni.training.monitor import TrainingHealthMonitor
+from virtu_omni.security.weights import safe_torch_load as _safe_torch_load
 
 
 class Distributed3DTrainer:
@@ -291,7 +292,7 @@ class Distributed3DTrainer:
     def load_checkpoint(self, checkpoint_path: str) -> None:
         """Resume training state from checkpoint."""
         print(f"[Trainer] Resuming from checkpoint: {checkpoint_path}")
-        ckpt = torch.load(checkpoint_path, map_location=self.device, weights_only=False)
+        ckpt = _safe_torch_load(checkpoint_path, map_location=self.device)
         self.global_step = ckpt.get("global_step", 0)
         self.model.load_state_dict(ckpt["model_state_dict"])
         if "optimizer_state_dict" in ckpt and self.optimizer is not None:

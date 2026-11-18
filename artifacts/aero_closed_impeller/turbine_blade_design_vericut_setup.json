@@ -1,0 +1,136 @@
+{
+  "stock_stl": "D:\\Virtu模型\\artifacts\\aero_closed_impeller\\turbine_blade_design_stock_box.stl",
+  "stock_bytes": 684,
+  "stock_shape": "box",
+  "stock_dims": {
+    "dx": 42.0,
+    "dy": 38.0,
+    "dz": 126.0
+  },
+  "stock_origin": [
+    -21.0,
+    -19.0,
+    -32.0
+  ],
+  "stock_sanity": {
+    "ratio": 1.443,
+    "threshold": 4.0,
+    "ok": true,
+    "reason": ""
+  },
+  "stock_source": "reused_existing_stock_stl_verified_against_spec",
+  "stock_basis": "measured_from_sample_inverse_derivation",
+  "part_type": "加工航空发动机涡轮叶片五轴联动",
+  "stock_hint": "box",
+  "inferred_is_revolution": false,
+  "inverse_sample_evidence": {
+    "spec": {
+      "shape": "box",
+      "dims": {
+        "dx": 42.0,
+        "dy": 38.0,
+        "dz": 126.0
+      },
+      "origin": [
+        -21.0,
+        -19.0,
+        -32.0
+      ],
+      "sanity": {
+        "ratio": 1.443,
+        "threshold": 4.0,
+        "ok": true,
+        "reason": ""
+      },
+      "describe": "BOX 42.0x38.0x126.0mm @ (-21.0, -19.0, -32.0)"
+    },
+    "design_mesh": "D:\\Virtu模型\\00_归档\\01_历史备份\\eval_archive\\turbine_blade_design.stl",
+    "product_bbox": {
+      "xmin": -18.0,
+      "xmax": 18.0,
+      "ymin": -14.0,
+      "ymax": 18.0,
+      "zmin": -30.0,
+      "zmax": 91.0
+    },
+    "product_size_mm": [
+      36.0,
+      32.0,
+      121.0
+    ],
+    "semantic_is_revolution": false,
+    "inference_reason": "explicit_bounding_block_hint",
+    "basis": "measured_from_sample",
+    "sample_stock_mesh": "D:\\Virtu模型\\00_归档\\01_历史备份\\eval_archive\\turbine_blade_stock.stl",
+    "sample_design_mesh": "D:\\Virtu模型\\00_归档\\01_历史备份\\eval_archive\\turbine_blade_design.stl",
+    "sample_stock_bbox": {
+      "xmin": -21.0,
+      "xmax": 21.0,
+      "ymin": -19.0,
+      "ymax": 19.0,
+      "zmin": -32.0,
+      "zmax": 94.0
+    },
+    "sample_stock_size_mm": [
+      42.0,
+      38.0,
+      126.0
+    ],
+    "sample_stock_shape": "box",
+    "sample_allowances_mm": {
+      "x_minus": 3.0,
+      "x_plus": 3.0,
+      "y_minus": 5.0,
+      "y_plus": 1.0,
+      "z_bottom_clamp": 2.0,
+      "z_top": 3.0
+    },
+    "sample_stock_encloses_design": true,
+    "derivation": "product_bbox + per-face sample allowances",
+    "inferred_is_revolution": false,
+    "vcproject_setup": {
+      "vcproject": "D:\\Virtu模型\\01_CAD交付件\\turbine_blade_vericut.vcproject",
+      "machine_files": [
+        "dmg_mori_nmv1500.mch"
+      ],
+      "control_files": [
+        "fan30im.ctl"
+      ],
+      "csystems": [
+        "G57"
+      ],
+      "linear_axes": [
+        "X",
+        "Y",
+        "Z"
+      ],
+      "rotary_axes": [
+        "B",
+        "C"
+      ],
+      "is_5axis": true,
+      "kinematics": "5-Axis X/Y/Z/B/C",
+      "nc_programs": [
+        "D:\\Virtu模型\\turbine_blade_5axis.nc"
+      ],
+      "nc_checked_for_rtcp": "D:\\Virtu模型\\01_CAD交付件\\turbine_blade_5axis.nc",
+      "nc_has_rtcp": true,
+      "stock_files": [
+        "D:\\Virtu模型\\turbine_blade_stock.stl"
+      ],
+      "design_files": [
+        "D:\\Virtu模型\\turbine_blade_design.stl"
+      ],
+      "tool_libraries": [
+        "force-impeller.tls"
+      ]
+    }
+  },
+  "design_stl": "D:\\Virtu模型\\00_归档\\01_历史备份\\eval_archive\\turbine_blade_design.stl",
+  "nc_file": "D:\\Virtu模型\\01_CAD交付件\\turbine_blade_5axis.nc",
+  "project": "D:\\Virtu模型\\artifacts\\aero_closed_impeller\\turbine_blade_design_VERICUT.vcproject",
+  "project_template": "D:\\Virtu模型\\01_CAD交付件\\turbine_blade_vericut.vcproject",
+  "sample_vcproject": "D:\\Virtu模型\\01_CAD交付件\\turbine_blade_vericut.vcproject",
+  "replacements_not_found": [],
+  "basis": "measured (product/sample-derived stock / files written) / asserted (sample machine reused)"
+}

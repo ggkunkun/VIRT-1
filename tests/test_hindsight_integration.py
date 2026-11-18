@@ -13,37 +13,75 @@ from __future__ import annotations
 
 import json
 import os
+import secrets
 import sys
 import tempfile
 import threading
-import time
 import unittest
+import urllib.error
 import urllib.request
 from pathlib import Path
+from unittest.mock import patch
 
 WORKSPACE_DIR = Path(__file__).resolve().parent.parent
 if str(WORKSPACE_DIR) not in sys.path:
     sys.path.insert(0, str(WORKSPACE_DIR))
 
 from virtu_omni.memory import VirtuHindsightMemory, MemoryType
-from virtu_omni.agent.agent_team import EvolutionAndMemoryAgent, IndustrialAgentTeam
-from scripts.workbuddy_virtu_bridge import ThreadingServer, OpenAIBaseHandler
+from virtu_omni.agent import agent_team
+from scripts import workbuddy_virtu_bridge as bridge
 
 
 class TestHindsightIntegration(unittest.TestCase):
     """Test suite for Virtu Hindsight Memory integration."""
 
     def setUp(self):
-        self.temp_storage = tempfile.NamedTemporaryFile(suffix=".json", delete=False)
-        self.temp_storage.close()
-        self.mem = VirtuHindsightMemory(storage_path=self.temp_storage.name)
+        temp_dir = tempfile.TemporaryDirectory()
+        self.addCleanup(temp_dir.cleanup)
+        self.temp_root = Path(temp_dir.name)
+        memory_env = patch.dict(os.environ, {
+            "VIRTU_MEMORY_PATH": str(self.temp_root / "skill_memory.json"),
+            "VIRTU_SKILLS_ROOT": str(self.temp_root / "skills"),
+            "HINDSIGHT_API_URL": "",
+            "HINDSIGHT_BASE_URL": "",
+            "HINDSIGHT_API_KEY": "",
+        })
+        self.addCleanup(memory_env.stop)
+        memory_env.start()
+        self.mem = VirtuHindsightMemory(storage_path=self.temp_root / "hindsight.json")
+        for memory_patch in (
+            patch.object(bridge, "hindsight_memory", self.mem),
+            patch.object(agent_team, "VirtuHindsightMemory", return_value=self.mem),
+        ):
+            self.addCleanup(memory_patch.stop)
+            memory_patch.start()
 
-    def tearDown(self):
-        if os.path.exists(self.temp_storage.name):
-            try:
-                os.unlink(self.temp_storage.name)
-            except Exception:
-                pass
+    def _start_bridge(self):
+        self.test_token = secrets.token_urlsafe(32)
+        token_patch = patch.object(bridge, "_BRIDGE_TOKEN", self.test_token)
+        self.addCleanup(token_patch.stop)
+        token_patch.start()
+        self.opener = urllib.request.build_opener(urllib.request.ProxyHandler({}))
+        self.server = bridge.ThreadingServer(("127.0.0.1", 0), bridge.OpenAIBaseHandler)
+        self.addCleanup(self.server.server_close)
+        self.base_url = f"http://127.0.0.1:{self.server.server_address[1]}"
+        self.server_thread = threading.Thread(
+            target=self.server.serve_forever, kwargs={"poll_interval": 0.05}, daemon=True
+        )
+        self.server_thread.start()
+        self.addCleanup(self._stop_server)
+
+    def _stop_server(self):
+        self.server.shutdown()
+        self.server_thread.join(timeout=5)
+        self.assertFalse(self.server_thread.is_alive(), "Test bridge thread did not stop")
+
+    def _open(self, request, *, authenticate=True):
+        self.assertTrue(request.full_url.startswith(f"{self.base_url}/"))
+        if authenticate:
+            # Do not forward the test credential if a response redirects elsewhere.
+            request.add_unredirected_header("Authorization", f"Bearer {self.test_token}")
+        return self.opener.open(request, timeout=10)
 
     def test_hindsight_initialization_and_banks(self):
         """Verify banks initialization and creation."""
@@ -127,10 +165,10 @@ class TestHindsightIntegration(unittest.TestCase):
 
     def test_agent_team_hindsight_integration(self):
         """Verify EvolutionAndMemoryAgent and IndustrialAgentTeam interact with Hindsight."""
-        agent = EvolutionAndMemoryAgent()
+        agent = agent_team.EvolutionAndMemoryAgent()
         # Verify Hindsight instance is attached
         self.assertTrue(hasattr(agent, "hindsight"))
-        self.assertIsInstance(agent.hindsight, VirtuHindsightMemory)
+        self.assertIs(agent.hindsight, self.mem)
 
         # Verify recall & reflect
         context = agent.retrieve_context("AL7075 铝合金精密轴套车削")
@@ -139,66 +177,65 @@ class TestHindsightIntegration(unittest.TestCase):
         reflection = agent.reflect_on_intent("AL7075 铝合金精密轴套车削")
         self.assertEqual(reflection["status"], "reflected")
 
+    def _post(self, path, payload, *, authenticate=True):
+        req = urllib.request.Request(
+            f"{self.base_url}{path}",
+            data=json.dumps(payload).encode("utf-8"),
+            headers={"Content-Type": "application/json"},
+        )
+        return self._open(req, authenticate=authenticate)
+
+    def test_bridge_hindsight_requires_authentication(self):
+        """Missing and invalid credentials must still fail for GET and POST."""
+        self._start_bridge()
+        for path, payload in (("/v1/hindsight/status", None), ("/v1/hindsight/retain", b"{}")):
+            for authorization in (None, f"Bearer {self.test_token}-invalid"):
+                with self.subTest(path=path, credentials="missing" if authorization is None else "invalid"):
+                    headers = {"Content-Type": "application/json"}
+                    if authorization is not None:
+                        headers["Authorization"] = authorization
+                    req = urllib.request.Request(f"{self.base_url}{path}", data=payload, headers=headers)
+                    with self.assertRaises(urllib.error.HTTPError) as caught:
+                        with self._open(req, authenticate=False):
+                            pass
+                    with caught.exception as response:
+                        self.assertEqual(response.code, 401)
+
     def test_bridge_hindsight_endpoints(self):
         """Verify bridge HTTP endpoints /v1/hindsight/*."""
-        test_port = 8011
-        server = ThreadingServer(("127.0.0.1", test_port), OpenAIBaseHandler)
-        t = threading.Thread(target=server.serve_forever, daemon=True)
-        t.start()
-        time.sleep(0.4)
+        self._start_bridge()
 
-        try:
-            # 1. GET /v1/hindsight/status
-            with urllib.request.urlopen(f"http://127.0.0.1:{test_port}/v1/hindsight/status") as resp:
-                data = json.loads(resp.read().decode("utf-8"))
-                self.assertEqual(data["status"], "active")
-                self.assertIn("banks", data)
+        with self._open(urllib.request.Request(f"{self.base_url}/v1/hindsight/status")) as resp:
+            data = json.loads(resp.read().decode("utf-8"))
+            self.assertEqual(data["status"], "active")
+            self.assertIn("banks", data)
 
-            # 2. POST /v1/hindsight/retain
-            retain_req = urllib.request.Request(
-                f"http://127.0.0.1:{test_port}/v1/hindsight/retain",
-                data=json.dumps({
-                    "bank_id": "virtu_cad_cam",
-                    "content": "API Bridge Test Retain Content",
-                    "context": "testing",
-                    "tags": ["api_test"],
-                }).encode("utf-8"),
-                headers={"Content-Type": "application/json"},
-            )
-            with urllib.request.urlopen(retain_req) as resp:
-                ret_data = json.loads(resp.read().decode("utf-8"))
-                self.assertEqual(ret_data["status"], "retained")
+        with self._post("/v1/hindsight/retain", {
+            "bank_id": "virtu_cad_cam",
+            "content": "API Bridge Test Retain Content",
+            "context": "testing",
+            "tags": ["api_test"],
+        }) as resp:
+            self.assertEqual(json.loads(resp.read().decode("utf-8"))["status"], "retained")
 
-            # 3. POST /v1/hindsight/recall
-            recall_req = urllib.request.Request(
-                f"http://127.0.0.1:{test_port}/v1/hindsight/recall",
-                data=json.dumps({
-                    "bank_id": "virtu_cad_cam",
-                    "query": "API Bridge Test",
-                    "max_results": 2,
-                }).encode("utf-8"),
-                headers={"Content-Type": "application/json"},
-            )
-            with urllib.request.urlopen(recall_req) as resp:
-                rec_data = json.loads(resp.read().decode("utf-8"))
-                self.assertEqual(rec_data["status"], "recalled")
-                self.assertGreaterEqual(rec_data["count"], 1)
+        with self._post("/v1/hindsight/recall", {
+            "bank_id": "virtu_cad_cam",
+            "query": "API Bridge Test",
+            "max_results": 2,
+        }) as resp:
+            rec_data = json.loads(resp.read().decode("utf-8"))
+            self.assertEqual(rec_data["status"], "recalled")
+            self.assertGreaterEqual(rec_data["count"], 1)
 
-            # 4. POST /v1/hindsight/reflect
-            reflect_req = urllib.request.Request(
-                f"http://127.0.0.1:{test_port}/v1/hindsight/reflect",
-                data=json.dumps({
-                    "bank_id": "virtu_cad_cam",
-                    "query": "API Bridge Test",
-                }).encode("utf-8"),
-                headers={"Content-Type": "application/json"},
-            )
-            with urllib.request.urlopen(reflect_req) as resp:
-                ref_data = json.loads(resp.read().decode("utf-8"))
-                self.assertEqual(ref_data["status"], "reflected")
+        with self._post("/v1/hindsight/reflect", {
+            "bank_id": "virtu_cad_cam",
+            "query": "API Bridge Test",
+        }) as resp:
+            self.assertEqual(json.loads(resp.read().decode("utf-8"))["status"], "reflected")
 
-        finally:
-            server.shutdown()
+        # The bridge must have written to the temporary bank, not the user's store.
+        self.assertTrue(any("API Bridge Test" in u["content"]
+                            for u in self.mem.banks["virtu_cad_cam"]["units"].values()))
 
 
 if __name__ == "__main__":

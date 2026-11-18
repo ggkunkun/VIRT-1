@@ -1,0 +1,7 @@
+[
+ {"model": "virtu-dense-merged-v2:q4_0", "profiles": [{"num_gpu": 99, "num_ctx": 8192}]},
+ {"model": "virtu-max:c3b78c77", "profiles": [{"num_gpu": 99, "num_ctx": 8192}]},
+ {"model": "qwen2.5:7b-instruct-q4_K_M", "profiles": [{"num_gpu": 99, "num_ctx": 8192}]},
+ {"model": "qwen2.5:1.5b", "profiles": [{"num_gpu": 99, "num_ctx": 8192}]},
+ {"model": "bge-m3:latest", "profiles": [{"num_gpu": 99, "num_ctx": 2048}]}
+]

@@ -1,0 +1,24 @@
+{
+  "status": "COMPLETED",
+  "base": "tmp_smoke/tiny",
+  "dataset": "tmp_smoke\\smoke.jsonl",
+  "dataset_sha256": "a71381eecb9a4ee31ca213148235c10514e92ccb62a9628a8d34808ab0a2e552",
+  "rows": {
+    "train": 16,
+    "dev": 4
+  },
+  "config": {
+    "epochs": 1.0,
+    "max_length": 256,
+    "grad_accum": 2,
+    "lr": 0.001,
+    "lora_r": 8,
+    "lora_alpha": 16,
+    "seed": 20261117
+  },
+  "dev_loss_start": 11.95166,
+  "dev_loss_end": 11.940777,
+  "total_updates": 8,
+  "adapter_sha256": "9102dd5f7fc8b8ccee3afd0572b6c42e981b9c8ecd9709ce99c216f1a3973525",
+  "completed_at": "2026-11-17T14:38:42"
+}

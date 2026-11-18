@@ -1,0 +1,1640 @@
+[
+  {
+    "family": "fea_fos",
+    "user": "不锈钢304构件，屈服强度 Sy=215 MPa，FEA 算得峰值 von Mises 应力 σ_vm=97.0 MPa。预测安全系数并判定 FOS≥1.5 是否通过。",
+    "expected": {
+      "world_state": {
+        "material": "不锈钢304",
+        "yield_strength_mpa": 215.0,
+        "peak_von_mises_mpa": 97.0,
+        "safety_factor": 2.22,
+        "fos_gate": "FOS>=1.5_pass"
+      },
+      "verification": {
+        "formula": "FOS=Sy/sigma_vm",
+        "checks": [
+          "FOS>=1.5"
+        ]
+      }
+    },
+    "predicted": {
+      "world_state": {
+        "safety_factor": 2.216494845360825,
+        "fos_gate": "FOS>=1.5_PASS",
+        "peak_von_mises_mpa": 97.0
+      }
+    },
+    "pass": true,
+    "raw_pass": true,
+    "fmt_raw": true,
+    "miss": [],
+    "miss_raw": [],
+    "guard_action": "corrected",
+    "raw": "{\"world_state\": {\"safety_factor\": 2.215, \"fos_gate\": \"pass\"}, \"derivation\": {\"safety_factor\": \"(215)/(97.0)\"} }"
+  },
+  {
+    "family": "invalid",
+    "user": "未提供材料类型，要求预测去除质量。",
+    "expected": {
+      "world_state": null,
+      "invalid": true,
+      "reason": "missing_material",
+      "expected_action": "拒绝并列出缺失/非法项，不输出臆测数值"
+    },
+    "predicted": {
+      "world_state": {
+        "world_state": null,
+        "invalid": true,
+        "reason": "缺少 material_type"
+      }
+    },
+    "pass": false,
+    "raw_pass": true,
+    "fmt_raw": true,
+    "miss": [],
+    "miss_raw": [],
+    "guard_action": "accept",
+    "raw": "{\"world_state\": null, \"invalid\": true, \"reason\": \"缺少 material_type\"}"
+  },
+  {
+    "family": "mass_props",
+    "user": "预测cylinder（半径 r=10.8 mm，高 h=137.9 mm）的质量属性：体积、质量、质心坐标、绕质心惯性矩 Ixx 与 Izz。材料 45钢。",
+    "expected": {
+      "world_state": {
+        "shape": "cylinder",
+        "volume_mm3": 50531.44,
+        "mass_g": 396.672,
+        "centroid_mm": [
+          10.8,
+          10.8,
+          68.95
+        ],
+        "inertia_ixx_mm4": 10685.26,
+        "inertia_izz_mm4": 10685.26,
+        "solver": "analytic_csg"
+      },
+      "verification": {
+        "formula": "V=l*w*h (box) | V=π r^2 h (cyl); m=ρV; centroid=几何中心; I_box=截面两边之积×高^3/12 (mm^4), I_cyl=πr^4/4 与 πr^4/2 (mm^4)",
+        "checks": [
+          "V>0",
+          "m>0"
+        ]
+      }
+    },
+    "predicted": {
+      "world_state": {
+        "world_state": {
+          "mass_props": {
+            "volume_mm3": 268051,
+            "mass_g": 2109.7,
+            "centroid_mm": [
+              0,
+              0,
+              68.95
+            ],
+            "inertia_mm4": {
+              "Ixx": 129555,
+              "Izz": 129555
+            }
+          }
+        },
+        "derivation": {
+          "mass_props.volume_mm3": "pi*r*r*h",
+          "mass_props.mass_g": "volume_mm3*7.85/1000",
+          "mass_props.centroid_mm": "[0, 0, h/2]",
+          "mass_props.inertia_mm4.Ixx": "pi*r*r*(h^2/12 + r^2/4), Izz = pi*r*r*(h^2/12 + r^2/4)"
+        },
+        "verification": {
+          "source": "cad.inertial_properties",
+          "resolved": true
+        }
+      }
+    },
+    "pass": false,
+    "raw_pass": false,
+    "fmt_raw": true,
+    "miss": [
+      "volume_mm3(missing)",
+      "mass_g(missing)"
+    ],
+    "miss_raw": [
+      "volume_mm3(268051!=50531.4)",
+      "mass_g(2109.7!=396.672)"
+    ],
+    "guard_action": "accept",
+    "raw": "{\"world_state\": {\"mass_props\": {\"volume_mm3\": 268051, \"mass_g\": 2109.7, \"centroid_mm\": [0, 0, 68.95], \"inertia_mm4\": {\"Ixx\": 129555, \"Izz\": 129555}}}, \"derivation\": {\"mass_props.volume_mm3\": \"pi*r*r*h\", \"mass_props.mass_g\": \"volume_mm3*7.85/1000\", \"mass_props.centroid_mm\": \"[0, 0, h/2]\", \"mass_props.inertia_mm4.Ixx\": \"pi*r*r*(h^2/12 + r^2/4), Izz = pi*r*r*(h^2/12 + r^2/4)\"}, \"verification\": {\"source\": \"cad.inertial_properties\", \"resolved\": true}}"
+  },
+  {
+    "family": "fea_fos",
+    "user": "铝合金6061构件，屈服强度 Sy=276 MPa，FEA 算得峰值 von Mises 应力 σ_vm=43.8 MPa。预测安全系数并判定 FOS≥1.5 是否通过。",
+    "expected": {
+      "world_state": {
+        "material": "铝合金6061",
+        "yield_strength_mpa": 276.0,
+        "peak_von_mises_mpa": 43.8,
+        "safety_factor": 6.3,
+        "fos_gate": "FOS>=1.5_pass"
+      },
+      "verification": {
+        "formula": "FOS=Sy/sigma_vm",
+        "checks": [
+          "FOS>=1.5"
+        ]
+      }
+    },
+    "predicted": {
+      "world_state": {
+        "safety_factor": 6.301369863013699,
+        "fos_gate": "FOS>=1.5_PASS",
+        "peak_von_mises_mpa": 43.8
+      }
+    },
+    "pass": true,
+    "raw_pass": false,
+    "fmt_raw": true,
+    "miss": [],
+    "miss_raw": [
+      "safety_factor(276!=6.3)"
+    ],
+    "guard_action": "corrected",
+    "raw": "{\"world_state\": {\"safety_factor\": 276.000, \"fos_gate\": \"pass\"}, \"derivation\": {\"safety_factor\": \"(276.000)/(43.800)\", \"fos_gate\": \"if (276.000/(43.800)) >= 1.5 then 'pass' else 'fail'\"}, \"verification\": {\"source\": \"fea_solver\", \"resolved\": true}}"
+  },
+  {
+    "family": "mass_props",
+    "user": "预测box（长 l=108.5 mm，宽 w=116.9 mm，高 h=96.0 mm）的质量属性：体积、质量、质心坐标、绕质心惯性矩 Ixx 与 Izz。材料 铝合金6061。",
+    "expected": {
+      "world_state": {
+        "shape": "box",
+        "volume_mm3": 1217630.4,
+        "mass_g": 3287.602,
+        "centroid_mm": [
+          54.25,
+          58.45,
+          48.0
+        ],
+        "inertia_ixx_mm4": 8618803.2,
+        "inertia_izz_mm4": 14444151.19,
+        "solver": "analytic_csg"
+      },
+      "verification": {
+        "formula": "V=l*w*h (box) | V=π r^2 h (cyl); m=ρV; centroid=几何中心; I_box=截面两边之积×高^3/12 (mm^4), I_cyl=πr^4/4 与 πr^4/2 (mm^4)",
+        "checks": [
+          "V>0",
+          "m>0"
+        ]
+      }
+    },
+    "predicted": {
+      "world_state": {
+        "mass_props": {
+          "volume_mm3": 108500000,
+          "mass_g": 2794.5
+        },
+        "centroid_mm": [
+          54.25,
+          58.45,
+          48.0
+        ],
+        "inertia_mm4": {
+          "Ixx": 1629533333.3,
+          "Izz": 1629533333.3
+        },
+        "mass_props.volume_mm3": 1217630.4
+      }
+    },
+    "pass": false,
+    "raw_pass": false,
+    "fmt_raw": true,
+    "miss": [
+      "volume_mm3(1.085e+08!=1.21763e+06)",
+      "mass_g(2794.5!=3287.6)"
+    ],
+    "miss_raw": [
+      "volume_mm3(1.085e+08!=1.21763e+06)",
+      "mass_g(2794.5!=3287.6)"
+    ],
+    "guard_action": "accept",
+    "raw": "{\"world_state\": {\"mass_props\": {\"volume_mm3\": 108500000, \"mass_g\": 2794.5}, \"centroid_mm\": [54.25, 58.45, 48.0], \"inertia_mm4\": {\"Ixx\": 1629533333.3, \"Izz\": 1629533333.3}}, \"derivation\": {\"mass_props.volume_mm3\": \"(108.5)*(116.9)*(96.0)\", \"mass_props.mass_g\": \"(108.5)*(116.9)*(96.0)*(2.710e-3)\", \"centroid_mm\": \"[l/2, w/2, h/2]\", \"inertia_mm4.Ixx\": \"((w^2 + h^2)/12)*l^3\", \"inertia_mm4.Izz\": \"((l^2 + h^2)/12)*w^3\"}, \"verification\": {\"source\": \"cad.inertial_properties\", \"resolved\": true}}"
+  },
+  {
+    "family": "mass_props",
+    "user": "预测cylinder（半径 r=12.0 mm，高 h=96.1 mm）的质量属性：体积、质量、质心坐标、绕质心惯性矩 Ixx 与 Izz。材料 黄铜H62。",
+    "expected": {
+      "world_state": {
+        "shape": "cylinder",
+        "volume_mm3": 43474.62,
+        "mass_g": 369.534,
+        "centroid_mm": [
+          12.0,
+          12.0,
+          48.05
+        ],
+        "inertia_ixx_mm4": 16286.02,
+        "inertia_izz_mm4": 16286.02,
+        "solver": "analytic_csg"
+      },
+      "verification": {
+        "formula": "V=l*w*h (box) | V=π r^2 h (cyl); m=ρV; centroid=几何中心; I_box=截面两边之积×高^3/12 (mm^4), I_cyl=πr^4/4 与 πr^4/2 (mm^4)",
+        "checks": [
+          "V>0",
+          "m>0"
+        ]
+      }
+    },
+    "predicted": {
+      "world_state": {
+        "world_state": {
+          "mass_props": {
+            "volume_mm3": 108597.6,
+            "mass_g": 846.6,
+            "centroid_mm": [
+              0.0,
+              0.0,
+              48.0
+            ],
+            "inertia_mm4": {
+              "Ixx": 259859.0,
+              "Izz": 139929.5
+            }
+          }
+        },
+        "derivation": {
+          "mass_props.volume_mm3": "pi*r*r*h",
+          "mass_props.mass_g": "volume_mm3*7.85/1000",
+          "mass_props.centroid_mm": "[0.0, 0.0, h/2]",
+          "mass_props.inertia_mm4.Ixx": "pi*r*r*(h/2)*(h/2 + r*r/3)",
+          "mass_props.inertia_mm4.Izz": "pi*r*r*(r*r/2 + h*h/12)"
+        },
+        "verification": {
+          "source": "cad.inertial_properties",
+          "resolved": true
+        }
+      }
+    },
+    "pass": false,
+    "raw_pass": false,
+    "fmt_raw": true,
+    "miss": [
+      "volume_mm3(missing)",
+      "mass_g(missing)"
+    ],
+    "miss_raw": [
+      "volume_mm3(108598!=43474.6)",
+      "mass_g(846.6!=369.534)"
+    ],
+    "guard_action": "accept",
+    "raw": "{\"world_state\": {\"mass_props\": {\"volume_mm3\": 108597.6, \"mass_g\": 846.6, \"centroid_mm\": [0.0, 0.0, 48.0], \"inertia_mm4\": {\"Ixx\": 259859.0, \"Izz\": 139929.5}}}, \"derivation\": {\"mass_props.volume_mm3\": \"pi*r*r*h\", \"mass_props.mass_g\": \"volume_mm3*7.85/1000\", \"mass_props.centroid_mm\": \"[0.0, 0.0, h/2]\", \"mass_props.inertia_mm4.Ixx\": \"pi*r*r*(h/2)*(h/2 + r*r/3)\", \"mass_props.inertia_mm4.Izz\": \"pi*r*r*(r*r/2 + h*h/12)\"}, \"verification\": {\"source\": \"cad.inertial_properties\", \"resolved\": true}}"
+  },
+  {
+    "family": "collision",
+    "user": "分析一段 FANUC 加工程序：安全平面 Z=29.3 mm，某 G00 快速移动段最低 Z=18.1 mm，毛坯顶面 Z=5.3 mm。预测碰撞/过切风险与 VERICUT Auto-Diff 颜色（红=过切，黄=风险，绿=合格）。",
+    "expected": {
+      "world_state": {
+        "safe_plane_z_mm": 29.3,
+        "rapid_min_z_mm": 18.1,
+        "stock_top_z_mm": 5.3,
+        "collision_risk": "none",
+        "gouge": false,
+        "autodiff": "green"
+      },
+      "verification": {
+        "formula": "risk = (Z_rapid_min < Z_safe) AND (Z_rapid_min < Z_stock_top+1)",
+        "checks": [
+          "no_gouge"
+        ]
+      }
+    },
+    "predicted": {
+      "world_state": {
+        "world_state": {
+          "collision_pred": "red",
+          "autodiff_color": "red"
+        },
+        "derivation": {
+          "collision_pred": "min_tool_depth(18.1 mm) < 毛坯顶面(Z=5.3 mm) 且 > 安全平面(Z=29.3 mm) → 刀具扎入毛坯顶面 18.1-5.3=12.8 mm，穿透成形面",
+          "autodiff_color": "red (tool penetration)"
+        },
+        "verification": {
+          "source": "cadcam_autodiff_rules",
+          "resolved": true
+        }
+      }
+    },
+    "pass": true,
+    "raw_pass": true,
+    "fmt_raw": true,
+    "miss": [],
+    "miss_raw": [],
+    "guard_action": "rejected",
+    "raw": "{\"world_state\": {\"collision_pred\": \"red\", \"autodiff_color\": \"red\"}, \"derivation\": {\"collision_pred\": \"min_tool_depth(18.1 mm) < 毛坯顶面(Z=5.3 mm) 且 > 安全平面(Z=29.3 mm) → 刀具扎入毛坯顶面 18.1-5.3=12.8 mm，穿透成形面\", \"autodiff_color\": \"red (tool penetration)\"}, \"verification\": {\"source\": \"cadcam_autodiff_rules\", \"resolved\": true}}"
+  },
+  {
+    "family": "geom_delta",
+    "user": "在工件上切除一个倒角，特征体积 4634.0 mm^3，切除前工件体积 35581.0 mm^3。预测切除后几何体积变化 ΔV 与切除后体积，并校验体积守恒。",
+    "expected": {
+      "world_state": {
+        "feature": "倒角",
+        "feature_volume_mm3": 4634.0,
+        "delta_volume_mm3": -4634.0,
+        "before_volume_mm3": 35581.0,
+        "after_volume_mm3": 30947.0,
+        "volume_conservation": "pass_cut_negative"
+      },
+      "verification": {
+        "formula": "dV = -V_feature (切除为负)",
+        "checks": [
+          "dV<0",
+          "after=before+dV"
+        ]
+      }
+    },
+    "predicted": {
+      "world_state": {
+        "delta_volume_mm3": -4634.0,
+        "after_volume_mm3": 30947.0,
+        "volume_conservation": "pass_cut_negative",
+        "feature_volume_mm3": 4634.0,
+        "before_volume_mm3": 35581.0
+      }
+    },
+    "pass": true,
+    "raw_pass": true,
+    "fmt_raw": true,
+    "miss": [],
+    "miss_raw": [],
+    "guard_action": "accept",
+    "raw": "{\"world_state\": {\"delta_volume_mm3\": -4634.0, \"after_volume_mm3\": 30947.0, \"volume_conservation\": \"pass\"}, \"derivation\": {\"delta_volume_mm3\": \"-4634.0\", \"after_volume_mm3\": \"35581.0-4634.0\"}, \"verification\": {\"source\": \"volume_formula\", \"resolved\": true}}"
+  },
+  {
+    "family": "tolerance",
+    "user": "尺寸链含 3 个组成环，半公差分别为 [0.072, 0.092, 0.093] mm（基本尺寸 21.0 mm）。孔轴偏差：上偏差 +0.014 mm，下偏差 -0.032 mm。用极值法与统计法（RSS）给出封闭环公差带半宽，并判定配合性质与等级。",
+    "expected": {
+      "world_state": {
+        "component_tolerances_mm": [
+          0.072,
+          0.092,
+          0.093
+        ],
+        "closed_loop_worstcase_halfwidth_mm": 0.257,
+        "closed_loop_rss_halfwidth_mm": 0.1493,
+        "basic_size_mm": 21.0,
+        "fit_clearance_mm": 0.046,
+        "tolerance_fit": "间隙配合",
+        "fit_class": "H7/g6",
+        "tolerance_pass": true
+      },
+      "verification": {
+        "formula": "WC=sum(ti); RSS=sqrt(sum(ti^2))",
+        "checks": [
+          "WC>=RSS"
+        ]
+      }
+    },
+    "predicted": {
+      "world_state": {
+        "closed_loop_worstcase_halfwidth_mm": 0.1493,
+        "closed_loop_rss_halfwidth_mm": 0.1493,
+        "tolerance_pass": true
+      }
+    },
+    "pass": false,
+    "raw_pass": false,
+    "fmt_raw": true,
+    "miss": [
+      "closed_loop_worstcase_halfwidth_mm(0.1493!=0.257)",
+      "fit_clearance_mm(missing)"
+    ],
+    "miss_raw": [
+      "closed_loop_worstcase_halfwidth_mm(0.157!=0.257)",
+      "closed_loop_rss_halfwidth_mm(0.098!=0.1493)",
+      "fit_clearance_mm(missing)"
+    ],
+    "guard_action": "corrected",
+    "raw": "{\"world_state\": {\"closed_loop_worstcase_halfwidth_mm\": 0.157, \"closed_loop_rss_halfwidth_mm\": 0.098, \"tolerance_pass\": true}, \"derivation\": {\"closed_loop_worstcase_halfwidth_mm\": \"sqrt(0.072^2 + 0.092^2 + 0.093^2)\", \"closed_loop_rss_halfwidth_mm\": \"sqrt(0.072^2 + 0.092^2 + 0.093^2)\"}, \"verification\": {\"source\": \"tolerance_rules\", \"resolved\": true}}"
+  },
+  {
+    "family": "fea_fos",
+    "user": "钛合金TC4构件，屈服强度 Sy=830 MPa，FEA 算得峰值 von Mises 应力 σ_vm=876.5 MPa。预测安全系数并判定 FOS≥1.5 是否通过。",
+    "expected": {
+      "world_state": {
+        "material": "钛合金TC4",
+        "yield_strength_mpa": 830.0,
+        "peak_von_mises_mpa": 876.5,
+        "safety_factor": 0.947,
+        "fos_gate": "FOS<1.5_FAIL"
+      },
+      "verification": {
+        "formula": "FOS=Sy/sigma_vm",
+        "checks": [
+          "FOS>=1.5"
+        ]
+      }
+    },
+    "predicted": {
+      "world_state": {
+        "safety_factor": 0.9469480889903024,
+        "fos_gate": "FOS<1.5_FAIL",
+        "peak_von_mises_mpa": 876.5
+      }
+    },
+    "pass": true,
+    "raw_pass": false,
+    "fmt_raw": true,
+    "miss": [],
+    "miss_raw": [
+      "safety_factor(1.05!=0.947)"
+    ],
+    "guard_action": "corrected",
+    "raw": "{\"world_state\": {\"safety_factor\": 1.05, \"fos_gate\": \"fail\"}, \"derivation\": {\"safety_factor\": \"(830)/(876.5)\", \"fos_gate\": \"if(1.05 >= 1.5, 'pass', 'fail')\"}, \"verification\": {\"source\": \"fea_fos\", \"resolved\": true}}"
+  },
+  {
+    "family": "removal",
+    "user": "毛坯体积 180035 mm^3，材料 45钢，密度 7.8 g/cm^3。用端铣刀单刀路：切削深度 DOC=3.73 mm，切削宽度 WOC=9.21 mm，进给速度 vf=777 mm/min，刀路长度 L=129.1 mm。预测去除量与余下质量。",
+    "expected": {
+      "world_state": {
+        "material_removed_mm3": 4435.0,
+        "mrr_mm3_per_min": 26690.0,
+        "removed_mass_g": 34.8,
+        "resulting_mass_g": 1380.0,
+        "delta_volume_mm3": -4435.0,
+        "volume_conservation": "pass_cut_negative"
+      },
+      "verification": {
+        "formula": "MRR=DOC*WOC*vf; V_removed=DOC*WOC*L; m=rho*V",
+        "checks": [
+          "dV<0",
+          "mrr>0"
+        ]
+      }
+    },
+    "predicted": {
+      "world_state": {
+        "material_removed_mm3": 4435.011030000001,
+        "resulting_mass_g": 1369.679913966,
+        "mrr_mm3_per_min": 26692.514100000004,
+        "removed_mass_g": 34.593086034,
+        "delta_volume_mm3": -4435.011030000001,
+        "volume_conservation": "pass_cut_negative"
+      }
+    },
+    "pass": true,
+    "raw_pass": false,
+    "fmt_raw": true,
+    "miss": [],
+    "miss_raw": [
+      "mrr_mm3_per_min(missing)",
+      "delta_volume_mm3(missing)"
+    ],
+    "guard_action": "accept",
+    "raw": "{\"world_state\": {\"material_removed_mm3\": 4568.0, \"resulting_mass_g\": 1383.0}, \"derivation\": {\"material_removed_mm3\": \"(DOC)*(WOC)*(L) = (3.73)*(9.21)*(129.1)\", \"resulting_mass_g\": \"((180035 - 4568.0)*0.0078)\"}, \"verification\": {\"source\": \"volume_formula\", \"resolved\": true}}"
+  },
+  {
+    "family": "tolerance",
+    "user": "尺寸链含 3 个组成环，半公差分别为 [0.091, 0.085, 0.056] mm（基本尺寸 54.7 mm）。孔轴偏差：上偏差 +0.034 mm，下偏差 -0.015 mm。用极值法与统计法（RSS）给出封闭环公差带半宽，并判定配合性质与等级。",
+    "expected": {
+      "world_state": {
+        "component_tolerances_mm": [
+          0.091,
+          0.085,
+          0.056
+        ],
+        "closed_loop_worstcase_halfwidth_mm": 0.232,
+        "closed_loop_rss_halfwidth_mm": 0.1365,
+        "basic_size_mm": 54.7,
+        "fit_clearance_mm": 0.049,
+        "tolerance_fit": "间隙配合",
+        "fit_class": "H7/g6",
+        "tolerance_pass": true
+      },
+      "verification": {
+        "formula": "WC=sum(ti); RSS=sqrt(sum(ti^2))",
+        "checks": [
+          "WC>=RSS"
+        ]
+      }
+    },
+    "predicted": {
+      "world_state": {
+        "closed_loop_worstcase_halfwidth_mm": 0.232,
+        "closed_loop_rss_halfwidth_mm": 0.1365,
+        "tolerance_pass": true
+      }
+    },
+    "pass": false,
+    "raw_pass": false,
+    "fmt_raw": true,
+    "miss": [
+      "fit_clearance_mm(missing)"
+    ],
+    "miss_raw": [
+      "fit_clearance_mm(missing)"
+    ],
+    "guard_action": "accept",
+    "raw": "{\"world_state\": {\"closed_loop_worstcase_halfwidth_mm\": 0.232, \"closed_loop_rss_halfwidth_mm\": 0.146, \"tolerance_pass\": true}, \"derivation\": {\"closed_loop_worstcase_halfwidth_mm\": \"(0.091+0.085+0.056)\", \"closed_loop_rss_halfwidth_mm\": \"sqrt(0.091^2+0.085^2+0.056^2)\"}, \"verification\": {\"source\": \"tolerance_calculator\", \"resolved\": true}}"
+  },
+  {
+    "family": "geom_delta",
+    "user": "在工件上切除一个通孔，特征体积 2846.0 mm^3，切除前工件体积 89581.0 mm^3。预测切除后几何体积变化 ΔV 与切除后体积，并校验体积守恒。",
+    "expected": {
+      "world_state": {
+        "feature": "通孔",
+        "feature_volume_mm3": 2846.0,
+        "delta_volume_mm3": -2846.0,
+        "before_volume_mm3": 89581.0,
+        "after_volume_mm3": 86735.0,
+        "volume_conservation": "pass_cut_negative"
+      },
+      "verification": {
+        "formula": "dV = -V_feature (切除为负)",
+        "checks": [
+          "dV<0",
+          "after=before+dV"
+        ]
+      }
+    },
+    "predicted": {
+      "world_state": {
+        "delta_volume_mm3": -2846.0,
+        "after_volume_mm3": 86735.0,
+        "volume_conservation": "pass_cut_negative",
+        "feature_volume_mm3": 2846.0,
+        "before_volume_mm3": 89581.0
+      }
+    },
+    "pass": true,
+    "raw_pass": true,
+    "fmt_raw": true,
+    "miss": [],
+    "miss_raw": [],
+    "guard_action": "accept",
+    "raw": "{\"world_state\": {\"delta_volume_mm3\": -2846.0, \"after_volume_mm3\": 86735.0, \"volume_conservation\": \"pass\"}, \"derivation\": {\"delta_volume_mm3\": \"-(2846.0)\", \"after_volume_mm3\": \"89581.0-2846.0\", \"volume_conservation\": \"abs(-2846.0/89581.0) < 0.05\"}, \"verification\": {\"source\": \"volume_formula\", \"resolved\": true}}"
+  },
+  {
+    "family": "tolerance",
+    "user": "尺寸链含 4 个组成环，半公差分别为 [0.067, 0.042, 0.059, 0.056] mm（基本尺寸 68.8 mm）。孔轴偏差：上偏差 +0.003 mm，下偏差 -0.009 mm。用极值法与统计法（RSS）给出封闭环公差带半宽，并判定配合性质与等级。",
+    "expected": {
+      "world_state": {
+        "component_tolerances_mm": [
+          0.067,
+          0.042,
+          0.059,
+          0.056
+        ],
+        "closed_loop_worstcase_halfwidth_mm": 0.224,
+        "closed_loop_rss_halfwidth_mm": 0.1134,
+        "basic_size_mm": 68.8,
+        "fit_clearance_mm": 0.012,
+        "tolerance_fit": "间隙配合",
+        "fit_class": "H7/g6",
+        "tolerance_pass": true
+      },
+      "verification": {
+        "formula": "WC=sum(ti); RSS=sqrt(sum(ti^2))",
+        "checks": [
+          "WC>=RSS"
+        ]
+      }
+    },
+    "predicted": {
+      "world_state": {
+        "tolerance": {
+          "closed_loop_worstcase_halfwidth_mm": 0.124,
+          "closed_loop_rss_halfwidth_mm": 0.063
+        },
+        "fit_clearance_mm": 68.809,
+        "tolerance_pass": true,
+        "closed_loop_worstcase_halfwidth_mm": 0.1134,
+        "closed_loop_rss_halfwidth_mm": 0.1134
+      }
+    },
+    "pass": false,
+    "raw_pass": false,
+    "fmt_raw": true,
+    "miss": [
+      "closed_loop_worstcase_halfwidth_mm(0.1134!=0.224)",
+      "fit_clearance_mm(68.809!=0.012)"
+    ],
+    "miss_raw": [
+      "closed_loop_worstcase_halfwidth_mm(0.124!=0.224)",
+      "closed_loop_rss_halfwidth_mm(0.063!=0.1134)",
+      "fit_clearance_mm(0.095!=0.012)"
+    ],
+    "guard_action": "corrected",
+    "raw": "{\"world_state\": {\"tolerance\": {\"closed_loop_worstcase_halfwidth_mm\": 0.124, \"closed_loop_rss_halfwidth_mm\": 0.063}, \"fit_clearance_mm\": 0.095, \"tolerance_pass\": true}, \"derivation\": {\"closed_loop_worstcase_halfwidth_mm\": \"sqrt(0.067^2+0.042^2+0.059^2+0.056^2) = 0.124\", \"closed_loop_rss_halfwidth_mm\": \"sqrt(0.067^2+0.042^2+0.059^2+0.056^2) = 0.124\", \"fit_clearance_mm\": \"68.8 - (-0.009) = 68.809 mm\"}, \"verification\": {\"source\": \"tolerance_propagation\", \"resolved\": true}}"
+  },
+  {
+    "family": "collision",
+    "user": "分析一段 FANUC 加工程序：安全平面 Z=5.5 mm，某 G00 快速移动段最低 Z=7.9 mm，毛坯顶面 Z=0.7 mm。预测碰撞/过切风险与 VERICUT Auto-Diff 颜色（红=过切，黄=风险，绿=合格）。",
+    "expected": {
+      "world_state": {
+        "safe_plane_z_mm": 5.5,
+        "rapid_min_z_mm": 7.9,
+        "stock_top_z_mm": 0.7,
+        "collision_risk": "none",
+        "gouge": false,
+        "autodiff": "green"
+      },
+      "verification": {
+        "formula": "risk = (Z_rapid_min < Z_safe) AND (Z_rapid_min < Z_stock_top+1)",
+        "checks": [
+          "no_gouge"
+        ]
+      }
+    },
+    "predicted": {
+      "world_state": {
+        "collision_check": {
+          "z_min_mm": 7.9,
+          "tool_height_mm": 5.5,
+          "clearance_mm": -2.4
+        },
+        "autodiff_color": "red",
+        "collision_check.z_min_mm": 7.9,
+        "tool_height_mm": 5.5,
+        "clearance_mm": 2.4
+      }
+    },
+    "pass": true,
+    "raw_pass": true,
+    "fmt_raw": true,
+    "miss": [],
+    "miss_raw": [],
+    "guard_action": "corrected",
+    "raw": "{\"world_state\": {\"collision_check\": {\"z_min_mm\": 7.9, \"tool_height_mm\": 5.5, \"clearance_mm\": -2.4}, \"autodiff_color\": \"red\"}, \"derivation\": {\"collision_check.z_min_mm\": \"7.9\", \"tool_height_mm\": \"5.5\", \"clearance_mm\": \"-(5.5-7.9)\", \"autodiff_color\": \"red\"}, \"verification\": {\"source\": \"cadcam_autodiff_red\", \"resolved\": true}}"
+  },
+  {
+    "family": "roughness",
+    "user": "车削外圆，每转进给 f=0.172 mm/rev，刀尖圆弧半径 r_ε=0.4 mm。预测加工表面粗糙度 Ra（μm）与对应粗糙度等级。",
+    "expected": {
+      "world_state": {
+        "feed_per_rev_mm": 0.172,
+        "nose_radius_mm": 0.4,
+        "surface_roughness_ra_um": 9.24,
+        "finish_class": "粗加工"
+      },
+      "verification": {
+        "formula": "Ra[um]=1000*f^2/(8*r_eps)",
+        "checks": [
+          "ra>0"
+        ]
+      }
+    },
+    "predicted": {
+      "world_state": {
+        "surface_roughness_ra_um": 9.244999999999997
+      }
+    },
+    "pass": true,
+    "raw_pass": false,
+    "fmt_raw": false,
+    "miss": [],
+    "miss_raw": [
+      "<unparsable>"
+    ],
+    "guard_action": "corrected",
+    "raw": "{\"world_state\": {\"surface_roughness_ra_um\": 3.4, \"roughness_grade\": \"Ra 3.2 μm (ISO 1943-1:2017)\"}, \"derivation\": {\"surface_roughness_ra_um\": \"r_eps = 0.4 mm = 400 μm; Ra = 0.4*r_eps = 0.4*400 = 160 μm? Wait, formula is Ra = 0.4*r_eps (μm) = 0.4*400 = 160 μm? No, standard formula for turning: Ra = 0.4*f*r_eps = 0.4*0.172*0.4 = 0.0279 mm = 27.9 μm. But given r_eps=0.4 mm, and f=0.172 mm/rev, standard Ra = 0.4*f*r_eps = 0.4*0.172*0.4 = 0.0279 mm = 27.9 μm. But question says r_ε=0.4 mm, and formula is Ra = 0.4*r_eps = 0.4*400 = 160 μm? Or is it Ra = 0.4*f*r_eps = 0.4*0.172*0.4 = 27.9 μm? Let me recheck: formula for turning Ra = 0.4*f*r_eps = 0.4*0.172*0.4 = 0.0279 mm = 27.9 μm. But question says r_ε=0.4 mm, and formula is Ra = 0.4*r_eps = 0.4*400 = 160 μm? Or is it Ra = 0.4*f*r_eps = 0.4*0.172*0.4 = 27.9 μm? Let me recheck: formula for turning Ra = 0.4*f*r_eps = 0.4*0.172*0.4 = 0.0279 mm = 27.9 μm. But question says r_ε=0.4 mm, and formula is Ra = 0.4*r_eps = 0.4*400 = 160 μm? Or is it Ra = 0.4*f*r_eps = 0.4*0.172*0.4 = 27.9 μm? Let me recheck: formula for turning Ra = 0.4*f*r_eps = 0.4*0.172*0.4 = 0.0279 mm = 27.9 μm. But question says r_ε=0.4 mm, and formula is Ra = 0.4*r_eps = 0.4*400 = 160 μm? Or is it Ra = 0.4*f*r_eps = 0.4*0.172*0.4 = 27.9 μm? Let me recheck: formula for turning Ra = 0.4*f*r_eps = 0.4*0.172*0.4 = 0.0279 mm = 27.9 μm. But question says r_ε=0.4 mm, and formula is Ra = 0.4*r_eps = 0.4*400 = 160 μm? Or is it Ra = 0.4*f*r_eps = 0.4*0.172*0.4 = 27.9 μm? Let me recheck: formula for turning Ra = 0.4*f*r_eps = 0.4*0.172*0.4 = 0.0279 mm = 27.9 μm. But question says r_ε=0.4 mm, and formula is Ra = 0.4*r_eps = 0.4*400 = 160 μm? Or is it Ra = 0.4*f*r_eps = 0.4*0.172*0.4 = 27.9 μm? Let me recheck: formula for turning Ra = 0.4*f*r_eps = 0.4*0.172*0.4 = 0.0279 mm = 27.9 μm. But question says r_ε=0.4 mm, and formula is Ra = 0.4"
+  },
+  {
+    "family": "collision",
+    "user": "分析一段 FANUC 加工程序：安全平面 Z=10.6 mm，某 G00 快速移动段最低 Z=15.3 mm，毛坯顶面 Z=19.8 mm。预测碰撞/过切风险与 VERICUT Auto-Diff 颜色（红=过切，黄=风险，绿=合格）。",
+    "expected": {
+      "world_state": {
+        "safe_plane_z_mm": 10.6,
+        "rapid_min_z_mm": 15.3,
+        "stock_top_z_mm": 19.8,
+        "collision_risk": "none",
+        "gouge": false,
+        "autodiff": "green"
+      },
+      "verification": {
+        "formula": "risk = (Z_rapid_min < Z_safe) AND (Z_rapid_min < Z_stock_top+1)",
+        "checks": [
+          "no_gouge"
+        ]
+      }
+    },
+    "predicted": {
+      "world_state": {
+        "world_state": {
+          "collision": {
+            "autodiff": "red"
+          },
+          "tool_path_quality": {
+            "color": "red"
+          }
+        },
+        "derivation": {
+          "collision.autodiff": "刀具在 Z=15.3 mm 低于毛坯顶面 Z=19.8 mm，且高于安全平面 Z=10.6 mm，处于毛坯悬空切削区，判定为过切（red）"
+        },
+        "verification": {
+          "source": "vericut_autodiff_rules",
+          "resolved": true
+        }
+      }
+    },
+    "pass": true,
+    "raw_pass": false,
+    "fmt_raw": true,
+    "miss": [],
+    "miss_raw": [
+      "autodiff(red!=green)"
+    ],
+    "guard_action": "accept",
+    "raw": "{\"world_state\": {\"collision\": {\"autodiff\": \"red\"}, \"tool_path_quality\": {\"color\": \"red\"}}, \"derivation\": {\"collision.autodiff\": \"刀具在 Z=15.3 mm 低于毛坯顶面 Z=19.8 mm，且高于安全平面 Z=10.6 mm，处于毛坯悬空切削区，判定为过切（red）\"}, \"verification\": {\"source\": \"vericut_autodiff_rules\", \"resolved\": true}}"
+  },
+  {
+    "family": "roughness",
+    "user": "车削外圆，每转进给 f=0.241 mm/rev，刀尖圆弧半径 r_ε=0.8 mm。预测加工表面粗糙度 Ra（μm）与对应粗糙度等级。",
+    "expected": {
+      "world_state": {
+        "feed_per_rev_mm": 0.241,
+        "nose_radius_mm": 0.8,
+        "surface_roughness_ra_um": 9.08,
+        "finish_class": "粗加工"
+      },
+      "verification": {
+        "formula": "Ra[um]=1000*f^2/(8*r_eps)",
+        "checks": [
+          "ra>0"
+        ]
+      }
+    },
+    "predicted": {
+      "world_state": {
+        "surface_roughness_ra_um": 9.07515625,
+        "roughness_grade": "Ra 3.2 μm (ISO 1943-1: Grade 6)"
+      }
+    },
+    "pass": true,
+    "raw_pass": false,
+    "fmt_raw": true,
+    "miss": [],
+    "miss_raw": [
+      "surface_roughness_ra_um(3.2!=9.08)"
+    ],
+    "guard_action": "corrected",
+    "raw": "{\"world_state\": {\"surface_roughness_ra_um\": 3.2, \"roughness_grade\": \"Ra 3.2 μm (ISO 1943-1: Grade 6)\"}, \"derivation\": {\"surface_roughness_ra_um\": \"0.8*sqrt(2*(0.241/2)^2/(0.8))\"} }"
+  },
+  {
+    "family": "collision",
+    "user": "分析一段 FANUC 加工程序：安全平面 Z=9.5 mm，某 G00 快速移动段最低 Z=-4.8 mm，毛坯顶面 Z=14.0 mm。预测碰撞/过切风险与 VERICUT Auto-Diff 颜色（红=过切，黄=风险，绿=合格）。",
+    "expected": {
+      "world_state": {
+        "safe_plane_z_mm": 9.5,
+        "rapid_min_z_mm": -4.8,
+        "stock_top_z_mm": 14.0,
+        "collision_risk": "high",
+        "gouge": true,
+        "autodiff": "red"
+      },
+      "verification": {
+        "formula": "risk = (Z_rapid_min < Z_safe) AND (Z_rapid_min < Z_stock_top+1)",
+        "checks": [
+          "no_gouge"
+        ]
+      }
+    },
+    "predicted": {
+      "world_state": {
+        "world_state": {
+          "collision_check": {
+            "z_min_mm": -4.8,
+            "safe_plane_z_mm": 9.5,
+            "tool_nose_above_blank": false,
+            "collision_risk": "high"
+          },
+          "autodiff_color": "red"
+        },
+        "derivation": {
+          "collision_check.z_min_mm": "G00 快速移动段最低 Z=-4.8 mm",
+          "collision_check.safe_plane_z_mm": "安全平面 Z=9.5 mm",
+          "autodiff_color": "刀具下切至 -4.8 mm 深度，穿透毛坯顶面 Z=14.0 mm 后继续切削，相对毛坯顶面切入深度 14.0-(-4.8) = 18.8 mm，远超安全平面以上 9.5 mm 的容限"
+        },
+        "verification": {
+          "source": "cadcam_autodiff",
+          "resolved": true
+        }
+      }
+    },
+    "pass": true,
+    "raw_pass": true,
+    "fmt_raw": true,
+    "miss": [],
+    "miss_raw": [],
+    "guard_action": "rejected",
+    "raw": "{\"world_state\": {\"collision_check\": {\"z_min_mm\": -4.8, \"safe_plane_z_mm\": 9.5, \"tool_nose_above_blank\": false, \"collision_risk\": \"high\"}, \"autodiff_color\": \"red\"}, \"derivation\": {\"collision_check.z_min_mm\": \"G00 快速移动段最低 Z=-4.8 mm\", \"collision_check.safe_plane_z_mm\": \"安全平面 Z=9.5 mm\", \"autodiff_color\": \"刀具下切至 -4.8 mm 深度，穿透毛坯顶面 Z=14.0 mm 后继续切削，相对毛坯顶面切入深度 14.0-(-4.8) = 18.8 mm，远超安全平面以上 9.5 mm 的容限\"}, \"verification\": {\"source\": \"cadcam_autodiff\", \"resolved\": true}}"
+  },
+  {
+    "family": "removal",
+    "user": "毛坯体积 291958 mm^3，材料 铝合金6061，密度 2.7 g/cm^3。用端铣刀单刀路：切削深度 DOC=2.06 mm，切削宽度 WOC=9.93 mm，进给速度 vf=725 mm/min，刀路长度 L=252.8 mm。预测去除量与余下质量。",
+    "expected": {
+      "world_state": {
+        "material_removed_mm3": 5171.0,
+        "mrr_mm3_per_min": 14830.0,
+        "removed_mass_g": 14.0,
+        "resulting_mass_g": 774.0,
+        "delta_volume_mm3": -5171.0,
+        "volume_conservation": "pass_cut_negative"
+      },
+      "verification": {
+        "formula": "MRR=DOC*WOC*vf; V_removed=DOC*WOC*L; m=rho*V",
+        "checks": [
+          "dV<0",
+          "mrr>0"
+        ]
+      }
+    },
+    "predicted": {
+      "world_state": {
+        "material_removed_mm3": 5171.22624,
+        "resulting_mass_g": 774.324289152,
+        "volume_conservation": "pass_cut_negative",
+        "mrr_mm3_per_min": 14830.455,
+        "removed_mass_g": 13.962310848000001,
+        "delta_volume_mm3": -5171.22624
+      }
+    },
+    "pass": true,
+    "raw_pass": false,
+    "fmt_raw": true,
+    "miss": [],
+    "miss_raw": [
+      "material_removed_mm3(46900!=5171)",
+      "mrr_mm3_per_min(missing)",
+      "resulting_mass_g(156.6!=774)",
+      "delta_volume_mm3(missing)"
+    ],
+    "guard_action": "corrected",
+    "raw": "{\"world_state\": {\"material_removed_mm3\": 46900, \"resulting_mass_g\": 156.6, \"volume_conservation\": \"pass\"}, \"derivation\": {\"material_removed_mm3\": \"(DOC)*(WOC)*(L) = (2.06)*(9.93)*(252.8)\", \"resulting_mass_g\": \"(initial_volume_mm3)*(density_g_per_cm3) - (material_removed_mm3)*(density_g_per_cm3) = (291958)*(2.7) - (46900)*(2.7)\"}, \"verification\": {\"source\": \"volume_formula\", \"resolved\": true}}"
+  },
+  {
+    "family": "removal",
+    "user": "毛坯体积 411322 mm^3，材料 铝合金6061，密度 2.7 g/cm^3。用端铣刀单刀路：切削深度 DOC=1.59 mm，切削宽度 WOC=2.13 mm，进给速度 vf=989 mm/min，刀路长度 L=136.2 mm。预测去除量与余下质量。",
+    "expected": {
+      "world_state": {
+        "material_removed_mm3": 461.3,
+        "mrr_mm3_per_min": 3349.0,
+        "removed_mass_g": 1.25,
+        "resulting_mass_g": 1110.0,
+        "delta_volume_mm3": -461.3,
+        "volume_conservation": "pass_cut_negative"
+      },
+      "verification": {
+        "formula": "MRR=DOC*WOC*vf; V_removed=DOC*WOC*L; m=rho*V",
+        "checks": [
+          "dV<0",
+          "mrr>0"
+        ]
+      }
+    },
+    "predicted": {
+      "world_state": {
+        "material_removed_mm3": 461.2685399999999,
+        "resulting_mass_g": 1109.3239749420002,
+        "mrr_mm3_per_min": 3349.4462999999996,
+        "removed_mass_g": 1.245425058,
+        "delta_volume_mm3": -461.2685399999999,
+        "volume_conservation": "pass_cut_negative"
+      }
+    },
+    "pass": true,
+    "raw_pass": false,
+    "fmt_raw": true,
+    "miss": [],
+    "miss_raw": [
+      "mrr_mm3_per_min(missing)",
+      "resulting_mass_g(305!=1110)",
+      "delta_volume_mm3(missing)"
+    ],
+    "guard_action": "corrected",
+    "raw": "{\"world_state\": {\"material_removed_mm3\": 475, \"resulting_mass_g\": 305}, \"derivation\": {\"material_removed_mm3\": \"(DOC)*(WOC)*L\", \"resulting_mass_g\": \"((411322)*(2.7/1000) - (475)*(2.7/1000))\"}, \"verification\": {\"source\": \"volume_formula\", \"resolved\": true}}"
+  },
+  {
+    "family": "roughness",
+    "user": "车削外圆，每转进给 f=0.252 mm/rev，刀尖圆弧半径 r_ε=0.2 mm。预测加工表面粗糙度 Ra（μm）与对应粗糙度等级。",
+    "expected": {
+      "world_state": {
+        "feed_per_rev_mm": 0.252,
+        "nose_radius_mm": 0.2,
+        "surface_roughness_ra_um": 39.7,
+        "finish_class": "粗加工"
+      },
+      "verification": {
+        "formula": "Ra[um]=1000*f^2/(8*r_eps)",
+        "checks": [
+          "ra>0"
+        ]
+      }
+    },
+    "predicted": {
+      "world_state": {
+        "surface_roughness_ra_um": 39.69
+      }
+    },
+    "pass": true,
+    "raw_pass": false,
+    "fmt_raw": false,
+    "miss": [],
+    "miss_raw": [
+      "<unparsable>"
+    ],
+    "guard_action": "corrected",
+    "raw": "{\"world_state\": {\"surface_roughness_ra_um\": 1.26, \"roughness_grade\": \"Ra 1.25 μm (ISO 1943-1:2017 指南 1.25 μm 级)\"}, \"derivation\": {\"surface_roughness_ra_um\": \"r_eps = 0.2 mm = 200 μm; Ra = 12*r_eps = 12*200 = 2400 μm? No, formula is Ra = 12*r_eps_mm = 12*0.2 = 2.4 mm = 2400 μm? Wait, no: standard formula for turning Ra is Ra = 12*r_eps_mm, but r_eps here is 0.2 mm, so Ra = 12*0.2 = 2.4 mm = 2400 μm. But this contradicts the given r_eps=0.2 mm and f=0.252 mm/rev. Let me recalculate: Ra = 12*r_eps_mm = 12*0.2 = 2.4 mm = 2400 μm. But this is way larger than typical Ra for f=0.252 mm/rev and r_ε=0.2 mm. Let me check the correct formula: For turning, Ra = 12*r_eps_mm = 12*0.2 = 2.4 mm = 2400 μm. But this seems too large. Wait, maybe I mixed up formulas. Let me recheck: For a given r_ε and f, Ra = 12*r_ε_mm = 12*0.2 = 2.4 mm = 2400 μm. But this is not correct for the given parameters. Let me recalculate using the correct formula for Ra in turning: Ra = 12*r_eps_mm = 12*0.2 = 2.4 mm = 2400 μm. But this contradicts the given r_eps=0.2 mm and f=0.252 mm/rev. Let me recalculate using the correct formula for Ra in turning: Ra = 12*r_eps_mm = 12*0.2 = 2.4 mm = 2400 μm. But this is not correct for the given parameters. Let me recalculate using the correct formula for Ra in turning: Ra = 12*r_eps_mm = 12*0.2 = 2.4 mm = 2400 μm. But this contradicts the given r_eps=0.2 mm and f=0.252 mm/rev. Let me recalculate using the correct formula for Ra in turning: Ra = 12*r_eps_mm = 12*0.2 = 2.4 mm = 2400 μm. But this is not correct for the given parameters. Let me recalculate using the correct formula for Ra in turning: Ra = 12*r_eps_mm = 12*0.2 = 2.4 mm = 2400 μm. But this contradicts the given r_eps=0.2 mm and f=0.252 mm/rev. Let me recalculate using the correct formula for Ra in turning: Ra = 12*r_eps_mm = 12*0.2 = 2.4 mm = 2400 μm. But this is not correct for the given parameters. Let me recalculate using the correct formula for Ra in turning: Ra = 12*r_eps_mm = 12*0.2 = 2.4 mm = 2400 μm. But this contradicts the given r_eps=0.2 mm and f=0.252 mm/rev. Let me recalculate using the correct formula for Ra in turning: Ra = 12*r_eps_mm = 12*0.2 = 2.4 mm = 2400 μm. But this is not correct for the given parameters. Let me recalculate using the correct formula for Ra in turning: Ra = 12*r_eps_mm = 12*0.2 = 2.4 mm = 2400 μm. But this contradicts the given r_eps=0.2 mm and f=0.252 mm/rev. Let me recalculate using the correct formula for Ra in turning: Ra = 12*r_eps_mm = 12*0.2 = 2.4 mm = 2400 μm. But this is not correct for the given parameters. Let me rec"
+  },
+  {
+    "family": "mass_props",
+    "user": "预测box（长 l=115.0 mm，宽 w=28.3 mm，高 h=16.6 mm）的质量属性：体积、质量、质心坐标、绕质心惯性矩 Ixx 与 Izz。材料 钛合金TC4。",
+    "expected": {
+      "world_state": {
+        "shape": "box",
+        "volume_mm3": 54024.7,
+        "mass_g": 239.329,
+        "centroid_mm": [
+          57.5,
+          14.15,
+          8.3
+        ],
+        "inertia_ixx_mm4": 10787.71,
+        "inertia_izz_mm4": 217208.04,
+        "solver": "analytic_csg"
+      },
+      "verification": {
+        "formula": "V=l*w*h (box) | V=π r^2 h (cyl); m=ρV; centroid=几何中心; I_box=截面两边之积×高^3/12 (mm^4), I_cyl=πr^4/4 与 πr^4/2 (mm^4)",
+        "checks": [
+          "V>0",
+          "m>0"
+        ]
+      }
+    },
+    "predicted": {
+      "world_state": {
+        "world_state": {
+          "mass_props": {
+            "volume_mm3": 52987.8,
+            "mass_g": 10597.6,
+            "centroid_mm": [
+              57.5,
+              14.15,
+              8.3
+            ],
+            "inertia_mm4": {
+              "Ixx": 129999.5,
+              "Izz": 129999.5
+            }
+          },
+          "derivation": {
+            "mass_props.volume_mm3": "(115.0)*(28.3)*(16.6)",
+            "mass_props.mass_g": "(115.0)*(28.3)*(16.6)*(4.430000000000001)",
+            "mass_props.centroid_mm": "[115.0/2, 28.3/2, 16.6/2]",
+            "mass_props.inertia_mm4.Ixx": "((115.0)*(28.3)*(16.6))/12*(115.0)^2 + ((28.3)*(16.6))/12*(28.3)^2",
+            "mass_props.inertia_mm4.Izz": "((115.0)*(28.3)*(16.6))/12*(16.6)^2 + ((115.0)*(16.6))/12*(115.0)^2"
+          }
+        },
+        "verification": {
+          "source": "cad.inertial_properties",
+          "resolved": true
+        }
+      }
+    },
+    "pass": false,
+    "raw_pass": false,
+    "fmt_raw": true,
+    "miss": [
+      "volume_mm3(missing)",
+      "mass_g(missing)"
+    ],
+    "miss_raw": [
+      "mass_g(10597.6!=239.329)"
+    ],
+    "guard_action": "accept",
+    "raw": "{\"world_state\": {\"mass_props\": {\"volume_mm3\": 52987.8, \"mass_g\": 10597.6, \"centroid_mm\": [57.5, 14.15, 8.3], \"inertia_mm4\": {\"Ixx\": 129999.5, \"Izz\": 129999.5}}, \"derivation\": {\"mass_props.volume_mm3\": \"(115.0)*(28.3)*(16.6)\", \"mass_props.mass_g\": \"(115.0)*(28.3)*(16.6)*(4.430000000000001)\", \"mass_props.centroid_mm\": \"[115.0/2, 28.3/2, 16.6/2]\", \"mass_props.inertia_mm4.Ixx\": \"((115.0)*(28.3)*(16.6))/12*(115.0)^2 + ((28.3)*(16.6))/12*(28.3)^2\", \"mass_props.inertia_mm4.Izz\": \"((115.0)*(28.3)*(16.6))/12*(16.6)^2 + ((115.0)*(16.6))/12*(115.0)^2\"}}, \"verification\": {\"source\": \"cad.inertial_properties\", \"resolved\": true}}"
+  },
+  {
+    "family": "roughness",
+    "user": "车削外圆，每转进给 f=0.083 mm/rev，刀尖圆弧半径 r_ε=1.2 mm。预测加工表面粗糙度 Ra（μm）与对应粗糙度等级。",
+    "expected": {
+      "world_state": {
+        "feed_per_rev_mm": 0.083,
+        "nose_radius_mm": 1.2,
+        "surface_roughness_ra_um": 0.718,
+        "finish_class": "精加工"
+      },
+      "verification": {
+        "formula": "Ra[um]=1000*f^2/(8*r_eps)",
+        "checks": [
+          "ra>0"
+        ]
+      }
+    },
+    "predicted": {
+      "world_state": {
+        "surface_roughness_ra_um": 0.7176041666666667,
+        "roughness_grade": "Ra 4.0 μm (ISO 1943-1:2017)"
+      }
+    },
+    "pass": true,
+    "raw_pass": false,
+    "fmt_raw": true,
+    "miss": [],
+    "miss_raw": [
+      "surface_roughness_ra_um(4.1!=0.718)"
+    ],
+    "guard_action": "corrected",
+    "raw": "{\"world_state\": {\"surface_roughness_ra_um\": 4.1, \"roughness_grade\": \"Ra 4.0 μm (ISO 1943-1:2017)\"}, \"derivation\": {\"surface_roughness_ra_um\": \"0.5*r_eps = 0.5*1.2\", \"roughness_grade\": \"查 ISO 1943-1 表 1，Ra 4.0 μm 对应 6 级表面粗糙度\"}}"
+  },
+  {
+    "family": "geom_delta",
+    "user": "在工件上切除一个通孔，特征体积 4901.0 mm^3，切除前工件体积 103294.0 mm^3。预测切除后几何体积变化 ΔV 与切除后体积，并校验体积守恒。",
+    "expected": {
+      "world_state": {
+        "feature": "通孔",
+        "feature_volume_mm3": 4901.0,
+        "delta_volume_mm3": -4901.0,
+        "before_volume_mm3": 103294.0,
+        "after_volume_mm3": 98393.0,
+        "volume_conservation": "pass_cut_negative"
+      },
+      "verification": {
+        "formula": "dV = -V_feature (切除为负)",
+        "checks": [
+          "dV<0",
+          "after=before+dV"
+        ]
+      }
+    },
+    "predicted": {
+      "world_state": {
+        "delta_volume_mm3": -4901.0,
+        "after_volume_mm3": 98393.0,
+        "volume_conservation": "pass_cut_negative",
+        "feature_volume_mm3": 4901.0,
+        "before_volume_mm3": 103294.0
+      }
+    },
+    "pass": true,
+    "raw_pass": true,
+    "fmt_raw": true,
+    "miss": [],
+    "miss_raw": [],
+    "guard_action": "accept",
+    "raw": "{\"world_state\": {\"delta_volume_mm3\": -4901.0, \"after_volume_mm3\": 98393.0, \"volume_conservation\": \"pass\"}, \"derivation\": {\"delta_volume_mm3\": \"-(4901.0)\", \"after_volume_mm3\": \"103294.0 - 4901.0\", \"volume_conservation\": \"abs(-4901.0) < 0.05 * 103294.0 ? 'pass' : 'fail'\"}, \"verification\": {\"source\": \"volume_formula\", \"resolved\": true}}"
+  },
+  {
+    "family": "mass_props",
+    "user": "预测box（长 l=188.1 mm，宽 w=43.3 mm，高 h=72.1 mm）的质量属性：体积、质量、质心坐标、绕质心惯性矩 Ixx 与 Izz。材料 45钢。",
+    "expected": {
+      "world_state": {
+        "shape": "box",
+        "volume_mm3": 587235.03,
+        "mass_g": 4609.795,
+        "centroid_mm": [
+          94.05,
+          21.65,
+          36.05
+        ],
+        "inertia_ixx_mm4": 1352422.68,
+        "inertia_izz_mm4": 1272539.4,
+        "solver": "analytic_csg"
+      },
+      "verification": {
+        "formula": "V=l*w*h (box) | V=π r^2 h (cyl); m=ρV; centroid=几何中心; I_box=截面两边之积×高^3/12 (mm^4), I_cyl=πr^4/4 与 πr^4/2 (mm^4)",
+        "checks": [
+          "V>0",
+          "m>0"
+        ]
+      }
+    },
+    "predicted": {
+      "world_state": {
+        "world_state": {
+          "mass_props": {
+            "volume_mm3": 568905.2,
+            "mass_g": 4467.1,
+            "centroid_mm": [
+              94.05,
+              21.65,
+              36.05
+            ],
+            "inertia_mm4": {
+              "Ixx": 12945250,
+              "Izz": 8474450
+            }
+          },
+          "derivation": {
+            "mass_props.volume_mm3": "(188.1)*(43.3)*(72.1)",
+            "mass_props.mass_g": "(188.1)*(43.3)*(72.1)*(0.00785)",
+            "mass_props.centroid_mm": "[l/2, w/2, h/2]",
+            "mass_props.inertia_mm4.Ixx": "((w/2)^2 + (h/2)^2)*l*(w*h/3)",
+            "mass_props.inertia_mm4.Izz": "((l/2)^2 + (w/2)^2)*w*(l*h/3)"
+          }
+        },
+        "verification": {
+          "source": "cad.inertial_properties",
+          "resolved": true
+        }
+      }
+    },
+    "pass": false,
+    "raw_pass": true,
+    "fmt_raw": true,
+    "miss": [
+      "volume_mm3(missing)",
+      "mass_g(missing)"
+    ],
+    "miss_raw": [],
+    "guard_action": "accept",
+    "raw": "{\"world_state\": {\"mass_props\": {\"volume_mm3\": 568905.2, \"mass_g\": 4467.1, \"centroid_mm\": [94.05, 21.65, 36.05], \"inertia_mm4\": {\"Ixx\": 12945250, \"Izz\": 8474450}}, \"derivation\": {\"mass_props.volume_mm3\": \"(188.1)*(43.3)*(72.1)\", \"mass_props.mass_g\": \"(188.1)*(43.3)*(72.1)*(0.00785)\", \"mass_props.centroid_mm\": \"[l/2, w/2, h/2]\", \"mass_props.inertia_mm4.Ixx\": \"((w/2)^2 + (h/2)^2)*l*(w*h/3)\", \"mass_props.inertia_mm4.Izz\": \"((l/2)^2 + (w/2)^2)*w*(l*h/3)\"}}, \"verification\": {\"source\": \"cad.inertial_properties\", \"resolved\": true}}"
+  },
+  {
+    "family": "invalid",
+    "user": "未提供材料类型，要求预测去除质量。",
+    "expected": {
+      "world_state": null,
+      "invalid": true,
+      "reason": "missing_material",
+      "expected_action": "拒绝并列出缺失/非法项，不输出臆测数值"
+    },
+    "predicted": {
+      "world_state": {
+        "world_state": null,
+        "invalid": true,
+        "reason": "缺少 material_type"
+      }
+    },
+    "pass": false,
+    "raw_pass": true,
+    "fmt_raw": true,
+    "miss": [],
+    "miss_raw": [],
+    "guard_action": "accept",
+    "raw": "{\"world_state\": null, \"invalid\": true, \"reason\": \"缺少 material_type\"}"
+  },
+  {
+    "family": "invalid",
+    "user": "切削深度 DOC=-2 mm，其余参数正常。",
+    "expected": {
+      "world_state": null,
+      "invalid": true,
+      "reason": "negative_cut_depth",
+      "expected_action": "拒绝并列出缺失/非法项，不输出臆测数值"
+    },
+    "predicted": {
+      "world_state": {
+        "delta_volume_mm3": 60000.0,
+        "material_removed_mm3": 60000.0,
+        "volume_conservation": "fail_cut_positive"
+      }
+    },
+    "pass": false,
+    "raw_pass": false,
+    "fmt_raw": false,
+    "miss": [],
+    "miss_raw": [],
+    "guard_action": "corrected",
+    "raw": "{\"world_state\": {\"delta_volume_mm3\": -16000, \"material_removed_mm3\": 16000}, \"derivation\": {\"delta_volume_mm3\": \"(200)*(150)*(2)\", \"material_removed_mm3\": \"-((200)*(150)*(2))\"}, \"verification\": {\"source\": \"volume_formula\", \"resolved\": true}}"
+  },
+  {
+    "family": "fea_fos",
+    "user": "黄铜H62构件，屈服强度 Sy=200 MPa，FEA 算得峰值 von Mises 应力 σ_vm=132.0 MPa。预测安全系数并判定 FOS≥1.5 是否通过。",
+    "expected": {
+      "world_state": {
+        "material": "黄铜H62",
+        "yield_strength_mpa": 200.0,
+        "peak_von_mises_mpa": 132.0,
+        "safety_factor": 1.52,
+        "fos_gate": "FOS>=1.5_pass"
+      },
+      "verification": {
+        "formula": "FOS=Sy/sigma_vm",
+        "checks": [
+          "FOS>=1.5"
+        ]
+      }
+    },
+    "predicted": {
+      "world_state": {
+        "safety_factor": 1.5151515151515151,
+        "fos_gate": "FOS>=1.5_PASS",
+        "peak_von_mises_mpa": 132.0
+      }
+    },
+    "pass": true,
+    "raw_pass": true,
+    "fmt_raw": true,
+    "miss": [],
+    "miss_raw": [],
+    "guard_action": "corrected",
+    "raw": "{\"world_state\": {\"safety_factor\": 1.515, \"fos_gate\": \"pass\"}, \"derivation\": {\"safety_factor\": \"(200)/(132.0)\"} }"
+  },
+  {
+    "family": "roughness",
+    "user": "车削外圆，每转进给 f=0.354 mm/rev，刀尖圆弧半径 r_ε=1.2 mm。预测加工表面粗糙度 Ra（μm）与对应粗糙度等级。",
+    "expected": {
+      "world_state": {
+        "feed_per_rev_mm": 0.354,
+        "nose_radius_mm": 1.2,
+        "surface_roughness_ra_um": 13.1,
+        "finish_class": "粗加工"
+      },
+      "verification": {
+        "formula": "Ra[um]=1000*f^2/(8*r_eps)",
+        "checks": [
+          "ra>0"
+        ]
+      }
+    },
+    "predicted": {
+      "world_state": {
+        "surface_roughness_ra_um": 13.053749999999999,
+        "roughness_grade": "Ra 6.3 μm (Grade 4)"
+      }
+    },
+    "pass": true,
+    "raw_pass": false,
+    "fmt_raw": true,
+    "miss": [],
+    "miss_raw": [
+      "surface_roughness_ra_um(6.8!=13.1)"
+    ],
+    "guard_action": "corrected",
+    "raw": "{\"world_state\": {\"surface_roughness_ra_um\": 6.8, \"roughness_grade\": \"Ra 6.3 μm (Grade 4)\"}, \"derivation\": {\"surface_roughness_ra_um\": \"2*r_eps = 2*1.2\", \"roughness_grade\": \"查 Ra-Grade 标准表确定\"}, \"verification\": {\"source\": \"roughness_formula\", \"resolved\": true}}"
+  },
+  {
+    "family": "geom_delta",
+    "user": "在工件上切除一个沉槽，特征体积 4986.0 mm^3，切除前工件体积 135704.0 mm^3。预测切除后几何体积变化 ΔV 与切除后体积，并校验体积守恒。",
+    "expected": {
+      "world_state": {
+        "feature": "沉槽",
+        "feature_volume_mm3": 4986.0,
+        "delta_volume_mm3": -4986.0,
+        "before_volume_mm3": 135704.0,
+        "after_volume_mm3": 130718.0,
+        "volume_conservation": "pass_cut_negative"
+      },
+      "verification": {
+        "formula": "dV = -V_feature (切除为负)",
+        "checks": [
+          "dV<0",
+          "after=before+dV"
+        ]
+      }
+    },
+    "predicted": {
+      "world_state": {
+        "delta_volume_mm3": -4986.0,
+        "after_volume_mm3": 130718.0,
+        "volume_conservation": "pass_cut_negative",
+        "feature_volume_mm3": 4986.0,
+        "before_volume_mm3": 135704.0
+      }
+    },
+    "pass": true,
+    "raw_pass": true,
+    "fmt_raw": true,
+    "miss": [],
+    "miss_raw": [],
+    "guard_action": "accept",
+    "raw": "{\"world_state\": {\"delta_volume_mm3\": -4986.0, \"after_volume_mm3\": 129718.0, \"volume_conservation\": \"pass\"}, \"derivation\": {\"delta_volume_mm3\": \"-(4986.0)\", \"after_volume_mm3\": \"135704.0 - 4986.0\", \"volume_conservation\": \"abs(-4986.0) / 135704.0 < 0.05\"}, \"verification\": {\"source\": \"volume_formula\", \"resolved\": true}}"
+  },
+  {
+    "family": "removal",
+    "user": "毛坯体积 383016 mm^3，材料 45钢，密度 7.8 g/cm^3。用端铣刀单刀路：切削深度 DOC=3.75 mm，切削宽度 WOC=7.23 mm，进给速度 vf=1075 mm/min，刀路长度 L=49.0 mm。预测去除量与余下质量。",
+    "expected": {
+      "world_state": {
+        "material_removed_mm3": 1329.0,
+        "mrr_mm3_per_min": 29150.0,
+        "removed_mass_g": 10.4,
+        "resulting_mass_g": 3000.0,
+        "delta_volume_mm3": -1329.0,
+        "volume_conservation": "pass_cut_negative"
+      },
+      "verification": {
+        "formula": "MRR=DOC*WOC*vf; V_removed=DOC*WOC*L; m=rho*V",
+        "checks": [
+          "dV<0",
+          "mrr>0"
+        ]
+      }
+    },
+    "predicted": {
+      "world_state": {
+        "material_removed_mm3": 1328.5125,
+        "resulting_mass_g": 2977.1624024999996,
+        "mrr_mm3_per_min": 29145.9375,
+        "removed_mass_g": 10.3623975,
+        "delta_volume_mm3": -1328.5125,
+        "volume_conservation": "pass_cut_negative"
+      }
+    },
+    "pass": true,
+    "raw_pass": false,
+    "fmt_raw": true,
+    "miss": [],
+    "miss_raw": [
+      "material_removed_mm3(126825!=1329)",
+      "mrr_mm3_per_min(missing)",
+      "delta_volume_mm3(missing)"
+    ],
+    "guard_action": "corrected",
+    "raw": "{\"world_state\": {\"material_removed_mm3\": 126825, \"resulting_mass_g\": 2995}, \"derivation\": {\"material_removed_mm3\": \"(DOC)*(WOC)*(L) = (3.75)*(7.23)*(49.0)\", \"resulting_mass_g\": \"(initial_volume_mm3)*(density_g_per_cm3) - (material_removed_mm3)*(density_g_per_cm3) = (383016)*(7.8) - (126825)*(7.8)\"} }"
+  },
+  {
+    "family": "invalid",
+    "user": "未提供材料类型，要求预测去除质量。",
+    "expected": {
+      "world_state": null,
+      "invalid": true,
+      "reason": "missing_material",
+      "expected_action": "拒绝并列出缺失/非法项，不输出臆测数值"
+    },
+    "predicted": {
+      "world_state": {
+        "world_state": null,
+        "invalid": true,
+        "reason": "缺少 material_type"
+      }
+    },
+    "pass": false,
+    "raw_pass": true,
+    "fmt_raw": true,
+    "miss": [],
+    "miss_raw": [],
+    "guard_action": "accept",
+    "raw": "{\"world_state\": null, \"invalid\": true, \"reason\": \"缺少 material_type\"}"
+  },
+  {
+    "family": "tolerance",
+    "user": "尺寸链含 4 个组成环，半公差分别为 [0.053, 0.022, 0.017, 0.036] mm（基本尺寸 44.1 mm）。孔轴偏差：上偏差 +0.008 mm，下偏差 -0.022 mm。用极值法与统计法（RSS）给出封闭环公差带半宽，并判定配合性质与等级。",
+    "expected": {
+      "world_state": {
+        "component_tolerances_mm": [
+          0.053,
+          0.022,
+          0.017,
+          0.036
+        ],
+        "closed_loop_worstcase_halfwidth_mm": 0.128,
+        "closed_loop_rss_halfwidth_mm": 0.06984,
+        "basic_size_mm": 44.1,
+        "fit_clearance_mm": 0.03,
+        "tolerance_fit": "间隙配合",
+        "fit_class": "H7/g6",
+        "tolerance_pass": true
+      },
+      "verification": {
+        "formula": "WC=sum(ti); RSS=sqrt(sum(ti^2))",
+        "checks": [
+          "WC>=RSS"
+        ]
+      }
+    },
+    "predicted": {
+      "world_state": {
+        "tolerance": {
+          "closed_loop_worstcase_halfwidth_mm": 0.128,
+          "closed_loop_rss_halfwidth_mm": 0.053
+        },
+        "fit_clearance_mm": 44.122,
+        "tolerance_pass": true,
+        "closed_loop_worstcase_halfwidth_mm": 0.0698,
+        "closed_loop_rss_halfwidth_mm": 0.0698
+      }
+    },
+    "pass": false,
+    "raw_pass": false,
+    "fmt_raw": true,
+    "miss": [
+      "closed_loop_worstcase_halfwidth_mm(0.0698!=0.128)",
+      "fit_clearance_mm(44.122!=0.03)"
+    ],
+    "miss_raw": [
+      "closed_loop_rss_halfwidth_mm(0.053!=0.06984)",
+      "fit_clearance_mm(0.096!=0.03)"
+    ],
+    "guard_action": "corrected",
+    "raw": "{\"world_state\": {\"tolerance\": {\"closed_loop_worstcase_halfwidth_mm\": 0.128, \"closed_loop_rss_halfwidth_mm\": 0.053}, \"fit_clearance_mm\": 0.096, \"tolerance_pass\": true}, \"derivation\": {\"closed_loop_worstcase_halfwidth_mm\": \"sqrt(0.053^2+0.022^2+0.017^2+0.036^2) = 0.053 mm (极值法半宽？原题给的是极值法总公差 0.128 mm，这里只算 RSS 半宽 0.053 mm；极值法全量为 0.128 mm，故封闭环半宽即 0.128 mm)\", \"closed_loop_rss_halfwidth_mm\": \"sqrt(0.053^2+0.022^2+0.017^2+0.036^2) = 0.053 mm\", \"fit_clearance_mm\": \"44.1 - (-0.022) = 44.122 mm\"}, \"verification\": {\"source\": \"tolerance_rules\", \"resolved\": true}}"
+  },
+  {
+    "family": "collision",
+    "user": "分析一段 FANUC 加工程序：安全平面 Z=17.0 mm，某 G00 快速移动段最低 Z=18.9 mm，毛坯顶面 Z=18.6 mm。预测碰撞/过切风险与 VERICUT Auto-Diff 颜色（红=过切，黄=风险，绿=合格）。",
+    "expected": {
+      "world_state": {
+        "safe_plane_z_mm": 17.0,
+        "rapid_min_z_mm": 18.9,
+        "stock_top_z_mm": 18.6,
+        "collision_risk": "none",
+        "gouge": false,
+        "autodiff": "green"
+      },
+      "verification": {
+        "formula": "risk = (Z_rapid_min < Z_safe) AND (Z_rapid_min < Z_stock_top+1)",
+        "checks": [
+          "no_gouge"
+        ]
+      }
+    },
+    "predicted": {
+      "world_state": {
+        "world_state": {
+          "collision_pred": "no_collision",
+          "autodiff_color": "green"
+        },
+        "derivation": {
+          "collision_pred": "18.9 mm >= 18.6 mm (safe above stock)",
+          "autodiff_color": "刀轨在毛坯以上且未切入加工面，无过切"
+        }
+      }
+    },
+    "pass": true,
+    "raw_pass": true,
+    "fmt_raw": true,
+    "miss": [],
+    "miss_raw": [],
+    "guard_action": "accept",
+    "raw": "{\"world_state\": {\"collision_pred\": \"no_collision\", \"autodiff_color\": \"green\"}, \"derivation\": {\"collision_pred\": \"18.9 mm >= 18.6 mm (safe above stock)\", \"autodiff_color\": \"刀轨在毛坯以上且未切入加工面，无过切\"}}"
+  },
+  {
+    "family": "geom_delta",
+    "user": "在工件上切除一个倒角，特征体积 4406.0 mm^3，切除前工件体积 153584.0 mm^3。预测切除后几何体积变化 ΔV 与切除后体积，并校验体积守恒。",
+    "expected": {
+      "world_state": {
+        "feature": "倒角",
+        "feature_volume_mm3": 4406.0,
+        "delta_volume_mm3": -4406.0,
+        "before_volume_mm3": 153584.0,
+        "after_volume_mm3": 149178.0,
+        "volume_conservation": "pass_cut_negative"
+      },
+      "verification": {
+        "formula": "dV = -V_feature (切除为负)",
+        "checks": [
+          "dV<0",
+          "after=before+dV"
+        ]
+      }
+    },
+    "predicted": {
+      "world_state": {
+        "delta_volume_mm3": -4406.0,
+        "after_volume_mm3": 149178.0,
+        "volume_conservation": "pass_cut_negative",
+        "feature_volume_mm3": 4406.0,
+        "before_volume_mm3": 153584.0
+      }
+    },
+    "pass": true,
+    "raw_pass": true,
+    "fmt_raw": true,
+    "miss": [],
+    "miss_raw": [],
+    "guard_action": "accept",
+    "raw": "{\"world_state\": {\"delta_volume_mm3\": -4406.0, \"after_volume_mm3\": 149178.0, \"volume_conservation\": \"pass\"}, \"derivation\": {\"delta_volume_mm3\": \"-4406.0\", \"after_volume_mm3\": \"153584.0-4406.0\"}, \"verification\": {\"source\": \"volume_formula\", \"resolved\": true}}"
+  },
+  {
+    "family": "fea_fos",
+    "user": "钛合金TC4构件，屈服强度 Sy=830 MPa，FEA 算得峰值 von Mises 应力 σ_vm=239.7 MPa。预测安全系数并判定 FOS≥1.5 是否通过。",
+    "expected": {
+      "world_state": {
+        "material": "钛合金TC4",
+        "yield_strength_mpa": 830.0,
+        "peak_von_mises_mpa": 239.7,
+        "safety_factor": 3.46,
+        "fos_gate": "FOS>=1.5_pass"
+      },
+      "verification": {
+        "formula": "FOS=Sy/sigma_vm",
+        "checks": [
+          "FOS>=1.5"
+        ]
+      }
+    },
+    "predicted": {
+      "world_state": {
+        "safety_factor": 3.4626616604088447,
+        "fos_gate": "FOS>=1.5_PASS",
+        "peak_von_mises_mpa": 239.7
+      }
+    },
+    "pass": true,
+    "raw_pass": true,
+    "fmt_raw": true,
+    "miss": [],
+    "miss_raw": [],
+    "guard_action": "corrected",
+    "raw": "{\"world_state\": {\"safety_factor\": 3.46, \"fos_gate\": \"pass\"}, \"derivation\": {\"safety_factor\": \"(830)/(239.7)\"}, \"verification\": {\"source\": \"fea_fos\", \"resolved\": true}}"
+  },
+  {
+    "family": "tolerance",
+    "user": "尺寸链含 4 个组成环，半公差分别为 [0.055, 0.021, 0.07, 0.084] mm（基本尺寸 53.8 mm）。孔轴偏差：上偏差 +0.022 mm，下偏差 -0.021 mm。用极值法与统计法（RSS）给出封闭环公差带半宽，并判定配合性质与等级。",
+    "expected": {
+      "world_state": {
+        "component_tolerances_mm": [
+          0.055,
+          0.021,
+          0.07,
+          0.084
+        ],
+        "closed_loop_worstcase_halfwidth_mm": 0.23,
+        "closed_loop_rss_halfwidth_mm": 0.1242,
+        "basic_size_mm": 53.8,
+        "fit_clearance_mm": 0.043,
+        "tolerance_fit": "间隙配合",
+        "fit_class": "H7/g6",
+        "tolerance_pass": true
+      },
+      "verification": {
+        "formula": "WC=sum(ti); RSS=sqrt(sum(ti^2))",
+        "checks": [
+          "WC>=RSS"
+        ]
+      }
+    },
+    "predicted": {
+      "world_state": {
+        "closed_loop_worstcase_halfwidth_mm": 0.1242,
+        "closed_loop_rss_halfwidth_mm": 0.1242,
+        "tolerance_pass": true
+      }
+    },
+    "pass": false,
+    "raw_pass": false,
+    "fmt_raw": true,
+    "miss": [
+      "closed_loop_worstcase_halfwidth_mm(0.1242!=0.23)",
+      "fit_clearance_mm(missing)"
+    ],
+    "miss_raw": [
+      "closed_loop_worstcase_halfwidth_mm(0.139!=0.23)",
+      "closed_loop_rss_halfwidth_mm(0.086!=0.1242)",
+      "fit_clearance_mm(missing)"
+    ],
+    "guard_action": "corrected",
+    "raw": "{\"world_state\": {\"closed_loop_worstcase_halfwidth_mm\": 0.139, \"closed_loop_rss_halfwidth_mm\": 0.086, \"tolerance_pass\": true}, \"derivation\": {\"closed_loop_worstcase_halfwidth_mm\": \"sqrt(0.055^2+0.021^2+0.07^2+0.084^2)\", \"closed_loop_rss_halfwidth_mm\": \"sqrt(0.055^2+0.021^2+0.07^2+0.084^2)\"}, \"verification\": {\"source\": \"tolerance_propagation\", \"resolved\": true}}"
+  },
+  {
+    "family": "invalid",
+    "user": "未提供材料类型，要求预测去除质量。",
+    "expected": {
+      "world_state": null,
+      "invalid": true,
+      "reason": "missing_material",
+      "expected_action": "拒绝并列出缺失/非法项，不输出臆测数值"
+    },
+    "predicted": {
+      "world_state": {
+        "world_state": null,
+        "invalid": true,
+        "reason": "缺少 material_type"
+      }
+    },
+    "pass": false,
+    "raw_pass": true,
+    "fmt_raw": true,
+    "miss": [],
+    "miss_raw": [],
+    "guard_action": "accept",
+    "raw": "{\"world_state\": null, \"invalid\": true, \"reason\": \"缺少 material_type\"}"
+  },
+  {
+    "family": "removal",
+    "user": "毛坯体积 333826 mm^3，材料 45钢，密度 7.8 g/cm^3。用端铣刀单刀路：切削深度 DOC=3.43 mm，切削宽度 WOC=6.19 mm，进给速度 vf=402 mm/min，刀路长度 L=94.9 mm。预测去除量与余下质量。",
+    "expected": {
+      "world_state": {
+        "material_removed_mm3": 2015.0,
+        "mrr_mm3_per_min": 8535.0,
+        "removed_mass_g": 15.8,
+        "resulting_mass_g": 2600.0,
+        "delta_volume_mm3": -2015.0,
+        "volume_conservation": "pass_cut_negative"
+      },
+      "verification": {
+        "formula": "MRR=DOC*WOC*vf; V_removed=DOC*WOC*L; m=rho*V",
+        "checks": [
+          "dV<0",
+          "mrr>0"
+        ]
+      }
+    },
+    "predicted": {
+      "world_state": {
+        "material_removed_mm3": 2014.8883300000005,
+        "resulting_mass_g": 2588.1266710259997,
+        "mrr_mm3_per_min": 8535.1434,
+        "removed_mass_g": 15.716128974000004,
+        "delta_volume_mm3": -2014.8883300000005,
+        "volume_conservation": "pass_cut_negative"
+      }
+    },
+    "pass": true,
+    "raw_pass": false,
+    "fmt_raw": true,
+    "miss": [],
+    "miss_raw": [
+      "material_removed_mm3(18750!=2015)",
+      "mrr_mm3_per_min(missing)",
+      "delta_volume_mm3(missing)"
+    ],
+    "guard_action": "corrected",
+    "raw": "{\"world_state\": {\"material_removed_mm3\": 18750, \"resulting_mass_g\": 2625}, \"derivation\": {\"material_removed_mm3\": \"(DOC)*(WOC)*(L) = (3.43)*(6.19)*(94.9)\", \"resulting_mass_g\": \"(initial_volume_mm3)*(density_g_per_cm3) - (material_removed_mm3)*(density_g_per_cm3) = (333826)*(7.8) - (18750)*(7.8)\"}, \"verification\": {\"source\": \"volume_formula\", \"resolved\": true}}"
+  }
+]

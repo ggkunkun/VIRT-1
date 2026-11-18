@@ -1,0 +1,12 @@
+get_running_processes elapsed=0.19s count=138 sld=[28188, 12852]
+find_software_window(solidworks)=None elapsed=0.03s
+diagnose(solidworks)={'status': 'process_running_no_window', 'software': 'solidworks', 'pids': [12852, 28188], 'embedding_pids': [], 'note': 'Process alive but no visible window (minimized to tray / other desktop / startup splash). Check window station and visibility before GUI automation.'} elapsed=2.36s
+type_text('')={'status': 'typed', 'length': 0, 'note': 'empty text, no input sent'} elapsed=0.00s
+dismiss_all_dialogs={'status': 'dismissed'} elapsed=11.81s
+preflight_apps={'AutoCAD': [], 'SOLIDWORKS': [], 'CIMCO Edit': []} elapsed=0.04s
+diagnose(sscnc)=status:not_running pids:[] elapsed=0.05s
+diagnose(cimco)=status:not_running pids:[] elapsed=0.04s
+diagnose(autocad)=status:not_running pids:[] elapsed=0.04s
+diagnose(vericut)=status:not_running pids:[] elapsed=0.04s
+diagnose(nx)=status:not_running pids:[] elapsed=0.05s
+DONE

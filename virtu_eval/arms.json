@@ -618,6 +618,56 @@
             "required": []
           }
         }
+      },
+      {
+        "type": "function",
+        "function": {
+          "name": "cadcam_feature_ops",
+          "description": "原子特征执行器：不提供任何一键策略，只按你自己给出的方案逐步执行。action=measure 返回 STEP 原始测量数据（母线闭合点列、直径谱、孔系、包围盒）；action=execute_plan 严格按 plan.ops 顺序执行，每个 op 后立即读质量属性形成证据链，不认识或缺参数的 op 如实报错、绝不自动补齐。",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "action": {
+                "type": "string",
+                "enum": [
+                  "measure",
+                  "execute_plan",
+                  "single_case"
+                ],
+                "description": "measure=读测量数据；execute_plan=按你的方案执行"
+              },
+              "plan": {
+                "type": "object",
+                "description": "建模方案。格式 {'ops':[ ... ]}。可用 op 按你的方法自行排序：new_part；sketch_profile(source=step_meridian 或 points=[[x,r],...], plane)；revolve(angle_deg)；sketch_holes(pcd_mm,hole_dia_mm,count,angles_deg,plane)；cut(type=through_all)；save_part(name)；import_assembly(step_path)；save_assembly(name)；drawing(template,first_angle,isometric,model_path,name)；verify。特征顺序、参数、是否使用某步骤全由你决定。",
+                "properties": {
+                  "ops": {
+                    "type": "array",
+                    "items": {
+                      "type": "object"
+                    }
+                  },
+                  "method_reason": {
+                    "type": "string",
+                    "description": "你选择这套特征顺序与参数的理由"
+                  },
+                  "expected_volume_mm3": {
+                    "type": "number",
+                    "description": "你预期最终体积，用于与实测对比"
+                  }
+                }
+              },
+              "step_path": {
+                "type": "string",
+                "description": "工作区内 STEP 绝对路径"
+              },
+              "out_dir": {
+                "type": "string",
+                "description": "产物目录（工作区内）"
+              }
+            },
+            "required": []
+          }
+        }
       }
     ],
     "tools_dimensions": [
@@ -1221,6 +1271,56 @@
             "required": []
           }
         }
+      },
+      {
+        "type": "function",
+        "function": {
+          "name": "cadcam_feature_ops",
+          "description": "原子特征执行器：不提供任何一键策略，只按你自己给出的方案逐步执行。action=measure 返回 STEP 原始测量数据（母线闭合点列、直径谱、孔系、包围盒）；action=execute_plan 严格按 plan.ops 顺序执行，每个 op 后立即读质量属性形成证据链，不认识或缺参数的 op 如实报错、绝不自动补齐。",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "action": {
+                "type": "string",
+                "enum": [
+                  "measure",
+                  "execute_plan",
+                  "single_case"
+                ],
+                "description": "measure=读测量数据；execute_plan=按你的方案执行"
+              },
+              "plan": {
+                "type": "object",
+                "description": "建模方案。格式 {'ops':[ ... ]}。可用 op 按你的方法自行排序：new_part；sketch_profile(source=step_meridian 或 points=[[x,r],...], plane)；revolve(angle_deg)；sketch_holes(pcd_mm,hole_dia_mm,count,angles_deg,plane)；cut(type=through_all)；save_part(name)；import_assembly(step_path)；save_assembly(name)；drawing(template,first_angle,isometric,model_path,name)；verify。特征顺序、参数、是否使用某步骤全由你决定。",
+                "properties": {
+                  "ops": {
+                    "type": "array",
+                    "items": {
+                      "type": "object"
+                    }
+                  },
+                  "method_reason": {
+                    "type": "string",
+                    "description": "你选择这套特征顺序与参数的理由"
+                  },
+                  "expected_volume_mm3": {
+                    "type": "number",
+                    "description": "你预期最终体积，用于与实测对比"
+                  }
+                }
+              },
+              "step_path": {
+                "type": "string",
+                "description": "工作区内 STEP 绝对路径"
+              },
+              "out_dir": {
+                "type": "string",
+                "description": "产物目录（工作区内）"
+              }
+            },
+            "required": []
+          }
+        }
       }
     ],
     "tools_dimensions": [
@@ -1810,6 +1910,56 @@
               "out_dir": {
                 "type": "string",
                 "description": "产物目录（必须位于工作区内）；留空用 runs/virtu_assembly"
+              }
+            },
+            "required": []
+          }
+        }
+      },
+      {
+        "type": "function",
+        "function": {
+          "name": "cadcam_feature_ops",
+          "description": "原子特征执行器：不提供任何一键策略，只按你自己给出的方案逐步执行。action=measure 返回 STEP 原始测量数据（母线闭合点列、直径谱、孔系、包围盒）；action=execute_plan 严格按 plan.ops 顺序执行，每个 op 后立即读质量属性形成证据链，不认识或缺参数的 op 如实报错、绝不自动补齐。",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "action": {
+                "type": "string",
+                "enum": [
+                  "measure",
+                  "execute_plan",
+                  "single_case"
+                ],
+                "description": "measure=读测量数据；execute_plan=按你的方案执行"
+              },
+              "plan": {
+                "type": "object",
+                "description": "建模方案。格式 {'ops':[ ... ]}。可用 op 按你的方法自行排序：new_part；sketch_profile(source=step_meridian 或 points=[[x,r],...], plane)；revolve(angle_deg)；sketch_holes(pcd_mm,hole_dia_mm,count,angles_deg,plane)；cut(type=through_all)；save_part(name)；import_assembly(step_path)；save_assembly(name)；drawing(template,first_angle,isometric,model_path,name)；verify。特征顺序、参数、是否使用某步骤全由你决定。",
+                "properties": {
+                  "ops": {
+                    "type": "array",
+                    "items": {
+                      "type": "object"
+                    }
+                  },
+                  "method_reason": {
+                    "type": "string",
+                    "description": "你选择这套特征顺序与参数的理由"
+                  },
+                  "expected_volume_mm3": {
+                    "type": "number",
+                    "description": "你预期最终体积，用于与实测对比"
+                  }
+                }
+              },
+              "step_path": {
+                "type": "string",
+                "description": "工作区内 STEP 绝对路径"
+              },
+              "out_dir": {
+                "type": "string",
+                "description": "产物目录（工作区内）"
               }
             },
             "required": []
@@ -2414,6 +2564,56 @@
             "required": []
           }
         }
+      },
+      {
+        "type": "function",
+        "function": {
+          "name": "cadcam_feature_ops",
+          "description": "原子特征执行器：不提供任何一键策略，只按你自己给出的方案逐步执行。action=measure 返回 STEP 原始测量数据（母线闭合点列、直径谱、孔系、包围盒）；action=execute_plan 严格按 plan.ops 顺序执行，每个 op 后立即读质量属性形成证据链，不认识或缺参数的 op 如实报错、绝不自动补齐。",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "action": {
+                "type": "string",
+                "enum": [
+                  "measure",
+                  "execute_plan",
+                  "single_case"
+                ],
+                "description": "measure=读测量数据；execute_plan=按你的方案执行"
+              },
+              "plan": {
+                "type": "object",
+                "description": "建模方案。格式 {'ops':[ ... ]}。可用 op 按你的方法自行排序：new_part；sketch_profile(source=step_meridian 或 points=[[x,r],...], plane)；revolve(angle_deg)；sketch_holes(pcd_mm,hole_dia_mm,count,angles_deg,plane)；cut(type=through_all)；save_part(name)；import_assembly(step_path)；save_assembly(name)；drawing(template,first_angle,isometric,model_path,name)；verify。特征顺序、参数、是否使用某步骤全由你决定。",
+                "properties": {
+                  "ops": {
+                    "type": "array",
+                    "items": {
+                      "type": "object"
+                    }
+                  },
+                  "method_reason": {
+                    "type": "string",
+                    "description": "你选择这套特征顺序与参数的理由"
+                  },
+                  "expected_volume_mm3": {
+                    "type": "number",
+                    "description": "你预期最终体积，用于与实测对比"
+                  }
+                }
+              },
+              "step_path": {
+                "type": "string",
+                "description": "工作区内 STEP 绝对路径"
+              },
+              "out_dir": {
+                "type": "string",
+                "description": "产物目录（工作区内）"
+              }
+            },
+            "required": []
+          }
+        }
       }
     ],
     "tools_dimensions": [
@@ -3008,6 +3208,56 @@
               "out_dir": {
                 "type": "string",
                 "description": "产物目录（必须位于工作区内）；留空用 runs/virtu_assembly"
+              }
+            },
+            "required": []
+          }
+        }
+      },
+      {
+        "type": "function",
+        "function": {
+          "name": "cadcam_feature_ops",
+          "description": "原子特征执行器：不提供任何一键策略，只按你自己给出的方案逐步执行。action=measure 返回 STEP 原始测量数据（母线闭合点列、直径谱、孔系、包围盒）；action=execute_plan 严格按 plan.ops 顺序执行，每个 op 后立即读质量属性形成证据链，不认识或缺参数的 op 如实报错、绝不自动补齐。",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "action": {
+                "type": "string",
+                "enum": [
+                  "measure",
+                  "execute_plan",
+                  "single_case"
+                ],
+                "description": "measure=读测量数据；execute_plan=按你的方案执行"
+              },
+              "plan": {
+                "type": "object",
+                "description": "建模方案。格式 {'ops':[ ... ]}。可用 op 按你的方法自行排序：new_part；sketch_profile(source=step_meridian 或 points=[[x,r],...], plane)；revolve(angle_deg)；sketch_holes(pcd_mm,hole_dia_mm,count,angles_deg,plane)；cut(type=through_all)；save_part(name)；import_assembly(step_path)；save_assembly(name)；drawing(template,first_angle,isometric,model_path,name)；verify。特征顺序、参数、是否使用某步骤全由你决定。",
+                "properties": {
+                  "ops": {
+                    "type": "array",
+                    "items": {
+                      "type": "object"
+                    }
+                  },
+                  "method_reason": {
+                    "type": "string",
+                    "description": "你选择这套特征顺序与参数的理由"
+                  },
+                  "expected_volume_mm3": {
+                    "type": "number",
+                    "description": "你预期最终体积，用于与实测对比"
+                  }
+                }
+              },
+              "step_path": {
+                "type": "string",
+                "description": "工作区内 STEP 绝对路径"
+              },
+              "out_dir": {
+                "type": "string",
+                "description": "产物目录（工作区内）"
               }
             },
             "required": []
@@ -3612,6 +3862,56 @@
             "required": []
           }
         }
+      },
+      {
+        "type": "function",
+        "function": {
+          "name": "cadcam_feature_ops",
+          "description": "原子特征执行器：不提供任何一键策略，只按你自己给出的方案逐步执行。action=measure 返回 STEP 原始测量数据（母线闭合点列、直径谱、孔系、包围盒）；action=execute_plan 严格按 plan.ops 顺序执行，每个 op 后立即读质量属性形成证据链，不认识或缺参数的 op 如实报错、绝不自动补齐。",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "action": {
+                "type": "string",
+                "enum": [
+                  "measure",
+                  "execute_plan",
+                  "single_case"
+                ],
+                "description": "measure=读测量数据；execute_plan=按你的方案执行"
+              },
+              "plan": {
+                "type": "object",
+                "description": "建模方案。格式 {'ops':[ ... ]}。可用 op 按你的方法自行排序：new_part；sketch_profile(source=step_meridian 或 points=[[x,r],...], plane)；revolve(angle_deg)；sketch_holes(pcd_mm,hole_dia_mm,count,angles_deg,plane)；cut(type=through_all)；save_part(name)；import_assembly(step_path)；save_assembly(name)；drawing(template,first_angle,isometric,model_path,name)；verify。特征顺序、参数、是否使用某步骤全由你决定。",
+                "properties": {
+                  "ops": {
+                    "type": "array",
+                    "items": {
+                      "type": "object"
+                    }
+                  },
+                  "method_reason": {
+                    "type": "string",
+                    "description": "你选择这套特征顺序与参数的理由"
+                  },
+                  "expected_volume_mm3": {
+                    "type": "number",
+                    "description": "你预期最终体积，用于与实测对比"
+                  }
+                }
+              },
+              "step_path": {
+                "type": "string",
+                "description": "工作区内 STEP 绝对路径"
+              },
+              "out_dir": {
+                "type": "string",
+                "description": "产物目录（工作区内）"
+              }
+            },
+            "required": []
+          }
+        }
       }
     ],
     "tools_dimensions": [
@@ -4211,6 +4511,56 @@
             "required": []
           }
         }
+      },
+      {
+        "type": "function",
+        "function": {
+          "name": "cadcam_feature_ops",
+          "description": "原子特征执行器：不提供任何一键策略，只按你自己给出的方案逐步执行。action=measure 返回 STEP 原始测量数据（母线闭合点列、直径谱、孔系、包围盒）；action=execute_plan 严格按 plan.ops 顺序执行，每个 op 后立即读质量属性形成证据链，不认识或缺参数的 op 如实报错、绝不自动补齐。",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "action": {
+                "type": "string",
+                "enum": [
+                  "measure",
+                  "execute_plan",
+                  "single_case"
+                ],
+                "description": "measure=读测量数据；execute_plan=按你的方案执行"
+              },
+              "plan": {
+                "type": "object",
+                "description": "建模方案。格式 {'ops':[ ... ]}。可用 op 按你的方法自行排序：new_part；sketch_profile(source=step_meridian 或 points=[[x,r],...], plane)；revolve(angle_deg)；sketch_holes(pcd_mm,hole_dia_mm,count,angles_deg,plane)；cut(type=through_all)；save_part(name)；import_assembly(step_path)；save_assembly(name)；drawing(template,first_angle,isometric,model_path,name)；verify。特征顺序、参数、是否使用某步骤全由你决定。",
+                "properties": {
+                  "ops": {
+                    "type": "array",
+                    "items": {
+                      "type": "object"
+                    }
+                  },
+                  "method_reason": {
+                    "type": "string",
+                    "description": "你选择这套特征顺序与参数的理由"
+                  },
+                  "expected_volume_mm3": {
+                    "type": "number",
+                    "description": "你预期最终体积，用于与实测对比"
+                  }
+                }
+              },
+              "step_path": {
+                "type": "string",
+                "description": "工作区内 STEP 绝对路径"
+              },
+              "out_dir": {
+                "type": "string",
+                "description": "产物目录（工作区内）"
+              }
+            },
+            "required": []
+          }
+        }
       }
     ],
     "tools_dimensions": [
@@ -4800,6 +5150,56 @@
               "out_dir": {
                 "type": "string",
                 "description": "产物目录（必须位于工作区内）；留空用 runs/virtu_assembly"
+              }
+            },
+            "required": []
+          }
+        }
+      },
+      {
+        "type": "function",
+        "function": {
+          "name": "cadcam_feature_ops",
+          "description": "原子特征执行器：不提供任何一键策略，只按你自己给出的方案逐步执行。action=measure 返回 STEP 原始测量数据（母线闭合点列、直径谱、孔系、包围盒）；action=execute_plan 严格按 plan.ops 顺序执行，每个 op 后立即读质量属性形成证据链，不认识或缺参数的 op 如实报错、绝不自动补齐。",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "action": {
+                "type": "string",
+                "enum": [
+                  "measure",
+                  "execute_plan",
+                  "single_case"
+                ],
+                "description": "measure=读测量数据；execute_plan=按你的方案执行"
+              },
+              "plan": {
+                "type": "object",
+                "description": "建模方案。格式 {'ops':[ ... ]}。可用 op 按你的方法自行排序：new_part；sketch_profile(source=step_meridian 或 points=[[x,r],...], plane)；revolve(angle_deg)；sketch_holes(pcd_mm,hole_dia_mm,count,angles_deg,plane)；cut(type=through_all)；save_part(name)；import_assembly(step_path)；save_assembly(name)；drawing(template,first_angle,isometric,model_path,name)；verify。特征顺序、参数、是否使用某步骤全由你决定。",
+                "properties": {
+                  "ops": {
+                    "type": "array",
+                    "items": {
+                      "type": "object"
+                    }
+                  },
+                  "method_reason": {
+                    "type": "string",
+                    "description": "你选择这套特征顺序与参数的理由"
+                  },
+                  "expected_volume_mm3": {
+                    "type": "number",
+                    "description": "你预期最终体积，用于与实测对比"
+                  }
+                }
+              },
+              "step_path": {
+                "type": "string",
+                "description": "工作区内 STEP 绝对路径"
+              },
+              "out_dir": {
+                "type": "string",
+                "description": "产物目录（工作区内）"
               }
             },
             "required": []
@@ -5404,6 +5804,56 @@
             "required": []
           }
         }
+      },
+      {
+        "type": "function",
+        "function": {
+          "name": "cadcam_feature_ops",
+          "description": "原子特征执行器：不提供任何一键策略，只按你自己给出的方案逐步执行。action=measure 返回 STEP 原始测量数据（母线闭合点列、直径谱、孔系、包围盒）；action=execute_plan 严格按 plan.ops 顺序执行，每个 op 后立即读质量属性形成证据链，不认识或缺参数的 op 如实报错、绝不自动补齐。",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "action": {
+                "type": "string",
+                "enum": [
+                  "measure",
+                  "execute_plan",
+                  "single_case"
+                ],
+                "description": "measure=读测量数据；execute_plan=按你的方案执行"
+              },
+              "plan": {
+                "type": "object",
+                "description": "建模方案。格式 {'ops':[ ... ]}。可用 op 按你的方法自行排序：new_part；sketch_profile(source=step_meridian 或 points=[[x,r],...], plane)；revolve(angle_deg)；sketch_holes(pcd_mm,hole_dia_mm,count,angles_deg,plane)；cut(type=through_all)；save_part(name)；import_assembly(step_path)；save_assembly(name)；drawing(template,first_angle,isometric,model_path,name)；verify。特征顺序、参数、是否使用某步骤全由你决定。",
+                "properties": {
+                  "ops": {
+                    "type": "array",
+                    "items": {
+                      "type": "object"
+                    }
+                  },
+                  "method_reason": {
+                    "type": "string",
+                    "description": "你选择这套特征顺序与参数的理由"
+                  },
+                  "expected_volume_mm3": {
+                    "type": "number",
+                    "description": "你预期最终体积，用于与实测对比"
+                  }
+                }
+              },
+              "step_path": {
+                "type": "string",
+                "description": "工作区内 STEP 绝对路径"
+              },
+              "out_dir": {
+                "type": "string",
+                "description": "产物目录（工作区内）"
+              }
+            },
+            "required": []
+          }
+        }
       }
     ],
     "tools_dimensions": [
@@ -5998,6 +6448,56 @@
               "out_dir": {
                 "type": "string",
                 "description": "产物目录（必须位于工作区内）；留空用 runs/virtu_assembly"
+              }
+            },
+            "required": []
+          }
+        }
+      },
+      {
+        "type": "function",
+        "function": {
+          "name": "cadcam_feature_ops",
+          "description": "原子特征执行器：不提供任何一键策略，只按你自己给出的方案逐步执行。action=measure 返回 STEP 原始测量数据（母线闭合点列、直径谱、孔系、包围盒）；action=execute_plan 严格按 plan.ops 顺序执行，每个 op 后立即读质量属性形成证据链，不认识或缺参数的 op 如实报错、绝不自动补齐。",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "action": {
+                "type": "string",
+                "enum": [
+                  "measure",
+                  "execute_plan",
+                  "single_case"
+                ],
+                "description": "measure=读测量数据；execute_plan=按你的方案执行"
+              },
+              "plan": {
+                "type": "object",
+                "description": "建模方案。格式 {'ops':[ ... ]}。可用 op 按你的方法自行排序：new_part；sketch_profile(source=step_meridian 或 points=[[x,r],...], plane)；revolve(angle_deg)；sketch_holes(pcd_mm,hole_dia_mm,count,angles_deg,plane)；cut(type=through_all)；save_part(name)；import_assembly(step_path)；save_assembly(name)；drawing(template,first_angle,isometric,model_path,name)；verify。特征顺序、参数、是否使用某步骤全由你决定。",
+                "properties": {
+                  "ops": {
+                    "type": "array",
+                    "items": {
+                      "type": "object"
+                    }
+                  },
+                  "method_reason": {
+                    "type": "string",
+                    "description": "你选择这套特征顺序与参数的理由"
+                  },
+                  "expected_volume_mm3": {
+                    "type": "number",
+                    "description": "你预期最终体积，用于与实测对比"
+                  }
+                }
+              },
+              "step_path": {
+                "type": "string",
+                "description": "工作区内 STEP 绝对路径"
+              },
+              "out_dir": {
+                "type": "string",
+                "description": "产物目录（工作区内）"
               }
             },
             "required": []
@@ -6599,6 +7099,56 @@
             "required": []
           }
         }
+      },
+      {
+        "type": "function",
+        "function": {
+          "name": "cadcam_feature_ops",
+          "description": "原子特征执行器：不提供任何一键策略，只按你自己给出的方案逐步执行。action=measure 返回 STEP 原始测量数据（母线闭合点列、直径谱、孔系、包围盒）；action=execute_plan 严格按 plan.ops 顺序执行，每个 op 后立即读质量属性形成证据链，不认识或缺参数的 op 如实报错、绝不自动补齐。",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "action": {
+                "type": "string",
+                "enum": [
+                  "measure",
+                  "execute_plan",
+                  "single_case"
+                ],
+                "description": "measure=读测量数据；execute_plan=按你的方案执行"
+              },
+              "plan": {
+                "type": "object",
+                "description": "建模方案。格式 {'ops':[ ... ]}。可用 op 按你的方法自行排序：new_part；sketch_profile(source=step_meridian 或 points=[[x,r],...], plane)；revolve(angle_deg)；sketch_holes(pcd_mm,hole_dia_mm,count,angles_deg,plane)；cut(type=through_all)；save_part(name)；import_assembly(step_path)；save_assembly(name)；drawing(template,first_angle,isometric,model_path,name)；verify。特征顺序、参数、是否使用某步骤全由你决定。",
+                "properties": {
+                  "ops": {
+                    "type": "array",
+                    "items": {
+                      "type": "object"
+                    }
+                  },
+                  "method_reason": {
+                    "type": "string",
+                    "description": "你选择这套特征顺序与参数的理由"
+                  },
+                  "expected_volume_mm3": {
+                    "type": "number",
+                    "description": "你预期最终体积，用于与实测对比"
+                  }
+                }
+              },
+              "step_path": {
+                "type": "string",
+                "description": "工作区内 STEP 绝对路径"
+              },
+              "out_dir": {
+                "type": "string",
+                "description": "产物目录（工作区内）"
+              }
+            },
+            "required": []
+          }
+        }
       }
     ],
     "tools_dimensions": [
@@ -7185,6 +7735,56 @@
               "out_dir": {
                 "type": "string",
                 "description": "产物目录（必须位于工作区内）；留空用 runs/virtu_assembly"
+              }
+            },
+            "required": []
+          }
+        }
+      },
+      {
+        "type": "function",
+        "function": {
+          "name": "cadcam_feature_ops",
+          "description": "原子特征执行器：不提供任何一键策略，只按你自己给出的方案逐步执行。action=measure 返回 STEP 原始测量数据（母线闭合点列、直径谱、孔系、包围盒）；action=execute_plan 严格按 plan.ops 顺序执行，每个 op 后立即读质量属性形成证据链，不认识或缺参数的 op 如实报错、绝不自动补齐。",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "action": {
+                "type": "string",
+                "enum": [
+                  "measure",
+                  "execute_plan",
+                  "single_case"
+                ],
+                "description": "measure=读测量数据；execute_plan=按你的方案执行"
+              },
+              "plan": {
+                "type": "object",
+                "description": "建模方案。格式 {'ops':[ ... ]}。可用 op 按你的方法自行排序：new_part；sketch_profile(source=step_meridian 或 points=[[x,r],...], plane)；revolve(angle_deg)；sketch_holes(pcd_mm,hole_dia_mm,count,angles_deg,plane)；cut(type=through_all)；save_part(name)；import_assembly(step_path)；save_assembly(name)；drawing(template,first_angle,isometric,model_path,name)；verify。特征顺序、参数、是否使用某步骤全由你决定。",
+                "properties": {
+                  "ops": {
+                    "type": "array",
+                    "items": {
+                      "type": "object"
+                    }
+                  },
+                  "method_reason": {
+                    "type": "string",
+                    "description": "你选择这套特征顺序与参数的理由"
+                  },
+                  "expected_volume_mm3": {
+                    "type": "number",
+                    "description": "你预期最终体积，用于与实测对比"
+                  }
+                }
+              },
+              "step_path": {
+                "type": "string",
+                "description": "工作区内 STEP 绝对路径"
+              },
+              "out_dir": {
+                "type": "string",
+                "description": "产物目录（工作区内）"
               }
             },
             "required": []
@@ -7777,6 +8377,56 @@
               "out_dir": {
                 "type": "string",
                 "description": "产物目录（必须位于工作区内）；留空用 runs/virtu_assembly"
+              }
+            },
+            "required": []
+          }
+        }
+      },
+      {
+        "type": "function",
+        "function": {
+          "name": "cadcam_feature_ops",
+          "description": "原子特征执行器：不提供任何一键策略，只按你自己给出的方案逐步执行。action=measure 返回 STEP 原始测量数据（母线闭合点列、直径谱、孔系、包围盒）；action=execute_plan 严格按 plan.ops 顺序执行，每个 op 后立即读质量属性形成证据链，不认识或缺参数的 op 如实报错、绝不自动补齐。",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "action": {
+                "type": "string",
+                "enum": [
+                  "measure",
+                  "execute_plan",
+                  "single_case"
+                ],
+                "description": "measure=读测量数据；execute_plan=按你的方案执行"
+              },
+              "plan": {
+                "type": "object",
+                "description": "建模方案。格式 {'ops':[ ... ]}。可用 op 按你的方法自行排序：new_part；sketch_profile(source=step_meridian 或 points=[[x,r],...], plane)；revolve(angle_deg)；sketch_holes(pcd_mm,hole_dia_mm,count,angles_deg,plane)；cut(type=through_all)；save_part(name)；import_assembly(step_path)；save_assembly(name)；drawing(template,first_angle,isometric,model_path,name)；verify。特征顺序、参数、是否使用某步骤全由你决定。",
+                "properties": {
+                  "ops": {
+                    "type": "array",
+                    "items": {
+                      "type": "object"
+                    }
+                  },
+                  "method_reason": {
+                    "type": "string",
+                    "description": "你选择这套特征顺序与参数的理由"
+                  },
+                  "expected_volume_mm3": {
+                    "type": "number",
+                    "description": "你预期最终体积，用于与实测对比"
+                  }
+                }
+              },
+              "step_path": {
+                "type": "string",
+                "description": "工作区内 STEP 绝对路径"
+              },
+              "out_dir": {
+                "type": "string",
+                "description": "产物目录（工作区内）"
               }
             },
             "required": []
@@ -8422,6 +9072,56 @@
             "required": []
           }
         }
+      },
+      {
+        "type": "function",
+        "function": {
+          "name": "cadcam_feature_ops",
+          "description": "原子特征执行器：不提供任何一键策略，只按你自己给出的方案逐步执行。action=measure 返回 STEP 原始测量数据（母线闭合点列、直径谱、孔系、包围盒）；action=execute_plan 严格按 plan.ops 顺序执行，每个 op 后立即读质量属性形成证据链，不认识或缺参数的 op 如实报错、绝不自动补齐。",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "action": {
+                "type": "string",
+                "enum": [
+                  "measure",
+                  "execute_plan",
+                  "single_case"
+                ],
+                "description": "measure=读测量数据；execute_plan=按你的方案执行"
+              },
+              "plan": {
+                "type": "object",
+                "description": "建模方案。格式 {'ops':[ ... ]}。可用 op 按你的方法自行排序：new_part；sketch_profile(source=step_meridian 或 points=[[x,r],...], plane)；revolve(angle_deg)；sketch_holes(pcd_mm,hole_dia_mm,count,angles_deg,plane)；cut(type=through_all)；save_part(name)；import_assembly(step_path)；save_assembly(name)；drawing(template,first_angle,isometric,model_path,name)；verify。特征顺序、参数、是否使用某步骤全由你决定。",
+                "properties": {
+                  "ops": {
+                    "type": "array",
+                    "items": {
+                      "type": "object"
+                    }
+                  },
+                  "method_reason": {
+                    "type": "string",
+                    "description": "你选择这套特征顺序与参数的理由"
+                  },
+                  "expected_volume_mm3": {
+                    "type": "number",
+                    "description": "你预期最终体积，用于与实测对比"
+                  }
+                }
+              },
+              "step_path": {
+                "type": "string",
+                "description": "工作区内 STEP 绝对路径"
+              },
+              "out_dir": {
+                "type": "string",
+                "description": "产物目录（工作区内）"
+              }
+            },
+            "required": []
+          }
+        }
       }
     ]
   },
@@ -9011,6 +9711,56 @@
               "out_dir": {
                 "type": "string",
                 "description": "产物目录（必须位于工作区内）；留空用 runs/virtu_assembly"
+              }
+            },
+            "required": []
+          }
+        }
+      },
+      {
+        "type": "function",
+        "function": {
+          "name": "cadcam_feature_ops",
+          "description": "原子特征执行器：不提供任何一键策略，只按你自己给出的方案逐步执行。action=measure 返回 STEP 原始测量数据（母线闭合点列、直径谱、孔系、包围盒）；action=execute_plan 严格按 plan.ops 顺序执行，每个 op 后立即读质量属性形成证据链，不认识或缺参数的 op 如实报错、绝不自动补齐。",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "action": {
+                "type": "string",
+                "enum": [
+                  "measure",
+                  "execute_plan",
+                  "single_case"
+                ],
+                "description": "measure=读测量数据；execute_plan=按你的方案执行"
+              },
+              "plan": {
+                "type": "object",
+                "description": "建模方案。格式 {'ops':[ ... ]}。可用 op 按你的方法自行排序：new_part；sketch_profile(source=step_meridian 或 points=[[x,r],...], plane)；revolve(angle_deg)；sketch_holes(pcd_mm,hole_dia_mm,count,angles_deg,plane)；cut(type=through_all)；save_part(name)；import_assembly(step_path)；save_assembly(name)；drawing(template,first_angle,isometric,model_path,name)；verify。特征顺序、参数、是否使用某步骤全由你决定。",
+                "properties": {
+                  "ops": {
+                    "type": "array",
+                    "items": {
+                      "type": "object"
+                    }
+                  },
+                  "method_reason": {
+                    "type": "string",
+                    "description": "你选择这套特征顺序与参数的理由"
+                  },
+                  "expected_volume_mm3": {
+                    "type": "number",
+                    "description": "你预期最终体积，用于与实测对比"
+                  }
+                }
+              },
+              "step_path": {
+                "type": "string",
+                "description": "工作区内 STEP 绝对路径"
+              },
+              "out_dir": {
+                "type": "string",
+                "description": "产物目录（工作区内）"
               }
             },
             "required": []
@@ -9608,6 +10358,56 @@
             "required": []
           }
         }
+      },
+      {
+        "type": "function",
+        "function": {
+          "name": "cadcam_feature_ops",
+          "description": "原子特征执行器：不提供任何一键策略，只按你自己给出的方案逐步执行。action=measure 返回 STEP 原始测量数据（母线闭合点列、直径谱、孔系、包围盒）；action=execute_plan 严格按 plan.ops 顺序执行，每个 op 后立即读质量属性形成证据链，不认识或缺参数的 op 如实报错、绝不自动补齐。",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "action": {
+                "type": "string",
+                "enum": [
+                  "measure",
+                  "execute_plan",
+                  "single_case"
+                ],
+                "description": "measure=读测量数据；execute_plan=按你的方案执行"
+              },
+              "plan": {
+                "type": "object",
+                "description": "建模方案。格式 {'ops':[ ... ]}。可用 op 按你的方法自行排序：new_part；sketch_profile(source=step_meridian 或 points=[[x,r],...], plane)；revolve(angle_deg)；sketch_holes(pcd_mm,hole_dia_mm,count,angles_deg,plane)；cut(type=through_all)；save_part(name)；import_assembly(step_path)；save_assembly(name)；drawing(template,first_angle,isometric,model_path,name)；verify。特征顺序、参数、是否使用某步骤全由你决定。",
+                "properties": {
+                  "ops": {
+                    "type": "array",
+                    "items": {
+                      "type": "object"
+                    }
+                  },
+                  "method_reason": {
+                    "type": "string",
+                    "description": "你选择这套特征顺序与参数的理由"
+                  },
+                  "expected_volume_mm3": {
+                    "type": "number",
+                    "description": "你预期最终体积，用于与实测对比"
+                  }
+                }
+              },
+              "step_path": {
+                "type": "string",
+                "description": "工作区内 STEP 绝对路径"
+              },
+              "out_dir": {
+                "type": "string",
+                "description": "产物目录（工作区内）"
+              }
+            },
+            "required": []
+          }
+        }
       }
     ]
   },
@@ -10192,6 +10992,56 @@
               "out_dir": {
                 "type": "string",
                 "description": "产物目录（必须位于工作区内）；留空用 runs/virtu_assembly"
+              }
+            },
+            "required": []
+          }
+        }
+      },
+      {
+        "type": "function",
+        "function": {
+          "name": "cadcam_feature_ops",
+          "description": "原子特征执行器：不提供任何一键策略，只按你自己给出的方案逐步执行。action=measure 返回 STEP 原始测量数据（母线闭合点列、直径谱、孔系、包围盒）；action=execute_plan 严格按 plan.ops 顺序执行，每个 op 后立即读质量属性形成证据链，不认识或缺参数的 op 如实报错、绝不自动补齐。",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "action": {
+                "type": "string",
+                "enum": [
+                  "measure",
+                  "execute_plan",
+                  "single_case"
+                ],
+                "description": "measure=读测量数据；execute_plan=按你的方案执行"
+              },
+              "plan": {
+                "type": "object",
+                "description": "建模方案。格式 {'ops':[ ... ]}。可用 op 按你的方法自行排序：new_part；sketch_profile(source=step_meridian 或 points=[[x,r],...], plane)；revolve(angle_deg)；sketch_holes(pcd_mm,hole_dia_mm,count,angles_deg,plane)；cut(type=through_all)；save_part(name)；import_assembly(step_path)；save_assembly(name)；drawing(template,first_angle,isometric,model_path,name)；verify。特征顺序、参数、是否使用某步骤全由你决定。",
+                "properties": {
+                  "ops": {
+                    "type": "array",
+                    "items": {
+                      "type": "object"
+                    }
+                  },
+                  "method_reason": {
+                    "type": "string",
+                    "description": "你选择这套特征顺序与参数的理由"
+                  },
+                  "expected_volume_mm3": {
+                    "type": "number",
+                    "description": "你预期最终体积，用于与实测对比"
+                  }
+                }
+              },
+              "step_path": {
+                "type": "string",
+                "description": "工作区内 STEP 绝对路径"
+              },
+              "out_dir": {
+                "type": "string",
+                "description": "产物目录（工作区内）"
               }
             },
             "required": []
@@ -10790,6 +11640,56 @@
             "required": []
           }
         }
+      },
+      {
+        "type": "function",
+        "function": {
+          "name": "cadcam_feature_ops",
+          "description": "原子特征执行器：不提供任何一键策略，只按你自己给出的方案逐步执行。action=measure 返回 STEP 原始测量数据（母线闭合点列、直径谱、孔系、包围盒）；action=execute_plan 严格按 plan.ops 顺序执行，每个 op 后立即读质量属性形成证据链，不认识或缺参数的 op 如实报错、绝不自动补齐。",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "action": {
+                "type": "string",
+                "enum": [
+                  "measure",
+                  "execute_plan",
+                  "single_case"
+                ],
+                "description": "measure=读测量数据；execute_plan=按你的方案执行"
+              },
+              "plan": {
+                "type": "object",
+                "description": "建模方案。格式 {'ops':[ ... ]}。可用 op 按你的方法自行排序：new_part；sketch_profile(source=step_meridian 或 points=[[x,r],...], plane)；revolve(angle_deg)；sketch_holes(pcd_mm,hole_dia_mm,count,angles_deg,plane)；cut(type=through_all)；save_part(name)；import_assembly(step_path)；save_assembly(name)；drawing(template,first_angle,isometric,model_path,name)；verify。特征顺序、参数、是否使用某步骤全由你决定。",
+                "properties": {
+                  "ops": {
+                    "type": "array",
+                    "items": {
+                      "type": "object"
+                    }
+                  },
+                  "method_reason": {
+                    "type": "string",
+                    "description": "你选择这套特征顺序与参数的理由"
+                  },
+                  "expected_volume_mm3": {
+                    "type": "number",
+                    "description": "你预期最终体积，用于与实测对比"
+                  }
+                }
+              },
+              "step_path": {
+                "type": "string",
+                "description": "工作区内 STEP 绝对路径"
+              },
+              "out_dir": {
+                "type": "string",
+                "description": "产物目录（工作区内）"
+              }
+            },
+            "required": []
+          }
+        }
       }
     ],
     "tools_dimensions": [
@@ -10797,5 +11697,648 @@
     ],
     "note": "Virtu-13.63B 非对称混合精度瘦身量化模型 (6.0GB / RTX 4050 显存优化)，经由世界模型与 DPO 对抗注入优化",
     "strip_think": true
+  },
+  "virtu_13b_hardened": {
+    "kind": "ollama_native",
+    "model_id": "virtu-13.63b:hardened",
+    "base_url": "http://127.0.0.1:11434",
+    "num_ctx": 4096,
+    "num_gpu": 24,
+    "think": false,
+    "strip_think": true,
+    "retries": 1,
+    "timeout": 600,
+    "tools": [
+      {
+        "type": "function",
+        "function": {
+          "name": "cadcam_preflight",
+          "description": "系统预检诊断：全面探测 SOLIDWORKS 2021、斯沃数控仿真 7.2、CIMCO Edit 2026、AutoCAD 2026、VERICUT 9.6 与 NX 12.0 六大工业软件的桌面快捷方式、可执行文件路径、运行进程 PID 与 COM 注册状态。",
+          "parameters": {
+            "type": "object",
+            "properties": {},
+            "required": []
+          }
+        }
+      },
+      {
+        "type": "function",
+        "function": {
+          "name": "cadcam_solidworks_model",
+          "description": "SOLIDWORKS 2021 三维参数化特征建模：通过 COM Automation / VBA 宏驱动特征树、方程式管理器 (EquationMgr) 生成零件，并导出 STEP 实体或工程图。",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "action": {
+                "type": "string",
+                "enum": [
+                  "model_flange",
+                  "annotate_drawing",
+                  "create_parametric_part",
+                  "execute_vba",
+                  "connect"
+                ],
+                "description": "执行动作：model_flange（带颈法兰盘参数化建模）、annotate_drawing（在工程图上放视图并标注尺寸与尺寸细节）、create_parametric_part（基础参数化建模）或 execute_vba（直接执行VBA代码）"
+              },
+              "annotation": {
+                "type": "object",
+                "description": "仅 action=annotate_drawing 时使用：{'dimensions': [{'target': 'D_outer'}], 'notes': ['一句尺寸细节'], 'gb': {...}}。可标注对象 target 只有这些：D_outer、D_hub、D_bore、D_bolt、t_base、hub_height（轮毂段高=H_total-t_base）、H_total；notes 写尺寸细节（孔数×孔径与分布圆、孔口倒角、材料、标准号）。gb 里按中国机械制图国标给图面细节：scale（如 1:2，GB/T 14690）、center_marks（true，GB/T 4457.4 中心线）、surface_finish（[{'target':..., 'ra':...}]，GB/T 131 表面结构）、tolerances（[{'target':..., 'fit':..., 'min_mm':..., 'max_mm':...}]，GB/T 4458.5 与 GB/T 1800 公差带）、general_tolerance（未注公差等级，GB/T 1804）、projection（第一角画法，GB/T 17451）。等轴测视图不标注尺寸。执行器会把图面真实读回来的尺寸、中心标记数、表面结构符号数与公差类型逐项核对，不靠返回值判定成功。"
+              },
+              "part_name": {
+                "type": "string",
+                "description": "零件名称：请自己起一个能体现你所选标准的名字（例如把标准号与规格写进名字），不要沿用示例占位名"
+              },
+              "dimensions": {
+                "type": "object",
+                "description": "关键几何尺寸字典，必须由你按所选标准自己算出并填入，例如 {'d_outer': <mm>, 'd_inner': <mm>, 'overall_len': <mm>, 'material': '<钢号>'}。本描述不提供任何可照抄的数值。"
+              },
+              "vba_code": {
+                "type": "string",
+                "description": "原生 SolidWorks VBA 宏代码（当 action 为 execute_vba 时必填）"
+              }
+            },
+            "required": [
+              "action"
+            ]
+          }
+        }
+      },
+      {
+        "type": "function",
+        "function": {
+          "name": "cadcam_nx_journal",
+          "description": "Siemens NX 12.0 无头日志运行与参数化建模：调用 NXBIN/run_journal.exe 运行 Python NXOpen 脚本，或构建包含表达式集合的 .prt 零件。",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "action": {
+                "type": "string",
+                "enum": [
+                  "run_journal",
+                  "create_parametric_model"
+                ],
+                "description": "执行动作：run_journal（执行现有脚本）或 create_parametric_model（生成NXOpen参数化脚本）"
+              },
+              "script_path": {
+                "type": "string",
+                "description": "需执行的 Python NXOpen 脚本绝对路径"
+              },
+              "part_name": {
+                "type": "string",
+                "description": "NX 零件名称"
+              },
+              "expressions": {
+                "type": "object",
+                "description": "NX ExpressionCollection 参数表达式字典，数值须由你按所选规格自行给出，如 {'D_OUTER': <mm>, 'LENGTH': <mm>}。本描述不提供任何可照抄的数值。"
+              }
+            },
+            "required": [
+              "action"
+            ]
+          }
+        }
+      },
+      {
+        "type": "function",
+        "function": {
+          "name": "cadcam_autocad_draw",
+          "description": "AutoCAD 2026 二维工程制图与无头 DXF 生成：通过 ActiveX COM 发送 AutoLISP 代码、通过 accoreconsole 执行无头批处理，或利用 ezdxf 生成分层几何/公差图纸。",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "action": {
+                "type": "string",
+                "enum": [
+                  "send_lisp",
+                  "create_dxf",
+                  "run_headless_script"
+                ],
+                "description": "执行动作：send_lisp（向活跃AutoCAD发LISP命令）、create_dxf（无头生成DXF图纸）、run_headless_script（accoreconsole无头执行）"
+              },
+              "code": {
+                "type": "string",
+                "description": "AutoLISP 表达式代码"
+              },
+              "drawing_name": {
+                "type": "string",
+                "description": "图纸名称"
+              },
+              "entities": {
+                "type": "array",
+                "description": "几何图元列表（line, circle, text, dimension 等）"
+              },
+              "script_path": {
+                "type": "string",
+                "description": "AutoLISP/SCR 脚本路径（供 accoreconsole 无头执行）"
+              }
+            },
+            "required": [
+              "action"
+            ]
+          }
+        }
+      },
+      {
+        "type": "function",
+        "function": {
+          "name": "cadcam_cimco_validate",
+          "description": "CIMCO Edit 2026 数控程序校验与外送准备：解析 FANUC Macro B 变量逻辑（#100、#500、WHILE/DO/END 括号配对）、模态 G 代码一致性，并拉起 CIMCO 视窗。",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "action": {
+                "type": "string",
+                "enum": [
+                  "validate_macro",
+                  "launch"
+                ],
+                "description": "执行动作：validate_macro（深度静态语法与逻辑校验）或 launch（在CIMCO Edit中打开NC文件）"
+              },
+              "code": {
+                "type": "string",
+                "description": "G代码 / FANUC Macro B 代码文本"
+              },
+              "nc_file_path": {
+                "type": "string",
+                "description": "待打开的 NC 文件路径"
+              }
+            },
+            "required": [
+              "action"
+            ]
+          }
+        }
+      },
+      {
+        "type": "function",
+        "function": {
+          "name": "cadcam_vericut_simulate",
+          "description": "VERICUT 9.6 机床动力学仿真与防碰撞检验：调用 vericut.bat -b 启动无头批处理仿真，执行 Auto-Diff 过切/欠切检查与干涉报警日志解析。",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "action": {
+                "type": "string",
+                "enum": [
+                  "run_simulation",
+                  "check_collision"
+                ],
+                "description": "执行动作：run_simulation（无头批处理仿真）或 check_collision（解析仿真碰撞日志）"
+              },
+              "project_path": {
+                "type": "string",
+                "description": "VERICUT 项目工程文件 (.vcproject) 路径"
+              },
+              "log_path": {
+                "type": "string",
+                "description": "仿真输出日志路径（用于干涉过切分析）"
+              }
+            },
+            "required": [
+              "action"
+            ]
+          }
+        }
+      },
+      {
+        "type": "function",
+        "function": {
+          "name": "cadcam_sscnc_control",
+          "description": "斯沃数控仿真软件 7.2 (SSCNC) 虚拟加工配置：拉起数控系统、设置 G54 工件坐标系、计算刀具几何补偿与刀尖象限 (T1-T9)，触发循环启动加工走刀。",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "action": {
+                "type": "string",
+                "enum": [
+                  "launch",
+                  "find_window",
+                  "calculate_offsets"
+                ],
+                "description": "执行动作：launch（启动斯沃）、find_window（检测主窗句柄）、calculate_offsets（计算车铣刀偏与象限）"
+              },
+              "tools": {
+                "type": "array",
+                "description": "刀具规格列表，包含 tool_num, type, x, z, r, quadrant"
+              }
+            },
+            "required": [
+              "action"
+            ]
+          }
+        }
+      },
+      {
+        "type": "function",
+        "function": {
+          "name": "cadcam_extreme_chain",
+          "description": "极限极速闭环CAD/CAE/CAM全生命周期引擎：将制造意图按【绘图(ezdxf/GB图层) -> 建模(体积守恒ΔV>0/特征树) -> 仿真(解析FEA应力FOS>=1.5 & G00快速下刀防撞) -> 加工(FANUC Macro B变量与主轴模态)】全流程毫秒级执行(<100ms)；严格践行【未到极限则自愈重试，到了极限则熔断回滚并输出RCFA报告】。",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "wish": {
+                "type": "string",
+                "description": "非标零件或模具制造意图描述，包含材质、主要直径、孔径、长度、特殊形状要求"
+              },
+              "out_root": {
+                "type": "string",
+                "description": "输出工程产物根目录（默认 runs/extreme_chain）"
+              },
+              "max_attempts": {
+                "type": "integer",
+                "description": "熔断尝试预算上限（默认 3 次）"
+              },
+              "tier2_native": {
+                "type": "boolean",
+                "description": "是否在毫秒级自查通过后连带驱动桌面原生六大软件（默认 False，极速毫秒模式）"
+              }
+            },
+            "required": [
+              "wish"
+            ]
+          }
+        }
+      },
+      {
+        "type": "function",
+        "function": {
+          "name": "cadcam_run_full_chain",
+          "description": "六大软件全流水线串行驱动：将制造意图（愿望）按识图→AutoCAD工程图→SOLIDWORKS三维建模→NX多轴CAM→CIMCO宏程序→VERICUT仿真→斯沃加工的全流程执行并汇总实测取证。",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "wish": {
+                "type": "string",
+                "description": "非标零件或模具制造意图描述，包含材质、主要直径、孔径、长度、特殊形状要求"
+              },
+              "out_root": {
+                "type": "string",
+                "description": "输出工程产物根目录（默认 runs/full_chain）"
+              },
+              "skip": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "跳过阶段列表，可选 sw2021, nx12, acad2026, cimco2026, vericut96, sscnc72"
+              }
+            },
+            "required": [
+              "wish"
+            ]
+          }
+        }
+      },
+      {
+        "type": "function",
+        "function": {
+          "name": "cadcam_desktop_gui",
+          "description": "桌面视觉感知与窗口控制：截取桌面或指定工业软件窗口、自动点掉遮挡弹窗，或发送键鼠交互指令。",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "action": {
+                "type": "string",
+                "enum": [
+                  "capture",
+                  "focus",
+                  "click",
+                  "type_text",
+                  "hotkey",
+                  "inspect_window",
+                  "dismiss_dialogs"
+                ],
+                "description": "动作类型"
+              },
+              "software": {
+                "type": "string",
+                "description": "目标软件名称，如 solidworks, autocad, sscnc, cimco, vericut, nx"
+              },
+              "x": {
+                "type": "integer",
+                "description": "屏幕或窗口内横坐标"
+              },
+              "y": {
+                "type": "integer",
+                "description": "屏幕或窗口内纵坐标"
+              },
+              "output_path": {
+                "type": "string",
+                "description": "截图保存路径"
+              },
+              "button": {
+                "type": "string",
+                "enum": [
+                  "left",
+                  "right",
+                  "middle"
+                ],
+                "description": "鼠标键，默认 left"
+              },
+              "double": {
+                "type": "boolean",
+                "description": "是否双击"
+              },
+              "text": {
+                "type": "string",
+                "description": "仅 action=type_text：输入原文，经 CF_UNICODETEXT 剪贴板贴入当前焦点，不经 shell"
+              },
+              "keys": {
+                "type": "string",
+                "description": "仅 action=hotkey：逗号分隔组合键，如 ctrl,s / alt,f4 / f5；解析不到的 token 报错不发送"
+              }
+            },
+            "required": [
+              "action"
+            ]
+          }
+        }
+      },
+      {
+        "type": "function",
+        "function": {
+          "name": "cadcam_visual_inspect",
+          "description": "工业视觉与图纸智能检测：对 VERICUT 仿真过切/欠切频谱、工程图图纸标题栏/视图区域、CNC 机床面板报警与屏幕进行计算机视觉分析。",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task": {
+                "type": "string",
+                "enum": [
+                  "autodiff_inspection",
+                  "blueprint_analysis",
+                  "cnc_screen_perception"
+                ],
+                "description": "视觉分析任务类型：autodiff_inspection（VERICUT色谱过切欠切分析）、blueprint_analysis（工程图纸分块与标题栏识别）、cnc_screen_perception（CNC机床屏幕与报警感知）"
+              },
+              "image_path": {
+                "type": "string",
+                "description": "待分析的图像或截图绝对路径"
+              }
+            },
+            "required": [
+              "task",
+              "image_path"
+            ]
+          }
+        }
+      },
+      {
+        "type": "function",
+        "function": {
+          "name": "cadcam_universal_geometry",
+          "description": "通用机械几何解析与跨平台生成引擎：支持轴类(Shaft)、法兰盘(Flange)、键槽(Keyway)、轴承座/支架(BearingBracket)、钣金折弯(SheetMetal)等多零件族。自动生成GB国标AutoCAD工程图(DXF)、SolidWorks参数化VBA宏、Siemens NX 12 Python Journal、FANUC数控宏程序G代码。",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "wish": {
+                "type": "string",
+                "description": "自然语言机械零件制造或几何需求描述"
+              },
+              "part_type": {
+                "type": "string",
+                "enum": [
+                  "auto",
+                  "shaft",
+                  "flange",
+                  "keyway",
+                  "bearing_bracket",
+                  "sheet_metal"
+                ],
+                "description": "零件家族类型（默认 auto 自动语义推断）"
+              },
+              "output_dir": {
+                "type": "string",
+                "description": "工程产物输出目录路径（默认 runs/universal_cad）"
+              }
+            },
+            "required": [
+              "wish"
+            ]
+          }
+        }
+      },
+      {
+        "type": "function",
+        "function": {
+          "name": "cadcam_cae_stress_analysis",
+          "description": "通用解析结构强度分析与几何闭环自愈引擎：依据受力工况（轴向拉伸/弯曲、法兰内压Lamé厚壁圆筒、平板Timoshenko弯曲、轴承座螺栓剪切拉拔）计算von Mises等效应力与安全系数(FOS)；当 FOS < 1.5 时触发物理尺寸反向闭环自愈，自动重算最小安全壁厚/截面。",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "spec": {
+                "type": "object",
+                "description": "零件几何规格字典（包含 dimensions 或关键截面尺寸）"
+              },
+              "material": {
+                "type": "string",
+                "description": "工程材料名称（如 45号钢, 304不锈钢, Q235, Cr12MoV, 6061铝合金）"
+              },
+              "pressure_mpa": {
+                "type": "number",
+                "description": "承受内压力 (MPa)"
+              },
+              "force_n": {
+                "type": "number",
+                "description": "承受拉伸或剪切载荷力 (N)"
+              },
+              "torque_nm": {
+                "type": "number",
+                "description": "承受扭矩 (N·m)"
+              },
+              "target_fos": {
+                "type": "number",
+                "description": "设计安全系数下限（默认 1.5）"
+              }
+            },
+            "required": [
+              "spec"
+            ]
+          }
+        }
+      },
+      {
+        "type": "function",
+        "function": {
+          "name": "cadcam_sheetmetal_nest",
+          "description": "钣金与下料排样引擎 (2D True-Shape Nesting)：基于最低水平线与Bottom-Left-Fill (BLF)启发式几何算法，支持零件旋转(0/90/180/270度)、间隙(kerf/margin)、板材利用率评估，并输出排样排版DXF工程图。",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "parts": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "width": {
+                      "type": "number"
+                    },
+                    "height": {
+                      "type": "number"
+                    },
+                    "quantity": {
+                      "type": "integer"
+                    },
+                    "allow_rotation": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "width",
+                    "height"
+                  ]
+                },
+                "description": "下料零件清单"
+              },
+              "sheet_width": {
+                "type": "number",
+                "description": "板材基料宽度 (mm，默认 1000.0)"
+              },
+              "sheet_height": {
+                "type": "number",
+                "description": "板材基料高度 (mm，默认 1000.0)"
+              },
+              "margin": {
+                "type": "number",
+                "description": "零件与板边以及零件间割缝安全间隙 (mm，默认 5.0)"
+              },
+              "output_dxf": {
+                "type": "string",
+                "description": "排样图 DXF 输出路径（可选）"
+              }
+            },
+            "required": [
+              "parts"
+            ]
+          }
+        }
+      },
+      {
+        "type": "function",
+        "function": {
+          "name": "cadcam_step_reverse",
+          "description": "STEP 几何逆向测量：直接解析 STEP AP203/AP214 文本，不打开 CAD 即可返回产品树、包围盒、圆柱面直径谱、锥面半角，并按 MANIFOLD_SOLID_BREP 拆出每个实体的面数/母线圆弧/偏心孔系，最后给出 rebuild_recipe（回转母线站位+孔分布）。用于从 .step 反求尺寸后自行决定参数化建模策略。第一步可先用 action=list 找到工作区内的 STEP 文件。",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "action": {
+                "type": "string",
+                "enum": [
+                  "list",
+                  "analyze",
+                  "assembly"
+                ],
+                "description": "list=列出工作区 assets 下可用的 STEP 文件；analyze=对 step_path 做几何逆向测量"
+              },
+              "step_path": {
+                "type": "string",
+                "description": "工作区内 .step 文件的绝对路径（action=analyze 时必填）"
+              },
+              "name_contains": {
+                "type": "string",
+                "description": "action=list 时按文件名子串过滤，可选"
+              },
+              "max_bodies": {
+                "type": "integer",
+                "description": "最多返回的实体明细数，默认 6"
+              },
+              "detail": {
+                "type": "boolean",
+                "description": "true=返回逐孔坐标等完整明细（体积较大）；默认 false 精简"
+              }
+            },
+            "required": []
+          }
+        }
+      },
+      {
+        "type": "function",
+        "function": {
+          "name": "cadcam_assembly_build",
+          "description": "逆向工程后的建模/拼装/出图执行器。model=按 STEP 母线剖面与孔系参数化重建可编辑回转件 .SLDPRT；assemble=导入 STEP 总成、按 4 个实例位姿自动拼装并另存 .SLDASM（几何零损失，最省特征）；drawing=用国标 gb_a3 模板生成第一角三视图+等轴测 .SLDDRW；full=一次依次完成三者并返回每个文件的体积/组件数/视图证据。选择哪个动作由你自己决定。",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "action": {
+                "type": "string",
+                "enum": [
+                  "model",
+                  "assemble",
+                  "drawing",
+                  "full"
+                ],
+                "description": "model / assemble / drawing / full（默认 full 一次交付三件）"
+              },
+              "step_path": {
+                "type": "string",
+                "description": "工作区内 STEP 绝对路径；留空则用 assets/wheel_mold_P0.step"
+              },
+              "out_dir": {
+                "type": "string",
+                "description": "产物目录（必须位于工作区内）；留空用 runs/virtu_assembly"
+              }
+            },
+            "required": []
+          }
+        }
+      },
+      {
+        "type": "function",
+        "function": {
+          "name": "cadcam_feature_ops",
+          "description": "原子特征执行器：不提供任何一键策略，只按你自己给出的方案逐步执行。action=measure 返回 STEP 原始测量数据（母线闭合点列、直径谱、孔系、包围盒）；action=execute_plan 严格按 plan.ops 顺序执行，每个 op 后立即读质量属性形成证据链，不认识或缺参数的 op 如实报错、绝不自动补齐。",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "action": {
+                "type": "string",
+                "enum": [
+                  "measure",
+                  "execute_plan",
+                  "single_case"
+                ],
+                "description": "measure=读测量数据；execute_plan=按你的方案执行"
+              },
+              "plan": {
+                "type": "object",
+                "description": "建模方案。格式 {'ops':[ ... ]}。可用 op 按你的方法自行排序：new_part；sketch_profile(source=step_meridian 或 points=[[x,r],...], plane)；revolve(angle_deg)；sketch_holes(pcd_mm,hole_dia_mm,count,angles_deg,plane)；cut(type=through_all)；save_part(name)；import_assembly(step_path)；save_assembly(name)；drawing(template,first_angle,isometric,model_path,name)；verify。特征顺序、参数、是否使用某步骤全由你决定。",
+                "properties": {
+                  "ops": {
+                    "type": "array",
+                    "items": {
+                      "type": "object"
+                    }
+                  },
+                  "method_reason": {
+                    "type": "string",
+                    "description": "你选择这套特征顺序与参数的理由"
+                  },
+                  "expected_volume_mm3": {
+                    "type": "number",
+                    "description": "你预期最终体积，用于与实测对比"
+                  }
+                }
+              },
+              "step_path": {
+                "type": "string",
+                "description": "工作区内 STEP 绝对路径"
+              },
+              "out_dir": {
+                "type": "string",
+                "description": "产物目录（工作区内）"
+              }
+            },
+            "required": []
+          }
+        }
+      }
+    ],
+    "tools_dimensions": [
+      "toolcall"
+    ]
   }
 }

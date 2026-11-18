@@ -1,0 +1,156 @@
+{
+  "schema_version": "1.0",
+  "source_facts": "D:\\Virtu模型\\data\\sft\\six_software_real_assets\\extracted_facts.json",
+  "source_facts_sha256": "e815aa2875fe38081f7f93710f6829374c3d07c94926a880789bdd4d517c9659",
+  "seed": 20261114,
+  "basis": "parser_verified",
+  "outputs": {
+    "pure_sft": {
+      "path": "D:\\Virtu模型\\data\\sft\\six_software_real_assets\\six_software_pure_sft.jsonl",
+      "count": 630,
+      "sha256": "a62238779f6edc4176765435f0c43db825f2e532a8cf05898ed090800ce01576"
+    },
+    "train_mix": {
+      "path": "D:\\Virtu模型\\data\\sft\\six_software_real_assets\\six_software_train_mix.jsonl",
+      "count": 850,
+      "sha256": "5f5c436bfb24094832514a2644a2f201347c6097eeca56816be67bdfd84f7317",
+      "replay_count": 220
+    },
+    "holdout": {
+      "path": "D:\\Virtu模型\\data\\sft\\six_software_real_assets\\six_software_holdout.jsonl",
+      "count": 101,
+      "sha256": "cbb59887414c470e9e09b99df5b82eb8653c8f00b13f600e2ce9b98e96128004"
+    },
+    "dpo": {
+      "path": "D:\\Virtu模型\\data\\sft\\six_software_real_assets\\six_software_dpo.jsonl",
+      "count": 90,
+      "sha256": "032896c5ca1c420915355fd506db6943ea9afa7fa4d472826cf473d204644854"
+    },
+    "kb_records": {
+      "path": "D:\\Virtu模型\\data\\sft\\six_software_real_assets\\six_software_kb_records.jsonl",
+      "count": 155,
+      "sha256": "a9e90e192dca7726070cf1c6f20fc58e695f24fa0b4d91fc617af98117d5f0b7"
+    },
+    "cloud_sft": {
+      "path": "D:\\Virtu模型\\cloud_train_pack\\dataset\\six_software_real_assets_sft.jsonl",
+      "count": 850,
+      "sha256": "5f5c436bfb24094832514a2644a2f201347c6097eeca56816be67bdfd84f7317"
+    },
+    "cloud_dpo": {
+      "path": "D:\\Virtu模型\\cloud_train_pack\\dataset\\six_software_real_assets_dpo.jsonl",
+      "count": 90,
+      "sha256": "032896c5ca1c420915355fd506db6943ea9afa7fa4d472826cf473d204644854"
+    },
+    "cloud_ledger": {
+      "path": "D:\\Virtu模型\\cloud_train_pack\\dataset\\six_software_real_assets_sft_ledger.json"
+    }
+  },
+  "cloud_pack": {
+    "solidworks": {
+      "train_count": 130,
+      "train_sha256": "a9242b42a38b951a2e674add4e140e228b516a9cfee4f6fb6fd7ac127271bb62",
+      "holdout_count": 23,
+      "holdout_sha256": "5c737dde5772c9b43fe33e023bb71cec3c8c6ba64a55c164a7508c73366bc4ee"
+    },
+    "nx": {
+      "train_count": 169,
+      "train_sha256": "c09e2ccafc7de2da9b14dbe84c3552afc6063e98ee4089e6a273ae61bdda2bc9",
+      "holdout_count": 19,
+      "holdout_sha256": "1bdd62fbc17bc1447b81d7547fd25d594d26152e2002d04b58a04d467d51f096"
+    },
+    "autocad": {
+      "train_count": 111,
+      "train_sha256": "5fae2a0125cc71ef68ae7f4b87dbf07f9f18292247d46d4ccddfa4a408425952",
+      "holdout_count": 28,
+      "holdout_sha256": "4874e49e6d7435c9d5bc1923dd406e5ad0487c8d8765cc3baf8d1615c0707aa2"
+    },
+    "cimco": {
+      "train_count": 90,
+      "train_sha256": "fdd92043a6b47fada7a4adde02f50936b3c467bb8ec1a30f49de3d63f6e8c7ba",
+      "holdout_count": 13,
+      "holdout_sha256": "3a267345ef2a9f754d24829c59b60792a94f34ca66e263f4a6212303865e6cbf"
+    },
+    "vericut": {
+      "train_count": 64,
+      "train_sha256": "9d925f7eaa9ef7eacb8f170c30f8186323a05c5dbfdf1fffbbb4207eea0862c7",
+      "holdout_count": 10,
+      "holdout_sha256": "d3b60d1817c4f2c9d5c56604f35318a54b89f10777534733ae4c1f9264043e4c"
+    },
+    "sscnc": {
+      "train_count": 66,
+      "train_sha256": "a3a92ae128fedc04c576298c06211f3ac62054c9fb7d7db5badd2e6206a1d67b",
+      "holdout_count": 13,
+      "holdout_sha256": "c62169ac36a08d750ce2b4493e0ad7c00c638e2778a16666c621e86597380f3a"
+    }
+  },
+  "pure_by_software": {
+    "solidworks": 130,
+    "nx": 169,
+    "autocad": 111,
+    "cimco": 90,
+    "vericut": 64,
+    "sscnc": 66
+  },
+  "pure_by_task": {
+    "sw_mass_unit_audit": 19,
+    "sw_custom_props": 45,
+    "sw_asm_refs": 30,
+    "sw_drw_dispatch_boundary": 8,
+    "sw_step_assembly": 1,
+    "sw_cae_live": 16,
+    "sw_sheetmetal_nest_live": 4,
+    "nx_prt_audit": 32,
+    "nx_cam_process_plan": 30,
+    "nx_parametric_journal": 107,
+    "autocad_dxf_live": 16,
+    "autocad_ocr_blueprint": 93,
+    "autocad_lisp_boundary": 1,
+    "cimco_macro_live": 72,
+    "cimco_fault_diag": 18,
+    "vericut_headless_boundary": 32,
+    "vericut_stock_autodiff": 16,
+    "vericut_log_missing_boundary": 16,
+    "sscnc_offsets_live": 56,
+    "sscnc_panel_boundary": 10,
+    "boundary_enc4": 1,
+    "boundary_masquerade_jpg": 1,
+    "boundary_surface_only_iges": 6
+  },
+  "holdout_by_software": {
+    "solidworks": 30,
+    "nx": 19,
+    "autocad": 15,
+    "cimco": 13,
+    "vericut": 11,
+    "sscnc": 13
+  },
+  "holdout_by_dimension": {
+    "solidworks_mass_audit": 8,
+    "solidworks_assembly_refs": 8,
+    "runtime_toolcall": 43,
+    "boundary": 6,
+    "nx_prt_audit": 9,
+    "autocad_ocr_blueprint": 10,
+    "cimco_macro_generation": 6,
+    "vericut_stock_envelope": 5,
+    "sscnc_offset_logic": 6
+  },
+  "dpo_by_category": {
+    "enc4_opaque_sw_refusal": 1,
+    "surface_only_iges_volume": 14,
+    "corrupt_jpg_masquerading": 1,
+    "cae_unresolved_material": 10,
+    "vericut_headless_honesty": 16,
+    "cimco_m05_g49_safety": 16,
+    "sscnc_not_running_honesty": 16,
+    "nx_unit_and_path_sandbox": 16
+  },
+  "holdout_gold_self_pass_rate": 1.0,
+  "leakage_audit": {
+    "train_unique_source_shas": 370,
+    "holdout_unique_source_shas": 79,
+    "sha_overlap": 0,
+    "holdout_ngram_leaks": 0,
+    "benchmark_v3_hard_leaks": 0
+  }
+}

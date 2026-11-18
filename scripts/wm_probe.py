@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env python3
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """wm_probe.py — 世界模型能力探针（复用仓库生成器 + 判分口径，轻量快速版）
 
@@ -12,38 +12,27 @@
 from __future__ import annotations
 import os, sys, json, time, random, argparse, urllib.request
 
-ROOT = r"D:\Virtu模型"
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(ROOT, "scripts"))
 import build_worldmodel_sft as W  # noqa: E402
 import wm_contract as C           # noqa: E402
 from guard_hooks import apply_guard  # noqa: E402
+from eval_worldmodel import GEN_BY_FAMILY as GEN, judge as _official_judge  # noqa: E402
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import wm_schema as S  # noqa: E402
 import wm_gate as G  # noqa: E402
 import wm_eval as E  # noqa: E402
 
-GEN = {
-    "removal": W.gen_removal_mrr,
-    "roughness": W.gen_roughness,
-    "fea_fos": W.gen_fea_fos,
-    "collision": W.gen_collision_gcode,
-    "tolerance": W.gen_tolerance,
-    "geom_delta": W.gen_geometric_delta,
-    "mass_props": W.gen_mass_props,
-    "invalid": W.gen_invalid,
-}
-NUM_KEYS = {
-    "removal": ["material_removed_mm3", "mrr_mm3_per_min", "resulting_mass_g", "delta_volume_mm3"],
-    "roughness": ["surface_roughness_ra_um"],
-    "fea_fos": ["safety_factor"],
-    "collision": [],
-    "tolerance": ["closed_loop_worstcase_halfwidth_mm", "closed_loop_rss_halfwidth_mm", "fit_clearance_mm"],
-    "geom_delta": ["delta_volume_mm3", "after_volume_mm3"],
-    "mass_props": ["volume_mm3", "mass_g"],
-    "invalid": [],
-}
 REL_TOL = 0.08
-GATES = ("fos_gate", "volume_conservation", "autodiff", "tolerance_pass")
+
+
+def judge(fam, exp, pred):
+    # 判分口径唯一真源是 eval_worldmodel.judge（词表/闸门/文本/布尔全部从
+    # wm_contract.KEY_SCHEMA 派生）。本文件旧版私持一份 v1 NUM_KEYS + 裸相等
+    # 闸门比对：collision 三个 Z 值不判、长短信任字面互判失败、文本/布尔全漏——
+    # 与官方判分器系统性偏离，探针分数不可比（2026-11-08 废除第二把尺子）。
+    ok, _fmt, miss = _official_judge(fam, exp, pred)
+    return ok, ";".join(miss)
 
 
 def call(model, prompt, system, num_gpu, num_predict, host="127.0.0.1:11434", fmt=None):
@@ -86,37 +75,6 @@ def extract_json(text):
         except Exception:
             continue
     return None
-
-
-def judge(fam, exp, pred):
-    if pred is None:
-        return False, "parse_fail"
-    if fam == "invalid":
-        ok = (pred.get("world_state") is None and pred.get("invalid") is True)
-        return ok, "" if ok else "invalid_shape"
-    pws = pred.get("world_state")
-    if not isinstance(pws, dict):
-        return False, "no_world_state"
-    ews = exp["world_state"]
-    bad = []
-    for k in NUM_KEYS[fam]:
-        if k not in ews or k not in pws:
-            bad.append(f"miss:{k}")
-            continue
-        try:
-            ev, pv = float(ews[k]), float(pws[k])
-        except Exception:
-            bad.append(f"nonnum:{k}")
-            continue
-        if abs(ev) < 1e-9:
-            if abs(pv) > 1e-6:
-                bad.append(f"val:{k}")
-        elif abs(pv - ev) / abs(ev) > REL_TOL:
-            bad.append(f"val:{k}({pv}vs{ev})")
-    for g in GATES:
-        if g in ews and g in pws and ews[g] != pws[g]:
-            bad.append(f"gate:{g}")
-    return (len(bad) == 0), ";".join(bad)
 
 
 def main():
@@ -178,6 +136,7 @@ def main():
             time.sleep(3)
             raw, el, ec = call(args.model, u, system, args.num_gpu, args.num_predict, fmt=fmt, )
         pred = extract_json(raw)
+        g = None
         try:
             g = apply_guard(raw, prompt=u, scenario=None, tol_rel=REL_TOL)
             if g["action"] in ("rejected", "escalate"):
@@ -185,9 +144,14 @@ def main():
         except Exception:
             pass
         eval_fixes = []
-        if args.pipeline == "strengthened" and pred is not None:
-            pred, eval_fixes = E.repair(pred)
-            pred = G.normalize_pred(pred)
+        if args.pipeline == "strengthened":
+            if g and g.get("action") in ("accept", "corrected") and isinstance(g.get("corrected"), dict):
+                corr = g["corrected"]
+                pred = corr if ("world_state" in corr or "invalid" in corr) else {"world_state": corr}
+                pred = G.normalize_pred(pred, u)
+            elif pred is not None:
+                pred, eval_fixes = E.repair(pred)
+                pred = G.normalize_pred(pred, u)
         ok, why = judge(fam, exp, pred)
         stat[fam]["n"] += 1
         stat[fam]["pass"] += int(ok)

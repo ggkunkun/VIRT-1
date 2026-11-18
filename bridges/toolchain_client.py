@@ -173,9 +173,11 @@ class ChainClient:
 class CADCAMToolchainClient:
     """Unified Client entry point for the 6-Software Industrial Toolchain."""
 
-    def __init__(self, base_url: Optional[str] = None, timeout: int = 300):
+    def __init__(self, base_url: Optional[str] = None, timeout: int = 300,
+                 token: Optional[str] = None):
         self.base_url = base_url.rstrip("/") if base_url else None
         self.timeout = timeout
+        self.token = token
         self._orchestrator = None if self.base_url else SixSoftwareOrchestrator()
 
         # Software sub-clients
@@ -204,6 +206,17 @@ class CADCAMToolchainClient:
                 "parameters": params,
             }
             return self._http_post("/v1/cadcam/dispatch", payload)
+        # 进程内 SDK 不能是免闸门的旁路：与 REST /v1/cadcam/dispatch、CLI dispatch
+        # 用同一张软件→工具映射表和同一道审批门。
+        from bridges.software_registry import DISPATCH_SOFTWARE_TOOL
+        from bridges.tool_calling_specs import approval_gate
+
+        tool = DISPATCH_SOFTWARE_TOOL.get(str(software).strip().lower(), "cadcam_dispatch")
+        gate_payload = dict(params)
+        gate_payload.update({"action": action, "software": software})
+        blocked = approval_gate(tool, gate_payload)
+        if blocked is not None:
+            return blocked
         return self._orchestrator.dispatch(software, action, params)
 
     def dispatch_gui(self, action: str, params: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
@@ -212,32 +225,47 @@ class CADCAMToolchainClient:
         if self.base_url:
             payload = {"action": action, **params}
             return self._http_post("/v1/cadcam/gui", payload)
-        from bridges.desktop_controller import DesktopController
-        ctl = DesktopController()
-        if action == "capture":
-            return ctl.capture(output_path=params.get("output_path"), software=params.get("software"))
-        elif action == "focus":
-            return ctl.focus(params.get("software", ""))
-        elif action == "click":
-            return ctl.click(params.get("x", 0), params.get("y", 0), button=params.get("button", "left"), double=params.get("double", False))
-        elif action == "type":
-            return ctl.type_text(params.get("text", ""))
-        elif action == "hotkey":
-            return ctl.hotkey(params.get("keys", ""))
-        elif action in ("dismiss", "dismiss_dialogs"):
-            return ctl.dismiss_all_dialogs()
-        return {"status": "error", "message": f"Unknown GUI action: {action}"}
+        # 走工具层，让 bridges/desktop_gate.py 的 OPT_IN / 焦点绑定 / HMAC 审计
+        # 对进程内 SDK 同样生效。此前这里直接 new DesktopController() 并点击，
+        # 是全仓唯一完全绕过桌面闸门的入口。
+        from bridges.tool_calling_specs import execute_tool_call
+
+        return execute_tool_call("cadcam_desktop_gui", {"action": action, **params})
 
     def run_chain(self, wish: str, out_root: Optional[str] = None, skip: tuple = ()) -> Dict[str, Any]:
         """Execute complete CAD/CAM manufacturing chain pipeline."""
         if self.base_url:
             payload = {"wish": wish, "out_root": out_root, "skip": list(skip)}
             return self._http_post("/v1/chain/run", payload)
+        from bridges.tool_calling_specs import approval_gate
+
+        blocked = approval_gate(
+            "cadcam_run_full_chain",
+            {"wish": wish, "out_root": out_root, "skip": list(skip)},
+        )
+        if blocked is not None:
+            return blocked
         return self._orchestrator.run_full_chain(wish, out_root=out_root, skip=skip)
+
+    def _auth_headers(self) -> Dict[str, str]:
+        headers: Dict[str, str] = {"User-Agent": "CADCAMToolchainClient"}
+        tok = self.token
+        if not tok:
+            tok = os.environ.get("VIRTU_REST_TOKEN", "").strip()
+        if not tok:
+            try:
+                from bridges.cadcam_rest_server import load_or_create_token
+                tok = load_or_create_token()[0]
+            except Exception:
+                tok = ""
+        if tok:
+            headers["Authorization"] = f"Bearer {tok}"
+            headers["X-Virtu-Token"] = tok
+        return headers
 
     def _http_get(self, endpoint: str) -> Dict[str, Any]:
         url = f"{self.base_url}{endpoint}"
-        req = urllib.request.Request(url, headers={"User-Agent": "CADCAMToolchainClient"})
+        req = urllib.request.Request(url, headers=self._auth_headers())
         try:
             with urllib.request.urlopen(req, timeout=self.timeout) as resp:
                 return json.loads(resp.read().decode("utf-8"))
@@ -253,10 +281,12 @@ class CADCAMToolchainClient:
     def _http_post(self, endpoint: str, data: Dict[str, Any]) -> Dict[str, Any]:
         url = f"{self.base_url}{endpoint}"
         raw = json.dumps(data, ensure_ascii=False).encode("utf-8")
+        headers = self._auth_headers()
+        headers["Content-Type"] = "application/json; charset=utf-8"
         req = urllib.request.Request(
             url,
             data=raw,
-            headers={"Content-Type": "application/json; charset=utf-8", "User-Agent": "CADCAMToolchainClient"}
+            headers=headers
         )
         try:
             with urllib.request.urlopen(req, timeout=self.timeout) as resp:

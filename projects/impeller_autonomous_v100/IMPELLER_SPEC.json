@@ -1,0 +1,43 @@
+{
+  "project_name": "VIRTU-IMPELLER-V100-AUTONOMOUS",
+  "part_type": "Centrifugal Semi-Open Impeller (半开式离心叶轮)",
+  "material": {
+    "grade": "AL 7075-T6 (航空超硬铝合金)",
+    "density_kg_m3": 2810.0,
+    "yield_strength_mpa": 503.0,
+    "tensile_strength_mpa": 572.0,
+    "elastic_modulus_gpa": 71.7,
+    "poisson_ratio": 0.33
+  },
+  "geometric_parameters": {
+    "tip_diameter_D2_mm": 120.0,
+    "hub_inlet_diameter_D1_mm": 40.0,
+    "bore_diameter_d_mm": 16.0,
+    "bore_tolerance": "H7 (+0.018/0)",
+    "keyway": {
+      "width_b_mm": 5.0,
+      "depth_t1_mm": 2.3,
+      "standard": "GB/T 1095-2003"
+    },
+    "backplate_thickness_mm": 10.0,
+    "total_axial_height_mm": 45.0,
+    "blade_count_Z": 6,
+    "blade_angular_pitch_deg": 60.0,
+    "blade_tip_width_b2_mm": 15.0,
+    "blade_thickness_mm": 2.5,
+    "blade_backward_lean_angle_deg": 35.0,
+    "fillet_radius_root_mm": 3.0
+  },
+  "operating_conditions": {
+    "rated_speed_rpm": 18000,
+    "angular_velocity_rad_s": 1884.96,
+    "medium": "Air",
+    "required_safety_factor_fos": 1.5,
+    "allowable_stress_von_mises_mpa": 335.33
+  },
+  "manufacturing_process": {
+    "turning_operations": "CNC Lathe turning for backplate disc, hub contour, bore phi16 H7 and face finish",
+    "milling_operations": "Multi-axis CNC milling for blade channel roughing, blade contour finishing, and fillet blend",
+    "simulation_target": "Vericut 9.6 virtual NC verification and G00 plunge collision detection"
+  }
+}

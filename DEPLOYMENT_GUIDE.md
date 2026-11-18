@@ -78,14 +78,17 @@ srun --nodes=16 --ntasks-per-node=8 \
 
 ## 4. 单卡商用推理服务生产部署
 
-### 4.1 生产服务后台常驻启动 (Systemd / Uvicorn)
+### 4.1 本机服务启动与凭据
 ```bash
 python scripts/run_server.py
 ```
+默认只监听 `127.0.0.1:8080`。首次启动时会在当前用户私有数据目录中生成独立的 Serving Bearer token，并设置受限文件权限。也可通过 `VIRTU_SERVING_TOKEN` 注入至少 32 个非空白字符的强随机 token；不要将 token 写入仓库、命令历史或日志。
 
-### 4.2 性能核验脚本 (A100 SXM4 200ms SLO 验证)
+### 4.2 本机认证请求
 ```bash
+TOKEN=$(cat "$HOME/.local/share/Virtu/ServiceAuth/serving/bearer_token")
 curl -X POST http://localhost:8080/v1/chat/completions \
+  -H "Authorization: Bearer $TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "model": "Virtu-Omni-10B",

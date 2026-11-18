@@ -14,6 +14,7 @@ import io
 import json
 import os
 import sys
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -91,6 +92,46 @@ class TestSecurityAuditIntegration(unittest.TestCase):
         self.assertFalse(res_cmd["passed"])
         self.assertTrue(any("shell metacharacters" in v.lower() for v in res_cmd["violations"]))
 
+    def test_nested_tool_arguments_are_recursively_audited(self):
+        safe_nested = {
+            "payload": {
+                "geometry": {"d_outer": 80.0, "d_inner": 20.0},
+                "outputs": [{"file_path": "exports/sleeve.vbs"}],
+            }
+        }
+        self.assertTrue(self.auditor.audit_tool_arguments("cad.parse_wish_intent", safe_nested)["passed"])
+        safe_absolute = {
+            "payload": {"output_path": str(WORKSPACE_DIR / "exports" / "sleeve.vbs")}
+        }
+        self.assertTrue(self.auditor.audit_tool_arguments("cad.parse_wish_intent", safe_absolute)["passed"])
+
+        bad_cases = (
+            ({"payload": {"outputs": [{"file_path": "../../windows/system32/macro.vbs"}]}},
+             "path traversal"),
+            ({"payload": {"outputs": [{"output_path": "C:/Windows/System32/macro.vbs"}]}},
+             "path outside authorized roots"),
+            ({"options": [{"command": "echo safe && rm -rf /"}]},
+             "shell metacharacters"),
+            ({"part": {"geometry": {"d_outer": 40.0, "d_inner": 39.0}}},
+             "wall thickness"),
+        )
+        for arguments, expected in bad_cases:
+            with self.subTest(expected=expected):
+                result = self.auditor.audit_tool_arguments("cad.parse_wish_intent", arguments)
+                self.assertFalse(result["passed"])
+                self.assertTrue(any(expected in violation.lower()
+                                    for violation in result["violations"]))
+
+        too_deep = {}
+        cursor = too_deep
+        for _ in range(66):
+            cursor["nested"] = {}
+            cursor = cursor["nested"]
+        depth_result = self.auditor.audit_tool_arguments("cad.parse_wish_intent", too_deep)
+        self.assertFalse(depth_result["passed"])
+        self.assertTrue(any("nesting depth" in violation.lower()
+                            for violation in depth_result["violations"]))
+
     def test_memory_poisoning_defense(self):
         """Verify memory write validation and poisoning prevention."""
         # Clean memory entry
@@ -119,7 +160,9 @@ class TestSecurityAuditIntegration(unittest.TestCase):
         audit_res = self.auditor.run_full_audit()
         self.assertGreaterEqual(audit_res["summary"]["total_findings"], 1)
 
-        findings_path = WORKSPACE_DIR / "benchmarks" / "test_findings_export.json"
+        # 放系统 TEMP：仓库内的测试产物在清理时会被宿主 safe-delete 垫片
+        # 的批量删除阈值拦成 SystemExit，导致全仓连跑假红。
+        findings_path = Path(tempfile.gettempdir()) / "virtu_test_findings_export.json"
         self.auditor.export_findings(findings_path)
         self.assertTrue(findings_path.exists())
 
@@ -132,18 +175,46 @@ class TestSecurityAuditIntegration(unittest.TestCase):
             findings_path.unlink()
 
     def test_agent_team_security_integration(self):
-        """Verify AuditorAndSandboxAgent performs defensive security auditing."""
+        """Verify AuditorAndSandboxAgent performs defensive security auditing.
+
+        夹具必须是**语法完整**的 VBA / Macro B：沙箱校验器现在会真的跑
+        `verify_solidworks_vba` / `verify_cimco_macro_b`（缺 End Sub、缺
+        ForceRebuild3、G00 负向扎刀都会判负），用残缺片段会让本用例测成
+        "代码不完整"，而不是它想测的"安全审计门是否生效"。
+        """
         auditor_agent = AuditorAndSandboxAgent()
+        valid_vba = (
+            "Sub main()\n"
+            "    Dim swApp As SldWorks.SldWorks\n"
+            "    Dim swModel As SldWorks.ModelDoc2\n"
+            "    Set swModel = swApp.ActiveDoc\n"
+            "    Dim swEqnMgr As Object\n"
+            "    Set swEqnMgr = swModel.GetEquationMgr\n"
+            '    swEqnMgr.Add -1, """D"" = 80.0"\n'
+            "    swEqnMgr.EvaluateAll\n"
+            "    swModel.ForceRebuild3 True\n"
+            "End Sub\n"
+        )
+        valid_macro = (
+            "O0001\n"
+            "G21 G40 G28 U0.0 W0.0\n"
+            "G97 S800 M03\n"
+            "G00 X50.0 Z5.0\n"
+            "G01 Z-2.0 F0.2\n"
+            "G71 U1.0 R0.5\n"
+            "M05\n"
+            "M30\n"
+        )
         context = {
             "user_prompt": "外径80mm，内孔20mm，长度50mm套筒",
             "architecture": {
                 "parsed_spec": {"d_outer": 80.0, "d_inner": 20.0, "overall_len": 50.0}
             },
-            "modeling": {"solidworks_vba": "' Test VBA"},
-            "machining": {"macro_b_code": "( Test Macro )"},
+            "modeling": {"solidworks_vba": valid_vba},
+            "machining": {"macro_b_code": valid_macro},
         }
         res = auditor_agent.run(context)
-        self.assertEqual(res["status"], "COMPLETED")
+        self.assertEqual(res["status"], "COMPLETED", res.get("summary"))
         self.assertIn("security_audit", res)
         self.assertTrue(res["security_audit"]["passed"])
         self.assertTrue(res["security_audit"]["prompt_security"]["passed"])

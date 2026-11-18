@@ -1,0 +1,44 @@
+{
+  "records": 2,
+  "certifier": "closed_impeller_proctor.ruler (non-model)",
+  "per_record": [
+    {
+      "walk": "几何定义域修复：D1t>D2/bore=D1h → 恢复直径序",
+      "bad_violations": 5,
+      "corrected_pass": true,
+      "corrected_values": {
+        "u2_m_s": 502.655,
+        "slip_sigma": 0.8328,
+        "dh0_kJ_kg": 187.084,
+        "pressure_ratio_recomputed": 4.3006,
+        "cm2_m_s": 119.55,
+        "sigma_eq_MPa": 560.77,
+        "FOS_recomputed": 1.5693,
+        "ca1_m_s": 170.38,
+        "M_rel_tip": 1.1111,
+        "Ns": 0.8441,
+        "T02_K": 474.4
+      }
+    },
+    {
+      "walk": "叶尖速/流道修复：编造u2+b2发散 → 提转速放宽流道据实复算",
+      "bad_violations": 4,
+      "corrected_pass": true,
+      "corrected_values": {
+        "u2_m_s": 502.655,
+        "slip_sigma": 0.8328,
+        "dh0_kJ_kg": 187.084,
+        "pressure_ratio_recomputed": 4.3006,
+        "cm2_m_s": 119.55,
+        "sigma_eq_MPa": 560.77,
+        "FOS_recomputed": 1.5693,
+        "ca1_m_s": 170.38,
+        "M_rel_tip": 1.1111,
+        "Ns": 0.8441,
+        "T02_K": 474.4
+      }
+    }
+  ],
+  "masking_leaks": [],
+  "rendered_chars": 3277
+}

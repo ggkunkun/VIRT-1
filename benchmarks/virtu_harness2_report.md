@@ -4,7 +4,7 @@
 **引擎**: Google Research Harness 2 (Recursive Agent Harnessing for an Open World, arXiv:2610.14224)  
 **递归阶数 (Budget)**: `k = 1` | **递归模式**: `parallel`  
 **总任务数**: 2 | **通过数**: 2 | **综合达标率**: **100.0%**  
-**总耗时**: 97.74s  
+**总耗时**: 192.39s  
 
 ---
 

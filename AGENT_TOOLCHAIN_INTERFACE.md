@@ -240,6 +240,10 @@ python cadcam_cli.py gui dismiss-dialogs
 1. **双通道容错解析 (Double-Layer Fallback)**：
    - 优先通过 COM 接口读取桌面快捷方式的目标参数与工作目录；
    - 遇 MSI 安装包跳转时，自动回退到已验证的物理主程序路径，确保无论用户是否重命名桌面图标均能命中；
+   - **入口形态容错**：桌面入口可以是 `.lnk`，也可以被用户换成直连 `.exe`（本机 NX 即如此）。
+     `software_registry.resolve_entry(key)` 按「用户桌面 → 公共桌面」×「同名 `.lnk` → 同名 `.exe`」
+     的顺序探测，取第一个真实存在的入口；`resolve_shortcut()` 对 `.exe`/`.bat`/`.cmd` 直接视自身为目标。
+     因此入口形式变化不会让 `is_ready` 误判为缺失。
 2. **弹窗自愈与防卡死守护 (Modal Dialog Dismissal Guard)**：
    - 工业软件容易出现“许可提示”、“每日一贴”、“文件恢复警告”等模态遮挡弹窗；
    - 工具链提供 `dismiss_dialogs()` 机制，自动检索当前前景顶层对话框并发送 ESC / Enter 快速消除；
@@ -249,4 +253,18 @@ python cadcam_cli.py gui dismiss-dialogs
    - VERICUT 支持 `vericut.bat -b` 后台静默仿真与日志提取；
    - 大幅减少拉起完整 GUI 带来的资源争抢与渲染延迟；
 4. **统一规范化 JSON 响应契约**：
-   所有接口统一返回 `status` ("success" | "error" | "warning")、`data`、`execution_time_ms` 及详细错误诊断，方便上层智能体自动解析和自愈。
+   所有接入通道（SDK / REST / MCP / Function Calling / CLI）的返回值统一带信封字段：
+
+   | 字段 | 说明 |
+   | :--- | :--- |
+   | `status` | `success` / `ok`（成功）、`error`（执行错误）、`blocked`（闸门拦截）、`timeout`（等待超时）、`warning`（部分成功）。缺省时由信封层按"无 `error` 即 `success`"补齐，不做美化。 |
+   | `data` | 业务字段聚合（`is_valid` / `variables` / `ready_count` / `software` ...）。 |
+   | `execution_time_ms` | 本次派发端到端耗时（毫秒，浮点）。 |
+   | `verdict_code` | 仅在拦截/失败时出现：`UNKNOWN_TOOL` / `PATH_TRAVERSAL_BLOCKED` / `SECURITY_AUDIT_VIOLATION` / `TOOL_APPROVAL_REQUIRED` / `PAYLOAD_TOO_LARGE` / `TOOL_TIMEOUT` / `TOOL_EXECUTION_ERROR`。 |
+
+   兼容性：历史扁平业务字段（`is_valid`、`variables`、`ready_count` ...）仍保留在顶层，
+   老调用方无需修改。实现位置：`bridges/tool_calling_specs.py::execute_tool_call`。
+
+   **诊断语义必须准确**：拼错的工具名返回 `UNKNOWN_TOOL`，不会退化成
+   `TOOL_APPROVAL_REQUIRED`——「没有这个工具」与「需要授权」是两件事，
+   后者会让人误以为授权即可用。

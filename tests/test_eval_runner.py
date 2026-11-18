@@ -55,7 +55,9 @@ class EvalRunnerTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temp:
             case_dir = self.make_case_dir(Path(temp))
             out_dir = Path(temp) / "run"
-            runner.run(str(case_dir), {"kind": "http_openai", "model_id": "fake"},
+            runner.run(str(case_dir), {"kind": "http_openai", "model_id": "fake",
+                            "tools": [{"type": "function",
+                                       "function": {"name": "cadcam_test"}}]},
                        str(out_dir), dims=["toolcall"], dry=True)
             self.assertFalse((out_dir / "raw.jsonl").exists())
             self.assertFalse((out_dir / "manifest.json").exists())
@@ -65,7 +67,9 @@ class EvalRunnerTests(unittest.TestCase):
                                                           "arguments": "{}"}}])
             with patch.object(runner, "build_arm", return_value=arm), \
                     patch.object(runner, "git_sha", return_value="abc123"):
-                raw = runner.run(str(case_dir), {"kind": "http_openai", "model_id": "fake"},
+                raw = runner.run(str(case_dir), {"kind": "http_openai", "model_id": "fake",
+                            "tools": [{"type": "function",
+                                       "function": {"name": "cadcam_test"}}]},
                                  str(out_dir), dims=["toolcall"])
             lines = Path(raw).read_text(encoding="utf-8").splitlines()
             self.assertEqual(len(lines), 1)
@@ -81,10 +85,14 @@ class EvalRunnerTests(unittest.TestCase):
             arm = _Arm(calls)
             with patch.object(runner, "build_arm", return_value=arm), \
                     patch.object(runner, "git_sha", return_value="abc123"):
-                raw = runner.run(str(case_dir), {"kind": "http_openai", "model_id": "fake"},
+                raw = runner.run(str(case_dir), {"kind": "http_openai", "model_id": "fake",
+                            "tools": [{"type": "function",
+                                       "function": {"name": "cadcam_test"}}]},
                                  str(out_dir), dims=["toolcall"])
                 with patch.object(runner, "build_arm", side_effect=AssertionError("must skip completed case")):
-                    runner.run(str(case_dir), {"kind": "http_openai", "model_id": "fake"},
+                    runner.run(str(case_dir), {"kind": "http_openai", "model_id": "fake",
+                            "tools": [{"type": "function",
+                                       "function": {"name": "cadcam_test"}}]},
                                str(out_dir), dims=["toolcall"])
             record = json.loads(Path(raw).read_text(encoding="utf-8").splitlines()[0])
             self.assertEqual(record["tool_calls"], calls)
@@ -99,13 +107,19 @@ class EvalRunnerTests(unittest.TestCase):
             arm = _Arm([{"type": "function", "function": {"name": "cadcam_test", "arguments": "{}"}}])
             with patch.object(runner, "build_arm", return_value=arm), \
                     patch.object(runner, "git_sha", return_value="abc123"):
-                runner.run(str(case_dir), {"kind": "http_openai", "model_id": "fake"},
+                runner.run(str(case_dir), {"kind": "http_openai", "model_id": "fake",
+                            "tools": [{"type": "function",
+                                       "function": {"name": "cadcam_test"}}]},
                            str(out_dir), dims=["toolcall"], temperature=0.0)
                 with self.assertRaisesRegex(ValueError, "fingerprint"):
-                    runner.run(str(case_dir), {"kind": "http_openai", "model_id": "fake"},
+                    runner.run(str(case_dir), {"kind": "http_openai", "model_id": "fake",
+                            "tools": [{"type": "function",
+                                       "function": {"name": "cadcam_test"}}]},
                                str(out_dir), dims=["toolcall"], temperature=0.2)
                 with self.assertRaisesRegex(ValueError, "fingerprint"):
-                    runner.run(str(case_dir), {"kind": "http_openai", "model_id": "other"},
+                    runner.run(str(case_dir), {"kind": "http_openai", "model_id": "other",
+                                               "tools": [{"type": "function",
+                                                          "function": {"name": "cadcam_test"}}]},
                                str(out_dir), dims=["toolcall"], temperature=0.0)
 
     def test_malformed_raw_record_is_not_silently_ignored(self):
@@ -116,7 +130,9 @@ class EvalRunnerTests(unittest.TestCase):
             out_dir.mkdir()
             (out_dir / "raw.jsonl").write_text("{broken\n", encoding="utf-8")
             with self.assertRaisesRegex(ValueError, "malformed raw.jsonl"):
-                runner.run(str(case_dir), {"kind": "http_openai", "model_id": "fake"},
+                runner.run(str(case_dir), {"kind": "http_openai", "model_id": "fake",
+                            "tools": [{"type": "function",
+                                       "function": {"name": "cadcam_test"}}]},
                            str(out_dir), dims=["toolcall"])
 
     def test_selected_subset_is_part_of_resume_fingerprint(self):
@@ -131,10 +147,14 @@ class EvalRunnerTests(unittest.TestCase):
             calls = [{"type": "function", "function": {"name": "cadcam_test", "arguments": "{}"}}]
             with patch.object(runner, "build_arm", return_value=_Arm(calls)), \
                     patch.object(runner, "git_sha", return_value="abc123"):
-                runner.run(str(case_dir), {"kind": "http_openai", "model_id": "fake"},
+                runner.run(str(case_dir), {"kind": "http_openai", "model_id": "fake",
+                            "tools": [{"type": "function",
+                                       "function": {"name": "cadcam_test"}}]},
                            str(out_dir), dims=["toolcall"], tiers=["easy"])
                 with self.assertRaisesRegex(ValueError, "fingerprint"):
-                    runner.run(str(case_dir), {"kind": "http_openai", "model_id": "fake"},
+                    runner.run(str(case_dir), {"kind": "http_openai", "model_id": "fake",
+                            "tools": [{"type": "function",
+                                       "function": {"name": "cadcam_test"}}]},
                                str(out_dir), dims=["toolcall"], tiers=["hard"])
 
 

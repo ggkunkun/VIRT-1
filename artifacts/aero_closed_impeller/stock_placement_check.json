@@ -1,0 +1,353 @@
+{
+  "current_project": "D:\\Virtu模型\\artifacts\\aero_closed_impeller\\AE_CLOSED_IMPELLER_VERICUT.vcproject",
+  "case_project": "E:\\samples\\All\\force_impeller_dmg_mori_nmv1500_fan30im_mm.vcproject",
+  "components_current": {
+    "Fixture": {
+      "type": "fixture",
+      "attach": "Attach",
+      "position": [
+        "0",
+        "0",
+        "0"
+      ],
+      "rotation": [
+        "0",
+        "0",
+        "0"
+      ],
+      "polys": [
+        {
+          "file": "D:\\Virtu模型\\artifacts\\aero_closed_impeller\\impeller_fixture.ply",
+          "origin": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "axes": [
+            [
+              "1",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "1",
+              "0"
+            ],
+            [
+              "0",
+              "0",
+              "1"
+            ]
+          ]
+        }
+      ],
+      "cylinders": []
+    },
+    "Stock": {
+      "type": "stock",
+      "attach": "Fixture",
+      "position": [
+        "0",
+        "0",
+        "0"
+      ],
+      "rotation": [
+        "0",
+        "0",
+        "0"
+      ],
+      "polys": [
+        {
+          "file": "D:\\Virtu模型\\artifacts\\aero_closed_impeller\\AE_CLOSED_IMPELLER_stock_block.stl",
+          "origin": [
+            0.0,
+            0.0,
+            175.0
+          ],
+          "axes": [
+            [
+              "1",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "1",
+              "0"
+            ],
+            [
+              "0",
+              "0",
+              "1"
+            ]
+          ]
+        }
+      ],
+      "cylinders": []
+    },
+    "Design": {
+      "type": "design",
+      "attach": "Stock",
+      "position": [
+        "0",
+        "0",
+        "0"
+      ],
+      "rotation": [
+        "0",
+        "0",
+        "0"
+      ],
+      "polys": [
+        {
+          "file": "D:\\Virtu模型\\artifacts\\aero_closed_impeller\\AE_CLOSED_IMPELLER_NASA1975.stl",
+          "origin": [
+            0.0,
+            0.0,
+            175.0
+          ],
+          "axes": [
+            [
+              "1",
+              "0",
+              "0"
+            ],
+            [
+              "0",
+              "1",
+              "0"
+            ],
+            [
+              "0",
+              "0",
+              "1"
+            ]
+          ]
+        }
+      ],
+      "cylinders": []
+    },
+    "Tool HOLDER": {
+      "type": null,
+      "attach": "",
+      "position": null,
+      "rotation": null,
+      "polys": [],
+      "cylinders": []
+    },
+    "Tool SHANK": {
+      "type": null,
+      "attach": "",
+      "position": null,
+      "rotation": null,
+      "polys": [],
+      "cylinders": []
+    },
+    "Tool CUTTER": {
+      "type": null,
+      "attach": "",
+      "position": null,
+      "rotation": null,
+      "polys": [],
+      "cylinders": []
+    },
+    "Tool": {
+      "type": null,
+      "attach": "",
+      "position": null,
+      "rotation": null,
+      "polys": [],
+      "cylinders": []
+    },
+    "Spindle": {
+      "type": null,
+      "attach": "",
+      "position": null,
+      "rotation": null,
+      "polys": [],
+      "cylinders": []
+    },
+    "Z": {
+      "type": null,
+      "attach": "",
+      "position": null,
+      "rotation": null,
+      "polys": [],
+      "cylinders": []
+    },
+    "Y": {
+      "type": null,
+      "attach": "",
+      "position": null,
+      "rotation": null,
+      "polys": [],
+      "cylinders": []
+    },
+    "X": {
+      "type": null,
+      "attach": "",
+      "position": null,
+      "rotation": null,
+      "polys": [],
+      "cylinders": []
+    },
+    "C": {
+      "type": null,
+      "attach": "",
+      "position": null,
+      "rotation": null,
+      "polys": [],
+      "cylinders": []
+    },
+    "B": {
+      "type": null,
+      "attach": "",
+      "position": null,
+      "rotation": null,
+      "polys": [],
+      "cylinders": []
+    },
+    "Base": {
+      "type": null,
+      "attach": "",
+      "position": null,
+      "rotation": null,
+      "polys": [],
+      "cylinders": []
+    },
+    "null": {
+      "type": null,
+      "attach": "",
+      "position": null,
+      "rotation": null,
+      "polys": [],
+      "cylinders": []
+    }
+  },
+  "world_bounds_current": {
+    "Fixture": {
+      "min": [
+        -160.0,
+        -160.0,
+        145.0
+      ],
+      "max": [
+        160.0,
+        160.0,
+        170.0
+      ]
+    },
+    "Stock": {
+      "min": [
+        -129.03,
+        -129.03,
+        170.0
+      ],
+      "max": [
+        129.03,
+        129.03,
+        249.85
+      ]
+    },
+    "Design": {
+      "min": [
+        -129.03,
+        -129.03,
+        175.0
+      ],
+      "max": [
+        129.03,
+        129.03,
+        249.85
+      ]
+    }
+  },
+  "world_bounds_case": {
+    "Fixture": {
+      "min": [
+        -85.0,
+        -85.0,
+        0.0
+      ],
+      "max": [
+        85.0,
+        85.0,
+        170.0
+      ]
+    },
+    "Stock": {
+      "min": [
+        -24.0,
+        -23.9938,
+        170.0
+      ],
+      "max": [
+        24.0,
+        24.0,
+        200.0
+      ]
+    },
+    "Design": {
+      "min": [
+        -24.0,
+        -23.9728,
+        175.0
+      ],
+      "max": [
+        24.0,
+        23.9965,
+        200.0
+      ]
+    }
+  },
+  "relations_current": {
+    "stock_bottom_minus_fixture_top": 0.0,
+    "stock_top_minus_design_top": 0.0,
+    "design_bottom_minus_stock_bottom": 5.0,
+    "stock_xy_half": [
+      129.03,
+      129.03
+    ],
+    "design_xy_half": [
+      129.03,
+      129.03
+    ],
+    "stock_xy_minus_design_xy": 0.0,
+    "stock_height": 79.85,
+    "design_height": 74.85,
+    "stock_xy_centered": true
+  },
+  "relations_case": {
+    "stock_bottom_minus_fixture_top": 0.0,
+    "stock_top_minus_design_top": 0.0,
+    "design_bottom_minus_stock_bottom": 5.0,
+    "stock_xy_half": [
+      24.0,
+      24.0
+    ],
+    "design_xy_half": [
+      24.0,
+      24.0
+    ],
+    "stock_xy_minus_design_xy": 0.0,
+    "stock_height": 30.0,
+    "design_height": 25.0,
+    "stock_xy_centered": false
+  },
+  "topology_match": {
+    "attach_chain_current": {
+      "Fixture": "Attach",
+      "Stock": "Fixture",
+      "Design": "Stock"
+    },
+    "attach_chain_case": {
+      "Fixture": "Attach",
+      "Stock": "Fixture",
+      "Design": "Stock"
+    },
+    "position_rotation_identity_current": true,
+    "no_rotational_stock": true
+  },
+  "matrix_semantics": "VERICUT 组件 ModelMatrix Origin 为各组件自身相对 Base 的位移，Attach 仅定义跟随/碰撞关系，不做 origin 累加；案例 Stock 与 Design 同为 Z=200 且二者 z 差 5mm，即为此语义的直接证据。"
+}

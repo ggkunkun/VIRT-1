@@ -1,16 +1,27 @@
 {
   "generated": "2026-11-04",
+  "repaired": "2026-11-12",
   "source": "six_software knowledge base (reverse-skill RE, phase1 plugins) + TRAINING_CONTRACT + fastest-methods (阶段 A/B 迭代)",
-  "total_train": 221,
-  "total_holdout": 50,
-  "total_records": 271,
+  "total_train": 212,
+  "total_holdout": 48,
+  "total_records": 260,
   "per_software": {
-    "solidworks": {"train": 38, "holdout": 8, "scenarios_train": {"core_op": 13, "plugin_op": 12, "kb_lookup": 5, "edge": 3, "fastest_route": 5}},
-    "autocad": {"train": 38, "holdout": 8, "scenarios_train": {"core_op": 13, "plugin_op": 12, "kb_lookup": 5, "edge": 3, "fastest_route": 5}},
-    "nx": {"train": 36, "holdout": 9, "scenarios_train": {"core_op": 12, "plugin_op": 12, "kb_lookup": 4, "edge": 2, "fastest_route": 6}},
-    "cimco": {"train": 36, "holdout": 9, "scenarios_train": {"core_op": 12, "plugin_op": 14, "kb_lookup": 3, "edge": 1, "fastest_route": 6}},
-    "vericut": {"train": 37, "holdout": 8, "scenarios_train": {"core_op": 12, "plugin_op": 12, "kb_lookup": 6, "edge": 2, "fastest_route": 5}},
-    "sscnc": {"train": 36, "holdout": 8, "scenarios_train": {"core_op": 14, "plugin_op": 9, "kb_lookup": 5, "edge": 3, "fastest_route": 5}}
+    "solidworks": {"train": 36, "holdout": 8},
+    "autocad": {"train": 38, "holdout": 7},
+    "nx": {"train": 31, "holdout": 8},
+    "cimco": {"train": 35, "holdout": 9},
+    "vericut": {"train": 37, "holdout": 8},
+    "sscnc": {"train": 35, "holdout": 8}
+  },
+  "repair": {
+    "date": "2026-11-12",
+    "original_records": 271,
+    "kept": 260,
+    "repaired": 213,
+    "dropped": 11,
+    "drop_reason": "原始行截断或语义残缺，无法在保持内容真实的前提下修复",
+    "backups": "*.jsonl.bak_repair_20261112",
+    "validation": "authoritative_validation_report_2026-11-12.json（逐行 json.loads + 结构/配对/arguments 全通过）"
   },
   "fastest_route_added": {"train": 32, "holdout": 8, "spec": "TRAINING_CONTRACT §11 场景E（fastest_route）；判定来源 fastest-methods\\<software>.md；holdout 与 train 路线/参数零重叠"},
   "format": "OpenAI function-calling JSONL (messages+tools, arguments=JSON-string), C1-C5 compatible",

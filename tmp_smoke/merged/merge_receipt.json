@@ -1,0 +1,12 @@
+{
+  "status": "MERGED",
+  "mode": "peft_merge_and_unload",
+  "base": "tmp_smoke/tiny",
+  "lora": "tmp_smoke/lora",
+  "dtype": "fp32",
+  "elapsed_s": 1.7,
+  "shards": [
+    "model.safetensors"
+  ],
+  "merged_at": "2026-11-17T14:41:10"
+}

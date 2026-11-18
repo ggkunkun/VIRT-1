@@ -155,8 +155,12 @@ def mass_props_csg(shape, params, rho):
         r, h = params["r"], params["h"]
         V = _cyl_volume(r, h)
         cx, cy, cz = r, r, h / 2.0
-        Ix = Iz = math.pi * r ** 4 / 4.0
-        Iy = math.pi * r ** 4 / 2.0
+        # 圆柱轴线沿 z：绕 x / y（直径轴）截面为圆 -> pi*r^4/4；绕 z（轴线）-> pi*r^4/2。
+        # 旧实现写成 Ix=Iz=pi*r^4/4、Iy=pi*r^4/2，把"绕轴线"的极惯性矩挂到了 y 轴，
+        # 而契约字段只有 inertia_ixx / inertia_izz，于是 izz 拿到的是直径轴的值（小一倍），
+        # 与 wm_schema 卡片文字 izz=pi*r^4/2 直接冲突 —— 护栏按错值"纠正"模型。
+        Ix = Iy = math.pi * r ** 4 / 4.0
+        Iz = math.pi * r ** 4 / 2.0
         return V, (cx, cy, cz), (Ix, Iy, Iz)
     else:
         return 0.0, (0, 0, 0), (0, 0, 0)
@@ -224,7 +228,7 @@ def solve_fea(rng):
         "peak_von_mises_mpa": sigma,
         "tip_deflection_mm": fem["tip_deflection_mm"],
         "safety_factor": round(fos, 3) if fos != float("inf") else 99.0,
-        "fos_gate": "FOS>=1.5_pass" if fos >= 1.5 else "FOS<1.5_FAIL",
+        "fos_gate": "pass" if fos >= 1.5 else "fail",
     }
     inputs = {"task": "fea_beam", "material": mat, "section_mm": {"b": b, "h": h},
               "span_mm": L, "end_load_N": F, "solver": "numpy_fem_euler_bernoulli"}
@@ -249,7 +253,7 @@ def solve_removal(rng):
         "removed_mass_g": round(removed_mass, 3),
         "resulting_mass_g": round(remaining, 3),
         "delta_volume_mm3": round(-removed, 1),
-        "volume_conservation": "pass_cut_negative",
+        "volume_conservation": "pass",
     }
     inputs = {"task": "material_removal", "material": mat, "rough_volume_mm3": stock_vol,
               "doc_mm": doc, "woc_mm": woc, "vf_mm_min": vf, "path_length_mm": L}
@@ -274,8 +278,8 @@ def solve_collision(rng):
     z_safe = round(rng.uniform(2.0, 30.0), 1)
     z_min = round(rng.uniform(-5.0, z_safe + 5.0), 1)
     stock_top = round(rng.uniform(0.0, 20.0), 1)
-    over = (z_min < z_safe) and (z_min < stock_top + 1.0)
-    gouge = over and (z_min < stock_top)
+    gouge = z_min < stock_top
+    over = ((z_min < z_safe) and (z_min < stock_top + 1.0)) or gouge
     risk = "high" if over else "none"
     outputs = {
         "safe_plane_z_mm": z_safe, "rapid_min_z_mm": z_min, "stock_top_z_mm": stock_top,
@@ -296,7 +300,7 @@ def solve_tolerance(rng):
     upper = round(rng.uniform(0.0, 0.05), 3)
     lower = round(rng.uniform(-0.05, 0.0), 3)
     clearance = upper - lower
-    fit = "间隙配合" if clearance > 0 else ("过盈配合" if clearance < 0 else "过渡配合")
+    fit = "间隙配合" if clearance > 0.01 else ("过盈配合" if clearance < -0.01 else "过渡配合")
     fit_class = ("H7/g6" if clearance > 0.01 else ("H7/p6" if clearance < -0.01 else "H7/js6"))
     outputs = {
         "component_tolerances_mm": tols,
@@ -304,7 +308,7 @@ def solve_tolerance(rng):
         "closed_loop_rss_halfwidth_mm": round(rss, 4),
         "basic_size_mm": basic, "fit_clearance_mm": round(clearance, 4),
         "tolerance_fit": fit, "fit_class": fit_class,
-        "tolerance_pass": bool(clearance >= -0.005),
+        "tolerance_pass": bool(clearance >= 0.0),
     }
     inputs = {"task": "tolerance_stack", "num_rings": n, "half_tolerances_mm": tols,
               "basic_size_mm": basic, "hole_upper_dev_mm": upper, "hole_lower_dev_mm": lower}
@@ -319,7 +323,7 @@ def solve_geom_delta(rng):
     outputs = {
         "feature": feat, "feature_volume_mm3": vol, "delta_volume_mm3": dv,
         "before_volume_mm3": before, "after_volume_mm3": before + dv,
-        "volume_conservation": "pass_cut_negative" if dv < 0 else "FAIL",
+        "volume_conservation": "pass" if dv < 0 else "fail",
     }
     inputs = {"task": "geometric_delta", "feature": feat,
               "feature_volume_mm3": vol, "before_volume_mm3": before}

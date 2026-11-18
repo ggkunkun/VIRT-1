@@ -1,0 +1,81 @@
+{
+  "generated_at": "2026-11-16 22:10:29",
+  "tag": "virtu-six-software:v5-repair",
+  "basis": "measured",
+  "corpus_sha256": "b3dc429de9b9ec428e66270a4b82446406f770690b162dd6cae3309fb6021303",
+  "rounds": [
+    {
+      "tag": "virtu-six-software:v3",
+      "round": 1,
+      "passed": 7,
+      "total": 10,
+      "failed": {
+        "sw_coordinate_probe": "missing_normal:front",
+        "lame_stress_probe": "missing_sigma_theta_33.33",
+        "fanuc_g71_safety_probe": "valid_F>0,unsafe_G00_negative_Z_plunge"
+      }
+    },
+    {
+      "tag": "virtu-six-software:v3",
+      "round": 2,
+      "passed": 8,
+      "total": 10,
+      "failed": {
+        "sw_coordinate_probe": "missing_normal:front",
+        "lame_stress_probe": "missing_sigma_theta_33.33"
+      }
+    },
+    {
+      "tag": "virtu-six-software:v4-local-repair",
+      "round": 1,
+      "passed": 8,
+      "total": 10,
+      "failed": {
+        "lame_stress_probe": "missing_negative_sigma_r_-20",
+        "fanuc_g71_safety_probe": "unsafe_G00_negative_Z_plunge"
+      }
+    },
+    {
+      "tag": "virtu-six-software:v4-local-repair",
+      "round": 2,
+      "passed": 7,
+      "total": 10,
+      "failed": {
+        "lame_stress_probe": "missing_negative_sigma_r_-20",
+        "fanuc_g71_safety_probe": "unsafe_G00_negative_Z_plunge",
+        "vericut_autodiff_probe": "missing_color:blue"
+      }
+    },
+    {
+      "tag": "virtu-six-software:v5-repair",
+      "round": 1,
+      "passed": 7,
+      "total": 10,
+      "failed": {
+        "lame_stress_probe": "missing_sigma_theta_33.33",
+        "fanuc_g71_safety_probe": "unsafe_G00_negative_Z_plunge",
+        "vericut_autodiff_probe": "missing_meaning:red"
+      }
+    },
+    {
+      "tag": "virtu-six-software:v5-repair",
+      "round": 2,
+      "passed": 8,
+      "total": 10,
+      "failed": {
+        "lame_stress_probe": "missing_sigma_theta_33.33",
+        "vericut_autodiff_probe": "missing_color:blue"
+      }
+    },
+    {
+      "tag": "virtu-six-software:v5-repair",
+      "round": 3,
+      "passed": 8,
+      "total": 10,
+      "failed": {
+        "lame_stress_probe": "missing_sigma_theta_33.33",
+        "vericut_autodiff_probe": "missing_color:blue"
+      }
+    }
+  ]
+}

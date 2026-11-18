@@ -29,6 +29,7 @@ import sys
 import json
 import argparse
 import subprocess
+from typing import Any, Dict
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
@@ -41,16 +42,21 @@ DEFAULT_TOL_REL = 0.08
 
 def call_ollama(model: str, prompt: str, system: str = "",
                 host: str = DEFAULT_HOST, timeout: int = 120) -> str:
-    """调用本地 ollama /generate（与 eval_worldmodel.call_ollama 等价，
-    不改动模型行为，仅做推理 + 文本返回）。返回 response 字符串。"""
+    """调用本地 ollama /generate（与 eval_worldmodel.call_ollama 同口径：
+    think=false + temperature=0 + num_predict 上限 + format=json + UTF-8 解码）。
+    返回 response 字符串。"""
     payload = json.dumps({
         "model": model, "prompt": prompt, "system": system,
-        "stream": False, "options": {"temperature": 0},
+        "stream": False, "think": False, "format": "json",
+        "options": {"temperature": 0, "num_predict": 1024},
     })
     try:
+        # Windows 下 text=True 默认按 locale(GBK) 解码，ollama 返回 UTF-8 中文
+        # 会抛 UnicodeDecodeError → 整题误记生成失败（eval 侧已修，此处曾漏）。
         p = subprocess.run(
             ["curl", "-s", f"http://{host}/api/generate", "-d", payload],
             capture_output=True, text=True, timeout=timeout,
+            encoding="utf-8", errors="replace",
         )
         return json.loads(p.stdout)["response"]
     except Exception as e:  # noqa: BLE001 - 生成失败必须显式暴露，不伪造

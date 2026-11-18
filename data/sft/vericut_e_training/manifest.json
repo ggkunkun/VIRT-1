@@ -1,0 +1,92 @@
+{
+  "source_facts": "D:\\Virtu模型\\data\\sft\\vericut_e_training\\extracted_facts.json",
+  "source_facts_sha256": "3b3c6f7a5d989a0a91abde68fbd81d89f4cccc91d4ed24792a73b602274449b8",
+  "seed": 20261114,
+  "basis": "parser_verified",
+  "outputs": {
+    "pure_sft": {
+      "path": "D:\\Virtu模型\\data\\sft\\vericut_e_training\\vericut_e_pure_sft.jsonl",
+      "count": 1030,
+      "sha256": "267b8a2abfaf19885c199ff064081269fe2a13548b528ea4eae2c3991cc2b245"
+    },
+    "train_mix": {
+      "path": "D:\\Virtu模型\\data\\sft\\vericut_e_training\\vericut_e_train_mix.jsonl",
+      "count": 1480,
+      "sha256": "50f16388357b76ed19520fb2da7451792597f13c76871e3b9f0cd444fce6bdd4",
+      "replay_count": 450
+    },
+    "holdout": {
+      "path": "D:\\Virtu模型\\data\\sft\\vericut_e_training\\vericut_e_holdout.jsonl",
+      "count": 105,
+      "sha256": "5299db23542034c933384bfdf7321916d4501cf392efb7bd718b66d209350669"
+    },
+    "dpo": {
+      "path": "D:\\Virtu模型\\data\\sft\\vericut_e_training\\vericut_e_dpo.jsonl",
+      "count": 447,
+      "sha256": "3bcc4d609e67d9861372492df10b392c827a8e3ba7ddc123f579ab5cc250645e",
+      "replay_count": 65
+    },
+    "cloud_sft": {
+      "path": "D:\\Virtu模型\\cloud_train_pack\\dataset\\vericut_e_training_sft.jsonl",
+      "count": 1480,
+      "sha256": "50f16388357b76ed19520fb2da7451792597f13c76871e3b9f0cd444fce6bdd4"
+    },
+    "cloud_dpo": {
+      "path": "D:\\Virtu模型\\cloud_train_pack\\dataset\\vericut_e_training_dpo.jsonl",
+      "count": 447,
+      "sha256": "3bcc4d609e67d9861372492df10b392c827a8e3ba7ddc123f579ab5cc250645e",
+      "replay_count": 65
+    }
+  },
+  "pure_by_task": {
+    "machine_kinematics": 57,
+    "pdf_curriculum_qa": 123,
+    "general_cnc_anti_forgetting": 9,
+    "nc_g49_bug_fix": 64,
+    "runtime_toolcall": 36,
+    "nc_safety_diagnosis": 109,
+    "tool_assembly_calc": 91,
+    "ctl_config": 28,
+    "tool_assembly_list": 84,
+    "setup_workoffset": 91,
+    "machine_kinematics_principle": 39,
+    "inverse_stock_derivation": 10,
+    "runtime_toolcall_vision": 36,
+    "setup_unit_collision": 71,
+    "boundary_refusal": 45,
+    "swp_envelope": 45,
+    "runtime_toolcall_single": 31,
+    "autodiff_color_axiom": 10,
+    "runtime_toolcall_cimco": 33,
+    "turbine_blade_5axis_kinematics": 1,
+    "runtime_toolcall_multiturn": 1,
+    "pdf_concept_force": 9,
+    "pdf_concept_autodiff": 6,
+    "turbine_blade_5axis_macro": 1
+  },
+  "holdout_by_dimension": {
+    "setup_workoffset": 20,
+    "tool_assembly": 20,
+    "machine_kinematics": 6,
+    "nc_safety_diagnosis": 29,
+    "pdf_curriculum_qa": 11,
+    "runtime_toolcall": 12,
+    "boundary": 6,
+    "vericut_setup_facts": 1
+  },
+  "leakage_audit": {
+    "train_unique_source_shas": 411,
+    "holdout_unique_source_shas": 72,
+    "sha_overlap": 0,
+    "holdout_ngram_leaks": 0,
+    "benchmark_ngram_leaks": 0,
+    "dpo": {
+      "dpo_count": 447,
+      "dpo_unique_source_shas": 245,
+      "holdout_unique_source_shas": 72,
+      "sha_overlap": 0,
+      "holdout_ngram_leaks": 0,
+      "benchmark_ngram_leaks": 0
+    }
+  }
+}

@@ -1,2 +1,9 @@
-# 上游技能副本按字节存证：skills/SKILLS_PROVENANCE.json 记录逐文件 sha256，故禁止换行符转换
+﻿# 上游技能副本按字节存证：skills/SKILLS_PROVENANCE.json 记录逐文件 sha256，故禁止换行符转换
 skills/** -text
+
+# 基准题板按字节存证：data/benchmark/CASES.lock 记录每个 .jsonl 的 sha256+bytes，
+# virtu_eval/runner.py 的 case_file_sha256 与 leg manifest 也逐字节比。
+# 本机 core.autocrlf=true（实测 2026-11-13），没有这条时干净克隆会得到 CRLF，
+# 于是 lock 里 74 个哈希全部对不上——一个「防静默改题」的锁被自己的检出手续打翻。
+data/benchmark/**/*.jsonl -text
+data/benchmark/CASES.lock -text

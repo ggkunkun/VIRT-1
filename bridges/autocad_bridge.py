@@ -108,7 +108,8 @@ class AutoCADBridge:
 
         try:
 
-            res = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout)
+            res = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout,
+                                 encoding="utf-8", errors="replace")
 
             return {
 
@@ -168,25 +169,47 @@ class AutoCADBridge:
 
 
 
-    def send_lisp_command(self, lisp_code: str):
+    def send_lisp_command(self, lisp_code: str, allow_freeform: bool = None):
 
-        """Send AutoLISP expression to active AutoCAD document."""
+        """Send AutoLISP expression to active AutoCAD document.
 
-        # Security sanitizer: block dangerous AutoLISP execution
+        Security (阶段二 B 组)：由「黑名单正则」改为 deny-by-default。
 
-        import re
+        策略实现在 bridges/code_sandbox_policy.py：
 
-        if re.search(r"(?i)\b(startapp|vl-file-delete|vl-file-copy|vl-file-rename|command\s+.*sh)\b", lisp_code or ""):
+          1) 硬禁构念（startapp / command+shell / vl-file-delete|copy|rename /
 
-            return {
+             vl-registry-* / vlax-invoke / vlax-create-object / vl-load-com /
 
-                "status": "blocked",
+             arxload / load "..." / eval / dos_* / 文件 IO）无论开关如何一律 blocked；
 
-                "verdict_code": "AUTOLISP_SECURITY_VIOLATION",
+          2) 自由文本 LISP 默认拒绝，仅当代码带 VIRTU_DSL_RENDERED 标记或显式
 
-                "message": "AutoLISP command contains disallowed system execution or file deletion functions.",
+             allow_freeform=True / VIRTU_LISP_ALLOW_FREEFORM=1 时放行；
 
-            }
+          3) 每次判定写结构化审计日志（kind/decision/rule/code_sha256/pid）。
+
+        """
+
+        try:
+
+            from bridges.code_sandbox_policy import validate_code as _validate_code_policy
+
+        except Exception:  # 以脚本方式直接运行时的兜底
+
+            from code_sandbox_policy import validate_code as _validate_code_policy
+
+        _blocked = _validate_code_policy(
+
+            "lisp", lisp_code, allow_freeform=allow_freeform,
+
+            source="bridges.autocad_bridge.send_lisp_command",
+
+        )
+
+        if _blocked:
+
+            return _blocked
 
         conn = self.connect()
 

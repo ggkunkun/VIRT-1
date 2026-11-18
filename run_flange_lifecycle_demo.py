@@ -249,6 +249,10 @@ print(f"  Execution Time: {cad_time_ms:.2f} ms")
 # 3. SOLIDWORKS 2021 三维建模与 VBA 宏演示 (Parametric CAD Stage)
 # =============================================================================
 t0_sw = time.perf_counter()
+# VBA 字符串内需反斜杠双写；先在 f-string 外算好，避免 f-string 表达式含反斜杠
+_sw_part_path_escaped = os.path.join(
+    OUT_DIR, '02_SOLIDWORKS_2021_Flange_Disk.SLDPRT'
+).replace('\\', '\\\\')
 sw_vba_code = f'''Attribute VB_Name = "FlangeDiskParametricModel"
 ' ==============================================================================
 ' SOLIDWORKS 2021 Parametric Automation Macro
@@ -336,7 +340,7 @@ Sub main()
     ' 设定材料属性 42CrMo
     Part.SetMaterialPropertyName2 "Default", "solidworks materials.sldmat", "42CrMo"
     Part.EditRebuild3
-    Part.SaveAs3 "{os.path.join(OUT_DIR, '02_SOLIDWORKS_2021_Flange_Disk.SLDPRT').replace('\\', '\\\\')}", 0, 2
+    Part.SaveAs3 "{_sw_part_path_escaped}", 0, 2
 End Sub
 '''
 sw_macro_path = os.path.join(OUT_DIR, "02_SOLIDWORKS_2021_Flange_Disk.swb")

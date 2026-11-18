@@ -1,0 +1,287 @@
+{
+  "schema_version": "1.0.0",
+  "generated_at_utc": "2026-11-17T11:33:45+00:00",
+  "index_path": "knowledge_base/training_case_index.json",
+  "index_generated_at_utc": "2026-11-17T11:31:39+00:00",
+  "vericut": {
+    "install": "E:/windows64",
+    "launcher": "E:\\windows64\\commands\\vericut.bat",
+    "batch_args": "BATCH batchp",
+    "workdir": "E:\\vericut_verify_work"
+  },
+  "method": "动态：VERICUT 9.6 BATCH 实际仿真，日志比对讲义行号/碰撞对象；静态：机床组件坐标、NC 指定行、刀库优化数据；VDAF/detect_collision 未做动态仿真，明确标注 manual_attestation / inferred",
+  "summary": {
+    "error_cases": 13,
+    "fully_reproduced": 8,
+    "attested_by_manual": 3,
+    "partial_static": 1,
+    "inferred_only": 1,
+    "not_reproduced_or_unmeasured": 0,
+    "dynamic_vericut_cases": 5,
+    "by_method": {
+      "static_measured": 3,
+      "static_manual_attestation": 3,
+      "dynamic_vericut_batch": 5,
+      "static_measured+manual_attestation": 1,
+      "static_asset": 1
+    },
+    "fully_reproduced_cases": [
+      "lathe_session_103l_add_3d_models_to_the_machine",
+      "lathe_session_day1",
+      "mill_session_103m_add_3d_models_to_the_machine",
+      "mill_session_day1",
+      "millturn_session_103mt_add_3d_models_to_the_machine",
+      "millturn_session_day1",
+      "session_112_setting_up_and_using_basic_debugging_tools",
+      "session_14_MDI_to_validate_part_setup"
+    ],
+    "attested_cases": [
+      "lathe_session_254fl_optimization",
+      "mill_session_254fm_optimization",
+      "VDAF_programming_training_session"
+    ],
+    "partial_cases": [
+      "VDAF_simulation_training_session"
+    ],
+    "inferred_cases": [
+      "detect_collision.mcd"
+    ],
+    "missing_cases": []
+  },
+  "cases": [
+    {
+      "case_id": "lathe_session_103l_add_3d_models_to_the_machine",
+      "index_status": "error_demo",
+      "index_capability": "turning",
+      "source_path": "lathe_session_103l_add_3d_models_to_the_machine.vcproject",
+      "index_sha256": "719d3d138ccc5e051d5dd61f7b988582e83223a5272f4f4ad76caa73bf840950",
+      "method": "static_measured",
+      "submethod": "machine_component_offset",
+      "reproduced": true,
+      "confidence": "measured",
+      "expected": "Z 轴应偏移 32.25 ”",
+      "observed": "lathe_session_103l_add_3d_models_to_the_machine.mch 的 Z 组件 Position={'X': '0', 'Y': '0', 'Z': '0'}",
+      "evidence": "the Appearance Pallet and select a desired appearance • Set Rapid Rate = 200 • Add model, File Name = mc_lathe_machine_z.stl The component and model are not located correctly. The Z axis Zero position should be 32.25” fr…"
+    },
+    {
+      "case_id": "lathe_session_254fl_optimization",
+      "index_status": "error_demo",
+      "index_capability": "turning",
+      "source_path": "lathe_session_254fl_optimization.vcproject",
+      "index_sha256": "4c0f164e8cac499eaf9ed3581902dc9c47169170d0c72620dfcabdd2f5cd71ac",
+      "method": "static_manual_attestation",
+      "submethod": "tool_library_optimization_data",
+      "reproduced": "attested",
+      "confidence": "manual_attestation",
+      "expected": "讲义明确：该工程保存的 Tool Library Optimization values 是错误的",
+      "observed": [
+        {
+          "file": "optimization_lathe_session_254.tls",
+          "optimization_nodes": 6,
+          "stock_cutting_limit_nodes": 6
+        }
+      ],
+      "evidence": "not give us a good picture of what is possible with these tools. Note, the Tool Library file which is save with this Project has Optimization values which are incorrect. The steps in this training session will have some …",
+      "note": "能证明「错误数据确实存在」，不能独立算出正确值（讲义用截图给参考值）"
+    },
+    {
+      "case_id": "lathe_session_day1",
+      "index_status": "error_demo",
+      "index_capability": "turning",
+      "source_path": "lathe_session_day1.vcproject",
+      "index_sha256": "0c7ec89a996b1cc91b8e5bd713a52c4fbf44e0e456795161df623346f60bc181",
+      "method": "dynamic_vericut_batch",
+      "reproduced": true,
+      "confidence": "measured",
+      "expected": "Session 3L: 刀具 \"1\" 碰撞 \"Jaws\"，第 23 行 N1100 Z-1.81",
+      "observed": [
+        "错误:在 23 行:N1100 Z-1.81 ,刀具 \"1\" 碰撞 \"Jaws\""
+      ],
+      "log_path": "reports/vericut_error_case_logs/lathe_session_day1.log",
+      "command": "vericut.bat BATCH batchp lathe_session_day1.vcproject",
+      "note": ""
+    },
+    {
+      "case_id": "mill_session_103m_add_3d_models_to_the_machine",
+      "index_status": "error_demo",
+      "index_capability": "milling_5axis_positioning",
+      "source_path": "mill_session_103m_add_3d_models_to_the_machine.vcproject",
+      "index_sha256": "6c6ea9d71df49f3d59ff46c648864f0f63e0034b637ea60fc31af189244ccaf6",
+      "method": "static_measured",
+      "submethod": "machine_component_offset",
+      "reproduced": true,
+      "confidence": "measured",
+      "expected": "Z 轴应偏移 600.0 mm",
+      "observed": "mill_session_103m_add_3d_models_to_the_machine.mch 的 Z 组件 Position={'X': '0', 'Y': '0', 'Z': '0'}",
+      "evidence": "Appearance Pallet and select a desired appearance • Set Rapid Rate = 5000 • Add model, File Name = mc_mill_machine_5ax_z.stl The component and model are not located correctly. The Z axis Zero position should be 600mm fro…"
+    },
+    {
+      "case_id": "mill_session_254fm_optimization",
+      "index_status": "error_demo",
+      "index_capability": "milling_3axis",
+      "source_path": "mill_session_254fm_optimization.vcproject",
+      "index_sha256": "c147f6f6955b98193871f5cb02aa324c910a464ed6fbccd6bcc993bf7c0650b9",
+      "method": "static_manual_attestation",
+      "submethod": "tool_library_optimization_data",
+      "reproduced": "attested",
+      "confidence": "manual_attestation",
+      "expected": "讲义明确：该工程保存的 Tool Library Optimization values 是错误的",
+      "observed": [
+        {
+          "file": "optimization_mill_session_254.tls",
+          "optimization_nodes": 6,
+          "stock_cutting_limit_nodes": 6
+        }
+      ],
+      "evidence": "not give us a good picture of what is possible with these tools. Note, the Tool Library file which is save with this Project has Optimization values which are incorrect. The steps in this training session will have some …",
+      "note": "能证明「错误数据确实存在」，不能独立算出正确值（讲义用截图给参考值）"
+    },
+    {
+      "case_id": "mill_session_day1",
+      "index_status": "error_demo",
+      "index_capability": "milling_4axis",
+      "source_path": "mill_session_day1.vcproject",
+      "index_sha256": "7c134c57ae34d2af73d0fb54965086985bf240015d034b85d6a45b53eadd688c",
+      "method": "dynamic_vericut_batch",
+      "reproduced": true,
+      "confidence": "measured",
+      "expected": "Session 3M: 刀具 \"9\" 的刀柄 \"Holder1\" 与 \"Fixture\" 碰撞（第 280/281 行）",
+      "observed": [
+        "错误:在 280 行:N201 X4.125 Y2.00 Z1.07,组件\"Tool\"上刀具\"9\"的刀柄\"刀柄\"Holder1\"\"与\"Fixture\"碰撞",
+        "错误:在 281 行:N202 G28 G91 Z0,组件\"Tool\"上刀具\"9\"的刀柄\"刀柄\"Holder1\"\"与\"Fixture\"碰撞"
+      ],
+      "log_path": "reports/vericut_error_case_logs/mill_session_day1.log",
+      "command": "vericut.bat BATCH batchp printargs mill_session_day1.vcproject",
+      "note": "仿真完整结束：错误数 12、警告数 3；printargs 只打印命令行，不改变仿真模式"
+    },
+    {
+      "case_id": "millturn_session_103mt_add_3d_models_to_the_machine",
+      "index_status": "error_demo",
+      "index_capability": "mill_turn",
+      "source_path": "millturn_session_103mt_add_3d_models_to_the_machine.vcproject",
+      "index_sha256": "9ea968b95266be6edcbb390f432d20a8a111abdc2c9a814c51853cc81bda8472",
+      "method": "static_measured",
+      "submethod": "machine_component_offset",
+      "reproduced": true,
+      "confidence": "measured",
+      "expected": "W 轴应偏移 1972.0 mm",
+      "observed": "millturn_session_103mt_add_3d_models_to_the_machine.mch 的 W 组件 Position={'X': '0', 'Y': '0', 'Z': '0'}",
+      "evidence": "= mc_millturn_machine_subspindle.stl • In Configure Model > Translate tab • Angles = 180 0 90 • Press Enter on your keyboard The component and model are not located correctly. The W axis Zero position should be 1972mm fr…"
+    },
+    {
+      "case_id": "millturn_session_day1",
+      "index_status": "error_demo",
+      "index_capability": "mill_turn",
+      "source_path": "millturn_session_day1.vcproject",
+      "index_sha256": "de4155d7c1c7daadf21a088fe0409230dfde111b6c6ed8635da1584ba883c42d",
+      "method": "dynamic_vericut_batch",
+      "reproduced": true,
+      "confidence": "measured",
+      "expected": "Session 3MT: 第 165 行 G1 A0. F20. 时 Tool HOLDER 与 Sub_Fixture 碰撞",
+      "observed": [
+        "错误:在 165 行:G1 A0. F20.,\"Tool CUTTER\"和\"Sub_Fixture\"碰撞.",
+        "错误:在 165 行:G1 A0. F20.,\"Tool HOLDER\"和\"Sub_Fixture\"碰撞."
+      ],
+      "log_path": "reports/vericut_error_case_logs/millturn_session_day1.log",
+      "command": "vericut.bat BATCH batchp millturn_session_day1.vcproject",
+      "note": "仿真完整结束（END-OF-FILE），另有 5 条警告"
+    },
+    {
+      "case_id": "session_112_setting_up_and_using_basic_debugging_tools",
+      "index_status": "error_demo",
+      "index_capability": "milling_5axis_positioning",
+      "source_path": "session_112_setting_up_and_using_basic_debugging_tools.vcproject",
+      "index_sha256": "41c1fba810ccfc3447f693abd7e8c3096ce3c90424cec598adeb0b6910200e47",
+      "method": "dynamic_vericut_batch",
+      "reproduced": true,
+      "confidence": "measured",
+      "expected": "Session 112: 仿真在第一个 G54 块停下，Work Offset Register 54 未设置",
+      "observed": [
+        "错误:工作偏置未设置: 子系统 = 1, 寄存器 = 54, 子寄存器 = 1",
+        "错误:工作偏置未设置: 子系统 = 1, 寄存器 = 54, 子寄存器 = 1",
+        "错误:工作偏置未设置: 子系统 = 1, 寄存器 = 54, 子寄存器 = 1"
+      ],
+      "log_path": "reports/vericut_error_case_logs/session_112.log",
+      "command": "vericut.bat BATCH batchp printargs session_112_setting_up_and_using_basic_debugging_tools.vcproject",
+      "note": "日志在 240s 截止；第 3 行即出现讲义所述错误，并在第 12/1662 行重复"
+    },
+    {
+      "case_id": "session_14_MDI_to_validate_part_setup",
+      "index_status": "error_demo",
+      "index_capability": "milling_5axis_positioning",
+      "source_path": "session_14_MDI_to_validate_part_setup.VcProject",
+      "index_sha256": "01fcda08ece1a73cf9b4bb2f7cad5b7d4774f9a2a44f731c1bae4187cb08d154",
+      "method": "dynamic_vericut_batch",
+      "reproduced": true,
+      "confidence": "measured_partial",
+      "expected": "Session 14: 刀具过短，刀柄 Holder1 与 Fixture 碰撞",
+      "observed": [
+        "错误:在 103 行:N990X-44.45Y-36.292,组件\"Tool\"上刀具\"2\"的刀柄\"刀柄\"Holder1\"\"与\"Fixture\"碰撞",
+        "错误:在 104 行:N1000G1Y-11.43,组件\"Tool\"上刀具\"2\"的刀柄\"刀柄\"Holder1\"\"与\"Fixture\"碰撞",
+        "错误:在 105 行:N1010X-133.302,组件\"Tool\"上刀具\"2\"的刀柄\"刀柄\"Holder1\"\"与\"Fixture\"碰撞",
+        "错误:在 107 行:N1030X-44.45,组件\"Tool\"上刀具\"2\"的刀柄\"刀柄\"Holder1\"\"与\"Fixture\"碰撞"
+      ],
+      "log_path": "reports/vericut_error_case_logs/session_14_console_excerpt.log",
+      "command": "vericut.bat BATCH batchp printargs session_14_MDI_to_validate_part_setup.VcProject",
+      "note": "日志为 420s 截断的运行片段（已出现碰撞）"
+    },
+    {
+      "case_id": "VDAF_programming_training_session",
+      "index_status": "error_demo",
+      "index_capability": "robotics_vdaf",
+      "source_path": "VDAF_programming_training_session.vdafproject",
+      "index_sha256": "38899b409a7c00e74c46c550e216be237a2363898af147814529531af2d50e68",
+      "method": "static_manual_attestation",
+      "submethod": "vdaf_project_asset",
+      "reproduced": "attested",
+      "confidence": "manual_attestation",
+      "expected": "Session 502: Lower Ram 与结构模型碰撞",
+      "observed": {
+        "project": "VDAF_programming_training_session.vdafproject",
+        "machine": [
+          "Brotje_CPAC.xmch"
+        ],
+        "machine_exists": true
+      },
+      "evidence": "n Controls select Reset Model to scan newly generated NC Program • Display the NC Program window • Select Play You should now see another collision between the Lower Ram and the structure model",
+      "note": "VDAF 编程工程与 Brotje 机床资产存在；碰撞由讲义明示，未做 VDAF 动态仿真"
+    },
+    {
+      "case_id": "VDAF_simulation_training_session",
+      "index_status": "error_demo",
+      "index_capability": "robotics_vdaf",
+      "source_path": "VDAF_simulation_training_session.vdafproject",
+      "index_sha256": "860446b08e8aea6d65a03aab7d0202b487c9934dc1585590fce827eb61c6e8a8",
+      "method": "static_measured+manual_attestation",
+      "submethod": "vdaf_nc_line_and_stack_data",
+      "reproduced": "partial",
+      "confidence": "measured_partial",
+      "expected": "Session 501: 第 27 行碰撞；第 108 行 M501 期望首层厚度 7.7，实测 10.0",
+      "observed": {
+        "rotisserie_nc_line_27": "X9169.318 Y-2285.076 Z2628.501",
+        "rotisserie_nc_line_28": "M501",
+        "fuselage_skin_thickness_xml": 7.70540783656
+      },
+      "evidence": "ect errors • Simulation Controls > Play Note: The message in Message area is indicating why the simulation halted. The simulation stopped at line #27 due to a collision between the riveter head and a temporary fastener p…",
+      "note": "NC 行与 7.7 叠层数据已核实；VDAF 模块未做动态仿真，10.0 实测值来自讲义"
+    },
+    {
+      "method": "static_asset",
+      "submethod": "collision_demo_asset",
+      "reproduced": "inferred_only",
+      "confidence": "inferred",
+      "expected": "独立碰撞检测演示（资源名/用途）",
+      "observed": {
+        "file": "detect_collision.mcd",
+        "five_axis_comment": true,
+        "rotary_words": true
+      },
+      "note": "没有对应的 .vcproject，未做动态仿真；只按资产用途标注，不冒充实测",
+      "case_id": "detect_collision.mcd",
+      "index_status": "error_demo",
+      "index_capability": "milling_5axis_positioning",
+      "source_path": "detect_collision.mcd",
+      "index_sha256": ""
+    }
+  ]
+}

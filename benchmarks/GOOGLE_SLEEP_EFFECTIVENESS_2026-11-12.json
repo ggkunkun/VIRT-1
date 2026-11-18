@@ -1,0 +1,112 @@
+{
+  "timestamp": "2026-11-12T23:33:12.140664",
+  "python": "3.12.10",
+  "model_caller_label": "ollama:virtu-disciplined:v1",
+  "pre_baseline_measured": 1.0,
+  "wake_cases": 3,
+  "cycle_report": {
+    "run_id": "LIVE_EFFECTIVENESS_20261112",
+    "duration_seconds": 233.597,
+    "wake_experiences_processed": 3,
+    "consolidated_units": 3,
+    "average_token_compression": "unmeasured",
+    "token_basis": "unmeasured",
+    "dreams_generated": 6,
+    "dream_oracle_pass_rate": 0.4,
+    "dream_evidence_basis": "measured",
+    "dream_gate_passed": false,
+    "stability_score": 1.0,
+    "plasticity_score": 1.0,
+    "catastrophic_forgetting_rate": 0.0,
+    "homeostasis_gate_passed": false,
+    "measurement_valid": true,
+    "model_caller_available": true,
+    "model_caller_label": "ollama:virtu-disciplined:v1",
+    "baseline_provided": true,
+    "basis": "measured",
+    "thresholds": {
+      "stability_min": 0.95,
+      "plasticity_min": 0.9,
+      "cf_max": 0.05
+    },
+    "reasons": [
+      "dream_oracle_below_threshold:0.4000"
+    ],
+    "evidence_path": "benchmarks/homeostasis_audit_LIVE_EFFECTIVENESS_20261112.json"
+  },
+  "mutation_probe": {
+    "probe_name": "falsifiable_mutation_probe_defective_fos",
+    "planted_defect": "extreme stress with unviable FOS",
+    "oracle_rejected_defect": true,
+    "probe_passed": true
+  },
+  "elapsed_seconds": 233.6,
+  "basis": "measured",
+  "verdict": {
+    "framework_effective": true,
+    "current_model_gate_passed": false,
+    "statement": "修复后证据链真实可追溯（measurement_valid=true, basis=measured, 真实 Ollama 模型 + 独立实测基线）；门禁按绝对阈值正确拒绝当前模型，唯一理由为 dream_oracle_below_threshold:0.4000。修复前同一场景必然输出 gate=True 的虚假通过。",
+    "five_criteria": {
+      "runnable": true,
+      "real_model_caller": true,
+      "falsifiable_gate": true,
+      "measured_evidence_only": true,
+      "knowledge_persisted": true
+    }
+  },
+  "before_after": {
+    "before_source": "runs/sleep_framework/sleep_cycle_report_auto_cycle_*.json (9 cycles) + 2026-11-12 诊断探针",
+    "before": {
+      "model_caller": "none (hardcoded fallback string)",
+      "baseline": "post-stability self-comparison",
+      "stability_score": 0.8,
+      "plasticity_score": "0.0 - 0.13",
+      "catastrophic_forgetting_rate": 0.0,
+      "homeostasis_gate_passed": true,
+      "dream_oracle_pass_rate": "1.0 (analytic self-check / empty set)",
+      "average_token_compression": "0.92+ (len(text)*2 estimate)",
+      "basis": "measured (falsely claimed)"
+    },
+    "after_source": "LIVE_EFFECTIVENESS_20261112 cycle_report (this file)",
+    "after": {
+      "model_caller": "ollama:virtu-disciplined:v1",
+      "baseline": "1.0 independently measured on 5 anchors before sleep",
+      "stability_score": 1.0,
+      "plasticity_score": 1.0,
+      "catastrophic_forgetting_rate": 0.0,
+      "homeostasis_gate_passed": false,
+      "dream_oracle_pass_rate": 0.4,
+      "average_token_compression": "unmeasured",
+      "basis": "measured",
+      "measurement_valid": true
+    }
+  },
+  "verification": {
+    "pytest": "22 passed in 127.15s (Python 3.12, --basetemp fresh dir)",
+    "py_compile": "8 changed python files OK, verify_virtu_sleep_framework.py emits no SyntaxWarning",
+    "cli_smoke": "scripts/run_sleep_maintenance.py --dry-run resolved ollama:virtu-disciplined:v1",
+    "falsifiable_probes": [
+      "no model caller -> basis=unmeasured, gate=False",
+      "bad model -> stability=0, CF=1.0, gate=False",
+      "missing baseline -> gate=False with no_pre_baseline_score",
+      "planted defective FOS dream -> oracle rejects",
+      "unmeasured tokens -> compression_ratio=None"
+    ]
+  },
+  "known_limitations": [
+    "锚点判分仍是关键词包含匹配：真实模型对 ANCHOR_02 回答「内壁径向应力恰好等于零」（物理错误，应为 -Pi）仍被判命中，stability=1.0 有水分；应改用物理 oracle / wm_verifier.recompute。",
+    "本地实现是 Google Sleep 三阶段范式的自研简化版，无参数更新、无低秩 expert、无 GKD 蒸馏、无梯度筛选 RL，不等同于 Google 官方实现。",
+    "当前真实模型 virtu-disciplined:v1 梦境 oracle 通过率 0.40，未达 0.80 门槛；这是模型能力问题，不是框架失效。"
+  ],
+  "reproduce": [
+    "Python 3.12: python -m pytest tests/test_sleep_framework.py tests/test_sleep_integration_dual_track.py tests/test_google_deepmind_suite.py -q --basetemp=<fresh dir>",
+    "python scripts/run_sleep_maintenance.py --dry-run",
+    "python scripts/run_sleep_maintenance.py --now --model virtu-disciplined:v1 --baseline <independently measured score>"
+  ],
+  "evidence_files": {
+    "cycle_report": "benchmarks/GOOGLE_SLEEP_EFFECTIVENESS_2026-11-12.json",
+    "homeostasis_audit": "benchmarks/homeostasis_audit_LIVE_EFFECTIVENESS_20261112.json",
+    "constitution": "AGENTS.md section 9",
+    "report_markdown": "benchmarks/GOOGLE_SLEEP_EFFECTIVENESS_2026-11-12.md"
+  }
+}

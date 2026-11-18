@@ -1,0 +1,6 @@
+FROM virtu-wm-v3:chatml
+PARAMETER num_ctx 32768
+PARAMETER num_gpu 16
+PARAMETER temperature 0
+PARAMETER repeat_penalty 1.15
+PARAMETER top_p 0.9
