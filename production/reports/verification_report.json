@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-18 22:35:46",
+  "generated_at": "2026-11-18 22:42:27",
   "part": {
     "id": "AE-CI-258",
     "name": "航空发动机封闭式叶轮",
@@ -2498,7 +2498,7 @@
         "planned_min": 1.5
       }
     ],
-    "software_reconfig_s": 0.13,
+    "software_reconfig_s": 0.06,
     "on_site_planned_min": 14.5,
     "total_min": 14.5,
     "target_min": 15.0,
@@ -2697,5 +2697,5 @@
     },
     "hashes": {}
   },
-  "elapsed_s": 94.8
+  "elapsed_s": 81.8
 }
