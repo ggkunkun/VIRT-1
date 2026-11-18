@@ -1,0 +1,209 @@
+{
+  "basis": "measured",
+  "model": "virtu-six-software:v3",
+  "run_id": "a9cfb7d09f9a7d1e",
+  "identity": {
+    "run_id": "a9cfb7d09f9a7d1e",
+    "captured_at": "2026-11-16T19:04:14",
+    "artifacts": {
+      "virtu-six-software:v3": {
+        "model_id": "virtu-six-software:v3",
+        "present": false
+      }
+    },
+    "cases": {
+      "data/benchmark/virtu_eval_v1/boundary.jsonl": "d0171f2c012609f9ba205c8c070392229a94be40089c5377bb9d980c93a06d7f",
+      "data/benchmark/virtu_eval_v1/generalization.jsonl": "4f5c114b9b047446b7158e8c7b78586001988a3bd95f9144dc6c09f5fa357f41",
+      "data/benchmark/virtu_eval_v1/generation.jsonl": "3ac2ff57f2eb52a7ac77d7fc0878135fdd5bb9a9e5b7e12ec7c9e727eadefa5c",
+      "data/benchmark/virtu_eval_v1/instruction.jsonl": "88aa16f29a2a1b592d8bc7c8c5ee6a2204957d8336d73a02743b81f645505285",
+      "data/benchmark/virtu_eval_v1/knowledge.jsonl": "3546c40f3ce82a75369e119d61caab2f3373b7fec6613cede70fa5b11d819b5f",
+      "data/benchmark/virtu_eval_v1/multimodal.jsonl": "baa7fd372ee49868d5bbdc4d67c73a3f77d43200d35db8d501f3b6cf9744b543",
+      "data/benchmark/virtu_eval_v1/reasoning.jsonl": "3f84a8ca2fb6f5500cd4ce1f31766533d08e13ebf781360b7ee9990d12ff237b",
+      "data/benchmark/virtu_eval_v1/toolcall.jsonl": "f758f28420f3baed1e3914192ebced6c6a48055ce2d70a1e8748957cd0b52a1a",
+      "data/sft/vericut_e_training/vericut_e_dpo.jsonl": "3bcc4d609e67d9861372492df10b392c827a8e3ba7ddc123f579ab5cc250645e",
+      "data/sft/vericut_e_training/vericut_e_holdout.jsonl": "5299db23542034c933384bfdf7321916d4501cf392efb7bd718b66d209350669",
+      "data/sft/vericut_e_training/vericut_e_pure_sft.jsonl": "267b8a2abfaf19885c199ff064081269fe2a13548b528ea4eae2c3991cc2b245",
+      "data/sft/vericut_e_training/vericut_e_train_mix.jsonl": "50f16388357b76ed19520fb2da7451792597f13c76871e3b9f0cd444fce6bdd4"
+    },
+    "ruler": {
+      "virtu_eval/graders.py": "5024fe5cfc85b6ac1792256fdc22b5ecfa66e3bf72698c48feea8399cfd7224c",
+      "virtu_eval/runner.py": "058da6dde22a83e571be976f6ac51f0c58de25158f9b76501fd74d335168bf1d",
+      "virtu_eval/arms.py": "0c2158c5b835d28fc370569acb79bf28cf85438ac0864739223098e3287a0d85",
+      "scripts/run_domain_ab.py": "916557c9e787df65e1d46d14291f5d825ad385e5b0d50227317776ac9b5ae6c8",
+      "cloud_train_pack/deploy_trained_adapter.py": "48c8230eaafb29bb25f1687e05417ffd5b29f03db2a9c9a1a2103b97eece871d",
+      ".agents/rules/virtu-evaluation-law.md": "056947ddb11e0c6ff6dfbdea342b1e102fe78c1dc112fdb33121b0bdfbd536c2"
+    },
+    "extra": {
+      "evaluation_law": ".agents/rules/virtu-evaluation-law.md",
+      "tags_digest": "35cd9e06c40e6a4faf4bd567da68d0ecdb58058f432cf543492bc9ff2b7ca69b"
+    }
+  },
+  "artifact_drift": [],
+  "phases": {
+    "gates": {
+      "probe_mutation": {
+        "exit_code": 0
+      },
+      "gold_selftest": {
+        "exit_code": 0
+      },
+      "passed": true
+    },
+    "targeted": {
+      "basis": "measured",
+      "n": 10,
+      "passed": 7,
+      "failed": [
+        "sw_coordinate_probe",
+        "lame_stress_probe",
+        "fanuc_g71_safety_probe"
+      ],
+      "measurement_version": "probes-2026-11-15-v2",
+      "grader_sha256": "48c8230eaafb29bb25f1687e05417ffd5b29f03db2a9c9a1a2103b97eece871d",
+      "items": [
+        {
+          "key": "show_template_gate",
+          "passed": true,
+          "reason": null,
+          "sample": ""
+        },
+        {
+          "key": "chat_liveness_probe",
+          "passed": true,
+          "reason": null,
+          "sample": "薄壁圆筒（r/t >= 10）环向应力（hoop stress）：  \n$$ \\sigma_{\\theta} = \\frac{p \\cdot r}{t} $$  \n- $ p $：内压，MPa；$ r $：半径，mm；$ t $：壁厚，mm；$ \\sigma_{\\theta} $：环向应力，MPa。"
+        },
+        {
+          "key": "native_tool_call_probe",
+          "passed": true,
+          "reason": "ok",
+          "sample": ""
+        },
+        {
+          "key": "anti_degenerate_sanity_probe",
+          "passed": true,
+          "reason": null,
+          "sample": "SOLIDWORKS 2021 默认基准面法向（未旋转坐标系）：\r\n- **Front Plane (前视基准面)**：`Normal = [0, 1, 0]`（+Y 轴，面向屏幕）\r\n- **Top Plane (上视基准面)**：`Normal = [0, 0, 1]`（+Z 轴，向上）\r\n- **Right Pl"
+        },
+        {
+          "key": "sw_coordinate_probe",
+          "passed": false,
+          "reason": "missing_normal:front",
+          "sample": ""
+        },
+        {
+          "key": "lame_stress_probe",
+          "passed": false,
+          "reason": "missing_sigma_theta_33.33",
+          "sample": "根据 Lamé 厚壁圆筒理论：\r\n\r\n- 内半径 $ r_i = \\frac{Di}{2} = 30\\,\\text{mm} $，外半径 $ r_o = \\frac{Do}{2} = 60\\,\\text{mm} $；\r\n- 压力比平方项：$ \\frac{Pi}{Pi} \\cdot \\left(\\frac{r_i}{r_o"
+        },
+        {
+          "key": "fanuc_g71_safety_probe",
+          "passed": false,
+          "reason": "valid_F>0,unsafe_G00_negative_Z_plunge",
+          "sample": "```nc\r\n%\r\nO1007 (FANUC ISO/G G71-G70 STEP-AXIS)\nG50 S1800\nG96 S150 M03\nT0101\nG0 X62.5 Z2.0\nG71 U1.5 W0.1 R0.5\nG71 P1 Q2 U0.4 W0.02 R0.1\nN1 G0 X38.0\nN2 G0 Z-25.0\nG00 T0202\nG00 X62.5"
+        },
+        {
+          "key": "vericut_autodiff_probe",
+          "passed": true,
+          "reason": "ok",
+          "sample": "在 VERICUT 9.6 的 **Auto-Diff** 偏差图中，颜色标识了刀路轨迹与目标模型的偏差状态，具体含义如下：\n\n---\n\n### ✅ Auto-Diff 偏差图颜色定义：\n| 颜色 | 含义 | 说明 |\n|------|------|------|\n| **红色 (Red)** | **过切 (Gouge)** | 刀具**切入工件内部**"
+        },
+        {
+          "key": "vericut_coordinate_unit_probe",
+          "passed": true,
+          "reason": "ok",
+          "sample": "（1）**工程单位是 inch（英寸）**，不是 millimeter（毫米）。  \nVERICUT 的 `<Unit>` 标签若为 `inch`，代表工程制图采用英制单位（英寸），而非公制毫米（mm）。在进行仿真前必须确认单位制式并统一换算。  \n\n（2）**不能直接等价套用 SOLIDWORKS 2021 默认的前/上/右基准面（Front/Top/Ri"
+        },
+        {
+          "key": "vericut_tool_call_probe",
+          "passed": true,
+          "reason": "ok",
+          "sample": ""
+        }
+      ]
+    },
+    "sanity": {
+      "cmd": {
+        "exit_code": 0
+      },
+      "status": "measured",
+      "evidence": "runs\\eval_v3_law_20261116\\sanity"
+    },
+    "domain24": {
+      "cmd": {
+        "exit_code": 0
+      },
+      "basis": "measured",
+      "n": 24,
+      "run_id": "1d53af6fb88a453d",
+      "grader_version": "slot_exact_v2",
+      "per_model": {
+        "virtu-six-software:v3": {
+          "n": 24,
+          "mean_score": 41.67,
+          "median_score": 41.65,
+          "mean_tok_s": 23.3,
+          "transport_errors": 0
+        }
+      },
+      "evidence": "runs\\eval_v3_law_20261116\\domain24\\summary.json",
+      "note": "slot_exact_v2 绝对分不可作能力结论，详见法律第二条"
+    },
+    "generic": {
+      "cmd": {
+        "exit_code": 0
+      },
+      "status": "measured",
+      "digest": "35cd9e06c40e6a4faf4bd567da68d0ecdb58058f432cf543492bc9ff2b7ca69b",
+      "run_id": "b478b63c00150074",
+      "gate": {
+        "expected_cases": 28,
+        "recorded_cases": 28,
+        "malformed_lines": 0,
+        "transport_errors": 0,
+        "transport_rate": 0.0,
+        "valid": true,
+        "problems": []
+      },
+      "dimensions": {
+        "boundary": 75.0,
+        "generalization": 50.72,
+        "generation": 35.0,
+        "instruction": 91.67,
+        "knowledge": 62.5,
+        "reasoning": 57.62,
+        "toolcall": 33.33
+      },
+      "overall_weighted": 58.04,
+      "leg_dir": "runs\\eval_v3_law_20261116\\generic\\virtu-six-software_v3",
+      "evidence": "runs\\eval_v3_law_20261116\\generic\\summary.json"
+    },
+    "holdout": {
+      "basis": "未测",
+      "reason": "基线 virtu-master-fixed:latest 已不在库中，无法构成同轮配对；按法律第四条不引用历史腿顶替"
+    }
+  },
+  "law": ".agents/rules/virtu-evaluation-law.md",
+  "generated_at": "2026-11-16T19:26:00+0800",
+  "drift_amendment": {
+    "at": "2026-11-16T19:26:30+0800",
+    "original_drift": [
+      "virtu-six-software:v4-local-repair: None -> 965475066318"
+    ],
+    "reason": "首版把测量期间库里新增 v4-local-repair 误判为被测对象漂移；按测评法律第一条，只有被测对象 digest 变化才作废",
+    "subject": "virtu-six-software:v3",
+    "pinned_digest": "35cd9e06c40e6a4faf4bd567da68d0ecdb58058f432cf543492bc9ff2b7ca69b",
+    "current_digest": "35cd9e06c40e6a4faf4bd567da68d0ecdb58058f432cf543492bc9ff2b7ca69b",
+    "subject_intact": true,
+    "new_tags_recorded_not_voiding": [
+      "virtu-six-software:v4-local-repair"
+    ]
+  },
+  "radar": {
+    "single": "benchmarks/v3_law_radar_20261116/radar.png",
+    "compare": "benchmarks/v3_law_radar_20261116/compare/radar.png",
+    "self_test_all_caught": true
+  },
+  "report_md": "benchmarks/VIRTU_V3_LAW_EVAL_2026-11-16.md"
+}
