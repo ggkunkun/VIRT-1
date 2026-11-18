@@ -49,9 +49,9 @@ def candidate_files():
     # 自指例外：本文件含「探测器必须响」的合成字面量（password='Sup3rSecretValue'），
     # 把它自己纳入扫描会让这项闸门永久红，从而失去意义。只排除本文件。
     self_path = Path(__file__).resolve()
-    out = subprocess.run(["git", "ls-files", "*.py"], cwd=str(ROOT),
-                         capture_output=True, text=True).stdout
-    for line in out.splitlines():
+    out = subprocess.run(["git", "ls-files", "-z", "*.py"], cwd=str(ROOT),
+                         capture_output=True, text=True).stdout or ""
+    for line in out.split(chr(0)):
         if line.strip():
             paths.add(ROOT / line.strip())
     for pattern in ("scripts/*.py", "bridges/*.py", "*.py", "virtu_eval/*.py",

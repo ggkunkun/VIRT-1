@@ -148,8 +148,8 @@
       "files": [
         {
           "path": "SKILL.md",
-          "bytes": 1624,
-          "sha256": "feb1dd75a6f0aedae01bd2a1631d073360d5c116d3b0a6bb1be230d35a0fe990"
+          "bytes": 1735,
+          "sha256": "ef92eef475eafd63072368b87a299da11a956174cac6cd211ed4436705f47207"
         }
       ]
     },
@@ -421,8 +421,8 @@
         },
         {
           "path": "scripts/fos_crosscheck.py",
-          "bytes": 5368,
-          "sha256": "a210f4a66a5985c262f5345eed1c3f3fe6af408e39a2b062746354d856923aaf"
+          "bytes": 5617,
+          "sha256": "1c214d60067bdda3cd2bf46c11afcb452f4b882a88d2be8d1ea7377dcac58280"
         },
         {
           "path": "scripts/__pycache__/fos_crosscheck.cpython-312.pyc",

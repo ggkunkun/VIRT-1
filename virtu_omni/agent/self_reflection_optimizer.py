@@ -127,6 +127,7 @@ class SelfReflectionOptimizer:
                     optimized_code += "\n    swModel.ForceRebuild3 True\n    swModel.ViewZoomtofit2\n"
 
         elif "cimco" in lang or "macro" in lang or "cnc" in lang:
+            from .headless_sandbox_verifier import _strip_gcode_comments
             # Fix kinematic collision (G00 Z- into stock)
             optimized_code = re.sub(
                 r"G00\s+Z(-[0-9]+(?:\.[0-9]+)?)",
@@ -134,22 +135,31 @@ class SelfReflectionOptimizer:
                 optimized_code,
                 flags=re.IGNORECASE
             )
-            if "M03" not in optimized_code and "M04" not in optimized_code:
+            # Detect spindle/feed from real words only, never from comments.
+            cleaned = "\n".join(_strip_gcode_comments(l) for l in optimized_code.splitlines())
+            if not re.search(r"\bM0?[34]\b", cleaned, re.IGNORECASE):
                 optimized_code = "% \nO0001 (PARAMETRIC MACRO OPTIMIZED)\nG21 G40 G97 G99\nG28 U0.0 W0.0\nT0101\nM03 S1200\n" + optimized_code
-            if "F" not in optimized_code:
+            if not re.search(r"\bF\s*[.\d]", cleaned, re.IGNORECASE):
                 optimized_code = optimized_code.replace("G01", "G01 F0.2")
 
         elif "lisp" in lang or "autocad" in lang:
-            open_count = optimized_code.count("(")
-            close_count = optimized_code.count(")")
-            if open_count > close_count:
-                optimized_code += ")" * (open_count - close_count)
+            # Structural S-expression errors cannot be safely auto-repaired by
+            # appending ')': that only balances the count and games the gate while
+            # the program stays broken. Leave the code unchanged so the recheck
+            # reports the real defect instead of a fabricated pass.
+            pass
 
-        # Re-verify with sandbox to ensure it now passes
+        # Re-verify with sandbox; the claim below is tied to this measured recheck.
         recheck = self.verifier.verify_code_sandbox(optimized_code, lang)
         if recheck.get("passed", False):
-            reflection += "\n\n【二次沙箱回归验证】：100% 通过虚拟仿真环境，状态为 " + recheck.get("execution_status", "SUCCESS")
+            reflection += "\n\n【二次沙箱回归验证（实测）】：通过虚拟仿真环境，状态为 " + recheck.get("execution_status", "SUCCESS")
         else:
-            reflection += "\n\n【二次沙箱回归验证】：状态更新为 " + recheck.get("execution_status", "PARTIAL")
+            remaining = recheck.get("errors", [])
+            reflection += (
+                "\n\n【二次沙箱回归验证（实测）】：仍未通过，状态为 "
+                + recheck.get("execution_status", "PARTIAL")
+                + "。自动修复未消除全部缺陷，禁止据此宣称完成；剩余致命项："
+                + ("；".join(remaining) if remaining else "见沙箱遥测")
+            )
 
         return optimized_code, reflection

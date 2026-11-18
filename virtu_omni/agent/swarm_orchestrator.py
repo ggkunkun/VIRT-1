@@ -29,6 +29,7 @@ from __future__ import annotations
 import os
 import sys
 import io
+import copy
 import json
 import time
 import math
@@ -136,28 +137,35 @@ class Blackboard:
                 del self._lease[lease.key]
                 self._audit.append({"t": time.time(), "op": "release",
                                     "holder": lease.holder, "key": lease.key})
+                # 释放即唤醒等待者：否则竞争者要睡满旧租约 TTL 才复查，
+                # 短持有 + 长 TTL 时表现为"明明已释放却仍 LeaseTimeout"。
+                self._cond.notify_all()
 
     def renew(self, lease: Lease, extra_s: float = 10.0) -> bool:
         with self._cond:
             cur = self._lease.get(lease.key)
             if cur is not None and cur.lease_id == lease.lease_id:
                 cur.expires_at = time.time() + extra_s
+                self._cond.notify_all()
                 return True
             return False
 
     # ---- 读（无需锁）----
     def read(self, key: str) -> Any:
-        return self._store.get(key)
+        # 返回深拷贝：读者拿到的是快照而非活引用，无法绕过写锁租约直接改共享态。
+        # write 走"重新绑定"而非原地改值，故无锁拷贝仍是一致的（读者不阻塞）。
+        return copy.deepcopy(self._store.get(key))
 
     def meta(self, key: str) -> Dict[str, Any]:
-        return self._meta.get(key, {})
+        return copy.deepcopy(self._meta.get(key, {}))
 
     def keys(self) -> List[str]:
         return list(self._store.keys())
 
     def snapshot(self) -> Dict[str, Any]:
-        return {k: {"value": self._store[k], "meta": self._meta.get(k, {})}
-                for k in self._store}
+        return {k: {"value": copy.deepcopy(v),
+                    "meta": copy.deepcopy(self._meta.get(k, {}))}
+                for k, v in list(self._store.items())}
 
     def audit_log(self) -> List[Dict[str, Any]]:
         return list(self._audit)
@@ -206,10 +214,24 @@ def handoff_gate(bb: Blackboard, stage: str, prior_stage: Optional[str],
         if prior is None:
             raise HandoffError(
                 f"文档交接被拒：前置阶段 {prior_stage} 尚未产出，无法进入 {stage}")
-        missing = [f for f in required_fields if f not in (prior.get("content") or {})]
+        prior_content = prior.get("content") or {}
+
+        def _satisfied(f: str) -> bool:
+            # 仅"键存在"不够：值为 None / 空容器等于该字段没产出（空壳交接），
+            # 必须判红。标量 0/False 是合法取值，不算空。
+            if f not in prior_content:
+                return False
+            v = prior_content[f]
+            if v is None:
+                return False
+            if isinstance(v, (list, dict, tuple, set, str)) and len(v) == 0:
+                return False
+            return True
+
+        missing = [f for f in required_fields if not _satisfied(f)]
         if missing:
             raise HandoffError(
-                f"文档交接被拒：{prior_stage} 缺少下一阶段所需字段 {missing}，"
+                f"文档交接被拒：{prior_stage} 缺少或空置下一阶段所需字段 {missing}，"
                 f"无法进入 {stage}")
     doc = MetaSOPDoc(stage=stage, author_agent=author, basis=basis,
                      content=content)
@@ -662,9 +684,10 @@ def audit_worker(task: Dict[str, Any], bb: Blackboard) -> Dict[str, Any]:
         except Exception as exc:
             autodiff = {"basis": "payload_error",
                         "error": "{}: {}".format(type(exc).__name__, exc)}
-            if require_ad:
-                defects.append("Auto-Diff 载荷读取失败: {}".format(exc))
-                gate_passed = False
+            # §8.4：解析/读取失败一律判红。提供了载荷却读不出证据 = 证据链断裂，
+            # 与 require_ad 无关——否则坏载荷在 require_ad=False 时被静默吞成"通过"。
+            defects.append("Auto-Diff 载荷读取/解析失败（证据链断裂）: {}".format(exc))
+            gate_passed = False
     elif require_ad:
         defects.append("require_autodiff=True 但未提供 Auto-Diff 载荷")
         gate_passed = False
@@ -771,6 +794,11 @@ class AdversarialCritic:
                             "finding": "Auto-Diff 判定未通过（过切/残料/证据不足）",
                             "evidence": "verdict={} codes={} ratios={}".format(
                                 ad.get("verdict"), ad.get("codes"), ad.get("ratios"))})
+        if ad.get("basis") == "payload_error":
+            defects.append({"id": "RED-AUTODIFF-ERROR",
+                            "severity": "fatal",
+                            "finding": "Auto-Diff 载荷读取/解析失败，偏差证据链断裂（§8.4 解析失败必判红）",
+                            "evidence": str(ad.get("error"))})
         if claimed_success and ad.get("basis") == "not_provided":
             defects.append({"id": "RED-NO-AUTODIFF",
                             "severity": "major",

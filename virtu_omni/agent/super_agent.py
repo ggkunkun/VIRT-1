@@ -1119,11 +1119,13 @@ class VirtuSuperAgent:
                             ("d_inner", "d_inner_mm", "bore_diameter_mm", "bore_diameter")
                             if spec_dict.get(key) is not None), None)
         if internal_pressure_mpa is None:
-            internal_pressure_mpa = spec_dict.get(
-                "pressure_inner_mpa", spec_dict.get("internal_pressure_mpa")
-            )
+            internal_pressure_mpa = spec_dict.get("pressure_inner_mpa")
+            if internal_pressure_mpa is None:
+                internal_pressure_mpa = spec_dict.get("internal_pressure_mpa")
         if po_mpa is None:
-            po_mpa = spec_dict.get("pressure_outer_mpa", spec_dict.get("external_pressure_mpa", 0.0))
+            po_mpa = spec_dict.get("pressure_outer_mpa")
+            if po_mpa is None:
+                po_mpa = spec_dict.get("external_pressure_mpa", 0.0)
         material_name = spec_dict.get("material")
 
         missing = [name for name, value in (

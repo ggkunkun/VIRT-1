@@ -132,7 +132,7 @@ class WishCADCAMEngine:
 
         # 2. Extract key dimensions using regex requiring at least one digit
         outer_d = re.findall(r"(?:外径|外轮廓|外圆)[\s=:约为]*([0-9]+(?:\.[0-9]+)?)", wish_text)
-        inner_d = re.findall(r"(?:内径|内孔|孔径|轴孔|底径|根部)[\s=:约为]*([0-9]+(?:\.[0-9]+)?)", wish_text)
+        inner_d = re.findall(r"(?:内径|内孔|通孔径|通孔|中心孔|孔径|轴孔|底径|根部)[\s=:约为]*([0-9]+(?:\.[0-9]+)?)", wish_text)
         generic_d = re.findall(r"(?:直径|[D|d][\s=:约为]+)([0-9]+(?:\.[0-9]+)?)", wish_text)
 
         d_outer = safe_float(outer_d[0], 53.0) if outer_d else (safe_float(generic_d[0], 53.0) if generic_d else 53.0)
@@ -147,6 +147,24 @@ class WishCADCAMEngine:
         lengths = re.findall(r"(?:总长|长度|高度|总高|宽|厚|[L|l|H|h][\s=:约为]+)([0-9]+(?:\.[0-9]+)?)", wish_text)
         angles = re.findall(r"(?:角|度|deg|angle)[\s=:约为]*([0-9]+(?:\.[0-9]+)?)", wish_text)
         counts = re.findall(r"([0-9]+)\s*(?:个|道|叶片|齿|槽)", wish_text)
+
+        # 载荷工况：只认题面显式给出的压力，绝不假设默认内压
+        # （缺载荷时下游 CAE 必须 BLOCKED，而不是拿 10 MPa 冒充已知工况）。
+        def _grab_pressure(*keywords: str) -> Optional[float]:
+            for kw in keywords:
+                m = re.search(
+                    kw + r"\s*(?:为|是|=|:|：)?\s*(\d+(?:\.\d+)?)\s*(?:MPa|兆帕)",
+                    wish_text, re.IGNORECASE,
+                )
+                if m:
+                    try:
+                        return float(m.group(1))
+                    except ValueError:
+                        return None
+            return None
+
+        pressure_inner_mpa = _grab_pressure(r"(?:内压|内部压力|工作压力|设计压力)")
+        pressure_outer_mpa = _grab_pressure(r"(?:外压|外部压力)")
 
         try:
             num_features = min(max(int(counts[0]), 1), 100) if counts else 3
@@ -254,6 +272,8 @@ class WishCADCAMEngine:
             "root_type": sample_fields.get("root_type"),
             "kinematics": sample_fields.get("kinematics"),
             "sample_provenance": sample_fields.get("sample_provenance"),
+            "pressure_inner_mpa": pressure_inner_mpa,
+            "pressure_outer_mpa": pressure_outer_mpa,
             "dimension_evidence": {
                 "d_outer_mm": {"value": d_outer, "source": outer_source},
                 "d_inner_mm": {"value": d_inner, "source": inner_source},

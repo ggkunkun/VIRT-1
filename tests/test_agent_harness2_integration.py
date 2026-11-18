@@ -68,7 +68,10 @@ class TestAgentHarness2Integration(unittest.TestCase):
         out_dir = self.root / "harnessed_run"
         res = self.agent.solve(prompt, mode=SuperAgentMode.HARNESSED, output_dir=str(out_dir))
 
-        self.assertTrue(res.success)
+        # Fail-closed 契约（与 test_super_agent.test_02 一致）：该 prompt 未给出
+        # 载荷工况，且特征树为规则推导而非实测 CAD 证据，工程门必须判负，
+        # 不得靠 HARNESSED 包装把草稿伪装成工程通过。
+        self.assertFalse(res.success)
         self.assertEqual(res.mode, SuperAgentMode.HARNESSED.value)
         self.assertIn("Harness² Recursive Improver", res.facets_engaged)
         self.assertIn("harness2_refinement", res.artifacts)

@@ -279,6 +279,7 @@ class ActionEngine:
             down_flag = MOUSEEVENTF_RIGHTDOWN if button.lower() == "right" else MOUSEEVENTF_LEFTDOWN
             up_flag = MOUSEEVENTF_RIGHTUP if button.lower() == "right" else MOUSEEVENTF_LEFTUP
 
+            aborted = False
             self._move_raw(sx, sy)
             time.sleep(0.02)
             user32.mouse_event(down_flag, 0, 0, 0, 0)
@@ -292,10 +293,13 @@ class ActionEngine:
                     # 轨迹中途被外力打断（并发 agent / 操作者真鼠标）→ 立即松手让位
                     if input_guard.foreign_motion((curr_x, curr_y)):
                         logger.warning("drag aborted: cursor moved by a foreign writer")
+                        aborted = True
                         break
             finally:
                 user32.mouse_event(up_flag, 0, 0, 0, 0)
 
+        # 中途让位 ≠ 完成：轨迹没走完就不能报 executed/ok=True（AGENTS.md §5）。
+        # 真实输入已部分发出（按下+部分移动+抬起），故 input_sent 仍为 True。
         return {
             "action": "drag",
             "start_x": sx,
@@ -303,8 +307,9 @@ class ActionEngine:
             "end_x": ex,
             "end_y": ey,
             "steps": steps,
-            "ok": True,
-            "status": "executed",
+            "ok": not aborted,
+            "status": "aborted" if aborted else "executed",
+            "aborted": "foreign_cursor_writer" if aborted else None,
             "dry_run": False,
             "input_sent": True,
         }
@@ -371,6 +376,13 @@ class ActionEngine:
                 vk_codes.append(ord(k_lower.upper()))
             else:
                 logger.warning(f"Unknown key: {k}")
+
+        # 空组合/全部未知键 ⇒ 没有任何键可发。绝不能报 input_sent=True/executed
+        # （AGENTS.md §5：没碰总线就说碰了是假断言）。无需加锁，直接如实拒绝。
+        if not vk_codes:
+            return {"action": "hotkey", "keys": keys, "ok": False,
+                    "status": "no_keys", "error": "no valid keys resolved from input",
+                    "dry_run": False, "input_sent": False}
 
         with input_guard.input_session("hotkey", target="focused-window") as ctx:
             if ctx["dry_run"]:

@@ -382,6 +382,26 @@ class ProcessMemoryReclaimer:
             except Exception:
                 pass
 
+        # 3b. 复核强杀是否真的生效：kill() 只是发出终止请求，进程可能仍存活
+        #     （Windows 上进程对象短暂滞留，或受保护进程拒绝退出）。仍存活的进程
+        #     绝不能被报成 RECLAIMED——那是无证据的断言（AGENTS.md §5）。
+        residual_pids: List[int] = []
+        for p in session_procs:
+            try:
+                if not p.is_running():
+                    continue
+                wait = getattr(p, "wait", None)
+                if callable(wait):
+                    try:
+                        wait(timeout=1.0)
+                    except Exception:
+                        pass
+                if p.is_running():
+                    residual_pids.append(p.pid)
+            except Exception:
+                # 无法确认死亡 => 保守计为残留，不臆断已回收
+                residual_pids.append(p.pid)
+
         # Legacy unconditional taskkill /F /IM is REMOVED: it used to kill
         # unrelated user-owned SOLIDWORKS/AutoCAD processes. It is available
         # only via an explicit opt-in and is always audited.
@@ -407,11 +427,12 @@ class ProcessMemoryReclaimer:
             "pids_found": pids_found,
             "adopted_pids": adopted_pids,
             "killed_pids": killed_pids,
+            "residual_pids": residual_pids,
             "rss_freed_est_mb": round(rss_freed_est_mb, 2),
             "mem_before_mb": mem_before["available_mb"],
             "mem_after_mb": mem_after["available_mb"],
             "reclaimed_mb": reclaimed_mb,
-            "status": "RECLAIMED",
+            "status": "FAILED" if residual_pids else "RECLAIMED",
             "session_pids_tracked": sorted(self._session_pids),
             "allow_global_kill": self.allow_global_kill,
             "timestamp": time.strftime("%Y-%m-%d %H:%M:%S")
@@ -434,19 +455,38 @@ class ProcessMemoryReclaimer:
         return results
 
     def _append_log(self, record: Dict[str, Any]):
-        """追加记录至本地取证日志文件。"""
+        """追加记录至本地取证日志文件（原子写 + 损坏留证）。
+
+        取证日志是证据（AGENTS.md §8）：写入必须原子（temp + os.replace），
+        避免并发读者看到半截 JSON；既有文件损坏时不得静默清空丢弃历史，
+        而是另存 ``.corrupt-<ts>.bak`` 留证后再起新数组。
+        """
         try:
-            os.makedirs(os.path.dirname(os.path.abspath(self.log_path)), exist_ok=True)
-            cur = []
-            if os.path.exists(self.log_path):
+            path = os.path.abspath(self.log_path)
+            os.makedirs(os.path.dirname(path), exist_ok=True)
+            cur: List[Any] = []
+            if os.path.exists(path):
                 try:
-                    with open(self.log_path, "r", encoding="utf-8") as f:
-                        cur = json.load(f)
+                    with open(path, "r", encoding="utf-8") as f:
+                        loaded = json.load(f)
+                    cur = loaded if isinstance(loaded, list) else []
+                    if not isinstance(loaded, list):
+                        raise ValueError("log root is not a JSON array")
                 except Exception:
+                    # 损坏/非数组：保留原始字节作为证据，绝不静默丢弃
+                    try:
+                        bak = f"{path}.corrupt-{int(time.time())}.bak"
+                        os.replace(path, bak)
+                    except Exception:
+                        pass
                     cur = []
             cur.append(record)
-            with open(self.log_path, "w", encoding="utf-8") as f:
+            tmp = f"{path}.tmp"
+            with open(tmp, "w", encoding="utf-8") as f:
                 json.dump(cur, f, ensure_ascii=False, indent=2)
+                f.flush()
+                os.fsync(f.fileno())
+            os.replace(tmp, path)
         except Exception:
             pass
 

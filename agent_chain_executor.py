@@ -959,11 +959,13 @@ def _run_child(worker, payload, timeout, out_dir, name=None):
             # 结果已落盘、进程还赖着（COM 引用没释放）：这不是超时，收掉孤儿即可
             lingering = True
             subprocess.run(["taskkill", "/PID", str(p.pid), "/T", "/F"],
-                           capture_output=True, shell=False)
+                           stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+                           timeout=15, shell=False)
         elif rc is None:
             timed_out = True
             subprocess.run(["taskkill", "/PID", str(p.pid), "/T", "/F"],
-                           capture_output=True, shell=False)
+                           stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+                           timeout=15, shell=False)
             rc = "TIMEOUT_KILLED"
     data = None
     if os.path.exists(rj):
@@ -1537,7 +1539,8 @@ def _vericut_batch_run(bat, project_path, out_dir, timeout=420, argv_extra=None,
                 break
         if p.poll() is None:
             subprocess.run(["taskkill", "/PID", str(p.pid), "/T", "/F"],
-                           capture_output=True, shell=False)
+                           stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+                           timeout=15, shell=False)
             rc = idle_note or "TIMEOUT_KILLED"
         else:
             rc = p.returncode
@@ -1565,7 +1568,7 @@ def open_vericut_gui(project_path, out_dir=None, wait_s=45):
     必须带 `fitall`：不带时视图不缩放到全图，看上去就像「机床根本没加载」——实测同一工程
     加 fitall 后机床、主轴视图都正常显示。返回 PID 与日志路径，关窗由调用方/用户决定。
     """
-    bat = r"E:\windows64\commandsericut_console.bat"
+    bat = r"E:\windows64\commands\vericut_console.bat"
     project_path = os.path.abspath(project_path)
     out_dir = os.path.abspath(out_dir or os.path.dirname(project_path))
     _, use_project = _vericut_training_stub(project_path)
@@ -1875,7 +1878,7 @@ def _find_play_button(hwnd=None, scan_all=False, scale=4, threshold=0.80):
     tpl = np.asarray(Image.open(tpl_path).convert("RGB"))
     th, tw = tpl.shape[:2]
     shot_img = pyautogui.screenshot().convert("RGB")
-    H, W = shot_img.size
+    W, H = shot_img.size  # PIL size=(width, height)；旧实现 H,W 对调致扫描几何全错
     shot = np.asarray(shot_img).astype(np.int16)
     tpl = tpl.astype(np.int16)
     rect = _phys_rect(hwnd) if hwnd else None
@@ -1965,9 +1968,11 @@ def _vericut_click_play(hwnd, xy, real=False):
     """触发播放：`real` 为真用真实点击（该点确实属于我们窗口时），否则 PostMessage 给窗口自己。"""
     try:
         if real:
-            import pyautogui
-            pyautogui.click(int(xy[0]), int(xy[1]))
-            return "真实点击"
+            # 真实点击必须经 input_guard（§4.5 键鼠总线唯一入口）：fail-closed +
+            # 租约 + 审计 + 松手兜底。pyautogui.click 直写总线、绕过全部闸门，弃用。
+            import win_input
+            sent = win_input.click(int(xy[0]), int(xy[1]))
+            return "真实点击（经 input_guard 授权）" if sent else "真实点击被闸门拒绝/演练（未发出）"
         _vericut_post_click(hwnd, xy[0], xy[1])
         return "PostMessage 到窗口自身（绕开遮挡）"
     except Exception as e:
@@ -2630,7 +2635,8 @@ def close_launched():
         pid = str(rec.get("pid"))
         if pid in rows and _same_install(rows[pid]["path"], rec.get("path", "")):
             subprocess.run(["taskkill", "/PID", pid, "/T", "/F"],
-                           capture_output=True, shell=False)
+                           stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+                           timeout=15, shell=False)
             closed.append(int(pid))
             _launch_ledger_append({"pid": int(pid), "exe": rec.get("exe"),
                                   "path": rec.get("path"),

@@ -201,7 +201,8 @@ class TestSecurityAuditIntegration(unittest.TestCase):
             "G97 S800 M03\n"
             "G00 X50.0 Z5.0\n"
             "G01 Z-2.0 F0.2\n"
-            "G71 U1.0 R0.5\n"
+            "G01 X45.0\n"
+            "G01 Z5.0\n"
             "M05\n"
             "M30\n"
         )

@@ -68,10 +68,19 @@ class TestAgentReachIntegration(unittest.TestCase):
         self.assertIsNotNone(curator.reach)
         self.assertIsInstance(curator.reach, VirtuAgentReach)
 
-        res = curator.search_web_knowledge("solidworks", channel="github", limit=2)
+        # 用受控的真实分支载荷做 hermetic 验证：旧实现离线时伪造 "Technical
+        # Reference" 条目并谎报 SUCCESS，本用例曾依赖那份假证据。现固定 reach.search
+        # 返回 ok+items，确定性地走真实 SUCCESS 分支（不依赖 live GitHub / 不依赖伪造）。
+        canned = {"ok": True, "backend": "github-api", "items": [
+            {"title": "ros/solidworks_urdf_exporter",
+             "url": "https://github.com/ros/solidworks_urdf_exporter"}]}
+        with patch.object(curator.reach, "search", return_value=canned):
+            res = curator.search_web_knowledge("solidworks", channel="github", limit=2)
         self.assertEqual(res["status"], "SUCCESS")
         self.assertEqual(res["query"], "solidworks")
         self.assertIn("findings", res)
+        self.assertEqual(res["findings"], canned["items"])
+        self.assertEqual(res["backend"], "github-api")
 
     def test_bridge_reach_endpoints(self):
         """Verify WorkBuddy Bridge REST API endpoints (/v1/reach/*)."""

@@ -54,7 +54,9 @@ def test_01_super_agent_autonomous_hooks_wake_step():
     prompt = "设计精密轴承套圈 AL7075-T6 轴套，要求具备 Lamé 安全系数 FOS >= 1.5 并复核尺寸"
     res = agent.solve(prompt, mode=SuperAgentMode.AUTONOMOUS, memory_safe=True)
 
-    assert res.success is True
+    # Fail-closed：prompt 未给出压力载荷，CAE 必然 BLOCKED，工程门判负；
+    # 本用例只验证 wake-step 钩子，成功与否以真实门为准。
+    assert res.success is False
     # Verify wake step was automatically recorded
     assert len(agent.sleep_framework.wake_buffer) == initial_wake_count + 1
     latest_exp = agent.sleep_framework.wake_buffer.get_unconsolidated()[-1]

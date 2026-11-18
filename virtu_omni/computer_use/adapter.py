@@ -174,14 +174,26 @@ class VirtuComputerUse:
 
         profile = self.get_screen_profile()
 
-        # 诚实性：全部步骤都被闸门抑制时不能报"完成"。旧实现无条件
-        # status=COMPLETED，等于把"一次都没发"说成"做了"（违反 AGENTS.md §5/§8）。
+        # 诚实性（AGENTS.md §5/§8）：判决必须反映实际发生的事。
+        #  - 空动作列表：all([])==True 是陷阱，什么都没做绝不能报 COMPLETED。
+        #  - 任一步骤 ok=False：整体失败，status=FAILED，不能仍报 COMPLETED。
+        #  - 全部步骤被闸门抑制（dry_run，零真实输入）：如实标 COMPLETED_SIMULATED。
         inputs_sent = sum(1 for s in step_results if s["result"].get("input_sent"))
         simulated_steps = [s for s in step_results if s["result"].get("dry_run")]
+        all_ok = all(s["result"].get("ok", False) for s in step_results)
         all_suppressed = bool(step_results) and inputs_sent == 0 and bool(simulated_steps)
 
+        if not step_results:
+            ok, status = False, "NO_ACTIONS"
+        elif not all_ok:
+            ok, status = False, "FAILED"
+        elif all_suppressed:
+            ok, status = True, "COMPLETED_SIMULATED"
+        else:
+            ok, status = True, "COMPLETED"
+
         return {
-            "ok": all(s["result"].get("ok", False) for s in step_results),
+            "ok": ok,
             "goal": goal,
             "total_steps": len(actions),
             "screen_profile": {
@@ -192,7 +204,7 @@ class VirtuComputerUse:
             "steps": step_results,
             "pre_action_state": pre_capture,
             "post_action_state": post_capture,
-            "status": "COMPLETED_SIMULATED" if all_suppressed else "COMPLETED",
+            "status": status,
             "simulated": all_suppressed,
             "input_sent_steps": inputs_sent,
         }

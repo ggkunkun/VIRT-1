@@ -161,7 +161,11 @@ def parse_json_loose(text: str) -> tuple[dict | None, str]:
     t = (text or "").strip()
     t = re.sub(r"^```(?:json)?|```$", "", t, flags=re.M).strip()
     try:
-        return json.loads(t), "json"
+        v = json.loads(t)
+        # 只接受 dict：模型偶尔吐 JSON 数组，旧实现直接返回 list，下游
+        # sanitize_plan/(data or {}).get(...) 对 list 调 .get 会 AttributeError 崩溃。
+        if isinstance(v, dict):
+            return v, "json"
     except Exception:
         pass
     try:
@@ -347,6 +351,10 @@ def coerce_arg(prop: dict, value):
     if isinstance(value, bool):
         vt = "boolean"
     if vt in allowed:
+        return value, True, ""
+    # JSON Schema "number" 同时接受整数与浮点；Python int 的 vt="integer" 不应被
+    # 仅声明 "number" 的参数拒绝，否则合法数值参数会被 sanitize_plan 静默丢弃。
+    if vt == "integer" and "number" in allowed:
         return value, True, ""
     # 字符串 -> 数字 / 布尔（模型常把 "true"/"640" 写成字符串）
     if isinstance(value, str):

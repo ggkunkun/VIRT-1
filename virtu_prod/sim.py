@@ -136,8 +136,6 @@ def parse(text: str, dialect: str) -> Parsed:
         nb = (b + wd["B"]) if (not absolute and "B" in wd) else wd.get("B", b)
         nc = (c + wd["C"]) if (not absolute and "C" in wd) else wd.get("C", c)
         has_xy = "X" in wd or "Y" in wd
-        if motion == 0 and has_xy and not comp:
-            p.errors.append(f"L{ln}: 快速移动未启用刀长补偿 (G43)")
         if motion in (1, 2, 3) and not spindle:
             p.errors.append(f"L{ln}: 切削进给时主轴未启动")
         if motion in (1, 2, 3) and feed is None:

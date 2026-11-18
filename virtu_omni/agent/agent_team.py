@@ -932,14 +932,37 @@ class EvolutionAndMemoryAgent(BaseIndustrialAgent):
             "沙箱仿真必须验证 ForceRebuild3 与 G00 快速移动无负向切削碰撞"
         ]
 
+        # 成功经验必须 gated 于真实验证（§5 证据先于断言）：旧实现无条件写
+        # "成功完成"，沙箱/真实门失败时仍把成功经验归档 → 记忆投毒。
+        # engineering_verdict 是权威门（solve_full 注入真实工程结果），优先于 legacy 沙箱。
+        auditor_passed = context.get("auditor", {}).get("passed") is True
+        eng_verdict = context.get("engineering_verdict")   # None=未提供权威门
+        verified_success = (eng_verdict is True) if eng_verdict is not None else auditor_passed
+        basis = "measured" if eng_verdict is True else "asserted"
+        wish = spec.get("wish_name", "零件")
+        mat = spec.get("material", "AL")
+        if verified_success:
+            claim = (f"验证通过：完成【{wish}】参数化建模与数控规划。"
+                     f"材质: {mat}, 策略: {solution_strategy}")
+        else:
+            reason = ("真实工程门未通过" if eng_verdict is False
+                      else "沙箱校验未通过/未执行" if not auditor_passed
+                      else "未经真实工程门验证")
+            claim = (f"{reason}：【{wish}】建模与数控规划策略归档（仅供复盘，"
+                     f"不得当作成功经验召回）。材质: {mat}")
+
         # 1. Commit to Hindsight Memory (both agent experiences and mental models)
         h_exp = self.hindsight.retain(
             bank_id="virtu_cad_cam",
-            content=f"成功完成【{spec.get('wish_name', '零件')}】参数化建模与数控规划。材质: {spec.get('material', 'AL')}, 策略: {solution_strategy}",
+            content=claim,
             context="procedures",
             tags=["agent_team", "cad_cam", spec.get("material", "AL")],
             memory_type=MemoryType.AGENT_EXPERIENCES,
-            metadata={"task_signature": task_sig, "spec": spec}
+            metadata={"task_signature": task_sig, "spec": spec,
+                      "engineering_verified": verified_success,
+                      "auditor_passed": auditor_passed,
+                      "engineering_verdict": eng_verdict,
+                      "evidence_basis": basis}
         )
 
         h_mm = self.hindsight.retain(
@@ -974,9 +997,15 @@ class EvolutionAndMemoryAgent(BaseIndustrialAgent):
             "hindsight_mental_model_id": h_mm["id"],
             "memory_security": mem_audit,
             "skills_provenance": prov_check,
+            "verified_success": verified_success,
+            "evidence_basis": basis,
+            "engineering_verdict": eng_verdict,
             "total_experiences": self.memory_engine.memory["total_experiences"],
             "hindsight_total_units": self.hindsight.get_status()["total_units"],
-            "summary": f"已将本次多智能体协同经验与心智模型固化至 Hindsight 记忆库 (EXP: {h_exp['id']}, MM: {h_mm['id']})，通过防投毒安全审查。"
+            "summary": ("已将本次多智能体协同经验与心智模型固化至 Hindsight 记忆库 "
+                        f"(EXP: {h_exp['id']}, MM: {h_mm['id']})，通过防投毒安全审查。"
+                        + ("成功经验已实测验证。" if verified_success
+                           else "归档为复盘记录，未标记为成功经验。"))
         }
 
 
@@ -1107,9 +1136,22 @@ class IndustrialAgentTeam:
         os.makedirs(engineering_dir, exist_ok=True)
 
         legacy = self.solve(user_prompt, output_dir=legacy_dir,
-                            memory_safe=memory_safe, run_ctx=run_ctx)
+                            memory_safe=memory_safe, run_ctx=run_ctx,
+                            commit_memory=False)
         eng = self.solve_engineering(user_prompt, params=params,
                                      output_dir=engineering_dir, run_ctx=run_ctx)
+
+        # 真实工程门已出结论，此刻才归档经验：verdict 权威优先于 legacy 沙箱。
+        # 门判红 → 归档为复盘记录（verified_success=False），绝不写成成功经验（§5）。
+        mem_res = self.memory_agent.run({
+            "user_prompt": user_prompt,
+            "architecture": legacy.get("architecture", {}),
+            "auditor": legacy.get("sandbox_audit", {}),
+            "engineering_verdict": eng["engineering_verified"],
+        })
+        commit_path = os.path.join(legacy_dir, "07_hindsight_memory_commit.json")
+        with open(commit_path, "w", encoding="utf-8") as f:
+            json.dump(mem_res, f, ensure_ascii=False, indent=2)
 
         merged = dict(legacy)  # 保留 legacy 字段（架构/特征树/GD&T/记忆等）以兼容下游
         merged.update({
@@ -1125,7 +1167,10 @@ class IndustrialAgentTeam:
             "swarm_status": eng["status"],
             "swarm_verification": eng["verification_report"],
             "per_agent_status": {**legacy.get("per_agent_status", {}),
-                                 **eng["per_agent_status"]},
+                                 **eng["per_agent_status"],
+                                 "EvolutionAndMemoryAgent.commit":
+                                     str(mem_res.get("status", "UNKNOWN")).upper()},
+            "memory_evolution": mem_res,
             "engineering": eng,
             "output_dir": base_dir,
             "legacy_output_dir": legacy.get("output_dir"),
@@ -1267,11 +1312,16 @@ class IndustrialAgentTeam:
         output_dir: Optional[str] = None,
         memory_safe: bool = True,
         run_ctx: Any = None,
+        commit_memory: bool = True,
     ) -> Dict[str, Any]:
         """Execute collaborative end-to-end multi-agent problem solving with stage-gated memory safety.
 
         run_ctx: 上游（super_agent / deep_agent）透传的 RunContext；缺省按内容指纹自建，
         保证同一 prompt 的 run_id 可复现（审计 §7.2 / §8.2）。
+
+        commit_memory: 是否在第 7 步立即归档经验。独立调用默认 True（沙箱结论即权威）。
+        ``solve_full`` 传 False，把记忆归档延后到真实工程门之后，由权威 verdict 决定
+        是否标记为成功经验——避免 legacy 桩在真实门判红前就把"成功"写进记忆库（§5）。
         """
         t0 = time.time()
         ctx = ensure_ctx(run_ctx, "agent_team.solve", user_prompt)
@@ -1395,11 +1445,23 @@ class IndustrialAgentTeam:
         })
 
         # Step 7: Memory Agent commits verified patterns
-        mem_res = self.memory_agent.run({
-            "user_prompt": user_prompt,
-            "architecture": arch_res,
-            "auditor": audit_res
-        })
+        # commit_memory=False（solve_full 调用）时延后归档：此刻还没有真实工程门的
+        # 权威 verdict，先写记忆会把"桩自报成功"当成成功经验固化（§5 记忆投毒）。
+        if commit_memory:
+            mem_res = self.memory_agent.run({
+                "user_prompt": user_prompt,
+                "architecture": arch_res,
+                "auditor": audit_res
+            })
+        else:
+            mem_res = {
+                "agent": self.memory_agent.name,
+                "status": "DEFERRED",
+                "summary": "记忆归档延后至真实工程门之后（solve_full 注入权威 verdict）",
+                "deferred": True,
+                "verified_success": False,
+                "evidence_basis": "asserted",
+            }
         step7_files = {
             "07_hindsight_memory_commit.json": mem_res
         }

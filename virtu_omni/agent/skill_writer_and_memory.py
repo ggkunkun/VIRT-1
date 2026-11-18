@@ -497,7 +497,21 @@ class SkillWriterAndMemory:
         scripts: Optional[Dict[str, str]] = None
     ) -> str:
         """Autonomously construct and deploy a standard Antigravity SKILL folder."""
+        # 路径穿越防护：skill_name 必须是 skills_root 下的单层安全目录名，scripts 的键
+        # 必须是 scripts/ 下的安全文件名。拒绝 .. / 绝对路径 / 路径分隔符，并以 realpath
+        #  containment 兜底（防符号链接逃逸）。skill_name/scripts 来自工具调用，属外部输入。
+        root = os.path.realpath(self.skills_root)
+
+        def _safe_component(name: str, kind: str) -> str:
+            if (not name or name in (".", "..") or os.path.isabs(name)
+                    or "/" in name or "\\" in name or ".." in name):
+                raise ValueError(f"非法{kind}（疑似路径穿越）: {name!r}")
+            return name
+
+        _safe_component(skill_name, "skill_name")
         skill_dir = os.path.join(self.skills_root, skill_name)
+        if os.path.realpath(skill_dir) != os.path.join(root, skill_name):
+            raise ValueError(f"skill_name 解析后逃出 skills_root: {skill_name!r}")
         scripts_dir = os.path.join(skill_dir, "scripts")
         os.makedirs(scripts_dir, exist_ok=True)
 
@@ -520,7 +534,10 @@ class SkillWriterAndMemory:
         # 2. Save bundled executable scripts
         if scripts:
             for sname, scontent in scripts.items():
+                _safe_component(sname, "脚本文件名")
                 spath = os.path.join(scripts_dir, sname)
+                if os.path.realpath(spath) != os.path.join(root, skill_name, "scripts", sname):
+                    raise ValueError(f"脚本路径逃出 scripts_dir: {sname!r}")
                 with open(spath, "w", encoding="utf-8") as f:
                     f.write(scontent)
 
@@ -669,19 +686,16 @@ class SkillWriterAndMemory:
             except Exception as e:
                 print(f"[AGENT-REACH] Search fallback due to: {e}")
 
-        # Graceful fallback
+        # 诚实降级：未执行真实检索（Agent-Reach 不可用 / 无结果 / 异常）。
+        # 不得伪造 "Technical Reference" 条目冒充联网证据（§5 证据先于断言）；
+        # 与 query_first_principles_concept 的 FALLBACK/空集口径一致。
         return {
             "query": query,
             "channel": channel,
-            "status": "SUCCESS",
-            "findings": [
-                {
-                    "title": f"Technical Reference for {query}",
-                    "snippet": f"Detailed API specification, parameters, and syntax conventions for {query}.",
-                    "url": f"https://github.com/search?q={urllib.parse.quote(query)}"
-                }
-            ],
+            "status": "NO_EVIDENCE",
+            "findings": [],
             "backend": "offline-fallback",
+            "note": "未执行真实检索：Agent-Reach 不可用或无结果，本条不得当作联网证据",
         }
 
     def query_first_principles_concept(self, topic: str, limit: int = 3) -> Dict[str, Any]:

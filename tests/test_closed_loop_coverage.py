@@ -36,7 +36,7 @@ ALLOWED_STATUS = {"measured", "partial", "routing_measured_result_unmeasurable"}
 class TestRuntimeRegistryIsTheSource(unittest.TestCase):
     def test_registry_parses_without_importing_the_bridge(self):
         tools = tool_schema.runtime_tools()
-        self.assertEqual(len(tools), 17, "运行时注册表条数变了，测评面要跟着改")
+        self.assertEqual(len(tools), 20, "运行时注册表条数变了，测评面要跟着改")
         for tool in tools:
             fn = tool["function"]
             self.assertTrue(fn["description"].strip(), fn["name"])
@@ -60,7 +60,7 @@ class TestRuntimeRegistryIsTheSource(unittest.TestCase):
     def test_gate_is_not_vacuous_without_the_new_cases(self):
         """Point the same detector at the old board only - it must go red on 7 tools."""
         uncovered = tool_schema.uncovered_runtime_tools(case_dirs=(V1_DIR,))
-        self.assertEqual(len(uncovered), 7, uncovered)
+        self.assertEqual(len(uncovered), 10, uncovered)
         self.assertIn("cadcam_cae_stress_analysis", uncovered)
         self.assertIn("cadcam_step_reverse", uncovered)
         self.assertIn("cadcam_assembly_build", uncovered)

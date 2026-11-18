@@ -15,7 +15,7 @@ import pytest
 
 from scripts.router import router_server as router
 
-TOKEN = "router-test-token-" + "x" * 48
+TOKEN = ("router-test-token-" + "x" * 48)
 
 
 @contextmanager

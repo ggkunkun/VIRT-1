@@ -39,7 +39,7 @@ class BlueprintInverseEngine:
             "length_mm": r"(?:总长|全长|轴向长度|长度|长)\s*[:=：]?\s*(\d+(?:\.\d+)?)\s*(mm|毫米|inch|in|英寸)",
             "width_mm": r"(?:宽度|宽)\s*[:=：]?\s*(\d+(?:\.\d+)?)\s*(mm|毫米|inch|in|英寸)",
             "thickness_mm": r"(?:厚度|厚|总高|高度)\s*[:=：]?\s*(\d+(?:\.\d+)?)\s*(mm|毫米|inch|in|英寸)",
-            "hole_diameter_mm": r"(?:内径|内孔|轴孔|孔径|bore)\s*(?:[ØΦφ])?\s*[:=：]?\s*(\d+(?:\.\d+)?)\s*(mm|毫米|inch|in|英寸)",
+            "hole_diameter_mm": r"(?:内径|内孔|通孔径|通孔|中心孔|轴孔|孔径|bore)\s*(?:[ØΦφ])?\s*[:=：]?\s*(\d+(?:\.\d+)?)\s*(mm|毫米|inch|in|英寸)",
             "pitch_mm": r"(?:节圆|分度圆|孔距|中心距|PCD)\s*(?:直径)?\s*[:=：]?\s*(\d+(?:\.\d+)?)\s*(mm|毫米|inch|in|英寸)",
         }
 
