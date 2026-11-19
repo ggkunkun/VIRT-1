@@ -1,0 +1,20 @@
+{
+  "ts": "2026-11-19",
+  "session": "mode-knob-forensics",
+  "findings": {
+    "knob_9651_gesture": "180deg CW arc drag toggles between exactly 2 visual states (odd/even parity), does NOT advance through mode detents; identical pixel delta 4196 every drag",
+    "span_test": "arc spans 30-150deg all produce same toggle -> detent advance likely requires different gesture (press-hold-release at detent? smaller radius? wheel? or knob is not mode selector)",
+    "mode_text_ocr": "status row under CRT shows persistent JOG token at window-rel ~(1154,435); did not change across 10+ drags; may be mode label OR unrelated indicator - UNRESOLVED",
+    "cycle_start_now": "8/8 consecutive BM_CLICK(9518) produced 请切换到AUTO、MDI、示教或DNC模式! modal -> current mode is a reject-mode consistently",
+    "contrast_prior": "previous session: 2nd CW detent + cycle start -> continuous 3D motion (AUTO). Either knob behavior/state differed then, or mode was already AUTO",
+    "menu_paths": "full menu dump: NO mode-selection menu items; mode is panel-only control",
+    "panel_buttons": "55 Buttons owner-drawn, OCR finds no text labels; mode could be among them but unverifiable by OCR",
+    "login_dialog": "CNCLogin.exe pid6096 dialog still open (harmless, non-overlapping)"
+  },
+  "next_steps": [
+    "web research: SSCNC 7.2 / FANUC 0iM standard panel mode selector operation (official sim docs)",
+    "try alternate gestures: press-hold 1s then drag, radius 15/45px, CCW, wheel on knob, double-click",
+    "try dialogs 794/795 button-mode panels via alternate controller panel config",
+    "read mode from SSCNC diagnostics/报警 window or MDI page header via OCR full-screen"
+  ]
+}

@@ -1,0 +1,8 @@
+{"step": 1, "class": "NO_RESPONSE", "prompt": null, "motions": [0, 0, 0, 0, 0], "running_frames": 0, "all_dialogs": [[199742, ""]]}
+{"step": 2, "class": "NO_RESPONSE", "prompt": null, "motions": [0, 0, 0, 0, 0], "running_frames": 0, "all_dialogs": [[199742, ""]]}
+{"step": 3, "class": "REJECT_MODE", "prompt": [724352, ["确定", "请切换到AUTO、MDI、示教或DNC模式!"]], "motions": [], "running_frames": 0, "all_dialogs": [[199742, ""], [724352, "Sw"]]}
+{"step": 4, "class": "REJECT_MODE", "prompt": [724352, ["确定", "请切换到AUTO、MDI、示教或DNC模式!"]], "motions": [], "running_frames": 0, "all_dialogs": [[199742, ""], [724352, "Sw"]]}
+{"step": 5, "class": "REJECT_MODE", "prompt": [724352, ["确定", "请切换到AUTO、MDI、示教或DNC模式!"]], "motions": [], "running_frames": 0, "all_dialogs": [[199742, ""], [724352, "Sw"]]}
+{"step": 6, "class": "REJECT_MODE", "prompt": [724352, ["确定", "请切换到AUTO、MDI、示教或DNC模式!"]], "motions": [], "running_frames": 0, "all_dialogs": [[199742, ""], [724352, "Sw"]]}
+{"step": 7, "class": "REJECT_MODE", "prompt": [724352, ["确定", "请切换到AUTO、MDI、示教或DNC模式!"]], "motions": [], "running_frames": 0, "all_dialogs": [[199742, ""], [724352, "Sw"]]}
+{"step": 8, "class": "REJECT_MODE", "prompt": [724352, ["确定", "请切换到AUTO、MDI、示教或DNC模式!"]], "motions": [], "running_frames": 0, "all_dialogs": [[199742, ""], [724352, "Sw"]]}

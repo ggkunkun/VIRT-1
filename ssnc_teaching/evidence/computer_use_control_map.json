@@ -1,0 +1,1424 @@
+{
+ "evidence_type": "computer_use_control_map",
+ "software": "SSCNC 7.2.2.0",
+ "controller": "FANUC 0iM (CTRL1 FANUC 0i-M标准面板)",
+ "captured": "2026-11-19T13:42:36",
+ "screen": [
+  1920,
+  1080
+ ],
+ "windows": {
+  "main": {
+   "hwnd": 67042,
+   "class": "ClassName_Swansoft_CNC_Simulation",
+   "title": "FANUC 0iM - SwanSoft CNC"
+  },
+  "op_panel": {
+   "hwnd": 68412,
+   "class": "#32770",
+   "rect_note": "rect shifts with main window; re-enumerate before use"
+  },
+  "crt_panel": {
+   "hwnd": 198146,
+   "class": "#32770"
+  },
+  "machine_view": {
+   "hwnd": 132606,
+   "class": "Afx:...b:...",
+   "note": "3D view frame; overlaps left edge of op panel"
+  }
+ },
+ "activation_contract": {
+  "button_controls": "BM_CLICK via SendMessage/PostMessage on hwnd — VERIFIED works (produces real SSCNC responses: prompts, page switches, estop release)",
+  "native_dialog_buttons": "BM_CLICK — verified (prompt dismiss)",
+  "menus": "real mouse click works; also enumerable via Win32 menu APIs",
+  "synthesized_mouse_on_buttons": "DOES NOT WORK — mouse_event clicks on SSCNC Button controls produce no response (verified on CRT SYS softkey and panel buttons). Menus DO respond to real clicks.",
+  "knobs_statics": "unresolved — see unresolved",
+  "rule": "NEVER use screen coordinates for SSCNC controls; always resolve hwnd by class+id+rect, activate via BM_CLICK, verify by post-state readback"
+ },
+ "panel_buttons_55": [
+  {
+   "hwnd": 68414,
+   "id": 9500,
+   "rect": [
+    1072,
+    532,
+    1102,
+    562
+   ]
+  },
+  {
+   "hwnd": 68418,
+   "id": 9502,
+   "rect": [
+    1072,
+    587,
+    1102,
+    617
+   ]
+  },
+  {
+   "hwnd": 68422,
+   "id": 9504,
+   "rect": [
+    1072,
+    642,
+    1102,
+    672
+   ]
+  },
+  {
+   "hwnd": 68426,
+   "id": 9506,
+   "rect": [
+    1072,
+    698,
+    1102,
+    728
+   ]
+  },
+  {
+   "hwnd": 68430,
+   "id": 9508,
+   "rect": [
+    1072,
+    753,
+    1102,
+    783
+   ]
+  },
+  {
+   "hwnd": 68434,
+   "id": 9510,
+   "rect": [
+    1111,
+    532,
+    1141,
+    562
+   ]
+  },
+  {
+   "hwnd": 68438,
+   "id": 9512,
+   "rect": [
+    1111,
+    587,
+    1141,
+    617
+   ]
+  },
+  {
+   "hwnd": 68442,
+   "id": 9514,
+   "rect": [
+    1111,
+    642,
+    1141,
+    672
+   ]
+  },
+  {
+   "hwnd": 68446,
+   "id": 9516,
+   "rect": [
+    1111,
+    698,
+    1141,
+    728
+   ]
+  },
+  {
+   "hwnd": 68450,
+   "id": 9518,
+   "rect": [
+    1111,
+    753,
+    1141,
+    783
+   ]
+  },
+  {
+   "hwnd": 68454,
+   "id": 9520,
+   "rect": [
+    1150,
+    532,
+    1180,
+    562
+   ]
+  },
+  {
+   "hwnd": 68458,
+   "id": 9522,
+   "rect": [
+    1150,
+    587,
+    1180,
+    617
+   ]
+  },
+  {
+   "hwnd": 68462,
+   "id": 9524,
+   "rect": [
+    1150,
+    642,
+    1180,
+    672
+   ]
+  },
+  {
+   "hwnd": 68466,
+   "id": 9526,
+   "rect": [
+    1150,
+    698,
+    1180,
+    728
+   ]
+  },
+  {
+   "hwnd": 68470,
+   "id": 9528,
+   "rect": [
+    1150,
+    753,
+    1180,
+    783
+   ]
+  },
+  {
+   "hwnd": 68474,
+   "id": 9530,
+   "rect": [
+    1187,
+    532,
+    1217,
+    562
+   ]
+  },
+  {
+   "hwnd": 68478,
+   "id": 9532,
+   "rect": [
+    1187,
+    587,
+    1217,
+    617
+   ]
+  },
+  {
+   "hwnd": 68482,
+   "id": 9534,
+   "rect": [
+    1187,
+    642,
+    1217,
+    672
+   ]
+  },
+  {
+   "hwnd": 68486,
+   "id": 9536,
+   "rect": [
+    1187,
+    698,
+    1217,
+    728
+   ]
+  },
+  {
+   "hwnd": 68490,
+   "id": 9538,
+   "rect": [
+    1187,
+    753,
+    1217,
+    783
+   ]
+  },
+  {
+   "hwnd": 68494,
+   "id": 9540,
+   "rect": [
+    1250,
+    532,
+    1280,
+    562
+   ]
+  },
+  {
+   "hwnd": 68498,
+   "id": 9542,
+   "rect": [
+    1250,
+    587,
+    1280,
+    617
+   ]
+  },
+  {
+   "hwnd": 68502,
+   "id": 9544,
+   "rect": [
+    1250,
+    642,
+    1280,
+    672
+   ]
+  },
+  {
+   "hwnd": 68506,
+   "id": 9546,
+   "rect": [
+    1250,
+    698,
+    1280,
+    728
+   ]
+  },
+  {
+   "hwnd": 68510,
+   "id": 9548,
+   "rect": [
+    1250,
+    753,
+    1280,
+    783
+   ]
+  },
+  {
+   "hwnd": 68514,
+   "id": 9550,
+   "rect": [
+    1289,
+    532,
+    1319,
+    562
+   ]
+  },
+  {
+   "hwnd": 68518,
+   "id": 9552,
+   "rect": [
+    1289,
+    587,
+    1319,
+    617
+   ]
+  },
+  {
+   "hwnd": 68522,
+   "id": 9554,
+   "rect": [
+    1289,
+    642,
+    1319,
+    672
+   ]
+  },
+  {
+   "hwnd": 68526,
+   "id": 9556,
+   "rect": [
+    1289,
+    698,
+    1319,
+    728
+   ]
+  },
+  {
+   "hwnd": 68530,
+   "id": 9558,
+   "rect": [
+    1289,
+    753,
+    1319,
+    783
+   ]
+  },
+  {
+   "hwnd": 68534,
+   "id": 9560,
+   "rect": [
+    1328,
+    532,
+    1358,
+    562
+   ]
+  },
+  {
+   "hwnd": 68538,
+   "id": 9562,
+   "rect": [
+    1328,
+    587,
+    1358,
+    617
+   ]
+  },
+  {
+   "hwnd": 68542,
+   "id": 9564,
+   "rect": [
+    1328,
+    642,
+    1358,
+    672
+   ]
+  },
+  {
+   "hwnd": 68546,
+   "id": 9566,
+   "rect": [
+    1328,
+    698,
+    1358,
+    728
+   ]
+  },
+  {
+   "hwnd": 68550,
+   "id": 9568,
+   "rect": [
+    1328,
+    753,
+    1358,
+    783
+   ]
+  },
+  {
+   "hwnd": 68554,
+   "id": 9570,
+   "rect": [
+    1366,
+    532,
+    1396,
+    562
+   ]
+  },
+  {
+   "hwnd": 68558,
+   "id": 9572,
+   "rect": [
+    1366,
+    587,
+    1396,
+    617
+   ]
+  },
+  {
+   "hwnd": 68562,
+   "id": 9574,
+   "rect": [
+    1366,
+    642,
+    1396,
+    672
+   ]
+  },
+  {
+   "hwnd": 68566,
+   "id": 9576,
+   "rect": [
+    1366,
+    698,
+    1396,
+    728
+   ]
+  },
+  {
+   "hwnd": 68570,
+   "id": 9578,
+   "rect": [
+    1366,
+    753,
+    1396,
+    783
+   ]
+  },
+  {
+   "hwnd": 68574,
+   "id": 9580,
+   "rect": [
+    1429,
+    532,
+    1459,
+    562
+   ]
+  },
+  {
+   "hwnd": 68578,
+   "id": 9582,
+   "rect": [
+    1429,
+    587,
+    1459,
+    617
+   ]
+  },
+  {
+   "hwnd": 68582,
+   "id": 9584,
+   "rect": [
+    1429,
+    642,
+    1459,
+    672
+   ]
+  },
+  {
+   "hwnd": 68586,
+   "id": 9586,
+   "rect": [
+    1429,
+    698,
+    1459,
+    728
+   ]
+  },
+  {
+   "hwnd": 68590,
+   "id": 9588,
+   "rect": [
+    1429,
+    753,
+    1459,
+    783
+   ]
+  },
+  {
+   "hwnd": 68594,
+   "id": 9590,
+   "rect": [
+    1466,
+    532,
+    1496,
+    562
+   ]
+  },
+  {
+   "hwnd": 68598,
+   "id": 9592,
+   "rect": [
+    1466,
+    587,
+    1496,
+    617
+   ]
+  },
+  {
+   "hwnd": 68602,
+   "id": 9594,
+   "rect": [
+    1466,
+    642,
+    1496,
+    672
+   ]
+  },
+  {
+   "hwnd": 68606,
+   "id": 9596,
+   "rect": [
+    1466,
+    698,
+    1496,
+    728
+   ]
+  },
+  {
+   "hwnd": 68610,
+   "id": 9598,
+   "rect": [
+    1466,
+    753,
+    1496,
+    783
+   ]
+  },
+  {
+   "hwnd": 68614,
+   "id": 9600,
+   "rect": [
+    1504,
+    532,
+    1534,
+    562
+   ]
+  },
+  {
+   "hwnd": 68618,
+   "id": 9602,
+   "rect": [
+    1504,
+    587,
+    1534,
+    617
+   ]
+  },
+  {
+   "hwnd": 68622,
+   "id": 9604,
+   "rect": [
+    1504,
+    642,
+    1534,
+    672
+   ]
+  },
+  {
+   "hwnd": 68626,
+   "id": 9606,
+   "rect": [
+    1504,
+    698,
+    1534,
+    728
+   ]
+  },
+  {
+   "hwnd": 68630,
+   "id": 9608,
+   "rect": [
+    1504,
+    753,
+    1534,
+    783
+   ]
+  }
+ ],
+ "panel_large_statics": [
+  {
+   "hwnd": 68634,
+   "rect": [
+    800,
+    652,
+    923,
+    771
+   ]
+  },
+  {
+   "hwnd": 68636,
+   "rect": [
+    818,
+    517,
+    914,
+    624
+   ]
+  },
+  {
+   "hwnd": 68638,
+   "rect": [
+    935,
+    652,
+    1049,
+    774
+   ]
+  }
+ ],
+ "verified_functions": {
+  "9506": {
+   "function": "emergency_stop",
+   "status": "verified",
+   "evidence": "red pixel cluster 2707px; click released e-stop latch (main window re-enabled); SSCNC prompt 请释放紧停按扭 reproduced"
+  },
+  "9586": {
+   "function": "jog_motion_candidate",
+   "status": "verified_class",
+   "evidence": "BM_CLICK -> prompt 请先换到JOG,RJOG,JOG INC,WHEEL或HND模式"
+  },
+  "9606": {
+   "function": "jog_motion_candidate",
+   "status": "verified_class",
+   "evidence": "same prompt"
+  },
+  "9518": {
+   "function": "cycle_start_candidate",
+   "status": "verified_class",
+   "evidence": "BM_CLICK -> prompt 请切换到AUTO、MDI、示教或DNC模式"
+  }
+ },
+ "sweep_results": [
+  {
+   "idx": 0,
+   "id": 9500,
+   "rect": [
+    1048,
+    532,
+    1078,
+    562
+   ],
+   "prompts": [],
+   "panel_diff": 0.0003,
+   "crt_diff": 0.0004,
+   "statics_changed": {}
+  },
+  {
+   "idx": 1,
+   "id": 9510,
+   "rect": [
+    1087,
+    532,
+    1117,
+    562
+   ],
+   "prompts": [],
+   "panel_diff": 0.0006,
+   "crt_diff": 0.0005,
+   "statics_changed": {}
+  },
+  {
+   "idx": 2,
+   "id": 9520,
+   "rect": [
+    1126,
+    532,
+    1156,
+    562
+   ],
+   "prompts": [],
+   "panel_diff": 0.0006,
+   "crt_diff": 0.0004,
+   "statics_changed": {}
+  },
+  {
+   "idx": 3,
+   "id": 9530,
+   "rect": [
+    1163,
+    532,
+    1193,
+    562
+   ],
+   "prompts": [],
+   "panel_diff": 0.0006,
+   "crt_diff": 0.0004,
+   "statics_changed": {}
+  },
+  {
+   "idx": 4,
+   "id": 9540,
+   "rect": [
+    1226,
+    532,
+    1256,
+    562
+   ],
+   "prompts": [],
+   "panel_diff": 0.0003,
+   "crt_diff": 0.0003,
+   "statics_changed": {}
+  },
+  {
+   "idx": 5,
+   "id": 9550,
+   "rect": [
+    1265,
+    532,
+    1295,
+    562
+   ],
+   "prompts": [],
+   "panel_diff": 0.0,
+   "crt_diff": 0.0003,
+   "statics_changed": {}
+  },
+  {
+   "idx": 6,
+   "id": 9560,
+   "rect": [
+    1304,
+    532,
+    1334,
+    562
+   ],
+   "prompts": [],
+   "panel_diff": 0.0,
+   "crt_diff": 0.0003,
+   "statics_changed": {}
+  },
+  {
+   "idx": 7,
+   "id": 9570,
+   "rect": [
+    1342,
+    532,
+    1372,
+    562
+   ],
+   "prompts": [],
+   "panel_diff": 0.0,
+   "crt_diff": 0.0004,
+   "statics_changed": {}
+  },
+  {
+   "idx": 8,
+   "id": 9580,
+   "rect": [
+    1405,
+    532,
+    1435,
+    562
+   ],
+   "prompts": [],
+   "panel_diff": 0.0,
+   "crt_diff": 0.0001,
+   "statics_changed": {}
+  },
+  {
+   "idx": 9,
+   "id": 9590,
+   "rect": [
+    1442,
+    532,
+    1472,
+    562
+   ],
+   "prompts": [],
+   "panel_diff": 0.0,
+   "crt_diff": 0.0001,
+   "statics_changed": {}
+  },
+  {
+   "idx": 10,
+   "id": 9600,
+   "rect": [
+    1480,
+    532,
+    1510,
+    562
+   ],
+   "prompts": [],
+   "panel_diff": 0.0,
+   "crt_diff": 0.0,
+   "statics_changed": {}
+  },
+  {
+   "idx": 11,
+   "id": 9502,
+   "rect": [
+    1048,
+    587,
+    1078,
+    617
+   ],
+   "prompts": [],
+   "panel_diff": 0.0003,
+   "crt_diff": 0.0001,
+   "statics_changed": {}
+  },
+  {
+   "idx": 12,
+   "id": 9512,
+   "rect": [
+    1087,
+    587,
+    1117,
+    617
+   ],
+   "prompts": [],
+   "panel_diff": 0.0003,
+   "crt_diff": 0.0,
+   "statics_changed": {}
+  },
+  {
+   "idx": 13,
+   "id": 9522,
+   "rect": [
+    1126,
+    587,
+    1156,
+    617
+   ],
+   "prompts": [],
+   "panel_diff": 0.0003,
+   "crt_diff": 0.0001,
+   "statics_changed": {}
+  },
+  {
+   "idx": 14,
+   "id": 9532,
+   "rect": [
+    1163,
+    587,
+    1193,
+    617
+   ],
+   "prompts": [],
+   "panel_diff": 0.0,
+   "crt_diff": 0.0001,
+   "statics_changed": {}
+  },
+  {
+   "idx": 15,
+   "id": 9542,
+   "rect": [
+    1226,
+    587,
+    1256,
+    617
+   ],
+   "prompts": [],
+   "panel_diff": 0.0,
+   "crt_diff": 0.0001,
+   "statics_changed": {}
+  },
+  {
+   "idx": 16,
+   "id": 9552,
+   "rect": [
+    1265,
+    587,
+    1295,
+    617
+   ],
+   "prompts": [],
+   "panel_diff": 0.0,
+   "crt_diff": 0.0001,
+   "statics_changed": {}
+  },
+  {
+   "idx": 17,
+   "id": 9562,
+   "rect": [
+    1304,
+    587,
+    1334,
+    617
+   ],
+   "prompts": [],
+   "panel_diff": 0.0,
+   "crt_diff": 0.0001,
+   "statics_changed": {}
+  },
+  {
+   "idx": 18,
+   "id": 9572,
+   "rect": [
+    1342,
+    587,
+    1372,
+    617
+   ],
+   "prompts": [],
+   "panel_diff": 0.0,
+   "crt_diff": 0.0,
+   "statics_changed": {}
+  },
+  {
+   "idx": 19,
+   "id": 9582,
+   "rect": [
+    1405,
+    587,
+    1435,
+    617
+   ],
+   "prompts": [],
+   "panel_diff": 0.0,
+   "crt_diff": 0.0001,
+   "statics_changed": {}
+  },
+  {
+   "idx": 20,
+   "id": 9592,
+   "rect": [
+    1442,
+    587,
+    1472,
+    617
+   ],
+   "prompts": [],
+   "panel_diff": 0.0,
+   "crt_diff": 0.0001,
+   "statics_changed": {}
+  },
+  {
+   "idx": 21,
+   "id": 9602,
+   "rect": [
+    1480,
+    587,
+    1510,
+    617
+   ],
+   "prompts": [],
+   "panel_diff": 0.0,
+   "crt_diff": 0.0002,
+   "statics_changed": {}
+  },
+  {
+   "idx": 22,
+   "id": 9504,
+   "rect": [
+    1048,
+    642,
+    1078,
+    672
+   ],
+   "prompts": [],
+   "panel_diff": 0.0,
+   "crt_diff": 0.0001,
+   "statics_changed": {}
+  },
+  {
+   "idx": 23,
+   "id": 9514,
+   "rect": [
+    1087,
+    642,
+    1117,
+    672
+   ],
+   "prompts": [],
+   "panel_diff": 0.0003,
+   "crt_diff": 0.0001,
+   "statics_changed": {}
+  },
+  {
+   "idx": 24,
+   "id": 9524,
+   "rect": [
+    1126,
+    642,
+    1156,
+    672
+   ],
+   "prompts": [],
+   "panel_diff": 0.0003,
+   "crt_diff": 0.0,
+   "statics_changed": {}
+  },
+  {
+   "idx": 25,
+   "id": 9534,
+   "rect": [
+    1163,
+    642,
+    1193,
+    672
+   ],
+   "prompts": [],
+   "panel_diff": 0.0,
+   "crt_diff": 0.0001,
+   "statics_changed": {}
+  },
+  {
+   "idx": 26,
+   "id": 9544,
+   "rect": [
+    1226,
+    642,
+    1256,
+    672
+   ],
+   "prompts": [],
+   "panel_diff": 0.0,
+   "crt_diff": 0.0,
+   "statics_changed": {}
+  },
+  {
+   "idx": 27,
+   "id": 9554,
+   "rect": [
+    1265,
+    642,
+    1295,
+    672
+   ],
+   "prompts": [],
+   "panel_diff": 0.0,
+   "crt_diff": 0.0001,
+   "statics_changed": {}
+  },
+  {
+   "idx": 28,
+   "id": 9564,
+   "rect": [
+    1304,
+    642,
+    1334,
+    672
+   ],
+   "prompts": [],
+   "panel_diff": 0.0,
+   "crt_diff": 0.0001,
+   "statics_changed": {}
+  },
+  {
+   "idx": 29,
+   "id": 9574,
+   "rect": [
+    1342,
+    642,
+    1372,
+    672
+   ],
+   "prompts": [],
+   "panel_diff": 0.0,
+   "crt_diff": 0.0001,
+   "statics_changed": {}
+  },
+  {
+   "idx": 30,
+   "id": 9584,
+   "rect": [
+    1405,
+    642,
+    1435,
+    672
+   ],
+   "prompts": [],
+   "panel_diff": 0.0,
+   "crt_diff": 0.0001,
+   "statics_changed": {}
+  },
+  {
+   "idx": 31,
+   "id": 9594,
+   "rect": [
+    1442,
+    642,
+    1472,
+    672
+   ],
+   "prompts": [],
+   "panel_diff": 0.0,
+   "crt_diff": 0.0001,
+   "statics_changed": {}
+  },
+  {
+   "idx": 32,
+   "id": 9604,
+   "rect": [
+    1480,
+    642,
+    1510,
+    672
+   ],
+   "prompts": [],
+   "panel_diff": 0.0,
+   "crt_diff": 0.0,
+   "statics_changed": {}
+  },
+  {
+   "idx": 34,
+   "id": 9516,
+   "rect": [
+    1087,
+    698,
+    1117,
+    728
+   ],
+   "prompts": [],
+   "panel_diff": 0.0,
+   "crt_diff": 0.0001,
+   "statics_changed": {}
+  },
+  {
+   "idx": 35,
+   "id": 9526,
+   "rect": [
+    1126,
+    698,
+    1156,
+    728
+   ],
+   "prompts": [],
+   "panel_diff": 0.0,
+   "crt_diff": 0.0001,
+   "statics_changed": {}
+  },
+  {
+   "idx": 36,
+   "id": 9536,
+   "rect": [
+    1163,
+    698,
+    1193,
+    728
+   ],
+   "prompts": [],
+   "panel_diff": 0.0,
+   "crt_diff": 0.0001,
+   "statics_changed": {}
+  },
+  {
+   "idx": 37,
+   "id": 9546,
+   "rect": [
+    1226,
+    698,
+    1256,
+    728
+   ],
+   "prompts": [],
+   "panel_diff": 0.0,
+   "crt_diff": 0.0001,
+   "statics_changed": {}
+  },
+  {
+   "idx": 38,
+   "id": 9556,
+   "rect": [
+    1265,
+    698,
+    1295,
+    728
+   ],
+   "prompts": [],
+   "panel_diff": 0.0,
+   "crt_diff": 0.0,
+   "statics_changed": {}
+  },
+  {
+   "idx": 39,
+   "id": 9566,
+   "rect": [
+    1304,
+    698,
+    1334,
+    728
+   ],
+   "prompts": [],
+   "panel_diff": 0.0,
+   "crt_diff": 0.0001,
+   "statics_changed": {}
+  },
+  {
+   "idx": 40,
+   "id": 9576,
+   "rect": [
+    1342,
+    698,
+    1372,
+    728
+   ],
+   "prompts": [],
+   "panel_diff": 0.0,
+   "crt_diff": 0.0,
+   "statics_changed": {}
+  },
+  {
+   "idx": 41,
+   "id": 9586,
+   "rect": [
+    1405,
+    698,
+    1435,
+    728
+   ],
+   "prompts": [
+    "请先换到JOG,RJOG,JOG INC,WHEEL或HND模式!"
+   ],
+   "blocked_by": "请先换到JOG,RJOG,JOG INC,WHEEL或HND模式!",
+   "panel_diff": 0.0,
+   "crt_diff": 0.0,
+   "statics_changed": {}
+  },
+  {
+   "idx": 42,
+   "id": 9596,
+   "rect": [
+    1442,
+    698,
+    1472,
+    728
+   ],
+   "prompts": [],
+   "panel_diff": 0.0,
+   "crt_diff": 0.0001,
+   "statics_changed": {}
+  },
+  {
+   "idx": 43,
+   "id": 9606,
+   "rect": [
+    1480,
+    698,
+    1510,
+    728
+   ],
+   "prompts": [
+    "请先换到JOG,RJOG,JOG INC,WHEEL或HND模式!"
+   ],
+   "blocked_by": "请先换到JOG,RJOG,JOG INC,WHEEL或HND模式!",
+   "panel_diff": 0.0,
+   "crt_diff": 0.0,
+   "statics_changed": {}
+  },
+  {
+   "idx": 44,
+   "id": 9508,
+   "rect": [
+    1048,
+    753,
+    1078,
+    783
+   ],
+   "prompts": [],
+   "panel_diff": 0.0,
+   "crt_diff": 0.0,
+   "statics_changed": {}
+  },
+  {
+   "idx": 45,
+   "id": 9518,
+   "rect": [
+    1087,
+    753,
+    1117,
+    783
+   ],
+   "prompts": [
+    "请切换到AUTO、MDI、示教或DNC模式!"
+   ],
+   "blocked_by": "请切换到AUTO、MDI、示教或DNC模式!",
+   "panel_diff": 0.0,
+   "crt_diff": 0.0,
+   "statics_changed": {}
+  },
+  {
+   "idx": 46,
+   "id": 9528,
+   "rect": [
+    1126,
+    753,
+    1156,
+    783
+   ],
+   "prompts": [],
+   "panel_diff": 0.0,
+   "crt_diff": 0.0001,
+   "statics_changed": {}
+  },
+  {
+   "idx": 47,
+   "id": 9538,
+   "rect": [
+    1163,
+    753,
+    1193,
+    783
+   ],
+   "prompts": [],
+   "panel_diff": 0.0,
+   "crt_diff": 0.0001,
+   "statics_changed": {}
+  },
+  {
+   "idx": 48,
+   "id": 9548,
+   "rect": [
+    1226,
+    753,
+    1256,
+    783
+   ],
+   "prompts": [],
+   "panel_diff": 0.0,
+   "crt_diff": 0.0001,
+   "statics_changed": {}
+  },
+  {
+   "idx": 49,
+   "id": 9558,
+   "rect": [
+    1265,
+    753,
+    1295,
+    783
+   ],
+   "prompts": [],
+   "panel_diff": 0.0,
+   "crt_diff": 0.0001,
+   "statics_changed": {}
+  },
+  {
+   "idx": 50,
+   "id": 9568,
+   "rect": [
+    1304,
+    753,
+    1334,
+    783
+   ],
+   "prompts": [],
+   "panel_diff": 0.0,
+   "crt_diff": 0.0001,
+   "statics_changed": {}
+  },
+  {
+   "idx": 51,
+   "id": 9578,
+   "rect": [
+    1342,
+    753,
+    1372,
+    783
+   ],
+   "prompts": [],
+   "panel_diff": 0.0,
+   "crt_diff": 0.0,
+   "statics_changed": {}
+  },
+  {
+   "idx": 52,
+   "id": 9588,
+   "rect": [
+    1405,
+    753,
+    1435,
+    783
+   ],
+   "prompts": [],
+   "panel_diff": 0.0,
+   "crt_diff": 0.0001,
+   "statics_changed": {}
+  },
+  {
+   "idx": 53,
+   "id": 9598,
+   "rect": [
+    1442,
+    753,
+    1472,
+    783
+   ],
+   "prompts": [],
+   "panel_diff": 0.0,
+   "crt_diff": 0.0,
+   "statics_changed": {}
+  },
+  {
+   "idx": 54,
+   "id": 9608,
+   "rect": [
+    1480,
+    753,
+    1510,
+    783
+   ],
+   "prompts": [],
+   "panel_diff": 0.0,
+   "crt_diff": 0.0001,
+   "statics_changed": {}
+  }
+ ],
+ "unresolved": [],
+ "next_steps": [
+  "alarm reproduction via AUTO/MDI",
+  "real-operation assessment",
+  "doc update v1.2"
+ ],
+ "mode_knob_SOLVED": {
+  "control": "Static id 9651 in op-panel dialog (#32770), top-left 96x107px",
+  "hwnd_lookup": "u.GetDlgItem(op_panel_hwnd, 9651) — re-enumerate panel hwnd each session",
+  "gesture": "REAL mouse arc drag via input_guard: CW from -90deg to +90deg around knob center, radius ~30px, ~24 steps ~1s; each full drag = one mode detent",
+  "verified": "2026-11-19 live: after 2 CW detents + BM_CLICK cycle-start(9518) -> continuous 3D-view motion 6/6 frames = AUTO program run (EX10.CNC); mode prompt absent",
+  "mode_probe": "BM_CLICK 9518 (cycle start) -> modal \"请切换到AUTO、MDI、示教或DNC模式!\" when NOT in AUTO/MDI/TEACH/DNC; absent in AUTO",
+  "other_knobs": "id 9650 (feed override, bottom-left), id 9652 (spindle override, bottom-right) — same arc-drag gesture, do NOT affect mode",
+  "notes": "click alone does NOT change mode (only visual press); straight-line drag ineffective; must be arc drag through detent"
+ }
+}

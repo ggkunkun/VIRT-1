@@ -1,0 +1,912 @@
+{
+ "DASEN\\DASEN3iT\\sscnc.exe": [
+  {
+   "dlg": 6479,
+   "hits": {
+    "AUTO": true,
+    "EDIT": true,
+    "MDI": true,
+    "JOG": true,
+    "DNC": false,
+    "REF": false
+   },
+   "size": 2876
+  }
+ ],
+ "FANUC\\FANUC0TD\\sscnc.exe": [
+  {
+   "dlg": 374,
+   "hits": {
+    "AUTO": true,
+    "EDIT": true,
+    "MDI": true,
+    "JOG": true,
+    "DNC": false,
+    "REF": true
+   },
+   "size": 2438
+  }
+ ],
+ "FANUC\\FANUC0iMF\\sscnc.exe": [
+  {
+   "dlg": 453,
+   "hits": {
+    "AUTO": true,
+    "EDIT": true,
+    "MDI": true,
+    "JOG": true,
+    "DNC": false,
+    "REF": false
+   },
+   "size": 3254
+  },
+  {
+   "dlg": 794,
+   "hits": {
+    "AUTO": true,
+    "EDIT": true,
+    "MDI": true,
+    "JOG": true,
+    "DNC": true,
+    "REF": true
+   },
+   "size": 2862
+  },
+  {
+   "dlg": 795,
+   "hits": {
+    "AUTO": true,
+    "EDIT": false,
+    "MDI": true,
+    "JOG": false,
+    "DNC": true,
+    "REF": false
+   },
+   "size": 2210
+  },
+  {
+   "dlg": 24918,
+   "hits": {
+    "AUTO": true,
+    "EDIT": true,
+    "MDI": true,
+    "JOG": true,
+    "DNC": true,
+    "REF": false
+   },
+   "size": 2124
+  }
+ ],
+ "FANUC\\FANUC0iM\\sscnc.exe": [
+  {
+   "dlg": 453,
+   "hits": {
+    "AUTO": true,
+    "EDIT": true,
+    "MDI": true,
+    "JOG": true,
+    "DNC": false,
+    "REF": false
+   },
+   "size": 3254
+  },
+  {
+   "dlg": 794,
+   "hits": {
+    "AUTO": true,
+    "EDIT": true,
+    "MDI": true,
+    "JOG": true,
+    "DNC": true,
+    "REF": true
+   },
+   "size": 2862
+  },
+  {
+   "dlg": 795,
+   "hits": {
+    "AUTO": true,
+    "EDIT": false,
+    "MDI": true,
+    "JOG": false,
+    "DNC": true,
+    "REF": false
+   },
+   "size": 2210
+  },
+  {
+   "dlg": 24918,
+   "hits": {
+    "AUTO": true,
+    "EDIT": true,
+    "MDI": true,
+    "JOG": true,
+    "DNC": true,
+    "REF": false
+   },
+   "size": 2124
+  }
+ ],
+ "FANUC\\FANUC0iTF\\sscnc.exe": [
+  {
+   "dlg": 372,
+   "hits": {
+    "AUTO": true,
+    "EDIT": true,
+    "MDI": true,
+    "JOG": true,
+    "DNC": false,
+    "REF": true
+   },
+   "size": 2566
+  },
+  {
+   "dlg": 533,
+   "hits": {
+    "AUTO": true,
+    "EDIT": true,
+    "MDI": true,
+    "JOG": true,
+    "DNC": false,
+    "REF": false
+   },
+   "size": 3034
+  },
+  {
+   "dlg": 602,
+   "hits": {
+    "AUTO": true,
+    "EDIT": true,
+    "MDI": true,
+    "JOG": true,
+    "DNC": false,
+    "REF": true
+   },
+   "size": 2788
+  },
+  {
+   "dlg": 603,
+   "hits": {
+    "AUTO": true,
+    "EDIT": true,
+    "MDI": true,
+    "JOG": true,
+    "DNC": false,
+    "REF": true
+   },
+   "size": 2422
+  },
+  {
+   "dlg": 605,
+   "hits": {
+    "AUTO": true,
+    "EDIT": true,
+    "MDI": true,
+    "JOG": true,
+    "DNC": true,
+    "REF": true
+   },
+   "size": 2562
+  },
+  {
+   "dlg": 606,
+   "hits": {
+    "AUTO": true,
+    "EDIT": true,
+    "MDI": true,
+    "JOG": true,
+    "DNC": true,
+    "REF": true
+   },
+   "size": 2528
+  },
+  {
+   "dlg": 607,
+   "hits": {
+    "AUTO": true,
+    "EDIT": true,
+    "MDI": true,
+    "JOG": true,
+    "DNC": false,
+    "REF": false
+   },
+   "size": 2448
+  },
+  {
+   "dlg": 614,
+   "hits": {
+    "AUTO": false,
+    "EDIT": true,
+    "MDI": true,
+    "JOG": true,
+    "DNC": true,
+    "REF": true
+   },
+   "size": 2336
+  },
+  {
+   "dlg": 617,
+   "hits": {
+    "AUTO": true,
+    "EDIT": true,
+    "MDI": false,
+    "JOG": true,
+    "DNC": false,
+    "REF": false
+   },
+   "size": 1960
+  },
+  {
+   "dlg": 10117,
+   "hits": {
+    "AUTO": true,
+    "EDIT": true,
+    "MDI": true,
+    "JOG": true,
+    "DNC": false,
+    "REF": true
+   },
+   "size": 1334
+  },
+  {
+   "dlg": 10541,
+   "hits": {
+    "AUTO": true,
+    "EDIT": true,
+    "MDI": true,
+    "JOG": true,
+    "DNC": false,
+    "REF": true
+   },
+   "size": 3862
+  },
+  {
+   "dlg": 10542,
+   "hits": {
+    "AUTO": true,
+    "EDIT": true,
+    "MDI": true,
+    "JOG": true,
+    "DNC": false,
+    "REF": true
+   },
+   "size": 2462
+  }
+ ],
+ "FANUC\\FANUC0iT\\sscnc.exe": [
+  {
+   "dlg": 372,
+   "hits": {
+    "AUTO": true,
+    "EDIT": true,
+    "MDI": true,
+    "JOG": true,
+    "DNC": false,
+    "REF": true
+   },
+   "size": 2566
+  },
+  {
+   "dlg": 533,
+   "hits": {
+    "AUTO": true,
+    "EDIT": true,
+    "MDI": true,
+    "JOG": true,
+    "DNC": false,
+    "REF": false
+   },
+   "size": 3034
+  },
+  {
+   "dlg": 602,
+   "hits": {
+    "AUTO": true,
+    "EDIT": true,
+    "MDI": true,
+    "JOG": true,
+    "DNC": false,
+    "REF": true
+   },
+   "size": 2788
+  },
+  {
+   "dlg": 603,
+   "hits": {
+    "AUTO": true,
+    "EDIT": true,
+    "MDI": true,
+    "JOG": true,
+    "DNC": false,
+    "REF": true
+   },
+   "size": 2422
+  },
+  {
+   "dlg": 605,
+   "hits": {
+    "AUTO": true,
+    "EDIT": true,
+    "MDI": true,
+    "JOG": true,
+    "DNC": true,
+    "REF": true
+   },
+   "size": 2562
+  },
+  {
+   "dlg": 606,
+   "hits": {
+    "AUTO": true,
+    "EDIT": true,
+    "MDI": true,
+    "JOG": true,
+    "DNC": true,
+    "REF": true
+   },
+   "size": 2528
+  },
+  {
+   "dlg": 607,
+   "hits": {
+    "AUTO": true,
+    "EDIT": true,
+    "MDI": true,
+    "JOG": true,
+    "DNC": false,
+    "REF": false
+   },
+   "size": 2448
+  },
+  {
+   "dlg": 614,
+   "hits": {
+    "AUTO": false,
+    "EDIT": true,
+    "MDI": true,
+    "JOG": true,
+    "DNC": true,
+    "REF": true
+   },
+   "size": 2336
+  },
+  {
+   "dlg": 617,
+   "hits": {
+    "AUTO": true,
+    "EDIT": true,
+    "MDI": false,
+    "JOG": true,
+    "DNC": false,
+    "REF": false
+   },
+   "size": 1960
+  },
+  {
+   "dlg": 10117,
+   "hits": {
+    "AUTO": true,
+    "EDIT": true,
+    "MDI": true,
+    "JOG": true,
+    "DNC": false,
+    "REF": true
+   },
+   "size": 1334
+  },
+  {
+   "dlg": 10541,
+   "hits": {
+    "AUTO": true,
+    "EDIT": true,
+    "MDI": true,
+    "JOG": true,
+    "DNC": false,
+    "REF": true
+   },
+   "size": 3862
+  },
+  {
+   "dlg": 10542,
+   "hits": {
+    "AUTO": true,
+    "EDIT": true,
+    "MDI": true,
+    "JOG": true,
+    "DNC": false,
+    "REF": true
+   },
+   "size": 2462
+  }
+ ],
+ "FANUC\\FANUC18M\\sscnc.exe": [
+  {
+   "dlg": 453,
+   "hits": {
+    "AUTO": true,
+    "EDIT": true,
+    "MDI": true,
+    "JOG": true,
+    "DNC": false,
+    "REF": false
+   },
+   "size": 3254
+  },
+  {
+   "dlg": 794,
+   "hits": {
+    "AUTO": true,
+    "EDIT": true,
+    "MDI": true,
+    "JOG": true,
+    "DNC": true,
+    "REF": true
+   },
+   "size": 2862
+  },
+  {
+   "dlg": 795,
+   "hits": {
+    "AUTO": true,
+    "EDIT": false,
+    "MDI": true,
+    "JOG": false,
+    "DNC": true,
+    "REF": false
+   },
+   "size": 2210
+  },
+  {
+   "dlg": 24918,
+   "hits": {
+    "AUTO": true,
+    "EDIT": true,
+    "MDI": true,
+    "JOG": true,
+    "DNC": true,
+    "REF": false
+   },
+   "size": 2124
+  }
+ ],
+ "FANUC\\FANUC18T\\sscnc.exe": [
+  {
+   "dlg": 372,
+   "hits": {
+    "AUTO": true,
+    "EDIT": true,
+    "MDI": true,
+    "JOG": true,
+    "DNC": false,
+    "REF": true
+   },
+   "size": 2566
+  },
+  {
+   "dlg": 533,
+   "hits": {
+    "AUTO": true,
+    "EDIT": true,
+    "MDI": true,
+    "JOG": true,
+    "DNC": false,
+    "REF": false
+   },
+   "size": 3034
+  },
+  {
+   "dlg": 602,
+   "hits": {
+    "AUTO": true,
+    "EDIT": true,
+    "MDI": true,
+    "JOG": true,
+    "DNC": false,
+    "REF": true
+   },
+   "size": 2788
+  },
+  {
+   "dlg": 603,
+   "hits": {
+    "AUTO": true,
+    "EDIT": true,
+    "MDI": true,
+    "JOG": true,
+    "DNC": false,
+    "REF": true
+   },
+   "size": 2422
+  },
+  {
+   "dlg": 605,
+   "hits": {
+    "AUTO": true,
+    "EDIT": true,
+    "MDI": true,
+    "JOG": true,
+    "DNC": true,
+    "REF": true
+   },
+   "size": 2562
+  },
+  {
+   "dlg": 606,
+   "hits": {
+    "AUTO": true,
+    "EDIT": true,
+    "MDI": true,
+    "JOG": true,
+    "DNC": true,
+    "REF": true
+   },
+   "size": 2528
+  },
+  {
+   "dlg": 607,
+   "hits": {
+    "AUTO": true,
+    "EDIT": true,
+    "MDI": true,
+    "JOG": true,
+    "DNC": false,
+    "REF": false
+   },
+   "size": 2448
+  },
+  {
+   "dlg": 614,
+   "hits": {
+    "AUTO": false,
+    "EDIT": true,
+    "MDI": true,
+    "JOG": true,
+    "DNC": true,
+    "REF": true
+   },
+   "size": 2336
+  },
+  {
+   "dlg": 617,
+   "hits": {
+    "AUTO": true,
+    "EDIT": true,
+    "MDI": false,
+    "JOG": true,
+    "DNC": false,
+    "REF": false
+   },
+   "size": 1960
+  },
+  {
+   "dlg": 10117,
+   "hits": {
+    "AUTO": true,
+    "EDIT": true,
+    "MDI": true,
+    "JOG": true,
+    "DNC": false,
+    "REF": true
+   },
+   "size": 1334
+  },
+  {
+   "dlg": 10541,
+   "hits": {
+    "AUTO": true,
+    "EDIT": true,
+    "MDI": true,
+    "JOG": true,
+    "DNC": false,
+    "REF": true
+   },
+   "size": 3862
+  },
+  {
+   "dlg": 10542,
+   "hits": {
+    "AUTO": true,
+    "EDIT": true,
+    "MDI": true,
+    "JOG": true,
+    "DNC": false,
+    "REF": true
+   },
+   "size": 2462
+  }
+ ],
+ "GSK\\GSK928TC\\sscnc.exe": [
+  {
+   "dlg": 341,
+   "hits": {
+    "AUTO": true,
+    "EDIT": true,
+    "MDI": false,
+    "JOG": true,
+    "DNC": false,
+    "REF": true
+   },
+   "size": 3196
+  }
+ ],
+ "GSK\\GSK980TDb\\sscnc.exe": [
+  {
+   "dlg": 338,
+   "hits": {
+    "AUTO": true,
+    "EDIT": true,
+    "MDI": true,
+    "JOG": true,
+    "DNC": false,
+    "REF": true
+   },
+   "size": 2092
+  }
+ ],
+ "GSK\\GSK990M\\sscnc.exe": [
+  {
+   "dlg": 855,
+   "hits": {
+    "AUTO": true,
+    "EDIT": false,
+    "MDI": true,
+    "JOG": true,
+    "DNC": true,
+    "REF": false
+   },
+   "size": 4692
+  }
+ ],
+ "HNC\\HNC210T\\sscnc.exe": [
+  {
+   "dlg": 372,
+   "hits": {
+    "AUTO": true,
+    "EDIT": false,
+    "MDI": false,
+    "JOG": true,
+    "DNC": false,
+    "REF": true
+   },
+   "size": 2008
+  }
+ ],
+ "HNC\\HNC21M\\sscnc.exe": [
+  {
+   "dlg": 944,
+   "hits": {
+    "AUTO": true,
+    "EDIT": false,
+    "MDI": false,
+    "JOG": true,
+    "DNC": false,
+    "REF": true
+   },
+   "size": 2018
+  }
+ ],
+ "HNC\\HNC21T\\sscnc.exe": [
+  {
+   "dlg": 372,
+   "hits": {
+    "AUTO": true,
+    "EDIT": false,
+    "MDI": false,
+    "JOG": true,
+    "DNC": false,
+    "REF": true
+   },
+   "size": 2002
+  }
+ ],
+ "HNC\\HNC22T\\sscnc.exe": [
+  {
+   "dlg": 372,
+   "hits": {
+    "AUTO": true,
+    "EDIT": false,
+    "MDI": false,
+    "JOG": true,
+    "DNC": false,
+    "REF": true
+   },
+   "size": 2002
+  }
+ ],
+ "JNC\\JNC30M\\sscnc.exe": [
+  {
+   "dlg": 3680,
+   "hits": {
+    "AUTO": true,
+    "EDIT": false,
+    "MDI": true,
+    "JOG": true,
+    "DNC": false,
+    "REF": false
+   },
+   "size": 3508
+  }
+ ],
+ "JNC\\JNC30T\\sscnc.exe": [
+  {
+   "dlg": 3680,
+   "hits": {
+    "AUTO": true,
+    "EDIT": false,
+    "MDI": true,
+    "JOG": true,
+    "DNC": false,
+    "REF": false
+   },
+   "size": 2938
+  }
+ ],
+ "KND\\KND1000T\\sscnc.exe": [
+  {
+   "dlg": 3679,
+   "hits": {
+    "AUTO": true,
+    "EDIT": false,
+    "MDI": true,
+    "JOG": true,
+    "DNC": false,
+    "REF": false
+   },
+   "size": 4170
+  }
+ ],
+ "KND\\KND100M\\sscnc.exe": [
+  {
+   "dlg": 410,
+   "hits": {
+    "AUTO": true,
+    "EDIT": false,
+    "MDI": true,
+    "JOG": true,
+    "DNC": true,
+    "REF": false
+   },
+   "size": 4764
+  }
+ ],
+ "KND\\KND100T\\sscnc.exe": [
+  {
+   "dlg": 622,
+   "hits": {
+    "AUTO": true,
+    "EDIT": false,
+    "MDI": true,
+    "JOG": true,
+    "DNC": false,
+    "REF": false
+   },
+   "size": 4544
+  }
+ ],
+ "KND\\KND1TB\\sscnc.exe": [
+  {
+   "dlg": 3200,
+   "hits": {
+    "AUTO": true,
+    "EDIT": false,
+    "MDI": true,
+    "JOG": true,
+    "DNC": false,
+    "REF": false
+   },
+   "size": 2746
+  }
+ ],
+ "KND\\KND1Ti\\sscnc.exe": [
+  {
+   "dlg": 3200,
+   "hits": {
+    "AUTO": true,
+    "EDIT": false,
+    "MDI": true,
+    "JOG": true,
+    "DNC": false,
+    "REF": false
+   },
+   "size": 2582
+  }
+ ],
+ "MITSUBISHI\\E70M\\sscnc.exe": [
+  {
+   "dlg": 462,
+   "hits": {
+    "AUTO": true,
+    "EDIT": true,
+    "MDI": true,
+    "JOG": true,
+    "DNC": true,
+    "REF": false
+   },
+   "size": 2428
+  }
+ ],
+ "MITSUBISHI\\M70M\\sscnc.exe": [
+  {
+   "dlg": 462,
+   "hits": {
+    "AUTO": true,
+    "EDIT": true,
+    "MDI": true,
+    "JOG": true,
+    "DNC": true,
+    "REF": false
+   },
+   "size": 2428
+  }
+ ],
+ "MITSUBISHI\\M80M\\sscnc.exe": [
+  {
+   "dlg": 462,
+   "hits": {
+    "AUTO": true,
+    "EDIT": true,
+    "MDI": true,
+    "JOG": true,
+    "DNC": true,
+    "REF": false
+   },
+   "size": 2428
+  }
+ ],
+ "NCT\\NCT104M\\sscnc.exe": [
+  {
+   "dlg": 10502,
+   "hits": {
+    "AUTO": true,
+    "EDIT": true,
+    "MDI": true,
+    "JOG": true,
+    "DNC": false,
+    "REF": true
+   },
+   "size": 5556
+  }
+ ],
+ "NCT\\NCT104T\\sscnc.exe": [
+  {
+   "dlg": 10502,
+   "hits": {
+    "AUTO": true,
+    "EDIT": true,
+    "MDI": true,
+    "JOG": true,
+    "DNC": false,
+    "REF": true
+   },
+   "size": 5224
+  }
+ ],
+ "RENHE\\RENHE32T\\sscnc.exe": [
+  {
+   "dlg": 576,
+   "hits": {
+    "AUTO": true,
+    "EDIT": true,
+    "MDI": false,
+    "JOG": true,
+    "DNC": false,
+    "REF": false
+   },
+   "size": 2192
+  }
+ ],
+ "SINUMERIK\\802DT\\sscnc.exe": [
+  {
+   "dlg": 10981,
+   "hits": {
+    "AUTO": true,
+    "EDIT": false,
+    "MDI": false,
+    "JOG": true,
+    "DNC": false,
+    "REF": true
+   },
+   "size": 2316
+  }
+ ]
+}

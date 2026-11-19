@@ -1,0 +1,7 @@
+{"pt": [970, 970], "event": "crtdiff", "frac": 0.7756}
+{"pt": [1030, 970], "event": "crtdiff", "frac": 0.845}
+{"pt": [10, 1030], "event": "crtdiff", "frac": 0.0032}
+{"pt": [130, 1030], "event": "crtdiff", "frac": 0.0032}
+{"pt": [850, 1030], "event": "crtdiff", "frac": 0.9297}
+{"pt": [910, 1030], "event": "crtdiff", "frac": 0.078}
+{"done": true, "hits": [[970, 970, "diff 0.7756"], [1030, 970, "diff 0.8450"], [10, 1030, "diff 0.0032"], [130, 1030, "diff 0.0032"], [850, 1030, "diff 0.9297"], [910, 1030, "diff 0.0780"]]}

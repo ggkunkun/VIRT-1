@@ -1,0 +1,1546 @@
+{
+ "panel_hwnd": 68412,
+ "shot": "D:\\Virtu模型\\ssnc_teaching\\evidence\\panel_map_shot.png",
+ "results": [
+  {
+   "hwnd": 68414,
+   "id": 9500,
+   "text": "Button1",
+   "rect": [
+    1048,
+    532,
+    1078,
+    562
+   ],
+   "top3": [
+    [
+     0.36,
+     "ref",
+     "btn_wia"
+    ],
+    [
+     0.325,
+     "ref",
+     "btn_nj3_symbol"
+    ],
+    [
+     0.237,
+     "py",
+     "btn_wia"
+    ]
+   ]
+  },
+  {
+   "hwnd": 68434,
+   "id": 9510,
+   "text": "Button1",
+   "rect": [
+    1087,
+    532,
+    1117,
+    562
+   ],
+   "top3": [
+    [
+     0.314,
+     "ref",
+     "btn_nj3_symbol"
+    ],
+    [
+     0.291,
+     "inc",
+     "btn_sy_symbol"
+    ],
+    [
+     0.284,
+     "mz",
+     "btn_wia"
+    ]
+   ]
+  },
+  {
+   "hwnd": 68454,
+   "id": 9520,
+   "text": "Button1",
+   "rect": [
+    1126,
+    532,
+    1156,
+    562
+   ],
+   "top3": [
+    [
+     0.38,
+     "ref",
+     "btn_nj3_symbol"
+    ],
+    [
+     0.365,
+     "ref",
+     "btn_wia"
+    ],
+    [
+     0.34,
+     "home",
+     "btn_sy_symbol"
+    ]
+   ]
+  },
+  {
+   "hwnd": 68474,
+   "id": 9530,
+   "text": "Button1",
+   "rect": [
+    1163,
+    532,
+    1193,
+    562
+   ],
+   "top3": [
+    [
+     0.38,
+     "ref",
+     "btn_nj3_symbol"
+    ],
+    [
+     0.365,
+     "ref",
+     "btn_wia"
+    ],
+    [
+     0.34,
+     "home",
+     "btn_sy_symbol"
+    ]
+   ]
+  },
+  {
+   "hwnd": 68494,
+   "id": 9540,
+   "text": "Button1",
+   "rect": [
+    1226,
+    532,
+    1256,
+    562
+   ],
+   "top3": [
+    [
+     0.38,
+     "ref",
+     "btn_nj3_symbol"
+    ],
+    [
+     0.366,
+     "ref",
+     "btn_wia"
+    ],
+    [
+     0.34,
+     "home",
+     "btn_sy_symbol"
+    ]
+   ]
+  },
+  {
+   "hwnd": 68514,
+   "id": 9550,
+   "text": "Button1",
+   "rect": [
+    1265,
+    532,
+    1295,
+    562
+   ],
+   "top3": [
+    [
+     0.381,
+     "ref",
+     "btn_nj3_symbol"
+    ],
+    [
+     0.366,
+     "ref",
+     "btn_wia"
+    ],
+    [
+     0.34,
+     "home",
+     "btn_sy_symbol"
+    ]
+   ]
+  },
+  {
+   "hwnd": 68534,
+   "id": 9560,
+   "text": "Button1",
+   "rect": [
+    1304,
+    532,
+    1334,
+    562
+   ],
+   "top3": [
+    [
+     0.38,
+     "ref",
+     "btn_nj3_symbol"
+    ],
+    [
+     0.365,
+     "ref",
+     "btn_wia"
+    ],
+    [
+     0.339,
+     "home",
+     "btn_sy_symbol"
+    ]
+   ]
+  },
+  {
+   "hwnd": 68554,
+   "id": 9570,
+   "text": "Button1",
+   "rect": [
+    1342,
+    532,
+    1372,
+    562
+   ],
+   "top3": [
+    [
+     0.381,
+     "ref",
+     "btn_nj3_symbol"
+    ],
+    [
+     0.365,
+     "ref",
+     "btn_wia"
+    ],
+    [
+     0.34,
+     "home",
+     "btn_sy_symbol"
+    ]
+   ]
+  },
+  {
+   "hwnd": 68574,
+   "id": 9580,
+   "text": "Button1",
+   "rect": [
+    1405,
+    532,
+    1435,
+    562
+   ],
+   "top3": [
+    [
+     0.381,
+     "ref",
+     "btn_nj3_symbol"
+    ],
+    [
+     0.366,
+     "ref",
+     "btn_wia"
+    ],
+    [
+     0.34,
+     "home",
+     "btn_sy_symbol"
+    ]
+   ]
+  },
+  {
+   "hwnd": 68594,
+   "id": 9590,
+   "text": "Button1",
+   "rect": [
+    1442,
+    532,
+    1472,
+    562
+   ],
+   "top3": [
+    [
+     0.381,
+     "ref",
+     "btn_nj3_symbol"
+    ],
+    [
+     0.365,
+     "ref",
+     "btn_wia"
+    ],
+    [
+     0.34,
+     "home",
+     "btn_sy_symbol"
+    ]
+   ]
+  },
+  {
+   "hwnd": 68614,
+   "id": 9600,
+   "text": "Button1",
+   "rect": [
+    1480,
+    532,
+    1510,
+    562
+   ],
+   "top3": [
+    [
+     0.382,
+     "ref",
+     "btn_nj3_symbol"
+    ],
+    [
+     0.365,
+     "ref",
+     "btn_wia"
+    ],
+    [
+     0.34,
+     "home",
+     "btn_sy_symbol"
+    ]
+   ]
+  },
+  {
+   "hwnd": 68418,
+   "id": 9502,
+   "text": "Button1",
+   "rect": [
+    1048,
+    587,
+    1078,
+    617
+   ],
+   "top3": [
+    [
+     0.448,
+     "ref",
+     "btn_nj3_symbol"
+    ],
+    [
+     0.347,
+     "ref",
+     "btn_wia"
+    ],
+    [
+     0.331,
+     "py",
+     "btn_wia"
+    ]
+   ]
+  },
+  {
+   "hwnd": 68438,
+   "id": 9512,
+   "text": "Button1",
+   "rect": [
+    1087,
+    587,
+    1117,
+    617
+   ],
+   "top3": [
+    [
+     -1,
+     "zlock",
+     "btn_sy_symbol"
+    ],
+    [
+     -1,
+     "zcancel",
+     "btn_wia"
+    ],
+    [
+     -1,
+     "vfeed",
+     "btn_sy_symbol"
+    ]
+   ]
+  },
+  {
+   "hwnd": 68458,
+   "id": 9522,
+   "text": "Button1",
+   "rect": [
+    1126,
+    587,
+    1156,
+    617
+   ],
+   "top3": [
+    [
+     -1,
+     "zlock",
+     "btn_sy_symbol"
+    ],
+    [
+     -1,
+     "zcancel",
+     "btn_wia"
+    ],
+    [
+     -1,
+     "vfeed",
+     "btn_sy_symbol"
+    ]
+   ]
+  },
+  {
+   "hwnd": 68478,
+   "id": 9532,
+   "text": "Button1",
+   "rect": [
+    1163,
+    587,
+    1193,
+    617
+   ],
+   "top3": [
+    [
+     -1,
+     "zlock",
+     "btn_sy_symbol"
+    ],
+    [
+     -1,
+     "zcancel",
+     "btn_wia"
+    ],
+    [
+     -1,
+     "vfeed",
+     "btn_sy_symbol"
+    ]
+   ]
+  },
+  {
+   "hwnd": 68498,
+   "id": 9542,
+   "text": "Button1",
+   "rect": [
+    1226,
+    587,
+    1256,
+    617
+   ],
+   "top3": [
+    [
+     -1,
+     "zlock",
+     "btn_sy_symbol"
+    ],
+    [
+     -1,
+     "zcancel",
+     "btn_wia"
+    ],
+    [
+     -1,
+     "vfeed",
+     "btn_sy_symbol"
+    ]
+   ]
+  },
+  {
+   "hwnd": 68518,
+   "id": 9552,
+   "text": "Button1",
+   "rect": [
+    1265,
+    587,
+    1295,
+    617
+   ],
+   "top3": [
+    [
+     -1,
+     "zlock",
+     "btn_sy_symbol"
+    ],
+    [
+     -1,
+     "zcancel",
+     "btn_wia"
+    ],
+    [
+     -1,
+     "vfeed",
+     "btn_sy_symbol"
+    ]
+   ]
+  },
+  {
+   "hwnd": 68538,
+   "id": 9562,
+   "text": "Button1",
+   "rect": [
+    1304,
+    587,
+    1334,
+    617
+   ],
+   "top3": [
+    [
+     -1,
+     "zlock",
+     "btn_sy_symbol"
+    ],
+    [
+     -1,
+     "zcancel",
+     "btn_wia"
+    ],
+    [
+     -1,
+     "vfeed",
+     "btn_sy_symbol"
+    ]
+   ]
+  },
+  {
+   "hwnd": 68558,
+   "id": 9572,
+   "text": "Button1",
+   "rect": [
+    1342,
+    587,
+    1372,
+    617
+   ],
+   "top3": [
+    [
+     -1,
+     "zlock",
+     "btn_sy_symbol"
+    ],
+    [
+     -1,
+     "zcancel",
+     "btn_wia"
+    ],
+    [
+     -1,
+     "vfeed",
+     "btn_sy_symbol"
+    ]
+   ]
+  },
+  {
+   "hwnd": 68578,
+   "id": 9582,
+   "text": "Button1",
+   "rect": [
+    1405,
+    587,
+    1435,
+    617
+   ],
+   "top3": [
+    [
+     -1,
+     "zlock",
+     "btn_sy_symbol"
+    ],
+    [
+     -1,
+     "zcancel",
+     "btn_wia"
+    ],
+    [
+     -1,
+     "vfeed",
+     "btn_sy_symbol"
+    ]
+   ]
+  },
+  {
+   "hwnd": 68598,
+   "id": 9592,
+   "text": "Button1",
+   "rect": [
+    1442,
+    587,
+    1472,
+    617
+   ],
+   "top3": [
+    [
+     -1,
+     "zlock",
+     "btn_sy_symbol"
+    ],
+    [
+     -1,
+     "zcancel",
+     "btn_wia"
+    ],
+    [
+     -1,
+     "vfeed",
+     "btn_sy_symbol"
+    ]
+   ]
+  },
+  {
+   "hwnd": 68618,
+   "id": 9602,
+   "text": "Button1",
+   "rect": [
+    1480,
+    587,
+    1510,
+    617
+   ],
+   "top3": [
+    [
+     -1,
+     "zlock",
+     "btn_sy_symbol"
+    ],
+    [
+     -1,
+     "zcancel",
+     "btn_wia"
+    ],
+    [
+     -1,
+     "vfeed",
+     "btn_sy_symbol"
+    ]
+   ]
+  },
+  {
+   "hwnd": 68422,
+   "id": 9504,
+   "text": "Button1",
+   "rect": [
+    1048,
+    642,
+    1078,
+    672
+   ],
+   "top3": [
+    [
+     0.526,
+     "cool",
+     "btn_sy_symbol"
+    ],
+    [
+     0.355,
+     "flood",
+     "btn_wia"
+    ],
+    [
+     0.298,
+     "oilhole",
+     "btn_wia"
+    ]
+   ]
+  },
+  {
+   "hwnd": 68442,
+   "id": 9514,
+   "text": "Button1",
+   "rect": [
+    1087,
+    642,
+    1117,
+    672
+   ],
+   "top3": [
+    [
+     0.142,
+     "cw",
+     "btn_sy_symbol"
+    ],
+    [
+     0.142,
+     "ccw",
+     "btn_sy_symbol"
+    ],
+    [
+     0.136,
+     "autopower",
+     "btn_wia"
+    ]
+   ]
+  },
+  {
+   "hwnd": 68462,
+   "id": 9524,
+   "text": "Button1",
+   "rect": [
+    1126,
+    642,
+    1156,
+    672
+   ],
+   "top3": [
+    [
+     -0.0,
+     "zlock",
+     "btn_sy_symbol"
+    ],
+    [
+     0.0,
+     "zcancel",
+     "btn_wia"
+    ],
+    [
+     -0.0,
+     "vfeed",
+     "btn_sy_symbol"
+    ]
+   ]
+  },
+  {
+   "hwnd": 68482,
+   "id": 9534,
+   "text": "Button1",
+   "rect": [
+    1163,
+    642,
+    1193,
+    672
+   ],
+   "top3": [
+    [
+     0.048,
+     "mdi",
+     "btn_wia"
+    ],
+    [
+     0.047,
+     "mdi",
+     "btn_nj3_symbol"
+    ],
+    [
+     0.044,
+     "sbk",
+     "btn_nj3_symbol"
+    ]
+   ]
+  },
+  {
+   "hwnd": 68502,
+   "id": 9544,
+   "text": "Button1",
+   "rect": [
+    1226,
+    642,
+    1256,
+    672
+   ],
+   "top3": [
+    [
+     -0.0,
+     "zlock",
+     "btn_sy_symbol"
+    ],
+    [
+     0.0,
+     "zcancel",
+     "btn_wia"
+    ],
+    [
+     -0.0,
+     "vfeed",
+     "btn_sy_symbol"
+    ]
+   ]
+  },
+  {
+   "hwnd": 68522,
+   "id": 9554,
+   "text": "Button1",
+   "rect": [
+    1265,
+    642,
+    1295,
+    672
+   ],
+   "top3": [
+    [
+     -0.0,
+     "zlock",
+     "btn_sy_symbol"
+    ],
+    [
+     0.0,
+     "zcancel",
+     "btn_wia"
+    ],
+    [
+     -0.0,
+     "vfeed",
+     "btn_sy_symbol"
+    ]
+   ]
+  },
+  {
+   "hwnd": 68542,
+   "id": 9564,
+   "text": "Button1",
+   "rect": [
+    1304,
+    642,
+    1334,
+    672
+   ],
+   "top3": [
+    [
+     0.204,
+     "px",
+     "btn_wia"
+    ],
+    [
+     0.202,
+     "chipcw",
+     "btn_sy_symbol"
+    ],
+    [
+     0.2,
+     "chipccw",
+     "btn_sy_symbol"
+    ]
+   ]
+  },
+  {
+   "hwnd": 68562,
+   "id": 9574,
+   "text": "Button1",
+   "rect": [
+    1342,
+    642,
+    1372,
+    672
+   ],
+   "top3": [
+    [
+     0.251,
+     "cool",
+     "btn_sy_symbol"
+    ],
+    [
+     0.212,
+     "overtravel",
+     "btn_sy_symbol"
+    ],
+    [
+     0.212,
+     "flood",
+     "btn_wia"
+    ]
+   ]
+  },
+  {
+   "hwnd": 68582,
+   "id": 9584,
+   "text": "Button1",
+   "rect": [
+    1405,
+    642,
+    1435,
+    672
+   ],
+   "top3": [
+    [
+     0.235,
+     "px",
+     "btn_wia"
+    ],
+    [
+     0.212,
+     "oil",
+     "btn_sy_symbol"
+    ],
+    [
+     0.184,
+     "cool",
+     "btn_sy_symbol"
+    ]
+   ]
+  },
+  {
+   "hwnd": 68602,
+   "id": 9594,
+   "text": "Button1",
+   "rect": [
+    1442,
+    642,
+    1472,
+    672
+   ],
+   "top3": [
+    [
+     0.236,
+     "cycstop",
+     "btn_sy_symbol"
+    ],
+    [
+     0.234,
+     "cool",
+     "btn_nj3_symbol"
+    ],
+    [
+     0.213,
+     "ref",
+     "btn_nj3_symbol"
+    ]
+   ]
+  },
+  {
+   "hwnd": 68622,
+   "id": 9604,
+   "text": "Button1",
+   "rect": [
+    1480,
+    642,
+    1510,
+    672
+   ],
+   "top3": [
+    [
+     0.26,
+     "mb",
+     "btn_wia"
+    ],
+    [
+     0.235,
+     "home",
+     "btn_sy_symbol"
+    ],
+    [
+     0.218,
+     "gun",
+     "btn_wia"
+    ]
+   ]
+  },
+  {
+   "hwnd": 68426,
+   "id": 9506,
+   "text": "Button1",
+   "rect": [
+    1048,
+    698,
+    1078,
+    728
+   ],
+   "top3": [
+    [
+     0.332,
+     "home",
+     "btn_sy_symbol"
+    ],
+    [
+     0.269,
+     "stop",
+     "btn_sy_symbol"
+    ],
+    [
+     0.209,
+     "jet",
+     "btn_wia"
+    ]
+   ]
+  },
+  {
+   "hwnd": 68446,
+   "id": 9516,
+   "text": "Button1",
+   "rect": [
+    1087,
+    698,
+    1117,
+    728
+   ],
+   "top3": [
+    [
+     0.259,
+     "tool",
+     "btn_nj3_symbol"
+    ],
+    [
+     0.257,
+     "air",
+     "btn_wia"
+    ],
+    [
+     0.235,
+     "flushing",
+     "btn_wia"
+    ]
+   ]
+  },
+  {
+   "hwnd": 68466,
+   "id": 9526,
+   "text": "Button1",
+   "rect": [
+    1126,
+    698,
+    1156,
+    728
+   ],
+   "top3": [
+    [
+     -0.0,
+     "zlock",
+     "btn_sy_symbol"
+    ],
+    [
+     0.0,
+     "zcancel",
+     "btn_wia"
+    ],
+    [
+     -0.0,
+     "vfeed",
+     "btn_sy_symbol"
+    ]
+   ]
+  },
+  {
+   "hwnd": 68486,
+   "id": 9536,
+   "text": "Button1",
+   "rect": [
+    1163,
+    698,
+    1193,
+    728
+   ],
+   "top3": [
+    [
+     0.181,
+     "cool",
+     "btn_sy_symbol"
+    ],
+    [
+     0.179,
+     "autopower",
+     "btn_wia"
+    ],
+    [
+     0.175,
+     "tape",
+     "btn_wia"
+    ]
+   ]
+  },
+  {
+   "hwnd": 68506,
+   "id": 9546,
+   "text": "Button1",
+   "rect": [
+    1226,
+    698,
+    1256,
+    728
+   ],
+   "top3": [
+    [
+     0.211,
+     "cw",
+     "btn_sy_symbol"
+    ],
+    [
+     0.208,
+     "ccw",
+     "btn_sy_symbol"
+    ],
+    [
+     0.142,
+     "pz",
+     "btn_wia"
+    ]
+   ]
+  },
+  {
+   "hwnd": 68526,
+   "id": 9556,
+   "text": "Button1",
+   "rect": [
+    1265,
+    698,
+    1295,
+    728
+   ],
+   "top3": [
+    [
+     -0.0,
+     "zlock",
+     "btn_sy_symbol"
+    ],
+    [
+     0.0,
+     "zcancel",
+     "btn_wia"
+    ],
+    [
+     -0.0,
+     "vfeed",
+     "btn_sy_symbol"
+    ]
+   ]
+  },
+  {
+   "hwnd": 68546,
+   "id": 9566,
+   "text": "Button1",
+   "rect": [
+    1304,
+    698,
+    1334,
+    728
+   ],
+   "top3": [
+    [
+     0.318,
+     "ref",
+     "btn_wia"
+    ],
+    [
+     0.282,
+     "flood",
+     "btn_wia"
+    ],
+    [
+     0.274,
+     "cycstop",
+     "btn_sy_symbol"
+    ]
+   ]
+  },
+  {
+   "hwnd": 68566,
+   "id": 9576,
+   "text": "Button1",
+   "rect": [
+    1342,
+    698,
+    1372,
+    728
+   ],
+   "top3": [
+    [
+     0.247,
+     "stop",
+     "btn_sy_symbol"
+    ],
+    [
+     0.244,
+     "cw",
+     "btn_sy_symbol"
+    ],
+    [
+     0.244,
+     "ccw",
+     "btn_sy_symbol"
+    ]
+   ]
+  },
+  {
+   "hwnd": 68586,
+   "id": 9586,
+   "text": "Button1",
+   "rect": [
+    1405,
+    698,
+    1435,
+    728
+   ],
+   "top3": [
+    [
+     0.296,
+     "flood",
+     "btn_wia"
+    ],
+    [
+     0.292,
+     "teach",
+     "btn_nj3_symbol"
+    ],
+    [
+     0.289,
+     "overtravel",
+     "btn_sy_symbol"
+    ]
+   ]
+  },
+  {
+   "hwnd": 68606,
+   "id": 9596,
+   "text": "Button1",
+   "rect": [
+    1442,
+    698,
+    1472,
+    728
+   ],
+   "top3": [
+    [
+     0.286,
+     "ref",
+     "btn_wia"
+    ],
+    [
+     0.281,
+     "mb",
+     "btn_wia"
+    ],
+    [
+     0.273,
+     "teach",
+     "btn_nj3_symbol"
+    ]
+   ]
+  },
+  {
+   "hwnd": 68626,
+   "id": 9606,
+   "text": "Button1",
+   "rect": [
+    1480,
+    698,
+    1510,
+    728
+   ],
+   "top3": [
+    [
+     0.199,
+     "cw",
+     "btn_sy_symbol"
+    ],
+    [
+     0.199,
+     "ccw",
+     "btn_sy_symbol"
+    ],
+    [
+     0.181,
+     "stop",
+     "btn_sy_symbol"
+    ]
+   ]
+  },
+  {
+   "hwnd": 68430,
+   "id": 9508,
+   "text": "Button1",
+   "rect": [
+    1048,
+    753,
+    1078,
+    783
+   ],
+   "top3": [
+    [
+     0.286,
+     "opt",
+     "btn_sy_symbol"
+    ],
+    [
+     0.271,
+     "prgrst",
+     "btn_wia"
+    ],
+    [
+     0.268,
+     "dryrun",
+     "btn_wia"
+    ]
+   ]
+  },
+  {
+   "hwnd": 68450,
+   "id": 9518,
+   "text": "Button1",
+   "rect": [
+    1087,
+    753,
+    1117,
+    783
+   ],
+   "top3": [
+    [
+     0.168,
+     "stop",
+     "btn_sy_symbol"
+    ],
+    [
+     0.156,
+     "cw",
+     "btn_sy_symbol"
+    ],
+    [
+     0.156,
+     "ccw",
+     "btn_sy_symbol"
+    ]
+   ]
+  },
+  {
+   "hwnd": 68470,
+   "id": 9528,
+   "text": "Button1",
+   "rect": [
+    1126,
+    753,
+    1156,
+    783
+   ],
+   "top3": [
+    [
+     -0.0,
+     "zlock",
+     "btn_sy_symbol"
+    ],
+    [
+     0.0,
+     "zcancel",
+     "btn_wia"
+    ],
+    [
+     -0.0,
+     "vfeed",
+     "btn_sy_symbol"
+    ]
+   ]
+  },
+  {
+   "hwnd": 68490,
+   "id": 9538,
+   "text": "Button1",
+   "rect": [
+    1163,
+    753,
+    1193,
+    783
+   ],
+   "top3": [
+    [
+     0.193,
+     "prgrst",
+     "btn_wia"
+    ],
+    [
+     0.096,
+     "lub",
+     "btn_nj3_symbol"
+    ],
+    [
+     0.09,
+     "restart",
+     "btn_sy_symbol"
+    ]
+   ]
+  },
+  {
+   "hwnd": 68510,
+   "id": 9548,
+   "text": "Button1",
+   "rect": [
+    1226,
+    753,
+    1256,
+    783
+   ],
+   "top3": [
+    [
+     0.242,
+     "edit",
+     "btn_nj3_symbol"
+    ],
+    [
+     0.207,
+     "restart",
+     "btn_sy_symbol"
+    ],
+    [
+     0.194,
+     "dnc",
+     "btn_nj3_symbol"
+    ]
+   ]
+  },
+  {
+   "hwnd": 68530,
+   "id": 9558,
+   "text": "Button1",
+   "rect": [
+    1265,
+    753,
+    1295,
+    783
+   ],
+   "top3": [
+    [
+     -0.0,
+     "zlock",
+     "btn_sy_symbol"
+    ],
+    [
+     0.0,
+     "zcancel",
+     "btn_wia"
+    ],
+    [
+     -0.0,
+     "vfeed",
+     "btn_sy_symbol"
+    ]
+   ]
+  },
+  {
+   "hwnd": 68550,
+   "id": 9568,
+   "text": "Button1",
+   "rect": [
+    1304,
+    753,
+    1334,
+    783
+   ],
+   "top3": [
+    [
+     0.291,
+     "prgrst",
+     "btn_wia"
+    ],
+    [
+     0.265,
+     "inc",
+     "btn_nj3_symbol"
+    ],
+    [
+     0.264,
+     "air",
+     "btn_wia"
+    ]
+   ]
+  },
+  {
+   "hwnd": 68570,
+   "id": 9578,
+   "text": "Button1",
+   "rect": [
+    1342,
+    753,
+    1372,
+    783
+   ],
+   "top3": [
+    [
+     0.412,
+     "vfeed",
+     "btn_sy_symbol"
+    ],
+    [
+     0.374,
+     "ref",
+     "btn_nj3_symbol"
+    ],
+    [
+     0.328,
+     "ref",
+     "btn_wia"
+    ]
+   ]
+  },
+  {
+   "hwnd": 68590,
+   "id": 9588,
+   "text": "Button1",
+   "rect": [
+    1405,
+    753,
+    1435,
+    783
+   ],
+   "top3": [
+    [
+     0.318,
+     "inc",
+     "btn_nj3_symbol"
+    ],
+    [
+     0.257,
+     "air",
+     "btn_wia"
+    ],
+    [
+     0.24,
+     "prgrst",
+     "btn_wia"
+    ]
+   ]
+  },
+  {
+   "hwnd": 68610,
+   "id": 9598,
+   "text": "Button1",
+   "rect": [
+    1442,
+    753,
+    1472,
+    783
+   ],
+   "top3": [
+    [
+     0.295,
+     "vfeed",
+     "btn_sy_symbol"
+    ],
+    [
+     0.294,
+     "ref",
+     "btn_wia"
+    ],
+    [
+     0.271,
+     "f0",
+     "btn_sy_symbol"
+    ]
+   ]
+  },
+  {
+   "hwnd": 68630,
+   "id": 9608,
+   "text": "Button1",
+   "rect": [
+    1480,
+    753,
+    1510,
+    783
+   ],
+   "top3": [
+    [
+     0.288,
+     "my",
+     "btn_wia"
+    ],
+    [
+     0.233,
+     "ref",
+     "btn_nj3_symbol"
+    ],
+    [
+     0.221,
+     "mz",
+     "btn_wia"
+    ]
+   ]
+  }
+ ]
+}
