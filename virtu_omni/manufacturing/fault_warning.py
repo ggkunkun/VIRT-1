@@ -133,6 +133,9 @@ def evaluate_collision_risk(
     stock_max_od: float = 56.0,
     rapid_decel_zone_mm: float = 5.0,
     near_miss_threshold_mm: float = 2.0,
+    prev_xyz: Optional[Tuple[float, float, float]] = None,
+    stock_xy_bounds: Optional[Tuple[float, float, float, float]] = None,
+    local_surface_limit: Optional[float] = None,
 ) -> Dict[str, Any]:
     """Check physical interference for cutter, shank & holder plus G00 plunge check."""
     x, y, z = xyz
@@ -143,16 +146,12 @@ def evaluate_collision_risk(
 
     # Turning lathe: tool approaches radially in X (diameter programmed!), chuck jaw occupies Z <= -60
     if process_family == "turning":
-        # Convert X diameter coordinate to radius on +X side
         r_pt = x * 0.5
         min_clr = float("inf")
         closest_zone = "none"
         for box in keepout_zones:
-            # For chuck cylinder check axial Z clearance vs turret holder body
-            # Chuck OD is 110mm radius; tool nose sits at r_pt, tool shank trails to r_pt + 25mm behind, holder body offset in Z-
             tool_z_left = z - (tool.diameter_mm * 0.25)
             d_z = tool_z_left - box.zmax if tool_z_left > box.zmax else (box.zmin - z if z < box.zmin else tool_z_left - box.zmax)
-            # Axial safety margin only matters if nose/shank is within chuck swing radius + holder overhang
             if r_pt < box.xmax:
                 clr = d_z
             else:
@@ -160,7 +159,14 @@ def evaluate_collision_risk(
             if clr < min_clr:
                 min_clr = clr
                 closest_zone = box.name
-        g00_plunge = is_rapid and (z < 0.0 and x < stock_max_od - 0.2)
+        eff_od = local_surface_limit if local_surface_limit is not None else stock_max_od
+        if prev_xyz is not None:
+            dx_in = x - prev_xyz[0]
+            dz_in = z - prev_xyz[2]
+            approaching = (dx_in < -0.05) or (dz_in < -0.05)
+        else:
+            approaching = True
+        g00_plunge = is_rapid and approaching and (z < 0.0 and x < eff_od - 0.2)
     else:
         min_clr = float("inf")
         closest_zone = "none"
@@ -171,10 +177,20 @@ def evaluate_collision_risk(
             if clr < min_clr:
                 min_clr = clr
                 closest_zone = box.name
-        # G00 rapid directly into stock material (below stock_top_z + safety decel margin inside XY stock)
-        # Note: above pocket floor / pre-drilled void or rapid move above stock_top_z is fine;
-        # rapid move to Z <= stock_top_z - 0.5 without clearance is a G00 plunge collision hazard!
-        g00_plunge = is_rapid and (z < stock_top_z - 0.5)
+        eff_top = local_surface_limit if local_surface_limit is not None else stock_top_z
+        if prev_xyz is not None:
+            moving_down = (z - prev_xyz[2]) < -0.05
+        else:
+            moving_down = True
+        if stock_xy_bounds is not None:
+            s_xmin, s_xmax, s_ymin, s_ymax = stock_xy_bounds
+            in_stock_xy = (
+                (s_xmin - r_cut + 0.1) <= x <= (s_xmax + r_cut - 0.1)
+                and (s_ymin - r_cut + 0.1) <= y <= (s_ymax + r_cut - 0.1)
+            )
+        else:
+            in_stock_xy = True
+        g00_plunge = is_rapid and moving_down and in_stock_xy and (z < eff_top - 0.5)
 
     if not math.isfinite(min_clr):
         min_clr = 999.0
@@ -305,18 +321,29 @@ def evaluate_frame_fault_status(
     feed_per_unit_mm: float,
     tolerance_band_mm: float = 0.030,
     stock_top_z: float = 2.0,
+    is_finishing: bool = True,
+    prev_xyz: Optional[Tuple[float, float, float]] = None,
+    stock_xy_bounds: Optional[Tuple[float, float, float, float]] = None,
+    local_surface_limit: Optional[float] = None,
+    roughing_allowance_mm: float = 0.40,
 ) -> Dict[str, Any]:
     """Run all 3 industrial fault-warning channels on a simulation frame."""
     wear = evaluate_tool_wear(tool, cumulative_cut_s)
     coll = evaluate_collision_risk(
         xyz, tool, keepout_zones,
-        process_family=process_family, is_rapid=is_rapid, stock_top_z=stock_top_z,
+        process_family=process_family,
+        is_rapid=is_rapid,
+        stock_top_z=stock_top_z,
+        prev_xyz=prev_xyz,
+        stock_xy_bounds=stock_xy_bounds,
+        local_surface_limit=local_surface_limit,
     )
+    eff_tol_band = tolerance_band_mm if is_finishing else max(tolerance_band_mm, roughing_allowance_mm * 2.0)
     tol = evaluate_tolerance_risk(
         material_id, tool,
         ap_mm=(ap_mm if is_cutting_zone else 0.05),
         feed_per_tooth_or_rev_mm=feed_per_unit_mm,
-        tolerance_band_mm=tolerance_band_mm,
+        tolerance_band_mm=eff_tol_band,
         vb_mm=wear["vb_mm"],
     )
     rank = {"NORMAL": 0, "WARN": 1, "CRITICAL": 2}

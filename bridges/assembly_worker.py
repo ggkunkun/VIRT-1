@@ -24,6 +24,8 @@ import pythoncom  # noqa: E402
 import win32com.client as win32  # noqa: E402
 from win32com.client import dynamic  # noqa: E402
 
+from bridges.sw_revision import SW_PROGID, assert_revision  # noqa: E402
+
 SW_PREF_3D_INTERCONNECT = 691
 
 
@@ -39,7 +41,7 @@ SW_EXE_CANDIDATES = (
 
 def _sw_running() -> bool:
     try:
-        win32.GetActiveObject("SldWorks.Application")
+        win32.GetActiveObject(SW_PROGID)
         return True
     except Exception:
         return False
@@ -51,7 +53,7 @@ def connect() -> Any:
     import subprocess
 
     try:
-        sw = win32.GetActiveObject("SldWorks.Application")
+        sw = win32.GetActiveObject(SW_PROGID)
     except Exception:
         exe = next((p for p in SW_EXE_CANDIDATES if os.path.exists(p)), None)
         if not exe:
@@ -61,7 +63,7 @@ def connect() -> Any:
         for _ in range(90):
             time.sleep(2.0)
             try:
-                sw = win32.GetActiveObject("SldWorks.Application")
+                sw = win32.GetActiveObject(SW_PROGID)
                 break
             except Exception:
                 continue
@@ -74,10 +76,12 @@ def connect() -> Any:
             if _prop(sw, "RevisionNumber") and isinstance(int(_call(sw, "GetDocumentCount", default=-1)), int):
                 stable += 1
                 if stable >= 3:
+                    assert_revision(sw, "assembly_worker.connect")
                     return sw
         except Exception:
             stable = 0
         time.sleep(1.0)
+    assert_revision(sw, "assembly_worker.connect")
     return sw
 
 

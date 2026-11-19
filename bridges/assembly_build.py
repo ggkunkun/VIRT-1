@@ -20,6 +20,7 @@ import win32com.client as w
 import pythoncom
 
 from bridges.step_reverse import reverse_step
+from bridges.sw_revision import SW_PROGID, assert_revision
 
 _GB_TEMPLATE = r"C:\ProgramData\SOLIDWORKS\SOLIDWORKS 2021\templates\gb_a3.drwdot"
 _FALLBACK_TEMPLATE = r"D:\SOLIDWORKS (2)\data\templates\gb.drwdot"
@@ -33,9 +34,11 @@ _PROFILE = _OUTER + _INNER
 
 def _connect():
     try:
-        return w.GetActiveObject("SldWorks.Application")
+        sw = w.GetActiveObject(SW_PROGID)
     except Exception:
-        return w.Dispatch("SldWorks.Application")
+        sw = w.Dispatch(SW_PROGID)
+    assert_revision(sw, "assembly_build._connect")
+    return sw
 
 
 def _errvar():

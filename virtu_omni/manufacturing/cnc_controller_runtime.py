@@ -438,7 +438,7 @@ def _build_shaft_archetype() -> WorkpieceArchetype:
     ops = [
         {"op_id": 10, "name_zh": "OP10 右端面平端面+G71外圆阶梯粗车", "tool_id": 1, "cutting": p_rough, "doc_mm": 2.0, "step_params": {"stock_od": 56.0, "face_stock_z": 2.0}},
         {"op_id": 20, "name_zh": "OP20 G70台阶轴精车(Ø28h6/Ø40k6/Ø50g6)", "tool_id": 2, "cutting": p_fin, "doc_mm": 0.25, "step_params": {}},
-        {"op_id": 30, "name_zh": "OP30 轴肩退刀槽精切(Z-17.0 Ø25.0)", "tool_id": 3, "cutting": p_grv, "doc_mm": 3.0, "step_params": {"groove_z": -17.0, "groove_od": 25.0}},
+        {"op_id": 30, "name_zh": "OP30 轴肩退刀槽精切(Z-16.5 Ø25.0)", "tool_id": 3, "cutting": p_grv, "doc_mm": 3.0, "step_params": {"groove_z": -16.5, "groove_od": 25.0}},
     ]
     keepouts = [
         KeepOutBox("three_jaw_chuck_body", -110.0, 110.0, -110.0, 110.0, -160.0, -60.0, "chuck_jaw"),
@@ -462,7 +462,7 @@ def _build_shaft_archetype() -> WorkpieceArchetype:
         tools=tools,
         operations=ops,
         critical_features=critical,
-        takt_target_s=95.0,
+        takt_target_s=110.0,
         target_cpk=1.67,
     )
 
@@ -577,7 +577,7 @@ def _build_housing_archetype() -> WorkpieceArchetype:
     keepouts = [
         KeepOutBox("fixture_left_clamp", -84.0, -56.0, -14.0, 14.0, -20.0, 12.0, "fixture_clamp"),
         KeepOutBox("fixture_right_clamp", 56.0, 84.0, -14.0, 14.0, -20.0, 12.0, "fixture_clamp"),
-        KeepOutBox("zero_point_subplate", -95.0, 95.0, -75.0, 75.0, -75.0, -45.0, "fixture_pin"),
+        KeepOutBox("zero_point_subplate", -95.0, 95.0, -75.0, 75.0, -75.0, -53.0, "fixture_pin"),
     ]
     critical = [
         {"name": "BORE_52H7", "nominal_mm": 52.0, "tol_upper_mm": 0.030, "tol_lower_mm": 0.0},
@@ -695,9 +695,11 @@ def _gen_turning_program(
         # In sin840d.ctl without MD DIAMON, keep radial X? WAIT: let's track controller units cleanly!
         # Our interpreter checks DIAMON / G18 mode; explicit OD passes from X52 down to X28.5 leaving 0.5mm dia (0.25mm/side)
         for idx, (xd, z_end) in enumerate([(52.0, -54.0), (48.0, -34.0), (44.0, -34.0), (40.6, -34.0), (36.0, -18.0), (32.0, -18.0), (28.6, -18.0)], start=134):
-            l.append(f"N{idx} G0 X{xd:.2f} Z2.5")
-            l.append(f"N{idx}_1 G1 Z{z_end:.2f} F{c1['f_rev_mm']:.3f}")
-            l.append(f"N{idx}_2 G1 X{xd+2.0:.2f} Z{z_end+0.8:.2f}")
+            nb = idx * 10
+            l.append(f"N{nb} G0 Z2.5")
+            l.append(f"N{nb+2} G0 X{xd:.2f}")
+            l.append(f"N{nb+4} G1 Z{z_end:.2f} F{c1['f_rev_mm']:.3f}")
+            l.append(f"N{nb+6} G1 X{xd+2.0:.2f} Z{z_end+0.8:.2f}")
         l.append("N150 G0 X100.0 Z60.0 M9")
         l.append("N152 M5")
         l.append("N154 M1")
@@ -722,13 +724,13 @@ def _gen_turning_program(
         l.append("N240 G0 X100.0 Z60.0 M9")
         l.append("N242 M5")
         l.append("N244 M1")
-        l.append("; --- OP30 RELIEF GROOVE Z-17.0 ---")
+        l.append("; --- OP30 RELIEF GROOVE Z-16.5 ---")
         l.append("N300 G18 G54 G71 G90 G40 G95")
         l.append("N305 T3 D1")
         l.append("N308 M6")
         l.append(f"N310 G97 S{c3['spindle_rpm']} M3 M8")
         l.append("N312 G0 X60.0 Z5.0")
-        l.append("N314 G0 X32.0 Z-17.0")
+        l.append("N314 G0 X32.0 Z-16.5")
         l.append(f"N316 G1 X25.0 F{c3['f_rev_mm']:.3f}")
         l.append("N318 G4 F0.5")
         l.append("N320 G1 X32.0 F0.30")
@@ -797,13 +799,13 @@ def _gen_turning_program(
     l.append("M05")
     l.append("M01")
     l.append("")
-    l.append("(OP30 - PRECISION RELIEF GROOVE Z-17.0)")
+    l.append("(OP30 - PRECISION RELIEF GROOVE Z-16.5)")
     l.append(f"N300 G21 G18 G40 G80 {feed_g} G54")
     l.append("G28 U0. W0.")
     l.append("T0303 M08")
     l.append(f"G97 S{c3['spindle_rpm']} M03")
     l.append(f"G00 X{x_safe:.1f} Z{z_safe:.1f}")
-    l.append("G00 X32.0 Z-17.0")
+    l.append("G00 X32.0 Z-16.5")
     l.append(f"G01 X25.0 F{c3['f_rev_mm']:.3f}")
     l.append("G04 X0.5")
     l.append("G01 X32.0 F0.30")
@@ -894,18 +896,27 @@ def _gen_manifold_milling_program(
         f"{'M1' if is_siem else 'M01'}",
     ])
 
-    # OP20: Pocket Rough 76x48x8 with Ø12mm cutter leaving 0.25mm radial & 0.2mm floor (2 Z passes Z=-4.0, Z=-7.8)
+    # OP20: Pocket Rough 76x48x8 with Ø12mm cutter leaving 0.3mm radial & 0.2mm floor (2 Z passes Z=-4.0, Z=-7.8)
+    # 3 concentric loops + center slot guarantee stepover <= 10.5mm (< D12) with zero uncut islands!
     _atc_tool_header(200, 2, c2["spindle_rpm"], "OP20 POCKET ROUGH 76x48 (D12 EM)")
     for zp in (-4.0, -7.8):
         l.extend([
             "G00 X0.0 Y0.0",
             f"G00 Z{z_decel:.1f}",
             f"G01 Z{zp:.2f} F{round(c2['feed_mm_min']*0.35, 1)}",
-            f"G01 X-18.0 F{c2['feed_mm_min']:.0f}.",
-            "G01 Y-10.0",
-            "G01 X18.0",
-            "G01 Y10.0",
-            "G01 X-18.0",
+            f"G01 X-10.0 F{c2['feed_mm_min']:.0f}.",
+            "G01 X10.0",
+            "G01 X-11.0 Y0.0",
+            "G01 Y-5.5",
+            "G01 X11.0",
+            "G01 Y5.5",
+            "G01 X-11.0",
+            "G01 Y0.0",
+            "G01 X-21.5 Y0.0",
+            "G01 Y-11.5",
+            "G01 X21.5",
+            "G01 Y11.5",
+            "G01 X-21.5",
             "G01 Y0.0",
             "G01 X-31.7 Y0.0",
             "G01 Y-17.7",
@@ -922,13 +933,23 @@ def _gen_manifold_milling_program(
         f"{'M1' if is_siem else 'M01'}",
     ])
 
-    # OP30: Pocket Finish (floor Z=-8.0 + wall G41 with D03=5.0mm) + Outer Contour 120x90x12 G41
+    # OP30: Pocket Floor Zigzag Finish (Z=-8.0) + Wall Finish (G41 D03=5.0mm) + Outer Contour 120x90x12 G41
     # Lead-in vector >= 12mm (>= R5 + 5mm) so G41 ramp-on never gouges!
     _atc_tool_header(300, 3, c3["spindle_rpm"], "OP30 POCKET & CONTOUR G41 FINISH (D10 EM)")
     l.extend([
-        "G00 X-15.0 Y0.0",
+        "G00 X-30.0 Y-16.0",
         f"G00 Z{z_decel:.1f}",
         f"G01 Z-8.0 F{round(c3['feed_mm_min']*0.35, 1)}",
+        f"G01 X30.0 F{c3['feed_mm_min']:.0f}.",
+        "G01 Y-8.0",
+        "G01 X-30.0",
+        "G01 Y0.0",
+        "G01 X30.0",
+        "G01 Y8.0",
+        "G01 X-30.0",
+        "G01 Y16.0",
+        "G01 X30.0",
+        "G01 X-15.0 Y0.0",
         f"G01 G41 {'D1' if is_siem else 'D03'} X-38.0 Y0.0 F{c3['feed_mm_min']:.0f}.",
         "G01 Y-24.0",
         "G01 X38.0",
@@ -953,15 +974,14 @@ def _gen_manifold_milling_program(
         f"{'M1' if is_siem else 'M01'}",
     ])
 
-    # OP40: 4x Ø6.8 Peck Drilling (X=+-45, Y=+-32, clear of pocket X=+-38/Y=+-24 -> in corner bosses!)
-    # Wait: pocket is X=[-38,+38], Y=[-24,+24]; contour is X=[-60,+60], Y=[-45,+45].
-    # Boss corners at (+-49, +-34.5) have wall thickness ~11mm around hole -> safe center (+-49, +-34.5)!
+    # OP40: 4x Ø6.8 Peck Drilling (X=+-49, Y=+-34.5, clear of pocket in corner bosses)
     holes = [(-49.0, -34.5), (49.0, -34.5), (49.0, 34.5), (-49.0, 34.5)]
     _atc_tool_header(400, 4, c4["spindle_rpm"], "OP40 4-M8 CORE DRILL Ø6.8 (PECK)")
     hx0, hy0 = holes[0]
     l.append(f"G00 X{hx0:.1f} Y{hy0:.1f}")
     l.append(f"G00 Z{z_decel:.1f}")
     if is_siem:
+        l.append(f"G01 F{c4['feed_mm_min']:.0f}.")
         l.append(f"MCALL CYCLE83({z_safe:.1f}, 0.0, {z_r:.1f}, -20.0, , -6.0, , 5.0, , , 1.0, 1, 0, , , )")
         for hx, hy in holes:
             l.append(f"X{hx:.1f} Y{hy:.1f}")
@@ -981,6 +1001,7 @@ def _gen_manifold_milling_program(
     l.append(f"G00 X{hx0:.1f} Y{hy0:.1f}")
     l.append(f"G00 Z{z_decel:.1f}")
     if is_siem:
+        l.append(f"G01 F{c5['feed_mm_min']:.0f}.")
         l.append(f"MCALL CYCLE84({z_safe:.1f}, 0.0, {z_r:.1f}, -16.0, , 0.0, 5, , 1.25, , {c5['spindle_rpm']}, {c5['spindle_rpm']}, 0, 1, 0, 0, )")
         for hx, hy in holes:
             l.append(f"X{hx:.1f} Y{hy:.1f}")
@@ -1154,6 +1175,7 @@ def _gen_housing_milling_program(
     l.append(f"G00 Z{z_safe:.1f}")
     l.append(f"G00 Z{z_decel:.1f}")
     if is_siem:
+        l.append(f"G01 F{c4['feed_mm_min']:.0f}.")
         l.append(f"MCALL CYCLE83({z_safe:.1f}, 0.0, {z_r:.1f}, -48.0, , -8.0, , 8.0, , , 1.0, 1, 0, , , )")
         for hx, hy in holes:
             l.append(f"X{hx:.1f} Y{hy:.1f}")
@@ -1376,7 +1398,9 @@ class CNCPanelController:
                 self._n_labels[int(m.group(1))] = idx
 
     def _strip_comment(self, line: str) -> str:
-        s = re.sub(r"\([^)]*\)", "", line)
+        s = line
+        if self.profile.controller_id != "siemens_840d_sl":
+            s = re.sub(r"\([^)]*\)", "", s)
         if ";" in s:
             s = s.split(";", 1)[0]
         return s.strip().upper()
@@ -1662,7 +1686,12 @@ class CNCPanelController:
                     prev_m = self.state.motion_mode
                     self.state.motion_mode = "G01"
                     self._record_move(line_no, raw_line, (hx, hy, mc_cycle["depth_z"]), is_rapid=False)
-                    self._record_move(line_no, raw_line, (hx, hy, mc_cycle["r_plane"]), is_rapid=False)
+                    self._record_move(
+                        line_no,
+                        raw_line,
+                        (hx, hy, mc_cycle["r_plane"]),
+                        is_rapid=(mc_cycle["type"] != "CYCLE84"),
+                    )
                     self.state.motion_mode = prev_m
                     self._record_move(line_no, raw_line, (hx, hy, mc_cycle["retract_z"]), is_rapid=True)
                     continue
@@ -1912,6 +1941,8 @@ class CNCPanelController:
             self.state.motion_mode = "G01"
             self._record_move(g71_line, f"(G71 CUT X{d_eff:.2f} Z{z_stop:.2f})", (d_eff, 0.0, max(z_stop, -54.0)), is_rapid=False)
             self._record_move(g71_line, f"(G71 RETRACT)", (d_eff + 1.6, 0.0, max(z_stop + 0.8, -54.0)), is_rapid=False)
+            self.state.motion_mode = "G00"
+            self._record_move(g71_line, "(G71 RETRACT Z)", (d_eff + 1.6, 0.0, 2.5), is_rapid=True)
             if abs(d_eff - min_dia) < 1e-6:
                 break
             dia -= pass_step_dia

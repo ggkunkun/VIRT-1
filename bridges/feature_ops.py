@@ -19,6 +19,7 @@ import win32com.client as w
 import pythoncom
 
 from bridges.step_reverse import analyze
+from bridges.sw_revision import SW_PROGID, assert_revision
 
 # STEP 母线测量结果（上一轮从 B-Rep 圆弧/平面反求并已用体积 0 误差验证）。
 # 这是「测量数据」，不是建模方法；是否用它、怎么组合由模型决定。
@@ -44,18 +45,19 @@ def _connect():
     last = None
     for _ in range(4):
         try:
-            _SW = w.GetActiveObject("SldWorks.Application")
+            _SW = w.GetActiveObject(SW_PROGID)
             break
         except Exception:
             try:
-                _SW = w.Dispatch("SldWorks.Application")
+                _SW = w.Dispatch(SW_PROGID)
                 break
             except Exception as e:
                 last = e
                 _SW = None
                 time.sleep(1.5)
     if _SW is None:
-        raise last or RuntimeError("cannot connect to SldWorks.Application")
+        raise last or RuntimeError("cannot connect to %s" % SW_PROGID)
+    assert_revision(_SW, "feature_ops._connect")
     return _SW
 
 

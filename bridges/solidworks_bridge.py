@@ -88,9 +88,13 @@ except Exception:
 
 # SOLIDWORKS 2021 type library (embedded in sldworks.tlb next to SLDWORKS.exe)
 
+from bridges.sw_revision import SW_PROGID, SW_REV_MAJOR
+
+
+
 TLB_GUID = "{83A33D31-27C5-11CE-BFD4-00400513BB57}"
 
-SW_VERSION = 29  # SW2021
+SW_VERSION = SW_REV_MAJOR  # 29 = SW2021，来自 bridges.sw_revision 单一事实来源
 
 SLDWORKS_EXE = r"D:\SOLIDWORKS (2)\SLDWORKS.exe"
 
@@ -258,7 +262,9 @@ def _try_attach():
 
     try:
 
-        return win32com.client.GetActiveObject("SldWorks.Application")
+        sw = win32com.client.GetActiveObject(SW_PROGID)
+
+        return sw
 
     except Exception:
 

@@ -205,3 +205,60 @@ def test_optimizer_cnc_spindle_detection_ignores_comments():
     cleaned = "\n".join(_strip_gcode_comments(l) for l in fixed.splitlines())
     # A real spindle start (outside comments) must now exist.
     assert _re.search(r"\bM0?[34]\b", cleaned)
+
+
+# --- C15: G80 是固定循环取消，不是循环本身（涡轮叶片五轴假红修复） -----------
+
+def test_g80_cancel_then_reference_return_before_spindle_passes():
+    # 涡轮叶片五轴程序的典型安全开头：G80 取消循环 + G28 回参考点（带 Z 字），
+    # 都在主轴启动之前。旧实现把 G80 落进 74..89 误设 motion=cycle，于是 G28 Z0.
+    # 被误判「主轴停转却切削进给」→ 合法程序假红。修复后必须通过。
+    code = (
+        "O5001\n"
+        "G21 G40 G49 G80 G90 G17\n"
+        "G28 G91 Z0.\n"
+        "G90\n"
+        "T1 M06\n"
+        "G54\n"
+        "M03 S955\n"
+        "M08\n"
+        "G00 B0. C0.\n"
+        "G00 G43.4 H01 Z100.0\n"
+        "G00 Z5.0\n"
+        "G01 Z-3.0 F191\n"
+        "G00 Z100.0\n"
+        "M05\nM30\n"
+    )
+    r = _v().verify_cimco_macro_b(code)
+    assert r["passed"] is True, r["errors"]
+    assert not any("spindle is stopped" in e for e in r["errors"])
+
+
+def test_g80_is_not_canned_cycle():
+    # G80 取消循环后模态回到 rapid。若仍误把 G80 当 cycle，随后裸 Z-5.0（无 G00/G01）
+    # 会被当成循环深度而跳过碰撞检查 → 假绿。修复后裸负 Z 必须判rapid扎刀碰撞。
+    code = (
+        "O0001\n"
+        "G21 G40 G80 G90\n"
+        "M03 S1000\n"
+        "Z-5.0\n"
+        "M30\n"
+    )
+    r = _v().verify_cimco_macro_b(code)
+    assert r["passed"] is False
+    assert r["collision_detected"] is True
+    assert any("Rapid traverse G00 plunge" in e for e in r["errors"])
+
+
+def test_cutting_feed_before_spindle_still_rejected():
+    # 负对照：真正的「主轴未启动就切削进给」必须仍判红，证明 G80 修复未削弱主轴门。
+    code = (
+        "O0001\n"
+        "G21 G40 G80 G90\n"
+        "G01 Z-2.0 F100\n"
+        "M03 S1000\n"
+        "M30\n"
+    )
+    r = _v().verify_cimco_macro_b(code)
+    assert r["passed"] is False
+    assert any("spindle is stopped" in e for e in r["errors"])

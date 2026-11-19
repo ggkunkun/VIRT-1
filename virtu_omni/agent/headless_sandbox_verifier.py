@@ -326,6 +326,11 @@ class HeadlessSandboxVerifier:
                     motion = "rapid"
                 elif g in (1, 2, 3):
                     motion = "feed"
+                elif g == 80:
+                    # G80 是固定循环「取消」，不是循环本身。旧实现把它落进
+                    # 74..89 区间误设 motion=cycle，导致随后 G28 Z0. 回参考点
+                    # （带 Z 轴字、主轴尚未启动）被误判成「主轴停转却切削进给」。
+                    motion = "rapid"
                 elif g in (70, 71, 72, 73, 76) or 74 <= g <= 89:
                     # canned drilling/boring cycles G73-G89 move Z by controlled
                     # cycle feed, never by rapid — Z word is hole depth, not plunge.

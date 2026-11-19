@@ -149,6 +149,7 @@ def test_sw_verdict_needs_volume_within_analytic_band(tmp_path, monkeypatch):
 
     class FakeApp:
         Visible = True
+        RevisionNumber = "29.5.0.0070"   # 版本门：夹具必须声明真实版本，否则 stage_sw 直接 blocked
 
         def RunMacro2(self, *a):
             m = os.path.join(out, "stage01_sw_metrics.txt")
@@ -621,3 +622,29 @@ def test_vericut_simlog_reads_real_summary_block():
     assert sim["total_cut_distance_mm"] == 458.033658
     assert sim["total_distance_mm"] == 2103.030921
     assert sim["errors"] == 107 and sim["warnings"] == 0
+
+
+def test_stage_sw_blocks_when_revision_is_not_29(tmp_path, monkeypatch):
+    """连到 Rev 34（2026 卸载残留的 ProgID 空壳）必须 blocked。
+
+    背景：本机 HKCR\\SldWorks.Application.34 仍指向已删除的安装目录。
+    任何「探测最高版本」或沿用无版本 ProgID 的旧代码都可能落到它上面。
+    版本门必须在建模之前拦住，而不是让 2026 的 API 差异静默污染结果。
+    """
+    out = str(tmp_path)
+
+    class WrongRevApp:
+        Visible = True
+        RevisionNumber = "34.0.0.0001"
+
+        def RunMacro2(self, *a):
+            raise AssertionError("版本不符时不得执行建模宏")
+
+    monkeypatch.setattr(ace, "ensure_process", lambda *a, **kw: {"attached": True, "pid": 1})
+    import win32com.client as w32c
+    monkeypatch.setattr(w32c, "GetActiveObject", lambda progid: WrongRevApp())
+
+    rep = ace.stage_sw({"d_outer": 53.0, "d_inner": 14.0, "overall_len": 45.0}, out)
+
+    assert rep["status"] == "blocked"
+    assert "34.0.0.0001" in rep["error"]

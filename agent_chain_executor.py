@@ -21,6 +21,7 @@ ROOT = os.path.dirname(os.path.abspath(__file__))
 if ROOT not in sys.path:
     sys.path.insert(0, ROOT)
 from virtu_omni.agent.process_memory_reclaimer import ProcessMemoryReclaimer
+from bridges.sw_revision import SW_PROGID, assert_revision
 
 NX_BASE = r"E:\BaiduNetdiskDownload\NX 12.0.2.9\NX12.2.9waigua\NX12.2.9\NX"
 NX_RUN_JOURNAL = os.path.join(NX_BASE, "NXBIN", "run_journal.exe")
@@ -837,7 +838,7 @@ def stage_sw(spec, out_dir, macro_builder=None, wait_launch_s=150):
     notes.append("附着既有 SLDWORKS pid=%s" % ladder.get("pid") if ladder.get("attached")
                  else "本次 explorer 派生启动 SLDWORKS pid=%s" % ladder.get("pid"))
     if ladder.get("error"):
-        return _evidence("solidworks", "blocked", "COM SldWorks.Application",
+        return _evidence("solidworks", "blocked", "COM %s" % SW_PROGID,
                          error=ladder["error"], notes=notes)
     try:
         gencache.EnsureModule("{83A33D31-27C5-11CE-BFD4-00400513BB57}", 0, 29, 0)
@@ -850,7 +851,7 @@ def stage_sw(spec, out_dir, macro_builder=None, wait_launch_s=150):
     deadline = time.time() + 300
     while time.time() < deadline and app is None:
         try:
-            app = win32com.client.GetActiveObject("SldWorks.Application")
+            app = win32com.client.GetActiveObject(SW_PROGID)
         except Exception as e:
             last_err = e
             # SW 启动中途才弹 #32770（实测「工具栏信息不一致」），弹着时 ROT 永不注册；
@@ -859,8 +860,14 @@ def stage_sw(spec, out_dir, macro_builder=None, wait_launch_s=150):
                 notes.append("附着中再次点掉 SW 模态框: %s" % json.dumps(d, ensure_ascii=False)[:160])
             time.sleep(3)
     if app is None:
-        return _evidence("solidworks", "blocked", "COM SldWorks.Application",
+        return _evidence("solidworks", "blocked", "COM %s" % SW_PROGID,
                          error="COM 附着失败: %r" % (last_err,), notes=notes)
+    try:
+        sw_rev = assert_revision(app, "agent_chain_executor.solidworks")
+        notes.append("版本校验通过: RevisionNumber=%s" % sw_rev)
+    except Exception as e:
+        return _evidence("solidworks", "blocked", "COM %s 版本校验" % SW_PROGID,
+                         error=str(e)[:200], notes=notes)
     try:
         app.Visible = True
     except Exception:
