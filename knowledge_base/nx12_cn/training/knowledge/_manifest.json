@@ -4,17 +4,17 @@
     {
       "module": "01_草图绘制",
       "file": "01_草图绘制.md",
-      "commands": 305
+      "commands": 306
     },
     {
       "module": "02_零件建模",
       "file": "02_零件建模.md",
-      "commands": 259
+      "commands": 356
     },
     {
       "module": "03_装配设计",
       "file": "03_装配设计.md",
-      "commands": 126
+      "commands": 130
     },
     {
       "module": "04_曲面设计",
@@ -29,12 +29,12 @@
     {
       "module": "06_同步建模",
       "file": "06_同步建模.md",
-      "commands": 37
+      "commands": 38
     },
     {
       "module": "07_工程图与PMI",
       "file": "07_工程图与PMI.md",
-      "commands": 571
+      "commands": 597
     },
     {
       "module": "08_加工制造",
@@ -44,27 +44,27 @@
     {
       "module": "09_仿真分析",
       "file": "09_仿真分析.md",
-      "commands": 6
+      "commands": 1150
     },
     {
       "module": "10_模具设计",
       "file": "10_模具设计.md",
-      "commands": 554
+      "commands": 577
     },
     {
       "module": "11_管线与线路",
       "file": "11_管线与线路.md",
-      "commands": 1
+      "commands": 308
     },
     {
       "module": "12_文件编辑视图信息",
       "file": "12_文件编辑视图信息.md",
-      "commands": 304
+      "commands": 375
     },
     {
       "module": "13_图层与显示",
       "file": "13_图层与显示.md",
-      "commands": 12
+      "commands": 15
     },
     {
       "module": "14_定制与首选项",
@@ -75,6 +75,11 @@
       "module": "15_其他与第三方外挂",
       "file": "15_其他与第三方外挂.md",
       "commands": 1294
+    },
+    {
+      "module": "21_其他官方应用",
+      "file": "21_其他官方应用.md",
+      "commands": 509
     }
   ]
 }

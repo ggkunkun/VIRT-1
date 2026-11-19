@@ -3,7 +3,7 @@
 > **唯一适配版本**：NX 12.0（本机介质 12.0.2.9，简体中文）
 > **数据基准**：直接解析本机 NX 安装介质（measured），非模型记忆、非推断
 > **生成时间**：2026-11-18
-> **可证事实**：4424 条官方命令 / 128 个菜单文件 / 9 个按钮定义 / 128126 条中文翻译条目
+> **可证事实**：6610 条命令目录（E1/E2/E3/E4）/ 100 个应用级官方翻译表 / 128126 条中文翻译条目 / 75 条快捷键
 > **外挂通道**：13 个第三方外挂 / 1639 条唯一命令 / 180 个跨外挂重名 ID
 
 ---
@@ -15,7 +15,7 @@
 | 类别 | 状态 | 依据 |
 |---|---|---|
 | 命令 ID / 中文名 / 菜单路径 / 快捷键 / 官方提示 | ✅ 已从介质提取并校验 | `.btn`/`.men`/`simpl_chinese` 翻译表，含源文件 SHA256 |
-| 六级知识结构、13272 条测试用例 | ✅ 已生成，7/7 静态检查通过 | 见 `reports/verification_report.md` |
+| 六级知识结构、19830 条测试用例 | ✅ 已生成，15/15 静态检查通过 | 见 `reports/verification_report.md` |
 | 每功能点 ≥3 场景的 **GUI 实际执行** | ⏳ 未取证 | 当前为可执行用例，非已执行结果 |
 | 四维验收 95 分合格线 | ⏳ 未达标 | 报告如实标 NOT_VERIFIED，无虚构分数 |
 | 与 NX 10/1847/2000 的具体差异 | ⏳ 未取证 | 仅列核对清单，不臆造差异 |
@@ -30,9 +30,9 @@
 training/
 ├── README.md                         本文件（总览 + 使用说明）
 ├── catalog/
-│   └── nx12_cn_full_catalog.json     全量命令目录 4424 条（唯一命名基准，含 evidence 字段）
+│   └── nx12_cn_full_catalog.json     全量命令目录 6610 条（唯一命名基准，含 evidence 字段）
 ├── knowledge/
-│   ├── 01_草图绘制.md ... 15_其他与第三方外挂.md   六级知识库（15 模块）
+│   ├── 01_草图绘制.md ... 21_其他官方应用.md   六级知识库（16 模块）
 │   ├── 16_外挂分册/                  第三方外挂命令分册（13 份 + 总索引）
 │   └── _manifest.json                模块清单
 ├── plugins/
@@ -41,38 +41,41 @@ training/
 │   └── plugin_router.py              外挂路由层（list/search/resolve/plan_call/doctor）
 ├── features/
 │   ├── 01_快捷键体系.md              75 条快捷键（介质实测）+ 自定义规则
-│   ├── 02_中文术语对照.md            2456 条中英对照
+│   ├── 02_中文术语对照.md            4059 条中英对照
 │   ├── 03_版本差异对照库.md          本版本可证事实 + 待核对清单
 │   ├── 04_报错代码库.md              开放式登记表 + 取证方法（不编造代码）
 │   └── 05_性能优化配置.md            官方入口 + 调优核对清单
 ├── tests/
-│   ├── test_cases_all.json           13272 条用例（4424×3 场景）
+│   ├── test_cases_all.json           19830 条用例（6610×3 场景）
 │   └── README_测试用例集.md          用例索引与验收映射
 ├── reports/
 │   ├── verification_report.md        验收报告（含四维状态与未验证披露）
 │   └── verification_report.json      机器可读版
 └── tools/
     ├── extract_full_catalog_v2.py    ① 全量提取器（重建目录）
-    ├── build_knowledge_base.py       ② 六级知识库生成器
-    ├── build_features.py             ③ 专属特性库生成器
-    ├── build_test_cases.py           ④ 测试用例生成器
-    ├── build_plugin_registry.py      ⑤ 外挂注册表生成器（GBK 解码 + 版本过滤）
-    ├── build_plugin_knowledge.py     ⑥ 外挂分册生成器
-    └── verify_and_report.py          ⑦ 验证器 + 报告生成器
+    ├── augment_catalog_from_translations.py ② 官方翻译表补全器（E4）
+    ├── build_knowledge_base.py       ③ 六级知识库生成器
+    ├── build_features.py             ④ 专属特性库生成器
+    ├── build_test_cases.py           ⑤ 测试用例生成器
+    ├── build_plugin_registry.py      ⑥ 外挂注册表生成器（GBK 解码 + 版本过滤）
+    ├── build_plugin_knowledge.py     ⑦ 外挂分册生成器
+    └── verify_and_report.py          ⑧ 验证器 + 报告生成器
 ```
 
 ## 2. 六级知识架构
 
 每个模块文档严格采用：**模块 → 子模块 → 功能点 → 操作步骤 → 参数说明 → 注意事项**。
 
-- 每个功能点带版本标签 `[NX12.0-CN]` 与证据等级 `[E1-MEDIA]` / `[E2-MENU]` / `[E3-UNTR]`。
+- 每个功能点带版本标签 `[NX12.0-CN]` 与证据等级 `[E1-MEDIA]` / `[E2-MENU]` / `[E3-UNTR]` / `[E4-TRANSLATION]`。
 - 操作步骤的菜单路径来自真实 `.men` 解析，快捷键来自 `.btn` 的 `ACCELERATOR`，官方说明来自翻译表原文。
+- E4 条目仅有官方译文，菜单路径/快捷键/参数对话框需 GUI 复核。
 - 无官方说明处显式标 `[待实测]`，不臆造参数默认值。
 
 证据等级：
 - **E1-MEDIA**（1675 条）：来自 `definitions_*.btn` + 官方中文翻译，可点名源文件。
 - **E2-MENU**（1039 条）：仅出现在菜单定义中，有官方中文名。
 - **E3-UNTR**（1710 条）：菜单中出现但无官方中文翻译，多为第三方外挂，需 GUI 复核显示名。
+- **E4-TRANSLATION**（2186 条）：由 100 个应用级官方 `*_men`/`definitions_*_btn` 简体中文翻译表补全；中文名与功能说明为官方译文，菜单路径/参数对话框需 GUI 复核。
 
 ## 3. 复用与扩展（可复跑工具链）
 
@@ -80,6 +83,7 @@ training/
 
 ```bash
 python extract_full_catalog_v2.py      # 从介质重建 catalog（换版本时改 --nx-root）
+python augment_catalog_from_translations.py  # 用官方翻译表补全缺失应用命令（E4）
 python build_knowledge_base.py         # 重建 knowledge/
 python build_features.py               # 重建 features/
 python build_test_cases.py             # 重建 tests/
@@ -99,7 +103,7 @@ python verify_and_report.py            # 跑验证 + 出报告
 2. 输出步骤时引用知识库功能点的真实菜单路径与命令 ID；`[待实测]` 处必须如实告知用户需现场确认。
 3. 步骤粒度：菜单逐层展开 → 点击项 → 对话框参数 → 确定/取消；快捷键优先给出。
 4. 遇到报错，先查 `features/04_报错代码库.md`；无登记项时引导用户按取证流程提供日志，不编造解法。
-5. 涉及第三方外挂（E3）命令时，明确标注"非 Siemens 官方功能"。
+5. 涉及第三方外挂（E3）或仅译文补全命令（E4）时，明确标注证据等级与“需 GUI 复核”的边界。
 
 ## 5. 第三方外挂通道（外挂 Agent）
 

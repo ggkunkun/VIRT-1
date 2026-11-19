@@ -3,8 +3,8 @@
 """验证器 + 验收报告生成器。
 
 执行真实可做的验证：
-  V1 目录完整性：命令 ID 唯一、模块覆盖、证据等级分布
-  V2 溯源核对：随机抽样 N 条，检查命令 ID 在介质 .btn/.men 中真实存在
+  V1 目录完整性：命令 ID 唯一、模块覆盖、证据等级分布（含 E4-TRANSLATION）
+  V2 溯源核对：随机抽样 N 条，检查命令 ID 在介质 .btn/.men 或官方翻译表中真实存在
   V3 知识库覆盖：knowledge/*.md 功能点数 == 目录命令数
   V4 测试用例覆盖：cases == commands × 3，每命令场景齐全
   V5 引用一致性：知识库中的命令 ID ⊆ 目录
@@ -31,17 +31,35 @@ NX = Path(r"D:\BaiduNetdiskDownload\NX 12.0.2.9\NX12.2.9waigua\NX12.2.9\NX")
 VER = "NX12.0-CN"
 
 
-def check_media_evidence(cids: list[str]) -> tuple[int, list[str]]:
-    """在介质 .btn/.men 中检索抽样命令 ID，返回命中数与未命中样例。"""
-    idset = set(cids)
+def check_media_evidence(cids: list[str], cmds: dict) -> tuple[int, list[str]]:
+    """在介质 .btn/.men 或官方翻译表中检索抽样命令 ID，返回命中数与未命中样例。"""
     found: set[str] = set()
-    pats = {cid: re.compile(r"\b" + re.escape(cid) + r"\b") for cid in cids}
+    # E4-TRANSLATION：命令 ID 以 <CID>_<SUFFIX> 形式出现在官方翻译表中
+    e4_ids = [cid for cid in cids if cmds.get(cid, {}).get("evidence") == "E4-TRANSLATION"]
+    for cid in e4_ids:
+        c = cmds[cid]
+        pat = re.compile(r"\b" + re.escape(cid) + r"_")
+        ok = False
+        for rel in c.get("translation_sources") or []:
+            fp = NX / rel
+            try:
+                txt = fp.read_text(encoding="utf-8-sig", errors="ignore")
+            except OSError:
+                continue
+            if pat.search(txt):
+                ok = True
+                break
+        if ok:
+            found.add(cid)
+    # E1/E2/E3：在 .btn/.men 中按独立命令 ID 检索
+    ids2 = [cid for cid in cids if cid not in found]
+    pats = {cid: re.compile(r"\b" + re.escape(cid) + r"\b") for cid in ids2}
     for p in list(NX.rglob("*.btn")) + list(NX.rglob("*.men")):
         try:
             txt = p.read_text(encoding="ascii", errors="ignore")
         except OSError:
             continue
-        for cid in cids:
+        for cid in ids2:
             if cid not in found and pats[cid].search(txt):
                 found.add(cid)
         if len(found) == len(cids):
@@ -63,16 +81,17 @@ def main() -> int:
     mods = Counter(v["module"] for v in cmds.values())
     required = ["01_草图绘制","02_零件建模","03_装配设计","04_曲面设计","05_钣金设计","06_同步建模",
                 "07_工程图与PMI","08_加工制造","09_仿真分析","10_模具设计","11_管线与线路",
-                "12_文件编辑视图信息","13_图层与显示","14_定制与首选项"]
+                "12_文件编辑视图信息","13_图层与显示","14_定制与首选项",
+                "15_其他与第三方外挂","21_其他官方应用"]
     missing_mod = [m for m in required if mods.get(m, 0) == 0]
-    rec("V1.2 14个要求模块均有功能点", not missing_mod, f"缺失={missing_mod or '无'}; 模块数={len(mods)}")
+    rec("V1.2 要求模块均有功能点", not missing_mod, f"缺失={missing_mod or '无'}; 模块数={len(mods)}")
     ev = Counter(v["evidence"] for v in cmds.values())
     rec("V1.3 证据等级分布", sum(ev.values()) == len(cmds), json.dumps(ev, ensure_ascii=False))
 
     # V2 介质溯源抽样
     random.seed(120)
     sample = random.sample(ids, 60)
-    hit, miss = check_media_evidence(sample)
+    hit, miss = check_media_evidence(sample, cmds)
     rec("V2 介质溯源抽样(60条命令ID)", hit == len(sample), f"命中={hit}/{len(sample)}; 未命中样例={miss[:5]}")
 
     # V3 知识库覆盖
@@ -91,6 +110,9 @@ def main() -> int:
     full = all(len(v) >= 3 for v in case_cmds.values()) and len(case_cmds) == len(ids)
     rec("V4 测试用例全覆盖(每点3场景)", full,
         f"用例={tc['total_cases']}, 覆盖命令={len(case_cmds)}/{len(ids)}, 每点场景数=3")
+
+    kmanifest = json.loads((KDIR / "_manifest.json").read_text(encoding="utf-8"))
+    n_mod = len(kmanifest.get("modules", []))
 
     # V5 快捷键/术语来源核对
     acc = [v for v in cmds.values() if v.get("accelerator")]
@@ -198,7 +220,8 @@ def main() -> int:
             "复杂项目端到端流程在 NX 12.0 中文界面的完整跑通。",
             "报错代码→解法的实测有效性。",
             "与 NX 10 / 1847 / 2000 系列的具体差异结论（当前为核对清单）。",
-            "第三方外挂命令（E3，1710 条）的中文显示名与官方归属性。",
+            f"第三方外挂命令（E3，{ev.get('E3-UNTR', 0)} 条）的中文显示名与官方归属性。",
+            f"E4-TRANSLATION 命令（{ev.get('E4-TRANSLATION', 0)} 条）的菜单路径、快捷键与参数对话框需 GUI 复核。",
         ],
     }
     (OUT / "verification_report.json").write_text(
@@ -235,10 +258,10 @@ def main() -> int:
           "- 已知阻断：VERSION≠120 的外挂（YSUG、KASA）在 NX12 下标记为不可用；"
           "硬编码路径断裂与环境变量缺失由 `doctor` 实时检测。",
           "", "## 七、证据链", "",
-          "- 命令目录：`catalog/nx12_cn_full_catalog.json`（4424 条，含 source_btn / men_files / evidence）",
+          f"- 命令目录：`catalog/nx12_cn_full_catalog.json`（{len(ids)} 条，含 source_btn / men_files / evidence）",
           "- 源文件 SHA256：见目录 `key_sources_sha256` 字段",
-          "- 知识库：`knowledge/`（15 个模块文件，`_manifest.json`）",
-          "- 测试用例：`tests/test_cases_all.json`（13272 条）", "",
+          f"- 知识库：`knowledge/`（{n_mod} 个模块文件，`_manifest.json`）",
+          f"- 测试用例：`tests/test_cases_all.json`（{tc['total_cases']} 条）", "",
           "## 八、补齐到 95 分的路径", "",
           "1. 按 `tests/test_cases_all.json` 的 S1/S2/S3 逐条在 NX 12.0 中文界面执行，留存截图与参数快照。",
           "2. 将实测结果回填知识库 `[待实测]` 标记处，并把报错原文录入 `features/04_报错代码库.md`。",
