@@ -27,14 +27,14 @@
 
 | 算子 | seq | 基线 ms | 优化 ms | 加速比 | 显存降幅 | max_abs_diff | 闸门 | n |
 | :--- | ---: | ---: | ---: | ---: | ---: | ---: | :---: | ---: |
-| `VirtuAttention (fused QKV + SDPA)` | 64 | 7.406 | 7.133 | 1.04x | 未测 | `1.38e-07` | PASS | 9 |
-| `UniRoPE (1D cached)` | 64 | 0.414 | 0.311 | 1.33x | 未测 | `0.00e+00` | PASS | 9 |
-| `VirtuSwiGLU (fused gate/up GEMM)` | 64 | 15.595 | 16.377 | 0.95x | 未测 | `0.00e+00` | PASS | 9 |
-| `VirtuRMSNorm (fused kernel)` | 64 | 0.116 | 0.122 | 0.94x | 未测 | `0.00e+00` | PASS | 9 |
+| `VirtuAttention (fused QKV + SDPA)` | 64 | 8.859 | 8.679 | 1.02x | 未测 | `1.38e-07` | PASS | 9 |
+| `UniRoPE (1D cached)` | 64 | 0.594 | 0.414 | 1.43x | 未测 | `0.00e+00` | PASS | 9 |
+| `VirtuSwiGLU (fused gate/up GEMM)` | 64 | 16.521 | 17.557 | 0.94x | 未测 | `0.00e+00` | PASS | 9 |
+| `VirtuRMSNorm (fused kernel)` | 64 | 0.151 | 0.147 | 1.03x | 未测 | `0.00e+00` | PASS | 9 |
 
-- **四算子微基准合计耗时比（非整模型端到端）**: **0.98x**
+- **四算子微基准合计耗时比（非整模型端到端）**: **0.97x**
 - **峰值显存降幅**: **0.0%** — 未测（CPU 环境无 CUDA 显存计数）
 - **数值等价性核验**: `[PASS] 全部等价性闸门通过`
-- **退化算子（speedup < 1.00x，不做平均掩盖）**: `VirtuSwiGLU (fused gate/up GEMM)@64=0.95x`; `VirtuRMSNorm (fused kernel)@64=0.94x`
+- **退化算子（speedup < 1.00x，不做平均掩盖）**: `VirtuSwiGLU (fused gate/up GEMM)@64=0.94x`
 
 > 说明：`overall_speedup` = 本表所有配对的 `基线 ms 之和 / 优化 ms 之和`，仅代表这四个微基准，不代表 Ollama/GGUF 部署模型的端到端生成速度。显存列负值表示优化后占用增加，未做截断。

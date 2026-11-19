@@ -1,12 +1,12 @@
 {
   "run_id": "1a4171a791e7668b",
-  "timestamp": 1795018672.765612,
+  "timestamp": 1795020228.729363,
   "device_name": "CPU",
   "pytorch_version": "2.15.0+cpu",
   "cuda_available": false,
   "flash_attention_available": true,
   "summary": {
-    "overall_speedup": 0.9828,
+    "overall_speedup": 0.9749,
     "memory_reduction_pct": 0.0,
     "total_operators_optimized": 4,
     "benchmarked_sequence_lengths": [
@@ -14,7 +14,7 @@
     ],
     "invariants_verified": true,
     "total_timing_samples": 36,
-    "regression_count": 2,
+    "regression_count": 1,
     "basis": "measured",
     "evidence_path": "benchmarks\\model_operator_optimization_report.json"
   },
@@ -51,11 +51,11 @@
   "operator_benchmarks": [
     {
       "operator": "VirtuAttention (fused QKV + SDPA)",
-      "baseline_ms": 7.4062,
-      "optimized_ms": 7.1328,
-      "speedup": 1.0383,
-      "baseline_spread_ms": 1.5434,
-      "optimized_spread_ms": 2.915,
+      "baseline_ms": 8.8589,
+      "optimized_ms": 8.6788,
+      "speedup": 1.0207,
+      "baseline_spread_ms": 0.2338,
+      "optimized_spread_ms": 0.6012,
       "baseline_mem_mb": null,
       "optimized_mem_mb": null,
       "memory_reduction_pct": 0.0,
@@ -74,11 +74,11 @@
     },
     {
       "operator": "UniRoPE (1D cached)",
-      "baseline_ms": 0.4139,
-      "optimized_ms": 0.311,
-      "speedup": 1.3309,
-      "baseline_spread_ms": 0.0323,
-      "optimized_spread_ms": 0.0213,
+      "baseline_ms": 0.594,
+      "optimized_ms": 0.4142,
+      "speedup": 1.4339,
+      "baseline_spread_ms": 0.1215,
+      "optimized_spread_ms": 0.0441,
       "baseline_mem_mb": null,
       "optimized_mem_mb": null,
       "memory_reduction_pct": 0.0,
@@ -97,11 +97,11 @@
     },
     {
       "operator": "VirtuSwiGLU (fused gate/up GEMM)",
-      "baseline_ms": 15.5954,
-      "optimized_ms": 16.3765,
-      "speedup": 0.9523,
-      "baseline_spread_ms": 1.0493,
-      "optimized_spread_ms": 0.6985,
+      "baseline_ms": 16.5211,
+      "optimized_ms": 17.557,
+      "speedup": 0.941,
+      "baseline_spread_ms": 2.1344,
+      "optimized_spread_ms": 1.3495,
       "baseline_mem_mb": null,
       "optimized_mem_mb": null,
       "memory_reduction_pct": 0.0,
@@ -120,11 +120,11 @@
     },
     {
       "operator": "VirtuRMSNorm (fused kernel)",
-      "baseline_ms": 0.1156,
-      "optimized_ms": 0.1223,
-      "speedup": 0.9447,
-      "baseline_spread_ms": 0.0533,
-      "optimized_spread_ms": 0.0181,
+      "baseline_ms": 0.1513,
+      "optimized_ms": 0.1471,
+      "speedup": 1.0283,
+      "baseline_spread_ms": 0.0801,
+      "optimized_spread_ms": 0.1689,
       "baseline_mem_mb": null,
       "optimized_mem_mb": null,
       "memory_reduction_pct": 0.0,
@@ -142,12 +142,12 @@
       "seq_len": 64
     }
   ],
-  "overall_speedup": 0.9828,
+  "overall_speedup": 0.9749,
   "memory_reduction_pct": 0.0,
   "all_invariants_passed": true,
   "identity": {
     "run_id": "1a4171a791e7668b",
-    "captured_at": "2026-11-19T00:17:51",
+    "captured_at": "2026-11-19T00:43:47",
     "artifacts": {},
     "cases": {},
     "ruler": {
@@ -175,8 +175,7 @@
   "evidence_path": "benchmarks\\model_operator_optimization_report.json",
   "invalidated_legs": [],
   "regressions": [
-    "VirtuSwiGLU (fused gate/up GEMM)@64=0.95x",
-    "VirtuRMSNorm (fused kernel)@64=0.94x"
+    "VirtuSwiGLU (fused gate/up GEMM)@64=0.94x"
   ],
   "measurement_notes": {
     "basis": "measured",
