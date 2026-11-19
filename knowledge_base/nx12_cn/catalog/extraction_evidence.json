@@ -1,0 +1,25 @@
+{
+  "nx_root": "D:\\BaiduNetdiskDownload\\NX 12.0.2.9\\NX12.2.9waigua\\NX12.2.9\\NX",
+  "generated_at": "2026-11-19T10:58:01+08:00",
+  "stats": {
+    "nx_root": "D:\\BaiduNetdiskDownload\\NX 12.0.2.9\\NX12.2.9waigua\\NX12.2.9\\NX",
+    "translation_entries": 134744,
+    "btn_files": 9,
+    "men_files": 19,
+    "commands": 2454,
+    "commands_with_zh": 2453,
+    "commands_with_accel": 83,
+    "commands_with_menu_path": 2149,
+    "menus": 656,
+    "ribbon_tabs": 8
+  },
+  "key_sources": {
+    "NXBIN/ugraf.exe": "72e1c09b3bc666376d1f28807fd285014964e8c69131d43b239760707ed8c80f",
+    "UGII/menus/definitions_main.btn": "e142f49130694ad60274874134e9980d2b45bb33d5dc4c2d4d38c94f4d5ea119",
+    "UGII/menus/ug_main.men": "93bb79dd91c0cce157771a41666962326fce223355338f406867c7264774603c",
+    "UGII/menus/ug_modeling.men": "77f3fc3340a65a43b0f9d60ad7658702b33fdda6727d73bdd540a2c6d8b3f98a",
+    "UGII/menus/ug_sketcher.men": "f7596a5b47187fbc778c3bc0291c7d2a82409509bc08a0969221c662ecd75fa2",
+    "LOCALIZATION/translations/simpl_chinese/definitions_main_btn_simpl_chinese.txt": "d98cbfbf19643263dc2bab27a97cfa738e3e9ea3a58d7078cfded045424097f3"
+  },
+  "basis": "measured（直接解析本机安装介质；非模型记忆）"
+}

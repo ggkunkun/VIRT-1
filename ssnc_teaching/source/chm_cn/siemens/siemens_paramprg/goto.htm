@@ -1,0 +1,87 @@
+
+<html xmlns="undefined">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>无标题文档</title>
+<link href="../../helper_css.css" rel="stylesheet" type="text/css">
+</head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar">
+  <tr>
+    <td>有条件跳转</td>
+  </tr>
+</table>
+<p><strong>1.</strong><strong>功能 </strong><br>
+用IF-条件语句表示有条件跳转.如果满足跳转条件(也就是值不等于零),则进行跳转.跳转目标只能是有标记符的程序段.该程序段必须在此程序之内.<br>
+有条件跳转指令要求一个独立的程序段.在一个程序段中可以有许多个条件跳转指令.<br>
+使用了条件跳转后有时会使程序得到明显的简化.</p>
+<p><strong>2.</strong><strong>编程 </strong><br>
+  IF条件GOTOF Lable ；先前跳转 <br>
+  IF条件GOTOB Lable ；向后跳转</p>
+<table border="0" cellspacing="1" cellpadding="0">
+  <tr>
+    <td width="87" bgcolor="#E9ECF5" class="title">AWL</td>
+    <td width="922" bgcolor="#E9ECF5"class="title">说明</td>
+  </tr>
+  <tr>
+    <td width="87" valign="top" bgcolor="#E9ECF5"><p>GOTOF</p></td>
+    <td width="922" valign="top" bgcolor="#E9ECF5"><p>向前跳转(向程序结束的方向跳转)</p></td>
+  </tr>
+  <tr>
+    <td width="87" valign="top" bgcolor="#E9ECF5"><p> GOTOB</p></td>
+    <td width="922" valign="top" bgcolor="#E9ECF5"><p>向后跳转(向程序开始的方向跳转)</p></td>
+  </tr>
+  <tr>
+    <td width="87" valign="top" bgcolor="#E9ECF5"><p> Lable</p></td>
+    <td width="922" valign="top" bgcolor="#E9ECF5"><p>所选的标记符 </p></td>
+  </tr>
+  <tr>
+    <td width="87" valign="top" bgcolor="#E9ECF5"><p>IF</p></td>
+    <td width="922" valign="top" bgcolor="#E9ECF5"><p>跳转条件导入符 </p></td>
+  </tr>
+  <tr>
+    <td width="87" valign="top" bgcolor="#E9ECF5"><p>条件 </p></td>
+    <td width="922" valign="top" bgcolor="#E9ECF5"><p>作为条件的计算参数,计算表达式 </p></td>
+  </tr>
+</table>
+<p><strong>3.</strong><strong>比较运算 </strong></p>
+<table border="0" cellspacing="1" cellpadding="0">
+  <tr>
+    <td width="98" bgcolor="#E9ECF5" class="title">运算符 </td>
+    <td width="1122" bgcolor="#E9ECF5" class="title" >意义 </td>
+  </tr>
+  <tr>
+    <td width="98" valign="top" bgcolor="#E9ECF5"><p>= =</p></td>
+    <td width="1122" valign="top" bgcolor="#E9ECF5"><p>等于 </p></td>
+  </tr>
+  <tr>
+    <td width="98" valign="top" bgcolor="#E9ECF5"><p>＜＞ </p></td>
+    <td width="1122" valign="top" bgcolor="#E9ECF5"><p>不等 </p></td>
+  </tr>
+  <tr>
+    <td width="98" valign="top" bgcolor="#E9ECF5"><p>＞ </p></td>
+    <td width="1122" valign="top" bgcolor="#E9ECF5"><p>大于 </p></td>
+  </tr>
+  <tr>
+    <td width="98" valign="top" bgcolor="#E9ECF5"><p>＜ </p></td>
+    <td width="1122" valign="top" bgcolor="#E9ECF5"><p>小于 </p></td>
+  </tr>
+  <tr>
+    <td width="98" valign="top" bgcolor="#E9ECF5"><p>＞ = </p></td>
+    <td width="1122" valign="top" bgcolor="#E9ECF5"><p>大于或等于 </p></td>
+  </tr>
+  <tr>
+    <td width="98" valign="top" bgcolor="#E9ECF5"><p>＜ = </p></td>
+    <td width="1122" valign="top" bgcolor="#E9ECF5"><p>小于或等于 </p></td>
+  </tr>
+</table>
+<p>用上述比较运算表示跳转条件,计算表达式也可用于比较运算.<br>
+比较运算的结果有两种,一种为“满足”，另一种为“不满足”。 “不满足”时，该运算结果值为零。 </p>
+<p><strong>4.</strong><strong>比较运算编程举例 </strong><br>
+  R1＞1 ；R1大于1<br>
+  1＜R1 ；1小于R1<br>
+  R1＜R2+R3 ；R1小于R2加R3<br>
+  R6＞=SIN(R7*R7) ；R6大于或等于SIN(R7)2<br>
+</p>
+</body>
+</html>

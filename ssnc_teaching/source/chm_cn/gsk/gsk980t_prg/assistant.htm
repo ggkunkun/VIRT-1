@@ -1,0 +1,136 @@
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title></title>
+
+<link href="../../helper_css.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar">
+  <tr>
+    <td>辅助功能(M     
+    功能)</td>
+  </tr>
+</table>
+<TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+  <TR>
+    <TD class=contents1 vAlign=top><b> 代码及其含义</span></b><br>
+    </span>  如果在地址</span>M</span>后面指令了</span>2</span>位数值，那就把对应的信号送给机床，用来控制机床的</span>ON/OFF</span>。</span>M</span>代码在一个程序段中只允许一个有效，</span>M</span>代码信号为电平输出，保持信号。</span></font></TD>
+  </TR>
+  <TR>
+    <td height="150" class="contents1"><table width="590" border="0" cellpadding="2" cellspacing="1" bgcolor="#00309C">
+      <tr class="contents1">
+        <td width="86" height="20" align="center" bgcolor="#B2D4F6"><b>M代码</font></b></td>
+        <td height="20" bgcolor="#FFFFFF" width="435" align="center"><b> 说明</font></b></td>
+      </tr>
+      <tr class="contents1">
+        <td width="86" height="20" align="center" bgcolor="#B2D4F6">M03</span></font></td>
+        <td height="20" bgcolor="#FFFFFF" width="435" align="center">主轴正转</span></font></td>
+      </tr>
+      <tr class="contents1">
+        <td width="86" height="20" align="center" bgcolor="#B2D4F6">M04</span></font></td>
+        <td height="20" bgcolor="#FFFFFF" width="435" align="center">主轴反转</span></font></td>
+      </tr>
+      <tr class="contents1">
+        <td width="86" height="20" align="center" bgcolor="#B2D4F6">M05</span></font></td>
+        <td height="20" bgcolor="#FFFFFF" width="435" align="center">主轴停止</span></font></td>
+      </tr>
+      <tr class="contents1">
+        <td width="86" height="20" align="center" bgcolor="#B2D4F6">M08</span></font></td>
+        <td height="20" bgcolor="#FFFFFF" width="435" align="center">冷却液开</span></font></td>
+      </tr>
+      <tr class="contents1">
+        <td width="86" height="20" align="center" bgcolor="#B2D4F6">M09</span></font></td>
+        <td height="20" bgcolor="#FFFFFF" width="435" align="center">冷却液关（不输出信号）</span></font></td>
+      </tr>
+      <tr class="contents1">
+        <td width="86" height="20" align="center" bgcolor="#B2D4F6">M32</span></font></td>
+        <td height="20" bgcolor="#FFFFFF" width="435" align="center">润滑开</span></font></td>
+      </tr>
+      <tr class="contents1">
+        <td width="86" height="20" align="center" bgcolor="#B2D4F6">M33</span></font></td>
+        <td height="20" bgcolor="#FFFFFF" width="435" align="center">润滑关（不输出信号）</span></font></td>
+      </tr>
+      <tr class="contents1">
+        <td width="86" height="20" align="center" bgcolor="#B2D4F6">M10</span></font></td>
+        <td height="20" bgcolor="#FFFFFF" width="435" align="center">备用</span></font></td>
+      </tr>
+      <tr class="contents1">
+        <td width="86" height="20" align="center" bgcolor="#B2D4F6">M11</span></font></td>
+        <td height="20" bgcolor="#FFFFFF" width="435" align="center">备用尖（不输出信号）</span></font></td>
+      </tr>
+      <tr class="contents1">
+        <td width="86" height="20" align="center" bgcolor="#B2D4F6">M00</span></font></td>
+        <td height="20" bgcolor="#FFFFFF" width="435" align="center">程序暂停，按‘循环起动’程序继续执行</span></font></td>
+      </tr>
+      <tr class="contents1">
+        <td width="86" height="20" align="center" bgcolor="#B2D4F6">M30</span></font></td>
+        <td height="20" bgcolor="#FFFFFF" width="435" align="center">程序结束，程序返回开始</span></font></td>
+      </tr>
+    </table></TD>
+  </TR>
+  <TR>
+    <TD>&nbsp;</span><br>
+      </span></font>除</span>M00</span>，</span>M30</span>外，其它</span>M</span>代码的执行时间（不是脉冲宽度）可由诊断号№</span>80</span>设定。</span>
+        <o:p> </o:p>
+        </span></font>
+      <p >设定值：</span>0～255</span>（</span>128</span>毫秒</span>～32.640</span>毫秒）</span>
+        <o:p> </o:p>
+      </span></font></p>
+      <p >设定时间</span>=</span>设定值×</span>128</span>毫秒。</span>
+        <o:p> </o:p>
+      </span></font></p>
+      <p >注</span>1</span>：当在程序中指定了上述以外的</span>M</span>代码系统将产生以下报警并停止执行。</span>
+        <o:p> </o:p>
+      </span></font></p>
+      <p > 01</font></span>：</span>M</span>代码错</span>
+        <o:p> </o:p>
+      </span></font></p>
+      <p >注</span>2</span>：</span>M</span>，</span>S</span>，</span>T</span>起动后，即使方式改变，也仍然保持，可按‘</span>RESET</span>’关闭（由参数</span>009BIT3</span>设置是否有效）。</span>
+        <o:p> </o:p>
+      </span></font></p>
+      <p >下面的</span>M</span>代码规定了特殊的使用意义。</span>
+        <o:p> </o:p>
+      </span></font></p>
+      <p >（</span>1</span>）</span>M30</span>（程序结束）</span>
+        <o:p> </o:p>
+      </span></font></p>
+      <p > 1</font></span>）&nbsp; </span>表示主程序结束。</span>
+        <o:p> </o:p>
+      </span></font></p>
+      <p > 2</font></span>）&nbsp; </span>停止自动运转，处于复位状态。</span>
+        <o:p> </o:p>
+      </span></font></p>
+      <p > 3</font></span>）&nbsp; </span>返回到主程序开头。</span>
+        <o:p> </o:p>
+      </span></font></p>
+      <p > 4</font></span>）&nbsp; </span>加工件数</span>1</span>。</span>
+        <o:p> </o:p>
+      </span></font></p>
+      <p >（</span>2</span>）</span>M00</span>：程序停</span>
+        <o:p> </o:p>
+      </span></font></p>
+      <p >当执行了</span>M00</span>的程序段后，停止自动运转。与单程序段停同样，把其前面的模态信息全部保存起来。</span>CNC</span>开始转后，再开始自动运转。</span>
+        <o:p> </o:p>
+      </span></font></p>
+      <p >（</span>3</span>）</span>M98/M99</span>（调用子程序</span>/</span>子程序返回）</span>
+        <o:p> </o:p>
+      </span></font></p>
+      <p >用于调用子程序。或程序结尾为</span>M99</span>时，程序可重复执行。详细情况情参照了程序控制一节。</span>
+        <o:p> </o:p>
+      </span></font></p>
+      <p >注</span>1</span>：</span>M00</span>，</span>M30</span>的下一个程序段即使存在，也存不进缓冲存储器中去。</span>
+        <o:p> </o:p>
+      </span></font></p>
+      注</span>2</span>：执行</span>M98</span>和</span>M99</span>时，代码号不送出。</span></font> </span>
+      <p> <br>
+              <br>
+              <br>
+              <br>
+      </span></font></p></TD>
+  </TR>
+</TABLE>
+</body>
+</html>

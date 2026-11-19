@@ -1,0 +1,48 @@
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title></title>
+<link href="../../helper_css.css" rel="stylesheet" type="text/css">
+</head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar">
+  <tr>
+    <td>子程序</td>
+  </tr>
+</table>
+<p><strong>1.</strong><strong>应用 </strong><br>
+  原则上讲主程序和子程序之间并没有区别。 <br>
+  用子程序编写经常重复进行的加工，比如某一确定的轮廓形状。子程序位于主程序的一种型式就是加工循环，加工循环包含一般通用的加工工序，诸如螺纹切削，柸料切削加工等等。通过给规定的计算参数赋值就可以实现各种具体的加工。 </p>
+<p><strong>2.</strong><strong>结构 </strong><br>
+  子程序的结构与主程序的结构一样，在子程序中也式最后一个程序段中用M2结束子程序运行运行。子程序结束后返回主程序。 </p>
+<p><strong>3.</strong><strong>程序结束 </strong><br>
+  除了用M2指令外，还可以用RET指令结束子程序。 <br>
+  RET要求占用一个独立的程序段。 <br>
+  用RET指令结束子程序、返回主程序时不会中断G64连续路径运行方式，用M2指令则会中断G64运行方式，并进入停止状态。 <br>
+  <img width="428" height="272" src="images/subprg_clip_image002.jpg"><br>
+  <br>
+  <strong>4.</strong><strong>子程序程序名 </strong><br>
+  为了方便地选择某一子程序，必须给子程序取一个程序名。程序名可以自由选取，但必须符合以下规定： <br>
+  － 开始两个符号必须时字母 <br>
+  － 其它符号为字母，数字或下划线 <br>
+  － 最多8个字符 <br>
+  － 没有分隔符 <br>
+  其方法与主程序中程序名的选取方法一样。 </p>
+<p><strong>5.</strong><strong>子程序调用 </strong><br>
+  在一个程序中（主程序或子程序）可以直接用程序名调用子程序。子程序调用要求占用一个独立的程序段。 <br>
+  举例： <br>
+  N10 L785 P3 ；调用子程序L785<br>
+  N20 WELLE7  ；调用子程序WELLE7</p>
+<p><strong>6.</strong><strong>程序重复调用 </strong><br>
+  如果要求多次连续地执行某一子程序,则在编程时必须在所调用子程序的程序名后地址P下写入调用次数,最大次数可以为9999(P1...P9999) <br>
+  举例:<br>
+  N10 L785 P3  ；调用子程序L785 ,运行3次 </p>
+<p><strong>7.</strong><strong>嵌套深度 </strong><br>
+  子程序不仅可以从主程序中调用,也可以从其它程序中调用,这个过程称为子程序的嵌套。子程序的嵌套深度可以为三层,也就是四级程序界面(包括主程序界面) 。 <br>
+  注释:在使用加工循环进行加工时,要注意加工循环程序也同样属于四级程序界面中的一级。 </p>
+<p><strong>8.</strong><strong>说明 </strong><br>
+  在子程序中可以改变模态有效的G功能,比如G90到G91的变换.在返回调用程序时请注意检查一下所有模态有效的功能指令,并按照要求进行调整。 <br>
+  对于R参数也需同样注意，不要无意识地用上级程序界面中所使用的计算参数来修改下级程序界面的计算参数。 </p>
+</body>
+</html>

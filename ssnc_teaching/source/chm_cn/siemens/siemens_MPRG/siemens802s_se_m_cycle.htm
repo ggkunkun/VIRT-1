@@ -1,0 +1,664 @@
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title></title>
+<link href="../../helper_css.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar">
+  <tr>
+    <td>固定循环</td>
+  </tr>
+</table>
+<p>循环是指用于特定加工过程的工艺子程序，比如用于钻削、坯料切削或螺纹切削等，只要改变参数就可以使这些循环应用于各种具体加工过程。系统中装有车削和铣削所用到的几个标准循环。</p>
+<p> <strong>标准循环概述</strong><strong> </strong><br>
+  <strong>1. </strong><strong>循环概况 </strong><br>
+  LCYC82  钻削，沉孔加工 <br>
+  LCYC83  深孔钻削 <br>
+  LCYC840  带补偿夹具的螺纹切削 <br>
+  LCYC84 不带补偿夹具的螺纹切削 <br>
+  LCYC85 镗孔 <br>
+  LCYC60 线性孔排列 <br>
+  LCYC61 圆弧孔排列 <br>
+  LCYC75 矩形槽，键槽，圆形凹槽铣削 <br>
+  <strong>2. </strong><strong>参数使用 </strong><br>
+  循环中所使用的参数为R100～R149。 <br>
+  调用一个循环之前该循环中的传递参数必须已经赋值，不需要的参数置为空格或零。 <br>
+  循环结束以后传递参数的值保持不变 <br>
+  <strong>3. </strong><strong>计算参数 </strong><br>
+  循环使用R250至R299作为内部计算参数，在调用循环时清零。 <br>
+  <strong>4. </strong><strong>调用/返回条件 </strong><br>
+  编程循环时不考虑具体的坐标轴。在调用循环之前，必须在调用程序中回钻削位置。如果在钻削循环中没有设定进给率、主轴转速和方向的参数，则必须在零件程序的开始设置这些值。循环结束以后G0 G90 G40一直有效。 <br>
+  <strong>5. </strong><strong>循环重新编译 </strong><br>
+  当参数组在调用循环之前并且紧挨着循环调用语句时，才可以进行循环的重新编译。这些参数不可以被NC指令或者注释语句隔开。 <br>
+  <strong>6. </strong><strong>平面定义 </strong><br>
+  钻削循环和铣削循环的前提条件就是首先选择平面G17、G18或G19，激活编程的坐标转换(零点偏置，旋转)从而定义目前加工的实际坐标系。钻削轴始终为系统的第三坐标轴。 <br>
+  在调用循环之前，平面中必须已经有一个具有补偿值的刀具生效，在循环结束之后该刀具保持有效。
+  </h2>
+</p>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+  <tr>
+    <td>LCYC82 钻削/沉孔加工</td>
+  </tr>
+</table>
+<p><strong> </strong> <strong>1. </strong><strong>功能 </strong><br>
+  刀具以设置的主轴转速和进给速度钻孔，直至到达给定的最终钻削深度。在到达最终钻削深度时可以设置一个停留时间。退刀时以快速移动速度进行。 <br>
+  <strong>2. </strong><strong>调用 </strong><br>
+  LCYC82<br>
+  <strong>3. </strong><strong>前提条件 </strong><br>
+  必须在调用程序中规定主轴转速和方向以及钻削轴进给率。 <br>
+  在调用循环之前必须在调用程序中回钻孔位置。 <br>
+  在调用循环之前必须选择带补偿值的相应的刀具。 <br>
+  <strong>4. </strong><strong>参数说明 </strong></p>
+<table border="1"  cellpadding="0" cellspacing="0" style="border-collapse=collapse" bordercolor="#00309C">
+  <tr>
+    <td width="121"><br>
+      <strong>参数 </strong> </td>
+    <td width="242"><p align="center"><strong>含义，数值范围 </strong></p></td>
+  </tr>
+  <tr>
+    <td width="121"><p align="center">R101</p></td>
+    <td width="242"><p align="center">返回平面(绝对坐标)</p></td>
+  </tr>
+  <tr>
+    <td width="121"><p align="center">R102</p></td>
+    <td width="242"><p align="center">安全高度(无正负号)</p></td>
+  </tr>
+  <tr>
+    <td width="121"><p align="center">R103</p></td>
+    <td width="242"><p align="center">参考平面(绝对坐标)</p></td>
+  </tr>
+  <tr>
+    <td width="121"><p align="center">R104</p></td>
+    <td width="242"><p align="center">最后钻深(绝对坐标)</p></td>
+  </tr>
+  <tr>
+    <td width="121"><p align="center">R105</p></td>
+    <td width="242"><p align="center">在最后钻削深度停留时间 </p></td>
+  </tr>
+</table>
+<p><strong>说明：</strong><strong> </strong><br>
+  R101  返回平面确定循环结束之后钻削轴的抬刀位置。 <br>
+  R102  安全高度为相对参考平面刀具的抬刀安全距离，其方向由循环自动确定。 <br>
+  R103  参考平面就是图纸中所标明的钻削起始点。 <br>
+  R104  确定钻削深度，它取决于工件零点。 <br>
+  R105  在最后钻削深度停留时间(秒)。 <br>
+  <strong>5. </strong><strong>时序过程 </strong><br>
+  循环开始之前的位置是调用程序中最后所回的钻削位置。 <br>
+  <strong>循环的时序过程: </strong><br>
+  1.  用G0回到参考平面加安全距离处。 <br>
+  2.  按照调用程序中设置的进给率以G1进行钻削，直至最终钻削深度。 <br>
+  3.  执行此深度停留时间。 <br>
+  4.  以G0退刀，回到返回平面。 <br>
+  <strong>6. </strong><strong>编程举例 </strong><br>
+  使用LCYC82循环，程序在XY平面X24Y15位置加工深度为27毫米的孔，在孔底停留时间2秒，钻孔坐标轴方向安全距离为4毫米。循环结束后刀具处于X24 Y15 Z110。 <br>
+  N10  G0 G17 G90 F500 T2 D1 S500 M4 ；规定参数值 <br>
+  N20  X24 Y15 ；回到钻孔位 <br>
+  N30  R101=110 R102=4 R103=102 R104=75 ；设定参数 <br>
+  N35  R105=2 ；设定参数 <br>
+  N40  LCYC82 ；调用循环 <br>
+  N50  M2 ；程序结束 </p>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+  <tr>
+    <td>LCYC83 深孔钻削</td>
+  </tr>
+</table>
+<p><strong>1. </strong><strong>功能 </strong><br>
+  深孔钻削循环加工深孔，通过分步钻入达到最后的钻深，钻深的最大值事先规定。 <br>
+  钻削既可以在每步到钻深后，提出钻头到其参考平面加安全距离处达到排屑目的，也可以每次上提1毫米以便断屑。 <br>
+  <strong>2. </strong><strong>调用 </strong><br>
+  LCYC83<br>
+  <strong>3. </strong><strong>前提条件 </strong><br>
+  必须在调用程序中规定主轴转速和方向。 <br>
+  在调用循环之前钻头必须已经处于钻削开始位置。 <br>
+  在调用循环之前必须选取钻头的刀具补偿值。 <br>
+  <strong>4. </strong><strong>参数说明 </strong><br>
+  <img width="149" height="97" src="pic/siemens802s_se_m_cycle_clip_image001.gif"><br>
+</p>
+<table border="1"  cellpadding="0" cellspacing="0" style="border-collapse=collapse" bordercolor="#00309C">
+  <tr>
+    <td width="103"><br>
+      参数 </td>
+    <td width="313"><p align="center">含义，数值范围 </p></td>
+  </tr>
+  <tr>
+    <td width="103"><p align="center">R101</p></td>
+    <td width="313"><p align="center">返回平面(绝对坐标)</p></td>
+  </tr>
+  <tr>
+    <td width="103"><p align="center">R102</p></td>
+    <td width="313"><p align="center">安全距离，无符号 </p></td>
+  </tr>
+  <tr>
+    <td width="103"><p align="center">R103</p></td>
+    <td width="313"><p align="center">参考平面(绝对坐标)</p></td>
+  </tr>
+  <tr>
+    <td width="103"><p align="center">R104</p></td>
+    <td width="313"><p align="center">最后钻深(绝对坐标)</p></td>
+  </tr>
+  <tr>
+    <td width="103"><p align="center">R105</p></td>
+    <td width="313"><p align="center">在钻削深度停留时间(断屑)</p></td>
+  </tr>
+  <tr>
+    <td width="103"><p align="center">R107</p></td>
+    <td width="313"><p align="center">钻削进给率 </p></td>
+  </tr>
+  <tr>
+    <td width="103"><p align="center">R108</p></td>
+    <td width="313"><p align="center">首钻进给率 </p></td>
+  </tr>
+  <tr>
+    <td width="103"><p align="center">R109</p></td>
+    <td width="313"><p align="center">在起始点和排屑时停留时间 </p></td>
+  </tr>
+  <tr>
+    <td width="103"><p align="center">R110</p></td>
+    <td width="313"><p align="center">首钻深度(绝对坐标)</p></td>
+  </tr>
+  <tr>
+    <td width="103"><p align="center">R111</p></td>
+    <td width="313"><p align="center">递减量，无符号 </p></td>
+  </tr>
+  <tr>
+    <td width="103"><p align="center">R127</p></td>
+    <td width="313"><p align="center">加工方式: 断屑=0 排屑=1</p></td>
+  </tr>
+</table>
+<p><strong>说明：</strong><strong> </strong><br>
+  R101  返回平面确定循环结束后抬刀位置。用于移动到下一个位置继续进行钻孔。 <br>
+  R102  安全距离只对参考平面而言，  循环可以自动确定安全距离的方向。 <br>
+  R103参考平面就是图纸中所标明的钻削起始点，通常设为Z轴坐标零点。 <br>
+  R104  最后钻深以绝对值设置，与循环调用之前的状态G90或G91无关。 <br>
+  R105设置此深度处的停留时间(秒)。 <br>
+  R107,R108  通过这两个参数设置第一次钻深及其后钻削的进给率。 <br>
+  R109可以设置起始点停留时间。只有在“排屑”  方式下才执行在起始点处的停留时间。 <br>
+  R110确定第一次钻削行程的深度。 <br>
+  R111确定每刀切削量的大小，从而保证以后的钻削量小于当前的钻削量。 <br>
+  用于第二次钻削量如果大于所设置的递减量，则第二次钻削量应等于第一次钻削量减去递减量。否则，第二次钻削量就等于递减量。 <br>
+  当最后的剩余量大于两倍的递减量时，则在此之前的最后钻削量应等于递减量，所剩下的最后剩余量平分为最终两次钻削行程。  如果第一次钻削量的值与总的钻削深度量相矛盾，则显示报警号61107 “第一次钻深错误定义”，从而不执行循环。 <br>
+  R127 <br>
+  值0: 钻头在到达每次钻削深度后上提1毫米空转，用于断屑。 <br>
+  值1: 每次钻深后钻头返回到参考平面加安全距离，以便排屑。 <br>
+  <strong>5. </strong><strong>时序过程 </strong><br>
+  循环开始之前的位置是调用程序中最后所回的钻削位置。 <br>
+  <strong>循环的时序过程:</strong><br>
+  1.  用G0回到参考平面加安全距离处。 <br>
+  2.  用G1执行第一次钻深，进给率是调用循环之前所设置的进给率，执行钻深停留时间。 <br>
+  <strong>在断屑时: </strong><br>
+  用G1按调用程序中所设置的进给率从当前钻深上提1毫米，以便断屑。 <br>
+  <strong>在排屑时: </strong><br>
+  用G0返回到参考平面加安全距离处，以便排屑，执行起始点停留时间(参数R109)，然后用G0返回上次钻深，但留出一个前置量(此量的大小由循环内部计算所得)。 <br>
+  3.  用G1按所设置的进给率执行下一次钻深切削，重复此过程，直到最终钻削深度。 <br>
+  4.  用G0返回到返回平面。 <br>
+  <strong>6. </strong><strong>编程举例 </strong><br>
+  <img width="215" height="208" src="pic/siemens802s_se_m_cycle_clip_image002.jpg"></p>
+<p>G54  G90 G0 ；工件坐标系选择 <br>
+  T1D1 ；刀具长度补偿 <br>
+  Z50<br>
+  M3  S600<br>
+  M8<br>
+  X-40  Y0<br>
+  R101=50.000  R102=2.000 ；定义循环参数 <br>
+  R103=0.000  R104=-36.000<br>
+  R105=0.000  R107=200.000<br>
+  R108=100.000  R109=0.000<br>
+  R110=-5.000  R111=2.000<br>
+  R127=0.000<br>
+  LCYC83 ；呼叫钻孔循环 <br>
+  R115=83.000  R116=0.000 ；定义线性孔排列参数 <br>
+  R117=0.000  R118=-40.000<br>
+  R119=5.000  R120=0.000<br>
+  R121=20.000<br>
+  LCYC60 ；线性孔排列格式 <br>
+  Z50<br>
+  M5<br>
+  M9<br>
+  M2</p>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+  <tr>
+    <td>LCYC84 不带补偿夹具螺纹切削 </td>
+  </tr>
+</table>
+<p><strong>1. </strong><strong>功能</strong> <br>
+  刀具以设置的主轴转速和方向钻削，直至给定的螺纹深度。与LCYC840相比此循环运行更快更精确。尽管如此，加工时仍应使用补偿夹具。钻削轴的进给率由主轴转速导出。在循环中旋转方向自动转换，退刀可以另一个速度进行。 <br>
+  <strong>2. </strong><strong>调用 </strong><br>
+  LCYC84<br>
+  <strong>3. </strong><strong>前提条件 </strong><br>
+  主轴必须是位置控制主轴(带编码器)时才可以应用此循环。循环在运行时本身并不检查主轴是否具有实际值编码器。 <br>
+  在调用循环之前必须在调用程序中回到钻削位置。 <br>
+  在调用循环之前必须选择相应的带刀具补偿的刀具。 <br>
+  必须根据主轴机床数据设定情况和驱动的精度情况使用补偿夹具。 <br>
+  <strong>4. </strong><strong>参数说明 </strong></p>
+<table border="1"  cellpadding="0" cellspacing="0" style="border-collapse=collapse" bordercolor="#00309C">
+  <tr>
+    <td width="91"><p align="center"><strong>参数 </strong></p></td>
+    <td width="456"><p align="center"><strong>含义，数值范围 </strong></p></td>
+  </tr>
+  <tr>
+    <td width="91"><p align="center">R101</p></td>
+    <td width="456"><p align="center">返回平面(绝对坐标)</p></td>
+  </tr>
+  <tr>
+    <td width="91"><p align="center">R102</p></td>
+    <td width="456"><p align="center">安全距离 </p></td>
+  </tr>
+  <tr>
+    <td width="91"><p align="center">R103</p></td>
+    <td width="456"><p align="center">参考平面(绝对坐标)</p></td>
+  </tr>
+  <tr>
+    <td width="91"><p align="center">R104</p></td>
+    <td width="456"><p align="center">最后钻深(绝对坐标)</p></td>
+  </tr>
+  <tr>
+    <td width="91"><p align="center">R105</p></td>
+    <td width="456"><p align="center">在螺纹终点处的停留时间 </p></td>
+  </tr>
+  <tr>
+    <td width="91"><p align="center">R106</p></td>
+    <td width="456"><p align="center">螺纹导程 范围:0.001～2000.000毫米 -0.001 ～ -2000.000毫米 </p></td>
+  </tr>
+  <tr>
+    <td width="91"><p align="center">R112</p></td>
+    <td width="456"><p align="center">攻丝速度 </p></td>
+  </tr>
+  <tr>
+    <td width="91"><p align="center">R113</p></td>
+    <td width="456"><p align="center">退刀速度 </p></td>
+  </tr>
+</table>
+<p>表5.3-3<br>
+  <strong>说明： </strong><br>
+  参数R101 - R105 参见LCYC82 <br>
+  R106  用此数值设定螺纹间的距离，数值前的符号表示加工螺纹时主轴的旋转方向。正号表示右转(同M3)，负号表示左转(同M4)。 <br>
+  R112  规定攻丝时的主轴转速。 <br>
+  R113  在此参数下可以设置退刀时的主轴转速。如果此值设为零，则刀具以R112下所设置的主轴转速退刀。 <br>
+  <strong>5. </strong><strong>时序过程 </strong><br>
+  循环开始之前的位置是调用程序中最后所回的钻削位置。 <br>
+  <strong>循环的时序过程: </strong><br>
+  1.  用G0回到参考平面加安全距离处。 <br>
+  2.  在0度时主轴停止，主轴转换为坐标轴运行。 <br>
+  3.  用G331和R112下设置的转速加工螺纹，旋转方向由螺距(R106)的符号可以确定。 <br>
+  4.  用G332指令和R113下设置的转速退刀至参考平面处。 <br>
+  5.  用G0退回到返回平面，取消主轴坐标轴运行。 <br>
+  <strong>6. </strong><strong>编程举例 </strong><br>
+  在XY平面X30Y35处进行不带补偿夹具的攻丝，钻削轴为Z轴。没有设置停留时间。负螺距编程，即主轴左转。 <br>
+  N10  G0 G90 G17 T4 D4 ；规定一些参数值 <br>
+  N20  X30 Y35 Z40 ；回到钻孔位 <br>
+  N30  R101=40 R102=2 R103=36 R104=6 R105=0 ；设定参数 <br>
+  N40  R106=-0.5 R112=100 R113=500 ；设定参数 <br>
+  N50  LCYC84 ；调用循环 <br>
+  N60  M2 ；程序结束 </p>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+  <tr>
+    <td>LCYC85  镗孔 </td>
+  </tr>
+</table>
+<p><strong>1. </strong><strong>功能</strong> <br>
+  刀具以给定的主轴转速和进给率钻削，直至最终镗孔深度。如果到达最终深度，可以设置一个停留时间。进刀及退刀运行分别按照相应参数下设置的进给率速度进行。 <br>
+  <strong>2. </strong><strong>调用 </strong><br>
+  LCYC85<br>
+  <strong>3. </strong><strong>前提条件 </strong><br>
+  必须在调用程序中规定主轴转速和方向。 <br>
+  在调用循环之前必须在调用程序中回到镗孔位置。 <br>
+  在调用循环之前必须选择相应的带刀具补偿的刀具。 <br>
+  <strong>4. </strong><strong>参数说明 </strong></p>
+<table border="1"  cellpadding="0" cellspacing="0" style="border-collapse=collapse" bordercolor="#00309C">
+  <tr>
+    <td width="107"><br>
+      <strong>参数 </strong> </td>
+    <td width="252"><p align="center"><strong>含义，数值范围 </strong></p></td>
+  </tr>
+  <tr>
+    <td width="107"><p align="center">R101</p></td>
+    <td width="252"><p align="center">返回平面(绝对坐标)</p></td>
+  </tr>
+  <tr>
+    <td width="107"><p align="center">R102</p></td>
+    <td width="252"><p align="center">安全距离 </p></td>
+  </tr>
+  <tr>
+    <td width="107"><p align="center">R103</p></td>
+    <td width="252"><p align="center">参考平面(绝对坐标)</p></td>
+  </tr>
+  <tr>
+    <td width="107"><p align="center">R104</p></td>
+    <td width="252"><p align="center">最后钻深(绝对值)</p></td>
+  </tr>
+  <tr>
+    <td width="107"><p align="center">R105</p></td>
+    <td width="252"><p align="center">在此钻削深度处的停留时间 </p></td>
+  </tr>
+  <tr>
+    <td width="107"><p align="center">R107</p></td>
+    <td width="252"><p align="center">钻削进给率 </p></td>
+  </tr>
+  <tr>
+    <td width="107"><p align="center">R108</p></td>
+    <td width="252"><p align="center">退刀时进给率 </p></td>
+  </tr>
+</table>
+<p><strong>说明： </strong><br>
+  参数 R101 - R105 参见LCYC82 <br>
+  R107  确定镗孔时的进给率大小。 <br>
+  R108  确定退刀时的进给率大小。 <br>
+  <strong>5. </strong><strong>时序过程 </strong><br>
+  循环开始之前的位置是调用程序中最后所回的镗孔位置。 <br>
+  <strong>循环的时序过程: </strong><br>
+  1.  用G0回到参考平面加安全距离处。 <br>
+  2.  用G1以R107参数设置的进给率加工到最终镗孔深度。 <br>
+  3.  执行最终深度的停留时间。 <br>
+  4.  用G1以R107参数设置的退刀进给率返回到参考平面加安全距离处。 <br>
+  <strong>6. </strong><strong>编程举例 </strong><br>
+  在ZX平面Z70 X50处调用循环LCYC85，Y轴为镗孔轴。没有设置停留时间。 <br>
+  N10  G0 G90 G18 F1000 S500 M3 T1 D1 ；规定一些参数值 <br>
+  N20  Z70 X50 Y105 ；回到钻孔位 <br>
+  N30  R101=105 R102=2 R103=102 R104=77 ；设定参数 <br>
+  N35  R105=0 R107=200 R108=400 ；设定参数 <br>
+  N40  LCYC85 ；调用循环 <br>
+  N50  M2 ；程序结束 </p>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+  <tr>
+    <td>LCYC60 线性孔排列钻削 </td>
+  </tr>
+</table>
+<p><strong>1. </strong><strong>功能</strong> <br>
+  用此循环加工线性排列的钻孔或螺纹孔，钻孔及螺纹孔的类型由一个参数确定。 <br>
+  <strong>2. </strong><strong>调用 </strong><br>
+  LCYC60<br>
+  <strong>3. </strong><strong>前提条件</strong> <br>
+  在调用程序中必须按照钻孔循环和切内螺纹循环的要求设置主轴转速和方向，以及钻孔轴的进给率。 <br>
+  同样，在调用钻孔图循环之前也必须对所选择的钻削循环和切内螺纹循环设定参数。另外，在调用循环之前必须选择相应的带刀具补偿的刀具。 <br>
+  <strong>4. </strong><strong>参数说明 </strong><br>
+  <img width="149" height="97" src="pic/siemens802s_se_m_cycle_clip_image001_0000.gif"><br>
+</p>
+<table border="1"  cellpadding="0" cellspacing="0" style="border-collapse=collapse" bordercolor="#00309C">
+  <tr>
+    <td width="119"><p align="center"><strong>参数 </strong></p></td>
+    <td width="424"><p align="center"><strong>含义，数值范围 </strong></p></td>
+  </tr>
+  <tr>
+    <td width="119"><p align="center">R115</p></td>
+    <td width="424"><p align="center">钻孔或攻丝循环号数值: 82(LCYC82),83(LCYC83),84(LCYC84),840(LCYC840),85(LCYC85)</p></td>
+  </tr>
+  <tr>
+    <td width="119"><p align="center">R116</p></td>
+    <td width="424"><p align="center">横坐标参考点 </p></td>
+  </tr>
+  <tr>
+    <td width="119"><p align="center">R117</p></td>
+    <td width="424"><p align="center">纵坐标参考点 </p></td>
+  </tr>
+  <tr>
+    <td width="119"><p align="center">R118</p></td>
+    <td width="424"><p align="center">第一孔到参考点的距离 </p></td>
+  </tr>
+  <tr>
+    <td width="119"><p align="center">R119</p></td>
+    <td width="424"><p align="center">孔数 </p></td>
+  </tr>
+  <tr>
+    <td width="119"><p align="center">R120</p></td>
+    <td width="424"><p align="center">平面中孔排列直线的角度 </p></td>
+  </tr>
+  <tr>
+    <td width="119"><p align="center">R121</p></td>
+    <td width="424"><p align="center">孔间距离 </p></td>
+  </tr>
+</table>
+<p><br>
+  <strong>说明： </strong><br>
+  R115  选择待加工的钻孔或攻丝所需调用的钻孔循环号或攻丝循环号 <br>
+  R116/R117  在孔排列直线上确定一个点作为参考点，用来确定两个孔之间的距离。从该点出发，定义到第一个钻孔的距离(R118) <br>
+  R118  确定第一个钻孔到参考点的距离 <br>
+  R119  确定孔的个数 <br>
+  R120  确定直线与横坐标之间的角度 <br>
+  R121  确定两个孔之间的距离 <br>
+  <strong>5. </strong><strong>时序过程 </strong><br>
+  出发点: 位置任意，但需保证从该位置出发可以无碰撞地回到第一个钻孔位。循环执行时首先回到第一个钻孔位，并按照R115参数所确定的循环加工孔，然后快速回到其他的钻削位，按照所设定的参数进行接下去的加工过程。 <br>
+  <strong>6. </strong><strong>编程举例</strong> <br>
+  N10  G0 G18 G90 S500 M3 T1 D1 ；确定工艺参数 <br>
+  N20  X50 Z50 Y110 ；回到出发点 <br>
+  N30  R101=105 R102=2 R103=102 R104=22 ；定义钻孔循环参数 <br>
+  N40  R106=1 R107=82 R108=20 R109=100 ；定义钻孔循环参数 <br>
+  N50  R110=1 R111=100 ；定义钻孔循环参数 <br>
+  N60  R115=83 R116=30 R117=20 R119=0 R118=20 R121=20 <br>
+  ；定义线性孔循环参数 <br>
+  N70  LCYC60 ；调用线性孔循环 <br>
+  N80  …… ；更换刀具 <br>
+  N90  R106=0.5 R107=100 R108=500 ；定义切内螺纹循环参数 <br>
+  (只需要设置相对于钻孔循环修改了的参数) <br>
+  N100  R115=84 ；定义线性孔循环参数 <br>
+  (R116  - 121等同于第一次调用) <br>
+  N110LCYC60 ；调用线性孔循环 <br>
+  N120  M2 <br>
+  矩阵排列孔，用此循环可以加工XY平面上5行5列排列的孔，孔间距为10毫米。参考点坐标为X30 Y20，使用循环LCYC85(镗孔)钻削。在程序中确定主轴转速和方向，进给率由参数给定。 <br>
+  N10  G0 G17 G90 S500 M3 T2 D1 ；确定工艺参数 <br>
+  N20  X10 Y10 Z105 ；回到出发点 <br>
+  N30  R1=0,R101=105,R102=2,R103=102 ；确定钻孔循环参数,初始化线性孔排列计数器(R1) <br>
+  N40  R104=30 R105=2 R106=100 R107=300；定义钻孔循环参数 <br>
+  N50  R115=85 R116=30 R117=20 R120=0 R119=5 ；定义线性孔排列循环参数 <br>
+  N60  R118=10 R121=10 ；定义线性孔排列循环参数 <br>
+  N70  MARKE1:LCYC60 ；调用线性孔排列循环 <br>
+  N80  R1=R1+1 R117=R117+10 ；提高线性孔计数器,确 定新的参考点 <br>
+  N90  IF R1&lt;5 GOTOB MARKE1 ；当满足条件时返回到 Marke1<br>
+  N100  G0 G90 X10 Y10 Z105 ；回到出发点位置 <br>
+  N110  M2 ；程序结束 </p>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+  <tr>
+    <td>LCYC61 圆弧孔排列</td>
+  </tr>
+</table>
+<p><strong>1. </strong><strong>功能 </strong><br>
+  用此循环可以加工圆弧状排列的孔和螺纹。 <br>
+  <strong>2. </strong><strong>调用 </strong><br>
+  LCYC61<br>
+  <strong>3. </strong><strong>前提条件 </strong><br>
+  在调用该循环之前同样要对所选择的钻孔循环和切内螺纹循环设定参数。 <br>
+  在调用循环之前,必须要选择相应的带刀具补偿的刀具。 </p>
+<p><strong>参数说明 </strong></p>
+<table border="1"  cellpadding="0" cellspacing="0" style="border-collapse=collapse" bordercolor="#00309C">
+  <tr>
+    <td width="95"><p align="center"><strong>参数 </strong></p></td>
+    <td width="462"><p align="center"><strong>含义，数值范围 </strong></p></td>
+  </tr>
+  <tr>
+    <td width="95"><p align="center">R115</p></td>
+    <td width="462"><p align="center">钻孔或攻丝循环号数值: 82(LCYC82),83(LCYC83),84(LCYC84),840(LCYC840),85(LCYC85)</p></td>
+  </tr>
+  <tr>
+    <td width="95"><p align="center">R116</p></td>
+    <td width="462"><p align="center">圆弧圆心横坐标(绝对值)</p></td>
+  </tr>
+  <tr>
+    <td width="95"><p align="center">R117</p></td>
+    <td width="462"><p align="center">圆弧圆心纵坐标(绝对值)</p></td>
+  </tr>
+  <tr>
+    <td width="95"><p align="center">R118</p></td>
+    <td width="462"><p align="center">圆弧半径 </p></td>
+  </tr>
+  <tr>
+    <td width="95"><p align="center">R119</p></td>
+    <td width="462"><p align="center">孔数 </p></td>
+  </tr>
+  <tr>
+    <td width="95"><p align="center">R120</p></td>
+    <td width="462"><p align="center">起始角，数值范围:-180 &lt;R120 &lt;180</p></td>
+  </tr>
+  <tr>
+    <td width="95"><p align="center">R121</p></td>
+    <td width="462"><p align="center">角度增量 </p></td>
+  </tr>
+</table>
+<p><strong>说明：</strong><strong> </strong><br>
+  R115  参见LCYC60 <br>
+  R116/R117/R118  加工平面中圆弧孔位置通过圆心坐标(参数R116/R117)和半径(R118)定义。在此，半径值只能为正。 <br>
+  R119  参见LCYC61 <br>
+  R120/R121  这些参数确定圆弧上钻孔的排列位置。其中参数R120给出横坐标正方向与第一个钻孔之间的夹角，R121规定孔与孔之间的夹角。如果R121等于零，则在循环内部将这些孔均匀地分布在圆弧上，从而根据钻孔数计算出孔与孔之间的夹角。 <br>
+  <strong>5. </strong><strong>时序过程 </strong><br>
+  位置任意，但需保证从该位置出发可以无碰撞地回到第一个钻孔位。 <br>
+  循环执行时首先回到第一个钻孔位，并按R115参数所确定的循环加工孔，然后快速回到其他的钻削位，按照所设定的参数进行接下去的加工过程。 <br>
+  <strong>6. </strong><strong>编程举例 </strong></p>
+<p>使用循环LCYC82加工4个深度为30毫米的孔。圆通过XY平面上圆心坐标X70Y60和半径42毫米确定。起始角为33度。Z轴上安全距离为2毫米。主轴转速和方向以及进给率在调用循环中确定。 <br>
+  N10  G0 G17 G90 F500 S400 M3 T3 D1 ；确定工艺参数 <br>
+  N20  X50 Y45 Z5 ；回到出发点 <br>
+  N30  R101=5 R102=2 R103=0 R104=-30 R105=1 ；定义钻削循环参数 <br>
+  N40  R115=82 R116=70 R117=60 R118=42 R119=4 ；定义圆弧孔排列循环 <br>
+  N50  R120=33 R121=0 ；定义圆弧孔排列循环 <br>
+  N60  LCYC61 ；调用圆弧孔循环 <br>
+  N70  M2 ；程序结束 </p>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+  <tr>
+    <td>LCYC75 矩形槽/键槽和圆形凹槽的铣削</td>
+  </tr>
+</table>
+<p><strong>1. </strong><strong>功能 </strong><br>
+  利用此循环，通过设定相应的参数可以铣削一个与轴平行的矩形槽或者键槽，或者一个圆形凹槽。循环加工分为粗加工和精加工。通过参数设定凹槽长度=凹槽宽度=两倍的圆角半径，可以铣削一个直径为凹槽长度或凹槽宽度的圆形凹槽。 <br>
+  如果凹槽宽度等同于两倍的圆角半径，则铣削一个键槽。加工时总是在第3轴方向从中心处开始进刀。这样在有导向孔的情况下就可以使用不能切中心孔的铣刀。 <br>
+  <strong>2. </strong><strong>调用 </strong><br>
+  LCYC75<br>
+  <strong>3. </strong><strong>前提条件 </strong><br>
+  如果没有钻底孔，则该循环要求使用带端面齿的铣刀，从而可以切削中心孔(DIN844)。 <br>
+  在调用程序中规定主轴的转速和方向，在调用循环之前刀具必须要带补偿。 <br>
+  <strong>4. </strong><strong>参数说明 </strong><br>
+  <img width="149" height="97" src="pic/siemens802s_se_m_cycle_clip_image001_0001.gif"><br>
+</p>
+<table border="1"  cellpadding="0" cellspacing="0" style="border-collapse=collapse" bordercolor="#00309C">
+  <tr>
+    <td width="103"><br>
+      <strong>参数 </strong> </td>
+    <td width="337"><p align="center"><strong>含义，数值范围 </strong></p></td>
+  </tr>
+  <tr>
+    <td width="103"><p align="center">R101</p></td>
+    <td width="337"><p align="center">返回平面(绝对坐标)</p></td>
+  </tr>
+  <tr>
+    <td width="103"><p align="center">R102</p></td>
+    <td width="337"><p align="center">安全距离 </p></td>
+  </tr>
+  <tr>
+    <td width="103"><p align="center">R103</p></td>
+    <td width="337"><p align="center">参考平面(绝对坐标)</p></td>
+  </tr>
+  <tr>
+    <td width="103"><p align="center">R104</p></td>
+    <td width="337"><p align="center">凹槽深度(绝对坐标)</p></td>
+  </tr>
+  <tr>
+    <td width="103"><p align="center">R116</p></td>
+    <td width="337"><p align="center">凹槽圆心横坐标 </p></td>
+  </tr>
+  <tr>
+    <td width="103"><p align="center">R117</p></td>
+    <td width="337"><p align="center">凹槽圆心纵坐标 </p></td>
+  </tr>
+  <tr>
+    <td width="103"><p align="center">R118</p></td>
+    <td width="337"><p align="center">凹槽长度 </p></td>
+  </tr>
+  <tr>
+    <td width="103"><p align="center">R119</p></td>
+    <td width="337"><p align="center">凹槽宽度 </p></td>
+  </tr>
+  <tr>
+    <td width="103"><p align="center">R120</p></td>
+    <td width="337"><p align="center">拐角半径 </p></td>
+  </tr>
+  <tr>
+    <td width="103"><p align="center">R121</p></td>
+    <td width="337"><p align="center">最大进刀深度 </p></td>
+  </tr>
+  <tr>
+    <td width="103"><p align="center">R122</p></td>
+    <td width="337"><p align="center">深度进刀进给率 </p></td>
+  </tr>
+  <tr>
+    <td width="103"><p align="center">R123</p></td>
+    <td width="337"><p align="center">表面加工的进给率 </p></td>
+  </tr>
+  <tr>
+    <td width="103"><p align="center">R124</p></td>
+    <td width="337"><p align="center">表面加工的精加工余量 </p></td>
+  </tr>
+  <tr>
+    <td width="103"><p align="center">R125</p></td>
+    <td width="337"><p align="center">深度加工的精加工余量 </p></td>
+  </tr>
+  <tr>
+    <td width="103"><p align="center">R126</p></td>
+    <td width="337"><p align="center">铣削方向：(G2或G3) 数值范围：2(G2)，3(G3)</p></td>
+  </tr>
+  <tr>
+    <td width="103"><p align="center">R127</p></td>
+    <td width="337"><p align="center">铣削类型 1 ： 粗加工 2 ：精加工 </p></td>
+  </tr>
+</table>
+<p><br>
+  <strong>说明： </strong><br>
+  R101/R102/R103  参见LCYC82 <br>
+  R104  在此参数下设置参考面和凹槽槽底之间的距离(深度)。 <br>
+  R116/R117  用参数R116和R117确定凹槽中心点的横坐标和纵坐标。 <br>
+  R118/R119  用参数R118和R119确定平面上凹槽的形状。如果铣刀半径R120大于设置的角度半径，则所加工的凹槽圆角半径等于铣刀半径。如果刀具半径超过凹槽长度或宽度的一半，则循环中断，并发出报警“铣刀半径太大”。如果铣削一个圆形槽(R118=R119=R120)， 则拐角半径(R120)的值就是圆形槽的直径。 <br>
+  R121  用此参数确定最大的进刀深度。循环运行时以同样的尺寸进刀。利用参数R121和R104循环计算出一个进刀量，其大小介于0.5*最大进刀深度和最大进刀深度之间。如果R121=0则立即以凹槽深度进刀。进刀从提前了一个安全距离的参考平面处开始。 <br>
+  R122  进刀时的进给率，方向垂直于加工平面。 <br>
+  R123  用此参数确定平面上粗加工和精加工的进给率。 <br>
+  R124  设置粗加工时留出的轮廓精加工余量。在精加工时(R127=2)，根据参数R124和R125选择“仅加工轮廓”，或者“同时加工轮廓和深度”。 <br>
+  仅加工轮廓: R124&gt;0，R125=0 <br>
+  轮廓和深度: R124&gt;0，R125&gt;0 <br>
+  R124=0，R125=0 <br>
+  R124=0，R125&gt;0 <br>
+  R125  R125 参数给定的精加工余量在深度进给粗加工时起作用。精加工时(R127=2)利用参数R124和125选择“仅加工轮廓” 或“同时加工轮廓和深度”。 <br>
+  仅加工轮廓: R124&gt;0，R125=0 <br>
+  轮廓和深度: R124&gt;0，R125&gt;0 <br>
+  R124=0，R125=0 <br>
+  R124=0，R125&gt;0 <br>
+  R126  用此参数规定加工方向。 <br>
+  R127  此参数确定加工方式。 <br>
+  1  - 粗加工 <br>
+  按照给定的参数加工凹槽至精加工余量。 <br>
+  2  - 精加工 <br>
+  进行精加工的前提条件是：凹槽的粗加工过程已经结束，接下去对精加工余量进行加工。在此要求留出的精加工余量小于刀具直径。 <br>
+  <strong>5. </strong><strong>时序过程 </strong><br>
+  出发点: 位置任意，但需保证从该位置出发可以无碰撞地回到返回平面的凹槽中心点。 <br>
+  1.  粗加工R127=1 <br>
+  用G0回到返回平面的凹槽中心点，然后再同样以G0回到提前了参考平面加安全高度处的参考平面处。凹槽的加工分为以下几个步骤: <br>
+  .  以R122确定的进给率和调用循环之前的主轴转速进刀到下一次加工的凹槽中心点处。 <br>
+  .  按照R123确定的进给率和调用循环之前的主轴转速在轮廓和深度方向进行铣削，直至最后精加工余量。如果铣刀直径大于凹槽/键槽宽度减去精加工余量，或者铣刀半径等于凹槽/键槽宽度，若有可能请降低精加工余量，通过摆动运动加工一个溜槽。 <br>
+  .  加工方向由R126参数给定的值确定。 <br>
+  .  在凹槽加工结束之后，刀具回到返回平面凹槽中心，循环过程结束。 <br>
+  2.  精加工R127=2 <br>
+  .  如果要求分多次进刀，则只有最后一次进刀到达最后深度凹槽中心点(R122)。为了缩短返回的空行程，在此之前的所有进刀均快速返回，并根据凹槽和键槽的大小无需回到凹槽中心点才开始加工。通过参数和R124R125选择“仅进行轮廓加工” 或者“同时加工轮廓和工件”。 <br>
+  仅加工轮廓: R124&gt;0，R125=0 <br>
+  轮廓和深度: R124&gt;0，R125&gt;0 <br>
+  R124=0，R125=0 <br>
+  R124=0，R125&gt;0 <br>
+  平面加工以R123参数设定的值进行，深度进给则以R122设定的参数值运行。 <br>
+  .  加工方向由参数R126设定的参数值确定。 <br>
+  .  凹槽加工结束以后刀具运行到返回平面的凹槽中心点处，结束循环。 </p>
+<p><strong>6. </strong><strong>编程举例 </strong><br>
+  <img width="278" height="197" src="pic/siemens802s_se_m_cycle_clip_image002_0000.jpg"><br>
+</p>
+<p>G56  G90 G0 ；工件坐标系选择 <br>
+  T1D1 ；刀具补偿(刀具半径为5mm)<br>
+  M6<br>
+  G0  Z50<br>
+  M3  S1200<br>
+  M8<br>
+  R101=50.000  R102=2.000 ；定义铣槽循环参数 <br>
+  R103=0.000  R104=-10.000<br>
+  R116=0.000  R117=0.000<br>
+  R118=60.000  R119=40.000<br>
+  R120=6.000  R121=3.000<br>
+  R122=200.000  R123=500.000<br>
+  R124=0.00  R125=0.00<br>
+  R126=3.000  R127=1.000<br>
+  LCYC75 ；调用铣槽循环 <br>
+  G0  Z50<br>
+  M5  M9<br>
+  M2</p>
+</body>
+</html>

@@ -1,0 +1,480 @@
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title></title>
+<link href="../../helper_css.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar">
+  <tr>
+    <td><span class="title2">循环编程</span></td>
+  </tr>
+</table>
+<TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+  <TR>
+    <TD class=contents1 vAlign=top><p><br>
+      循环240（输入数据）<br>
+          <img width="31" height="31" src="xhbc_clip_image002_0001.jpg">循环定义<br>
+          <img width="345" height="291" src="xhbc_clip_image002_0000.jpg"><br>
+        <br>
+0 BEGIN PGM 1   MM <br>
+ . <br>
+ . <br>
+ . <br>
+10 CYCL DEF 240 CENTERING <br>
+ Q200 = 2 安全高度 <br>
+ Q343 = 1 选择深度/ 直径 <br>
+ Q201 = +0 定心孔深度 <br>
+ Q344 = -9 定心孔直径 <br>
+ Q206 = 250 切入进给速率 <br>
+ Q211 = 0.1 在孔底的停顿时间 <br>
+ Q203 = +20 表面坐标 <br>
+ Q204 = 100 第二安全高度 <br>
+... END PGM 1 MM <br>
+ <br>
+<strong>注意：</strong><br>
+ ■ 循环参数Q201 （深度）或Q344 （直径）的代数符号决定加工方向（与<br>
+  Q343 有关）。<br>
+ ■ 输入Q203 （工件表面坐标）的绝对坐标值。<br>
+ ■ 调用循环。<br>
+ <br>
+ 循环200（钻孔）（输入数据）<br>
+ <img width="30" height="30" src="xhbc_clip_image002_0002.jpg">循环定义<br>
+ <br>
+ <img width="348" height="281" src="xhbc_clip_image002_0003.jpg"><br>
+<br>
+  0 BEGIN PGM 1 MM <br>
+ . <br>
+ . <br>
+ . <br>
+  10 CYCL DEF 200 DRILLING <br>
+ Q200 = 2 安全高度 <br>
+ Q201 = -18 深度 <br>
+ Q206 = 200 切入进给速率 <br>
+ Q202 = 5 切入深度 <br>
+ Q210 = 0 在顶部停顿时间 <br>
+ Q203 = +0 表面坐标 <br>
+ Q204 = 50 第二安全高度 <br>
+ Q211 = 0 在孔底的停顿时间 <br>
+... END PGM 1 MM <br>
+<strong>注意：</strong><br>
+ ■ 循环参数DEPTH （深度）的代数符号决定加工方向。 <br>
+ ■ 输入Q203 （工件表面坐标）的绝对坐标值。 <br>
+ ■ 调用循环。<br>
+ <br>
+ 任务：孔
+</p>
+      <p><img width="481" height="357" src="xhbc_clip_image002_0004.jpg"><br>
+        <br>
+        BEGIN PGM... MM 创建程序 <br>
+        BLK FORM 0.1 ... X... Y...  Z... 定义工件毛坯 <br>
+        BLK FORM 0.2 X... Y... Z... <br>
+        TOOL CALL ... ... S... 调用刀具 <br>
+        CYCL DEF ... 定义循环 <br>
+        L Z+... 移至第二安全高度 <br>
+        L X... Y... M99 孔1 的位置 / 调用循环 <br>
+        L X... Y... M99 孔2 / 调用循环 <br>
+        L X... Y... M99 孔3 / 调用循环 <br>
+      ... 退刀，程序结束</p>
+      <p>解决方法： 孔 <br>
+        完整程序 <br>
+        0 BEGIN PGM 6BAS201 MM <br>
+        1 BLK FORM 0.1 Z X+0 Y+0 Z-20 <br>
+        2 BLK FORM 0.2 X+100 Y+100 Z+0 <br>
+        3 TOOL CALL 7 Z S1000 R4 <br>
+        4 CYCL DEF 200 DRILLING <br>
+        Q200=2 安全高度 <br>
+        Q201=-5 深度 <br>
+        Q206=150 切入进给速率 <br>
+        Q202=5 切入深度 <br>
+        Q210=0 在顶部停顿时间 <br>
+        Q203=+0 表面坐标 <br>
+        Q204=2 第二安全高度 <br>
+        Q211=0 在孔底的停顿时间 <br>
+        5 L Z+100 R0 F99999 M3 <br>
+        6 L X+20 Y+30 M99 起始位置 <br>
+        7 L X+50 Y+70 M99 孔2 <br>
+        8 L X+75 Y+30 M99 孔3 <br>
+        9 L Z+100 R0 FMAX M30 <br>
+        10 END PGM 6BAS201 MM <br>
+        <br>
+      循环203（万能钻孔）（输入数据）<br>
+      <img width="28" height="29" src="xhbc_clip_image002_0005.jpg">循环定义<br>
+      <img width="345" height="291" src="xhbc_clip_image002_0006.jpg"><br>
+        <br>
+        0 BEGIN PGM 1 MM <br>
+        . <br>
+        . <br>
+        . <br>
+        10 CYCL DEF 203 UNIVERSAL <br>
+        DRILLING <br>
+        Q200 = 2 安全高度 <br>
+        Q201 = -25 深度 <br>
+        Q206 = 200 切入进给速率 <br>
+        Q202 = 10 切入深度 <br>
+        Q210 = 0 在顶部停顿时间 <br>
+        Q203 = +0 表面坐标 <br>
+        Q204 = 50 第二安全高度 <br>
+        Q212 = 0 缩减量 <br>
+        Q213 = 1 退刀前的停顿次数 <br>
+        Q205 = 5 最小切入深度 <br>
+        Q211 = 0 在孔底的停顿时间 <br>
+        Q208 = 500 退刀速率 <br>
+        Q256 = 0.2 断屑距离 <br>
+        ... END PGM 1 MM <br>
+        <strong>注意： </strong><br>
+      ■ 如果Q208 的值为0，退刀速率等于Q206 的钻孔进给速率<br>
+      <br>
+      循环206（浮动夹头攻丝架攻丝）（输入数据）<br>
+      <img width="30" height="30" src="xhbc_clip_image002_0007.jpg">循环定义<br>
+      <img width="320" height="308" src="xhbc_clip_image002_0008.jpg"><br>
+        <br>
+        0 BEGIN PGM 1 MM <br>
+        . <br>
+        . <br>
+      . </p>
+      <p>10 CYCL DEF 206 TAPPING NEW <br>
+        Q200 = 2 安全高度 <br>
+        Q201 = -25 深度 <br>
+        Q206 = 200 切入进给速率 <br>
+        Q211 = 0 在孔底的停顿时间 <br>
+        Q203 = +0 表面坐标 <br>
+        Q204 = 50 第二安全高度 <br>
+        ... END PGM 1 MM <br>
+  <strong>注意： </strong><br>
+        ■ 将刀具夹紧在浮动攻丝架上。攻丝期间，用于补偿进给速率和主轴转速偏<br>
+        差，保持要求的螺距<br>
+        <br>
+        循环207（刚性攻丝，可控主轴）（输入数据）<br>
+        <br>
+        <img width="359" height="308" src="xhbc_clip_image002_0009.jpg"><br>
+  <br>
+        0 BEGIN PGM 1 MM <br>
+        . <br>
+        . <br>
+        . <br>
+        10 CYCL DEF 207 RIGID TAPPING  NEW <br>
+        Q200 = 2 安全高度 <br>
+        Q201 = -25 深度 <br>
+        Q239 = +1.5 螺纹螺距 <br>
+        Q203 = +0 表面坐标 <br>
+        Q204 = 50 第二安全高度 <br>
+        ... END PGM 1 MM <br>
+  <strong>注意：</strong><strong> </strong><br>
+        ■ 用可控主轴进行攻丝，需要机床制造商对机床和TNC 进行设置。 <br>
+        ■ TNC 用可控主轴进行攻丝加工。这样保证要求的螺距。 <br>
+        ■ 进给速率和主轴转速倍率调节电位器被锁定。 <br>
+        <br>
+        循环208（螺旋镗铣）（输入数据）<br>
+        <img width="32" height="32" src="xhbc_clip_image002_0010.jpg">循环定义<br>
+        <br>
+        <img width="386" height="408" src="xhbc_clip_image002_0011.jpg">        <br>
+  <br>
+        ■ 如果输入的名义直径Q335 等于刀具直径， TNC 直接钻孔到最终深度。 <br>
+        ■ 根据需要在刀具表（TOOL.T）的ANGLE （角度）列输入最大允许的刀具切入 <br>
+        角。如果切入深度太大， TNC 自动计算最大允许的切入深度。 <br>
+        0 BEGIN PGM 1 MM <br>
+        . <br>
+        . <br>
+        . <br>
+        10 CYCL DEF 208 BORE MILLING <br>
+        Q200 = 6 安全高度 <br>
+        Q201 = -13 深度 <br>
+        Q206 = 150 切入进给速率 <br>
+        Q334 = 1.5 切入深度 <br>
+        Q203 = +100 表面坐标 <br>
+        Q204 = 50 第二安全高度 <br>
+        Q335 = 25 名义直径 <br>
+        Q342 = 0 粗加直径 <br>
+        Q351 = +1 铣削类型（顺铣或逆铣） </p>
+      <p>... END PGM 1 MM <br>
+          <br>
+        循环232（端面铣）<br>
+        <br>
+        循环232 用于用多道进给铣平端面，同时考虑精铣余量。有三种可用的加工方法：<br>
+        ■ 方式Q389=0：折线加工，在被加工表面外换向<br>
+        ■ 方式Q389=1：折线加工，在被加工表面内换向<br>
+        ■ 方式Q389=2：平行线加工，用定位进给速率退刀和换向 <br>
+        0 BEGIN PGM 1 MM <br>
+        . <br>
+        . <br>
+        . <br>
+        10 CYCL DEF 232 FACE MILLING <br>
+        Q389 = 2 方式 <br>
+        Q225 = +10 第一轴起点 <br>
+        Q226 = +12 第二轴起点 <br>
+        Q227 = +2.5 第三轴起点 <br>
+        Q386 = -3 第三轴终点 <br>
+        Q218 = 150 第一边长 <br>
+        Q219 = 75 第二边长 <br>
+        Q202 = 2 最大切入深度 <br>
+        Q369 = 0.5 底面余量 <br>
+        Q370 = 1 最大行距 <br>
+        Q207 = 500 铣削进给速率 <br>
+        Q385 = 800 精铣进给速率 <br>
+        Q253 = 2000 预定位进给速率 <br>
+        Q200 = 2 安全高度 <br>
+        Q357 = 2 距侧面安全距离 <br>
+        Q204 = 2 第二安全高度 <br>
+      ... END PGM 1 MM <br>
+      <br>
+      解决方法：循环232（端面铣）<br>
+      方式Q389=0<br>
+      <img width="303" height="209" src="xhbc_clip_image002_0012.jpg"><br>
+      方式Q389=1<br>
+      <img width="300" height="207" src="xhbc_clip_image002_0013.jpg"><br>
+      方式Q389=2<br>
+      <img width="303" height="206" src="xhbc_clip_image002_0014.jpg"></p>
+      <p>循环251（矩形型腔）（输入数据）<br>
+        <img width="29" height="28" src="xhbc_clip_image002_0015.jpg">循环定义<br>
+        <img width="291" height="212" src="xhbc_clip_image002_0016.jpg"></p>
+      <p><img width="309" height="210" src="xhbc_clip_image002_0017.jpg"><br>
+        <br>
+          <img width="303" height="210" src="xhbc_clip_image002_0018.jpg"><br>
+        <br>
+          <br>
+        0 BEGIN PGM 1 MM <br>
+        . <br>
+        . <br>
+        . <br>
+        10 CYCL DEF 251 RECTANGULAR <br>
+        POCKET <br>
+        Q215 = 0 加工策略 <br>
+        Q218 = 80 第一边长 <br>
+        Q219 = 60 第二边长 <br>
+        Q220 = 5 角点半径 <br>
+        Q368 = 0.2 侧边余量 <br>
+        Q224 = +0 旋转角度 <br>
+        Q367 = 0 型腔定位位置 <br>
+        Q207 = 500 铣削进给速率 <br>
+        Q351 = +1 顺铣/ 逆铣 <br>
+        Q201 = -20 深度 <br>
+        Q202 = 5 切入深度 <br>
+        Q369 = 0.1 底面余量 <br>
+        Q206 = 150 切入进给速率 <br>
+        Q338 = 5 精铣进给量 <br>
+        Q200 = 2 安全高度 <br>
+        Q203 = +0 表面坐标 <br>
+        Q204 = 50 第二安全高度 <br>
+        Q370 = 1 刀具路径行距系数 <br>
+        Q366 = 1 切入方法 <br>
+        ... END PGM 1 MM <br>
+        <br>
+        循环252（圆弧型腔）（输入数据）<br>
+        <img width="30" height="32" src="xhbc_clip_image002_0019.jpg">循环定义<br>
+        <img width="287" height="207" src="xhbc_clip_image002_0020.jpg"><br>
+        <img width="301" height="209" src="xhbc_clip_image002_0021.jpg"><br>
+        <br>
+        <img width="306" height="209" src="xhbc_clip_image002_0022.jpg"><br>
+        <br>
+        0 BEGIN PGM 1 MM <br>
+        . <br>
+        . <br>
+        . <br>
+        10 CYCL DEF 252 CIRCULAR <br>
+        POCKET <br>
+        Q215 = 0 加工策略 <br>
+        Q223 = 60 圆直径 <br>
+        Q368 = 0.2 侧边余量 <br>
+        Q207 = 500 铣削进给速率 <br>
+        Q351 = +1 顺铣/ 逆铣 <br>
+        Q201 = -20 深度 <br>
+        Q202 = 5 切入深度 <br>
+        Q369 = 0.1 底面余量 <br>
+        Q206 = 150 切入进给速率 <br>
+        Q338 = 5 精铣进给量 <br>
+        Q200 = 2 安全高度 <br>
+        Q203 = +0 表面坐标 <br>
+        Q204 = 50 第二安全高度 <br>
+        Q370 = 1 刀具路径行距系数 <br>
+        Q366 = 1 切入 <br>
+      ... END PGM 1 MM </p>
+      <p>循环253（铣键槽）（输入数据）<br>
+        <img width="31" height="31" src="xhbc_clip_image002_0023.jpg">循环定义<br>
+        <img width="305" height="204" src="xhbc_clip_image002_0024.jpg"><br>
+        <img width="310" height="209" src="xhbc_clip_image002_0025.jpg"><br>
+        <img width="304" height="208" src="xhbc_clip_image002_0026.jpg"><br>
+        <br>
+        0 BEGIN PGM 1 MM <br>
+        . <br>
+        . <br>
+        . <br>
+        10 CYCL DEF 253 SLOT MILLING <br>
+        Q215 = 0 加工策略 <br>
+        Q218 = 80 第一边长度（键槽长度） <br>
+        Q219 = 12 第二边长度（键槽宽度） <br>
+        Q368 = 0.2 侧边余量 <br>
+        Q224 = +0 旋转角度 <br>
+        Q367 = 0 槽位置 <br>
+        Q207 = 500 铣削进给速率 <br>
+        Q351 = +1 顺铣/ 逆铣 <br>
+        Q201 = -20 深度 <br>
+        Q202 = 5 切入深度 <br>
+        Q369 = 0.1 底面余量 <br>
+        Q206 = 150 切入进给速率 <br>
+        Q338 = 5 精铣进给量 <br>
+        Q200 = 2 安全高度 <br>
+        Q203 = +0 表面坐标 <br>
+        Q204 = 50 第二安全高度 <br>
+        Q366 = 1 切入方法 <br>
+        Q385 = 500 精铣进给速率 <br>
+        ... END PGM 1 MM <br>
+        <br>
+        循环254（扇形槽）（输入数据）<br>
+        <img width="31" height="31" src="xhbc_clip_image002_0023.jpg">循环定义<br>
+        <img width="308" height="209" src="xhbc_clip_image002_0027.jpg"><br>
+        <img width="296" height="209" src="xhbc_clip_image002_0028.jpg"><br>
+        <br>
+        <img width="300" height="204" src="xhbc_clip_image002_0029.jpg"></p>
+      <p>0 BEGIN PGM 1 MM <br>
+        . <br>
+        . <br>
+        . <br>
+        10 CYCL DEF 254 CIRCULAR SLOT <br>
+        Q215 = 0 加工策略 <br>
+        Q219 = 12 槽宽 <br>
+        Q368 = 0.2 侧边余量 <br>
+        Q375 = 80 节圆直径 <br>
+        Q367 = 0 槽位置原点 <br>
+        Q216 = +50 第一轴中心 <br>
+        Q217 = +50 第二轴中心 <br>
+        Q376 = +45 起始角 <br>
+        Q248 = 90 角度 <br>
+        Q378 = 0 步进角 <br>
+        Q377 = 1 加工个数 <br>
+        Q207 = 500 铣削进给速率 <br>
+        Q351 = +1 顺铣/ 逆铣 <br>
+        Q201 = -20 深度 <br>
+        Q202 = 5 切入深度 <br>
+        Q369 = 0.1 底面余量 <br>
+        Q206 = 150 切入进给速率 <br>
+        Q338 = 5 精铣进给量 <br>
+        Q200 = 2 安全高度 <br>
+        Q203 = +0 表面坐标 <br>
+        Q204 = 50 第二安全高度 <br>
+        Q366 = 1 切入方法 <br>
+        Q385 = 500 精铣进给速率 <br>
+        ... END PGM 1 MM <br>
+        <br>
+        任务：开槽板<br>
+        <img width="488" height="362" src="xhbc_clip_image002_0030.jpg"><br>
+  <br>
+        解决方法： 开槽板 <br>
+        完整程序 <br>
+        0 BEGIN PGM 6BAS210 MM <br>
+        1 BLK FORM 0.1 Z X+0 Y+0 Z-20 <br>
+        2 BLK FORM 0.2 X+100 Y+100 Z+0 <br>
+        3 TOOL CALL 5 Z S1000 <br>
+        4 L Z+100 R0 FMAX M3 <br>
+        5 CYCL DEF 253 SLOT MILLING <br>
+        Q215=0 加工策略 <br>
+        Q218=75 槽长 <br>
+        Q219=15 槽宽 <br>
+        Q368=0 侧边余量 <br>
+        Q374=+20 旋转角度 <br>
+        Q367=0 槽位置 <br>
+        Q207=200 铣削进给速率 <br>
+        Q351=+1 顺铣/ 逆铣 <br>
+        Q201=-10 深度 <br>
+        Q202=5 切入深度 <br>
+        Q369=0 底面余量 <br>
+        Q206=100 切入进给速率 <br>
+        Q338=5 精铣进给量 <br>
+        Q200=2 安全高度 <br>
+        Q203=+0 表面坐标 <br>
+        Q204=0 第二安全高度 <br>
+        Q366=1 切入方法 <br>
+        Q385=500 精铣进给速率 <br>
+        6 CYCL CALL POS X+50 Y+25 Z+0  FMAX <br>
+        7 CYCL DEF 254 CIRCULAR SLOT <br>
+        Q215=0 加工策略 <br>
+        Q219=12 槽宽 <br>
+        Q368=0 侧边余量 <br>
+        Q375=50 节圆直径 <br>
+        Q367=0 槽位置原点 <br>
+        Q216=+40 第一轴中心 <br>
+        Q217=+60 第二轴中心 <br>
+        Q376=35 起始角 <br>
+        Q248=180 角度 <br>
+        Q378=+0 步进角 <br>
+        Q377=1 加工个数 <br>
+        Q207=200 铣削进给速率 <br>
+        Q351=+1 顺铣/ 逆铣 <br>
+        Q201=-10 深度 <br>
+        Q202=5 切入深度 <br>
+        Q369=0 底面余量 <br>
+        Q206=100 切入进给速率 <br>
+        Q338=0 精铣进给量 <br>
+        Q200=2 安全高度 <br>
+        Q203=+0 表面坐标 <br>
+        Q204=0 第二安全高度 <br>
+        Q366=1 切入方法 <br>
+        Q385=500 精铣进给速率 <br>
+        8 CYCL CALL <br>
+        9 L Z+100 R0 FMAX M30 <br>
+      10 END PGM 6BAS210 MM<br>
+        <br>
+        矩形凸台，圆形凸台循环（输入数据）<br>
+        编程前注意：<br>
+        .用半径补偿RO在加工面上将刀具预定位至起点位置。注意参数Q367（凸台位置）。<br>
+        .TNC自动沿刀具轴预定位刀具。注意参数Q204（第二安全高度）。<br>
+        .循环参数DEPTH（深度）的代数符号决定加工方向。如果编程DEPTH=0，这个循环将不被执行。
+        <br>
+        <br>
+        任务：矩形1<br>
+        <br>
+        <img width="507" height="374" src="xhbc_clip_image002_0031.jpg">        <br>
+        <br>
+        解决方法： 矩形I <br>
+        完整程序 <br>
+        0 BEGIN PGM 6BAS265 MM <br>
+        1 BLK FORM 0.1 Z X+0 Y+0 Z-20 <br>
+        2 BLK FORM 0.2 X+100 Y+100 Z+0 <br>
+        3 TOOL CALL 13 Z S800 <br>
+        4 L Z+100 R0 FMAX M3 <br>
+        5 CYCL DEF 257 CIRCULAR STUD <br>
+        Q223=+90 零件最终直径 <br>
+        Q222=+140 工件毛坯直径 <br>
+        Q368=0 侧边余量 <br>
+        Q207=500 铣削进给速率 <br>
+        Q351=+1 顺铣/ 逆铣 <br>
+        Q201=-10 深度 <br>
+        Q202=5 切入深度 <br>
+        Q206=3000 切入进给速率 <br>
+        Q200=2 安全高度 <br>
+        Q203=+0 表面坐标 <br>
+        Q204=50 第二安全高度 <br>
+        Q370=+1 路径行距系数 <br>
+        6 CYCL CALL POS X+50 Y+50 Z+0  FMAX <br>
+        7 CYCL DEF 251 RECTANGULAR  POCKET <br>
+        Q215=0 加工策略 <br>
+        Q218=60 第一边长 <br>
+        Q219=30 第二边长 <br>
+        Q220=5 角点半径 <br>
+        Q368=0.2 侧边余量 <br>
+        Q224=+0 旋转角度 <br>
+        Q367=0 型腔定位点位置 <br>
+        Q207=500 铣削进给速率 <br>
+        Q351=+1 顺铣/ 逆铣 <br>
+        Q201=-5 深度 <br>
+        Q202=5 切入深度 <br>
+        Q369=0 底面余量 <br>
+        Q206=150 切入进给速率 <br>
+        Q338=0 精铣进给量 <br>
+        Q200=2 安全高度 <br>
+        Q203=+0 表面坐标 <br>
+        Q204=50 第二安全高度 <br>
+        Q370=1 刀具路径行距系数 <br>
+        Q366=1 切入方法 <br>
+        Q385=500 精铣进给速率 <br>
+        8 CYCL CALL POS X+50 Y+50 Z+0  FMAX <br>
+        9 L Z+100 R0 FMAX M30 <br>
+      10 END PGM 6BAS265 MM </p>
+      <p><br>
+      </p></TD>
+  </TR>
+</TABLE>
+</body>
+</html>

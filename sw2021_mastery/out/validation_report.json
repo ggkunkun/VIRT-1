@@ -1,0 +1,118 @@
+{
+  "checked_at": "2026-11-18",
+  "baseline": {
+    "product": "SOLIDWORKS 2021",
+    "service_pack": "SP5.0",
+    "build": "29.5.0.0070",
+    "exe": "D:\\SOLIDWORKS (2)\\SLDWORKS.exe",
+    "progid": "SldWorks.Application",
+    "clsid": "{0A5BC87B-FDBF-4A0B-BC8A-DE1271220E81}",
+    "local_server32": "D:\\SOLIDWORKS (2)\\sldworks.exe",
+    "ui_language": "简体中文",
+    "evidence": "注册表 Uninstall 项 + SLDWORKS.exe VersionInfo + HKCR\\SldWorks.Application\\CLSID\\LocalServer32",
+    "checked_at": "2026-11-18"
+  },
+  "status": "PASS",
+  "counts": {
+    "train_dataset": 6317,
+    "instruction_map": 18139,
+    "testcases": 524,
+    "ops": 348
+  },
+  "hard_gates": [
+    {
+      "code": "H1",
+      "status": "PASS",
+      "detail": "训练集 6317 条（阈值 5000）"
+    },
+    {
+      "code": "H2",
+      "status": "PASS",
+      "detail": "指令映射 18139 条（阈值 2000）"
+    },
+    {
+      "code": "H3",
+      "status": "PASS",
+      "detail": "测试用例 524 条（阈值 500）"
+    },
+    {
+      "code": "H3b",
+      "status": "PASS",
+      "detail": "各模块用例数下限 20；不足模块：无"
+    },
+    {
+      "code": "H4a",
+      "status": "PASS",
+      "detail": "重复 id：训练集 0，映射 0，用例 0"
+    },
+    {
+      "code": "H4b",
+      "status": "PASS",
+      "detail": "悬空引用 0 条，前 3 条：[]"
+    },
+    {
+      "code": "H5",
+      "status": "PASS",
+      "detail": "未被覆盖的 L3 操作点 0 个：[]"
+    },
+    {
+      "code": "H6",
+      "status": "PASS",
+      "detail": "2022+ 版本串味命中 0 条：[]"
+    },
+    {
+      "code": "H7",
+      "status": "PASS",
+      "detail": "训练集缺字段 0 处：[]"
+    }
+  ],
+  "soft_gates": [
+    {
+      "code": "S1",
+      "detail": "界面步骤路径命中 2021 白名单入口 16380/16380 = 100.00%；代码类步骤（宏代码上下文）1201 条单列不计入；未命中入口：{}"
+    },
+    {
+      "code": "S2",
+      "detail": "版本证据状态分布：{'pending_native_screenshot': 6317}；原生截图核验需人工在 2021 环境完成"
+    },
+    {
+      "code": "S3",
+      "detail": "意图类别覆盖 20/20 = 100%（要求 ≥95%）"
+    }
+  ],
+  "coverage": {
+    "ops_total": 348,
+    "ops_with_train": 348,
+    "ops_with_instruction": 348,
+    "ops_with_testcase": 348,
+    "testcase_op_coverage": 1.0,
+    "min_train_per_op": 14,
+    "min_instruction_per_op": 34,
+    "modules": 12
+  },
+  "testcase_by_module": {
+    "草图": 76,
+    "特征": 59,
+    "装配": 63,
+    "工程图": 43,
+    "曲面": 30,
+    "钣金": 30,
+    "焊件": 29,
+    "渲染仿真": 30,
+    "模具": 28,
+    "管道布线": 28,
+    "配置": 29,
+    "宏": 29,
+    "综合": 50
+  },
+  "task_type_distribution": {
+    "operation": 4176,
+    "workflow": 120,
+    "assembly": 12,
+    "drawing": 8,
+    "troubleshooting": 696,
+    "annotation": 405,
+    "api": 480,
+    "mate": 420
+  }
+}

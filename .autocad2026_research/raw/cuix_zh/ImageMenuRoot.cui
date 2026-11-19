@@ -1,0 +1,204 @@
+<?xml version="1.0"?><!--
+Warning! Do not edit the contents of this file.
+If you attempt to edit this file using an XML editor, you could lose
+customization and migration functionality. If you need to change
+information in the customization file, use the Customize User Interface
+dialog in the product.
+To access the Customize User Interface dialog, click the Tools menu,
+Customization panel, User Interface button, or enter CUI on the command line.
+--><ImageMenuRoot xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ImageMenu UID="IM_0001">
+    <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+    <Alias>image</Alias>
+    <Alias>image_3DObjects</Alias>
+    <DialogTitle xlate="true" UID="XLS_0079">三维对象</DialogTitle>
+    <Description xlate="true" UID="XLS_0080"/>
+    <ImageMenuItem BlankLine="false" SlideLibrary="acad" SlideName="Box3d" UID="IMI_0001">
+      <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+      <DisplayName xlate="true" UID="XLS_7228">长方体</DisplayName>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_MESH_PRIMITIVE_BOX"/>
+      </MenuItem>
+    </ImageMenuItem>
+    <ImageMenuItem BlankLine="false" SlideLibrary="acad" SlideName="Pyramid" UID="IMI_0002">
+      <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+      <DisplayName xlate="true" UID="XLS_7229">棱锥体</DisplayName>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_MESH_PRIMITIVE_PYRAMID"/>
+      </MenuItem>
+    </ImageMenuItem>
+    <ImageMenuItem BlankLine="false" SlideLibrary="acad" SlideName="Wedge" UID="IMI_0003">
+      <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+      <DisplayName xlate="true" UID="XLS_7230">楔体</DisplayName>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_MESH_PRIMITIVE_WEDGE"/>
+      </MenuItem>
+    </ImageMenuItem>
+    <ImageMenuItem BlankLine="false" SlideLibrary="acad" SlideName="Sphere" UID="IMI_0005">
+      <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+      <DisplayName xlate="true" UID="XLS_7232">球体</DisplayName>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_MESH_PRIMITIVE_SPHERE"/>
+      </MenuItem>
+    </ImageMenuItem>
+    <ImageMenuItem BlankLine="false" SlideLibrary="acad" SlideName="Cone" UID="IMI_0006">
+      <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+      <DisplayName xlate="true" UID="XLS_7233">圆锥体</DisplayName>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_MESH_PRIMITIVE_CONE"/>
+      </MenuItem>
+    </ImageMenuItem>
+    <ImageMenuItem BlankLine="false" SlideLibrary="acad" SlideName="Torus" UID="IMI_0007">
+      <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+      <DisplayName xlate="true" UID="XLS_7234">圆环体</DisplayName>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_MESH_PRIMITIVE_TORUS"/>
+      </MenuItem>
+    </ImageMenuItem>
+    <ImageMenuItem BlankLine="false" SlideLibrary="acad" SlideName="Dish" UID="IMI_0008">
+      <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+      <DisplayName xlate="true" UID="XLS_7235">圆柱体</DisplayName>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_MESH_PRIMITIVE_CYLINDER"/>
+      </MenuItem>
+    </ImageMenuItem>
+    <ImageMenuItem BlankLine="false" SlideLibrary="acad" SlideName="Mesh" UID="IMI_0009">
+      <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+      <DisplayName xlate="true" UID="XLS_7236">网格</DisplayName>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_0418"/>
+      </MenuItem>
+    </ImageMenuItem>
+  </ImageMenu>
+  <ImageMenu UID="IM_0002">
+    <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    <Alias>image_poly</Alias>
+    <DialogTitle xlate="true" UID="XLS_0081">设置样条曲线拟合变量</DialogTitle>
+    <Description xlate="true" UID="XLS_0082"/>
+    <ImageMenuItem BlankLine="false" SlideLibrary="acad" SlideName="pm-quad" UID="IMI_0010">
+      <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+      <DisplayName xlate="true" UID="XLS_7237">二次拟合网格</DisplayName>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_0419"/>
+      </MenuItem>
+    </ImageMenuItem>
+    <ImageMenuItem BlankLine="false" SlideLibrary="acad" SlideName="pm-cubic" UID="IMI_0011">
+      <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+      <DisplayName xlate="true" UID="XLS_7238">三次拟合网格</DisplayName>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_0420"/>
+      </MenuItem>
+    </ImageMenuItem>
+    <ImageMenuItem BlankLine="false" SlideLibrary="acad" SlideName="pm-bezr" UID="IMI_0012">
+      <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+      <DisplayName xlate="true" UID="XLS_7239">Bezier 拟合网格</DisplayName>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_0421"/>
+      </MenuItem>
+    </ImageMenuItem>
+    <ImageMenuItem BlankLine="false" SlideLibrary="acad" SlideName="pl-quad" UID="IMI_0013">
+      <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+      <DisplayName xlate="true" UID="XLS_7240">二次拟合多段线</DisplayName>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_0422"/>
+      </MenuItem>
+    </ImageMenuItem>
+    <ImageMenuItem BlankLine="false" SlideLibrary="acad" SlideName="pl-cubic" UID="IMI_0014">
+      <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+      <DisplayName xlate="true" UID="XLS_7241">三次拟合多段线</DisplayName>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_0423"/>
+      </MenuItem>
+    </ImageMenuItem>
+  </ImageMenu>
+  <ImageMenu UID="IM_0003">
+    <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+    <Alias>image_vporti</Alias>
+    <DialogTitle xlate="true" UID="XLS_0083">平铺视口布局</DialogTitle>
+    <Description xlate="true" UID="XLS_0084"/>
+    <ImageMenuItem BlankLine="false" SlideLibrary="acad" SlideName="vport-1" UID="IMI_0015">
+      <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+      <DisplayName xlate="true" UID="XLS_7242">单个</DisplayName>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_0424"/>
+      </MenuItem>
+    </ImageMenuItem>
+    <ImageMenuItem BlankLine="false" SlideLibrary="acad" SlideName="vport-3v" UID="IMI_0016">
+      <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+      <DisplayName xlate="true" UID="XLS_7243">三个:  垂直</DisplayName>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_0425"/>
+      </MenuItem>
+    </ImageMenuItem>
+    <ImageMenuItem BlankLine="false" SlideLibrary="acad" SlideName="vport-3h" UID="IMI_0017">
+      <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+      <DisplayName xlate="true" UID="XLS_7244">三个:  水平</DisplayName>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_0426"/>
+      </MenuItem>
+    </ImageMenuItem>
+    <ImageMenuItem BlankLine="false" SlideLibrary="acad" SlideName="vport-4" UID="IMI_0018">
+      <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+      <DisplayName xlate="true" UID="XLS_7245">四个:  相等</DisplayName>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_0427"/>
+      </MenuItem>
+    </ImageMenuItem>
+    <ImageMenuItem BlankLine="false" SlideLibrary="acad" SlideName="vport-2v" UID="IMI_0019">
+      <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+      <DisplayName xlate="true" UID="XLS_7246">两个:  垂直</DisplayName>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_0428"/>
+      </MenuItem>
+    </ImageMenuItem>
+    <ImageMenuItem BlankLine="false" SlideLibrary="acad" SlideName="vport-3r" UID="IMI_0020">
+      <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+      <DisplayName xlate="true" UID="XLS_7247">三个:  右</DisplayName>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_0429"/>
+      </MenuItem>
+    </ImageMenuItem>
+    <ImageMenuItem BlankLine="false" SlideLibrary="acad" SlideName="vport-3l" UID="IMI_0021">
+      <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+      <DisplayName xlate="true" UID="XLS_7248">三个:  左</DisplayName>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_0430"/>
+      </MenuItem>
+    </ImageMenuItem>
+    <ImageMenuItem BlankLine="false" SlideLibrary="acad" SlideName="vport-4l" UID="IMI_0022">
+      <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+      <DisplayName xlate="true" UID="XLS_7249">四个:  左</DisplayName>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_0431"/>
+      </MenuItem>
+    </ImageMenuItem>
+    <ImageMenuItem BlankLine="false" SlideLibrary="acad" SlideName="vport-2h" UID="IMI_0023">
+      <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+      <DisplayName xlate="true" UID="XLS_7250">两个:  水平</DisplayName>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_0432"/>
+      </MenuItem>
+    </ImageMenuItem>
+    <ImageMenuItem BlankLine="false" SlideLibrary="acad" SlideName="vport-3a" UID="IMI_0024">
+      <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+      <DisplayName xlate="true" UID="XLS_7251">三个:  上</DisplayName>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_0433"/>
+      </MenuItem>
+    </ImageMenuItem>
+    <ImageMenuItem BlankLine="false" SlideLibrary="acad" SlideName="vport-3b" UID="IMI_0025">
+      <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+      <DisplayName xlate="true" UID="XLS_7252">三个:  下</DisplayName>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_0434"/>
+      </MenuItem>
+    </ImageMenuItem>
+    <ImageMenuItem BlankLine="false" SlideLibrary="acad" SlideName="vport-4r" UID="IMI_0026">
+      <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+      <DisplayName xlate="true" UID="XLS_7253">四个:  右</DisplayName>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_0435"/>
+      </MenuItem>
+    </ImageMenuItem>
+  </ImageMenu>
+</ImageMenuRoot>

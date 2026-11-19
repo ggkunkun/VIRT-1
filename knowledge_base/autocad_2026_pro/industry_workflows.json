@@ -1,0 +1,148 @@
+{
+  "version": "AutoCAD 2026 (R25.1) 简体中文正式版",
+  "note": "行业场景工作流，制图规范参考 GB/T 14689-2008、GB/T 4457-2002、GB/T 1804 及项目 runbook 约定；命令均来自官方 CUIX/acad.pgp。",
+  "domains": [
+    {
+      "id": "mechanical",
+      "name": "机械设计",
+      "standards": ["GB/T 14689-2008 技术制图 图纸幅面和格式", "GB/T 4457 机械制图", "GB/T 1800/1804 公差", "GB/T 131 表面粗糙度"],
+      "layer_scheme": ["OUTLINE(粗实线,7)", "HIDDEN(虚线,8)", "CENTER(中心线,1,CENTER线型)", "DIM(尺寸,3)", "HATCH(剖面线,8)", "TITLE_BLOCK(图框标题栏,7)"],
+      "text_height_mm": 3.5,
+      "font": "仿宋 / gbeitc",
+      "workflows": [
+        {
+          "name": "轴类零件工程图",
+          "steps": [
+            "NEW(acadiso.dwt) → UNITS 设毫米 → LIMITS 设图幅(A3 420x297)",
+            "LAYER 建 6 标准层，CENTER 层加载 CENTER 线型",
+            "OUTLINE 层：LINE/CIRCLE/PLINE 画主视图轮廓；比例 1:1",
+            "CENTER 层：画轴线；HIDDEN 层：画孔/键槽虚线",
+            "DIM 层：DIMLINEAR 标总长/各段长，DIMDIAMETER 标直径，DIMSTYLE 定制箭头/字高3.5",
+            "形位公差：TOLERANCE 标注同轴度/圆跳动；引线 MLEADER 标表面粗糙度",
+            "HATCH 层：剖面图用 HATCH(ANSI31) 填充",
+            "TITLE_BLOCK 层：插入标题栏块，填写材料/比例/视图",
+            "出图前 ZOOM EXTENTS 检查视口边界与文字-尺寸重叠 → PLOT(ctb) 出 PDF"
+          ],
+          "key_commands": ["LINE", "CIRCLE", "DIMLINEAR", "DIMDIAMETER", "DIMSTYLE", "TOLERANCE", "MLEADER", "HATCH", "XBIND", "PLOT"]
+        },
+        {
+          "name": "装配图与明细栏",
+          "steps": [
+            "INSERT 插入各零件块 → XREF 引用标准件库",
+            "TRIM/ERASE 清理遮挡线 → 剖面线 HATCH 相邻件方向相反",
+            "BALLOON/MLEADER 编序号 → TABLE 创建明细栏",
+            "DATAEXTRACTION 从块属性提取零件清单到表格",
+            "DIM 标注装配尺寸/配合尺寸(如 H7/g6)"
+          ],
+          "key_commands": ["INSERT", "XREF", "TRIM", "HATCH", "MLEADER", "TABLE", "DATAEXTRACTION"]
+        }
+      ]
+    },
+    {
+      "id": "architecture",
+      "name": "建筑设计",
+      "standards": ["GB/T 50104-2010 建筑制图标准", "GB/T 50001 房屋建筑制图统一标准"],
+      "layer_scheme": ["WALL(墙体)", "DOOR(门)", "WINDOW(窗)", "STAIR(楼梯)", "DIM(标注)", "TEXT(文字)", "FURN(家具)", "AXIS(轴线)"],
+      "text_height_mm": 3.5,
+      "font": "仿宋_GB2312",
+      "workflows": [
+        {
+          "name": "建筑平面图",
+          "steps": [
+            "AXIS 层：LINE 绘制定位轴线，CENTER 线型，轴号标注",
+            "WALL 层：MLINE 双线画墙体 或 OFFSET 偏移墙线后 TRIM 整理",
+            "DOOR/WINDOW 层：INSERT 插入门窗块，动态块调整开启方向/尺寸",
+            "STAIR 层：ARRAY 阵列踏步线",
+            "DIM 层：DIMLINEAR 标轴距/开间进深，连续标注 DIMCONTINUE",
+            "TEXT 层：房间名称与面积(MTEXT)，楼层标高",
+            "布局 LAYOUT → 页面设置 → 视口 MVSETUP → 图框 → PLOT"
+          ],
+          "key_commands": ["MLINE", "OFFSET", "TRIM", "INSERT", "ARRAY", "DIMLINEAR", "DIMCONTINUE", "MTEXT", "LAYOUT", "PLOT"]
+        },
+        {
+          "name": "建筑立面/剖面图",
+          "steps": ["从平面图投影 → LINE/XLINE 引高度线", "ELEVATION 细节用 PLINE 描绘", "HATCH 填充材质", "标注标高与尺寸"],
+          "key_commands": ["XLINE", "PLINE", "LINE", "HATCH", "DIMLINEAR", "TEXT"]
+        }
+      ]
+    },
+    {
+      "id": "civil",
+      "name": "土木工程",
+      "standards": ["GB/T 50103-2010 总图制图标准", "JTG 公路工程制图标准"],
+      "layer_scheme": ["TERRAIN(地形)", "ROAD(道路)", "PIPE(管线)", "ELEV(高程)", "DIM", "TEXT"],
+      "text_height_mm": 3.5,
+      "font": "仿宋",
+      "workflows": [
+        {
+          "name": "道路纵断面/地形图",
+          "steps": [
+            "导入坐标点 → POINT 展点 → PLINE 连等高线/地面线",
+            "SPLINE 拟合道路边线 → OFFSET 生成车道",
+            "标注桩号与高程：TEXT/FIELD",
+            "GEOMAP/ArcGIS 底图叠加真实地理信息(2026)",
+            "布局分幅 → 批量 PLOT"
+          ],
+          "key_commands": ["POINT", "PLINE", "SPLINE", "OFFSET", "TEXT", "FIELD", "GEOMAP", "PLOT"]
+        },
+        {
+          "name": "管网综合图",
+          "steps": ["多图层管线 LINE/PLINE", "不同 LINETYPE 区分管线类别", "DATAEXTRACTION 提取管径/材质", "标注管底标高"],
+          "key_commands": ["LINE", "PLINE", "LINETYPE", "DATAEXTRACTION", "DIMLINEAR"]
+        }
+      ]
+    },
+    {
+      "id": "interior",
+      "name": "室内设计",
+      "standards": ["GB/T 建筑室内设计制图标准", "GB 50222 建筑内部装修设计防火规范"],
+      "layer_scheme": ["WALL", "FURN(家具)", "LIGHT(灯具)", "ELEC(电气)", "MAT(材质)", "DIM", "TEXT"],
+      "text_height_mm": 3.0,
+      "font": "微软雅黑 / 仿宋",
+      "workflows": [
+        {
+          "name": "室内平面布置图",
+          "steps": [
+            "量房 → 绘制墙体 → INSERT 家具动态块(可翻转/旋转)",
+            "COPY/MIRROR 布置对称家具 → ROTATE 调整角度",
+            "HATCH 表达地面材质(木地板/瓷砖)",
+            "DIM 标注尺寸 → MTEXT 说明",
+            "三维：EXTRUDE 墙体 → MATERIAL 赋材质 → RENDER 效果图"
+          ],
+          "key_commands": ["INSERT", "COPY", "MIRROR", "ROTATE", "HATCH", "DIMLINEAR", "EXTRUDE", "MATERIAL", "RENDER"]
+        },
+        {
+          "name": "天花/电气布置图",
+          "steps": ["反射天花 MIRROR → 灯具 INSERT → 开关插座块", "PLINE 绘制线路 → 图层区分强电弱电", "图例表 TABLE"],
+          "key_commands": ["MIRROR", "INSERT", "PLINE", "TABLE", "LAYER"]
+        }
+      ]
+    }
+  ],
+  "troubleshooting": [
+    {"symptom": "打开文件卡顿/慢", "cause": "图形冗余/参照缺失/字体缺失", "fix": "PURGE 清理 → AUDIT 核查 → 检查 XREF 路径 → -GRAPHICSCONFIG 调低显卡加速"},
+    {"symptom": "文字显示为问号/乱码", "cause": "缺失字体或大字体(shx)", "fix": "STYLE 指定存在字体 → 加载 gbeitc.shx/gbenor.shx → 或用 FONTALT 替代"},
+    {"symptom": "标注不随对象变化", "cause": "DIMASSOC=0 非关联标注", "fix": "设 DIMASSOC=2 → 重建标注"},
+    {"symptom": "无法选中/编辑对象", "cause": "图层锁定/对象在块内/外部参照", "fix": "检查图层锁定 → REFEDIT 编辑块 → XOPEN 编辑参照源"},
+    {"symptom": "填充无法显示", "cause": "边界不闭合/比例不当/填充被关闭", "fix": "检查边界闭合 → 调 HPSCALE → FILLMODE=1 → REGEN"},
+    {"symptom": "打印出图比例不对", "cause": "视口比例/页面设置不匹配", "fix": "PAGESETUP 设图纸尺寸 → 激活视口 ZOOM 1/<比例>xp → 锁定视口"},
+    {"symptom": "线宽/颜色打印无效", "cause": "打印样式表(ctb/stb)覆盖", "fix": "STYLESMANAGER 检查 ctb → 确认颜色相关/命名打印样式一致"},
+    {"symptom": "命令失效/别名冲突", "cause": " acad.pgp 别名被改/自定义冲突", "fix": "ALIAS 重新加载 acad.pgp → 检查 CUI 快捷键冲突"},
+    {"symptom": "COM 调用被拒绝(call rejected by callee)", "cause": "AutoCAD 忙/多实例干扰", "fix": "等待重试 → 关闭多余窗口 → 干净进程重启"},
+    {"symptom": "DWG 损坏打不开", "cause": "文件异常中断", "fix": "RECOVER 修复 → 另存 → 或 AUDIT 后另存新文件"}
+  ],
+  "efficiency_tips": [
+    "用别名替代全称：L/C/TR/CO/M/RO/SC/F/DI 大幅提升绘图速度",
+    "命令行透明命令：执行中可输入 'ZOOM、'PAN 不中断当前命令",
+    "F1 帮助、F3 对象捕捉、F7 栅格、F8 正交、F10 极轴、F11 对象追踪",
+    "DSETTINGS 预设捕捉模式 → 减少手动输入坐标",
+    "动作录制器 RECORD 录制重复操作 → 回放自动化",
+    "TOOLPALETTES 工具选项板 + 设计中心 ADCENTER 复用标准件",
+    "图纸集 SHEETSET 管理多图 → 统一打印发布 PUBLISH",
+    "2026 智能块 BLOCKPLACE/BLOCKREPLACE 自动放置替换，减少单击"
+  ],
+  "template_config": {
+    "基础模板": "acadiso.dwt (公制) / acad.dwt (英制)",
+    "国标配置清单": ["UNITS 毫米", "LIMITS 图幅", "6 标准图层", "DIMSTYLE 国标标注样式(字高3.5/箭头闭合填充)", "STYLE 仿宋字体", "LINETYPE 加载 CENTER/HIDDEN", "ctb 打印样式", "标题栏/图框块"]
+  }
+}

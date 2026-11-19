@@ -1,0 +1,392 @@
+
+<html xmlns="undefined">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title></title>
+<link href="../../helper_css.css" rel="stylesheet" type="text/css">
+</head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar">
+  <tr>
+    <td>GSK928TC数控系统操作</td>
+  </tr>
+</table>
+<p>在“视图”下拉菜单或者浮动菜单中选择“控制面板切换”后，数控系统操作键盘会出现在视窗的右上角，其左侧为数控系统显示屏，如下图所示。用操作键盘结合显示屏可以进行数控系统操作。 <br>
+  <img width="554" height="234" src="pic/gsk928tc_sys_clip_image002.jpg"> <br>
+  GSK928 TE/C输入面板 </p>
+<p>数字键　　　　　　　　　　　　　　　　字母键 <br>
+  <img width="130" height="167" src="pic/gsk928tc_sys_clip_image004.jpg">　　　　　　　　　　　　　<img width="177" height="166" src="pic/gsk928tc_sys_clip_image006.jpg"> <br>
+  数字/字母键用于输入数据到输入区域（如下图所示），系统自动判别取字母还是取数字。 <br>
+  <img width="347" height="292" src="pic/gsk928tc_sys_clip_image008.jpg"> <br>
+  <br>
+  编辑键 <br>
+  <img width="35" height="33" src="pic/gsk928tc_sys_clip_image010.jpg">消除输入到键输入缓冲寄存器中的字符或符号。键缓寄存器的内容由CRT显示。例：键输入缓冲寄存器的显示为：N001时，按ESC则N001被取消。 <br>
+  <img width="32" height="35" src="pic/gsk928tc_sys_clip_image012.jpg">用于程序的删除的编辑操纵。 <br>
+  <img width="34" height="34" src="pic/gsk928tc_sys_clip_image014.jpg">用于程序的修改的编辑操纵。 <br>
+  <img width="31" height="32" src="pic/gsk928tc_sys_clip_image016.jpg">用于程序的插入的编辑操纵。 <br>
+  <img width="34" height="36" src="pic/gsk928tc_sys_clip_image018.jpg">用于确定编写或输入的数值正确。 <br>
+  页面切换键 <br>
+  <img width="35" height="35" src="pic/gsk928tc_sys_clip_image020.jpg">显示，设定补偿量和宏变量，共有两项，［偏置］，［宏变量］。 <br>
+  <img width="34" height="34" src="pic/gsk928tc_sys_clip_image022.jpg">显示，设置各种设置参数，参数开关及程序开关。 <br>
+  <img width="33" height="33" src="pic/gsk928tc_sys_clip_image024.jpg">显示，设定参数。 <br>
+  <img width="33" height="33" src="pic/gsk928tc_sys_clip_image026.jpg">显示各种诊断数据。 </p>
+<p>翻页按钮（PAGE） <br>
+  <img width="34" height="32" src="pic/gsk928tc_sys_clip_image028.jpg">使LCD画面的页逆方向更换。 <br>
+  <img width="34" height="34" src="pic/gsk928tc_sys_clip_image030.jpg">使LCD画面的页顺方向更换。 </p>
+<p>光标移动（CURSOR） <br>
+  <img width="36" height="35" src="pic/gsk928tc_sys_clip_image032.jpg">使光标向上移动一个区分单位。 <br>
+  <img width="34" height="31" src="pic/gsk928tc_sys_clip_image034.jpg">使光标向下移动一个区分单位。 </p>
+<p>复位键 <br>
+  <img width="34" height="33" src="pic/gsk928tc_sys_clip_image036.jpg">解除报警，CNC复位。 </p>
+<p>输入键 <br>
+  <img width="31" height="32" src="pic/gsk928tc_sys_clip_image016_0000.jpg">输入键。用于输入参数，补偿量等数据。从RS232接口输入文件的启动。MDI方式下程序段指令的输入。 </p>
+<h3>手动对刀操作 </h3>
+<p>加工一个零件常需要几把不同的刀具，由于刀具安装及刀具偏差，每把刀转到切削位置，其刀尖所处位置并不完全重合。为使用户在编程时无需考虑刀具间的偏差，本系统设置自动生成的对刀方法，使对刀操作非常简单方便。通过对刀操作以后，用户在编程序时只要根据零件图纸及加工工艺编写工件程序，完全不必考虑刀具间的偏差，只需在加工程序的换刀指令中调用相应的刀具补偿。（详细使用方法，参见本手册“编程篇”中的刀具补偿功能部分）。 <br>
+  GSK928TE/C数控系统为方便各种不同的用户需求，设置了试切对刀和定点对刀两种对刀方式，用户可根据自己的习惯任意选择不同的对刀方式。现在说明如下： </p>
+<h4> 试切对刀方法 </h4>
+<p>（必须在设置好工件坐标系后方可使用，操作过程与设置工件坐标系的操作过程基本相同） <br>
+  1、在机床上装夹好试切工件，选择任意一把刀，（一般是加工使用的第一把刀）。 <br>
+  2、选择合适的主轴转速，启动主轴。在手动方式下移动刀具在工件上切出一个小台阶。 <br>
+  3、在X轴不移动的情况下沿向Z方向将刀具移动到完全位置，停止主轴旋转。 <br>
+  4、测量所切出的台阶的直径，按<img width="33" height="31" src="pic/gsk928tc_sys_clip_image002_0000.jpg">键，屏幕显示<img width="41" height="18" src="pic/gsk928tc_sys_clip_image004_0000.jpg">输入测量出的直径值，按<img width="33" height="31" src="pic/gsk928tc_sys_clip_image006_0000.jpg">键，屏幕显示<img width="39" height="17" src="pic/gsk928tc_sys_clip_image008_0000.jpg">，（1表示当前的刀位号），按<img width="33" height="31" src="pic/gsk928tc_sys_clip_image006_0001.jpg">键系统自动计算X轴方向的刀偏值，并将计算出的刀偏存入相应的X轴刀偏参数区。在刀偏工作方式下可以查看和修改。如果显示<img width="39" height="17" src="pic/gsk928tc_sys_clip_image008_0001.jpg">时输入1～8的数字键再按<img width="33" height="31" src="pic/gsk928tc_sys_clip_image006_0002.jpg">键，则系统计算出的刀偏值，将存入输入的数字对应的X轴刀偏参数区，不按<img width="33" height="31" src="pic/gsk928tc_sys_clip_image006_0003.jpg">键而按<img width="32" height="33" src="pic/gsk928tc_sys_clip_image010_0000.jpg">键，则取消刀偏计算及存储。 <br>
+  5、再次启动主轴，在手动方式下移动刀具在工件上切出一个端面。 <br>
+  6、在Z轴不移动的情况下沿X方向将刀具移动到安全的位置，停止主轴旋转。选择一点作为基准点，（该点最好是机床上的一个固定点，如卡盘端面或切工装基准面，以便以后重新对刀时能找出原来的基准装置）测量所选端面到所选基准点在Z方向的距离。按<img width="31" height="30" src="pic/gsk928tc_sys_clip_image012_0000.jpg">键，屏幕显示<img width="39" height="17" src="pic/gsk928tc_sys_clip_image014_0000.jpg">输入测量出的数据，按<img width="33" height="31" src="pic/gsk928tc_sys_clip_image006_0004.jpg">键，屏幕显示<img width="39" height="15" src="pic/gsk928tc_sys_clip_image016_0001.jpg">，（1表示当前的刀位号）按<img width="33" height="31" src="pic/gsk928tc_sys_clip_image006_0005.jpg">键，系统自动计算所选刀具在Z方向的刀偏值，并将计算出的刀偏值存入当前刀号对应的Z轴刀偏参数区。在刀偏工作方式下可以查看和修改。如果显示<img width="39" height="15" src="pic/gsk928tc_sys_clip_image016_0002.jpg">时输入1～8的数字键再按<img width="33" height="31" src="pic/gsk928tc_sys_clip_image006_0006.jpg">键，则系统计算出的刀偏值，将存入输入的数字对应的Z轴刀偏参数区，不按<img width="33" height="31" src="pic/gsk928tc_sys_clip_image006_0007.jpg">键而按<img width="32" height="33" src="pic/gsk928tc_sys_clip_image010_0001.jpg">键，则取消刀偏计算 存储。 <br>
+  7、换下一把刀，并重复1-6步骤的操作对好其它刀具。 <br>
+  8、当工件坐标系没有变动的情况下，可以通过上述过程对任意一把刀操作。在刀具磨损或调整一把刀时，操作非常快捷、方便。 </p>
+<h4>定点对刀方式 </h4>
+<p>1、在机床上安装好试切工件和所用的刀具，选择任意一把刀（一般是加工中使用的第一把刀）作为基准刀。 <br>
+  2、选择合适的主轴转速并启动主轴。 <br>
+  3、选择合适的手动进给方式将刀具靠近工件上事先确定的对刀点，当确定刀具与对刀点重合后停止移动刀具。 <br>
+  4、按<img width="33" height="31" src="pic/gsk928tc_sys_clip_image006_0008.jpg">键，屏幕高亮显示当前刀号和刀偏号，连续按两次<img width="41" height="30" src="pic/gsk928tc_sys_clip_image018_0000.jpg">键，屏幕正常显示当前刀号和刀偏号，系统自动记下当前坐标位置，并将当前坐标值作为其它刀的对刀基准。（对非基准刀不能进行此步骤操作）。对于基准刀还需进行下一步操作。 <br>
+  5、按<img width="33" height="31" src="pic/gsk928tc_sys_clip_image006_0009.jpg">键，再按<img width="31" height="33" src="pic/gsk928tc_sys_clip_image020_0000.jpg">键确认，（若因刀具损坏以原已对过的刀为基准重新对刀，则按<img width="33" height="34" src="pic/gsk928tc_sys_clip_image022_0000.jpg">键），屏幕正常显示当前嚎号和刀偏号，系统自动计算出当前刀号对应的刀偏值并把刀偏值存入当前刀号对应的参数区。在刀偏工作方式中可以查看和修改该刀偏值。 <br>
+  6、用手动方式将刀具移出对刀位置到可以换刀处，通过手动换刀，将下一把需要的刀转到切削位置。 <br>
+  7、重复2、3、5项操作。直到全部刀具对刀完毕。 <br>
+  注：1、如使用光学对刀仪，可不用启动主轴将对刀点选定在对刀仪的十字线交点上，其他操作全部相同。 <br>
+  2、系统自动生成的刀具偏置可在刀偏工作方式中显示及修改。详见刀偏工作方式所述。 <br>
+  3、如果因刀具损坏或重新安装某一把刀具则只需任选一把已对过的刀作为基准，先将这把刀按上述方法对到某一点，并按基准刀对刀方式确认即第4项操作，但不能进行第5项操作，退回到安全位置，再换刀到新的刀具，按上述2、3、5项非基准刀的对刀操作方法重新将此刀对好。（原基准刀的刀偏值不一定为零） <br>
+  4、若使用排刀对刀时，刀具处于工件的另一侧时，试切对刀时输入的X方向测量值应为负值，在定点对刀方式只能通过手工方式将对应刀号的?? X刀偏值符号取反即原正号改为负号，负号改为正号。 </p>
+<h3>手动操作虚拟数控车床 </h3>
+<p>1. 手动返回参考点 <br>
+  (1)在手动方式下，按参考点方式键<img width="35" height="34" src="pic/gsk928tc_sys_clip_image002_0001.jpg">、<img width="34" height="36" src="pic/gsk928tc_sys_clip_image004_0001.jpg">，选择回参考点操作方式，这时液晶屏幕右下角显示［机械回零］。 <br>
+  注1：返回参考点结束时，返回参考点结束指示灯亮。 <br>
+  注2：返回参考点结束指示灯亮时，在下列情况下灭灯。 <br>
+  (1)从参考点移出时； <br>
+  (2)按下急停开关 。 <br>
+  注３：参考点方向，主要参照机床厂家的说明书。 <br>
+  2. 手动返回程序起点 <br>
+  (1)  按下返回程序起点键 <img width="34" height="35" src="pic/gsk928tc_sys_clip_image006_0010.jpg">，选择返回程序起点方式，这时液晶屏幕右下角显示［程序回零］。&nbsp;<br>
+  (2)  选择移动轴<img width="34" height="35" src="pic/gsk928tc_sys_clip_image006_0011.jpg">、<img width="36" height="36" src="pic/gsk928tc_sys_clip_image008_0002.jpg">机床沿着程序起点方向移动。回到程序起点时，坐标轴停止移动，有位置显示的地址［X］，［Ｚ］，［Ｕ］，［Ｗ］闪烁。程序回零后，自动消除刀偏。 </p>
+<p>3. 手动连续进给 <br>
+  (1)按下手动方式键 <img width="35" height="34" src="pic/gsk928tc_sys_clip_image010_0002.jpg">，选择手动操作方式，这时液晶屏幕上面显示[手动方式]。 <br>
+  (2)选择移动轴<img width="37" height="33" src="pic/gsk928tc_sys_clip_image012_0001.jpg">、 <img width="35" height="36" src="pic/gsk928tc_sys_clip_image014_0001.jpg">?机床沿着选择轴方向移动。 <br>
+  注：手动期间只能一个轴运动，如果同时选择两轴的开关，也只能是先选择的那个轴运动。如果选择2轴机能，可手动2轴开关同时移动。 <br>
+  (3)调节JOG进给速度 <br>
+  (4)快速进给 <img width="37" height="89" src="pic/gsk928tc_sys_clip_image016_0003.jpg"><br>
+  按下快速进给键时，同带自锁的按钮，进行‘开→关→开…’切换，当为‘开’时，位于面板  上部指示灯亮，关时指示灯灭。选择为开时，手动以快速速度进给。按此开关为ON时，刀具在已选择的轴方向上快速进给。 <br>
+  注1：快速进给时的速度，时间常数，加减速方式与用程序指令的快速进给（GOO定位）时相同。 <br>
+  注2：在接通电源或解除急停后，如没有返回参考点，当快速进给开关为ON（开）时，手动进给速度为JOG进给速度或快速进给，由参数（№012  LSO）选择。 <br>
+  注3：在编辑/手轮方式下，按键无效。指示灯灭。其它方式下可选择快速进给，转换方式时取消快速进给。 <br>
+  4. 手轮进给 <br>
+  转动手摇脉冲发生器，可以使机床微量进给。 <br>
+  (1)按下手动方式下，选择手轮操作键<img width="33" height="35" src="pic/gsk928tc_sys_clip_image018_0001.jpg">，这时液晶屏幕上面显示[手轮方式]。 <br>
+  (2)选择手轮运动轴：在手轮方式下，按下相应的键<img width="33" height="35" src="pic/gsk928tc_sys_clip_image018_0002.jpg">　<img width="34" height="35" src="pic/gsk928tc_sys_clip_image020_0001.jpg"><br>
+  注：在手轮方式下，按键有效。所选手轮轴的地址[U]或[W]闪烁。 <br>
+  (3)转动手轮 <img width="102" height="102" src="pic/gsk928tc_sys_clip_image021.jpg"><br>
+  (4)选择移动量：按下增量选择移动增量，相应在屏幕左下角显示移动增量。 <br>
+  (5)移动量选择开关 <img width="40" height="33" src="pic/gsk928tc_sys_clip_image022_0001.jpg">?<img width="40" height="33" src="pic/gsk928tc_sys_clip_image023.jpg">?<img width="40" height="33" src="pic/gsk928tc_sys_clip_image024_0000.jpg"></p>
+<table border="1" cellpadding="0" cellspacing="0" bordercolor="#00309C">
+  <tr>
+    <td width="142">&nbsp;</td>
+    <td width="426" colspan="3"><p align="center">每一刻度的移动量 </p></td>
+  </tr>
+  <tr>
+    <td width="142"><p align="center">输入单位制 </p></td>
+    <td width="142"><p align="center">0.001</p></td>
+    <td width="142"><p align="center">0.01</p></td>
+    <td width="142"><p align="center">0.1</p></td>
+  </tr>
+  <tr>
+    <td width="142"><p align="center">公制输入(毫米)</p></td>
+    <td width="142"><p align="center">0.001</p></td>
+    <td width="142"><p align="center">0.01</p></td>
+    <td width="142"><p align="center">0.1</p></td>
+  </tr>
+</table>
+<p align="center">表3.2－1<br>
+  注1：上表中数值根据机械不同而不同。 <br>
+  注2：手摇脉冲发生器的速度要低于5转/秒。如果超过此速度，即使手摇脉冲发生器回转结束了，但不能立即停止，会出现刻度和移动量不符。 <br>
+  注3：在手轮方式下，按键有效。??? &nbsp;<br>
+  5. 手动辅助机能操作 <br>
+  (1)  手动换刀 <br>
+  <img width="36" height="32" src="pic/gsk928tc_sys_clip_image026_0000.jpg">?手动/手轮方式下按下此键，刀架旋转换下一把刀（参照机床厂家的说明书）。 <br>
+  (2)冷却液开关 <br>
+  <img width="35" height="35" src="pic/gsk928tc_sys_clip_image028_0000.jpg">?手动/手轮方式下，按下此键，同带自锁的按钮，进行‘开→关→开…’切换。 </p>
+<p>(3)主轴正转 <br>
+  <img width="35" height="32" src="pic/gsk928tc_sys_clip_image030_0000.jpg">?手动/手轮方式下，按下此键，主轴正向转动起动。 <br>
+  (4)主轴反转 <br>
+  <img width="36" height="33" src="pic/gsk928tc_sys_clip_image032_0000.jpg">?手动/手轮方式下，按下此键，主轴反向转动起动。 <br>
+  (5)主轴停止 <br>
+  <img width="34" height="34" src="pic/gsk928tc_sys_clip_image034_0000.jpg">?手动/手轮方式下，按下此键，主轴停止转动。 <br>
+  <strong>注</strong>：当没有冷却输出时，按下冷却键，输出相应的点。当有冷却输出时，按下冷却键，关闭相应的点。主轴正转/反转时，按下反转/正转键时，主轴也停止。但显示会出现报警06：M03，M04码指定错。在换刀过程中，换刀键无效，按复位（RESET）或急停可关闭刀架正/反转输出，并停止换刀过程。 <br>
+  在手动方式起动后，改变方式时，输出保持不变。但可通过自动方式执行相应的M代码关闭对应的输出。 <br>
+  同样，在自动方式执行相应的M代码输出后，也可在手动方式下按相应的键关闭相应的输出。 <br>
+  在主轴正转/反转时，未执行M05而直接执行M04/M03时，M04/M03无效，主轴继续主轴正转/反转，但显示会出现报警06：M03，M04码指定错。 <br>
+  复位时，对M08，M32，M03，M04输出点是否有影响取决于参数（P009  RSJG）。 <br>
+  急停时，关闭主轴，冷却，润滑，换刀输出。 </p>
+<p><strong>运 行 </strong><br>
+  6. 运转方式 <br>
+  (1)存储器运转 <br>
+  (A)  首先把程序存入存储器中。 <br>
+  (B)  选择要运行的程序。 <br>
+  (C)  把方式选择于自动方式的位置。 <br>
+  (D)  按循环启动按钮。&nbsp;<br>
+  <img width="43" height="37" src="pic/gsk928tc_sys_clip_image002_0002.jpg">自动循环起动键</p>
+<p><img width="44" height="36" src="pic/gsk928tc_sys_clip_image004_0002.jpg">自动循环停止键<br>
+  <br>
+  按循环启动按钮后，开始执行程序。 <br>
+  (B)按[程序]键。 <br>
+  (C)按[翻页]按钮后，选择在左上方显示有‘程序段值’的画面。如下图： <br>
+  <img width="312" height="250" src="pic/gsk928tc_sys_clip_image006_0012.jpg"><br>
+  <br>
+  (D)  键入X10.5。 <br>
+  (E)  按IN键。X10.5输入被显示出来。按IN键以前，发现输入错误，可按CAN键，然后再次输入X和正确的数值。如果按IN键后发现错误，再次输入正确的数值。 <br>
+  (F)  输入Z200.5。 <br>
+  (G)按IN，Z200.5被输入并显示出来。 <br>
+  (H)按循环起动键  。 <br>
+  按循环起动键前，取消部分操作内容。为了要取消Z200.5，其方法如下： <br>
+  (A)依次按Z、CAN键。 <br>
+(B)按循环启动按钮。 </p>
+<p>7. 自动运转的启动 <br>
+  存储器运转 <br>
+  1）选择自动方式； <br>
+  2）选择程序； <br>
+  3）按操作面板上的循环启动按钮。 </p>
+<p>8. 自动运转的停止 <br>
+  使自动运转停止的方法有两种，一是用程序事先在要停止的地方输入停止命令，二是按操作面板上按钮使它停止。 <br>
+  <strong>（</strong><strong>1</strong><strong>）程序停（</strong><strong>M00</strong><strong>）</strong><strong> </strong><br>
+  含有M00的程序段执行后，停止自动运转，与单程序段停止相同，模态信息全部被保存起来。用CNC启动，能再次开始自动运转。 <br>
+  <strong>（</strong><strong>2</strong><strong>）程序结束（</strong><strong>M30</strong><strong>）</strong><strong> </strong><br>
+  (A)表示主程序结束。 <br>
+  (B)停止自动运转,变成复位状态。 <br>
+  (C)返回到程序的起点。 <br>
+  <strong>（</strong><strong>3</strong><strong>）进给保持</strong><strong> </strong><br>
+  在自动运转中，按操作板上的进给保持键可以使自动运转暂时停止。 <br>
+  &nbsp;&nbsp;<img width="43" height="37" src="pic/gsk928tc_sys_clip_image002_0003.jpg">????? &nbsp;&nbsp;?? <img width="44" height="36" src="pic/gsk928tc_sys_clip_image004_0003.jpg">??<br>
+  进给保持键????? ?循环停止键 <br>
+  按进给保持按钮后，机床呈下列状态。 <br>
+  1)? 机床在移动时，进给减速停止。 <br>
+  2)? 在执行暂停中，休止暂停。 <br>
+  3)? 执行M、S、T的动作后，停止。 <br>
+  按自动循环起动键后，程序继续执行。 <br>
+  <strong>（</strong><strong>4</strong><strong>）复位</strong><strong> </strong><br>
+  复位键 <img width="32" height="34" src="pic/gsk928tc_sys_clip_image008_0003.jpg"><br>
+  用LCD/MDI上的复位键，使自动运转结束，变成复位状态。在运动中如果进行复位，则机械减速停止。 </p>
+<p>9.进给速度倍率 <br>
+  用进给速度倍率开关，可以对由程序指定的进给速度倍率。 <br>
+  进给速度倍率按键 <img width="37" height="93" src="pic/gsk928tc_sys_clip_image010_0003.jpg">。 <br>
+  具有0～150%的倍率。 <br>
+  注：进给速度倍率开关与手动连续进给速度开关通用。 </p>
+<p>10.快速进给倍率 <br>
+  快速进给倍率选择键 <img width="41" height="94" src="pic/gsk928tc_sys_clip_image012_0002.jpg">。 <br>
+  快速倍率有F0，25%，50%，100%四挡。 <br>
+  可对下面的快速进给速度进行100%、50%、25%的倍率或者为F0的值上。 <br>
+  (1)?? G00快速进给； <br>
+  (2)?? 固定循环中的快速进给； <br>
+  (3)?? G28时的快速进给； <br>
+  (4)?? 手动快速进给； <br>
+  (5)?? 手动返回参考点的快速进给。 <br>
+  当快速进给速度为6米/分时，如果倍率为50%，则速度为3米/分。 </p>
+<p>11.空运转 <br>
+  当空运转开关 <img width="37" height="34" src="pic/gsk928tc_sys_clip_image014_0002.jpg">?为ON时，不管程序中如何指定进给速度，而以下面表中的速度运动。 </p>
+<table border="1" cellpadding="0" cellspacing="0" bordercolor="#00309C">
+  <tr>
+    <td width="189" rowspan="2">&nbsp;</td>
+    <td width="379" colspan="2"><p align="center">程? 序? 指? 令 </p></td>
+  </tr>
+  <tr>
+    <td width="190"><p align="center">快速进给 </p></td>
+    <td width="190"><p align="center">切削进给 </p></td>
+  </tr>
+  <tr>
+    <td width="189"><p align="center">手动快速进给按钮ON(开)</p></td>
+    <td width="190"><p align="center">快速进给 </p></td>
+    <td width="190"><p align="center">JOG进给最高速度 </p></td>
+  </tr>
+  <tr>
+    <td width="189"><p align="center">手动快速进给按钮OFF（关） </p></td>
+    <td width="190"><p align="center">JOG进给速度或快速进给 </p></td>
+    <td width="190"><p align="center">JOG进给速度 </p></td>
+  </tr>
+</table>
+<p align="center"><br>
+  注：用参数设定（RDRN，№004）也可以快速进给。 </p>
+<p>12.进给保持后或者停止后的再启动 <br>
+  在进给保持开关为ON状态时，（自动方式或者录入方式），按循环启动按钮，自动循环开始继续运转。 </p>
+<p>13.单程序段 <br>
+  当单程序段开关 <img width="35" height="37" src="pic/gsk928tc_sys_clip_image016_0004.jpg">?置于ON时，单程序段灯亮，执行程序的一个程序段后，停止。如果再按循环启动按钮，则执行完下个程序段后，停止。 <br>
+  注1：在G28中，即使是中间点，也进行单程序段停止。 <br>
+  注2：在单程序段为ON时，执行固定循环G90，G92，G94，G70～G75时，如下述情况： <br>
+  （…………………→快速进给，________________→切削进给）。 <br>
+  注3：M98  P＿；M99；及G65的程序段不能单程序段停止。但M98、M99程序段中，除N，O，P以外还有其它地址时，能让单程序段停止。 </p>
+<p><strong>安全操作 </strong><br>
+  14.急停（EMERGENCY? STOP） <br>
+  按下急停按钮 <img width="57" height="56" src="pic/gsk928tc_sys_clip_image017.jpg">，使机床移动立即停止，并且所有的输出如主轴的转动，冷却液等也全部关闭。急停按钮解除后，所有的输出都需重新起动。 <br>
+  一按按钮，机床就能锁住，解除的方法是旋转后解除。 <br>
+  注1：紧急停时，电机的电源被切断。 <br>
+  注2：在解除急停以前，要消除机床异常的因素。 </p>
+<p>15.超程 <br>
+  如果刀具进入了由参数规定的禁止区域（存储行程极限），则显示超程报警，刀具减速后停止。此时用手动，把刀具向安全方向移动，按复位按钮，解除报警。 </p>
+<p><strong>程序存储、编辑 </strong><br>
+  16.程序存储、编辑操作前的准备 <br>
+  在介绍程序的存储、编辑操作之前，有必要介绍一下操作前的准备。 <br>
+  (1)把程序保护开关置于ON上。 <br>
+  (2)操作方式设定为编辑方式 <img width="37" height="34" src="pic/gsk928tc_sys_clip_image019.jpg">。 <br>
+  (3)按[程序]键后，显示程序。 <br>
+  后方可编辑程序。 </p>
+<p>17.选择一个数控程序 <br>
+  按 <img width="37" height="34" src="pic/gsk928tc_sys_clip_image019_0000.jpg">?键，显示程序画面； <br>
+  按输入键<img width="34" height="32" src="pic/gsk928tc_sys_clip_image021_0000.jpg">，输入所要的程序名如：“O1”，按下回车键<img width="34" height="36" src="pic/gsk928tc_sys_clip_image023_0000.jpg"> 找到后，O1显示在屏幕右上角，NC程序显示在屏幕上。 </p>
+<p>18.删除一个数控程序 <br>
+  选择编辑方式； <br>
+  按<img width="37" height="34" src="pic/gsk928tc_sys_clip_image019_0001.jpg"> 键，显示程序画面； <br>
+  按<img width="34" height="32" src="pic/gsk928tc_sys_clip_image021_0001.jpg"> 键，输入所要的程序名如：“O7”，按下删除键<img width="35" height="38" src="pic/gsk928tc_sys_clip_image025.jpg">，系统提示“确认？”按下回车键<img width="34" height="36" src="pic/gsk928tc_sys_clip_image023_0001.jpg"> 即完成删除。 </p>
+<p>19.删除全部程序 <br>
+  选择编辑方式； <br>
+  按<img width="37" height="34" src="pic/gsk928tc_sys_clip_image019_0002.jpg"> 键，显示程序画面； <br>
+  按键<img width="34" height="32" src="pic/gsk928tc_sys_clip_image021_0002.jpg">，从键盘输入<img width="33" height="32" src="pic/gsk928tc_sys_clip_image027.jpg">、<img width="33" height="37" src="pic/gsk928tc_sys_clip_image029.jpg"><br>
+  按删除键<img width="35" height="38" src="pic/gsk928tc_sys_clip_image025_0000.jpg">，系统提示“确认？” <br>
+  按回车键<img width="34" height="36" src="pic/gsk928tc_sys_clip_image023_0002.jpg">将所有零件程序删除，按其它键，不执行删除操作，返回编辑工作方式。 </p>
+<p>20.顺序号检索 <br>
+  顺序号检索通常是检索程序内的某一顺序号，一般用于从这个顺序号开始执行或者编辑。 <br>
+  由于检索而被跳过的程序段对CNC的状态无影响。也就是说，被跳过的程序段中的坐标值、M、S、T代码、G代码等对CNC的坐标值、模态值不产生影响。因此，进行顺序号检索指令，开始或者再次开始执行的程序段，要设定必要的M、S、T代码及坐标系等。进行顺序号检索的程序段一般是在工序的相接处。 <br>
+  如果必须检索工序中某一程序段并以其开始执行时，需要查清此时的机床状态、CNC状态需要与其对应的M、S、T代码和坐标系的设定等，可用录入方式输入进去，执行进行设定。 <br>
+  检索存储器中存入程序号的步骤： <br>
+  （a）把方式选择置于自动或编辑上； <br>
+  （b）按<img width="37" height="34" src="pic/gsk928tc_sys_clip_image019_0003.jpg"> 键，显示程序画面； <br>
+  （c）选择要检索顺序号的所在程序； <br>
+  （d）按地址键N； <br>
+  （e）用键输入要检索的顺序号； <br>
+  （f）按 <img width="33" height="33" src="pic/gsk928tc_sys_clip_image031.jpg">?光标键； <br>
+  （g）检索结束时，在LCD画面的右上部，显示出已检索的顺序号。 <br>
+  注1：在顺序号检索中，不执行M98  + + + +(调用的子程序),因此，在自动方式检索时，如果要检索现在选出程序中所调用的子程序内的某个顺序号，就会出现报警P/S(№060)。 <br>
+  <img width="259" height="170" src="pic/gsk928tc_sys_clip_image033.jpg"> <br>
+  <br>
+  上例中如果要检索N8888&nbsp;则会出现报警。 </p>
+<p>23.字的插入、修改、删除 <br>
+  存入存储器中程序的内容，可以改变。 <br>
+  (a)  把方式选择为编辑方式； <br>
+  (b)  按[程序]键，显示程序画面； <br>
+  (c)  选择要编辑的程序； <br>
+  (d)  检索要编辑的字。有以下两种方法 <br>
+  1） 用扫描（SACN）的方法； <br>
+  2） 用检索字的方法； <br>
+  (e)进行字的修改、插入、删除等编辑操作 <br>
+  注1：字的概念和编辑单位：所谓字是由地址和跟在它后面的数据组成。对于用户宏程序，字的要领完全没有了，通称为“编辑单位”。在一次扫描中，光标显示在“编辑单位”的开头。插入的内容在“编辑单位”之后。 <br>
+  编辑单位的定义： <br>
+  1） 从当前地址到下个地址之前的内容。如：G65  H01 P#103 Q#105；中有4个编辑单位。 <br>
+  2） 所谓地址是指字母；（EOB）为单独一个字。 <br>
+  根据这个定义，字也是一个编辑单位。在下面关于编辑的说明中，所谓字，正确地应该说“编辑单位” <br>
+  注2：光标总是在某一编辑单位的下端，而编辑的操作也是在光标所指的编辑单位上进行的，在自动方式下程序的执行也是从光标所指的编辑室单位开始执行程序的。将光标移动至要编辑的位置或要执行的位置称之为检索。 </p>
+<p>(1) 字的检索 <br>
+  <strong>(a)</strong><strong>用扫描的方法</strong><strong> </strong><br>
+  一个字一个字地扫描； <br>
+  1）按光标 <img width="33" height="33" src="pic/gsk928tc_sys_clip_image002_0004.jpg">?时&nbsp;<br>
+  <img width="382" height="107" src="pic/gsk928tc_sys_clip_image004_0004.jpg"><br>
+  <br>
+  此时，在画面上，光标一个字一个字地顺方向移动。也就是说，在被选择和地址下面，显示出光标。 <br>
+  2） 按 <img width="32" height="33" src="pic/gsk928tc_sys_clip_image006_0013.jpg">?光标键时&nbsp;&nbsp;&nbsp;<br>
+  <img width="381" height="98" src="pic/gsk928tc_sys_clip_image008_0004.jpg"><br>
+  <br>
+  此时,在画面上，光标一个字一个字地反方向移动。也就是说，在被选择字的地址下面，显示出光标。 <br>
+  3） 如果持续按<img width="33" height="33" src="pic/gsk928tc_sys_clip_image002_0005.jpg"> 光标或者 <img width="32" height="33" src="pic/gsk928tc_sys_clip_image006_0014.jpg">?光标? ，则会连续自动快速移动光标。 <br>
+  4） 按下翻页键 <img width="34" height="34" src="pic/gsk928tc_sys_clip_image010_0004.jpg">，画面翻页，光标移至下页开头的字。 <br>
+  5） 按上翻页键 <img width="33" height="33" src="pic/gsk928tc_sys_clip_image012_0003.jpg">，画面翻到前一页，光标移至开头的字。 <br>
+  6） 持续按下翻页或上翻页，则自动快速连续翻页。 <br>
+  <strong>(b)</strong><strong>检索字的方法</strong><strong> </strong><br>
+  从光标现在位置开始，顺方向或反方向检索指定的字。&nbsp;<br>
+  <img width="444" height="99" src="pic/gsk928tc_sys_clip_image014_0003.jpg"><br>
+  <br>
+  1） 用键输入地址S <br>
+  2） 用键输入‘0’，‘2’ <br>
+  注1：如果只用键输入S1，就不能检索S02 <br>
+  注2：检索S01时，如果只是S1就不能检索，此时必须输入S01。 <br>
+  3） 按<img width="33" height="33" src="pic/gsk928tc_sys_clip_image002_0006.jpg"> 光标键，开始检索。 <br>
+  如果检索完成了,光标显示在S02的下面。如果不是按光标↓键，而是按光标↑键，则向反方向检索。 <br>
+  <strong>(c) </strong><strong>用地址检索的方法</strong><strong> </strong><br>
+  从现在位置开始,顺方向检索指定的地址。 <br>
+  <img width="451" height="98" src="pic/gsk928tc_sys_clip_image016_0005.jpg"><br>
+  <br>
+  1)? 按地址键M； <br>
+  2)? 按<img width="33" height="33" src="pic/gsk928tc_sys_clip_image002_0007.jpg"> 光标键； <br>
+  检索完成后，光标显示在M的下面。如果不是按光标↓键，而是按光标↑键，则反方向检索。&nbsp;<br>
+  <strong>(d)</strong><strong>返回到程序开头的方法</strong><strong> </strong><br>
+  <img width="467" height="62" src="pic/gsk928tc_sys_clip_image018_0003.jpg"><br>
+  <br>
+  1） 方法1 <br>
+  按复位键 <img width="34" height="34" src="pic/gsk928tc_sys_clip_image020_0002.jpg">（编辑方式，选择了程序画面），当返回到开头后，在LCD画面上，从头开始显示程序的内容。 <br>
+  2） 方法2 <br>
+  检索程序号。 <br>
+  3） 方法3 <br>
+  （1）置于自动方式或编辑方式； <br>
+  （2）按 <img width="34" height="33" src="pic/gsk928tc_sys_clip_image022_0002.jpg">?键，显示程序画面； <br>
+  （3）按地址O； <br>
+  （4）按<img width="32" height="33" src="pic/gsk928tc_sys_clip_image006_0015.jpg"> 光标键； <br>
+  (2)字的插入 <br>
+  (a)  检索或扫描到要插入的前一个字； <br>
+  (b)  用键输入要插入的地址。本例中要插入T； <br>
+  (c)  用键输入15； <br>
+  (d)  按 <img width="34" height="34" src="pic/gsk928tc_sys_clip_image024_0001.jpg">?键； <br>
+  (3)字的变更 <br>
+  <img width="403" height="64" src="pic/gsk928tc_sys_clip_image026_0001.jpg"><br>
+  <br>
+  (a)检索或扫描到要变更的字； <br>
+  (b)输入要变更的地址,本例中输入M； <br>
+  (c)用键输入数据； <br>
+  (d)按 <img width="33" height="33" src="pic/gsk928tc_sys_clip_image028_0001.jpg">，则新键入的字代替了当前光标所指的字。 <br>
+  如输入M03，按ALT键时, <br>
+  <img width="393" height="60" src="pic/gsk928tc_sys_clip_image030_0001.jpg"><br>
+</p>
+<p>(4)字的删除 <br>
+  <img width="391" height="59" src="pic/gsk928tc_sys_clip_image032_0001.jpg"><br>
+</p>
+<p>(a)检索或扫描到要删除的字； <br>
+  (b)按 <img width="33" height="32" src="pic/gsk928tc_sys_clip_image034_0001.jpg">?键，则当前光标所指的字被删除。 <br>
+  <img width="327" height="57" src="pic/gsk928tc_sys_clip_image036_0000.jpg"><br>
+</p>
+<p>(5)多个程序段的删除????? ??????????????????????????<br>
+  从现在显示的字开始，删除到指定顺序号的程序段。 <br>
+  <img width="456" height="67" src="pic/gsk928tc_sys_clip_image038_0000.jpg"><br>
+  <br>
+  (a)按地址键N； <br>
+  (b)用键输入顺序号2233； <br>
+  (c)按 <img width="33" height="32" src="pic/gsk928tc_sys_clip_image034_0002.jpg">?键，至N2233的程序段被删除。光标移到下个字的地址下面。 </p>
+<p><strong>数据的显示、设定 </strong><br>
+  24.补偿量 <br>
+  (1)刀具补偿量的设定和显示（<img width="33" height="32" src="pic/gsk928tc_sys_clip_image040_0000.jpg">键）。 <br>
+  刀具补偿量的设定方法可分为绝对值输入和增量值输入两种。 <br>
+  <strong>(a)</strong><strong>对值输入时</strong><strong> </strong><br>
+  1)按 <img width="33" height="32" src="pic/gsk928tc_sys_clip_image040_0001.jpg">?键； <br>
+  2)因为显示分为多页，按翻页按钮，可以选择需要的页。 <br>
+  <img width="330" height="288" src="pic/gsk928tc_sys_clip_image042_0009.jpg"> <br>
+  <br>
+  3)把光标移到要输入的补偿号的位置。 <br>
+  扫描法：按上、下光标键盘顺次移动光标。 <br>
+  检索法：用下述按键顺序直接移动光标至键入的位置。 <br>
+  4)地址X或Z后，用数据键，输入补偿量（可以输入小数点）。 <br>
+  5)按<img width="35" height="34" src="pic/gsk928tc_sys_clip_image044_0001.jpg">键后，把补偿量输入，并在LCD上显示出来。 <br>
+  <strong>(b)</strong><strong>增量值输入</strong> <br>
+  1)把光标移到要变更的补偿号的位置（与（1）-3）的操作相同）。 <br>
+  2)如要改变X轴的值，键入U，对于Z轴，键入W。 <br>
+  3)用数据键键入增量值。 <br>
+  4)按 <img width="35" height="34" src="pic/gsk928tc_sys_clip_image044_0002.jpg">?键，把现在的补偿量与键入的增量值相加，其结果作为新的补偿量显示出来。 <br>
+  例:已设定的补偿量5.678 <br>
+  键盘输入的增量1.5 <br>
+  新设定的补偿量7.178(=5.678+1.5) <br>
+  注：在自动运转中，变更补偿量时，新的补偿量不能立即生效，必须在指定其补偿号的T代码被指行后，才开始效。 </p>
+<p>25.参数设置工作方式 <br>
+  GSK928 TE/C数控系统设计了P01～P23共23个参数，每个参数都有其确定的含义并决定数控系统及机床的工作方式，在机床安装调试时应对其中某些参数进行修改。 <br>
+  按工作方式选择键按<img width="34" height="32" src="pic/gsk928tc_sys_clip_image002_0008.jpg">进入参数设置工作方式。第一屏显示P01～P09共9个参数，如图所示： <br>
+  <img width="288" height="247" src="pic/gsk928tc_sys_clip_image004_0005.jpg"><br>
+  按<img width="33" height="35" src="pic/gsk928tc_sys_clip_image006_0016.jpg">或<img width="34" height="35" src="pic/gsk928tc_sys_clip_image008_0005.jpg">键可以向前或向后翻页（共9个参数）显示其它参数，按<img width="36" height="36" src="pic/gsk928tc_sys_clip_image010_0005.jpg">、<img width="35" height="35" src="pic/gsk928tc_sys_clip_image012_0004.jpg">可以显示下一个成上一个参数平在屏幕上提示所指参数的中文意义。 </p>
+</body>
+</html>

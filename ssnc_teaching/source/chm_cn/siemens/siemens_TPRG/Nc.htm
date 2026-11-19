@@ -1,0 +1,1489 @@
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title></title>
+<link href="../../helper_css.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar">
+  <tr>
+    <td><span class="title2">NC编程基本原理</span></td>
+  </tr>
+</table>
+<TABLE border=0 cellPadding=0 cellSpacing=0 height="100%">
+  <TBODY>
+    <TR>
+      <TD vAlign=top>&nbsp;</TD>
+    </TR>
+    <TR>
+      <TD>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 height=20 class="bar1">
+            <TR>
+              <td>程序名称</td>
+            </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+            <TR>
+              <TD height=26  class=contents1  vAlign=top><br>
+                在编制程序时可以按以下规则确定程序名： <br>
+                开始的两个符号必须是字母，其后的符号可以是字母,数字或下划线，最多为16个字符，不得使用分隔符 <br>
+                <br>
+                举例：RAHMEN52 <br>
+                <br>              </TD>
+            </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 height=20 class="bar1">
+            <TR>
+              <td>程序结构</td>
+            </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+            <TR>
+              <TD height=26  class=contents1  vAlign=top><br>
+                  <span class="title6">1.结构和内容 </span><br>
+                NC程序由各个程序段组成。<br>
+                每一个程序段执行一个加工步骤。 <br>
+                程序段由若干个字组成。<br>
+                最后一个程序段包含程序结束符：M2。 <br>
+                <span class="title6"><br>
+                  2.NC程序结构</span> <br>
+                程序段 字&nbsp;&nbsp;&nbsp; 字 字 …&nbsp;&nbsp;&nbsp; ;注释<br>
+                程序段 N10 G0 X20 … ;第一程序段<br>
+                程序段 N20 G2 Z37 … ;第二程序段<br>
+                程序段 N30 G91 … … ;… <br>
+                程序段 N40 … … … <br>
+                程序段 N50 M2 ;程序结束 <br>
+                <br>              </TD>
+            </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 height=20 class="bar1">
+            <TR>
+              <td>&nbsp;字结构及地址</td>
+            </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+            <TR>
+              <TD height=26  class=contents1  vAlign=top><br>
+                  <span class="title6">1.功能/结构</span><br>
+                字是组成程序段的元素,由字构成控制器的指令。 <br>
+                字由以下几部分组成 <br>
+                &#8226;地址符 <br>
+                地址符一般是一字母。 <br>
+                &#8226;数值 <br>
+                数值是一个数字串，它可以带正负号和小数点。 <br>
+                正号可以省略不写。 <br>
+                <br>
+                <br>
+                <span class="title6">2.多个地址符</span><br>
+                一个字可以包含多个字母，数值与字母之间用符号“=” 隔开。 <br>
+                举例：CR=5.23 <br>
+                <br>
+                此外，G功能也可以通过一个符号名进行调用（参见章节“指令表”）。<br>
+                举例：SCALE；打开比例系数。<br>
+                <br>
+                <span class="title6">3.扩展地址</span> <br>
+                对于如下地址；<br>
+                R 计算参数<br>
+                H H功能<br>
+                I，J，K 插补参数/中间点<br>
+                <br>
+                地址可以通过1到4个数字进行地址扩展。在这种情况下，其数值可以通过“=”进行赋值（参见章节“指令表”）。<br>
+                举例：R10=6.234 H5=12.1 I1=32.67<br>
+                <br>              </TD>
+            </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 height=20 class="bar1">
+            <TR>
+              <td>&nbsp;程序段结构</td>
+            </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+            <TR>
+              <TD height=26  class=contents1  vAlign=top><br>
+                  <span class="title6">1.功能</span> <br>
+                一个程序段中含有执行一个工序所需的全部数据. <br>
+                程序段由若干个字和段结束符“LF”组成.在程序编写过程中进行换行时或按输入键时可以自动产生段结束符. <br>
+                <br>
+                <span class="title6">2.字顺序</span> <br>
+                程序段中有很多指令时建议按如下顺序: <br>
+                N…G…X…Y…Z…F…S…T…D…M… <br>
+                程序段号说明以5或10为间隔选择程序段号，以便以后插入程序段时不会改变程序段号的顺序。<br>
+                <br>
+                <span class="title6">3.可被跳跃的程序段</span> <br>
+                那些不需在每次运行中都执行的程序段可以被跳跃过去，为此应在这样的 <br>
+                程序段的段号字之前输入斜线符“/”。 <br>
+                通过操作机床控制面板或者通过接口控制信号可以使跳跃程序段功能生效。几个连续的程序段可以通过在其所有的程序段段号之前输入斜线符“/” 
+                被跳跃过去。 <br>
+                在程序运行过程中，一旦跳跃程序段功能生效，则所有带“/” 符的程序段都不予执行，当然这些程序段中的指令也不予考虑。<br>
+                程序从下一个没带斜线符的程序段开始执行。 <br>
+                <br>
+                <span class="title6">3.注释</span> <br>
+                利用加注释的方法可在程序中对程序段进行说明，注释可作为对操作者的提示显示在屏幕上。 <br>
+                <br>
+                <span class="title6">4.信息</span> <br>
+                信息编程在一个独立的程序段中。信息显示在专门的区域，并且一直有效，除非被一个新的信息所替代，或者程序结束。一个信息最多可以显示65个字符。<br>
+                一个空的信息会清除以前的信息。<br>
+                MSG（这是信息文本）<br>
+                <br>
+                <span class="title6">5.例子</span> <br>
+                N10 ;G&amp;S公司订货号12A71 <br>
+                N20 ;泵部件17，图纸号：123 677 <br>
+                N30 ;程序编制员H.Adam，部门TV4 <br>
+                N40 MSG （“ROUGH UNMACHINED PART”）<br>
+                :50 G17 G54 G94 F470 S20 D0 M3 ;主程序段 <br>
+                N60 G0 G90 X100 Y200 <br>
+                N70 G1 Z185.6 <br>
+                N80 X112 <br>
+                /N90 X118 Y180 ;程序段可以被跳跃 <br>
+                N100 X118 Y120 <br>
+                N110 G0 G90 X200 <br>
+                N120 M2 ;程序结束 <br>
+                <br>              </TD>
+            </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 height=20 class="bar1">
+            <TR>
+              <td>&nbsp;字符集</td>
+            </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+            <TR>
+              <TD height=26  class=contents1  vAlign=top><br>
+                在编程中可以使用以下字符，它们按一定的规则进行编译。 <br>
+                <span class="title6">1.字母</span> <br>
+                A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z <br>
+                大写字母和小写字母没有区别. <br>
+                <span class="title6">2.数字</span> <br>
+                0,1,2,3,4,5,6,7,8,9 <br>
+                <span class="title6">3.可打印的特殊字符</span> <br>
+                ( 园括号开 <br>
+                ) 园括号闭 <br>
+                [ 方括号开 <br>
+                ] 方括号闭 <br>
+                &lt; 小于 <br>
+                &gt; 大于 <br>
+                : 主程序，标志符结束 <br>
+                = 赋值，相等部分 <br>
+                / 除号，跳跃符 <br>
+                * 乘号 <br>
+                + 加号，正号 <br>
+                - 减号，负号 <br>
+                “ 引号 <br>
+                _ 字母下划线 <br>
+                . 小数点 <br>
+                , 逗号，分隔符 <br>
+                ; 注释标志符 <br>
+                % 预定，没用 <br>
+                &amp; 预定，没用 <br>
+                ’ 预定，没用 <br>
+                $ 预定，没用 <br>
+                ? 预定，没用 <br>
+                ! 预定，没用 <br>
+                <span class="title6">4.不可打印的特殊</span> <br>
+                LF 程序段结束符 <br>
+                字符 空格 字之间的分隔符，空白字 <br>
+                制表键 预定，没用
+                <br>
+              </TD>
+            </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%" height="1121">
+            <TR>
+              <TD vAlign=top><b>  <br>
+&nbsp;指令表</b><br>
+                </span> </TD>
+            </TR>
+            <TR>
+              <td height="879"><table border="0" cellpadding="2" cellspacing="1" bgcolor="#00309C">
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>地址</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="118"><b>含义</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="95"><b>赋值</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="156"><b>说明</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="150"><b>编程</b></td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>D</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="118">刀具刀补号</td>
+                    <td height="20" bgcolor="#FFFFFF" width="95">0…9整数，不带符号</td>
+                    <td height="20" bgcolor="#FFFFFF" width="156"> 用于某个刀具T…的补偿参数：D0表示补偿值=0一个刀具最多有9个D号</td>
+                    <td height="20" bgcolor="#FFFFFF" width="150">D…</td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>F</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="118"></td>
+                    <td height="20" bgcolor="#FFFFFF" width="95">0.001…99 999.999</td>
+                    <td height="20" bgcolor="#FFFFFF" width="156"> 刀具/工件的进给速度，对应G94或G95，单位分别为毫米/分钟或毫米/转</td>
+                    <td height="20" bgcolor="#FFFFFF" width="150">F…</td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>F</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="118">进给率(与G4 一起可以编程停留时间)</td>
+                    <td height="20" bgcolor="#FFFFFF" width="95">0.001…99 999.999</td>
+                    <td height="20" bgcolor="#FFFFFF" width="156">停留时间，单位秒</td>
+                    <td height="20" bgcolor="#FFFFFF" width="150">G4 F…  单独运行</td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>G</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="118">G功能(准备功能字)</td>
+                    <td height="20" bgcolor="#FFFFFF" width="95">已事先规定</td>
+                    <td height="20" bgcolor="#FFFFFF" width="156">G功能按G功能组划分， 一个程序段中只能有一个G功能组中的一个G功能指令。G功能按模态有效(直到被同组中其它功能替代)，或者以程序段方式有效。 <br>
+                      G功能组：</td>
+                    <td height="20" bgcolor="#FFFFFF" width="150">G… </td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>G0</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="218" colspan="2">快速移动</td>
+                    <td height="20" bgcolor="#FFFFFF" width="156">1：运动指令</td>
+                    <td height="20" bgcolor="#FFFFFF" width="150">G0 X…Z…</td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>G1</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="218" colspan="2">直线插补</td>
+                    <td height="40" bgcolor="#FFFFFF" width="156" rowspan="8">(插补方式) <br>
+                      模态有效</td>
+                    <td height="20" bgcolor="#FFFFFF" width="150">G1 X…Z…F…</td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>G2</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="218" colspan="2">顺时针圆弧插补</td>
+                    <td height="20" bgcolor="#FFFFFF" width="150">G2 
+                      X…Z…I…K…… ;圆心和终点 <br>
+                      G2 X…CR=…F…
+                      ;半径和终点 <br>
+                      G2 AR=…I…F…
+                      ;张角和圆心 <br>
+                      G2 AR=…X…F…
+                      ;张角和终点</td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>G3</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="218" colspan="2">逆时针园弧插补</td>
+                    <td height="20" bgcolor="#FFFFFF" width="150">G3….; <br>
+                      其它同G2 </td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>CIP</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="218" colspan="2">中间点圆弧插补</td>
+                    <td height="20" bgcolor="#FFFFFF" width="150">CIPX…Z…I1=…K1=…F…</td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>G33</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="218" colspan="2">恒螺距的螺纹切削</td>
+                    <td height="20" bgcolor="#FFFFFF" width="150">S… M… <br>
+                      ;主轴转速，方向 <br>
+                      G33Z…K… <br>
+                      在Z轴方向上带 <br>
+                      补偿夹具攻丝. </td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>G331</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="218" colspan="2">不带补偿夹具切削内螺纹</td>
+                    <td height="20" bgcolor="#FFFFFF" width="150">N10 SPOS= <br>
+                      主轴处于位置调节状态 <br>
+                      N20 G331 Z…K… S… <br>
+                      ;在Z轴方向不带补偿夹具攻丝 <br>
+                      ;右旋螺纹或左旋螺纹通过螺距的 <br>
+                      符号(比如K+) 确定: <br>
+                      +: 同M3 <br>
+                      -: 同M4 </td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>G332</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="218" colspan="2">不带补偿夹具切削内螺纹. 退刀</td>
+                    <td height="20" bgcolor="#FFFFFF" width="150">G332 Z… K… <br>
+                      ;不带补偿夹具切削螺纹. Z退刀 ;螺距符号同G331</td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>CT</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="218" colspan="2">带切线的过渡圆弧插补</td>
+                    <td height="20" bgcolor="#FFFFFF" width="150">N10…<br>
+                      N20 CT Z… X…F. 圆弧以前一段切线为过渡.</td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>G4</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="218" colspan="2">快速移动</td>
+                    <td height="20" bgcolor="#FFFFFF" width="156">2: 特殊运行,程序段方式有效</td>
+                    <td height="20" bgcolor="#FFFFFF" width="150">G4 F…或G4 S….;自身程序段</td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>G63</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="218" colspan="2">快速移动</td>
+                    <td height="20" bgcolor="#FFFFFF" width="156"></td>
+                    <td height="20" bgcolor="#FFFFFF" width="150">G63 Z…F…S…M… </td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>G74</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="218" colspan="2">回参考点</td>
+                    <td height="20" bgcolor="#FFFFFF" width="156"></td>
+                    <td height="20" bgcolor="#FFFFFF" width="150">G74X…Z… 
+                      ;自身程序段 </td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>G75</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="218" colspan="2">回固定点</td>
+                    <td height="20" bgcolor="#FFFFFF" width="156"></td>
+                    <td height="20" bgcolor="#FFFFFF" width="150">G75X…Z… ;自身程序段 </td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>TRANS</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="218" colspan="2">可编程的偏置</td>
+                    <td height="40" bgcolor="#FFFFFF" width="156" rowspan="10">3: 写存储器，程序段方式有效</td>
+                    <td height="20" bgcolor="#FFFFFF" width="150">TRANSX…Z…自身程序段 </td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>ROT</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="218" colspan="2">可编程的旋转</td>
+                    <td height="20" bgcolor="#FFFFFF" width="150">ROT RPL=… ;在当前平面中旋转G17到G19</td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>SCALE</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="218" colspan="2">可编程比例系数</td>
+                    <td height="20" bgcolor="#FFFFFF" width="150">SCALEX…Z…在所给定轴方向比例系数,自身程序段</td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>MIRROR</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="218" colspan="2">可编程镜像功能</td>
+                    <td height="20" bgcolor="#FFFFFF" width="150">MIRROR X0 改变方向的坐标轴，自身程序段</td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>ATRANS</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="218" colspan="2">附加可编程的偏置</td>
+                    <td height="20" bgcolor="#FFFFFF" width="150">ATRANSX…Z…自身程序段</td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>AROT</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="218" colspan="2">附加可编程的旋转</td>
+                    <td height="20" bgcolor="#FFFFFF" width="150">AROT RPL=… ;在当前平面中旋转G17到G19</td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>ASCALE</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="218" colspan="2">附加可编程比例系数</td>
+                    <td height="20" bgcolor="#FFFFFF" width="150">ASCALEX…Z…在所给定轴方向比例系数,自身程序段</td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>AMIRROR</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="218" colspan="2">附加可编程镜像功能</td>
+                    <td height="20" bgcolor="#FFFFFF" width="150">AMIRROR X0 改变方向的坐标轴，自身程序段</td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>G25</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="218" colspan="2">主轴转速下限</td>
+                    <td height="20" bgcolor="#FFFFFF" width="150">G25S… ;自身程序段<br>
+                      G25 X…Z…;自身程序段</td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>G26</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="218" colspan="2">主轴转速上限</td>
+                    <td height="20" bgcolor="#FFFFFF" width="150">G26S… ;自身程序段<br>
+                      G26 X…Z…;自身程序段</td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>G17</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="218" colspan="2"> (在加工中心孔时要求)</td>
+                    <td height="20" bgcolor="#FFFFFF" width="156">6: 平面选择</td>
+                    <td height="20" bgcolor="#FFFFFF" width="150">G17…所在平面的垂直轴为刀具长度补偿轴</td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>G18*</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="218" colspan="2">Z/X平面</td>
+                    <td height="20" bgcolor="#FFFFFF" width="156">模态有效</td>
+                    <td height="20" bgcolor="#FFFFFF" width="150"></td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>G40</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="218" colspan="2">刀尖半径补偿方式的取消</td>
+                    <td height="20" bgcolor="#FFFFFF" width="156">7: 刀尖半径补偿模态有效</td>
+                    <td height="20" bgcolor="#FFFFFF" width="150"></td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>G41</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="218" colspan="2">调用刀尖半径补偿, 刀具在轮廓左侧移动</td>
+                    <td height="20" bgcolor="#FFFFFF" width="156"></td>
+                    <td height="20" bgcolor="#FFFFFF" width="150"></td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>G42</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="218" colspan="2">调用刀尖半径补偿, 刀具在轮廓右侧移动</td>
+                    <td height="20" bgcolor="#FFFFFF" width="156"></td>
+                    <td height="20" bgcolor="#FFFFFF" width="150"></td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>G500</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="218" colspan="2">取消可设定零点偏置</td>
+                    <td height="20" bgcolor="#FFFFFF" width="156">8: 可设定零点偏置模态有效</td>
+                    <td height="20" bgcolor="#FFFFFF" width="150"></td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>G54</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="218" colspan="2">第一可设定零点偏置</td>
+                    <td height="20" bgcolor="#FFFFFF" width="156"></td>
+                    <td height="20" bgcolor="#FFFFFF" width="150"></td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>G55</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="218" colspan="2">第二可设定零点偏置</td>
+                    <td height="20" bgcolor="#FFFFFF" width="156"></td>
+                    <td height="20" bgcolor="#FFFFFF" width="150"></td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>G56</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="218" colspan="2">第三可设定零点偏置</td>
+                    <td height="20" bgcolor="#FFFFFF" width="156"></td>
+                    <td height="20" bgcolor="#FFFFFF" width="150"></td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>G57</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="218" colspan="2">第四可设定零点偏置</td>
+                    <td height="20" bgcolor="#FFFFFF" width="156"></td>
+                    <td height="20" bgcolor="#FFFFFF" width="150"></td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>G58</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="218" colspan="2">第五可设定零点偏置</td>
+                    <td height="20" bgcolor="#FFFFFF" width="156"></td>
+                    <td height="20" bgcolor="#FFFFFF" width="150"></td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>G59</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="218" colspan="2">第六可设定零点偏置</td>
+                    <td height="20" bgcolor="#FFFFFF" width="156"></td>
+                    <td height="20" bgcolor="#FFFFFF" width="150"></td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>G53</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="218" colspan="2">按程序段方式取消可设定零点偏置</td>
+                    <td height="40" bgcolor="#FFFFFF" width="156" rowspan="2">9: 取消可设定零点偏置段方式有效</td>
+                    <td height="20" bgcolor="#FFFFFF" width="150"></td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>G153</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="218" colspan="2">按程序段方式取消可设定零点偏置，包括框架</td>
+                    <td height="20" bgcolor="#FFFFFF" width="150"></td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>G60*</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="218" colspan="2">准确定位</td>
+                    <td height="20" bgcolor="#FFFFFF" width="156">10:定位性能模态有效</td>
+                    <td height="20" bgcolor="#FFFFFF" width="150"></td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>G64</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="218" colspan="2">连续路径方式</td>
+                    <td height="20" bgcolor="#FFFFFF" width="156"></td>
+                    <td height="20" bgcolor="#FFFFFF" width="150"></td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>G9</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="218" colspan="2">准确定位,单程序段有效</td>
+                    <td height="20" bgcolor="#FFFFFF" width="156">11:程序段方式准停段方式有效</td>
+                    <td height="20" bgcolor="#FFFFFF" width="150"></td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>G601</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="218" colspan="2">在G60,G9方式下准确定位，精</td>
+                    <td height="40" bgcolor="#FFFFFF" width="156" rowspan="2">12:准停窗口模态有效</td>
+                    <td height="20" bgcolor="#FFFFFF" width="150"></td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>G602</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="218" colspan="2">在G60,G9方式下准确定位，粗</td>
+                    <td height="20" bgcolor="#FFFFFF" width="150"></td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>G70</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="218" colspan="2">英制尺寸</td>
+                    <td height="80" bgcolor="#FFFFFF" width="156" rowspan="4">13:英制/公制尺寸模态有效</td>
+                    <td height="20" bgcolor="#FFFFFF" width="150"></td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>G71*</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="218" colspan="2">公制尺寸</td>
+                    <td height="20" bgcolor="#FFFFFF" width="150"></td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>G700</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="218" colspan="2">英制尺寸，也用于进给率F</td>
+                    <td height="20" bgcolor="#FFFFFF" width="150"></td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>G710</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="218" colspan="2">公制尺寸，也用于进给率F</td>
+                    <td height="20" bgcolor="#FFFFFF" width="150"></td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>G90*</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="218" colspan="2">绝对尺寸</td>
+                    <td height="40" bgcolor="#FFFFFF" width="156" rowspan="2">14:绝对尺寸/增量尺寸模态有效</td>
+                    <td height="20" bgcolor="#FFFFFF" width="150"></td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>G91</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="218" colspan="2">增量尺寸</td>
+                    <td height="20" bgcolor="#FFFFFF" width="150"></td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>G94*</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="218" colspan="2">进给率F，单位毫米/分</td>
+                    <td height="20" bgcolor="#FFFFFF" width="156">15:进给/主轴模态有效</td>
+                    <td height="20" bgcolor="#FFFFFF" width="150"></td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>G95</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="218" colspan="2">主轴进给率F，单位毫米/转</td>
+                    <td height="20" bgcolor="#FFFFFF" width="156"></td>
+                    <td height="20" bgcolor="#FFFFFF" width="150"></td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>CFC</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="218" colspan="2"> 圆弧加工时打开进给率修调</td>
+                    <td height="40" bgcolor="#FFFFFF" width="156" rowspan="2">16:进给率修调 偿模态有效</td>
+                    <td height="20" bgcolor="#FFFFFF" width="150"></td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>CFTCP</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="218" colspan="2"> 关闭进给率修调</td>
+                    <td height="20" bgcolor="#FFFFFF" width="150"></td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>G901</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="218" colspan="2">在圆弧段进给补偿“开”</td>
+                    <td height="20" bgcolor="#FFFFFF" width="156"></td>
+                    <td height="20" bgcolor="#FFFFFF" width="150"></td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>G900</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="218" colspan="2">进给补偿“关”</td>
+                    <td height="20" bgcolor="#FFFFFF" width="156"></td>
+                    <td height="20" bgcolor="#FFFFFF" width="150"></td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>G450</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="218" colspan="2">圆弧过渡</td>
+                    <td height="40" bgcolor="#FFFFFF" width="156" rowspan="2">18:刀尖半径补偿时拐角特性模态有效</td>
+                    <td height="20" bgcolor="#FFFFFF" width="150"></td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>G451</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="218" colspan="2">等距线的交点</td>
+                    <td height="20" bgcolor="#FFFFFF" width="150"></td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>BRISK</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="218" colspan="2">轨迹跳跃加速</td>
+                    <td height="40" bgcolor="#FFFFFF" width="156" rowspan="2">21:加速度特性<br>
+                      模态有效</td>
+                    <td height="20" bgcolor="#FFFFFF" width="150"></td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>SOFT*</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="218" colspan="2">轨迹平滑加速</td>
+                    <td height="20" bgcolor="#FFFFFF" width="150"></td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>FFOWF</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="218" colspan="2">预控关闭</td>
+                    <td height="40" bgcolor="#FFFFFF" width="156" rowspan="2">预控<br>
+                      模态有效</td>
+                    <td height="20" bgcolor="#FFFFFF" width="150"></td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>FFOWN*</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="218" colspan="2">预控打开</td>
+                    <td height="20" bgcolor="#FFFFFF" width="150"></td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>WALIMON*</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="218" colspan="2">工作区域限制生效</td>
+                    <td height="40" bgcolor="#FFFFFF" width="156" rowspan="2">工作区域限制<br>
+                      模态有效</td>
+                    <td height="40" bgcolor="#FFFFFF" width="150" rowspan="2">适用于所有轴，通过设定数据激活；值通过G25，G26设置</td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>WALIMOF</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="218" colspan="2">工作区域限制取消</td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>G920*</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="218" colspan="2">西门子方式</td>
+                    <td height="20" bgcolor="#FFFFFF" width="156">其它NC语言</td>
+                    <td height="20" bgcolor="#FFFFFF" width="150"></td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>G921</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="218" colspan="2">其它方式</td>
+                    <td height="20" bgcolor="#FFFFFF" width="156">模态有效</td>
+                    <td height="20" bgcolor="#FFFFFF" width="150"></td>
+                  </tr>
+                  <tr bgcolor="#B2D4F6" class="contents1">
+                    <td width="569" height="20" align="center" colspan="5"><b>带* 的功能在程序启动时生效(如果没有编程新的内容，指用于“铣削” 时的系统变量).</b></td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><p align="left"><b>H<br>
+                      H0=<br>
+                      T0<br>
+                      H9999</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="118">H功能</td>
+                    <td height="20" bgcolor="#FFFFFF" width="95"> ±0.000001…9999.9<br>
+                      999（8个十进制数据位）或使用指数形式</td>
+                    <td height="20" bgcolor="#FFFFFF" width="156"> 用于传送到PLC的数值，其定义由机床制造厂家确定。</td>
+                    <td height="20" bgcolor="#FFFFFF" width="150">H0=… <br>
+                      H9999=…e.g.<br>
+                      H7=23.456</td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><p><b>I</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="118">插补参数</td>
+                    <td height="20" bgcolor="#FFFFFF" width="95"> ±0.001…99999.999<br>
+                      螺纹: <br>
+                      0.001…20000.000</td>
+                    <td height="20" bgcolor="#FFFFFF" width="156"> X轴尺寸，在G2和G3中为圆心坐标：在G33,G331,G332中则表示螺距大</td>
+                    <td height="20" bgcolor="#FFFFFF" width="150"> 参见G2,G3,G33,G331和G332</td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><p><b>K</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="118">插补参数</td>
+                    <td height="20" bgcolor="#FFFFFF" width="95"> ±0.001…99999.999<br>
+                      螺纹: <br>
+                      0.001…20000.000</td>
+                    <td height="20" bgcolor="#FFFFFF" width="156"> Z轴尺寸，在G2和G3中为圆心坐标：在G33,G331,G332中则表示螺距大</td>
+                    <td height="20" bgcolor="#FFFFFF" width="150"> 参见G2,G3,G33,G331和G332</td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><p><b>I1</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="118">圆弧插补的中间点</td>
+                    <td height="20" bgcolor="#FFFFFF" width="95"> ±0.001…99999.999<br>
+                      螺纹: <br>
+                      0.001…20000.000</td>
+                    <td height="20" bgcolor="#FFFFFF" width="156"> 属于X轴；用于CIP进行圆弧插补的参数</td>
+                    <td height="20" bgcolor="#FFFFFF" width="150"> 参见CIP</td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><p><b>K1</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="118">圆弧插补的中间点</td>
+                    <td height="20" bgcolor="#FFFFFF" width="95"> ±0.001…99999.999<br>
+                      螺纹: <br>
+                      0.001…20000.000</td>
+                    <td height="20" bgcolor="#FFFFFF" width="156"> 属于Z轴；用于CIP进行圆弧插补的参数</td>
+                    <td height="20" bgcolor="#FFFFFF" width="150"> 参见CIP</td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><p><b>L</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="118">子程序名及子程序调用</td>
+                    <td height="20" bgcolor="#FFFFFF" width="95">7位十进制整数， 无符号</td>
+                    <td height="20" bgcolor="#FFFFFF" width="156"> 可以选择L1…L9999999; 子程序调用需要一个独立的程序段。注意：L0001不等于L1</td>
+                    <td height="20" bgcolor="#FFFFFF" width="150"> L… ;自身程序段</td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><p><b>M</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="118">辅助功能</td>
+                    <td height="20" bgcolor="#FFFFFF" width="95"> 0…99整数，无符号</td>
+                    <td height="20" bgcolor="#FFFFFF" width="156"> 用于进行开关操作，如“打开” 冷却液，一个程序段中最多有5个M功能</td>
+                    <td height="20" bgcolor="#FFFFFF" width="150"> M...</td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>M0</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="218" colspan="2">程序停止</td>
+                    <td height="20" bgcolor="#FFFFFF" width="156">用M0停止程序的执行：按“启动”键加工继续执行。</td>
+                    <td height="20" bgcolor="#FFFFFF" width="150"></td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>M1</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="218" colspan="2">程序有条件停止</td>
+                    <td height="20" bgcolor="#FFFFFF" width="156">与M0一样，但仅在“条件停(M1)有效” 功能被软键或接口信号触发后才生效。</td>
+                    <td height="20" bgcolor="#FFFFFF" width="150"></td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>M2</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="218" colspan="2">程序结束</td>
+                    <td height="20" bgcolor="#FFFFFF" width="156">在程序的最后一段被写入</td>
+                    <td height="20" bgcolor="#FFFFFF" width="150"></td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>M30</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="218" colspan="2">　</td>
+                    <td height="20" bgcolor="#FFFFFF" width="156">预定，没用</td>
+                    <td height="20" bgcolor="#FFFFFF" width="150"></td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>M17</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="218" colspan="2">　</td>
+                    <td height="20" bgcolor="#FFFFFF" width="156">预定，没用</td>
+                    <td height="20" bgcolor="#FFFFFF" width="150"></td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>M3</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="218" colspan="2">主轴顺时针旋转</td>
+                    <td height="20" bgcolor="#FFFFFF" width="156"></td>
+                    <td height="20" bgcolor="#FFFFFF" width="150"></td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>M4</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="218" colspan="2">主轴逆时针旋转</td>
+                    <td height="20" bgcolor="#FFFFFF" width="156"></td>
+                    <td height="20" bgcolor="#FFFFFF" width="150"></td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>M5</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="218" colspan="2">主轴停</td>
+                    <td height="20" bgcolor="#FFFFFF" width="156"></td>
+                    <td height="20" bgcolor="#FFFFFF" width="150"></td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>M6</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="218" colspan="2">更换刀具</td>
+                    <td height="20" bgcolor="#FFFFFF" width="156">在机床数据有效时用M6更换刀具，其它情况下直接用T指令进行。</td>
+                    <td height="20" bgcolor="#FFFFFF" width="150"></td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>N</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="118">副程序段</td>
+                    <td height="20" bgcolor="#FFFFFF" width="95">0…9999 9999整数, 无符号</td>
+                    <td height="20" bgcolor="#FFFFFF" width="156">与程序段段号一起标识程段，N位于程序段开始</td>
+                    <td height="20" bgcolor="#FFFFFF" width="150">比如：N20 </td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>:</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="118">主程序段</td>
+                    <td height="20" bgcolor="#FFFFFF" width="95">0…9999 9999整数, 无符号</td>
+                    <td height="20" bgcolor="#FFFFFF" width="156">指明主程序段，用字符“:” 取代副程序段的地址符“N”。主程序段中必须包含其加工所需的全部指令</td>
+                    <td height="20" bgcolor="#FFFFFF" width="150">比如：20 </td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>P</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="118">子程序调用次数</td>
+                    <td height="20" bgcolor="#FFFFFF" width="95">1…9999整数, 无符号</td>
+                    <td height="20" bgcolor="#FFFFFF" width="156">在同一程序段中多次调用子程序比如:N10 L871 P3;调用三次</td>
+                    <td height="20" bgcolor="#FFFFFF" width="150">比如：L781 P… ;自身程序段</td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>RET</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="118">子程序结束</td>
+                    <td height="20" bgcolor="#FFFFFF" width="95"></td>
+                    <td height="20" bgcolor="#FFFFFF" width="156">代替M2使用，保证路径连续运行</td>
+                    <td height="20" bgcolor="#FFFFFF" width="150">RET;自身程序段</td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>S</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="118">主轴转速,在G4 中表示暂停时间</td>
+                    <td height="20" bgcolor="#FFFFFF" width="95">0.001…99 999.999</td>
+                    <td height="20" bgcolor="#FFFFFF" width="156">主轴转速单位是转/分，在G4中作为暂停时间</td>
+                    <td height="20" bgcolor="#FFFFFF" width="150">S…</td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>T</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="118">刀具号</td>
+                    <td height="20" bgcolor="#FFFFFF" width="95">1…32000整数,无符号</td>
+                    <td height="20" bgcolor="#FFFFFF" width="156">可以用T指令直接更换刀具，可由M6进行。这可由机床数据设定</td>
+                    <td height="20" bgcolor="#FFFFFF" width="150">T…</td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>X</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="118">坐标轴</td>
+                    <td height="20" bgcolor="#FFFFFF" width="95">±0.001…99999.999</td>
+                    <td height="20" bgcolor="#FFFFFF" width="156">位移信息</td>
+                    <td height="20" bgcolor="#FFFFFF" width="150">X…</td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>Y</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="118">坐标轴</td>
+                    <td height="20" bgcolor="#FFFFFF" width="95">±0.001…99999.999</td>
+                    <td height="20" bgcolor="#FFFFFF" width="156">位移信息</td>
+                    <td height="20" bgcolor="#FFFFFF" width="150">Y…</td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>Z</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="118">坐标轴</td>
+                    <td height="20" bgcolor="#FFFFFF" width="95">±0.001…99999.999</td>
+                    <td height="20" bgcolor="#FFFFFF" width="156">位移信息</td>
+                    <td height="20" bgcolor="#FFFFFF" width="150">Z…</td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>AR</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="118">圆弧插补张角</td>
+                    <td height="20" bgcolor="#FFFFFF" width="95">0.00001…359.99999</td>
+                    <td height="20" bgcolor="#FFFFFF" width="156">单位是度，用于在G2/G3中确定圆弧大小</td>
+                    <td height="20" bgcolor="#FFFFFF" width="150">参见G2/G3</td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>CALL</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="118">循环调用</td>
+                    <td height="20" bgcolor="#FFFFFF" width="95"></td>
+                    <td height="20" bgcolor="#FFFFFF" width="156"></td>
+                    <td height="20" bgcolor="#FFFFFF" width="150">N10 CALL CYCLE…（1.78，8）</td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>CHF</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="118">倒角，一般使用</td>
+                    <td height="20" bgcolor="#FFFFFF" width="95">0.001…99999.999</td>
+                    <td height="20" bgcolor="#FFFFFF" width="156">在两个轮廓之间插入给定长度的倒角</td>
+                    <td height="20" bgcolor="#FFFFFF" width="150">N10 X…Y…CHF=<br>
+                      N11 X…Y…</td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>CHR</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="118">倒角轮廓连线</td>
+                    <td height="20" bgcolor="#FFFFFF" width="95">0.001…99999.999</td>
+                    <td height="20" bgcolor="#FFFFFF" width="156">在两个轮廓之间插入给定边长的倒角</td>
+                    <td height="20" bgcolor="#FFFFFF" width="150">参见G2/G3</td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>CR</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="118">圆弧插补半径</td>
+                    <td height="20" bgcolor="#FFFFFF" width="95">0.001…99999.999</td>
+                    <td height="20" bgcolor="#FFFFFF" width="156">大于半圆的圆弧带负号“-”	在G2/G3中确定圆葫</td>
+                    <td height="20" bgcolor="#FFFFFF" width="150">N10 X…Y…CHR=<br>
+                      N11 X…Y…</td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>CYCLE</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="118">加工循环</td>
+                    <td height="20" bgcolor="#FFFFFF" width="95">仅为给定值</td>
+                    <td height="20" bgcolor="#FFFFFF" width="156">调用加工循环时要求一个独立的程序段；事先给定的参数必须赋值（参见章节“循环”）</td>
+                    <td height="20" bgcolor="#FFFFFF" width="150"></td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>CYCLE82</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="118">钻削，深孔加工</td>
+                    <td height="20" bgcolor="#FFFFFF" width="95"></td>
+                    <td height="20" bgcolor="#FFFFFF" width="156"></td>
+                    <td height="20" bgcolor="#FFFFFF" width="150">N10 CALL CYCLE 82（…）<br>
+                      自身程序段</td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>CYCLE83</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="118">深孔钻削</td>
+                    <td height="20" bgcolor="#FFFFFF" width="95"></td>
+                    <td height="20" bgcolor="#FFFFFF" width="156"></td>
+                    <td height="20" bgcolor="#FFFFFF" width="150">N10 CALL
+                      CYCLE 83（…）<br>
+                      自身程序段</td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>CYCLE840</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="118">带补偿的夹具切削螺纹</td>
+                    <td height="20" bgcolor="#FFFFFF" width="95"></td>
+                    <td height="20" bgcolor="#FFFFFF" width="156"></td>
+                    <td height="20" bgcolor="#FFFFFF" width="150">N10 CALL
+                      CYCLE 840（…）<br>
+                      自身程序段</td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>CYCLE84</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="118">带螺纹插补切削螺纹</td>
+                    <td height="20" bgcolor="#FFFFFF" width="95"></td>
+                    <td height="20" bgcolor="#FFFFFF" width="156"></td>
+                    <td height="20" bgcolor="#FFFFFF" width="150">N10 CALL
+                      CYCLE 84（…）<br>
+                      自身程序段</td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>CYCLE85</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="118">镗孔1</td>
+                    <td height="20" bgcolor="#FFFFFF" width="95"></td>
+                    <td height="20" bgcolor="#FFFFFF" width="156"></td>
+                    <td height="20" bgcolor="#FFFFFF" width="150">N10 CALL
+                      CYCLE 85（…）<br>
+                      自身程序段</td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>CYCLE86</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="118">镗孔2</td>
+                    <td height="20" bgcolor="#FFFFFF" width="95"></td>
+                    <td height="20" bgcolor="#FFFFFF" width="156"></td>
+                    <td height="20" bgcolor="#FFFFFF" width="150">N10 CALL
+                      CYCLE 86（…）<br>
+                      自身程序段</td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>CYCLE88</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="118">镗孔4</td>
+                    <td height="20" bgcolor="#FFFFFF" width="95"></td>
+                    <td height="20" bgcolor="#FFFFFF" width="156"></td>
+                    <td height="20" bgcolor="#FFFFFF" width="150">N10 CALL
+                      CYCLE 88（…）<br>
+                      自身程序段</td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>CYCLE93</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="118">凹槽循环</td>
+                    <td height="20" bgcolor="#FFFFFF" width="95"></td>
+                    <td height="20" bgcolor="#FFFFFF" width="156"></td>
+                    <td height="20" bgcolor="#FFFFFF" width="150">N10 CALL 
+                      CYCLE 93 (…)</td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>CYCLE94</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="118">钻孔圆弧排列的孔</td>
+                    <td height="20" bgcolor="#FFFFFF" width="95"></td>
+                    <td height="20" bgcolor="#FFFFFF" width="156"></td>
+                    <td height="20" bgcolor="#FFFFFF" width="150">N10 CALL 
+                      CYCLE 94 (…)</td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>CYCLE95</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="118">铣槽</td>
+                    <td height="20" bgcolor="#FFFFFF" width="95"></td>
+                    <td height="20" bgcolor="#FFFFFF" width="156"></td>
+                    <td height="20" bgcolor="#FFFFFF" width="150">N10 CALL 
+                      CYCLE 95 (…)</td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>CYCLE97</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="118">铣圆形槽</td>
+                    <td height="20" bgcolor="#FFFFFF" width="95"></td>
+                    <td height="20" bgcolor="#FFFFFF" width="156"></td>
+                    <td height="20" bgcolor="#FFFFFF" width="150">N10 CALL 
+                      CYCLE97 (…)</td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>GOTOB</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="118">向后跳转指令</td>
+                    <td height="20" bgcolor="#FFFFFF" width="95"></td>
+                    <td height="20" bgcolor="#FFFFFF" width="156">与跳转标志符一起，表示跳转到所标志的程序段，跳转方向向前</td>
+                    <td height="20" bgcolor="#FFFFFF" width="150">比如：<br>
+                      N20 GOTOB MARKE 1</td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>GOTOF</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="118">向前跳转指令</td>
+                    <td height="20" bgcolor="#FFFFFF" width="95"></td>
+                    <td height="20" bgcolor="#FFFFFF" width="156">与跳转标志符一起，表示跳转到所标志的程序段，跳转方向向后</td>
+                    <td height="20" bgcolor="#FFFFFF" width="150">比如：<br>
+                      N20 GOTOF MARKE 2</td>
+                  </tr>
+                  <tr class="contents1">
+                    <td width="45" height="20" align="center" bgcolor="#B2D4F6"><b>RND</b></td>
+                    <td height="20" bgcolor="#FFFFFF" width="118">园角</td>
+                    <td height="20" bgcolor="#FFFFFF" width="95">0.010…99 9.999</td>
+                    <td height="20" bgcolor="#FFFFFF" width="156">在两个轮廓之间以给定的半径插入过渡圆弧</td>
+                    <td height="20" bgcolor="#FFFFFF" width="150">N10 X…Y…RND=… <br>
+                      N11 X…Y… </td>
+                  </tr>
+                </table>
+                  <p>　</TD>
+            </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 height=20 class="bar">
+            <TR>
+              <TD><strong>代码解释</strong>　</TD>
+            </TR>
+        </TABLE>
+        <TABLE height="24">
+            <TR> </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 height=20 class="bar1">
+            <TR>
+              <td>G00&nbsp; 快速线性移动</td>
+            </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+            <TR>
+              <TD height=26  class=contents1  vAlign=top><br>
+                  <span class="title6"> 1. 功能</span> <br>
+                轴快速移动G0用于快速定位刀具，没有对工件进行加工。可以在几个轴上同时执行快速移动，由此产生一线性轨迹。 <br>
+                <br>
+                机床数据中规定每个坐标轴快速移动速度的最大值，一个坐标轴运行时就以此速度快速移动。如果快速移动同时在两个轴上执行，则移动速度为两个轴可能的最大速度。 <br>
+                <br>
+                用G0快速移动时在地址F下程编的进给率无效。<br>
+                <img border="0" src="code/G00.GIF" width="289" height="120"><br>
+                G0一直有效，直到被G功能组中其它的指令(G1,G2,G3,…) 取代为止。<br>
+                <br>
+                <span class="title6"> 2. 编程举例</span><br>
+                N10 G0 X100 Z65 ；直角坐标系<br>
+                …<br>
+                N50 G0 RP=16.78 AP=45 ；极坐标系<br>
+                <br>
+                <span class="title6"> 3.说明</span><br>
+                G功能组中还有其它的G指令用于定位功能(参见章节8.3.12 “准确定位/连续路径方式：G60,G64” 
+                )。在用G60准确定位时，可以在窗口下选择不同的精度。<br>
+                              <br>
+                另外，用于准确定位还有一个单程序段方式有效的指令：G9。 <br>
+                <br>
+                在进行准确定位时请注意对几种方式的选择。 <br>
+                
+                <p><br>
+              </TD>
+            </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 height=20 class="bar1">
+            <TR>
+              <td>G01&nbsp; 带进给率的线性插补</td>
+            </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+            <TR>
+              <TD height=26  class=contents1  vAlign=top><br>
+                  <span class="title6"> 1. 功能</span> <br>
+                刀具以直线从起始点移动到目标位置，按地址F下编程的进给速度运行。 <br>
+                <br>
+                所有的坐标轴可以同时运行。 <br>
+                <br>
+                G1一直有效，直到被G功能组中其它的指令(G0,G2,G3,…) 取代为止。 <br>
+                <br>
+                <img border="0" src="code/G01.GIF" width="241" height="126"><br>
+                <span class="title6"> 2. 编程举例<br>
+                </span>N05 G0 G90 X40 Z200 S500 M3 ;刀具快速移动到P1,3个轴 <br>
+                方向同时移动，主轴转速= <br>
+                500转/分, 顺时针旋转 <br>
+                N10 G1 Z-12 F100 ;进刀到Z-12,进给率100毫米/分 <br>
+                N15 X20 Z105 ;刀具以直线运行到P2 <br>
+                N20 Z80 ;快速移动空运行 <br>
+                N25 G0 Z100 ;快速移动空运行<br>
+                N30 M2 ;程序结束<br></TD>
+            </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 height=20 class="bar1">
+            <TR>
+              <td> G02/G03&nbsp; 圆弧插补</td>
+            </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+            <TR>
+              <TD height=26  class=contents1  vAlign=top><br>
+                  <span class="title6"> 1. 功能</span> <br>
+                刀具以圆弧<img border="0" src="code/G02.gif" width="284" height="137">轨迹从起始点移动到终点，方向由G指令确定: <br>
+                G2---顺时针方向 <br>
+                G3---逆时针方向<br>
+                <br>
+                <br>
+                G2和G3一直有效，直到被G功能组中其它的指令(G0,G1,…)取代为止。<br>
+                <br>
+                <b>说明</b> <br>
+                其它的圆弧编程方法有：<br>
+                CT –圆弧用切线连接<br>
+                CIP –通过中间点的圆弧<br>
+                <br>
+                <br>
+                <span class="title6"> 2. 编程<br>
+                </span> G2/G3 X…Y..I…J… ；圆心和终点<br>
+                G2/G3 CR=…X…Y… ；半径和终点<br>
+                G2/G3 AR=…I…J… ；张角和圆心<br>
+                G2/G3 AR=…X…J… ；张角和终点<br>
+                G2/G3 AP=…RP=… ；极坐标和极点圆弧<br>
+                <br>
+                <b>说明:</b> <br>
+                其它的圆弧编程方法有：<br>
+                CT –圆弧用切线连接<br>
+                CIT –通过中间点的圆弧<br>
+                <br>
+                <span class="title6"> 3. 编程举例<br>
+                </span> 圆心坐标和终点坐标<br>
+                N5 G90 Z30 X40 ;用于N10的圆弧起始点 <br>
+                N10 G2 Z50 X40 K10 I-7 ;终点和圆心             　<br>
+                <br>
+                终点和半径尺寸<br>
+                N5 G90 Z30 X40 ;用于N10的圆弧起始点 <br>
+                N10 G2 Z50 X40 CR=12.207 ;终点和半径<br>
+                <b>说明：</b> <br>
+                CR数值前带负号“-” 表明所选插补圆弧段大于半园。<br>
+                <br>
+                终点和张角尺寸举例<br>
+                N5 G90 Z30 X40 ;用于N10的圆弧起始点 <br>
+                N10 G2 Z50 X40 AR=105 ;终点和张角<br>
+                <br>
+                圆心和张角尺寸<br>
+                N5 G90 Z30 X40 ;用于N10的圆弧起始点 <br>
+                N10 G2 K10 I-7 AR=105 ；圆心和张角<br>
+                <br></TD>
+            </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 height=20 class="bar1">
+            <TR>
+              <td> G75&nbsp; 返回固定点</td>
+            </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+            <TR>
+              <TD height=26  class=contents1  vAlign=top><br>
+                  <span class="title6"> 1. 功能</span> <br>
+                用G75可以返回到机床中某个固定点, 比如换刀点。固定点位置固定地存储在机床数据中，它不会产生偏移。 <br>
+                <br>
+                每个轴的返回速度就是其快速移动速度。<br>
+                <br>
+                G75需要一独立程序段，并按程序段方式有效。<br>
+                <br>
+                在G75之后的程序段中原先“插补方式” 组中的G指令(G0,G1,G2, …)将再次生效。 <br>
+                <br>
+                <span class="title6"> 2. 编程举例</span><br>
+                <br>
+                N10 G75 X0 Z0 <br>
+                注释：程序段中X和Z下编程的数值（这里为0）不识别。<br>
+                <span class="title6"> <br>
+                </span></TD>
+            </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 height=20 class="bar1">
+            <TR>
+              <td> G74&nbsp; 回参考点</td>
+            </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+            <TR>
+              <TD height=26  class=contents1  vAlign=top><p><br>
+                <span class="title6"> 1. 功能</span> <br>
+                用G74指令实现NC程序中回参考点功能, 每个轴的方向和速度存储在机床数据中。 <br>
+                <br>
+                G74需要一独立程序段，并按程序段方式有效。<br>
+                <br>
+                在G74之后的程序段中原先“插补方式” 组中的G指令(G0,G1,G2, …)将再次生效。<br>
+                <br>
+                <span class="title6"> 2. 编程举例</span><br>
+                N10 G74 X0 Z0 <br>
+                注释：程序段中X和Z下编程的数值（这里为0）不识别</p>
+                <p><br>
+                </p></TD>
+            </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 height=20 class="bar1">
+            <TR>
+              <td> G9,G60,G64&nbsp; 
+              准确定位/连续路径加工</td>
+            </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+            <TR>
+              <TD height=26  class=contents1  vAlign=top><br>
+                  <span class="title6"> 1. 功能</span> <br>
+                针对程序段转换时不同的性能要求，802S提供一组G功能用于进行最佳匹配的选择。比如。有时要求坐标轴快速定位; 
+                有时要求按轮廓编程对几个程序段进行连续路径加工。 <br>
+                              <span class="title6"> <br>
+                                2. 编程<br>
+                                <br>
+                              </span> G60 ;准确定位--模态有效 <br>
+                G64 ;连续路径加工 <br>
+                G9 ;准确定位--单程序段有效 <br>
+                G601 ;精准确定位窗口 <br>
+                G602 ;粗准确定位窗口 <br>
+                
+                <p> <span class="title6"> 3.准确定位G60,G9<br>
+                  </span><br>
+                  G60或G9功能生效时，当到达定位精度后，移动轴的进给速度减小到零。 <br>
+                  如果一个程序段的轴位移结束并开始执行下一个程序段，则可以设定下一个模态有效的G功能: <br>
+                  <b>*</b> G601 精准确定位窗口 <br>
+                  当所有的坐标轴都到达“精准确定位窗口” (机床数据中设定值) 后，开始进行程序段转换。 <br>
+                  <br>
+                  <b>*</b> G602 粗准确定位窗口 <br>
+                  当所有的坐标轴都到达“粗准确定位窗口” (机床数据中设定值)后，开始进行程序段转换。<br>
+                  <br>
+                  在执行多次定位过程时，“准确定位窗口” 如何选择将对加工运行总时间影响很大。精确调整需要较多时间。 <br>
+                  <br>
+                  <span class="title6"> 4.编程举例<br>
+                  </span> N5 G602 ;粗准确定位窗口 <br>
+                  N10 G0 G60 X…            ;准确定位,模态方式 <br>
+                  N20 X…;G60继续有效<br>
+                  … <br>
+                  N50 G1 G601 …             ;精准确定位窗口 <br>
+                  N80 G64 X…                ;转换到连续路径方式 <br>
+                  … <br>
+                  N100 G0 G9 X…             ;准确定位，单程序段有效 <br>
+                  N111…                     ;仍为连续路径方式 <br>
+                  …<br>
+                  <b>&nbsp;注释：<br>
+                  </b>指令G9仅对自身程序段有效，而G60 准确定位一直有效，直到被G64取代为止。			
+                <p> <br>
+                  <span class="title6"> 5.连续路径加工 G64<br>
+                  </span> 连续路径加工方式的目的就是在一个程序段到下一个程序段转
+                  G64                 换过程中避免进给停顿，并使其尽可能以相同的轨迹速度(切线过渡)转换到下一个程序段，并以可预见的速度过渡执行下一个程序段的功能。 
+                  在有拐角的轨迹过渡时(非切线过渡)有时必须降低速度，从而保证程序段转换时不发生突然变化，或者加速度的改变受到限制（如果SOFT有效） <br>
+                  <br>
+                  <span class="title6"> 5.编程举例 </span> <br>
+                  N10 G64 G1 X… F… ;连续路径加工 <br>
+                  N20 Z.. ;继续 <br>
+                  … <br>
+                  N180 G60… ;转换到准确定位 <br>
+                  <br>
+                  <br>
+              </TD>
+            </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 height=20 class="bar1">
+            <TR>
+              <td> G4&nbsp; 暂停</td>
+            </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+            <TR>
+              <TD height=26  class=contents1  vAlign=top><br>
+                  <span class="title6"> 1. 功能 </span> <br>
+                通过在两个程序段之间插入一个G4程序段，可以使加工中断给定的时间，比如自由切削。<br>
+                G4程序段(含地址F或S)只对自身程序段有效，并暂停所给定的时间。在此之前程编的进给量F和主轴转速S保持存储状态。<br>
+                <br>
+                <span class="title6"> 2. 编程<br>
+                </span> G4 F… ;暂停时间(秒) <br>
+                G4 S… ;暂停主轴转数<br>
+                <br>
+                <span class="title6"> 3. 编程举例<br>
+                </span> N5 G1 F200 Z-50 S300 M3 ;进给率F,主轴转数S <br>
+                N10 G4 F2.5 ;暂停2.5秒 <br>
+                N20 Z70 <br>
+                N30 G4 S30 ;主轴暂停30转,相当于在S=300转/分钟 <br>
+                和转速修调100%时暂停t=0.1分钟 <br>
+                N40 X… ;进给率和主轴转速继续有效 <br>
+                <br>
+                <b>注释:</b><br>
+                G4 S…只有在受控主轴情况下才有效(当转速给定值同样通过S…编程时)。<br></TD>
+            </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 height=20 class="bar1">
+            <TR>
+              <td> F&nbsp; 进给率</td>
+            </TR>
+          </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+            <TR>
+              <TD height=26  class=contents1  vAlign=top><br>
+                  <span class="title6"> 1. 功能 </span> <br>
+                进给率F是刀具轨迹速度，它是所有移动坐标轴速度的矢量和。坐标轴速度是刀具轨迹速度在坐标轴上的分量。 
+                进给率F在G1,G2,G3,G5插补方式中生效，并且一直有效，直到被一个新的地址F取代为止。 <br>
+                <br>
+                <span class="title6"> 2. 编程<br>
+                </span> F… <br>
+                注释：在取整数值方式下可以取消小数点后面的数据，如F300。 <br>
+                进给率F的单位 地址F的单位由G功能确定: <br>
+                G94和G95 <br>
+                <b>*</b> G94 直线进给率毫米/分钟 <br>
+                <b>*</b> G95 旋转进给率毫米/转(只有主轴旋转才有意义!) <br>
+                <br>
+                <span class="title6"> 3. 编程举例<br>
+                </span> &nbsp;N10 G94 F310 ;进给量毫米/分钟 <br>
+                N110 S200 M3 ;主轴旋转 <br>
+                N120 G95 F15.5 ;进给量毫米/转 <br>
+                <b>注释：</b><br>
+                G94和G95更换时要求写入一个新的地址F。 <br>
+                <br></TD>
+            </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 height=20 class="bar1">
+            <TR>
+              <td> S&nbsp; 主轴转速S,旋转方向</td>
+            </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+            <TR>
+              <TD height=26  class=contents1  vAlign=top><br>
+                  <span class="title6"> 1. 功能 </span> <br>
+                当机床具有受控主轴时，主轴的转速可以编程在地址S下，单位转/分钟。旋转方向和主轴运动起始点和终点通过M指令规定(参见章节“辅助功能M” 
+                )。 <br>
+                              <br>
+                M3 主轴右转 <br>
+                M4 主轴左转 <br>
+                M5 主轴停 <br>
+                注释：在S值取整情况下可以去除小数点后面的数据，比如S270<br>
+                <br>
+                说明 如果在程序段中不仅有M3或M4指令，而且还写有坐标轴运行指令，则M指令在坐标轴运行之前生效。<br>
+                <br>
+                只有在主轴启动之后，坐标轴才开始运行。
+                <p>&nbsp;<br>
+                  <span class="title6"> 2. 编程举例<br>
+                  </span> N10 G1 X70 Z20 F300 S270 M3 ;在X、Z轴运行之前，主轴以270 转/分启动，方向顺时针 <br>
+                  … <br>
+                  N80 S450 … ;改变转速 <br>
+                  … <br>
+                N170 G0 Z180 M5 ;Z轴运行，主轴停止&nbsp;                
+                <p>
+                  <br>
+                  
+              </TD>
+            </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 height=20 class="bar1">
+            <TR>
+              <td> G25,G26&nbsp; 主轴转速极限</td>
+            </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+            <TR>
+              <TD height=26  class=contents1  vAlign=top><br>
+                  <span class="title6"> 1. 功能 </span> <br>
+                通过在程序中写入G25或G26指令和地址S下的转速，可以限制特定情况下主轴的极限值范围。与此同时原来设定数据中的数据被覆盖。 <br>
+                <br>
+                G25或G26指令均要求一独立的程序段。原先编程的转速S保持存储状态。
+                <p><br>
+                  <span class="title6"> 2. 编程<br>
+                  </span> G25 S… ;主轴转速下限 <br>
+                  G26 S… ;主轴转速上限 <br>
+                  <b>说明:</b><br>
+                  主轴转速的最高极限值在机床数据中设定。通过面板操作可以激活用于其它极限情况的设定参数。
+                <p> <br>
+                  <span class="title6"> 3. 编程举例<br>
+                  </span> N10 G25 S12 ;主轴转速下限：12转/分钟 <br>
+                N20 G26 S700 ;主轴转速上限：700转/分钟                 
+                <p><br>
+                  
+                  
+              </TD>
+            </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 height=20 class="bar1">
+            <TR>
+              <td>T&nbsp; 刀具</td>
+            </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+            <TR>
+              <TD height=26  class=contents1  vAlign=top><br>
+                  <span class="title6"> 1. 功能 </span> <br>
+                编程T指令可以选择刀具。在此，是用T指令直接更换刀具还是仅仅进行刀具的预选，这必须要在机床数据中确定: <br>
+                &#8226; 用T指令直接更换刀具(刀具调用)，或者 <br>
+                &#8226; 仅用T指令预选刀具，另外还要用M6指令才可进行刀具的更换(也可参见章节8.7 “辅助功能M”) <br>
+                <br>
+                <b>注意:</b> <br>
+                在选用一个刀具后，程序运行结束以及系统关机/开机对此均没有影响，该刀具一直保持有效。<br>
+                如果手动更换一刀具，则更换情况必须要输入到系统中， 从而使系统可以正确地识别该刀具。比如，您可以在MDA方式下启动一个带新的T指令的程序段。<br>
+                <br>
+                <span class="title6"> 2. 编程<br>
+                </span> T… ;刀具号:1…32000，T0.没有刀具 <br>
+                <b>提示:</b> <br>
+                系统中最多可以同时存储30把刀具。 <br>
+                <br>
+                <span class="title6"> 3. 编程举例<br>
+                </span> 不用M6更换刀具: <br>
+                N10 T1 ;刀具1 <br>
+                … <br>
+                N70 T588 ;刀具588 <br>
+                <br>
+                ;用M6更换刀具: <br>
+                N10 T14… ;预选刀具14 <br>
+                … <br>
+                N15 M6 ;执行刀具更换，刀具T14有效<br> 
+           
+              </TD>
+            </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 height=20 class="bar1">
+            <TR>
+              <td>D&nbsp; 刀具补偿号</td>
+            </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+            <TR>
+              <TD height=26  class=contents1  vAlign=top><br>
+                  <span class="title6"> 1. 功能 </span> <br>
+                一个刀具可以匹配从1到9几个不同补偿的数据组(用于多个切削刃)。另外可以用D及其对应的序号编程一个专门的切削刃。 <br>
+                如果没有编写D指令，则D1自动生效。 <br>
+                如果编程D0，则刀具补偿值无效。 <br>
+                <br>
+                <b>提示 <br>
+                </b>系统中最多可以同时存储64个刀具补偿数组(D号)。<br>
+                <br>
+                <span class="title6"> 2. 编程<br>
+                </span> D… ;刀具刀补号：1…9， <br>
+                D0：没有补偿值有效! <br>
+                <br>
+                <b>说明 <br>
+                </b> 刀具调用后，刀具长度补偿立即生效；如果没有编程D号，则D1值自动生效。先编程的长度补偿先执行，对应的坐标轴也先运行。注意有效平面G17到G19! <br>
+                刀具半径补偿必须与G41/G42一起执行.&nbsp; <br>
+                <br>
+                <span class="title6"> 3. 编程举例<br>
+                </span> 不用M6指令更换刀具(仅用T指令): <br>
+                N5 G17 ;确定用于补偿的坐标轴平面 <br>
+                N10 T1 ;刀具1D1值生效 <br>
+                N11 G0 Z… ;在G17中Z轴是长度补偿轴，在此对不同长度补偿的差值进行覆盖 <br>
+                N50 T4 D2 ;更换成刀具4，对应于T4中D2值生效 <br>
+                … <br>
+                N70 G0 Z… D1;刀具4D1值生效，在此仅更换切削刃用M6指令更换刀具: <br>
+                N5 G17 ;确定用于补偿的坐标轴平面 <br>
+                N10 T1 ;刀具预选 <br>
+                … <br>
+                N15 M6 ;刀具更换,刀具1 D1值生效 <br>
+                N16 G0 Z… ;在G17中Z轴是长度补偿轴，在此对不同长度补偿的差值进行覆盖 <br>
+                … <br>
+                N20 G0 Z… D2;刀具1 D2值生效，在G17中Z轴是长度补偿轴, <br>
+                长度补偿D1-&gt;D2之间的差值在此进行覆盖 <br>
+                N50 T4 ;刀具预选T4, <br>
+                注意：刀具T1 D2值仍然有效! <br>
+                … <br>
+                N55 D3 M6 ;刀具更换，刀具T4 D3值有效
+                <br>
+              </TD>
+            </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 height=20 class="bar1">
+            <TR>
+              <td>G41,G42&nbsp; 刀尖半径补偿</td>
+            </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+            <TR>
+              <TD height=26  class=contents1  vAlign=top><br>
+                  <span class="title6"> 1. 功能 </span> <br>
+                系统在所选择的平面G17到G19中以刀具半径补偿的方式进行加工。 <br>
+                <br>
+                刀具必须有相应的刀补号才能有效。刀尖半径补偿通过G41/G42生效。控制器自动计算出当前刀具运行所产生的、与编程轮廓等距离的刀具轨迹。 <br>
+                <img border="0" src="../siemens_MPRG/code/G41.GIF" width="256" height="213"><br>
+                <br>
+                <span class="title6"> 2. 编程<br>
+                </span> G41 X… Y… ;在工件轮廓左边刀补 <br>
+                G42 X… Y… ;在工件轮廓右边刀补 <br>
+                <br>
+                刀具以直线回轮廓，并在轮廓起始点处与轨迹切向垂直。 <br>
+                正确选择起始点，可以保证刀具运行不发生碰撞。 <br>
+                在通常情况下，在G41/G42程序段之后紧接着工件轮廓的第一个程序段。 <br>
+                <br>
+                <b>注释</b>：<br>
+                只有在线性插补时(G0,G1)才可以进行G41/G42的选择。 <br>
+                <br>
+                编程两个坐标轴(比如G17中:X,Y)。如果你只给出一个坐标轴的尺寸，则第二个坐标轴自动地以最后编程的尺寸赋值。 <br>
+                <br>
+                <span class="title6"> 3. 编程举例<br>
+                </span> N10 T… <br>
+                N20 G17 D2 F300 ;第二个刀补号,进给率300毫米/分 <br>
+                N25 X… Y… ;P0-起始点 <br>
+                N30 G1 G42 X… Y… ;选择工件轮廓右边补偿，P1 <br>
+                N30 X… Y… ;起始轮廓，圆弧或直线 <br>
+                <br>
+                在选择了刀具半径补偿之后也可以执行刀具移动或者M指令: <br>
+                <br>
+                … <br>
+                N20 G1 G41 X… Y… ;选择轮廓左边刀补 <br>
+                N21 Z… ;进刀 <br>
+                N22 X… Y… ;起始轮廓，圆弧或直线 <br>
+                … <br>
+                <br>
+
+              </TD>
+            </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 height=20 class="bar1">
+            <TR>
+              <td>G40&nbsp; 取消刀尖半径补偿</td>
+            </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+            <TR>
+              <TD height=26  class=contents1  vAlign=top><br>
+                  <span class="title6"> 1. 功能 </span> <br>
+                用G40取消刀尖半径补偿，此状态也是编程开始时所处的状态。 <br>
+                <br>
+                G40指令之前的程序段刀具以正常方式结束(结束时补偿矢量垂直于轨迹终点处切线); 与起始角无关。 <br>
+                <br>
+                在运行G40程序段之后，刀具中心到达编程终点。<br>
+                <br>
+                在选择G40程序段编程终点时要始终确保刀具运行不会发生碰撞。 <br>
+                <br>
+                <br>
+                <span class="title6"> 2. 编程<br>
+                </span> G40 X… Y… ;取消刀尖半径补偿 <br>
+                <br>
+                <b>注释:<br>
+                </b>只有在线性插补(G0，G1)情况下才可以取消补偿运行。 <br>
+                <br>
+                编程平面的两个坐标轴(比如G17中：X，Y)。如果你只给出一个坐标轴的尺寸，则第二个坐标轴自动地以在此之前最后编程的尺寸赋值。 <br>
+                <br>
+                <span class="title6"> 3. 编程举例<br>
+                </span> N100 X… Y… ;最后程序段轮廓，圆弧或直线，P1 <br>
+                N110 G40 G1 X…Y… ;取消刀尖半径补偿，P2 <br>
+                <br>
+　
+              </TD>
+            </TR>
+        </TABLE></TD>
+    </TR>
+  </TBODY>
+</TABLE>
+</body>
+</html>

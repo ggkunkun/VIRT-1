@@ -1,0 +1,3524 @@
+<?xml version="1.0"?><!--
+Warning! Do not edit the contents of this file.
+If you attempt to edit this file using an XML editor, you could lose
+customization and migration functionality. If you need to change
+information in the customization file, use the Customize User Interface
+dialog in the product.
+To access the Customize User Interface dialog, click the Tools menu,
+Customization panel, User Interface button, or enter CUI on the command line.
+--><ToolbarRoot xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Toolbar ToolbarOrient="floating" ToolbarVisible="hide" xval="200" yval="200" rows="1" UID="TB_SMOOTH_MESH">
+    <ModifiedRev MajorVersion="18" MinorVersion="0" UserVersion="0"/>
+    <Alias>AC_SMOOTH_MESH</Alias>
+    <Name xlate="true" UID="XLS_TB_SUBD">平滑网格</Name>
+    <ToolbarFlyout UseOwnIcon="false" pTargetAlias="AC_SMOOTH_MESH_PRIMITIVES" UID="TBB_SUBD_000">
+      <ModifiedRev MajorVersion="18" MinorVersion="0" UserVersion="0"/>
+      <FlyoutName xlate="true" UID="XLS_SUBD_000">网格图元</FlyoutName>
+      <SmallImage Name="RCDATA_16_OM_MESH_FAMILY"/>
+      <LargeImage Name="RCDATA_32_OM_MESH_FAMILY"/>
+    </ToolbarFlyout>
+    <ToolbarButton IsSeparator="false" UID="TBB_SUBD_018">
+      <ModifiedRev MajorVersion="18" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_SUBD_018">平滑对象</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_MESH_SMOOTH"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_SUBD_001">
+      <ModifiedRev MajorVersion="18" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_SUBD_001">提高网格平滑度</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_MESH_SMOOTH_MORE"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_SUBD_002">
+      <ModifiedRev MajorVersion="18" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_SUBD_002">降低网格平滑度</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_MESH_SMOOTH_LESS"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_SUBD_003">
+      <ModifiedRev MajorVersion="18" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_SUBD_003">优化网格</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_MESH_SMOOTH_REFINE"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="true" UID="TBB_SUBD_004">
+      <ModifiedRev MajorVersion="18" MinorVersion="0" UserVersion="0"/>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_SUBD_005">
+      <ModifiedRev MajorVersion="18" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_SUBD_004">锐化网格</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_MESH_SMOOTH_CREASE"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_SUBD_006">
+      <ModifiedRev MajorVersion="18" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_SUBD_005">取消锐化网格</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_MESH_SMOOTH_UNCREASE"/>
+      </MenuItem>
+    </ToolbarButton>
+  </Toolbar>
+  <Toolbar ToolbarOrient="floating" ToolbarVisible="hide" xval="200" yval="200" rows="1" UID="TB_SMOOTH_MESH_PRIMITIVES">
+    <ModifiedRev MajorVersion="18" MinorVersion="0" UserVersion="0"/>
+    <Alias>AC_SMOOTH_MESH_PRIMITIVES</Alias>
+    <Name xlate="true" UID="XLS_TB_SUBD_PRIMS">平滑网格图元</Name>
+    <ToolbarButton IsSeparator="false" UID="TBB_SUBD_007">
+      <ModifiedRev MajorVersion="18" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_SUBD_007">网格长方体</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_MESH_PRIMITIVE_BOX"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_SUBD_008">
+      <ModifiedRev MajorVersion="18" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_SUBD_008">网格圆锥体</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_MESH_PRIMITIVE_CONE"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_SUBD_009">
+      <ModifiedRev MajorVersion="18" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_SUBD_009">网格圆柱体</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_MESH_PRIMITIVE_CYLINDER"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_SUBD_010">
+      <ModifiedRev MajorVersion="18" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_SUBD_010-">网格棱锥体</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_MESH_PRIMITIVE_PYRAMID"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_SUBD_011">
+      <ModifiedRev MajorVersion="18" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_SUBD_011">网格球体</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_MESH_PRIMITIVE_SPHERE"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_SUBD_012">
+      <ModifiedRev MajorVersion="18" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_SUBD_012">网格楔体</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_MESH_PRIMITIVE_WEDGE"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_SUBD_013">
+      <ModifiedRev MajorVersion="18" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_SUBD_013">网格圆环体</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_MESH_PRIMITIVE_TORUS"/>
+      </MenuItem>
+    </ToolbarButton>
+  </Toolbar>
+  <Toolbar ToolbarOrient="floating" ToolbarVisible="hide" xval="100" yval="130" rows="1" UID="ID_TbDimensi">
+    <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+    <Alias>TB_DIMENSION</Alias>
+    <Alias>Dimension</Alias>
+    <Description xlate="true" UID="ACAD_1655">标注工具栏</Description>
+    <Name xlate="true" UID="ACAD_385">标注</Name>
+    <ToolbarButton IsSeparator="false" UID="TBB_0001">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1425">线性</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Dimlinear"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0002">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1426">对齐</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Dimaligne"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0003">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1427">弧长</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Dimarclen"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0004">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1428">坐标</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Dimordina"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="true" UID="TBB_0005">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0006">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1429">半径</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Dimradius"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0007">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1430">折弯</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Dimjogged"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0008">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1431">直径</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Dimdiamet"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0009">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1432">角度</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Dimangula"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="true" UID="TBB_0010">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0011">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1433">快速标注</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_QDim"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0012">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1434">基线</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Dimbaseli"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0013">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1435">连续</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Dimcontin"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0512">
+      <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_6501">等距标注</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Dimspace"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0513">
+      <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_6504">折断标注</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Dimbreak"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="true" UID="TBB_0014">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0016">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1437">公差...</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Tolerance"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0017">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1438">圆心标记</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Dimcenter"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0514">
+      <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_6508">检验</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Diminspection"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0515">
+      <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_6511">折弯线性</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Dimjoglin"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="true" UID="TBB_0018">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0019">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1439">编辑标注</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Dimedit"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0020">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1440">编辑标注文字</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Dimtedit"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0368">
+      <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1441">标注更新</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_DimstyleA"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="true" UID="TBB_0022">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    </ToolbarButton>
+    <ToolbarControl Control="DimStyleControl" UID="TBC_0001">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    </ToolbarControl>
+    <ToolbarButton IsSeparator="false" UID="TBB_0023">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1442">标注样式...</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Ddim"/>
+      </MenuItem>
+    </ToolbarButton>
+  </Toolbar>
+  <Toolbar ToolbarOrient="left" ToolbarVisible="show" xval="0" yval="0" rows="1" UID="ID_TbDraw">
+    <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+    <Alias>TB_DRAW</Alias>
+    <Alias>Draw</Alias>
+    <Description xlate="true" UID="ACAD_1656">绘图工具栏</Description>
+    <Name xlate="true" UID="ACAD_401">绘图</Name>
+    <ToolbarButton IsSeparator="false" UID="TBB_0024">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1443">直线</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Line"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0025">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1444">构造线</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Xline"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0026">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1445">多段线</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Pline"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0027">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1446">多边形</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Polygon"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0028">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1447">矩形</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Rectang"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0342">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1448">圆弧</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1607"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0343">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1449">圆</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1608"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0031">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1450">修订云线</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Revcloud"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0032">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1451">样条曲线</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Spline"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0344">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1452">椭圆</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1609"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0345">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1453">椭圆弧</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1610"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarFlyout UseOwnIcon="false" pTargetAlias="TB_INSERT" UID="ID_TbInsert">
+      <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+      <FlyoutName xlate="true" UID="ACAD_424">块</FlyoutName>
+      <SmallImage Name="RCDATA_16_BLOCK"/>
+      <LargeImage Name="RCDATA_32_BLOCK"/>
+    </ToolbarFlyout>
+    <ToolbarButton IsSeparator="false" UID="TBB_0035">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1454">创建块</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1588"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0346">
+      <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1455">点</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_PointMult"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0037">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1456">图案填充...</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Bhatch"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0038">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1457">渐变色...</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Gradient"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0039">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1458">面域</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Region"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0040">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1459">表格...</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Table"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0041">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1460">多行文字...</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Mtext"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0835">
+      <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_00021789">添加选定对象</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_AddSelected"/>
+      </MenuItem>
+    </ToolbarButton>
+  </Toolbar>
+  <Toolbar ToolbarOrient="right" ToolbarVisible="show" xval="0" yval="1" rows="1" UID="ID_TbDrawOrd">
+    <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+    <Alias>TB_DRAWORDER</Alias>
+    <Alias>Draw_Order</Alias>
+    <Description xlate="true" UID="ACAD_2538">绘图次序工具栏</Description>
+    <Name xlate="true" UID="ACAD_2533">绘图次序</Name>
+    <ToolbarButton IsSeparator="false" UID="TBB_0042">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1461">前置</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_DrawordeF"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0043">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1462">后置</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_DrawordeB"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0044">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1463">置于对象之上</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_DrawordeA"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0045">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1464">置于对象之下</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_DrawordeU"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="true" UID="TBB_0836">
+      <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+    </ToolbarButton>
+    <ToolbarFlyout UseOwnIcon="false" pTargetAlias="TB_DRAWORDER_ANNOTATION_TO_FRONT" UID="TBF_0016">
+      <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+      <FlyoutName xlate="true" UID="XLS_00021792">注释前置</FlyoutName>
+    </ToolbarFlyout>
+    <ToolbarButton IsSeparator="false" UID="TBB_0837">
+      <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_00021790">将图案填充项后置</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_HatchToBack"/>
+      </MenuItem>
+    </ToolbarButton>
+  </Toolbar>
+  <Toolbar ToolbarOrient="floating" ToolbarVisible="hide" xval="100" yval="170" rows="1" UID="ID_TbInquiry">
+    <ModifiedRev MajorVersion="18" MinorVersion="0" UserVersion="0"/>
+    <Alias>TB_INQUIRY</Alias>
+    <Alias>Inquiry</Alias>
+    <Description xlate="true" UID="ACAD_1657">查询工具栏</Description>
+    <Name xlate="true" UID="ACAD_418">查询</Name>
+    <ToolbarFlyout UseOwnIcon="false" pTargetAlias="TB_MEASUREMENT_TOOLS" UID="TBF_0014">
+      <ModifiedRev MajorVersion="18" MinorVersion="0" UserVersion="0"/>
+      <FlyoutName xlate="true" UID="XLS_00014422">测量工具</FlyoutName>
+    </ToolbarFlyout>
+    <ToolbarButton IsSeparator="false" UID="TBB_0048">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1467">面域/质量特性</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Massprop"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="true" UID="TBB_0049">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0050">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1468">列表</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_List"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0347">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1469">定位点</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1612"/>
+      </MenuItem>
+    </ToolbarButton>
+  </Toolbar>
+  <Toolbar ToolbarOrient="floating" ToolbarVisible="hide" xval="100" yval="190" rows="1" UID="TB_0001">
+    <ModifiedRev MajorVersion="23" MinorVersion="1" UserVersion="0"/>
+    <Alias>TB_INSERT</Alias>
+    <Alias>Insert</Alias>
+    <Description xlate="true" UID="XLS_0051"/>
+    <Name xlate="true" UID="ACAD_424">插入</Name>
+    <ToolbarButton IsSeparator="false" UID="TBB_0369">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1470">插入块</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1614"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="true" UID="TBB_0053">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0831">
+      <ModifiedRev MajorVersion="18" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_00015592">附着</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_ATTACH"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0054">
+      <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1471">附着外部参照</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Xref"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0429">
+      <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1840">插入 DWF 参考底图</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1697"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0510">
+      <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_6412">插入 DGN 参考底图</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1728"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0830">
+      <ModifiedRev MajorVersion="18" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_00015591">插入 PDF 参考底图</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_PDFATTACH"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0055">
+      <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1472">附着图像</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Image"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="true" UID="TBB_0056">
+      <ModifiedRev MajorVersion="19" MinorVersion="0" UserVersion="0"/>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0057">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1473">输入</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Import"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="true" UID="TBB_0058">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0059">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1474">OLE 对象...</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Insertobj"/>
+      </MenuItem>
+    </ToolbarButton>
+  </Toolbar>
+  <Toolbar ToolbarOrient="floating" ToolbarVisible="hide" xval="100" yval="350" rows="1" UID="ID_TbLayouts">
+    <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    <Alias>TB_LAYOUTS</Alias>
+    <Alias>Layouts</Alias>
+    <Description xlate="true" UID="ACAD_2127">布局工具栏</Description>
+    <Name xlate="true" UID="ACAD_2152">布局</Name>
+    <ToolbarButton IsSeparator="false" UID="TBB_0060">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1475">新建布局</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_NewLayout"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0061">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1476">来自样板的布局...</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_TmplLayou"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0062">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1477">页面设置管理器...</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_PlotSetup"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0063">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1478">显示“视口”对话框</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_VpDialog"/>
+      </MenuItem>
+    </ToolbarButton>
+  </Toolbar>
+  <Toolbar ToolbarOrient="right" ToolbarVisible="show" xval="0" yval="0" rows="1" UID="ID_TbModify">
+    <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+    <Alias>TB_MODIFY</Alias>
+    <Alias>Modify</Alias>
+    <Description xlate="true" UID="ACAD_1659">修改工具栏</Description>
+    <Name xlate="true" UID="ACAD_430">修改</Name>
+    <ToolbarButton IsSeparator="false" UID="TBB_0064">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1479">删除</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Erase"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0065">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1480">复制</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Copy"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0066">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1481">镜像</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Mirror"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0067">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1482">偏移</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Offset"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarFlyout UseOwnIcon="false" pTargetAlias="Array_Toolbar" UID="TBF_0017">
+      <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+      <FlyoutName xlate="true" UID="XLS_00021865">阵列</FlyoutName>
+    </ToolbarFlyout>
+    <ToolbarButton IsSeparator="false" UID="TBB_0069">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1484">移动</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Move"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0070">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1485">旋转</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Rotate"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0071">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1486">缩放</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Scale"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0072">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1487">拉伸</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Stretch"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0073">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1488">修剪</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Trim"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0074">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1489">延伸</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Extend"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0075">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1490">打断于点</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_BreakSele"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0076">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1491">打断</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Break"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0077">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1492">合并</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Join"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0078">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1493">倒角</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Chamfer"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0079">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1494">圆角</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Fillet"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_UIE_0841">
+      <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_00021836">光顺曲线</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_BLEND_CURVES"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0080">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1495">分解</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Explode"/>
+      </MenuItem>
+    </ToolbarButton>
+  </Toolbar>
+  <Toolbar ToolbarOrient="floating" ToolbarVisible="hide" xval="100" yval="270" rows="1" UID="ID_TbModifII">
+    <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+    <Alias>TB_MODIFY_II</Alias>
+    <Alias>Modify_II</Alias>
+    <Description xlate="true" UID="ACAD_1664">修改 II 工具栏</Description>
+    <Name xlate="true" UID="ACAD_493">修改 II</Name>
+    <ToolbarButton IsSeparator="false" UID="TBB_0081">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1496">显示顺序</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Draworder"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="true" UID="TBB_0082">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0337">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1497">编辑图案填充</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1584"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0338">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1498">编辑多段线</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1585"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0339">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1499">编辑样条曲线</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1586"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0841">
+      <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_00021848">编辑阵列</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_EditArray"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="true" UID="TBB_0086">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0340">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1500">编辑属性...</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1587"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0088">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1501">块属性管理器...</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_BattMan"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0089">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1502">同步属性</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_AttSync"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0090">
+      <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1503">数据提取...</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_EAttExt"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0845">
+      <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_00021932">删除重复对象</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_OVERKILL"/>
+      </MenuItem>
+    </ToolbarButton>
+  </Toolbar>
+  <Toolbar ToolbarOrient="top" ToolbarVisible="show" xval="2" yval="1" rows="1" UID="ID_TbObjectP">
+    <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    <Alias>TB_OBJECT_PROPERTIES</Alias>
+    <Alias>Properties</Alias>
+    <Description xlate="true" UID="ACAD_1660">对象特性工具栏</Description>
+    <Name xlate="true" UID="ACAD_447">特性</Name>
+    <ToolbarControl Control="OPTColorControl" UID="TBC_0002">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    </ToolbarControl>
+    <ToolbarButton IsSeparator="true" UID="TBB_0091">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    </ToolbarButton>
+    <ToolbarControl Control="LineTypeControl" UID="TBC_0003">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    </ToolbarControl>
+    <ToolbarButton IsSeparator="true" UID="TBB_0092">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    </ToolbarButton>
+    <ToolbarControl Control="LineWeightControl" UID="TBC_0004">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    </ToolbarControl>
+    <ToolbarButton IsSeparator="true" UID="TBB_0093">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    </ToolbarButton>
+    <ToolbarControl Control="PlotStyleControl" UID="TBC_0005">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    </ToolbarControl>
+  </Toolbar>
+  <Toolbar ToolbarOrient="top" ToolbarVisible="show" xval="1" yval="1" rows="1" UID="ID_TbLayer">
+    <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+    <Alias>TB_LAYER</Alias>
+    <Alias>Layers</Alias>
+    <Description xlate="true" UID="ACAD_2486">图层工具栏</Description>
+    <Name xlate="true" UID="ACAD_2477">图层</Name>
+    <ToolbarButton IsSeparator="false" UID="TBB_0348">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1504">图层特性管理器</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1613"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarControl Control="LayerControl" UID="TBC_0006">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    </ToolbarControl>
+    <ToolbarButton IsSeparator="false" UID="TBB_0095">
+      <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1505">将对象的图层置为当前</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Laymcur"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0096">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1506">上一个图层</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_LayerP"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0516">
+      <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_6517">图层状态管理器</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_LayerStatesMgr"/>
+      </MenuItem>
+    </ToolbarButton>
+  </Toolbar>
+  <Toolbar ToolbarOrient="top" ToolbarVisible="show" xval="1" yval="0" rows="1" UID="ID_TbStyles">
+    <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+    <Alias>TB_STYLES</Alias>
+    <Alias>Styles</Alias>
+    <Description xlate="true" UID="ACAD_2485">样式工具栏</Description>
+    <Name xlate="true" UID="ACAD_2479">样式</Name>
+    <ToolbarButton IsSeparator="false" UID="TBB_0097">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1507">文字样式...</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Style"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarControl Control="TxtStyleControl" UID="TBC_0007">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    </ToolbarControl>
+    <ToolbarButton IsSeparator="true" UID="TBB_0098">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0099">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1508">标注样式...</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Ddim"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarControl Control="DimStyleControl" UID="TBC_0008">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    </ToolbarControl>
+    <ToolbarButton IsSeparator="true" UID="TBB_0100">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0101">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1509">表格样式...</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_TblStyle"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarControl Control="TblStyleControl" UID="TBC_0009">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    </ToolbarControl>
+    <ToolbarButton IsSeparator="true" UID="TBB_0635">
+      <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0636">
+      <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_6676">多重引线样式</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Mleader_Style"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarControl Control="MldStyleControl" UID="TBC_0035">
+      <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+    </ToolbarControl>
+  </Toolbar>
+  <Toolbar ToolbarOrient="floating" ToolbarVisible="hide" xval="100" yval="210" rows="1" UID="ID_TbOsnap">
+    <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    <Alias>TB_OBJECT_SNAP</Alias>
+    <Alias>Object_Snap</Alias>
+    <Description xlate="true" UID="ACAD_1661">对象捕捉工具栏</Description>
+    <Name xlate="true" UID="ACAD_451">对象捕捉</Name>
+    <ToolbarButton IsSeparator="false" UID="TBB_0102">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1510">临时追踪点</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Tracking"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0349">
+      <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1511">捕捉自</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_From"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="true" UID="TBB_0350">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0351">
+      <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1512">捕捉到端点</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_OsnapEndp"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0352">
+      <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1513">捕捉到中点</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_OsnapMidp"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0353">
+      <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1514">捕捉到交点</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_OsnapInte"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0354">
+      <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1515">捕捉到外观交点</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_OsnapAppa"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0355">
+      <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1516">捕捉到延长线</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_OsnapExte"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="true" UID="TBB_0356">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0357">
+      <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1517">捕捉到圆心</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_OsnapCent"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0358">
+      <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1518">捕捉到象限点</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_OsnapQuad"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0359">
+      <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1519">捕捉到切点</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_OsnapTang"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="true" UID="TBB_0360">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0361">
+      <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1520">捕捉到垂足</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_OsnapPerp"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0362">
+      <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1521">捕捉到平行线</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_OsnapPara"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0363">
+      <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1522">捕捉到插入点</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_OsnapInse"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0364">
+      <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1523">捕捉到节点</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_OsnapNode"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="true" UID="TBB_0365">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0366">
+      <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1524">捕捉到最近点</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_OsnapNear"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0367">
+      <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1525">无捕捉</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_OsnapNone"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="true" UID="TBB_0122">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0123">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1526">对象捕捉设置...</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Osnap"/>
+      </MenuItem>
+    </ToolbarButton>
+  </Toolbar>
+  <Toolbar ToolbarOrient="floating" ToolbarVisible="hide" xval="100" yval="350" rows="1" UID="ID_TbOrbit">
+    <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+    <Alias>TB_3DNAV</Alias>
+    <Description xlate="true" UID="ACAD_2048">三维导航工具栏</Description>
+    <Name xlate="true" UID="ACAD_2047">三维导航</Name>
+    <ToolbarButton IsSeparator="false" UID="TBB_0124">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1527">三维平移</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_3dpan"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0125">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1528">三维缩放</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_3dzoom"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarFlyout UseOwnIcon="false" pTargetAlias="TB_ORBIT" UID="TBF_0008">
+      <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+      <FlyoutName xlate="true" UID="XLS_6326">动态观察</FlyoutName>
+    </ToolbarFlyout>
+    <ToolbarFlyout UseOwnIcon="false" pTargetAlias="TB_CAMERA_ADJUSTMENT" UID="TBF_0009">
+      <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+      <FlyoutName xlate="true" UID="XLS_6327">相机调整</FlyoutName>
+    </ToolbarFlyout>
+    <ToolbarFlyout UseOwnIcon="false" pTargetAlias="TB_WALKANDFLY" UID="TBF_0010">
+      <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+      <FlyoutName xlate="true" UID="XLS_6328">漫游和飞行</FlyoutName>
+    </ToolbarFlyout>
+    <ToolbarButton IsSeparator="true" UID="TBB_0133">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    </ToolbarButton>
+    <ToolbarControl Control="ViewControl" UID="TBC_0010">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    </ToolbarControl>
+  </Toolbar>
+  <Toolbar ToolbarOrient="floating" ToolbarVisible="hide" xval="100" yval="170" rows="1" UID="ID_TbRefedit">
+    <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    <Alias>TB_REFEDIT</Alias>
+    <Alias>Refedit</Alias>
+    <Description xlate="true" UID="ACAD_2027">参照编辑工具栏</Description>
+    <Name xlate="true" UID="ACAD_2022">参照编辑</Name>
+    <ToolbarButton IsSeparator="false" UID="TBB_0141">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1543">在位编辑参照</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_RefEditor"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="true" UID="TBB_0142">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    </ToolbarButton>
+    <ToolbarControl Control="RefblknameControl" UID="TBC_0011">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    </ToolbarControl>
+    <ToolbarButton IsSeparator="true" UID="TBB_0143">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0144">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1544">添加到工作集</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_RefAdd"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0145">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1545">从工作集删除</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_RefRemove"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0146">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1546">关闭参照</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_RefDscrd"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0147">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1547">保存参照编辑</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_RefSave"/>
+      </MenuItem>
+    </ToolbarButton>
+  </Toolbar>
+  <Toolbar ToolbarOrient="floating" ToolbarVisible="hide" xval="100" yval="370" rows="1" UID="ID_TbReferen">
+    <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+    <Alias>TB_REFERENCE</Alias>
+    <Alias>Reference</Alias>
+    <Description xlate="true" UID="ACAD_1846">参照工具栏</Description>
+    <Name xlate="true" UID="ACAD_1842">参照</Name>
+    <ToolbarButton IsSeparator="false" UID="TBB_0446">
+      <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_6059">外部参照</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_ExtReferences"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="true" UID="TBB_0442">
+      <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0444">
+      <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_6057">附着外部参照</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Xattach"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0441">
+      <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_6055">剪裁外部参照</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_XrefClip"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0151">
+      <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1551">外部参照绑定</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Xbind"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0152">
+      <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1552">外部参照边框</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Xclipfram"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="true" UID="TBB_0153">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0445">
+      <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_6058">附着图像</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Imageatta"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0156">
+      <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1555">剪裁图像</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_ImageClip"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0157">
+      <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1556">调整图像</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Imageadju"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0158">
+      <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1557">图像质量</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Imagequal"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0159">
+      <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1558">图像透明度</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Transpare"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0160">
+      <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1559">图像边框</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Imagefram"/>
+      </MenuItem>
+    </ToolbarButton>
+  </Toolbar>
+  <Toolbar ToolbarOrient="floating" ToolbarVisible="hide" xval="100" yval="230" rows="1" UID="ID_TbRender">
+    <ModifiedRev MajorVersion="21" MinorVersion="0" UserVersion="0"/>
+    <Alias>TB_RENDER</Alias>
+    <Alias>Render</Alias>
+    <Description xlate="true" UID="ACAD_1662">渲染工具栏</Description>
+    <Name xlate="true" UID="ACAD_468">渲染</Name>
+    <ToolbarButton IsSeparator="false" UID="TBB_0161">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1560">隐藏</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Hide"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="true" UID="TBB_0162">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="true" UID="TBB_0164">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    </ToolbarButton>
+    <ToolbarFlyout UseOwnIcon="true" pTargetAlias="TB_LIGHTS" UID="TBF_0002">
+      <ModifiedRev MajorVersion="24" MinorVersion="1" UserVersion="0"/>
+      <FlyoutName xlate="true" UID="XLS_1813">光源</FlyoutName>
+      <SmallImage Name="RCDATA_16_LIGHT"/>
+      <LargeImage Name="RCDATA_32_LIGHT"/>
+    </ToolbarFlyout>
+    <ToolbarButton IsSeparator="false" UID="TBB_0414">
+      <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1812">光源列表</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_LightList"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_MaterialsBrowser">
+      <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_00015810">材质浏览器</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Materials"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0167">
+      <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1564">材质编辑器</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_MaterialsEditor"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarFlyout UseOwnIcon="false" pTargetAlias="TB_MATMAPPING" UID="TBF_0004">
+      <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+      <FlyoutName xlate="true" UID="XLS_1830">贴图</FlyoutName>
+      <SmallImage Name="RCDATA_16_PLANAR_MAPPING"/>
+      <LargeImage Name="RCDATA_16_PLANAR_MAPPING"/>
+    </ToolbarFlyout>
+    <ToolbarButton IsSeparator="true" UID="TBB_0170">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="true" UID="TBB_0176">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0177">
+      <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1572">高级渲染设置...</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Rpref"/>
+      </MenuItem>
+    </ToolbarButton>
+  </Toolbar>
+  <Toolbar ToolbarOrient="floating" ToolbarVisible="hide" xval="100" yval="250" rows="1" UID="ID_TbSolids">
+    <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+    <Alias>TB_SOLIDS</Alias>
+    <Alias>Solids</Alias>
+    <Description xlate="true" UID="ACAD_1663">建模工具栏</Description>
+    <Name xlate="true" UID="ACAD_478">建模</Name>
+    <ToolbarButton IsSeparator="false" UID="TBB_0431">
+      <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_6028">多段体</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Polysolid"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0179">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1574">长方体</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Box"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0183">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1578">楔体</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Wedge"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0182">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1577">圆锥体</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Cone"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0180">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1575">球体</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Sphere"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0181">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1576">圆柱体</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Cylinder"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0184">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1579">圆环体</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Torus"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0382">
+      <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1725">棱锥体</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Pyramid"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0432">
+      <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_6029">螺旋</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Helix"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0433">
+      <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_6030">平面曲面</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Planesurf"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="true" UID="TBB_0185">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0186">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1580">拉伸</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Extrude"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0508">
+      <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_6331">按住并拖动 (CTRL+ALT)</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Presspull"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0385">
+      <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1728">扫掠</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Sweep"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0187">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1581">旋转</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Revolve"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0384">
+      <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1727">放样</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Loft"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="true" UID="TBB_0188">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0434">
+      <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_6031">并集</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Union"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0435">
+      <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_6032">差集</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Subtract"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0436">
+      <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_6033">交集</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Intersect"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="true" UID="TBB_0192">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0437">
+      <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_6036">三维移动</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_3DMove"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0438">
+      <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_6039">三维旋转</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_3DROTATE"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0440">
+      <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_6043">三维对齐</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_3dalign"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBBU_0008">
+      <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_00014393">三维阵列</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_3darray"/>
+      </MenuItem>
+    </ToolbarButton>
+  </Toolbar>
+  <Toolbar ToolbarOrient="floating" ToolbarVisible="hide" xval="100" yval="250" rows="1" UID="ID_TbSolids2">
+    <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+    <Alias>TB_SOLIDS2</Alias>
+    <Alias>Solid_Editing</Alias>
+    <Description xlate="true" UID="ACAD_1971">实体编辑工具栏</Description>
+    <Name xlate="true" UID="ACAD_1972">实体编辑</Name>
+    <ToolbarButton IsSeparator="false" UID="TBB_0196">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1588">并集</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Union"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0197">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1589">差集</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Subtract"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0198">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1590">交集</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Intersect"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="true" UID="TBB_0199">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0200">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1591">拉伸面</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_FaceExtru"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0201">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1592">移动面</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_FaceMove"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0202">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1593">偏移面</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_FaceOffse"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0203">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1594">删除面</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_FaceDel"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0204">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1595">旋转面</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_FaceRotat"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0205">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1596">倾斜面</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_FaceTaper"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0206">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1597">复制面</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_FaceCopy"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0207">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1598">着色面</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_FaceColor"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="true" UID="TBB_0208">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_SM_201">
+      <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_SM_1799">圆角边</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_FILLET_EDGE"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_SM_202">
+      <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_SM_1789">倒角边</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_CHAMFER_EDGE"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0209">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1599">复制边</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_EdgeCopy"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0210">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1600">着色边</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_EdgeColor"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="true" UID="TBB_0211">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0212">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1601">压印</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Imprint"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0213">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1602">清除</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_BodyCln"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0214">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1603">分割</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Separate"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0215">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1604">抽壳</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Shell"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0216">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1605">检查</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_BodyChk"/>
+      </MenuItem>
+    </ToolbarButton>
+  </Toolbar>
+  <Toolbar ToolbarOrient="floating" ToolbarVisible="hide" xval="0" yval="250" rows="1" UID="ID_TBSurfCreationFlyOut">
+    <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+    <Alias>TB_SURFACE_CREATION_FLYOUT</Alias>
+    <Name xlate="true" UID="ACAD_SM_1072">曲面创建 II</Name>
+    <ToolbarButton IsSeparator="false" UID="TBB_SM_0384">
+      <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_SM_1727">放样</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_SURF_LOFT"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_SM_0186">
+      <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_SM_1580">拉伸</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_SURF_EXTRUDE"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_SM_0187">
+      <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_SM_1581">旋转</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_SURF_REVOLVE"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_SM_0385">
+      <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_SM_1728">扫掠</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_SURF_SWEEP"/>
+      </MenuItem>
+    </ToolbarButton>
+  </Toolbar>
+  <Toolbar ToolbarOrient="floating" ToolbarVisible="hide" xval="200" yval="200" rows="1" UID="ID_TBSurfCreation">
+    <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+    <Alias>TB_SURFACE_CREATION</Alias>
+    <Name xlate="true" UID="XLS_2313">曲面创建</Name>
+    <ToolbarFlyout UseOwnIcon="false" pTargetAlias="TB_SURFACE_CREATION_FLYOUT" UID="TBB_SURF_0001">
+      <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+      <FlyoutName xlate="true" UID="XLS_2330">曲面常规</FlyoutName>
+    </ToolbarFlyout>
+    <ToolbarButton IsSeparator="false" UID="TBBU_2318">
+      <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_2320">曲面网络</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_SURF_NETWORK"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBBU_2319">
+      <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_2321">平面曲面</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Planesurf"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="true" UID="TBBU_2320">
+      <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBBU_2321">
+      <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_2322">曲面过渡</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_SURF_BLEND"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBBU_2322">
+      <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_2323">曲面修补</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_SURF_PATCH"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBBU_2323">
+      <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_2324">曲面偏移</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_SURF_OFFSET"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="true" UID="TBBU_2324">
+      <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBBU_2325">
+      <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_2325">曲面圆角</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_SURF_FILLET"/>
+      </MenuItem>
+    </ToolbarButton>
+  </Toolbar>
+  <Toolbar ToolbarOrient="floating" ToolbarVisible="hide" xval="200" yval="250" rows="1" UID="ID_TBSurfEditing">
+    <ModifiedRev MajorVersion="19" MinorVersion="0" UserVersion="0"/>
+    <Alias>TB_SURFACE_Editing</Alias>
+    <Name xlate="true" UID="XLS_2301">曲面编辑</Name>
+    <ToolbarButton IsSeparator="false" UID="TBBU_2301">
+      <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_2302">曲面修剪</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_SURF_TRIM"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBBU_2302">
+      <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_2303">曲面取消修剪</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_SURF_UNTRIM"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBBU_2303">
+      <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_2304">曲面延伸</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_SURF_EXTEND"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="true" UID="TBBU_2304">
+      <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBBU_2305">
+      <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_2305">曲面造型</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_SURF_SCULPT"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBBU_2306">
+      <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_2306">转换为 NURBS 曲面</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_SURF_CONVTONURBS"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBBU_2307">
+      <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_2307">转换为网格</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_MESH_SMOOTH"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="true" UID="TBBU_2308">
+      <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0857">
+      <ModifiedRev MajorVersion="19" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_00024825">提取边</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_ExtractEdges"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0858">
+      <ModifiedRev MajorVersion="19" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_00024829">提取等值线</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_EXTRACTISOLINES"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="true" UID="TBB_0856">
+      <ModifiedRev MajorVersion="19" MinorVersion="0" UserVersion="0"/>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBBU_2309">
+      <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_2308">曲面控制点 - 显示</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_CV_SHOW"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBBU_2310">
+      <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_2309">曲面控制点 - 隐藏</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_CV_HIDE"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBBU_2311">
+      <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_2310">曲面控制点 - 添加</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_SURF_CV_ADD"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBBU_2312">
+      <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_2311">曲面控制点 - 删除</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_SURF_CV_REMOVE"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBBU_2313">
+      <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_2312">曲面控制点 - 重新生成</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_SURF_CV_REBUILD"/>
+      </MenuItem>
+    </ToolbarButton>
+  </Toolbar>
+  <Toolbar ToolbarOrient="top" ToolbarVisible="hide" xval="0" yval="0" rows="1" UID="TB_0008">
+    <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+    <Alias>STANDARD_ANNOTATION</Alias>
+    <Description xlate="true" UID="XLS_6600">标准工具栏</Description>
+    <Name xlate="true" UID="XLS_6599">标准注释</Name>
+    <ToolbarButton IsSeparator="false" UID="TBB_0595">
+      <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_6601">新建</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_QNew"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0596">
+      <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_6602">打开...</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Open"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0597">
+      <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_6603">保存</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Save"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="true" UID="TBB_0598">
+      <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0599">
+      <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_6604">打印...</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Print"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0600">
+      <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_6605">打印预览</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Preview"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0601">
+      <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_6606">发布...</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Pub"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0602">
+      <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_6607">3DDWF</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1696"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="true" UID="TBB_0603">
+      <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0607">
+      <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_6611">特性匹配</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Matchprop"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0608">
+      <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_6612">块编辑器</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Bedit"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="true" UID="TBB_0609">
+      <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+    </ToolbarButton>
+    <ToolbarControl Control="UndoSkinnyButtonControl" UID="TBC_0032">
+      <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+    </ToolbarControl>
+    <ToolbarControl Control="RedoSkinnyButtonControl" UID="TBC_0033">
+      <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+    </ToolbarControl>
+    <ToolbarButton IsSeparator="true" UID="TBB_0610">
+      <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0615">
+      <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_6617">特性</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Modify"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0616">
+      <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_6618">设计中心</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Content"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0617">
+      <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_6619">工具选项板窗口</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_TPalette"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0618">
+      <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_6620">图纸集管理器</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_SSMPalette"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0619">
+      <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_6621">标记集管理器</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_MarkupMgr"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0620">
+      <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_6622">快速计算器</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_QCalc"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="true" UID="TBB_0621">
+      <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0622">
+      <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_6623">帮助</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Help"/>
+      </MenuItem>
+    </ToolbarButton>
+  </Toolbar>
+  <Toolbar ToolbarOrient="top" ToolbarVisible="show" xval="0" yval="0" rows="1" UID="ID_TbStandar">
+    <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+    <Alias>TB_STANDARD</Alias>
+    <Alias>Standard</Alias>
+    <Description xlate="true" UID="ACAD_1665">标准工具栏</Description>
+    <Name xlate="true" UID="ACAD_507">标准</Name>
+    <ToolbarButton IsSeparator="false" UID="TBB_0217">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1606">新建</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_QNew"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0218">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1607">打开...</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Open"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0219">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1608">保存</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Save"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="true" UID="TBB_0220">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0221">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1609">打印...</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Print"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0222">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1610">打印预览</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Preview"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0223">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1611">发布...</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Pub"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0428">
+      <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1838">3DDWF</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1696"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="true" UID="TBB_0224">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0225">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1612">剪切</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Cutclip"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0226">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1613">复制</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Copyclip"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0227">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1614">粘贴</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Pasteclip"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0228">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1615">特性匹配</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Matchprop"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0229">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1616">块编辑器</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Bedit"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="true" UID="TBB_0230">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    </ToolbarButton>
+    <ToolbarControl Control="UndoSkinnyButtonControl" UID="TBC_0012">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    </ToolbarControl>
+    <ToolbarControl Control="RedoSkinnyButtonControl" UID="TBC_0013">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    </ToolbarControl>
+    <ToolbarButton IsSeparator="true" UID="TBB_0231">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0232">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1617">实时平移</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1572"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0233">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1618">实时缩放</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1573"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarFlyout UseOwnIcon="false" pTargetAlias="TB_ZOOM" UID="ID_TbZoom">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <FlyoutName xlate="true" UID="ACAD_575">缩放</FlyoutName>
+      <SmallImage Name="RCDATA_16_ZOOM"/>
+      <LargeImage Name="RCDATA_16_ZOOM"/>
+    </ToolbarFlyout>
+    <ToolbarButton IsSeparator="false" UID="TBB_0234">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1619">缩放上一个</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_0278"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="true" UID="TBB_0235">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0236">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1620">特性</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Modify"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0237">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1621">设计中心</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Content"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0238">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1622">工具选项板窗口</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_TPalette"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0239">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1623">图纸集管理器</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_SSMPalette"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0341">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1624">标记集管理器</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_MarkupMgr"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0370">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1625">快速计算器</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_QCalc"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="true" UID="TBB_0242">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0243">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1626">帮助</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Help"/>
+      </MenuItem>
+    </ToolbarButton>
+  </Toolbar>
+  <Toolbar ToolbarOrient="floating" ToolbarVisible="hide" xval="100" yval="380" rows="1" UID="ID_TbCadStd">
+    <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    <Alias>TB_STANDARDS</Alias>
+    <Alias>CAD_Standards</Alias>
+    <Description xlate="true" UID="ACAD_2463">CAD 标准工具栏</Description>
+    <Name xlate="true" UID="ACAD_2423">CAD 标准</Name>
+    <ToolbarButton IsSeparator="false" UID="TBB_0244">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1627">配置...</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Standards"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0245">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1628">检查...</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_CheckStan"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0246">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1629">图层转换器...</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_LayTrans"/>
+      </MenuItem>
+    </ToolbarButton>
+  </Toolbar>
+  <Toolbar ToolbarOrient="floating" ToolbarVisible="hide" xval="100" yval="320" rows="1" UID="ID_TbText">
+    <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    <Alias>TB_TEXT</Alias>
+    <Alias>Text</Alias>
+    <Description xlate="true" UID="ACAD_2464">文字工具栏</Description>
+    <Name xlate="true" UID="ACAD_2428">文字</Name>
+    <ToolbarButton IsSeparator="false" UID="TBB_0266">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1646">多行文字...</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Mtext"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0267">
+      <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1647">单行文字</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Text"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0268">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1648">编辑...</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Ddedit"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0269">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1649">查找...</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_TextFind"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0645">
+      <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_6693">拼写检查</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Spell"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0270">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1650">文字样式...</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Style"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0271">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1651">比例</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Scaletext"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0272">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1652">对正</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Justifyte"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0273">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1653">在空间之间转换距离</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Spacetran"/>
+      </MenuItem>
+    </ToolbarButton>
+  </Toolbar>
+  <Toolbar ToolbarOrient="floating" ToolbarVisible="hide" xval="100" yval="310" rows="1" UID="ID_TbUcs">
+    <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+    <Alias>TB_UCS</Alias>
+    <Alias>UCS</Alias>
+    <Description xlate="true" UID="ACAD_1667">UCS 工具栏</Description>
+    <Name xlate="true" UID="ACAD_549">UCS</Name>
+    <ToolbarButton IsSeparator="false" UID="TBB_0274">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1654">UCS</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Ucs"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="true" UID="TBB_0276">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0279">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1657">世界</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_UcsWorld"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0277">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1656">上一个 UCS</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_UcsPrevio"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="true" UID="TBB_0278">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0281">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1659">面 UCS</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_0307"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0280">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1658">对象</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_UcsObject"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0282">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1660">视图</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_UcsView"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="true" UID="TBB_0283">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0284">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1661">原点</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_UcsOrigin"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0285">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1662">Z 轴矢量</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_UcsZAxVec"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0286">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1663">三点</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Ucs3point"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="true" UID="TBB_0287">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0288">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1664">X</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_UcsXAxRot"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0289">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1665">Y</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_UcsYAxRot"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0290">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1666">Z</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_UcsZAxRot"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="true" UID="TBB_0291">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0292">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1667">应用</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_UcsApply"/>
+      </MenuItem>
+    </ToolbarButton>
+  </Toolbar>
+  <Toolbar ToolbarOrient="floating" ToolbarVisible="hide" xval="100" yval="300" rows="1" UID="ID_TbUcsName">
+    <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+    <Alias>TB_UCSII</Alias>
+    <Alias>UCS_II</Alias>
+    <Description xlate="true" UID="ACAD_2231">UCS II 工具栏</Description>
+    <Name xlate="true" UID="ACAD_2230">UCS II</Name>
+    <ToolbarButton IsSeparator="false" UID="TBB_0468">
+      <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_6116">UCS</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Ucs"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0293">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1668">命名 UCS...</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Dducs"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="true" UID="TBB_0295">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    </ToolbarButton>
+    <ToolbarControl Control="UCSControl" UID="TBC_0014">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    </ToolbarControl>
+  </Toolbar>
+  <Toolbar ToolbarOrient="floating" ToolbarVisible="hide" xval="-2147483648" yval="-2147483648" rows="1" UID="ID_TbWorkspaces">
+    <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    <Alias>TB_WORKSPACES</Alias>
+    <Alias>Workspaces</Alias>
+    <Description xlate="true" UID="ACAD_2656">工作空间工具栏</Description>
+    <Name xlate="true" UID="ACAD_2659">工作空间</Name>
+    <ToolbarControl Control="WorkspacesControl" UID="TBC_0015">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    </ToolbarControl>
+    <ToolbarButton IsSeparator="false" UID="TBB_0296">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1670">工作空间设置...</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_WsSettings"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0335">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1671">我的工作空间</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1564"/>
+      </MenuItem>
+    </ToolbarButton>
+  </Toolbar>
+  <Toolbar ToolbarOrient="floating" ToolbarVisible="hide" xval="100" yval="330" rows="1" UID="ID_TbViewpoi">
+    <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+    <Alias>TB_VIEWPOINT</Alias>
+    <Alias>View</Alias>
+    <Description xlate="true" UID="ACAD_1668">视点工具栏</Description>
+    <Name xlate="true" UID="ACAD_563">视图</Name>
+    <ToolbarButton IsSeparator="false" UID="TBB_0298">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1672">命名视图...</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Ddview"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="true" UID="TBB_0299">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0300">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1673">俯视</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_VpointTop"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0301">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1674">仰视</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_VpointBot"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0302">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1675">左视</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_VpointLef"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0303">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1676">右视</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_VpointRig"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0304">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1677">前视</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_VpointFro"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0305">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1678">后视</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_VpointBac"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="true" UID="TBB_0306">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0307">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1679">西南等轴测</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_VpointSW"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0308">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1680">东南等轴测</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_VpointSE"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0309">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1681">东北等轴测</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_VpointNE"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0310">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1682">西北等轴测</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_VpointNW"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="true" UID="TBB_0311">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0312">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1683">创建相机</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Camera"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="true" UID="TBB_0313">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0386">
+      <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1749">上一视图</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_ViewPrevious"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarControl Control="NamedViewControl" UID="TBC_0016">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    </ToolbarControl>
+  </Toolbar>
+  <Toolbar ToolbarOrient="floating" ToolbarVisible="hide" xval="100" yval="350" rows="1" UID="ID_TbVpCreat">
+    <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    <Alias>TB_VIEWPORTS</Alias>
+    <Alias>Viewports</Alias>
+    <Description xlate="true" UID="ACAD_2130">视口创建工具栏</Description>
+    <Name xlate="true" UID="ACAD_2158">视口</Name>
+    <ToolbarButton IsSeparator="false" UID="TBB_0314">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1684">显示“视口”对话框</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_VpDialog"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0315">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1685">单个视口</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_VpSingle"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0316">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1686">多边形视口</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_VpPoly"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0317">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1687">将对象转换为视口</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_VpConvert"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0336">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1688">剪裁现有视口</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1571"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="true" UID="TBB_0319">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    </ToolbarButton>
+    <ToolbarControl Control="ViewportScaleControl" UID="TBC_0017">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    </ToolbarControl>
+  </Toolbar>
+  <Toolbar ToolbarOrient="floating" ToolbarVisible="hide" xval="100" yval="380" rows="1" UID="ID_TbWeb">
+    <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    <Alias>TB_WEB</Alias>
+    <Alias>Web</Alias>
+    <Description xlate="true" UID="ACAD_2391">Web 工具栏</Description>
+    <Name xlate="true" UID="ACAD_2166">Web</Name>
+    <ToolbarButton IsSeparator="false" UID="TBB_0320">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1689">后退</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_HlnkBack"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0321">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1690">前进</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_HlnkFwd"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0322">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1691">停止浏览</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_HlnkStop"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0323">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1692">浏览 Web</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Browser"/>
+      </MenuItem>
+    </ToolbarButton>
+  </Toolbar>
+  <Toolbar ToolbarOrient="floating" ToolbarVisible="hide" xval="100" yval="350" rows="1" UID="TB_0002">
+    <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    <Alias>TB_ZOOM</Alias>
+    <Alias>Zoom</Alias>
+    <Description xlate="true" UID="XLS_0076"/>
+    <Name xlate="true" UID="ACAD_575">缩放</Name>
+    <ToolbarButton IsSeparator="false" UID="TBB_0324">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1693">窗口缩放</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1574"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0325">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1694">动态缩放</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1575"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0326">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1695">比例缩放</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1576"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0327">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1696">中心缩放</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1577"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0328">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1697">缩放对象</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1578"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="true" UID="TBB_0329">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0330">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1698">放大</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1579"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0331">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1699">缩小</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1580"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="true" UID="TBB_0332">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0333">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1700">全部缩放</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_ZoomAll"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0334">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1701">范围缩放</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1582"/>
+      </MenuItem>
+    </ToolbarButton>
+  </Toolbar>
+  <Toolbar ToolbarOrient="floating" ToolbarVisible="hide" xval="310" yval="325" rows="1" UID="ID_TbLayer2">
+    <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+    <Alias>TB_LAYER2</Alias>
+    <Alias>Layers2</Alias>
+    <Name xlate="true" UID="XLS_1706">图层 II</Name>
+    <ToolbarButton IsSeparator="false" UID="TBB_0372">
+      <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1708">图层匹配</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_LAYMCH"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0373">
+      <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1709">更改为当前图层</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_LAYCUR"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0374">
+      <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1710">图层隔离</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_LAYISO"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0509">
+      <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_6403">取消图层隔离</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_LAYUNISO"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0375">
+      <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1711">将对象复制到新图层</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_COPYTO"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0376">
+      <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1712">图层漫游...</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_LAYWLK"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="true" UID="TBB_0377">
+      <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0378">
+      <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1713">图层冻结</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_LAYFRZ"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0379">
+      <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1714">图层关闭</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_LAYOFF"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0380">
+      <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1715">图层锁定</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_LAYLCK"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0381">
+      <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1716">图层解锁</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_LAYULK"/>
+      </MenuItem>
+    </ToolbarButton>
+  </Toolbar>
+  <Toolbar ToolbarOrient="floating" ToolbarVisible="hide" xval="200" yval="200" rows="1" UID="ID_TbLights">
+    <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+    <Alias>TB_LIGHTS</Alias>
+    <Name xlate="true" UID="XLS_1793">光源</Name>
+    <ToolbarButton IsSeparator="false" UID="TBB_0405">
+      <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1794">新建点光源</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_PointLight"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0406">
+      <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1795">新建聚光灯</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_SpotLight"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0407">
+      <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1796">新建平行光</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_DistantLight"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="true" UID="TBB_0404">
+      <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0409">
+      <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1797">光源列表</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_LightList"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="true" UID="TBB_0408">
+      <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0410">
+      <ModifiedRev MajorVersion="19" MinorVersion="1" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1798">地理位置...</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_GeoLocation_Map"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0411">
+      <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1799">阳光特性</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_SunProperties"/>
+      </MenuItem>
+    </ToolbarButton>
+  </Toolbar>
+  <Toolbar ToolbarOrient="floating" ToolbarVisible="hide" xval="200" yval="200" rows="1" UID="ID_TbMatMapping">
+    <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+    <Alias>TB_MATMAPPING</Alias>
+    <Name xlate="true" UID="XLS_1822">贴图</Name>
+    <ToolbarButton IsSeparator="false" UID="TBB_0415">
+      <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1824">平面贴图</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_PlanarMapping"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0417">
+      <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1826">长方体贴图</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_BoxMapping"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0418">
+      <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1827">球面贴图</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_SphericalMapping"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0419">
+      <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1828">柱面贴图</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_CylindricalMapping"/>
+      </MenuItem>
+    </ToolbarButton>
+  </Toolbar>
+  <Toolbar ToolbarOrient="floating" ToolbarVisible="hide" xval="200" yval="200" rows="1" UID="TB_0003">
+    <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+    <Alias>TB_VISUALSTYLE</Alias>
+    <Description xlate="true" UID="XLS_6280">视觉样式工具栏</Description>
+    <Name xlate="true" UID="XLS_6302">视觉样式</Name>
+    <ToolbarButton IsSeparator="false" UID="TBB_0505">
+      <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_6301">二维线框</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1725"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="true" UID="TBB_0500">
+      <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0501">
+      <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_6292">三维线框视觉样式</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1722"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0502">
+      <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_6295">三维隐藏视觉样式</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1723"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0499">
+      <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_6289">真实视觉样式</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1721"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0498">
+      <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_6286">概念视觉样式</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1726"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="true" UID="TBB_0503">
+      <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0504">
+      <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_6298">管理视觉样式</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1724"/>
+      </MenuItem>
+    </ToolbarButton>
+  </Toolbar>
+  <Toolbar ToolbarOrient="floating" ToolbarVisible="hide" xval="200" yval="200" rows="1" UID="TB_0004">
+    <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+    <Alias>TB_ORBIT</Alias>
+    <Name xlate="true" UID="XLS_6321">动态观察</Name>
+    <ToolbarButton IsSeparator="false" UID="TBB_0126">
+      <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1529">受约束的动态观察</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Constrained_Orbit"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0396">
+      <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_4198">自由动态观察</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Free_Orbit"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0127">
+      <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1530">连续动态观察</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_3dcorbit"/>
+      </MenuItem>
+    </ToolbarButton>
+  </Toolbar>
+  <Toolbar ToolbarOrient="floating" ToolbarVisible="hide" xval="200" yval="200" rows="1" UID="TB_0005">
+    <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+    <Alias>TB_CAMERA_ADJUSTMENT</Alias>
+    <Name xlate="true" UID="XLS_6322">相机调整</Name>
+    <ToolbarButton IsSeparator="false" UID="TBB_0128">
+      <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1531">回旋</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_3dswivel"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0129">
+      <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1532">调整视距</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_3ddistanc"/>
+      </MenuItem>
+    </ToolbarButton>
+  </Toolbar>
+  <Toolbar ToolbarOrient="floating" ToolbarVisible="hide" xval="200" yval="200" rows="1" UID="TB_0006">
+    <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+    <Alias>TB_WALKANDFLY</Alias>
+    <Name xlate="true" UID="XLS_6323">漫游和飞行</Name>
+    <ToolbarButton IsSeparator="false" UID="TBB_0397">
+      <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_1763">漫游</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_3DWalk"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0506">
+      <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_6324">飞行</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_3DFLY"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0507">
+      <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_6325">漫游和飞行设置...</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_3DWalk_Settings"/>
+      </MenuItem>
+    </ToolbarButton>
+  </Toolbar>
+  <Toolbar ToolbarOrient="floating" ToolbarVisible="hide" xval="200" yval="200" rows="1" UID="TB_0009">
+    <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+    <Alias>TB_MLEADER</Alias>
+    <Name xlate="true" UID="XLS_6669">多重引线</Name>
+    <ToolbarButton IsSeparator="false" UID="TBB_0627">
+      <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_6670">多重引线</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Mleader"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0628">
+      <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_6671">添加引线</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Mleader_Add"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0629">
+      <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_6672">删除引线</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Mleader_Remove"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="true" UID="TBB_0630">
+      <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0631">
+      <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_6673">多重引线对齐</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Mleader_Align"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0632">
+      <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_6674">多重引线合并</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Mleader_Collect"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="true" UID="TBB_0633">
+      <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+    </ToolbarButton>
+    <ToolbarControl Control="MldStyleControl" UID="TBC_0034">
+      <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+    </ToolbarControl>
+    <ToolbarButton IsSeparator="false" UID="TBB_0634">
+      <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_6675">多重引线样式</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Mleader_Style"/>
+      </MenuItem>
+    </ToolbarButton>
+  </Toolbar>
+  <Toolbar ToolbarOrient="floating" ToolbarVisible="hide" xval="200" yval="200" rows="1" UID="TB_0010">
+    <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+    <Alias>TB_FIND_TEXT</Alias>
+    <Name xlate="true" UID="XLS_6728">查找文字</Name>
+    <ToolbarControl Control="FindTextControl" UID="TBC_0036">
+      <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+    </ToolbarControl>
+  </Toolbar>
+  <Toolbar ToolbarOrient="floating" ToolbarVisible="hide" xval="200" yval="200" rows="1" UID="TB_0012">
+    <ModifiedRev MajorVersion="18" MinorVersion="0" UserVersion="0"/>
+    <Alias>TB_MEASUREMENT_TOOLS</Alias>
+    <Name xlate="true" UID="XLS_00014416">测量工具</Name>
+    <ToolbarButton IsSeparator="false" UID="TBB_0692">
+      <ModifiedRev MajorVersion="18" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_00014417">距离</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Dist"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0693">
+      <ModifiedRev MajorVersion="18" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_00014418">半径</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Radius"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0694">
+      <ModifiedRev MajorVersion="18" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_00014419">角度</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Angle"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0695">
+      <ModifiedRev MajorVersion="18" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_00014420">面积</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Area"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0696">
+      <ModifiedRev MajorVersion="18" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_00014421">体积</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Volume"/>
+      </MenuItem>
+    </ToolbarButton>
+  </Toolbar>
+  <Toolbar ToolbarOrient="floating" ToolbarVisible="show" xval="200" yval="200" rows="1" UID="TB_0013">
+    <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+    <Alias>PARAMETRIC_TOOLBAR</Alias>
+    <Name xlate="true" UID="XLS_00014404">参数化</Name>
+    <ToolbarFlyout UseOwnIcon="false" pTargetAlias="TB_GEOMCONSTRAINT" UID="TBF_0001">
+      <ModifiedRev MajorVersion="18" MinorVersion="0" UserVersion="0"/>
+      <FlyoutName xlate="true" UID="XLS_00014405">几何约束</FlyoutName>
+    </ToolbarFlyout>
+    <ToolbarButton IsSeparator="false" UID="TBB_0800">
+      <ModifiedRev MajorVersion="18" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_00015543">自动约束</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_AutoConstrain"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0801">
+      <ModifiedRev MajorVersion="18" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_00014428">显示约束</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_SelectObject"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0802">
+      <ModifiedRev MajorVersion="18" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_00014429">全部显示</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_Show_All"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0803">
+      <ModifiedRev MajorVersion="18" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_00014430">全部隐藏</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_Hide_All"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="true" UID="TBB_0804">
+      <ModifiedRev MajorVersion="18" MinorVersion="0" UserVersion="0"/>
+    </ToolbarButton>
+    <ToolbarFlyout UseOwnIcon="false" pTargetAlias="TB_DIMCONSTRAINT" UID="TBF_0015">
+      <ModifiedRev MajorVersion="18" MinorVersion="0" UserVersion="0"/>
+      <FlyoutName xlate="true" UID="XLS_00014419">标注约束</FlyoutName>
+    </ToolbarFlyout>
+    <ToolbarButton IsSeparator="false" UID="TBB_0832">
+      <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_00015792">显示约束</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_Show_Dyn_Constr"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0833">
+      <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_00015793">全部显示</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_Show_All_Dyn_Constr"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0834">
+      <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_00015794">全部隐藏</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_Hide_All_Dyn_Constr"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="true" UID="TBB_0807">
+      <ModifiedRev MajorVersion="18" MinorVersion="0" UserVersion="0"/>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0808">
+      <ModifiedRev MajorVersion="18" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_00014427">删除约束</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_Del_Constraint"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0809">
+      <ModifiedRev MajorVersion="18" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_00014431">约束设置...</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_ConstraintBarSettings"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0810">
+      <ModifiedRev MajorVersion="18" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_00014432">参数管理器...</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_Parameters"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="true" UID="TBB_0811">
+      <ModifiedRev MajorVersion="18" MinorVersion="0" UserVersion="0"/>
+    </ToolbarButton>
+  </Toolbar>
+  <Toolbar ToolbarOrient="floating" ToolbarVisible="hide" xval="200" yval="200" rows="1" UID="TB_0014">
+    <ModifiedRev MajorVersion="18" MinorVersion="0" UserVersion="0"/>
+    <Alias>TB_GEOMCONSTRAINT</Alias>
+    <Name xlate="true" UID="XLS_00014406">几何约束</Name>
+    <ToolbarButton IsSeparator="false" UID="TBB_0812">
+      <ModifiedRev MajorVersion="18" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_00014407">重合</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_GeomConstraint_Coincident"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0813">
+      <ModifiedRev MajorVersion="18" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_00014408">垂直</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_GeomConstraint_Perpendicular"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0814">
+      <ModifiedRev MajorVersion="18" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_00014409">平行</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_GeomConstraint_Parallel"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0815">
+      <ModifiedRev MajorVersion="18" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_00014410">相切</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_GeomConstraint_Tangent"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0816">
+      <ModifiedRev MajorVersion="18" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_00014411">水平</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_GeomConstraint_Horizontal"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0817">
+      <ModifiedRev MajorVersion="18" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_00014412">竖直</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_GeomConstraint_Vertical"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0818">
+      <ModifiedRev MajorVersion="18" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_00014413">共线</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_GeomConstraint_Colinear"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0819">
+      <ModifiedRev MajorVersion="18" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_00014414">同心</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_GeomConstraint_Concentric"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0820">
+      <ModifiedRev MajorVersion="18" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_00014415">平滑</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_Geomconstraint_smooth"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0821">
+      <ModifiedRev MajorVersion="18" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_00014416">对称</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_GeomConstraint_Symmetric"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0822">
+      <ModifiedRev MajorVersion="18" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_00014417">相等</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_GeomConstraint_Equal"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0823">
+      <ModifiedRev MajorVersion="18" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_00014418">固定</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_GeomConstraint_Fix"/>
+      </MenuItem>
+    </ToolbarButton>
+  </Toolbar>
+  <Toolbar ToolbarOrient="floating" ToolbarVisible="hide" xval="200" yval="200" rows="1" UID="TB_0016">
+    <ModifiedRev MajorVersion="18" MinorVersion="0" UserVersion="0"/>
+    <Alias>TB_DIMCONSTRAINT</Alias>
+    <Name xlate="true" UID="XLS_00014420">标注约束</Name>
+    <ToolbarButton IsSeparator="false" UID="TBB_0824">
+      <ModifiedRev MajorVersion="18" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_00014421">对齐</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_DimConstraint_Aligned"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0825">
+      <ModifiedRev MajorVersion="18" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_00014422">水平</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_DimConstraint_Horizontal"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0826">
+      <ModifiedRev MajorVersion="18" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_00014423">竖直</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_DimConstraint_Vertical"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0827">
+      <ModifiedRev MajorVersion="18" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_00014424">角度</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_DimConstraint_Angular"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0828">
+      <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_00014425">半径</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_DimConstraint_Radius"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0829">
+      <ModifiedRev MajorVersion="18" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_00014426">直径</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_DimConstraint_Diameter"/>
+      </MenuItem>
+    </ToolbarButton>
+  </Toolbar>
+  <Toolbar ToolbarOrient="floating" ToolbarVisible="hide" xval="200" yval="200" rows="1" UID="ID_DrawOrderAnnotation">
+    <ModifiedRev MajorVersion="19" MinorVersion="0" UserVersion="0"/>
+    <Alias>TB_DRAWORDER_ANNOTATION_TO_FRONT</Alias>
+    <Name xlate="true" UID="XLS_00021791">绘图次序, 注释前置</Name>
+    <ToolbarButton IsSeparator="false" UID="TBB_0840">
+      <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_00021795">文字对象前置</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_TextOnly"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0838">
+      <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_00021793">标注对象前置</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_DimsOnly"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0855">
+      <ModifiedRev MajorVersion="19" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_00024824">引线对象前置</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_LeaderOnly"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0854">
+      <ModifiedRev MajorVersion="19" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_00024823">所有注释对象前置</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_TxtAllAnno"/>
+      </MenuItem>
+    </ToolbarButton>
+  </Toolbar>
+  <Toolbar ToolbarOrient="floating" ToolbarVisible="hide" xval="200" yval="300" rows="1" UID="ID_TbGroup">
+    <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+    <Alias>TB_GROUP</Alias>
+    <Alias>Group</Alias>
+    <Name xlate="true" UID="XLS_UIE_00022213">组</Name>
+    <ToolbarButton IsSeparator="false" UID="TBB_UIE_0845">
+      <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_UIE_00022214">组</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_GROUP"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_UIE_0846">
+      <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_UIE_00022215">解除编组</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Ungroup"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0847">
+      <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_UIE_00022216">组编辑</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_GroupEdit"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_NAMED_GROUP">
+      <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_UIE_00022218">命名组</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_ClassicGroup"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0848">
+      <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_UIE_00022217">启用/禁用组选择</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_GroupSelection"/>
+      </MenuItem>
+    </ToolbarButton>
+  </Toolbar>
+  <Toolbar ToolbarOrient="floating" ToolbarVisible="show" xval="200" yval="200" rows="1" UID="TB_0017">
+    <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+    <Alias>Array_Toolbar</Alias>
+    <Name xlate="true" UID="XLS_00021864">阵列_工具栏</Name>
+    <ToolbarButton IsSeparator="false" UID="TBB_0842">
+      <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_00021866">矩形阵列</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_RectangularArray"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0843">
+      <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_00021867">路径阵列</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_PathArray"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0844">
+      <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_00021868">环形阵列</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_PolarArray"/>
+      </MenuItem>
+    </ToolbarButton>
+  </Toolbar>
+  <Toolbar ToolbarOrient="floating" ToolbarVisible="hide" xval="100" yval="170" rows="1" UID="TB_0018">
+    <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+    <Alias>TB_ARRAYEDIT</Alias>
+    <Description xlate="true" UID="XLS_00023186">阵列编辑工具栏</Description>
+    <Name xlate="true" UID="XLS_00023184">阵列编辑</Name>
+    <ToolbarButton IsSeparator="false" UID="TBB_0849">
+      <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_00023185">编辑阵列</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_EditArray"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="true" UID="TBB_0850">
+      <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+    </ToolbarButton>
+    <ToolbarControl Control="ArrayEditNameControl" UID="TBC_0038">
+      <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+    </ToolbarControl>
+    <ToolbarButton IsSeparator="true" UID="TBB_0851">
+      <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0852">
+      <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_00023189">保存更改</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Arrayeditclosesave"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_0853">
+      <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_00023190">放弃更改</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Arrayeditclosediscard"/>
+      </MenuItem>
+    </ToolbarButton>
+  </Toolbar>
+  <Toolbar ToolbarOrient="floating" ToolbarVisible="hide" xval="100" yval="190" rows="1" UID="TB_0019">
+    <ModifiedRev MajorVersion="23" MinorVersion="1" UserVersion="0"/>
+    <Alias>TB_POINTCLOUD</Alias>
+    <Alias>PointCloud</Alias>
+    <Description xlate="true" UID="XLS_0053"/>
+    <Name xlate="true" UID="ACAD_421">点云</Name>
+    <ToolbarButton IsSeparator="false" UID="TBB_1402">
+      <ModifiedRev MajorVersion="19" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_2573">密度</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_PointCloudDensity"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="false" UID="TBB_1403">
+      <ModifiedRev MajorVersion="19" MinorVersion="0" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_2574">实时密度</Name>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_PointCloudRTDensity"/>
+      </MenuItem>
+    </ToolbarButton>
+    <ToolbarButton IsSeparator="true" UID="TBB_1404">
+      <ModifiedRev MajorVersion="19" MinorVersion="0" UserVersion="0"/>
+    </ToolbarButton>
+  </Toolbar>
+</ToolbarRoot>

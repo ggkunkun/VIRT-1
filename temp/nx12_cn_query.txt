@@ -1,0 +1,487 @@
+== RIBBON TABS ==
+NX_RBN_TAB_WELD_ASSISTANT_LABEL -> 焊接助理(W)
+NX_RBN_TAB_WELD_ASSISTANT_TOOLBAR_LABEL -> 焊接助理
+NX_RBN_TAB_STRUCTURE_WELDING_LABEL -> 结构焊接(S)
+NX_RBN_TAB_STRUCTURE_WELDING_TOOLBAR_LABEL -> 结构焊接
+NX_RBN_TAB_BIW_LOCATOR_LABEL -> BIW 定位器
+NX_RBN_TAB_INDUSTRY_LABEL -> 行业
+NX_RBN_TAB_TEAPIPE_LABEL -> 软管
+NX_RBN_TAB_VEHICLE_DES_AUTO_LABEL -> 车辆设计自动化
+
+== TOP LEVELS ==
+插入(S): 282
+工具(T): 257
+编辑(E): 207
+视图(V): 168
+文件(F): 108
+分析(L): 84
+装配(A): 83
+信息(I): 47
+PMI: 43
+格式(R): 28
+帮助(H): 28
+首选项(P): 27
+草图约束(N): 24
+建模: 13
+任务(K): 11
+几何公差(M): 11
+所有首选项(A): 10
+尺寸(D): 5
+快速检查(Q): 4
+通透显示样式: 3
+几何公差(T): 3
+窗口(O): 3
+草图曲线(S): 3
+放置(M): 2
+捕捉点(O): 2
+窗口: 1
+定向视图到草图(K): 1
+设计组(G): 1
+更新模型(M): 1
+从草图更新模型(K): 1
+显示尺寸标注为 PMI(S)...: 1
+草图(H)...: 1
+在草图任务环境中打开(O): 1
+重新附着草图(H)...: 1
+修剪配方曲线(T)...: 1
+拟合曲线(U)...: 1
+样条(S)...: 1
+
+== ACCELERATORS ==
+Ctrl+N                               UG_FILE_NEW                                新建  | ['文件(F)', '新建(N)...']
+Ctrl+O                               UG_FILE_OPEN                               打开  | ['文件(F)', '打开(O)...']
+Ctrl+S                               UG_FILE_SAVE_PART                          保存  | ['文件(F)', '保存(S)']
+Ctrl+Shift+A                         UG_FILE_SAVE_AS                            另存为  | ['文件(F)', '另存为(A)...']
+Ctrl+Alt+Shift+I                     UI_FILE_SAVE_AS_NEW_ITEM_TYPE              另存为新项类型  | ['文件(F)', '另存为新项类型(Y)...']
+Ctrl+Alt+Shift+N                     UI_FILE_SAVE_AS_NON_MASTER_PARTS           另存非主模型部件  | ['文件(F)', '另存为非主模型部件(N)...']
+Ctrl+P                               UG_FILE_PLOT                               绘图  | ['文件(F)', '绘图(L)...']
+Ctrl+K                               UG_FILE_NEW_WORKSET                        文件 - 新建工作集  | ['文件(F)', '新建(N)', '工作集(W)...']
+Ctrl+Shift+E                         UG_FILE_NEW_DESIGN_ELEMENT                 文件 - 新建设计组件  | ['文件(F)', '新建(N)', '设计组件(D)...']
+Ctrl+G                               UG_FILE_RUN_GRIP                           执行 Grip  | ['文件(F)', '执行(T)', '执行 Grip']
+Ctrl+Shift+G                         UG_FILE_RUN_GRIP_DEBUG                     调试 Grip  | ['文件(F)', '执行(T)', '调试 Grip(D)...']
+Ctrl+U                               UG_FILE_RUN_UFUN                           执行 NX Open  | ['文件(F)', '执行(T)', '执行 NX Open']
+Ctrl+Z                               UG_EDIT_UNDO                               撤消  | ['编辑(E)', '撤消']
+Ctrl+Y                               UG_EDIT_REDO                               重做  | ['编辑(E)', '重做(R)']
+Ctrl+X                               UG_EDIT_CUT                                剪切  | ['编辑(E)', '剪切(T)']
+Ctrl+C                               UG_EDIT_COPY                               复制  | ['编辑(E)', '复制(C)']
+Ctrl+V                               UG_EDIT_PASTE                              粘贴  | ['编辑(E)', '粘贴(P)']
+Ctrl+Alt+V                           UG_EDIT_PASTE_SPECIAL                      选择性粘贴  | ['编辑(E)', '选择性粘贴(E)...']
+Ctrl+D                               UG_EDIT_DELETE                             删除  | ['编辑(E)', '删除(D)...']
+Ctrl+J                               UG_EDIT_OBJECT_DISPLAY                     编辑对象显示  | ['编辑(E)', '对象显示(J)...']
+Ctrl+T                               UG_EDIT_MOVE_OBJECT                        移动对象  | ['编辑(E)', '移动对象(O)...']
+Shift+F                              UG_SEL_FEATURE_PRIORITY                    最高选择优先级 - 特征  | ['编辑(E)', '选择(L)', '最高选择优先级 - 特征(F)']
+Shift+G                              UG_SEL_FACE_PRIORITY                       最高选择优先级 - 面  | ['编辑(E)', '选择(L)', '最高选择优先级 - 面(A)']
+Shift+B                              UG_SEL_BODY_PRIORITY                       最高选择优先级 - 体  | ['编辑(E)', '选择(L)', '最高选择优先级 - 体(B)']
+Shift+E                              UG_SEL_EDGE_PRIORITY                       最高选择优先级 - 边  | ['编辑(E)', '选择(L)', '最高选择优先级 - 边(E)']
+Shift+C                              UG_SEL_COMPONENT_PRIORITY                  最高选择优先级 - 组件  | ['编辑(E)', '选择(L)', '最高选择优先级 - 组件(C)']
+Ctrl+A                               UG_SEL_SELECT_ALL                          全选  | ['编辑(E)', '选择(L)', '全选(S)']
+Ctrl+W                               UG_EDIT_MD_SHOWHIDE_ALL                    显示和隐藏  | ['编辑(E)', '显示和隐藏(H)', '显示和隐藏(O)...']
+Ctrl+Shift+I                         UG_EDIT_ONE_PICK_HIDE                      立即隐藏  | ['编辑(E)', '显示和隐藏(H)', '立即隐藏(M)...']
+Ctrl+B                               UG_EDIT_BLANK_SELECTED                     隐藏  | ['编辑(E)', '显示和隐藏(H)', '隐藏(H)...']
+Ctrl+Shift+K                         UG_EDIT_UNBLANK_SELECTED                   显示  | ['编辑(E)', '显示和隐藏(H)', '显示(S)...']
+Ctrl+Shift+U                         UG_EDIT_UNBLANK_ALL_OF_PART                全部显示  | ['编辑(E)', '显示和隐藏(H)', '全部显示(A)']
+Ctrl+Shift+B                         UG_EDIT_UNBLANK_BY_NAME                    按名称显示  | ['编辑(E)', '显示和隐藏(H)', '按名称显示(N)...']
+Ctrl+Shift+S                         UG_VIEW_GRID_EDIT                          编辑排样(D)...  | ['视图(V)', '编辑排样(D)...']
+F3                                   UG_VIEW_CURRENT_DIALOG                     隐藏/显示当前对话框  | ['视图(V)', '当前对话框(C)']
+Ctrl+3                               UG_VIEW_VISUAL_PLM_UI                      显示 HD3D 工具 UI  | ['视图(V)', 'HD3D 工具 UI']
+Ctrl+F8                              UG_VIEW_RESET_ORIENTATION                  重置视图方向  | ['视图(V)', '重置方向(E)']
+F5                                   UG_VIEW_REFRESH                            刷新  | ['视图(V)', '操作(O)', '刷新(H)']
+Ctrl+F                               UG_VIEW_FIT                                适合窗口  | ['视图(V)', '操作(O)', '适合窗口(F)']
+Ctrl+Shift+Z                         UG_VIEW_ZOOM                               缩放  | ['视图(V)', '操作(O)', '缩放(Z)...']
+Ctrl+R                               UG_VIEW_ROTATE                             旋转视图  | ['视图(V)', '操作(O)', '旋转(R)...']
+Alt+Home                             UG_VIEW_NAVIGATE                           导航选项（即将失效）  | ['视图(V)', '操作(O)', '导航选项（即将失效）(N)...']
+Ctrl+H                               UG_VIEW_SECTIONING                         编辑截面  | ['视图(V)', '截面(S)', '编辑截面(C)...']
+Ctrl+Shift+N                         UG_LAYOUT_NEW                              新建布局  | ['视图(V)', '布局(L)', '新建(N)...']
+Ctrl+Shift+O                         UG_LAYOUT_OPEN                             打开布局  | ['视图(V)', '布局(L)', '打开(O)...']
+Ctrl+Shift+F                         UG_LAYOUT_FIT_ALL_VIEWS                    适合所有视图  | ['视图(V)', '布局(L)', '适合所有视图(F)']
+Ctrl+L                               UG_LAYER_SETTINGS                          图层设置  | ['格式(R)', '图层设置(S)...']
+W                                    UG_WCS_ORIENT_CHANGE_YC_DIR                更改 WCS YC 方向  | ['格式(R)', 'WCS', '更改 YC 方向...']
+Ctrl+E                               UG_INSERT_DLEXPRESSION                     表达式  | ['工具(T)', '表达式(X)...']
+Ctrl+1                               UG_TOOLS_CUSTOMIZE                         定制  | ['工具(T)', '定制(Z)...']
+Alt+F8                               UG_JOURNAL_PLAY                            播放操作记录  | ['工具(T)', '操作记录(J)', '播放(P)...']
+Alt+F11                              UG_JOURNAL_EDIT                            编辑操作记录  | ['工具(T)', '操作记录(J)', '编辑(E)...']
+Ctrl+Shift+R                         UG_MACRO_RECORD                            录制宏  | ['工具(T)', '宏(R)', '开始录制(R)...']
+Ctrl+Shift+P                         UG_MACRO_PLAYBACK                          回放宏  | ['工具(T)', '宏(R)', '回放(P)...']
+Alt+F5                               UG_MACRO_START_TIMER                       开始宏计时器  | ['工具(T)', '宏(R)', '开始计时器(T)']
+F4                                   UG_TOOLS_REPEAT_LAST_COMMAND_0             重复上一命令  | ['工具(T)', '重复命令(R)', '重复上一命令']
+Ctrl+I                               UG_INFO_OBJECT                             对象信息  | ['信息(I)', '对象(O)...']
+Ctrl+Shift+C                         UG_INFO_MB_SHOW_GRAPHS                     刷新曲率图  | ['分析(L)', '曲线(C)', '刷新曲率图(R)']
+Ctrl+2                               UG_PREFERENCES_USER_INTERFACE              用户界面首选项  | ['首选项(P)', '用户界面(I)...']
+Ctrl+Shift+V                         UG_PREFERENCES_VISUALIZATION               可视化首选项  | ['首选项(P)', '可视化(V)...']
+Ctrl+Shift+T                         UG_PREFERENCES_SELECTION                   选择首选项  | ['首选项(P)', '选择(E)...']
+Ctrl+Shift+J                         UG_PREFERENCES_OBJECT                      对象首选项  | ['首选项(P)', '对象(O)...']
+Ctrl+M                               UG_PMI_PREFERENCES_GEOMETRIC_TOLERANCING   几何公差首选项  | ['首选项(P)', 'PMI', '几何公差(T)...']
+F1                                   UG_HELP_ON_CONTEXT                         上下文帮助  | ['帮助(H)', '上下文帮助(C)...']
+F5                                   UG_VIEW_POPUP_REFRESH                      刷新  | 
+F6                                   UG_VIEW_POPUP_FIT                          适合窗口  | 
+F8                                   UG_VIEW_POPUP_SNAP_VIEW                    对齐视图  | 
+Ctrl+F2                              UG_VIEW_POPUP_SET_ROTATION_REFERENCE       设置旋转参考  | 
+Ctrl+F3                              UG_VIEW_POPUP_CLEAR_ROTATION_REFERENCE     清除旋转参考  | 
+Home                                 UG_VIEW_POPUP_ORIENT_TFRTRI                正三轴测图  | 
+End                                  UG_VIEW_POPUP_ORIENT_TFRISO                正等测图  | 
+Ctrl+Alt+T                           UG_VIEW_POPUP_ORIENT_TOP                   俯视图  | 
+Ctrl+Alt+F                           UG_VIEW_POPUP_ORIENT_FRONT                 前视图  | 
+Ctrl+Alt+R                           UG_VIEW_POPUP_ORIENT_RIGHT                 右视图  | 
+Ctrl+Alt+L                           UG_VIEW_POPUP_ORIENT_LEFT                  左视图  | 
+
+== CORE IDS ==
+UG_FILE_NEW | 新建 | accel=Ctrl+N | [['文件(F)', '新建(N)...']]
+UG_FILE_OPEN | 打开 | accel=Ctrl+O | [['文件(F)', '打开(O)...']]
+UG_FILE_SAVE_PART | 保存 | accel=Ctrl+S | [['文件(F)', '保存(S)'], ['任务(K)', '保存部件(S)']]
+UG_FILE_SAVE_AS | 另存为 | accel=Ctrl+Shift+A | [['文件(F)', '另存为(A)...']]
+UG_FILE_SAVE_ALL | 全部保存 | accel= | [['文件(F)', '全部保存(V)']]
+[MISSING] UG_FILE_OPTIONS
+[MISSING] UG_FILE_IMPORT
+[MISSING] UG_FILE_EXPORT
+[MISSING] UG_FILE_PRINT
+[MISSING] UG_PREFERENCES
+UG_PREFERENCES_OBJECT | 对象首选项 | accel=Ctrl+Shift+J | [['首选项(P)', '对象(O)...'], ['所有首选项(A)', '对象(O)...']]
+UG_PREFERENCES_USER_INTERFACE | 用户界面首选项 | accel=Ctrl+2 | [['首选项(P)', '用户界面(I)...'], ['所有首选项(A)', '用户界面(I)...']]
+[MISSING] UG_PREFERENCES_CUSTOMIZE
+[MISSING] UG_TOOLBOX_EXPRESSIONS
+[MISSING] UG_TOOLBOX_MEASURE
+[MISSING] UG_TOOLBOX_CUSTOMIZE
+[MISSING] UG_TOOLBOX_JOURNAL
+[MISSING] UG_SKETCHER
+[MISSING] UG_SKETCHER_SKETCH
+[MISSING] UG_SKETCHER_FINISH_SKETCH
+[MISSING] UG_SKETCHER_LINE
+[MISSING] UG_SKETCHER_ARC
+[MISSING] UG_SKETCHER_CIRCLE
+[MISSING] UG_SKETCHER_RECTANGLE
+[MISSING] UG_SKETCHER_FILLET
+[MISSING] UG_SKETCHER_TRIM
+[MISSING] UG_SKETCHER_OFFSET
+[MISSING] UG_SKETCHER_CONSTRAINT
+UG_MODELING_EXTRUDED_FEATURE | 拉伸 | accel= | [['插入(S)', '设计特征(E)', '拉伸(X)...'], ['插入(S)', '切割(T)', '拉伸(X)...']]
+[MISSING] UG_MODELING_REVOLVED
+[MISSING] UG_MODELING_BLOCK
+[MISSING] UG_MODELING_CYLINDER
+[MISSING] UG_MODELING_HOLE
+[MISSING] UG_MODELING_THREAD
+[MISSING] UG_MODELING_CHAMFER
+[MISSING] UG_MODELING_BLEND
+[MISSING] UG_MODELING_SHELL
+[MISSING] UG_MODELING_DRAFT
+[MISSING] UG_MODELING_RIB
+[MISSING] UG_MODELING_EDGE_BLEND
+[MISSING] UG_MODELING_EDGE_CHAMFER
+[MISSING] UG_MODELING_BOOLEAN
+[MISSING] UG_MODELING_UNITE
+[MISSING] UG_MODELING_SUBTRACT
+[MISSING] UG_MODELING_INTERSECT
+[MISSING] UG_MODELING_SYNCHRONOUS
+[MISSING] UG_MODELING_MOVE_FACE
+[MISSING] UG_MODELING_DELETE_FACE
+[MISSING] UG_MODELING_REPLACE_FACE
+[MISSING] UG_MODELING_PATTERN
+[MISSING] UG_MODELING_MIRROR
+[MISSING] UG_MODELING_FEATURE_EDIT_PARAMETERS
+[MISSING] UG_ASSEMBLY_ADD_COMPONENT
+[MISSING] UG_ASSEMBLY_CONSTRAINT
+[MISSING] UG_ASSEMBLY_NEW_COMPONENT
+[MISSING] UG_ASSEMBLY_MIRROR
+[MISSING] UG_ASSEMBLY_EXPLODE
+[MISSING] UG_ASSEMBLY_CLEARANCE
+[MISSING] UG_ASSEMBLY_INTERFERENCE
+[MISSING] UG_ASSEMBLY_REPORT
+[MISSING] UG_DRAFTING_DRAWING
+[MISSING] UG_DRAFING_DRAWING
+[MISSING] UG_DRAFTING_BASE_VIEW
+[MISSING] UG_DRAFTING_PROJECTED_VIEW
+[MISSING] UG_DRAFTING_SECTION_VIEW
+[MISSING] UG_DRAFTING_DETAIL_VIEW
+[MISSING] UG_DRAFTING_DIMENSION
+[MISSING] UG_DRAFTING_NOTE
+[MISSING] UG_DRAFTING_GDT
+[MISSING] UG_DRAFTING_SURFACE_FINISH
+[MISSING] UG_DRAFTING_TITLE_BLOCK
+[MISSING] UG_DRAFTING_EDIT_VIEW
+[MISSING] UG_DRAFTING_ANNOTATION
+[MISSING] UG_DRAFTING_ORTHOGRAPHIC_VIEW
+[MISSING] UG_SMD
+[MISSING] UG_SMD_SHEET
+[MISSING] UG_SMD_FLANGE
+[MISSING] UG_SMD_BEND
+[MISSING] UG_SMD_UNBEND
+[MISSING] UG_SMD_REBEND
+[MISSING] UG_SMD_CONTOUR_FLANGE
+[MISSING] UG_SMD_HOLE
+[MISSING] UG_SMD_NORMAL_CUTOUT
+[MISSING] MW_MOLDWIZARD
+[MISSING] MW_PARTING
+[MISSING] MW_MOLD_BASE
+[MISSING] MW_CORE_CAVITY
+[MISSING] MW_CAVITY_LAYOUT
+[MISSING] UG_CAM
+[MISSING] UG_CAM_CREATE_OPERATION
+[MISSING] UG_CAM_CREATE_TOOL
+[MISSING] UG_CAM_GENERATE
+[MISSING] UG_CAM_POST_PROCESS
+[MISSING] UG_CAM_VERIFY
+[MISSING] UG_CAM_PLANAR_MILL
+[MISSING] UG_CAM_CAVITY_MILL
+[MISSING] UG_CAM_DRILL
+[MISSING] UG_STYLER
+[MISSING] UG_FREEFORM
+[MISSING] UG_SWEPT
+[MISSING] UG_THROUGH_CURVES
+[MISSING] UG_THROUGH_CURVE_MESH
+[MISSING] UG_RULED
+
+== KEYWORD SEARCH ==
+
+-- 草图 (12) --
+  UG_EDIT_SKETCH | 编辑草图 | ['编辑(E)', '草图(K)...']
+  UG_EDIT_PREV13_SKETCH | 编辑 V13 之前版本草图 | ['编辑(E)', 'V13 之前版本草图...']
+  UG_EXPRESSION_LIST_BY_SKETCH | 按草图列出表达式 | ['信息(I)', '表达式(X)', '按草图列出表达式(S)...']
+  UG_INFO_SKETCH | V13.0 之前版本草图信息 | ['信息(I)', '其他(H)', '草图（V13.0 之前版本）(S)...']
+  UG_PREFERENCES_SKETCH | 草图首选项 | ['首选项(P)', '草图(S)...']
+  UG_SKETCH_ORIENT_VIEW_TO_SKETCH | 定向视图到草图 | ['定向视图到草图(K)']
+  UG_MODELING_REPLACE_WITH_INDEPENDENT_SKETCH | 替换为独立草图 | ['编辑(E)', '特征(F)', '替换为独立草图(I)...']
+  UG_MODELING_EDIT_SKETCH_PROFILE | 编辑草图 | ['编辑(E)', '特征(F)', '编辑草图(K)...']
+  UG_ARRANGE_CREATE_SKETCH_GROUP | 新建草图组 | ['格式(R)', '组(G)', '新建草图组(S)...']
+  UG_ARRANGE_CREATE_ACTIVE_GROUP | 新建活动草图组 | ['格式(R)', '组(G)', '新建活动草图组(K)...']
+  UG_SKETCH_EDIT_PARAMETERS | 编辑草图参数 | ['编辑(E)', '草图参数(A)...']
+  UG_DIRECT_SKETCH_FINISH | 完成草图 | []
+
+-- 拉伸 (3) --
+  UG_MODELING_EXTRUDED_FEATURE | 拉伸 | ['插入(S)', '设计特征(E)', '拉伸(X)...']
+  UG_MODELING_EXTRUDE_FACET_BODY | 拉伸小平面体 | ['插入(S)', '小平面建模(C)', '拉伸小平面体(E)...']
+  UG_MODELING_EXTRUDE_PROFILE | 拉伸轮廓 | ['插入(S)', '小平面建模(C)', '拉伸轮廓(P)...']
+
+-- 回转 (0) --
+
+-- 装配约束 (4) --
+  UG_ASSY_UPDATE_ASSEMBLY_CONSTRAINTS | 更新装配约束 | ['工具(T)', '更新(U)', '部件间更新(I)', '更新装配约束(O)']
+  UG_NXPOS_ASSEMBLY_CONSTRAINTS | 装配约束 | ['装配(A)', '组件位置(P)', '装配约束(N)...']
+  UG_NXPOS_REMEMBER_ASSEMBLY_CONSTRAINTS | 记住装配约束 | ['装配(A)', '组件位置(P)', '记住装配约束(B)...']
+  UG_LIST_MATING_CONSTRAINTS | 按装配约束列出表达式 | ['信息(I)', '表达式(X)', '列出装配约束(C)']
+
+-- 添加组件 (1) --
+  UG_ASSY_INSERT_COMPONENT | 添加组件 | ['装配(A)', '组件(C)', '添加组件(A)...']
+
+-- 基本视图 (2) --
+  UG_VIEW_MAKE_BASE_VIEW | 设为基本视图 | ['视图(V)', '设为基本视图(B)']
+  UG_VIEW_NAVIGATE_TO_BASE_VIEW | 导航至基本视图 | ['视图(V)', '导航至基本视图(N)']
+
+-- 剖视图 (5) --
+  UG_PMI_LIGHTWEIGHT_SECTION_VIEW_EDIT | 编辑剖视图 | ['编辑(E)', '剖视图(W)...']
+  UG_PMI_CUT_VIEW_EDIT | 编辑剖视图 | ['编辑(E)', '剖视图(W)...']
+  UG_VIEW_FIT_TO_SECTION_VIEW | 导航至剖视图 | ['视图(V)', '导航至剖视图']
+  UG_PMI_LIGHTWEIGHT_SECTION_VIEW_CREATE | PMI 剖视图 | ['PMI', '剖视图(C)...']
+  UG_PMI_CUT_VIEW_CREATE | 剖视图（原） | ['PMI', '剖视图（原有）(V)...']
+
+-- 尺寸 (12) --
+  UG_DRAFT_DIMENSION_RAPID | 快速尺寸 | ['插入(S)', '尺寸(M)', '快速(P)...']
+  UG_DRAFT_DIMENSION_LINEAR | 线性尺寸 | ['插入(S)', '尺寸(M)', '线性(L)...']
+  UG_DRAFT_DIMENSION_RADIAL | 径向尺寸 | ['插入(S)', '尺寸(M)', '径向(R)...']
+  UG_DRAFT_DIMENSION_ANGULAR | 角度尺寸 | ['插入(S)', '尺寸(M)', '角度(A)...']
+  UG_DRAFT_DIMENSION_CHAMFER | 倒斜角尺寸 | ['插入(S)', '尺寸(M)', '倒斜角(C)...']
+  UG_DRAFT_DIMENSION_THICKNESS | 厚度尺寸 | ['插入(S)', '尺寸(M)', '厚度(T)...']
+  UG_DRAFT_DIMENSION_CURVE_LENGTH | 弧长尺寸 | ['插入(S)', '尺寸(M)', '弧长(G)...']
+  UG_DRAFT_DIMENSION_ORDINATE | 坐标尺寸 | ['插入(S)', '尺寸(M)', '坐标(O)...']
+  MW_TOOLS_STOCK_SIZE | 坯料尺寸 | ['工具(T)', '特定于工艺(O)', '注塑模向导(M)', '注塑模工具(T)', '坯料尺寸(Z)...']
+  TOOLING_MW_AUTO_DIMENSION | 自动尺寸 | ['工具(T)', '特定于工艺(O)', '注塑模向导(M)', '模具图纸工具(W)', '自动尺寸(T)...']
+  EW_UNDERSIZE | 尺寸不足的体 | []
+  PDW_TOOLS_STOCK_SIZE | 坯料尺寸 | []
+
+-- 表面粗糙度 (2) --
+  UG_DRAFT_CRE_SURFACE_SYMBOL | 表面粗糙度符号 | ['插入(S)', '注释(A)', '表面粗糙度符号(S)...']
+  UG_PMI_SURFACE_SYMBOL | 表面粗糙度 | ['PMI', '表面粗糙度(S)...']
+
+-- 形位公差 (0) --
+
+-- 钣金 (3) --
+  PDW_TOOLS_SWAP_SMD | 交换钣金件 | []
+  UG_MODELING_SMD_REGION | 钣金成形(M)... | ['插入(S)', '钣金特征(H)', '钣金成形(M)...']
+  UG_MODELING_SHEETMTL_PRF | 钣金(H)... | ['首选项(P)', '钣金(H)...']
+
+-- 弯边 (6) --
+  UG_MODELING_FF_SFLANGE | 轮廓线弯边 | ['插入(S)', '弯边曲面(G)', '轮廓线弯边(F)...']
+  UG_MODELING_SMD_FLANGE | 弯边(F)... | ['插入(S)', '钣金特征(H)', '弯边(F)...']
+  UG_MODELING_SMD_INSET_FLANGE | 嵌入弯边(I)... | ['插入(S)', '钣金特征(H)', '嵌入弯边(I)...']
+  UG_MODELING_SMD_PROFILE_FLANGE | 轮廓弯边(A)... | ['插入(S)', '钣金特征(H)', '轮廓弯边(A)...']
+  UG_MODELING_SMD_GENFLG | 通用弯边(G)... | ['插入(S)', '钣金特征(H)', '通用弯边(G)...']
+  UG_AERO_FLANGE | 航空弯边 | []
+
+-- 展开 (12) --
+  PDW_DIRECT_UNFOLD | 直接展开 | []
+  PDW_UNIVERSAL_UNFORM | 通用展开 | []
+  PDW_UNFOLDING_SIMULATION | 展开仿真 | []
+  EDW_DIRECT_UNFOLD | 直接展开 | []
+  EDW_UNIVERSAL_UNFORM | 通用展开 | []
+  EDW_UNFOLDING_SIMULATION | 展开仿真 | []
+  UG_CURVE_WRAP | 缠绕/展开曲线 | ['插入(S)', '派生曲线(U)', '缠绕/展开曲线(W)...']
+  UG_ANT_TREE_SET_EXPAND_ALL | 全部展开 | ['工具(T)', '装配导航器(A)', '全部展开(A)']
+  UG_ANT_TREE_SET_EXPAND_ALL_COMPONENTS | 展开所有组件 | ['工具(T)', '装配导航器(A)', '展开所有组件(N)']
+  UG_ANT_TREE_SET_EXPAND_TO_SELECTED | 展开至选定的 | ['工具(T)', '装配导航器(A)', '展开至选定的(E)']
+  UG_ANT_TREE_SET_EXPAND_TO_VISIBLE | 展开至可见的 | ['工具(T)', '装配导航器(A)', '展开至可见的(V)']
+  UG_ANT_TREE_SET_EXPAND_TO_WORK | 展开至工作的 | ['工具(T)', '装配导航器(A)', '展开至工作的(K)']
+
+-- 模具 (3) --
+  MW_MOLD_DESIGN_VALIDATION | 模具设计验证 | ['工具(T)', '特定于工艺(O)', '注塑模向导(M)', '模具设计验证(V)']
+  UGMOLD_WCS | 模具坐标系 | ['工具(T)', '特定于工艺(O)', '注塑模向导(M)', '模具坐标系(Y)...']
+  UGMOLD_TRIM | 修边模具组件 | ['工具(T)', '特定于工艺(O)', '注塑模向导(M)', '模具修边工具(M)', '修边模具组件(T)...']
+
+-- 分型 (9) --
+  MW_TOOLS_COLOR_CHECK | 分型检查 | ['工具(T)', '特定于工艺(O)', '注塑模向导(M)', '注塑模工具(T)', '分型检查(K)']
+  MW_PM_TOOLS_PARTING_SURFACES | 设计分型面 | ['工具(T)', '特定于工艺(O)', '注塑模向导(M)', '分型工具(R)', '设计分型面(S)...']
+  MW_TOOLS_EDIT_PATCH | 编辑分型面和曲面补片 | ['工具(T)', '特定于工艺(O)', '注塑模向导(M)', '分型工具(R)', '编辑分型面和曲面补片(H)...']
+  MW_PM_TOOLS_BACKUP_SHEETS | 备份分型片/补片 | ['工具(T)', '特定于工艺(O)', '注塑模向导(M)', '分型工具(R)', '备份分型片/补片(B)...']
+  MW_PM_TOOLS_PARTING_NAVIGATOR | 分型导航器 | ['工具(T)', '特定于工艺(O)', '注塑模向导(M)', '分型工具(R)', '分型导航器(N)']
+  MW_CPA_PLANAR | 平面分型片体 | ['工具(T)', '特定于工艺(O)', '注塑模向导(M)', '铸模分型助理(P)', '平面分型片体(P)...']
+  MW_CPA_NATURAL | 自然分型片体 | ['工具(T)', '特定于工艺(O)', '注塑模向导(M)', '铸模分型助理(P)', '自然分型片体(N)...']
+  MW_CPA_STEP | 阶梯分型片体 | ['工具(T)', '特定于工艺(O)', '注塑模向导(M)', '铸模分型助理(P)', '阶梯分型片体(S)...']
+  MW_CPA_RAMP | 斜坡分型片体 | ['工具(T)', '特定于工艺(O)', '注塑模向导(M)', '铸模分型助理(P)', '斜面分型片体(R)...']
+
+-- 型腔 (4) --
+  UGMOLD_CENTER | 型腔布局 | ['工具(T)', '特定于工艺(O)', '注塑模向导(M)', '型腔布局(L)...']
+  MW_PM_TOOLS_DEFINE_SHEETS | 定义型腔和型芯 | ['工具(T)', '特定于工艺(O)', '注塑模向导(M)', '分型工具(R)', '定义型腔和型芯(C)...']
+  PDW_DIE_CAVITY_AND_SLUG_HOLE | 型腔和废料孔 | []
+  TOOLING_EDW_DIE_CAVITY_AND_SLUG_HOLE | 型腔和废料孔 | []
+
+-- 后处理 (1) --
+  UGMOLD_EJECT | 顶杆后处理 | ['工具(T)', '特定于工艺(O)', '注塑模向导(M)', '顶杆后处理(J)...']
+
+-- 平面铣 (0) --
+
+-- 型腔铣 (0) --
+
+-- 钻孔 (0) --
+
+-- 扫掠 (5) --
+  UG_MODELING_FF_SWEPT | 扫掠 | ['插入(S)', '扫掠(W)', '扫掠(S)...']
+  UG_MODELING_FF_STYLED_SWEEP | 样式扫掠 | ['插入(S)', '扫掠(W)', '样式扫掠(Y)...']
+  UG_MODELING_VSWEEP_FEATURE | 变化扫掠 | ['插入(S)', '扫掠(W)', '变化扫掠(V)...']
+  UG_MODELING_SWEEP_FEATURE | 沿引导线扫掠 | ['插入(S)', '扫掠(W)', '沿引导线扫掠(G)...']
+  UG_MODELING_SWEPT_VOLUME_FEATURE | 扫掠体 | ['插入(S)', '扫掠(W)', '扫掠体(W)...']
+
+-- 网格 (3) --
+  UG_SEL_CAE_MESH_PRIORITY | 最高选择优先级 - CAE 网格 | ['编辑(E)', '选择(L)', '最高选择优先级 - CAE 网格(M)']
+  UG_INFO_ANALYSIS_SECTION | 网格分析 | ['分析(L)', '形状(H)', '网格分析(G)...']
+  UG_MODELING_FF_CURVE_MESH | 通过曲线网格 | ['插入(S)', '网格曲面(M)', '通过曲线网格(M)...']
+
+-- 直纹 (1) --
+  UG_MODELING_FF_RULED | 直纹 | ['插入(S)', '网格曲面(M)', '直纹(R)...']
+
+-- 缝合 (3) --
+  TOOLING_COSTING_SEW_FEATURE | 缝合 | ['工具(T)', 'Feature2Cost', '缝合(W)...']
+  UG_MODELING_SEW_FEATURE | 缝合 | ['插入(S)', '组合(B)', '缝合(W)...']
+  UG_MODELING_UNSEW_FEATURE | 取消缝合 | ['插入(S)', '组合(B)', '取消缝合(N)...']
+
+-- 修剪 (12) --
+  MW_TOOLS_TRIM_REGION_PATCH | 修剪区域补片 | ['工具(T)', '特定于工艺(O)', '注塑模向导(M)', '注塑模工具(T)', '修剪区域补片(M)...']
+  MW_TOOLS_WORK_AREA | 修剪实体 | ['工具(T)', '特定于工艺(O)', '注塑模向导(M)', '注塑模工具(T)', '修剪实体(T)...']
+  UGMOLD_DESIGN_TRIM_TOOL | 设计修剪工具 | ['工具(T)', '特定于工艺(O)', '注塑模向导(M)', '模具修边工具(M)', '设计修剪工具(D)...']
+  EW_WORK_AREA | 修剪实体 | []
+  PDW_TOOLS_WORK_AREA | 修剪实体 | []
+  EDW_DEVELOP_TRIM_LINE | 扩展修剪线 | []
+  UG_EDIT_CURVE_TRIM | 修剪曲线 | ['编辑(E)', '曲线(V)', '修剪(T)...']
+  UG_EDIT_CURVE_TRIM_CORNER | 修剪拐角（原有） | ['编辑(E)', '曲线(V)', '修剪拐角（原有）(C)...']
+  UG_MODELING_EDIT_FF_ISO_TRIM | 等参数修剪/分割（即将失效） | ['编辑(E)', '曲面(R)', '等参数修剪/分割（即将失效）(A)...']
+  UG_MODELING_EDIT_FF_UNTRIM_EXTEND | 局部取消修剪和延伸 | ['编辑(E)', '曲面(R)', '局部取消修剪和延伸(D)...']
+  UG_MODELING_TRIM_FEATURE | 修剪体 | ['插入(S)', '修剪(T)', '修剪体(T)...']
+  UG_MODELING_FF_TRIMMED | 修剪片体 | ['插入(S)', '修剪(T)', '修剪片体(R)...']
+
+-- 表达式 (12) --
+  MW_TOOLS_COLOR_EXPRESSIONS | 颜色表达式 | ['工具(T)', '特定于工艺(O)', '注塑模向导(M)', '注塑模工具(T)', '颜色表达式(E)...']
+  UG_TABLE_IMPORT_EXPS | 导入表达式 | ['编辑(E)', '表(B)', '导入(P)', '表达式(E)...']
+  UG_INSERT_DLEXPRESSION | 表达式 | ['工具(T)', '表达式(X)...']
+  UG_ASSY_UPDATE_GEOMETRY_AND_EXPRESSIONS | 更新几何体、表达式和 PMI | ['工具(T)', '更新(U)', '部件间更新(I)', '更新几何体、表达式和 PMI(E)']
+  UG_EXPRESSION_LIST_ALL | 列出所有表达式 | ['信息(I)', '表达式(X)', '全部列出(A)']
+  UG_EXPRESSION_LIST_ALL_EXPRESSION_GROUPS | 列出所有表达式组 | ['信息(I)', '表达式(X)', '列出所有表达式组(G)']
+  UG_EXPRESSION_LIST_ALL_IN_ASSY | 列出装配中的所有表达式 | ['信息(I)', '表达式(X)', '列出装配中的所有表达式(Y)']
+  UG_EXPRESSION_LIST_ALL_IN_SESS | 列出会话中的所有表达式 | ['信息(I)', '表达式(X)', '列出会话中的全部(N)']
+  UG_EXPRESSION_LIST_BY_SKETCH | 按草图列出表达式 | ['信息(I)', '表达式(X)', '按草图列出表达式(S)...']
+  UG_LIST_MATING_CONSTRAINTS | 按装配约束列出表达式 | ['信息(I)', '表达式(X)', '列出装配约束(C)']
+  UG_EXPRESSION_LIST_ALL_BY_REF | 按引用列出所有表达式 | ['信息(I)', '表达式(X)', '按引用全部列出(R)']
+  UG_EXPRESSION_LIST_ALL_GEOMETRIC | 列出所有测量表达式 | ['信息(I)', '表达式(X)', '列出所有测量(M)']
+
+-- 命令查找器 (1) --
+  UG_HELP_COMMAND_FINDER | 命令查找器 | ['帮助(H)', '命令查找器(F)...']
+
+-- 定制 (12) --
+  UG_DRAFT_CRE_SYMBOLS | 定制符号 | ['插入(S)', '符号(Y)', '定制(C)...']
+  UG_DRAFT_DEFINE_SYMBOL | 定义定制符号 | ['插入(S)', '符号(Y)', '定义定制符号(E)...']
+  UG_PMI_SMASH_CUSTOM_SYMBOL | 打散定制符号 | ['编辑(E)', '符号(S)', '打散定制符号(S)...']
+  UG_PMI_REPLACE_CUSTOM_SYMBOL | 替换定制符号 | ['编辑(E)', '符号(S)', '替换定制符号(R)']
+  UG_VIEW_SHED_BACKGROUND_CUSTOM_PLAIN | 定制背景 | ['视图(V)', '可视化(V)', '定制背景']
+  UG_VIEW_SHED_MAP_REFLECTION_USER | 使用定制反射图像 | ['视图(V)', '可视化(V)', '使用定制反射图像']
+  UG_VIEW_SHED_MAP_TEXTURE_USER | 使用定制纹理图像 | ['视图(V)', '可视化(V)', '使用定制纹理图像']
+  UG_VIEW_SHED_LIGHTING_CUSTOM | 定制灯光 | ['视图(V)', '可视化(V)', '定制灯光']
+  UG_PMI_CRE_SYMBOLS | 定制符号 | ['PMI', '符号(Y)', '定制(C)...']
+  UG_PMI_DEFINE_SYMBOL | 定义定制符号 | ['PMI', '符号(Y)', '定义定制符号(E)...']
+  UG_TOOLS_CUSTOMIZE | 定制 | ['工具(T)', '定制(Z)...']
+  UI_KRU_CUSTOMIZATION | 定制紧固件装配 | ['工具(T)', '重用库(Y)', '紧固件装配助手(A)', '定制紧固件装配(U)...']
+
+-- 首选项 (12) --
+  UG_NXLAYOUT_PREFERENCES | 布局首选项 | ['首选项(P)', '布局(L)...']
+  UG_PREFERENCES_SKETCH | 草图首选项 | ['首选项(P)', '草图(S)...']
+  UG_PREFERENCES_ASSEMBLIES | 装配首选项 | ['首选项(P)', '装配(B)...']
+  UG_DRAFT_PREFERENCES_DRAFTING | 制图首选项 | ['首选项(P)', '制图(D)...']
+  UG_PREFERENCES_USER_INTERFACE | 用户界面首选项 | ['首选项(P)', '用户界面(I)...']
+  UG_PREFERENCES_VISUALIZATION | 可视化首选项 | ['首选项(P)', '可视化(V)...']
+  UG_PREFERENCES_PERFORMANCE | 可视化性能首选项 | ['首选项(P)', '可视化性能(Z)...']
+  UG_PREFERENCES_SELECTION | 选择首选项 | ['首选项(P)', '选择(E)...']
+  UG_PREFERENCES_OBJECT | 对象首选项 | ['首选项(P)', '对象(O)...']
+  UG_PREFERENCES_MEASUREMENT | 测量首选项 | ['首选项(P)', '测量(U)...']
+  UG_PREFERENCES_VIEW_SECTION | 视图剖切首选项 | ['首选项(P)', '视图剖切(N)...']
+  UG_PREFERENCES_UGMANAGER | Teamcenter 集成首选项 | ['首选项(P)', 'Teamcenter 集成(G)...']
+
+-- 图纸页 (4) --
+  UG_DRAFT_DRW_MODIFY | 编辑图纸页 | ['编辑(E)', '图纸页(H)...']
+  UG_NXLAYOUT_CONVERT_SHEET_TO_LAYOUT | 将图纸页转换为布局 | ['工具(T)', '布局(T)', '转换为布局(L)...']
+  UG_NXLAYOUT_CONVERT_LAYOUT_TO_SHEET | 将布局转换为图纸页 | ['工具(T)', '布局(T)', '转换为图纸页(S)...']
+  UG_DRAFT_DRW_OPEN | 打开图纸页 | ['格式(R)', '打开图纸页(T)...']
+
+-- 标题栏 (0) --
+
+-- 装配间隙 (0) --
+
+-- 爆炸 (8) --
+  UG_ASSY_CREATE_EXPLOSION | 新建爆炸 | ['装配(A)', '爆炸图(X)', '新建爆炸(N)...']
+  UG_ASSY_EXPLODE_COMPONENT | 编辑爆炸 | ['装配(A)', '爆炸图(X)', '编辑爆炸(E)...']
+  UG_ASSY_AUTO_EXPLODE_COMPONENT | 自动爆炸组件 | ['装配(A)', '爆炸图(X)', '自动爆炸组件(A)...']
+  UG_ASSY_UNEXPLODE_COMPONENT | 取消爆炸组件 | ['装配(A)', '爆炸图(X)', '取消爆炸组件(U)']
+  UG_ASSY_DELETE_EXPLOSION | 删除爆炸 | ['装配(A)', '爆炸图(X)', '删除爆炸(D)...']
+  UG_ASSY_HIDE_EXPLOSION | 隐藏爆炸 | ['装配(A)', '爆炸图(X)', '隐藏爆炸(H)']
+  UG_ASSY_SHOW_EXPLOSION | 显示爆炸 | ['装配(A)', '爆炸图(X)', '显示爆炸(S)']
+  UG_INFO_EXPLODED_VIEWS | 装配爆炸信息 | ['信息(I)', '装配(A)', '爆炸(E)...']
+
+-- 倒斜角 (6) --
+  UG_DRAFT_DIMENSION_CHAMFER | 倒斜角尺寸 | ['插入(S)', '尺寸(M)', '倒斜角(C)...']
+  UG_PMI_DIMENSION_CHAMFER | 倒斜角尺寸 | ['PMI', '尺寸(D)', '倒斜角(C)...']
+  UG_CURVE_CHAMFER | 曲线倒斜角（原有） | ['插入(S)', '曲线(C)', '倒斜角（原）(M)...']
+  UG_MODELING_CHAMFER_FEATURE | 倒斜角 | ['插入(S)', '细节特征(L)', '倒斜角(M)...']
+  UG_ADM_RESIZE_CHAMFER_FEATURE | 调整倒斜角大小 | []
+  UG_ADM_LABEL_CHAMFER_FEATURE | 标记为倒斜角 | []
+
+-- 边倒圆 (2) --
+  UG_MODELING_EDIT_FEATURE_REMOVE_MISSING_PARENTS | 从边倒圆移除缺失的父项 | ['编辑(E)', '特征(F)', '从边倒圆移除缺失的父项(T)']
+  UG_MODELING_BLEND_FEATURE | 边倒圆 | ['插入(S)', '细节特征(L)', '边倒圆(E)...']
+
+-- 抽壳 (1) --
+  UG_MODELING_HOLLOW_FEATURE | 抽壳 | ['插入(S)', '偏置/缩放(O)', '抽壳(H)...']
+
+-- 拔模 (3) --
+  UG_INFO_ANALYSIS_DRAFT | 拔模分析 | ['分析(L)', '形状(H)', '拔模分析(T)...']
+  UG_MODELING_TAPER_FEATURE | 拔模 | ['插入(S)', '细节特征(L)', '拔模(T)...']
+  UG_MODELING_BODY_TAPER_FEATURE | 拔模体 | ['插入(S)', '细节特征(L)', '拔模体(O)...']
+
+-- 孔 (12) --
+  UG_TABLE_CREATE_HOLE_TABLE | 孔表 | ['插入(S)', '表(B)', '孔表(H)...']
+  MW_TOOLS_WEDM_HOLE | 线切割起始孔 | ['工具(T)', '特定于工艺(O)', '注塑模向导(M)', '注塑模工具(T)', '线切割起始孔(E)...']
+  MW_DR_HOLE_REPORT | 孔表 | ['工具(T)', '特定于工艺(O)', '注塑模向导(M)', '模具图纸工具(W)', '孔表(B)...']
+  TOOLING_MW_HOLE_MANUFACTURING_NOTE | 孔加工注释 | ['工具(T)', '特定于工艺(O)', '注塑模向导(M)', '模具图纸工具(W)', '孔加工注释(H)...']
+  TOOLING_MW_HOLE_DATUM_SYMBOL | 孔基准符号 | ['工具(T)', '特定于工艺(O)', '注塑模向导(M)', '模具图纸工具(W)', '孔基准符号(D)...']
+  TOOLING_EW_HOLE_DATUM_SYMBOL | 孔基准符号 | []
+  PDW_BURRING_INSERT | 翻孔镶块设计 | []
+  PDW_TOOLS_WEDM_HOLE | 线切割起始孔 | []
+  PDW_DIE_CAVITY_AND_SLUG_HOLE | 型腔和废料孔 | []
+  PDW_DR_HOLE_REPORT | 孔表 | []
+  TOOLING_PDW_HOLE_MANUFACTURING_NOTE | 孔加工注释 | []
+  TOOLING_PDW_HOLE_DATUM_SYMBOL | 孔基准符号 | []
+
+-- 螺纹 (1) --
+  UG_MODELING_THREAD_FEATURE | 螺纹刀 | ['插入(S)', '设计特征(E)', '螺纹(T)...']

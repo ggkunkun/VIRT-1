@@ -1,0 +1,75 @@
+hits: 74
+AdvPBUI_UdeCategoryUI.cxx | toggleMilling_Title | Milling | 铣
+AdvPBUI_UdeCategoryUI.cxx | toggleDrilling_Title | Drilling | 钻孔
+Cam_ChamferMilling.cxx | CAMChamferMillingOperationClassName | Chamfer Milling Operation | 倒斜铣工序
+Cam_CycleTable.cxx | Exp_Drill_Back | Back Drilling | 背钻孔
+Cam_CylinderMilling.cxx | CAMCylinderMillingOperationClassName | Cylinder Milling Operation | 圆柱铣工序
+Cam_RadialGrooveMilling.cxx | CAMRadialGrooveMillingOperationClassName | Radial Groove Milling Operation | 径向槽铣工序
+cutter_definitions.c | MilingTangentBarrelTool | Milling Tangent Barrel Tool | 相切桶状铣刀
+param_indices.c | CAMCENTERDRILLCYCLETRACKINGPOINT | Center Drill Cycle Tracking Point | 中心钻循环跟踪点
+Cam_PMCVAdaptiveCustomIds.cxx | NonCuttingItemIds_Label13 | Start/Drill Points | 起点/钻点
+Cam_PMCVAdaptiveCustomIds.cxx | NonCuttingItemIds_Label14 | Start/Drill Points | 起点/钻点
+Cam_PMPMCustomIds.cxx | CamNonCuttingIds_Label7 | Start/Drill Points | 起点/钻点
+Cam_PMPMCustomIds.cxx | CamNonCuttingIds_Label8 | Start/Drill Points | 起点/钻点
+Cam_ScoprCustomIds.cxx | ScoprNonCutItemId_Label5 | Start/Drill Points | 起点/钻点
+Cam_ScoprCustomIds.cxx | ScoprNonCutItemId_Label6 | Start/Drill Points | 起点/钻点
+sim_error.c | SimTpbMillturnOperationError | Mill-Turn scenarios are not supported in Tool Path simulation. | 刀轨仿真不支持车铣分析方案。
+CamUI_AvailableToolsNavigator.cxx | CAMAvailableToolsNavigatorType1 | Mill | 铣刀
+CamUI_AvailableToolsNavigator.cxx | CAMAvailableToolsNavigatorType2 | Drill | 钻刀
+CamUI_CutPattern.cxx | CAMAdaptiveRoughingOption | Adaptive Milling | 自适应铣削
+CamUI_CycleDwell.cxx | CAMCycleDwellAtDrillingDepth | Dwell at Drilling Depth | 驻留在钻孔深度
+CamUI_CycleDwell.cxx | CAMCycleDwellAtFinalDrillingDepth | Dwell at Final Drilling Depth | 驻留在最终钻孔深度
+CamUI_MachineConfiguration.cxx | MachineConfigurationDynamics3AxMillingOption | 3 Axis Milling | 三轴铣
+CamUI_MachineConfiguration.cxx | MachineConfigurationDynamics5AxMillingOption | 5 Axis Milling | 五轴铣
+CamUI_MachineConfigurationChannelInfo.cxx | MachineConfigurationMachineTechnologyMillingOption | Milling | 铣
+CamUI_MachineConfigurationChannelInfo.cxx | MachineConfigurationMachineTechnologyMillturnOption | Millturn | 车铣
+CamUI_MachineConfigurationChannelSwiveling.cxx | MachineConfigurationPlaneMillTitle | Plane Mill | 平面铣削
+CamUI_MachineToolTree.cxx | CamUIMachineToolTreeToolTypeMill | Mill | 铣
+CamUI_MachineToolTree.cxx | CamUIMachineToolTreeToolTypeDrill | Drill | 钻
+CamUI_Preferences.cxx | CamUIPreferencesIPWColor1 | 1st Cyclic/Milling Tool | 第一循环/铣刀
+CamUI_Preferences.cxx | CamUIPreferencesIPWColor2 | 2nd Cyclic/Drilling Tool | 第二循环/钻刀
+CamUI_Preferences.cxx | CamUIPreferencesIPWColor11 | 11th Cyclic/Mill Forming Tool | 第十一循环/铣削成形刀
+CamUI_Preferences.cxx | CamUIPreferencesIPWColor12 | 12th Cyclic/Drill SPC Grooving Tool | 第十二循环/钻刀 SPC 槽刀
+CamUI_SurfaceContour.cxx | CAMOperationAreaMillingLabel | Area Milling Drive Method | 区域铣削驱动方法
+Cam_NCDiagCodes.cxx | NCDIAGAdaptiveMilHasSelfIntersections | Adaptive Milling has self-intersections. Tool path generation failed. | 自适应铣削包含自相交。刀轨生成失败。
+Cam_NCDiagCodes.cxx | NCDIAGAdaptiveMillingMissingGeometry | Adaptive Milling has no geometry defined. Tool path generation failed. | 自适应铣削没有定义几何体。刀轨生成失败。
+ui_cam_translation_helper.c | HOLE_MILLING_TITLE | Hole Milling | 孔铣
+ui_cam_translation_helper.c | HOLE_CHAMFER_MILLING_TITLE | Hole Chamfer Milling | 孔倒斜铣
+ui_cam_translation_helper.c | RADIAL_GROOVE_MILLING_TITLE | Radial Groove Milling | 径向槽铣
+ui_cam_translation_helper.c | SEQUENTIAL_DRILLING_TITLE | Sequential Drilling | 顺序钻
+ui_cam_translation_helper.c | BOSS_MILLING_TITLE | Boss Milling | 凸台铣
+ui_cam_translation_helper.c | BOSS_THREAD_MILLING_TITLE | Boss Thread Milling | 凸台螺纹铣
+ui_cam_translation_helper.c | THREAD_MILLING_TITLE | Thread Milling | 螺纹铣
+ui_cam_translation_helper.c | DRILLING_TITLE | Drilling | 钻孔
+ui_cam_translation_helper.c | DEEP_HOLE_DRILLING_TITLE | Deep Hole Drilling | 钻深孔
+ui_cam_translation_helper.c | GROOVE_MILLING_TITLE | Groove Milling | 槽铣削
+ui_cam_translation_helper.c | MILL_PART_PROBING_TITLE | Mill Part Probing | 铣削部件探测
+ui_cam_translation_helper.c | MILL_TOOL_PROBING_TITLE | Mill Tool Probing | 铣削刀具探测
+ui_cam_translation_helper.c | SPOT_DRILLING_TITLE | Spot Drilling | 定心钻
+ui_cam_translation_helper.c | MILL_TOOL_TITLE | Mill | 铣刀
+ui_cam_translation_helper.c | ADAPTIVE_MILLING_TITLE | Adaptive Milling | 自适应铣削
+ui_cam_translation_helper.c | POCKETING_TITLE | Pocket Milling | 腔铣
+ui_cam_translation_helper.c | BOSS_MILLING | Boss Milling | 凸台铣
+ui_cam_translation_helper.c | RADIAL_GROOVE_MILLING | Radial Groove Milling | 径向槽铣
+ui_cam_translation_helper.c | SEQUENTIAL_DRILLING | Sequential Drilling | 顺序钻
+ui_cam_translation_helper.c | HOLE_MILLING | Hole Milling | 孔铣
+ui_cam_translation_helper.c | HOLE_CHAMFER_MILLING | Hole Chamfer Milling | 孔倒斜铣
+ui_cam_translation_helper.c | THREAD_MILLING | Thread Milling | 螺纹铣
+ui_cam_translation_helper.c | BOSS_THREAD_MILLING | Boss Thread Milling | 凸台螺纹铣
+ui_cam_translation_helper.c | DRILLING | Drilling | 钻孔
+ui_cam_translation_helper.c | DEEP_HOLE_DRILLING | Deep Hole Drilling | 钻深孔
+ui_cam_translation_helper.c | GROOVE_MILLING | Groove Milling | 槽铣削
+ui_cam_translation_helper.c | MILL_PART_PROBING | Mill Part Probing | 铣削部件探测
+ui_cam_translation_helper.c | MILL_TOOL_PROBING | Mill Tool Probing | 铣削刀具探测
+ui_cam_translation_helper.c | SPOT_DRILLING | Spot Drilling | 定心钻
+ui_cam_translation_helper.c | ADAPTIVE_MILLING | Adaptive Milling | 自适应铣削
+ui_cam_translation_helper.c | POCKETING | Pocket Milling | 腔铣
+ui_param_items.c | CycleDwellAtDrillingDepth | Cycle - Dwell at Drilling Depth | 循环 - 驻留在钻孔深度
+ui_param_items.c | CycleDwellAtFinalDepth | Cycle - Dwell at Final Drilling Depth | 循环 - 驻留在最终钻孔深度
+ui_scop_items.c | CAMOperationAreaMillingDrivePatternCornerCleanup | Area Milling Drive Method - Pattern Corner Cleanup | 区域铣驱动方法 - 拐角清根模式
+ui_scop_items.c | CamOperationAreaMillingDriveOrderRegions | Area Milling Drive Method - Order Regions | 区域铣削驱动方法 - 区域排序
+ui_scop_items.c | CAMOperationAreaMillingDriveSteepOverlapDistance | Area Milling Drive Method - Steep Overlap Distance | 区域铣驱动方法 - 重叠距离陡峭模式
+ui_scop_items.c | CAMOperationAreaMillingDrivePatternSmooth | Area Milling Drive Method - Pattern Smooth | 区域铣驱动方法 - 光顺模式
+ModlFeature_HolePackageParms.cxx | DrillSizeHoleLabel | Drill Size Hole | 钻形孔
+Table_HoleTable.cxx | HoleTableDrillingType | Drilling Type | 钻孔类型
+Table_HoleTable.cxx | HoleTableDrillingDirection | Drilling Direction | 钻孔方向

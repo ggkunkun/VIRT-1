@@ -1,0 +1,374 @@
+<?xml version="1.0"?><!--
+Warning! Do not edit the contents of this file.
+If you attempt to edit this file using an XML editor, you could lose
+customization and migration functionality. If you need to change
+information in the customization file, use the Customize User Interface
+dialog in the product.
+To access the Customize User Interface dialog, click the Tools menu,
+Customization panel, User Interface button, or enter CUI on the command line.
+--><DoubleClickRoot xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <DoubleClickAction DxfName="3DFACE" UID="DC_0015">
+    <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+    <Name xlate="true" UID="XLS_1718">三维面</Name>
+    <MenuItem>
+      <MacroRef MenuMacroID="ID_QUICKPROPERTIES"/>
+    </MenuItem>
+  </DoubleClickAction>
+  <DoubleClickAction DxfName="3DSOLID" UID="DC_0016">
+    <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+    <Name xlate="true" UID="XLS_1719">三维实体</Name>
+    <MenuItem>
+      <MacroRef MenuMacroID="ID_QUICKPROPERTIES"/>
+    </MenuItem>
+  </DoubleClickAction>
+  <DoubleClickAction DxfName="ACAD_PROXY_E" UID="DC_0017">
+    <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+    <Name xlate="true" UID="XLS_1720">Acad_proxy_e</Name>
+    <MenuItem>
+      <MacroRef MenuMacroID="ID_QUICKPROPERTIES"/>
+    </MenuItem>
+  </DoubleClickAction>
+  <DoubleClickAction DxfName="ARC" UID="DC_0018">
+    <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+    <Name xlate="true" UID="XLS_1721">圆弧</Name>
+    <MenuItem>
+      <MacroRef MenuMacroID="ID_QUICKPROPERTIES"/>
+    </MenuItem>
+  </DoubleClickAction>
+  <DoubleClickAction DxfName="ARRAY" UID="DC_0046">
+    <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+    <Name xlate="true" UID="XLS_00021869">阵列</Name>
+    <MenuItem>
+      <MacroRef MenuMacroID="ID_QUICKPROPERTIES"/>
+    </MenuItem>
+  </DoubleClickAction>
+  <DoubleClickAction DxfName="ATTDEF" UID="DC_0001">
+    <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+    <Name xlate="true" UID="XLS_1704">附着定义</Name>
+    <MenuItem>
+      <MacroRef MenuMacroID="ID_Ddedit"/>
+    </MenuItem>
+  </DoubleClickAction>
+  <DoubleClickAction DxfName="ATTRIB" UID="DC_0044">
+    <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+    <Name xlate="true" UID="XLS_6408">属性</Name>
+    <MenuItem>
+      <MacroRef MenuMacroID="MM_1727"/>
+    </MenuItem>
+  </DoubleClickAction>
+  <DoubleClickAction DxfName="ATTBLOCKREF" UID="DC_0002">
+    <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+    <Name xlate="true" UID="XLS_1705">属性块</Name>
+    <MenuItem>
+      <MacroRef MenuMacroID="MM_1587"/>
+    </MenuItem>
+  </DoubleClickAction>
+  <DoubleClickAction DxfName="ATTDYNBLOCKREF" UID="DC_0003">
+    <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+    <Name xlate="true" UID="XLS_1706">属性动态块</Name>
+    <MenuItem>
+      <MacroRef MenuMacroID="MM_1587"/>
+    </MenuItem>
+  </DoubleClickAction>
+  <DoubleClickAction DxfName="BLOCKREF" UID="DC_0004">
+    <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+    <Name xlate="true" UID="XLS_1707">块</Name>
+    <MenuItem>
+      <MacroRef MenuMacroID="ID_Block_DoubleClick"/>
+    </MenuItem>
+  </DoubleClickAction>
+  <DoubleClickAction DxfName="DYNBLOCKREF" UID="DC_0005">
+    <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+    <Name xlate="true" UID="XLS_1708">动态块</Name>
+    <MenuItem>
+      <MacroRef MenuMacroID="ID_DynBlock_DoubleClick"/>
+    </MenuItem>
+  </DoubleClickAction>
+  <DoubleClickAction DxfName="BODY" UID="DC_0019">
+    <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+    <Name xlate="true" UID="XLS_1722">体</Name>
+    <MenuItem>
+      <MacroRef MenuMacroID="ID_QUICKPROPERTIES"/>
+    </MenuItem>
+  </DoubleClickAction>
+  <DoubleClickAction DxfName="CAMERA" UID="DC_0042">
+    <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+    <Name xlate="true" UID="XLS_6331">相机</Name>
+    <MenuItem>
+      <MacroRef MenuMacroID="ID_QUICKPROPERTIES"/>
+    </MenuItem>
+  </DoubleClickAction>
+  <DoubleClickAction DxfName="CENTERMARK" UID="DC_210_20313">
+    <ModifiedRev MajorVersion="21" MinorVersion="0" UserVersion="0"/>
+    <Name xlate="true" UID="XLS_210_242A0">圆心标记</Name>
+    <MenuItem>
+      <MacroRef MenuMacroID="ID_QUICKPROPERTIES"/>
+    </MenuItem>
+  </DoubleClickAction>
+  <DoubleClickAction DxfName="CENTERLINE" UID="DC_210_94DA7">
+    <ModifiedRev MajorVersion="21" MinorVersion="0" UserVersion="0"/>
+    <Name xlate="true" UID="XLS_210_39954">中心线</Name>
+    <MenuItem>
+      <MacroRef MenuMacroID="ID_QUICKPROPERTIES"/>
+    </MenuItem>
+  </DoubleClickAction>
+  <DoubleClickAction DxfName="CIRCLE" UID="DC_0020">
+    <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+    <Name xlate="true" UID="XLS_1723">圆</Name>
+    <MenuItem>
+      <MacroRef MenuMacroID="ID_QUICKPROPERTIES"/>
+    </MenuItem>
+  </DoubleClickAction>
+  <DoubleClickAction DxfName="DIMENSION" UID="DC_0047">
+    <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+    <Name xlate="true" UID="XLS_00022213">标注</Name>
+    <MenuItem>
+      <MacroRef MenuMacroID="ID_TEDIT"/>
+    </MenuItem>
+  </DoubleClickAction>
+  <DoubleClickAction DxfName="ELLIPSE" UID="DC_0022">
+    <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+    <Name xlate="true" UID="XLS_1725">椭圆</Name>
+    <MenuItem>
+      <MacroRef MenuMacroID="ID_QUICKPROPERTIES"/>
+    </MenuItem>
+  </DoubleClickAction>
+  <DoubleClickAction DxfName="EXTRUDEDSURFACE" UID="DC_0039">
+    <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+    <Name xlate="true" UID="XLS_6306">拉伸曲面</Name>
+    <MenuItem>
+      <MacroRef MenuMacroID="ID_QUICKPROPERTIES"/>
+    </MenuItem>
+  </DoubleClickAction>
+  <DoubleClickAction DxfName="GEOMAPIMAGE" UID="DC_0051">
+    <ModifiedRev MajorVersion="20" MinorVersion="0" UserVersion="0"/>
+    <Name xlate="true" UID="XLS_6313">GEOMAP 图像</Name>
+    <MenuItem>
+      <MacroRef MenuMacroID="ID_Imageadju"/>
+    </MenuItem>
+  </DoubleClickAction>
+  <DoubleClickAction DxfName="POSITIONMARKER" UID="DC_0050">
+    <ModifiedRev MajorVersion="19" MinorVersion="1" UserVersion="0"/>
+    <Name xlate="true" UID="XLS_6311">位置标记</Name>
+    <MenuItem>
+      <MacroRef MenuMacroID="ID_TEDIT"/>
+    </MenuItem>
+  </DoubleClickAction>
+  <DoubleClickAction DxfName="HATCH" UID="DC_0006">
+    <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+    <Name xlate="true" UID="XLS_1709">图案填充</Name>
+    <MenuItem>
+      <MacroRef MenuMacroID="ID_QUICKPROPERTIES"/>
+    </MenuItem>
+  </DoubleClickAction>
+  <DoubleClickAction DxfName="HELIX" UID="DC_0035">
+    <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+    <Name xlate="true" UID="XLS_6304">螺旋</Name>
+    <MenuItem>
+      <MacroRef MenuMacroID="ID_QUICKPROPERTIES"/>
+    </MenuItem>
+  </DoubleClickAction>
+  <DoubleClickAction DxfName="IMAGE" UID="DC_0007">
+    <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+    <Name xlate="true" UID="XLS_1710">图像</Name>
+    <MenuItem>
+      <MacroRef MenuMacroID="ID_Imageadju"/>
+    </MenuItem>
+  </DoubleClickAction>
+  <DoubleClickAction DxfName="LEADER" UID="DC_0023">
+    <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+    <Name xlate="true" UID="XLS_1726">引线</Name>
+    <MenuItem>
+      <MacroRef MenuMacroID="ID_QUICKPROPERTIES"/>
+    </MenuItem>
+  </DoubleClickAction>
+  <DoubleClickAction DxfName="LIGHT" UID="DC_0043">
+    <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+    <Name xlate="true" UID="XLS_6331">光源</Name>
+    <MenuItem>
+      <MacroRef MenuMacroID="ID_QUICKPROPERTIES"/>
+    </MenuItem>
+  </DoubleClickAction>
+  <DoubleClickAction DxfName="LINE" UID="DC_0024">
+    <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+    <Name xlate="true" UID="XLS_1727">直线</Name>
+    <MenuItem>
+      <MacroRef MenuMacroID="ID_QUICKPROPERTIES"/>
+    </MenuItem>
+  </DoubleClickAction>
+  <DoubleClickAction DxfName="LOFTEDSURFACE" UID="DC_0040">
+    <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+    <Name xlate="true" UID="XLS_6307">放样曲面</Name>
+    <MenuItem>
+      <MacroRef MenuMacroID="ID_QUICKPROPERTIES"/>
+    </MenuItem>
+  </DoubleClickAction>
+  <DoubleClickAction DxfName="LWPOLYLINE" UID="DC_0008">
+    <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+    <Name xlate="true" UID="XLS_1711">优化多段线</Name>
+    <MenuItem>
+      <MacroRef MenuMacroID="ID_Pedit"/>
+    </MenuItem>
+  </DoubleClickAction>
+  <DoubleClickAction DxfName="MLINE" UID="DC_0009">
+    <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+    <Name xlate="true" UID="XLS_1712">多线</Name>
+    <MenuItem>
+      <MacroRef MenuMacroID="ID_Mledit"/>
+    </MenuItem>
+  </DoubleClickAction>
+  <DoubleClickAction DxfName="MTEXT" UID="DC_0010">
+    <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+    <Name xlate="true" UID="XLS_1713">多行文字</Name>
+    <MenuItem>
+      <MacroRef MenuMacroID="ID_Mtedit"/>
+    </MenuItem>
+  </DoubleClickAction>
+  <DoubleClickAction DxfName="MULTILEADER" UID="DC_0045">
+    <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+    <Name xlate="true" UID="XLS_6737">多重引线</Name>
+    <MenuItem>
+      <MacroRef MenuMacroID="ID_QUICKPROPERTIES"/>
+    </MenuItem>
+  </DoubleClickAction>
+  <DoubleClickAction DxfName="PLANESURFACE" UID="DC_0036">
+    <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+    <Name xlate="true" UID="XLS_6305">平面曲面</Name>
+    <MenuItem>
+      <MacroRef MenuMacroID="ID_QUICKPROPERTIES"/>
+    </MenuItem>
+  </DoubleClickAction>
+  <DoubleClickAction DxfName="POINT" UID="DC_0025">
+    <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+    <Name xlate="true" UID="XLS_1728">点</Name>
+    <MenuItem>
+      <MacroRef MenuMacroID="ID_QUICKPROPERTIES"/>
+    </MenuItem>
+  </DoubleClickAction>
+  <DoubleClickAction DxfName="ACDBPOINTCLOUD" UID="DC_0089">
+    <ModifiedRev MajorVersion="19" MinorVersion="1" UserVersion="0"/>
+    <Name xlate="true" UID="XLS_1789">点云</Name>
+    <MenuItem>
+      <MacroRef MenuMacroID="ID_QUICKPROPERTIES"/>
+    </MenuItem>
+  </DoubleClickAction>
+  <DoubleClickAction DxfName="ACDBPOINTCLOUDEX" UID="DC_0090">
+    <ModifiedRev MajorVersion="20" MinorVersion="0" UserVersion="0"/>
+    <Name xlate="true" UID="XLS_1790">点云</Name>
+    <MenuItem>
+      <MacroRef MenuMacroID="ID_QUICKPROPERTIES"/>
+    </MenuItem>
+  </DoubleClickAction>
+  <DoubleClickAction DxfName="POLYLINE" UID="DC_0011">
+    <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+    <Name xlate="true" UID="XLS_1714">多段线</Name>
+    <MenuItem>
+      <MacroRef MenuMacroID="ID_Pedit"/>
+    </MenuItem>
+  </DoubleClickAction>
+  <DoubleClickAction DxfName="RAY" UID="DC_0026">
+    <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+    <Name xlate="true" UID="XLS_1729">射线</Name>
+    <MenuItem>
+      <MacroRef MenuMacroID="ID_QUICKPROPERTIES"/>
+    </MenuItem>
+  </DoubleClickAction>
+  <DoubleClickAction DxfName="REGION" UID="DC_0027">
+    <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+    <Name xlate="true" UID="XLS_1730">面域</Name>
+    <MenuItem>
+      <MacroRef MenuMacroID="ID_QUICKPROPERTIES"/>
+    </MenuItem>
+  </DoubleClickAction>
+  <DoubleClickAction DxfName="REVOLVEDSURFACE" UID="DC_0037">
+    <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+    <Name xlate="true" UID="XLS_6304">旋转曲面</Name>
+    <MenuItem>
+      <MacroRef MenuMacroID="ID_QUICKPROPERTIES"/>
+    </MenuItem>
+  </DoubleClickAction>
+  <DoubleClickAction DxfName="SECTIONOBJECT" UID="DC_0041">
+    <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+    <Name xlate="true" UID="XLS_6312">截面对象</Name>
+    <MenuItem>
+      <MacroRef MenuMacroID="ID_Livesection"/>
+    </MenuItem>
+  </DoubleClickAction>
+  <DoubleClickAction DxfName="SHAPE" UID="DC_0028">
+    <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+    <Name xlate="true" UID="XLS_1731">形</Name>
+    <MenuItem>
+      <MacroRef MenuMacroID="ID_QUICKPROPERTIES"/>
+    </MenuItem>
+  </DoubleClickAction>
+  <DoubleClickAction DxfName="SOLID" UID="DC_0029">
+    <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+    <Name xlate="true" UID="XLS_1732">实体</Name>
+    <MenuItem>
+      <MacroRef MenuMacroID="ID_QUICKPROPERTIES"/>
+    </MenuItem>
+  </DoubleClickAction>
+  <DoubleClickAction DxfName="SPLINE" UID="DC_0012">
+    <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+    <Name xlate="true" UID="XLS_1715">样条曲线</Name>
+    <MenuItem>
+      <MacroRef MenuMacroID="ID_Splinedit"/>
+    </MenuItem>
+  </DoubleClickAction>
+  <DoubleClickAction DxfName="SWEPTSURFACE" UID="DC_0038">
+    <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+    <Name xlate="true" UID="XLS_6305">扫掠曲面</Name>
+    <MenuItem>
+      <MacroRef MenuMacroID="ID_QUICKPROPERTIES"/>
+    </MenuItem>
+  </DoubleClickAction>
+  <DoubleClickAction DxfName="TABLE" UID="DC_0030">
+    <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+    <Name xlate="true" UID="XLS_1733">表格</Name>
+    <MenuItem>
+      <MacroRef MenuMacroID="ID_QUICKPROPERTIES"/>
+    </MenuItem>
+  </DoubleClickAction>
+  <DoubleClickAction DxfName="TEXT" UID="DC_0013">
+    <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+    <Name xlate="true" UID="XLS_1716">文字</Name>
+    <MenuItem>
+      <MacroRef MenuMacroID="ID_Ddedit"/>
+    </MenuItem>
+  </DoubleClickAction>
+  <DoubleClickAction DxfName="TOLERANCE" UID="DC_0031">
+    <ModifiedRev MajorVersion="20" MinorVersion="0" UserVersion="0"/>
+    <Name xlate="true" UID="XLS_1734">公差</Name>
+    <MenuItem>
+      <MacroRef MenuMacroID="ID_Ddedit"/>
+    </MenuItem>
+  </DoubleClickAction>
+  <DoubleClickAction DxfName="TRACE" UID="DC_0032">
+    <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+    <Name xlate="true" UID="XLS_1735">跟踪</Name>
+    <MenuItem>
+      <MacroRef MenuMacroID="ID_QUICKPROPERTIES"/>
+    </MenuItem>
+  </DoubleClickAction>
+  <DoubleClickAction DxfName="WIPEOUT" UID="DC_0033">
+    <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+    <Name xlate="true" UID="XLS_1736">区域覆盖</Name>
+    <MenuItem>
+      <MacroRef MenuMacroID="ID_QUICKPROPERTIES"/>
+    </MenuItem>
+  </DoubleClickAction>
+  <DoubleClickAction DxfName="XLINE" UID="DC_0034">
+    <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+    <Name xlate="true" UID="XLS_1737">构造线</Name>
+    <MenuItem>
+      <MacroRef MenuMacroID="ID_QUICKPROPERTIES"/>
+    </MenuItem>
+  </DoubleClickAction>
+  <DoubleClickAction DxfName="XREF" UID="DC_0014">
+    <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+    <Name xlate="true" UID="XLS_1717">外部参照</Name>
+    <MenuItem>
+      <MacroRef MenuMacroID="ID_RefEdit"/>
+    </MenuItem>
+  </DoubleClickAction>
+</DoubleClickRoot>

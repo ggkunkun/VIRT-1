@@ -1,0 +1,397 @@
+<?xml version="1.0"?><!--
+Warning! Do not edit the contents of this file.
+If you attempt to edit this file using an XML editor, you could lose
+customization and migration functionality. If you need to change
+information in the customization file, use the Customize User Interface
+dialog in the product.
+To access the Customize User Interface dialog, click the Tools menu,
+Customization panel, User Interface button, or enter CUI on the command line.
+--><AcceleratorRoot xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <MenuAccelerator UID="MA_0001">
+    <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    <Accelerator>
+      <KeyCombo accKeys="CTRL" AccelChar="K" bUseVirtual="false"/>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Hyperlink"/>
+      </MenuItem>
+    </Accelerator>
+  </MenuAccelerator>
+  <MenuAccelerator UID="MA_0036">
+    <ModifiedRev MajorVersion="19" MinorVersion="0" UserVersion="0"/>
+    <Accelerator>
+      <KeyCombo accKeys="CTRL" VirtualChar="F2" bUseVirtual="true"/>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Textscr"/>
+      </MenuItem>
+    </Accelerator>
+  </MenuAccelerator>
+  <MenuAccelerator UID="MA_0035">
+    <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+    <Accelerator>
+      <KeyCombo accKeys="SHIFT+CTRL" AccelChar="I" bUseVirtual="false"/>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_Toggle_Infer_Constr"/>
+      </MenuItem>
+    </Accelerator>
+  </MenuAccelerator>
+  <MenuAccelerator UID="MA_0034">
+    <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+    <Accelerator>
+      <KeyCombo accKeys="SHIFT+CTRL" AccelChar="H" bUseVirtual="false"/>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1904"/>
+      </MenuItem>
+    </Accelerator>
+  </MenuAccelerator>
+  <MenuAccelerator UID="MA_0032">
+    <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+    <Accelerator>
+      <KeyCombo accKeys="CTRL" AccelChar="I" bUseVirtual="false"/>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_0007"/>
+      </MenuItem>
+    </Accelerator>
+  </MenuAccelerator>
+  <MenuAccelerator UID="MA_0031">
+    <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+    <Accelerator>
+      <KeyCombo accKeys="CTRL" AccelChar="D" bUseVirtual="false"/>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1720"/>
+      </MenuItem>
+    </Accelerator>
+  </MenuAccelerator>
+  <MenuAccelerator UID="MA_0002">
+    <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    <Accelerator>
+      <KeyCombo accKeys="CTRL" AccelChar="L" bUseVirtual="false"/>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_0005"/>
+      </MenuItem>
+    </Accelerator>
+  </MenuAccelerator>
+  <MenuAccelerator UID="MA_0033">
+    <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+    <Accelerator>
+      <KeyCombo accKeys="SHIFT+CTRL" AccelChar="P" bUseVirtual="false"/>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_TOGGLEQPMODE"/>
+      </MenuItem>
+    </Accelerator>
+  </MenuAccelerator>
+  <MenuAccelerator UID="MA_0003">
+    <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    <Accelerator>
+      <KeyCombo accKeys="CTRL" AccelChar="R" bUseVirtual="false"/>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1556"/>
+      </MenuItem>
+    </Accelerator>
+  </MenuAccelerator>
+  <MenuAccelerator UID="MA_SP01">
+    <ModifiedRev MajorVersion="20" MinorVersion="1" UserVersion="0"/>
+    <Accelerator>
+      <KeyCombo accKeys="CTRL" VirtualChar="HOME" bUseVirtual="true"/>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_SP_02"/>
+      </MenuItem>
+    </Accelerator>
+  </MenuAccelerator>
+  <MenuAccelerator UID="MA_0004">
+    <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    <Accelerator>
+      <KeyCombo accKeys="CTRL" AccelChar="A" bUseVirtual="false"/>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_SelAll"/>
+      </MenuItem>
+    </Accelerator>
+  </MenuAccelerator>
+  <MenuAccelerator UID="MA_0005">
+    <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    <Accelerator>
+      <KeyCombo accKeys="CTRL" AccelChar="C" bUseVirtual="false"/>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Copyclip"/>
+      </MenuItem>
+    </Accelerator>
+  </MenuAccelerator>
+  <MenuAccelerator UID="MA_0006">
+    <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    <Accelerator>
+      <KeyCombo accKeys="CTRL" AccelChar="N" bUseVirtual="false"/>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_New"/>
+      </MenuItem>
+    </Accelerator>
+  </MenuAccelerator>
+  <MenuAccelerator UID="MA_0007">
+    <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    <Accelerator>
+      <KeyCombo accKeys="CTRL" AccelChar="O" bUseVirtual="false"/>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Open"/>
+      </MenuItem>
+    </Accelerator>
+  </MenuAccelerator>
+  <MenuAccelerator UID="MA_0008">
+    <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    <Accelerator>
+      <KeyCombo accKeys="CTRL" AccelChar="P" bUseVirtual="false"/>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Print"/>
+      </MenuItem>
+    </Accelerator>
+  </MenuAccelerator>
+  <MenuAccelerator UID="MA_0009">
+    <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    <Accelerator>
+      <KeyCombo accKeys="CTRL" AccelChar="S" bUseVirtual="false"/>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Save"/>
+      </MenuItem>
+    </Accelerator>
+  </MenuAccelerator>
+  <MenuAccelerator UID="MA_0010">
+    <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    <Accelerator>
+      <KeyCombo accKeys="SHIFT+CTRL" AccelChar="S" bUseVirtual="false"/>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Saveas"/>
+      </MenuItem>
+    </Accelerator>
+  </MenuAccelerator>
+  <MenuAccelerator UID="MA_0011">
+    <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    <Accelerator>
+      <KeyCombo accKeys="CTRL" AccelChar="Q" bUseVirtual="false"/>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Quit"/>
+      </MenuItem>
+    </Accelerator>
+  </MenuAccelerator>
+  <MenuAccelerator UID="MA_0012">
+    <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    <Accelerator>
+      <KeyCombo accKeys="CTRL" AccelChar="V" bUseVirtual="false"/>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Pasteclip"/>
+      </MenuItem>
+    </Accelerator>
+  </MenuAccelerator>
+  <MenuAccelerator UID="MA_0013">
+    <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    <Accelerator>
+      <KeyCombo accKeys="SHIFT+CTRL" AccelChar="C" bUseVirtual="false"/>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Copybase"/>
+      </MenuItem>
+    </Accelerator>
+  </MenuAccelerator>
+  <MenuAccelerator UID="MA_0014">
+    <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    <Accelerator>
+      <KeyCombo accKeys="SHIFT+CTRL" AccelChar="V" bUseVirtual="false"/>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Pastebloc"/>
+      </MenuItem>
+    </Accelerator>
+  </MenuAccelerator>
+  <MenuAccelerator UID="MA_0015">
+    <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    <Accelerator>
+      <KeyCombo accKeys="CTRL" AccelChar="X" bUseVirtual="false"/>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Cutclip"/>
+      </MenuItem>
+    </Accelerator>
+  </MenuAccelerator>
+  <MenuAccelerator UID="MA_242_6EF37">
+    <ModifiedRev MajorVersion="24" MinorVersion="2" UserVersion="0"/>
+    <Accelerator>
+      <KeyCombo accKeys="SHIFT+CTRL" AccelChar="X" bUseVirtual="false"/>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Cutbaseclip"/>
+      </MenuItem>
+    </Accelerator>
+  </MenuAccelerator>
+  <MenuAccelerator UID="MA_0016">
+    <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    <Accelerator>
+      <KeyCombo accKeys="CTRL" AccelChar="Y" bUseVirtual="false"/>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Redo"/>
+      </MenuItem>
+    </Accelerator>
+  </MenuAccelerator>
+  <MenuAccelerator UID="MA_0017">
+    <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    <Accelerator>
+      <KeyCombo accKeys="CTRL" AccelChar="Z" bUseVirtual="false"/>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_U"/>
+      </MenuItem>
+    </Accelerator>
+  </MenuAccelerator>
+  <MenuAccelerator UID="MA_0018">
+    <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    <Accelerator>
+      <KeyCombo accKeys="CTRL" AccelChar="0" bUseVirtual="false"/>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_CleanScreen"/>
+      </MenuItem>
+    </Accelerator>
+  </MenuAccelerator>
+  <MenuAccelerator UID="MA_0019">
+    <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    <Accelerator>
+      <KeyCombo accKeys="CTRL" AccelChar="1" bUseVirtual="false"/>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Modify"/>
+      </MenuItem>
+    </Accelerator>
+  </MenuAccelerator>
+  <MenuAccelerator UID="MA_0020">
+    <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    <Accelerator>
+      <KeyCombo accKeys="CTRL" AccelChar="2" bUseVirtual="false"/>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Content"/>
+      </MenuItem>
+    </Accelerator>
+  </MenuAccelerator>
+  <MenuAccelerator UID="MA_0021">
+    <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    <Accelerator>
+      <KeyCombo accKeys="CTRL" AccelChar="3" bUseVirtual="false"/>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_TPalette"/>
+      </MenuItem>
+    </Accelerator>
+  </MenuAccelerator>
+  <MenuAccelerator UID="MA_0022">
+    <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    <Accelerator>
+      <KeyCombo accKeys="CTRL" AccelChar="4" bUseVirtual="false"/>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_SSMPalette"/>
+      </MenuItem>
+    </Accelerator>
+  </MenuAccelerator>
+  <MenuAccelerator UID="MA_0024">
+    <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    <Accelerator>
+      <KeyCombo accKeys="CTRL" AccelChar="6" bUseVirtual="false"/>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_dbConnect"/>
+      </MenuItem>
+    </Accelerator>
+  </MenuAccelerator>
+  <MenuAccelerator UID="MA_0025">
+    <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    <Accelerator>
+      <KeyCombo accKeys="CTRL" AccelChar="7" bUseVirtual="false"/>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_MarkupMgr"/>
+      </MenuItem>
+    </Accelerator>
+  </MenuAccelerator>
+  <MenuAccelerator UID="MA_0026">
+    <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    <Accelerator>
+      <KeyCombo accKeys="CTRL" AccelChar="8" bUseVirtual="false"/>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_QCalc"/>
+      </MenuItem>
+    </Accelerator>
+  </MenuAccelerator>
+  <MenuAccelerator UID="MA_0027">
+    <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    <Accelerator>
+      <KeyCombo accKeys="CTRL" AccelChar="9" bUseVirtual="false"/>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_CmdLine"/>
+      </MenuItem>
+    </Accelerator>
+  </MenuAccelerator>
+  <MenuAccelerator UID="MA_0028">
+    <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    <Accelerator>
+      <KeyCombo accKeys="ALT" VirtualChar="F8" bUseVirtual="true"/>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_VBARun"/>
+      </MenuItem>
+    </Accelerator>
+  </MenuAccelerator>
+  <MenuAccelerator UID="MA_0029">
+    <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    <Accelerator>
+      <KeyCombo accKeys="ALT" VirtualChar="F11" bUseVirtual="true"/>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_VBAIDE"/>
+      </MenuItem>
+    </Accelerator>
+  </MenuAccelerator>
+  <MenuAccelerator UID="MA_0030">
+    <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    <Accelerator>
+      <KeyCombo accKeys="CTRL" AccelChar="H" bUseVirtual="false"/>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1557"/>
+      </MenuItem>
+    </Accelerator>
+  </MenuAccelerator>
+  <MenuAccelerator UID="MA_0037">
+    <ModifiedRev MajorVersion="19" MinorVersion="0" UserVersion="0"/>
+    <Accelerator>
+      <KeyCombo accKeys="SHIFT+CTRL" AccelChar="L" bUseVirtual="false"/>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_Selpre"/>
+      </MenuItem>
+    </Accelerator>
+  </MenuAccelerator>
+  <MenuAccelerator UID="MA_SM_01">
+    <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+    <Accelerator>
+      <KeyCombo accKeys="SHIFT" VirtualChar="F1" bUseVirtual="true"/>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_SubObjectAll2"/>
+      </MenuItem>
+    </Accelerator>
+  </MenuAccelerator>
+  <MenuAccelerator UID="MA_SM_02">
+    <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+    <Accelerator>
+      <KeyCombo accKeys="SHIFT" VirtualChar="F2" bUseVirtual="true"/>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_SubObjectVertex2"/>
+      </MenuItem>
+    </Accelerator>
+  </MenuAccelerator>
+  <MenuAccelerator UID="MA_SM_03">
+    <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+    <Accelerator>
+      <KeyCombo accKeys="SHIFT" VirtualChar="F3" bUseVirtual="true"/>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_SubObjectEdge2"/>
+      </MenuItem>
+    </Accelerator>
+  </MenuAccelerator>
+  <MenuAccelerator UID="MA_SM_04">
+    <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+    <Accelerator>
+      <KeyCombo accKeys="SHIFT" VirtualChar="F4" bUseVirtual="true"/>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_SubObjectFace2"/>
+      </MenuItem>
+    </Accelerator>
+  </MenuAccelerator>
+  <MenuAccelerator UID="MA_SM_05">
+    <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+    <Accelerator>
+      <KeyCombo accKeys="SHIFT" VirtualChar="F5" bUseVirtual="true"/>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_SubObjectSolidHistory2"/>
+      </MenuItem>
+    </Accelerator>
+  </MenuAccelerator>
+</AcceleratorRoot>

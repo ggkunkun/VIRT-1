@@ -1,0 +1,16 @@
+{
+  "tool": "macro2_renumber_format",
+  "run_at": "2026-11-18 23:35:54",
+  "start": 100,
+  "step": 10,
+  "count": 1,
+  "elapsed_sec": 0.013,
+  "files": [
+    {
+      "src": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\tmpeip0p3if\\r.nc",
+      "dst": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\tmpeip0p3if\\r_out.nc",
+      "blocks": 4
+    }
+  ],
+  "honest_note": "工程等价实现，对齐CIMCO .MAC [RENUM] 规则；复杂程序需GUI复核"
+}

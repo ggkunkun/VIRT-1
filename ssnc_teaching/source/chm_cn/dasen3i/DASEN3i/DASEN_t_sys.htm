@@ -1,0 +1,446 @@
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>无标题文档</title>
+<link href="../../helper_css.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<table width="100%"  border="0" cellspacing="0" cellpadding="0"class="bar">
+  <tr>
+	<td>DASEN3i-T数控系统操作</td>
+  </tr>
+</table>
+<p>在“视图”下拉菜单或者浮动菜单中选择“控制面板切换”后，数控系统操作键盘会出现在视窗的右上角，其左侧为数控系统显示屏，如下图所示。用操作键盘结合显示屏可以进行数控系统操作。<br>
+                  
+                  <br>
+                  <img src="PIC/DASEN.gif" width="400" height="212">
+<p>　<br>
+  数字/字母键用于输入数据到输入区域（如下图所示），系统自动判别取字母还是取数字。<br>
+  <img border="0" src="PIC/input/02.gif" width="386" height="285"><br>
+  <br>
+</p>
+                  <font face="宋体"><b>功能选择键</b><br>
+                  <img border="0" src="PIC/monitor_u.gif" width="41" height="41">位置显示页面。<br>
+                  <img border="0" src="PIC/tool_u.gif" width="43" height="41">参数输入页面。<br>
+                  <img border="0" src="PIC/mdi_off_u.gif" width="38" height="35">数控程序显示与编辑页面。<br>
+                  <br>
+<b>编辑键<br>
+</b>
+                  <img src="PIC/delete_u.gif" width="34" height="34">删除键。删除光标所在的数据；或者删除一个数控程序或者删除全部数控程序。<br>
+                  <img border="0" src="PIC/can_u.gif" width="34" height="34">此键是删除所输入到编辑缓冲区或搜索数据区内的数据的最后一个字符。（此按键功能等同于Back 
+                  Space键）<br>
+                  <img border="0" src="PIC/eob_u.gif" width="34" height="34">回撤换行键。结束一行程序的输入并且换行。<br>
+                  <img border="0" src="PIC/shift_u.gif" width="34" height="34">上档键。
+                  <p>
+                  <b>翻页按钮（PAGE）</b><br>
+                  <img border="0" src="PIC/front_u.gif" width="34" height="35">向上翻页。 
+                  此键功能是将现在画面翻到上一页。以每页为单位换页，并且换页后光标会停在第一个字符串开头。<br>
+                  <img border="0" src="PIC/back_u.gif" width="34" height="34">向下翻页。 
+                  此键功能是将现在画面翻到下一页。以每页为单位换页，并且换页后光标会停在第一个字符串开头。<br>
+                  　<p>                  <b>光标移动（CURSOR）<br>
+                  </b>
+                  <img border="0" src="PIC/up_u.gif" width="38" height="35">向上移动光标。<br>
+                  <img border="0" src="PIC/down_u.gif" width="38" height="35">向下移动光标。<br>
+                  <img border="0" src="PIC/left_u.gif" width="38" height="35">向左移动光标。<br>
+                  <img border="0" src="PIC/right_u.gif" width="38" height="35">向右d移动光标。
+<p>
+                  <b>输入键</b><br>
+  <img border="0" src="PIC/input_u.gif" width="45" height="33"> 输入键。
+                  当光标不在程序开关面停留在任何一个单节开关时，如果按下输入键，则从这个单节开始呼叫。当光标在程序最开头的时候，等同于在相对值画面上进行程序呼叫的操作。
+<p>  <b>重置键<br>
+  </b>
+                  <img border="0" src="PIC/reset_u.gif" width="34" height="34"> 
+                  复位键为“ON”时，NC装置处于复位状态。当NC装置在运转中，“复位”ON时，将出现下列情况：<br>
+                  　　　　如在移动指令执行中，则移动会减速停止，进行单节的剩余距离被清除。<br>
+                  　　　　如在M、S、T等的辅助功能的指令执行中，则辅助功能的执行被中断。<br>
+                  　　　　缓冲存储器的内容及显示被清除。<br>
+                  　　　　如在程序错误发生时，则程序错误状态被清除，报警灯熄灭。<br>
+                  　　　　输出/输入装置运行时开启复位开关，则电源被切断。<br>
+                  　　　　复位开关ON时，持续状态将返回初期化状态。<p>
+                  手动操作虚拟数控铣床
+                  <br>
+                  <br>
+                  *选择各轴<img border="0" src="PIC/input/34.gif" width="120" height="34">,按住按钮,即回参考点.<br>
+                  　<br>
+                  　<p>
+                  <b>移动</b><br>
+                  手动移动机床的方法有三种：<br>
+                  方法一: 连续移动（<img border="0" src="PIC/rapid_u.gif" width="38" height="35">）。这种方法用于较长距离的台面移动。<br>
+                  <br>
+                  (1) 置模式旋钮在“JOG”位置： <br>
+                  (2) 选择各轴,按方向钮，按住按钮机床台面运动，松开后停止运动。<br>
+                  <br>
+                  <b>编辑画面的菜单功能 </b>
+                  <p>（1）选择<img border="0" src="PIC/mdi_off_u.gif" width="38" height="35">画面时的菜单                  </p>
+                  <p>
+                  <img border="0" src="PIC/input/03.gif" width="387" height="283"></p>
+                  <p>（2）编辑画面的扩张操作菜单 </p>
+                  <table border="1" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#00309C" width="100%" id="AutoNumber1">
+                    <tr>
+                      <td width="20%" align="center">
+                      菜单</td>
+                      <td width="80%" align="center">
+                      功　　　能</td>
+                    </tr>
+                    <tr>
+                      <td width="20%" rowspan="2" align="center">
+                      呼叫</td>
+                      <td width="80%" align="center">
+                      1.进行任何字符串的呼叫。</td>
+                    </tr>
+                    <tr>
+                      <td align="center">2.进行编辑用的程序编号、顺序编号的呼叫。</td>
+                    </tr>
+                    <tr>
+                      <td width="20%" align="center">
+                      程序</td>
+                      <td width="80%" align="center">
+                      在画面上准备新加工程序并登录。</td>
+                    </tr>
+                    <tr>
+                      <td width="20%" rowspan="2" align="center">
+                      一览表</td>
+                      <td width="80%" align="center">
+                      1.可将内存内所登录的加工程序一览表加以确认。</td>
+                    </tr>
+                    <tr>
+                      <td align="center">2.可设定注释。</td>
+                    </tr>
+                    <tr>
+                      <td width="20%" align="center">
+                      大文字</td>
+                      <td width="80%" align="center">
+                      在画面上，每行仅显示40个字符。</td>
+                    </tr>
+                    <tr>
+                      <td width="20%" align="center">
+                      小文字</td>
+                      <td width="80%" align="center">
+                      在画面上，每行仅显示80个字符。</td>
+                    </tr>
+</table>
+                  <p>
+                  扩张操作菜单在选择时，9为反白表示。当选择一个扩张操作菜单时，可进行扩张操作，但不能进行程序编辑。未选择任何扩张操作时，则可进行程序编辑。 
+                  扩张操作菜单，在第一次按下时为选择状态，再次按下时成为非选择状态，或在设定处理正常完成后自动恢复为非选择状态。 </p>
+                  <p>（3）编辑程序的呼出　 <br>
+                  在编辑画面进行程序编辑时，首先必须操作扩张操作菜单的“呼叫”或“程序”。 
+                  如编辑已登录在内存内时，则进行“程序”的操作。有关详细的操作信息请参照“编辑画面扩张操作”。 
+                  如果在程序编辑过程中操作其它功能画面兵后，再次选择编辑画面，会显示选择编辑画面，会显示前次编辑的数据。但在下列情况下则成为任何均未呼出的状态，编辑前要再次进行数据呼叫。 
+                  1）由编辑画面编辑的程序，经压缩功能压缩后，再次选择编辑画面时。 
+                  2）由编辑画面编辑的程序，经合并功能与其它的程序合并后，再次选择编辑画面。 </p>
+                  <p>（4）全页模式/半页模式 <br>
+                  编辑和MDI画面的显示，可用全页键或半页键来切换 </p>
+                  <p><br>
+                  在全页模式时，可使用数据呼叫和程序创建功能，但没有程序一览表功能。如需核查储存的程序，请参照数据输入/输出程序一览表。 
+                  <br>
+                  （注1）假如在编辑画面中，改变模式，则MDI画面的模式也同样改变。<br>
+                  （注2）当“编辑中”在画面的右下角显示时，菜单键“前页”或“次页”无效，即按键并不改变模式。 <br>
+                  （注3）在电源切断或画面改变后，模式仍保持不变。 </p>
+                  <p><b>程序编辑操作</b></p>
+<p><b>数据显示更新<br>
+                  </b>画面所显示的数据，用
+                  <img border="0" src="PIC/up_u.gif" width="38" height="35">或<img border="0" src="PIC/down_u.gif" width="38" height="35">键，以1行为单位更新显示。<br>
+  在画面底部按<img border="0" src="PIC/down_u.gif" width="38" height="35">键或在画面顶部按<img border="0" src="PIC/up_u.gif" width="38" height="35">键时，则滚动一行。 
+</p>
+                  <p>
+                  <img border="0" src="PIC/input/04.gif" width="387" height="283"></p>
+<p>
+                  1）每按一次，光标向下移动一行。<br>
+                  2）光标在画面底部时按键，显示的数据仅向上移动一行，光标保持在底部不动。<br>
+                  3）再次按键时，显示的数据会一行一行向上移动，新数据显示在画面最底部。<br>
+  4）与之相反，按<img border="0" src="PIC/up_u.gif" width="38" height="35">键，光标向上移动一行；当光标在画面顶部时按键，显示的数据会一行一行向下移动，前一单节数据会显示出在画面顶部。</p>
+                  <p>
+                  数据变更</p>
+                  <p>
+                  加工程序如果不是记忆操作中的程序，则随时可编辑，<br>
+                  例如：想编辑的数据如下图所示。</p>
+                  <p align="left">
+                  <img border="0" src="PIC/input/05.gif" width="387" height="283"></p>
+                  <p>
+                  将Y200变更为G03　Y200　J100步骤如下：<br>
+                  （1）将光标移动到想变更的数据处。如下图：</p>
+                  <p>
+                  
+                  <img border="0" src="PIC/input/06.gif" width="387" height="283"></p>
+                  <p>
+                  （2）设定新数据G03　Y200　J100如下图：</p>
+                  <p>                  <img border="0" src="PIC/input/07.gif" width="387" height="283"></p>
+                  <p>
+                  每次设定字符时，光标会自动向右移动1格。</p>
+                  <p>
+                  （3）修改完成后，按下<img border="0" src="PIC/input_u.gif" width="45" height="33">键，新数据被写入。</p>
+                  <p>
+                  <b>数据的插入</b></p>
+                  <p>
+                  例如：G03　Y200　J100；的单节要插入数据F500时。<br>
+                  （1）将光标移动到要插入位置的下一个字符处。</p>
+                  <p>
+                  <img border="0" src="PIC/input/08.gif" width="387" height="283"><br>
+                  （2）按下<img border="0" src="PIC/shift_u.gif" width="34" height="34">后再按<img border="0" src="PIC/delete_u.gif" width="34" height="34"><br>
+                  1）光标以后的字符向右移动<br>
+2）在光标显示的位置插入数据。</p>
+                  <p>
+                  （3）数据插入F500如下图：</p>
+                  <p>
+                  <img border="0" src="PIC/input/09.gif" width="386" height="283"></p>
+                  <p>
+                  1）按下想插入的数据键，在显示的位置设定数据。<br>
+                  2）每插入1个字符，光标自动向右移动1格，其后的字符也向右移动。<br>
+                  3）重复上述1，2的操作，可连续插入几个字符，但如果画面上的光标位置之后没有间隔，则无法插入更多的数据。</p>
+                  <p>
+                  （4）修改完成后按<img border="0" src="PIC/input_u.gif" width="45" height="33">键，新数据写入记忆。</p>
+                  <p>
+                  字符删除</p>
+                  <p>
+                  
+                  例如：G03　Y200　J100　F500；单节的F500要变更为F50，需删除字符0。<br>
+                  （1）将光标移动到想删除的字符的位置。如下图：</p>
+                  <p>
+                  <img border="0" src="PIC/input/10.gif" width="386" height="283"></p>
+                  <p>
+                  （2）按下<img border="0" src="PIC/delete_u.gif" width="34" height="34">键。</p>
+                  <p>
+                  <img border="0" src="PIC/input/11.gif" width="386" height="283"><br>
+                  1）数据被删除。<br>
+                  2）光标自动向右移动1格。</p>
+                  <p>
+                  （3）修改完成后按<img border="0" src="PIC/input_u.gif" width="45" height="33">键，新数据写入记忆，被删字符右侧的字符左移。</p>
+                  <p>
+                  1个单节的删除</p>
+                  <p>
+                  例如：G03　Y200　J100　F50；的单节要全部删除。<br>
+                  （1）将光标移动到想删除的单节的位置。如下图：</p>
+                  <p>
+                  <img border="0" src="PIC/input/12.gif" width="386" height="283"></p>
+                  <p>
+                  （2）按下<img border="0" src="PIC/can_u.gif" width="34" height="34">键，整个单节的数据被删除。如下图：</p>
+                  <p>
+                  <img border="0" src="PIC/input/13.gif" width="386" height="283"></p>
+                  <p>
+                  （3）修改完成后按<img border="0" src="PIC/input_u.gif" width="45" height="33">键，单节中数据从记忆内删除。被删单节后的节段前移并显示。</p>
+                  <p>
+                  1个画面数据的删除</p>
+                  <p>
+                  例如：如下图所示的数据，在此画面所显示的数据要全部删除时<br>
+                  <img border="0" src="PIC/input/14.gif" width="386" height="283"></p>
+                  <p>
+                  （1）按下<img border="0" src="PIC/shift_u.gif" width="34" height="34">键后再按下<img border="0" src="PIC/can_u.gif" width="34" height="34">键，整个画面成为空白。</p>
+<p>
+                  <img border="0" src="PIC/input/15.gif" width="386" height="283"><br>
+  （2）按下<img border="0" src="PIC/input_u.gif" width="45" height="33">键，整个画面所的显示的数据，从记忆内删除。</p>
+                  <p>
+                  
+                  编辑画面的扩张操作</p>
+                  <p>
+                  编辑数据的呼出</p>
+                  <p>
+                  
+                  以下说明想编辑的程序或想编辑的单节呼出的。呼叫功能也可用于背景编辑时呼出正在运行中的工程序。也可用于程序开关的呼叫、字符串的呼叫和顺序编号的呼叫。</p>
+                  <p>
+                  1、程序先头的呼叫<br>
+                  在设定区域指定呼出程序编号。操作步骤如下：<br>
+                  （1）按下菜单键“呼叫”如下图：</p>
+                  <p>
+                  <img border="0" src="PIC/input/16.gif" width="386" height="283"></p>
+                  <p>
+                  显示呼叫的设定区域。</p>
+                  <p>
+                  （2）设定呼出的程序编号，如O1</p>
+                  <p>
+                  <img border="0" src="PIC/input/17.gif" width="386" height="283"></p>
+                  <p>
+                  （3）按下<img border="0" src="PIC/input_u.gif" width="45" height="33">键，呼叫中会显示“呼叫执行中”的信息，指定程序从开头起显示，光标显示在画面顶部，呼叫正确完成后，设定区域的显示会消失，“呼叫”菜单显示也由反白恢复为正常。如下图：</p>
+                  <p>
+                  
+                  <img border="0" src="PIC/input/18.gif" width="386" height="283"></p>
+                  <p>
+                  2、字符串的呼叫</p>
+                  <p>
+                  寻找想修改的文字数据时，可使用此字符串和叫。<br>
+                  在设定区域指定呼出的程序编号与字符串。但如果呼叫的字符串已在画面显示的程序中时，则可省略程序编号的指定。操作步骤如下：</p>
+                  <p>
+                  （1）按下菜单键“呼叫”，显示呼叫的设定区域。</p>
+                  <p>
+                  <img border="0" src="PIC/input/19.gif" width="386" height="283"></p>
+                  <p>
+                  （2）设定呼出的程序编号和字符串如：“N G01”</p>
+                  <p>
+                  （3）按下<img border="0" src="PIC/input_u.gif" width="45" height="33">键，指定字符串的呼叫从指定程序的开关开始。程序从包含已找到字符串的单节起显示。光标显示在呼叫字符串的开关。呼叫正确完成后，设定区域的显示会消失，数据呼叫的菜单显示由反拉拉扯扯恢复为正常。</p>
+                  <p>
+                  （注1）指定的字符串无法找到时，会显示“无该字符串”的信息。<br>
+                  （注2）字符串的指定最多为11个文字。<br>
+                  （注3）当呼叫指定的字符串时，不仅相同的字符串被呼叫，而且带有此字符串的其它字符串，也可被呼叫。</p>
+                  <p>
+                  3、顺序编号、单节编号的呼叫。<br>
+                  在设定区域指定呼出的程序编号、顺序编号和单节编号。<br>
+                  N（）中仅为数字时，成为顺序编号呼叫（如包括英文字母或记号则成为字符串呼叫）。如果呼叫的顺序编号已在画面显示的程序中，则可省略程序编号的指定。操作步骤如下：<br>
+                  （1）按下菜单键“呼叫”显示“呼叫”的设定区域。</p>
+                  <p>
+                  
+                  （2）设定想呼出的程序编号、顺序编号和单节编号。如：O（）N（6）－（）</p>
+                  <p>
+                  <img border="0" src="PIC/input/23.gif" width="386" height="284"></p>
+                  <p>
+                  （3）按下<img border="0" src="PIC/input_u.gif" width="45" height="33">键，从所指定程序的开关将该N编号找出。程序显示在包含已找到N编号的单节开头。但对于已在画面显示的程序，将从显示部分开始呼叫N编号。光标显示在该单节的开关，呼叫正确完成后，设定区域显示消失，呼叫菜单人反白恢复为正常。</p>
+                  <p>
+                  （注1）指定N无法找到时，会显示“无该NB”的信息。<br>
+                  （注2）指定的程序无法找到时，会显示“无该程序”的信息。<br>
+                  （注3）顺序编号的指定最多为5位数。</p>
+                  <p>
+                  <b>新程序的登录和形成</b><br>
+                  用于准备新的加工程序，选择“程序”的菜单，首先决定加工程序的编号，将编号登录。然后用按键直接输入程序，在画面上形成加工程序。<br>
+                  （1）按菜单键“程序”，显示“程序”设定区域。</p>
+                  <p>
+                  <img border="0" src="PIC/input/20.gif" width="386" height="284"></p>
+                  <p>
+                  
+                  （2）设定新登录的程序编号。必要时，可同时设定注解。例：O（18）。</p>
+                  <p>
+                  <img border="0" src="PIC/input/21.gif" width="386" height="284"></p>
+                  <p>
+                  （3）按下<img border="0" src="PIC/input_u.gif" width="45" height="33">键，程序编号与注解被公正登录在记忆内，并显示在画面上。此时仅有1个文字“%”作为数据自动登录在记忆内，画面如下图所示：</p>
+                  <p class="MsoNormal" style="text-indent: 0cm; margin-left: 0cm">
+                  
+                  <img border="0" src="PIC/input/22.gif" width="386" height="284"><p class="MsoNormal" style="text-indent: 0cm; margin-left: 0cm">
+                  
+                  （4）用按键依次输入加工程序，各按键的操作与一般程序的编辑操作完全相同。<br>
+                  （注1）用本功能将程序登录于记忆内，以后编辑此程序时与其它程序相同，可用“呼叫”操作将其呼出。<br>
+                  （注2）为程序做注解时，可输入“空格键”，但当程序登录在记忆内后，此空白变成无效。<p class="MsoNormal" style="text-indent: 0cm; margin-left: 0cm">
+                  
+                  位置显示<p class="MsoNormal" style="text-indent: 0cm; margin-left: 0cm">
+                  <b>相对值</b><p class="MsoNormal" style="text-indent: 0cm; margin-left: 0cm">
+                  按下功能选择键<img border="0" src="PIC/monitor_u.gif" width="41" height="41">，显示下列菜单：
+                  <p class="MsoNormal" style="text-indent: 0cm; margin-left: 0cm">
+                  <img border="0" src="PIC/input/24.gif" width="386" height="284"><p class="MsoNormal" style="text-indent: 0cm; margin-left: 0cm">
+                  在相对值画面上，可进行如下操作：<br>
+                  1）CRT画面的完全清除。<br>
+                  2）原始设定。各轴目前的相对值的数据可设定为0。<br>
+                  3）手动数值指令。M.S.T等的辅助功能输出可通过CRT画面设定。<p class="MsoNormal" style="text-indent: 0cm; margin-left: 0cm">
+                  <b>1、相对值显示的计数归零、原点归零<br>
+                  计数归零</b><br>
+                  只设定相对值显示为0，绝对值数据不变。<br>
+                  <br>
+                  <b>原点归零</b><br>
+                  将相对值显示和绝对值数据都设定为0。其等同于G92　X0　Y0　Z0；<br>
+                  <img border="0" src="PIC/input_u.gif" width="45" height="33">键具备计数归零（标准使用）功能。<br>
+                  <img border="0" src="PIC/can_u.gif" width="34" height="34">键具备原点归零（设定零）功能。<br>
+                  注意：也会将G54工件坐标归零。<br>
+                  （1）按下地址键<img border="0" src="PIC/x_u.gif" width="34" height="34">。按键对应的地址显示为反白。<p class="MsoNormal" style="text-indent: 0cm; margin-left: 0cm">
+                  （2）按下<img border="0" src="PIC/input_u.gif" width="45" height="33">键（计数归零）或按下<img border="0" src="PIC/can_u.gif" width="34" height="34">键（原点归零）。<br>
+                  X轴位置的数据设定为0，下一个轴的名称会反白显示。重复按下键　或键，可将其它轴的位置数据清除为0。最终轴清除为0后，反白显示消失。在中途按下轴的地址键，则选定轴的地址会反白显示。<p class="MsoNormal" style="text-indent: 0cm; margin-left: 0cm">
+                  2、手动数值指令（S，T，M指令）<br>
+                  
+                  主轴功能S、刀具功能T、辅助功能M的指令，可以简单地在CRT画面上操作。也就是说，可通过键入S，T，和M来执行这些指令，其效果与通过程序来指定这些指令相同。<br>
+                  （1）进行手动数值指令的条件<br>
+                  不在M，S，T指令的顺序处理中。例如，　自动起动中或自动休止中，只要满足上述条件，则可用手动数值指令。<br>
+                  （2）手动数值指令的操作步骤<br>
+                  1）选择位置显示的“相对值”的菜单画面。<br>
+                  2）按下指令对应的地址键，对应的指令值显示区域反白显示，成为手动数值指令输入状态。主轴功能键为S，刀具功能键为T，辅助功能键为M。<br>
+                  3）将所要指令的数值用按键输入。<br>
+                  4）按下<img border="0" src="PIC/input_u.gif" width="45" height="33">键。
+                  <p class="MsoNormal" style="text-indent: 0cm; margin-left: 0cm">
+                  坐标值<p class="MsoNormal" style="text-indent: 0cm; margin-left: 0cm">
+                  按下菜单键“坐标值”，显示坐标值画面。<p class="MsoNormal" style="text-indent: 0cm; margin-left: 0cm">
+                  <img border="0" src="PIC/input/25.gif" width="385" height="284"><p class="MsoNormal" style="text-indent: 0cm; margin-left: 0cm">
+                  指令值<p class="MsoNormal" style="text-indent: 0cm; margin-left: 0cm">
+                  按下菜单键“指令值”，显示指令值的画面。<p class="MsoNormal" style="text-indent: 0cm; margin-left: 0cm">
+                  <img border="0" src="PIC/input/26.gif" width="385" height="284"><p class="MsoNormal" style="text-indent: 0cm; margin-left: 0cm">
+                  呼叫<p class="MsoNormal" style="text-indent: 0cm; margin-left: 0cm">
+                  按下菜单键“呼叫”时，显示程序呼叫画面。<br>
+                  在呼叫画面，可以从记忆登录的加工程序中，将自动运转所无原则的程序编号、顺序编号、单节编号呼出。<p class="MsoNormal" style="text-indent: 0cm; margin-left: 0cm">
+                  <img border="0" src="PIC/input/27.gif" width="385" height="284"><p class="MsoNormal" style="text-indent: 0cm; margin-left: 0cm">
+                  记忆呼叫<br>
+                  加工前将程序从记忆所登录的加工程序中呼出。<br>
+                  设定所呼出的程序编号、顺序编号及单节编号，将纸带呼叫的设定区域设定为0。电源接通时的初期状态为记忆呼叫。<br>
+                  （1）设定所呼出的程序编号、顺序编号及单节编号。例：要呼出O1N20单节时O（1）N（20）－（）纸带（0）<p class="MsoNormal" style="text-indent: 0cm; margin-left: 0cm">
+                  <img border="0" src="PIC/input/28.gif" width="385" height="284"><p class="MsoNormal" style="text-indent: 0cm; margin-left: 0cm">
+                  （2）按下<img border="0" src="PIC/delete_u.gif" width="34" height="34">键，开始呼叫，找到指定的程序编号、顺序编号及单节编号时，会显示呼叫完毕的信息。画面最上端的O，N处显示找到的编号，在加工程序的显示区域，显示所找到的单节数据。
+                  <p class="MsoNormal" style="text-indent: 0cm; margin-left: 0cm">
+                  <b>刀具补偿（M系）</b><p class="MsoNormal" style="text-indent: 0cm; margin-left: 0cm">
+                  按下功能选择键<img border="0" src="PIC/tool_u.gif" width="43" height="41">，将显示下列菜单。
+                  <p class="MsoNormal" style="text-indent: 0cm; margin-left: 0cm">
+                  <img border="0" src="PIC/input/29.gif" width="385" height="284"><p class="MsoNormal" style="text-indent: 0cm; margin-left: 0cm">
+                  
+                  注意：自动运转（或单节停止）期间，如要改变刀具补偿或坐标系统补偿，则新的补偿值将从下一单节或多节以后有效。<p class="MsoNormal" style="text-indent: 0cm; margin-left: 0cm">
+                  <b>刀具补偿</b><p class="MsoNormal" style="text-indent: 0cm; margin-left: 0cm">
+                  当按下菜单键“补偿”，显示刀具补偿画面。<p class="MsoNormal" style="text-indent: 0cm; margin-left: 0cm">
+                  <img border="0" src="PIC/input/29.gif" width="385" height="284"><br>
+                  （1）刀具补偿记忆（种类1）<br>
+                  形状补偿记忆与磨耗补偿记忆没有区别，设定形状补偿的总量。补偿数据中刀具长度和刀具半径补偿是共享的。<br>
+                  （2）刀具补偿记忆（种类2）<br>
+                  分别设定形状补偿量和磨耗补偿量。形状补偿量分成长寸法和径寸法。对于补偿数据，长寸法数据用于刀具长度补偿，径寸法数据用于刀具半径补偿。<p class="MsoNormal" style="text-indent: 0cm; margin-left: 0cm">
+                  刀具补偿数据的设定<p class="MsoNormal" style="text-indent: 0cm; margin-left: 0cm">
+                  （1）种类1<br>
+                  设定刀具补偿数据时，在＃（）中设定补偿记忆号码，在数据（）中设定补偿数据，然后按下<img border="0" src="PIC/input_u.gif" width="45" height="33">键。<br>
+                  （2）种类2<br>
+                  设定刀具补偿数据时，在＃（）中设定补偿记忆号码，在设定区域中相对于长寸法、长磨耗、径寸法和径磨耗中设定的补偿数据，然后按下<img border="0" src="PIC/input_u.gif" width="45" height="33">键。<br>
+                  （3）在补偿记忆号码和刀具补偿数据设定后，如果按下<img border="0" src="PIC/input_u.gif" width="45" height="33">键，设定的补偿数据就显示在补偿记忆号码位置，设定部＃（）中的补偿记忆号码增1，并且数据（）中内容消失。这时光标移到同一设定区域的右端。<br>
+                  （4）如果刀具补偿数据被设定，但补偿记忆号码没有包含在显示的补偿记忆号码中时，第1次按下<img border="0" src="PIC/input_u.gif" width="45" height="33">键时，画面切换到建立补偿记忆号码对应的画面。当再次按下<img border="0" src="PIC/input_u.gif" width="45" height="33">键时，设定的刀具补偿数据显在补偿记忆号码位置。<br>
+                  （5）通过连续按<img border="0" src="PIC/up_u.gif" width="38" height="35">键或<img border="0" src="PIC/down_u.gif" width="38" height="35">键，显示在＃（）中的补偿记忆号码可以连续增加1或减少1。<br>
+                  （6）为了设定增量值模式，在＃（）中输入1然后按<img border="0" src="PIC/input_u.gif" width="45" height="33">键。<br>
+                  在增量值模式中，设定数据将加到显示区域的数据中。为取消增量值模式，在＃（）中输入a，然后按下<img border="0" src="PIC/input_u.gif" width="45" height="33">键，就变为绝对值模式。
+                  <p class="MsoNormal" style="text-indent: 0cm; margin-left: 0cm">
+                  刀具补偿数据的清除<p class="MsoNormal" style="text-indent: 0cm; margin-left: 0cm">
+                  在显示画面上清除<br>
+                  在一个画面上显示20组刀具补偿数据。清除所有显示的补偿数据时，按下<img border="0" src="PIC/shift_u.gif" width="34" height="34">键，然后再按下<img border="0" src="PIC/can_u.gif" width="34" height="34">键和<img border="0" src="PIC/input_u.gif" width="45" height="33">键
+                  <p class="MsoNormal" style="text-indent: 0cm; margin-left: 0cm">
+                  刀具补偿数据的设定模式（绝对值/增量值）<p class="MsoNormal" style="text-indent: 0cm; margin-left: 0cm">
+                  （1）模式选择法<br>
+                  <b>绝对值设定</b><br>
+                  改变为绝对值设定模式，方法如下：<br>
+                  在＃（）中输入A，然后按<img border="0" src="PIC/input_u.gif" width="45" height="33">键。＃（A）数据（）<br>
+                  <b>增量值设定</b><br>
+                  改变为增量值设定模式，方法如下：<br>
+                  在＃（）中输入“I”然后按<img border="0" src="PIC/input_u.gif" width="45" height="33">键。＃（I）数据（）
+                  <p class="MsoNormal" style="text-indent: 0cm; margin-left: 0cm">
+                  刀具登录<p class="MsoNormal" style="text-indent: 0cm; margin-left: 0cm">
+                  当按下菜单键“登录”，显示刀具登录画面。<p class="MsoNormal" style="text-indent: 0cm; margin-left: 0cm">
+                  <img border="0" src="PIC/input/30.gif" width="385" height="284"><p class="MsoNormal" style="text-indent: 0cm; margin-left: 0cm">
+                  <b>功能概要</b><br>
+                  使用刀具可登录在刀库座中。<br>
+                  当刀具选择指令或刀具更换指令改变刀具库座和刀具号码时，显示新刀具号码。<br>
+                  可在设定区域辅助（）中设定任何数据，并由用户PLC执行顺序处理。<br>
+                  刀具可登录在显示于画面上方的主轴刀、预备刀1至预备刀3和索引区。显示名称和显示数目可以改变。<br>
+                  尽管登录的刀具数因规格不同而不同，但最多可登录80把刀具（刀具号码最多4位）。<br>
+                  用手动数值指令可进行刀具选择和刀架上刀具的更换。<p class="MsoNormal" style="text-indent: 0cm; margin-left: 0cm">
+                  刀具库中刀具的登录<p class="MsoNormal" style="text-indent: 0cm; margin-left: 0cm">
+                  （1）在MG（）中设定1，刀具（）中设1234，D（）中设2。<p class="MsoNormal" style="text-indent: 0cm; margin-left: 0cm">
+                    <img border="0" src="PIC/input/31.gif" width="385" height="284">
+                  <p class="MsoNormal" style="text-indent: 0cm; margin-left: 0cm">
+                  （2）按下<img border="0" src="PIC/input_u.gif" width="45" height="33">键。刀具号码和D中的数据显示在规定的刀具库号码区域。设定区域MG（）中的刀库号码增加1，其它括号中的数据消失。如果设定的刀库号码不包括在数据显示区域列出的刀库号码中，当第1次按下<img border="0" src="PIC/input_u.gif" width="45" height="33">键，画面切换到相应的建立刀库号码的画面。当再次按下<img border="0" src="PIC/input_u.gif" width="45" height="33">键时，显示设定在数据区域中的数据。
+                  <p class="MsoNormal" style="text-indent: 0cm; margin-left: 0cm">
+                  刀具登录数据的清除<p class="MsoNormal" style="text-indent: 0cm; margin-left: 0cm">
+                  （1）在MG（）中设定CL。<br>
+                  （2）按下<img border="0" src="PIC/input_u.gif" width="45" height="33">键，在主轴刀、预备刀1至预备刀3、索引区和MG1到MGn中的所有数据都被清除。
+                  <p class="MsoNormal" style="text-indent: 0cm; margin-left: 0cm">
+                  刀具寿命管理<p class="MsoNormal" style="text-indent: 0cm; margin-left: 0cm">
+                  当按下菜单键“寿命”时，显示刀具寿命画面。<br>
+                  刀具寿命画面由主轴刀、预备刀、组号一览表画面和刀具寿命数据画面组成。<p class="MsoNormal" style="text-indent: 0cm; margin-left: 0cm">
+                  <b>功能概要</b><br>
+                  （1）刀具寿命管理1<br>
+                  程序操作时刀具的使用时间或使用次数被累加并监视刀具使用状态。<br>
+                  （2）刀具寿命管理2<br>
+                  刀具寿命管理2将备用刀具选择功能加到刀具寿命管理1上，在程序操作的刀具指令中选择备用刀具。所选用的刀具执行刀具直径补偿。<p class="MsoNormal" style="text-indent: 0cm; margin-left: 0cm">
+                  
+                  用户参数<p class="MsoNormal" style="text-indent: 0cm; margin-left: 0cm">
+                  按下功能选择键<img border="0" src="PIC/tool_u.gif" width="43" height="41">，在显示菜单中按“菜单”键来显示参数菜单。如下图：
+                  <p class="MsoNormal" style="text-indent: 0cm; margin-left: 0cm">
+                    <img border="0" src="PIC/input/32.gif" width="385" height="284">                  
+                  
+                  <p class="MsoNormal" style="text-indent: 0cm; margin-left: 0cm">
+                  <b>工件坐标</b><p class="MsoNormal" style="text-indent: 0cm; margin-left: 0cm">
+                  
+                  按下菜单键“工件”，显示工件坐标补偿的画面，可设定或显示各轴工件坐标系补偿数据。<br>
+                  <b>工件坐标系补偿数据的设定<br>
+                  </b>（1）在＃（）中输入工件坐标系对应的编号，数据（）中输入补偿数据，按下<img border="0" src="PIC/input_u.gif" width="45" height="33">键可以设定工件坐标系补偿数据。<br>
+                  （2）用此方法定义的工件坐标系补偿数据就显示在工件坐标系的位置上，在＃（）中的数目就变为下一个设定值，在数据（）中的数据消失。<br>
+                  （3）＃（）内所表示的编号可通过<img border="0" src="PIC/up_u.gif" width="38" height="35">　<img border="0" src="PIC/down_u.gif" width="38" height="35">键实现±1逐次增减。<br>
+                  （4）在＃（）中输入“I”并按<img border="0" src="PIC/input_u.gif" width="45" height="33">键，设定模式为增量模式。在增量模式下输入的数据被加到设定区的数据上。在＃（）中输入A并按<img border="0" src="PIC/input_u.gif" width="45" height="33">键，取消增量模式，恢复成绝对模式。<br>
+                  <b>外部工件坐标系补偿数据的设定</b><br>
+                  通过用外部的接触探针等测量坐标系的偏差，从G54～G59为止的全部工件坐标系能被补偿。<br>
+                  外部工件坐标系数据可通过两种方法设定，直接将外部数据输入外部补偿（EXT）或在设定区用手动操作（EXT）将其输入。<br>
+                  设定方法与工件坐标系补偿的设定相同。
+</body>
+</html>

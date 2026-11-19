@@ -1,0 +1,37 @@
+== UG_FILE_NEW ==
+  in menu UG_FILE file=nx_layout_te.men label_lookup=[['任务(K)', '新建(N)...']]
+== UG_FILE_SAVE_ALL ==
+  in menu UG_FILE file=nx_layout_te.men label_lookup=[['任务(K)', '全部保存(V)']]
+== UG_MODELING_EXTRUDED_FEATURE ==
+  in menu UG_MODELING_DESIGN_FEATURES file=ug_modeling.men label_lookup=[['插入(S)', '设计特征(E)', '拉伸(X)...'], ['插入(S)', '切割(T)', '拉伸(X)...']]
+  in menu UG_SBSM_CUTTING_FEATURES file=ug_sbsm.men label_lookup=[['插入(S)', '设计特征(E)', '拉伸(X)...'], ['插入(S)', '切割(T)', '拉伸(X)...']]
+
+== UG_FILE defs ==
+UG_FILE file=nx_layout_te.men n_items=75 items=[['BUTTON', 'UG_FILE_PRINT'], ['BUTTON', 'UG_NXLAYOUT_FINISH_2D_COMPONENT_EDIT'], ['BUTTON', 'UG_NXLAYOUT_EXIT_2D_COMPONENT_EDIT'], ['BUTTON', 'UG_DIRECT_SKETCH_FINISH'], ['BUTTON', 'UG_FILE_QUIT'], ['BUTTON', 'UG_TITLE_BLOCK_FINISH'], ['BUTTON', 'UG_TITLE_BLOCK_EXIT'], ['BUTTON', 'UG_SIMULATION_FINISH'], ['BUTTON', 'UG_GEODESIC_FINISH'], ['BUTTON', 'UG_FILE_NEW'], ['CASCADE', 'UG_FILE_NEW_CPD'], ['BUTTON', 'UG_FILE_OPEN']]
+UG_GATEWAY_MAIN_MENUBAR file=nx_layout_te.men n_items=96 items=[['CASCADE', 'UG_FILE'], ['CASCADE', 'UG_EDIT'], ['CASCADE', 'UG_VIEW'], ['CASCADE', 'UG_INSERT'], ['CASCADE', 'UG_ARRANGE'], ['CASCADE', 'UG_TOOLBOX'], ['CASCADE', 'UG_INFO'], ['CASCADE', 'UG_INFO_ANALYSIS'], ['CASCADE', 'UG_PREFERENCES'], ['CASCADE', 'YANGJEE'], ['CASCADE', 'KASA'], ['CASCADE', 'UG_WINDOW']]
+
+== translations for UG_FILE *_LABEL ==
+definitions_main_btn_simpl_chinese.txt | "definitions_main.btn" "UG_FILE_NEW_LABEL" "&New..." "新建(&N)..." ""
+nx_geodesic_sketch_men_simpl_chinese.txt | "nx_geodesic_sketch.men" "UG_FILE_LABEL" "Tas&k" "任务(&K)" ""
+nx_layout_te_men_simpl_chinese.txt | "nx_layout_te.men" "UG_FILE_LABEL" "Tas&k" "任务(&K)" ""
+nx_manufacturing_simulation_te_men_simpl_chinese.txt | "nx_manufacturing_simulation_te.men" "UG_FILE_LABEL" "&Task" "任务(&T)" ""
+nx_polygon_modeling_men_simpl_chinese.txt | "nx_polygon_modeling.men" "UG_FILE_LABEL" "Tas&k" "任务(&K)" ""
+nx_title_block_men_simpl_chinese.txt | "nx_title_block.men" "UG_FILE_LABEL" "Tas&k" "任务(&K)" ""
+simcenter_layout_te_men_simpl_chinese.txt | "simcenter_layout_te.men" "UG_FILE_LABEL" "Tas&k" "任务(&K)" ""
+simcenter_title_block_men_simpl_chinese.txt | "simcenter_title_block.men" "UG_FILE_LABEL" "Tas&k" "任务(&K)" ""
+ug_main_jteditor_men_simpl_chinese.txt | "ug_main_jteditor.men" "UG_FILE_LABEL" "&File" "文件(&F)" ""
+ug_main_men_simpl_chinese.txt | "ug_main.men" "UG_FILE_LABEL" "&File" "文件(&F)" ""
+ug_main_nxviewer_men_simpl_chinese.txt | "ug_main_nxviewer.men" "UG_FILE_LABEL" "&File" "文件(&F)" ""
+ug_main_simcenter_men_simpl_chinese.txt | "ug_main_simcenter.men" "UG_FILE_LABEL" "&File" "文件(&F)" ""
+ug_main_simviewer_men_simpl_chinese.txt | "ug_main_simviewer.men" "UG_FILE_LABEL" "&File" "文件(&F)" ""
+ug_sequencing_men_simpl_chinese.txt | "ug_sequencing.men" "UG_FILE_LABEL" "Tas&k" "任务(&K)" ""
+ug_sequencing_simcenter_men_simpl_chinese.txt | "ug_sequencing_simcenter.men" "UG_FILE_LABEL" "Tas&k" "任务(&K)" ""
+ug_sketcher_jteditor_men_simpl_chinese.txt | "ug_sketcher_jteditor.men" "UG_FILE_LABEL" "Tas&k" "任务(&K)" ""
+ug_sketcher_men_simpl_chinese.txt | "ug_sketcher.men" "UG_FILE_LABEL" "Tas&k" "任务(&K)" ""
+ug_sketcher_simcenter_men_simpl_chinese.txt | "ug_sketcher_simcenter.men" "UG_FILE_LABEL" "Tas&k" "任务(&K)" ""
+ug_subdiv_men_simpl_chinese.txt | "ug_subdiv.men" "UG_FILE_LABEL" "Tas&k" "任务(&K)" ""
+ug_subdiv_simcenter_men_simpl_chinese.txt | "ug_subdiv_simcenter.men" "UG_FILE_LABEL" "Tas&k" "任务(&K)" ""
+ug_subset_definition_men_simpl_chinese.txt | "ug_subset_definition.men" "UG_FILE_LABEL" "Tas&k" "任务(&K)" ""
+ug_subset_definition_simcenter_men_simpl_chinese.txt | "ug_subset_definition_simcenter.men" "UG_FILE_LABEL" "Tas&k" "任务(&K)" ""
+ug_true_studio_men_simpl_chinese.txt | "ug_true_studio.men" "UG_FILE_LABEL" "Tas&k" "任务(&K)" ""
+ug_true_studio_simcenter_men_simpl_chinese.txt | "ug_true_studio_simcenter.men" "UG_FILE_LABEL" "Tas&k" "任务(&K)" ""

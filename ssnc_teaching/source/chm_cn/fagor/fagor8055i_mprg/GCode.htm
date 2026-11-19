@@ -1,0 +1,1711 @@
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title></title>
+<link href="../../helper_css.css" rel="stylesheet" type="text/css">
+
+<style type="text/css">
+<!--
+.style1 {color: #000000}
+-->
+</style>
+</head>
+
+<body>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar">
+  <tr>
+    <td><span class="title2">G 代码命令</span></td>
+  </tr>
+</table>
+<TABLE border=0 cellPadding=0 cellSpacing=0 height="100%" width=100%>
+  <TBODY>
+    <TR>
+      <TD vAlign=top >&nbsp;</TD>
+    </TR>
+    <TR>
+      <TD vAlign=top ><TABLE border=0 cellPadding=0 cellSpacing=0 width="100%" height="600">
+            
+            <TR>
+              <TD vAlign=top height="102"><p><strong>准备功能</strong><strong> </strong><br>
+                准备功能使用字母 G 后跟 3 位数字编写 (G0 - G319)。 <br>
+                它们总是编写在程序段的开始，用于决定工件的几何形状和  CNC 的工作条件 <br>
+                G00  快速定位 <br>
+                G01  直线插补 <br>
+                G02 顺时针 ( 螺旋 ) 圆弧插补 <br>
+                G03 逆时针 ( 螺旋 ) 圆弧插补 <br>
+                G04 停顿 / 中断程序段准备 <br>
+                G05  圆角 <br>
+                G06 绝对圆心坐标 <br>
+                G07 方角 <br>
+                G08 圆弧相切于前一路径 <br>
+                G09 三点确定圆弧 <br>
+                G10 图像镜像取消 <br>
+                G11 相对于 X 轴的图像镜像 <br>
+                G12 相对于 Y 轴的图像镜像 <br>
+                G13 相对于 Z 轴的图像镜像 <br>
+                G14 相对于编程方向的图像镜像 <br>
+                G15 纵向轴的选择 <br>
+                G16 两个方向和纵向轴选择的主平面 <br>
+                G17 主平面 X-Y 和纵向轴 Z <br>
+                G18 主平面 Z-X 和纵向轴 Y <br>
+                G19 主平面 Y-Z 和纵向轴 X <br>
+                G20 定义工作区下限 <br>
+                G21 定义工作区上限 <br>
+                G22 激活 / 取消工作区 <br>
+                G23 激活跟踪功能 <br>
+                G24 激活数字化功能 <br>
+                G25 取消跟踪 / 数字化功能 <br>
+                G26 跟踪测头标定 <br>
+                G27 定义跟踪轮廓 <br>
+                G28 选择第二主轴 <br>
+                G29 选择主主轴 <br>
+                G28 - G29  轴切换 <br>
+                G30 主轴同步 ( 偏移 ) <br>
+                G32 进给率 &quot;F&quot; 用作时间的倒数功能 <br>
+                G33 加工螺纹 <br>
+                G34 加工可变螺距的螺纹 <br>
+                G36 自动圆角过渡 <br>
+                G37 切向进入 <br>
+                G38 切向退出 <br>
+                G39 倒角 <br>
+                G40 取消刀具半径补偿 <br>
+                G41 左手刀具半径补偿 <br>
+                G41 N  碰撞检查 <br>
+                G42 右手刀具半径补偿 <br>
+                G42 N  碰撞检查 <br>
+                G43  刀具长度补偿 <br>
+                G44 取消刀具长度补偿 <br>
+                G45 切向控制 (G45) <br>
+                G47 依据刀具坐标系统的刀具运动 <br>
+                G48 TCP 转换 <br>
+                G49 定义倾斜平面 <br>
+                G50 受控圆角 <br>
+                G51 预读 <br>
+                G52 移动到限定点 <br>
+                G53 相对于机床参考零点编程 (home) <br>
+                G54 绝对零点偏置 <br>
+                G55 绝对零点偏置 <br>
+                G56 绝对零点偏置 <br>
+                G57 绝对零点偏置 <br>
+                G58 附加零点偏置 <br>
+                G59 附加零点偏置 <br>
+                G60 直线加工固定循环 <br>
+                G61 矩形加工固定循环 <br>
+                G62 网格加工固定循环 <br>
+                G63 圆形加工固定循环 <br>
+                G64 圆弧加工固定循环 <br>
+                G65 圆弧 - 弦加工固定循环 <br>
+                G66 不规则型腔固定循环 <br>
+                G67 不规则型腔粗加工 <br>
+                G68 不规则型腔精加工 <br>
+                G69 组合深孔钻削 <br>
+                G70 英寸编程 <br>
+                G71 毫米编程 <br>
+                G72 普通和特殊比例因子 <br>
+                G73 模型旋转 <br>
+                G74 机床参考点搜索 <br>
+                G75 测头运动到有接触信号 <br>
+                G76 测头运动到不再有接触信号 <br>
+                G77 轴的耦合 ( 从动轴 ) <br>
+                G77S 主轴速度同步 <br>
+                G78 取消轴的耦合 ( 从动轴 ) <br>
+                G78S 取消主轴速度同步 <br>
+                G79 固定循环的参数修改 <br>
+                G80 取消固定循环 <br>
+                G81 钻削固定循环 <br>
+                G82 带停顿的钻削固定循环 <br>
+                G83 带固定进给量的深孔钻固定循环 <br>
+                G84 攻丝固定循环 <br>
+                G85 铰削固定循环 <br>
+                G86 带 G00 退回的镗削固定循环 <br>
+                G87 矩形型腔固定循环 <br>
+                G88 圆形型腔固定循环 <br>
+                G89 带 G01 退回的镗削固定循环 <br>
+                G90 绝对尺寸编程 <br>
+                G91 增量尺寸编程 <br>
+                G92 坐标预置 / 主轴速度限制 <br>
+                G93 极坐标原点预置 <br>
+                G94 进给率为毫米 （英寸）/ 分钟， mm (inches) / minute <br>
+                G95 进给率为毫米 （英寸）/ 每转， mm (inches) / per revolution <br>
+                G96 恒表面切削速度 <br>
+                G97 恒刀具中心点切削速度 <br>
+                G98 固定循环结束后返回到起始平面 <br>
+                G99 固定循环结束后返回到参考点平面 <br>
+              G145  暂时取消切向控制 </p></TD>
+            </TR>
+            <TR>
+              <td height="10" >&nbsp;</TD>
+            </TR>
+
+          </TABLE>
+        <TABLE height="24">
+            <TR> </TR>
+        </TABLE>
+        <TABLE width="100%" height=20 border=0 cellPadding=0 cellSpacing=0 class="bar1">
+            <TR>
+              <td height="20"><p><strong>平面选择 (G16, G17, G18, G19)</strong></p></td>
+            </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+            <TR>
+              <TD height=26 valign="top"><p><br>
+                在进行下列动作时应选择平面： <br>
+. 圆弧插补。 <br>
+. 控制圆角。 <br>
+. 切向进入和退出。 <br>
+. 倒角。 <br>
+. 在极坐标编程。 <br>
+. 加工固定循环。 <br>
+. 模型旋转。 <br>
+. 刀具半径补偿。 <br>
+. 刀具长度补偿。 <br>
+用于工作平面选择的 “G” 功能如下： <br>
+G16 轴 1 轴 2 轴  3。选择期望的工作平面和圆弧方向 G02 G03 ( 圆弧 插补 ), 轴 1 编 程时用作横坐标， 轴 2 用作纵坐标。 轴 3 是沿着刀具长度补偿方向应用的纵向轴。 <br>
+<img width="513" height="244" src="Code/GCode_clip_image002.jpg"> <br>
+G17. 选择 XY 平面 <br>
+G18. 选择 ZX 平面 <br>
+G19. 选择 YZ 平面 <br>
+G16, G17, G18 和 G19 功能是模态的，它们之间互不兼容。G16 功能应在它自己的程 序段中编写。 <br>
+<img width="518" height="345" src="Code/GCode_clip_image004.jpg"> <br>
+G17，  G18 和 G19 功能将三根主要的轴 (X， Y，  Z) 中的两根定义为工作平面，另外 的一根轴垂直于该平面。 当在工作平面进行半径补偿，在垂直轴进行长度补偿时，如果  X, Y 或 Z 轴的任意 一根轴不是受 CNC 控制的，CNC 将不允许使用 G17, G18 和 G19 功能。 上电后，执行了 M02, M30 后或 EMERGENCY （急停）或 RESET （复位）后， CNC 将 采用通用机床参数中  “IPLANE” 定义的平面为工作平面。 <br>
+                <br>
+                <br>              
+                </p>
+              </TD>
+            </TR>
+        </TABLE>
+        <TABLE height=20 border=0 cellPadding=0 cellSpacing=0 class="bar1" >
+            <TR>
+              <td height="20"><p><strong>零件尺寸 毫米 (G71) 或英寸 (G70) </strong></p></td>
+            </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+            <TR>
+              <TD height=26 align="left"  vAlign=top><br>
+                <p>CNC 允许输入编程时的尺寸单位，毫米或英寸。 <br>
+它有通用机床参数 “INCHES” 去定义 CNC 的尺寸单位。 <br>
+然而，在程序中这些单位可以在任何时候进行改变，有两个  G 功能用于这个目的： : <br>
+. G70 使用英寸编程。 <br>
+. G71 使用毫米编程。 <br>
+根据编写的是 G70 还是 G71， CNC 在此以后的所有程序段中采用相应的单位。G70 和 G71 功能是模态的和不兼容的。 <br>
+CNC 允许编程的数字从 0.0001 到 99999.9999 ( 可以带符号也可以不带 )，当工作 单位为毫米时 (G71)，其格式为 +/-5.4，或者以英寸为单位时 (G70)，从 0.00001 到 3937.00787 ( 可以带符号也可以不带 ) ，其格式为 +/-4.5。 然而，为了简化指令，我们可以说 CNC 允许 +/- 5.5 的格式，实际是允许 +/- 5.4 以毫米为单位和 +/- 4.5 以英寸为单位。 <br>
+上电后，在执行了 M02、 M30、 EMERGENCY （急停）或 RESET （复位）后， CNC 将 采用通用机床参数 “INCHES” 中定义的单位为尺寸单位。 <br></p>                </TD>
+            </TR>
+        </TABLE>
+        <TABLE height=20 border=0 cellPadding=0 cellSpacing=0 class="bar1" >
+          <TR>
+            <td height="20"><p><strong>绝对 / 增量编程 (G90, G91) </strong></p>
+            </td>
+          </TR>
+        </TABLE>
+
+        <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+            <TR>
+              <TD height=26><p>CNC 允许对坐标点的编程既可以使用绝对坐标 G90 也可使用增量坐标 G91。 <br>
+                当使用绝对坐标 (G90) 时，点的坐标相对于坐标建立的原点，通常是工件零点。 <br>
+                当使用增量坐标 (G91) 时，所编程的数值是刀具从所在点移动过的距离。前面的符 号表示运动的方向。 <br>
+                功能 G90/G91 是模态的和不兼容的。 <br>
+  <img width="515" height="578" src="Code/GCode_clip_image002_0000.jpg"> <br>
+                上电后，执行了 M02, M30 或 EMERGENCY （急停）或 RESET （复位）后， CNC 将根 据通用机床参数 “ISYSTEM” 的设定采用 G91 或 G90 编程的坐标方式。 <br>
+  <strong>参考点 </strong><br>
+                CNC 机床需要定义下列原点和参考点： <br>
+                . 机床参考零点或原点，该点是由机床制造商作为机床坐标系统的原点设定。 <br>
+                . 工件零点或工件原点，该点是编写零件程序时设定的测量原点，它能被编程者自 由选择，机床零点能被零点偏置设定。 <br>
+                . 机床参考点，该点是由机床制造商建立的系统同步点，在这点控制轴的位置，代替移动到远处的机床参考零点，这点的参考坐标由轴机床参数 “REFVALUE” 设 定。 <br>
+  <img width="510" height="496" src="Code/GCode_clip_image004_0000.jpg"> </p>
+                <br>
+                <p>
+                
+                <p><br>
+              </TD>
+            </TR>
+        </TABLE>
+        <TABLE height=20 border=0 cellPadding=0 cellSpacing=0 class="bar1" >
+          <TR>
+            <td height="20"><p><strong>相对于机床零点编程 (G53)</strong></p></td>
+          </TR>
+        </TABLE>
+       
+        <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+            <TR>
+              <TD height=26  vAlign=top><br>
+                <p>功能 G53 能被添加到任何具有路径控制功能的程序段中。 <br>
+它只在编写相对于机床零点的程序段时使用，这些坐标可以用毫米或英寸表示，这 取决于对通用机床参数 “INCHES” 的定义。 <br>
+当 G53 被单独编写 （没有运动信息）时，它将取消当前的零点偏置，不论它是通过  G54-G59 编程的还是由 (G92) 预置的。 <br>
+原点的预置如下： <br>
+功能 G53 不是模态的，因此在需要指定相对于机床零点的坐标时每次都要编写。 <br>
+该功能临时取消刀具半径和长度补偿。 <br>
+<img width="511" height="366" src="Code/GCode_clip_image002_0001.jpg"> <br>
+                </p>
+  <TABLE height=20 border=0 cellPadding=0 cellSpacing=0 class="bar1" >
+                                <TR>
+                                  <td height="20"><p><strong>坐标预置和零点偏置 </strong></p></td>
+                                </TR>
+                </TABLE>
+                <p>CNC 允许在编写程序时执行零点偏置，使用相关于工件平面的坐标来实现目标点， 不用修改工件不同点的坐标。 <br>
+零点偏置被定义为工件零点（工件起始点）和机床零点（机床起始点）之间的距离。 <br>
+<img width="517" height="324" src="Code/GCode_clip_image002_0002.jpg"> <br>
+零点偏置可以通过如下 2 种方法实现： <br>
+. 通过功能  G92 ( 坐标预置 )， CNC 接受 G92 后的编程坐标为新的轴的位置值。 <br>
+. 通过使用零点偏置  (G54,G55,G56,G57,G58, G59)，CNC  接受新的工件零点，该零点相对于机床零点的距离由所选择的表指定。 <br>
+两个功能是模态和不兼容的，所以一个被选择另一个将被取消。 <br>
+另外，还有一个零点偏置由 PLC 控制。该偏置总是添加到所选择的零点偏置上，并用于更正膨胀产生的零点漂移。 <br>
+<img width="517" height="406" src="Code/GCode_clip_image004_0001.jpg"> </p>
+              </TD>
+            </TR>
+        </TABLE>
+        <TABLE height=20 border=0 cellPadding=0 cellSpacing=0 class="bar1" >
+          <TR>
+            <td height="20"><p><strong>坐标预置和 S 值的限制 (G92) </strong></p></td>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+            <TR>
+              <TD height=26  vAlign=top><br>
+                <p>通过功能 G92，可以选择 CNC 轴的任何值，另外可以限制主轴的速度。 <br>
+. 坐标预置。 <br>
+当用 G92 完成零点偏置时，CNC 采用 G92 后面编写的坐标值为新的轴坐标。 <br>
+在编写 G92 的程序段中不能编写其他功能，编写的格式为： <br>
+G92 X...C ±5.5 <br>
+<img width="517" height="475" src="Code/GCode_clip_image002_0003.jpg"> <br>
+. 主轴速度限制 <br>
+当执行 &quot;G92 S5.4&quot; 类型的程序段时， CNC 立即限制主轴速度值被 S5.4。 <br>
+如果在以后程序段去执行大于&quot;S&quot;的值，CNC将执行由功能G92S设定的最大S值。也不执行从前操作面板来的最大的值。 </p>
+                <p><br>
+              </TD>
+            </TR>
+        </TABLE>
+        <TABLE height=20 border=0 cellPadding=0 cellSpacing=0 class="bar1" >
+          <TR>
+            <td height="20"><p><strong>零点偏置 (G54..G59) </strong></p></td>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+            <TR>
+              <TD height=26  vAlign=top><br>
+                <p>CNC 具有零点偏置表，可以选择表中的几个零点偏置。其目的是产生独立于当前工件零点的某些工件零点。 <br>
+可以从 CNC 的前控制面板访问表 （如操作手册中所述），或者通过使用高级语言指令的程序访问。 <br>
+这有 2 种类型的零点偏置： <br>
+. 绝对零点偏置  (G54,G55,G56 &amp; G57)，它们必须相对于机床零点。 <br>
+. 增量零点偏置  (G58,G59)。 <br>
+功能 G54, G55, G56, G57, G58  &amp; G59 必须在程序段中单独编写，工作在下列方式：当  G54, G55, G56, G57 中的某一个功能被执行时，CNC 应用相对于机床零点的零点偏置编程，取消可能存在的零点偏置。 <br>
+如果增量零点偏置 G58 或 G59 的某个被执行，CNC 将它的值添加到当前的绝对零点偏置中，之前取消的附加零点偏置可以被有效。 <br>
+可以看到 ( 在下面的例子中 ) 程序执行时应用的零点偏置。 <br>
+G54 应用零点偏置 G54 ==&gt; G54 <br>
+G58 应用零点偏置 G58 ==&gt; G54+G58 <br>
+G59 取消 G58 和增加 G59 ==&gt; G54+G59 <br>
+G55 取消所有的零点偏置和应用 G55 ==&gt; G55<br>
+一旦选择了零点偏置，它将一直保持有效，直到选择另一个零点偏置或在手动方式执行了零点搜索 (G74)。 该零点偏置甚至在  CNC 断电后也将保持有效。 <br>
+这种由程序建立的零点偏置对于重复加工操作机床的不同加工位置很有用。 <br>
+例如：零点偏置表被初始化成如下的值： <br>
+G54: X200 Y100 <br>
+G55: X160 Y 60 <br>
+G56: X170 Y110 <br>
+G58: X-40 Y-40 <br>
+G59: X-30 Y10<br>
+<img width="488" height="344" src="Code/GCode_clip_image002_0004.jpg"> <br>
+使用绝对零点偏置： <br>
+G54 ; 应用 G54 偏置 <br>
+执行轮廓 ; 执行轮廓 A1 <br>
+G55 ; 应用 G55 偏置 <br>
+执行轮廓 ; 执行轮廓 A2 <br>
+G56 ; 应用 G56 偏置 <br>
+执行轮廓 ; 执行轮廓 A3 <br>
+使用增量零点偏置： <br>
+G54 ; 应用 G54 偏置 <br>
+执行轮廓 ; 执行轮廓 A1 <br>
+G58 ; 应用 G54+G58 偏置 <br>
+执行轮廓 ; 执行轮廓 A2 <br>
+G59 ; 应用 G54+G59 偏置 <br>
+执行轮廓 ; 执行轮廓 A3</p>
+                <p><br>
+              </TD>
+            </TR>
+        </TABLE>
+        <TABLE height=20 border=0 cellPadding=0 cellSpacing=0 class="bar1" >
+          <TR>
+            <td height="20"><p><strong>增减刀具半径指令(G45/G46/G47/G48)</strong></p></td>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+            <TR>
+              <TD height=26  vAlign=top><br>
+                <p>CNC 具有零点偏置表，可以选择表中的几个零点偏置。其目的是产生独立于当前工件零点的某些工件零点。 <br>
+可以从 CNC 的前控制面板访问表 （如操作手册中所述），或者通过使用高级语言指令的程序访问。 <br>
+这有 2 种类型的零点偏置： <br>
+. 绝对零点偏置  (G54,G55,G56 &amp; G57)，它们必须相对于机床零点。 <br>
+. 增量零点偏置  (G58,G59)。 <br>
+功能 G54, G55, G56, G57, G58  &amp; G59 必须在程序段中单独编写，工作在下列方式：当  G54, G55, G56, G57 中的某一个功能被执行时，CNC 应用相对于机床零点的零点偏置编程，取消可能存在的零点偏置。 <br>
+如果增量零点偏置 G58 或 G59 的某个被执行，CNC 将它的值添加到当前的绝对零点偏置中，之前取消的附加零点偏置可以被有效。 <br>
+可以看到 ( 在下面的例子中 ) 程序执行时应用的零点偏置。 <br>
+G54 应用零点偏置 G54 ==&gt; G54 <br>
+G58 应用零点偏置 G58 ==&gt; G54+G58 <br>
+G59 取消 G58 和增加 G59 ==&gt; G54+G59 <br>
+G55 取消所有的零点偏置和应用 G55 ==&gt; G55<br>
+一旦选择了零点偏置，它将一直保持有效，直到选择另一个零点偏置或在手动方式执行了零点搜索 (G74)。 该零点偏置甚至在  CNC 断电后也将保持有效。 <br>
+这种由程序建立的零点偏置对于重复加工操作机床的不同加工位置很有用。 <br>
+例如：零点偏置表被初始化成如下的值： <br>
+G54: X200 Y100 <br>
+G55: X160 Y 60 <br>
+G56: X170 Y110 <br>
+G58: X-40 Y-40 <br>
+G59: X-30 Y10<br>
+<img width="488" height="344" src="Code/GCode_clip_image002_0005.jpg"> <br>
+使用绝对零点偏置： <br>
+G54 ; 应用 G54 偏置 <br>
+执行轮廓 ; 执行轮廓 A1 <br>
+G55 ; 应用 G55 偏置 <br>
+执行轮廓 ; 执行轮廓 A2 <br>
+G56 ; 应用 G56 偏置 <br>
+执行轮廓 ; 执行轮廓 A3 <br>
+使用增量零点偏置： <br>
+G54 ; 应用 G54 偏置 <br>
+执行轮廓 ; 执行轮廓 A1 <br>
+G58 ; 应用 G54+G58 偏置 <br>
+执行轮廓 ; 执行轮廓 A2 <br>
+G59 ; 应用 G54+G59 偏置 <br>
+执行轮廓 ; 执行轮廓 A3</p>
+              </TD>
+            </TR>
+        </TABLE>
+        <TABLE height=20 border=0 cellPadding=0 cellSpacing=0 class="bar1" >
+          <TR>
+            <td height="20"><p><strong>极坐标原点的预置 (G93) </strong></p></td>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+            <TR>
+              <TD height=26  vAlign=top><br>
+                <p>功能 G93 允许设置工作平面的任何点为新的极坐标原点。 <br>
+该功能必须在程序中单独编写，它的格式为： <br>
+G93 I±5.5 J±5.5 <br>
+参数 I &amp; J 分别定义新的极坐标原点相对于工件零点的横坐标和纵坐标的值。 <br>
+<img width="511" height="401" src="Code/GCode_clip_image002_0006.jpg"> <br>
+如果 G93 只编写在一个程序段中，机床所在点在此时成为极坐标原点。 <br>
+上电后，或执行 M02， M30 后，或急停 EMERGENCY 或复位 RESET 后， CNC将当前的工件零点作为极坐标的原点。 <br>
+当选择了新的工作平面 (G16， G17， G18， G19)， CNC 将极坐标原点作为该平面 的工件零点。</p>
+                <p>&nbsp;</p></TD>
+            </TR>
+        </TABLE>
+        <TABLE height=20 border=0 cellPadding=0 cellSpacing=0 class="bar1" >
+            <TR>
+              <td height="20"><p><strong>恒表面切削速度 (G96)</strong></p></td>
+            </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+            <TR>
+              <TD height=26  vAlign=top><br>
+                <p>当编写了 G96 时， CNC 以 F5.5 进给率作为相应工件上刀具的切削点。 <br>
+使用了该功能，已加工表面的曲线部分是一致的。 <br>
+在这种方式下（工作在 G96） ，为了保持切削点处速度不变，刀具中心在曲线的内外速度是不同的。 <br>
+功能 G96 是模态的，即，一旦编写了它，将一直有效直到编写了 G97。 <br>
+上电后，在执行了 M02, M30 后或在 EMERGENCY （急停）或 RESET （复位）后 ,CNC 采用 G97 功能。 </p>
+                <br>
+              </TD>
+            </TR>
+        </TABLE>
+        <TABLE height=20 border=0 cellPadding=0 cellSpacing=0 class="bar1" >
+            <TR>
+              <td height="20"><p><strong>恒刀具中心速度 (G97)</strong></p></td>
+            </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+            <TR>
+              <TD height=26  vAlign=top><br>
+                <p>当编写了 G97 时， CNC 以编写的 F5.5 进给率作为相应刀具中心的进给率。 <br>
+在这种方式下 （工作在 G97) ， 曲线部分内外切削点的速度是减小的，以保持刀具中心速度的恒定。 <br>
+功能 G97 是模态的，即，一旦编写了它，将一直有效直到编写了 G96。 <br>
+上电后，在执行了 M02, M30 或在 EMERGENCY （急停）或 RESET （复位）后 ,CNC 采用 G97 功能 </p>
+                <br>
+              </TD>
+            </TR>
+        </TABLE>
+        <TABLE height=20 border=0 cellPadding=0 cellSpacing=0 class="bar1" >
+            <TR>
+              <td height="20"><p><strong>选择主轴 (G28, G29)</strong></p></td>
+            </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+            <TR>
+              <TD height=26  vAlign=top><br>
+                <p>CNC 能控制两根主轴:主主轴和第二主轴,两根主轴可以同时转动，但每次只能控制其中一根轴。 <br>
+这种选择通过 G28 和 G29 来完成。 <br>
+G28: 选择第二主轴。 <br>
+G29: 选择主主轴。 <br>
+一旦选择了期望的主轴，可以从 CNC 的键盘或用下列功能进行操作 : <br>
+M3, M4, M5, M19 <br>
+S**** <br>
+G33, G34, G94, G95, G96, G97 <br>
+两根主轴都可以工作在开环或闭环方式下。 <br>
+功能 G28 和 G29 是模态的，它们互不兼容。 <br>
+G28 和 G29 必须单独编写在程序段中，它们是该程序段中唯一包含的信息。 <br>
+上电后，在执行了 M02, M30 或在 EMERGENCY （急停）或 RESET （复位）后 ,CNC采用 G29 功能 （选择主主轴）。 </p>
+                <p><br>
+              </TD>
+            </TR>
+        </TABLE>
+        <TABLE height=20 border=0 cellPadding=0 cellSpacing=0 class="bar1" >
+            <TR>
+              <td height="20"><p><strong> </strong><strong>同步主轴 (G30, G77S, G78S)</strong></p></td>
+            </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+            <TR>
+              <TD height=26  vAlign=top><br>
+                <p>利用功能 G77S，两根主轴 ( 主主轴和第二主轴 ) 的转速可以被同步。可以用功能G78S 取消同步。始终编写 G77S 和 G78S，因为功能 G77, G78 是使轴耦合或取消耦合轴。 <br>
+当主轴转速同步时，第二主轴与主主轴的转动速度相同。 <br>
+功能 G77S 可以在任何时候执行，可以开环 (M3, M4) 或闭环 (M19)，主轴甚至可以有不同的范围 （档位）。 <br>
+通用输出 &quot;SYNSPEED  (M5560)&quot; 将在主轴同步时 ( 相同的速度 ) 显示高电平。 <br>
+当同步取消时 (G78S)，第二主轴将重新获得它以前的速度和状态 (M3, M4, M5, M19)，主主轴继续保持当前状态。 <br>
+如果在同步状态时，所编写的 S 值比最大允许值大，CNC 将在它们同步时采用最大值。当取消同步时，不再使用极限值，主主轴将采用编程的速度。 <br>
+当主轴速度同步时，功能 G77S 有效，利用 G30 它们可以保持一定位置的同步和在第二主轴和主主轴之间可以有一个角度的偏置，因此第二主轴将以设置的偏置距离来跟随主主轴。 <br>
+编程格式 : G30 D ±359.9999 ( 偏置的角度 )</p>
+                </TD>
+            </TR>
+        </TABLE>
+        <TABLE height=20 border=0 cellPadding=0 cellSpacing=0 class="bar1" >
+            <TR>
+              <td height="20"><p><strong>快速定位 (G00)</strong></p></td>
+            </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+            <TR>
+              <TD height=26  vAlign=top><br>
+                <p>编写在 G00 后的运动被执行时的快速进给率由轴机床参数 &quot;G00FEED&quot; 指定。不管所移动轴的数量，合成的路径总是起始点和终止点之间的直线。 <br>
+                  <img width="554" height="318" src="Code/GCode_clip_image002_0007.jpg"> <br>
+当编写 G00 时，程序中最后被编写的 F 值不被取消，当再次编写了  G01, G02 或 G03 时，该 F 值即被恢复。 <br>
+G00 是模态的和 G01, G02, G03, G33，G34  及 G75 不兼容。 功能 G00 可被编写成G 或 G0。 </p>
+                <p><br>
+                </p></TD>
+            </TR>
+        </TABLE>
+        <TABLE height=20 border=0 cellPadding=0 cellSpacing=0 class="bar1" >
+            <TR>
+              <td height="20"><p><strong>直线插补 (G01)</strong><strong> </strong></p></td>
+            </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+            <TR>
+              <TD height=26  vAlign=top><br>
+                <p>在 G01 代码后编写的运动为直线运动，以编写的进给率 F 运动。 <br>
+当 2 根或  3 根轴同时运动时，走的路径是起点和终点之间的直线。 <br>
+机床运动的进给率 为程序中编写的 F，CNC 计算各轴的进给率以便得到合成路径的进给率为程序编写的 F 值。 </p>
+                <p><br>
+                </p></TD>
+            </TR>
+        </TABLE>
+        <TABLE height=20 border=0 cellPadding=0 cellSpacing=0 class="bar1" >
+            <TR>
+              <td height="20"><p><strong>圆弧插补 (G02, G03)</strong></p></td>
+            </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+            <TR>
+              <TD height=26  vAlign=top><br>
+                <p>这里有两种方法来完成圆弧插补： <br>
+G02: 顺时针圆弧插补 <br>
+G03: 逆时针圆弧插补 <br>
+G02 和 G03 后编写的运动以圆弧路径执行，并以编写的进给率  F 进行。 <br>
+顺时钟 (G02) 和逆时钟 (G03) 的定义根据下面所示的坐标系统确定： <br>
+<img width="554" height="310" src="Code/GCode_clip_image002_0008.jpg"> <br>
+该坐标系是指刀具在工件上的运动。 <br>
+圆弧插补只能在平面上执行，圆弧插补的定义形式如下： <br>
+迪卡尔坐标 <br>
+圆弧的终点和圆心位置的坐标相对于工作平面的轴的起点。 <br>
+中心坐标通过字母 I，J 或 K 以半径定义，它们每一个和各个轴的对应关系如下：当不定义中心坐标时，CNC 采用它们的值是零。 <br>
+<img width="554" height="223" src="Code/GCode_clip_image004_0002.jpg"> <br>
+编写格式： <br>
+无论选择那个平面，编写的顺序保持不变，同样是各自的中心坐标。 <br>
+平面 XY: G02(G03) X±5.5 Y±5.5 I±5.5 J±5.5 <br>
+平面 ZX: G02(G03) X±5.5 Z±5.5 I±5.5 K±5.5 <br>
+平面 YZ: G02(G03) Y±5.5 Z±5.5 J±5.5 K±5.5 <br>
+平面 AY: G02(G03) Y±5.5 A±5.5 J±5.5 I±5.5 <br>
+平面 XU: G02(G03) X±5.5 U±5.5 I±5.5 I±5.5<br>
+轴 X, U, A ==&gt; I <br>
+轴 Y, V, B ==&gt; J <br>
+轴 Z, W, C ==&gt; K</p>
+              <br></TD>
+            </TR>
+        </TABLE>
+        <TABLE height=20 border=0 cellPadding=0 cellSpacing=0 class="bar1" >
+            <TR>
+              <td height="20"><p><strong>采用编写圆弧中心的绝对坐标进行圆弧插补 (G06)</strong></p></td>
+            </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+            <TR>
+              <TD height=26  vAlign=top><br>
+                <p>通过增加功能 G06 到圆弧插补程序段，可以用绝对坐标编写圆弧中心的坐标 (I,J,或 K) ，即相对于坐标零点而不是圆弧的起点。 <br>
+功能 G06 不是模态的，因此在任何情况下需要以绝对坐标编写圆弧中心的地方都要编写 G06，G06 可以写成 G6。 <br>
+<img width="553" height="331" src="Code/GCode_clip_image002_0009.jpg"> <br>
+各种编程模式分析如下，点 X60 Y40 为起点。 <br>
+笛卡尔坐标： <br>
+G90 G17 G06 G03  X110 Y90 I60 J90 <br>
+G06 X160 Y40 I160 J90 <br>
+极坐标： <br>
+G90 G17 G06 G03  Q0 I60 J90 <br>
+G06 Q-90 I160 J90</p>
+                <p><br>
+                </p></TD>
+            </TR>
+        </TABLE>
+        <TABLE height=20 border=0 cellPadding=0 cellSpacing=0 class="bar1" >
+            <TR>
+              <td height="20"><p><strong>圆弧相切于前一路径 (G08)</strong></p></td>
+            </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+            <TR>
+              <TD height=26  vAlign=top><p>通过功能 G08 可以编写一圆弧与前一段路径相切，而不用编写圆心坐标 (I.J &amp;K) 。 <br>
+                只需要定义圆弧的终点坐标，采用极坐标或笛卡尔坐标要依照工作平面的轴定义。 <br>
+  <strong><img width="554" height="358" src="Code/GCode_clip_image002_0010.jpg"></strong><br>
+                假定起点为 X0 Y40， 期望编写一段直线，然后有一段圆弧与直线相切， 最后一段圆弧与前一段圆弧相切。 <br>
+                G90 G01  X70 <br>
+                G08 X90 Y60 ; 相切于前一段路径的圆弧 <br>
+                G08 X110 Y60 ; 相切于前一段路径的圆弧 </p>
+              <p>&nbsp;</p>
+                <p><br>
+              </TD>
+            </TR>
+        </TABLE>
+        <TABLE height=20 border=0 cellPadding=0 cellSpacing=0 class="bar1" >
+            <TR>
+              <td height="20"><p><strong>三点确定圆弧 (G09) </strong></p></td>
+            </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+            <TR>
+              <TD height=26  vAlign=top><br>
+                <p>利用功能 G09 可以通过编写圆弧终点和中间点 （圆弧的起点是运动的开始点）定义圆弧。换句话说，用编写圆弧的中间点代替编写圆弧的中心坐标。 <br>
+圆弧的终点用笛卡尔坐标或极坐标定义，圆弧的中间点总是用笛卡尔坐标定义，用字母 I,J, 或 K，与每个轴的对应关系如下： <br>
+轴 X, U, A ==&gt; I <br>
+轴 Y, V, B ==&gt; J <br>
+轴 Z, W, C ==&gt; K<br>
+<strong>螺旋插补 </strong><br>
+螺旋插补由工作平面的圆弧插补和编程的其它轴的移动组成。 <br>
+<img width="508" height="216" src="Code/GCode_clip_image002_0011.jpg"> <br>
+螺旋插补编写在一段程序中，圆弧插补通过功能  : G02, G03, G08 或 G09 实现。 <br>
+G02 X Y I J Z <br>
+G02 X Y R Z A <br>
+G03 Q I J A B <br>
+G08 X Y Z <br>
+G09 X Y I J Z <br>
+对于旋转大于一转的螺旋插补，必须且只能编写另一根直线轴的移动（仅一个轴）。 <br>
+另一方面，沿直线的螺距必须用字母 I，J，K 定义 （5.5 格式），这些字母和轴的 <br>
+对应关系如下： <br>
+轴 X, U, A ==&gt; I <br>
+轴 Y, V, B ==&gt; J <br>
+轴 Z, W, C ==&gt; K<br>
+G02 X Y I J Z K <br>
+G02 X Y R Z K <br>
+G03 Q I J A I <br>
+G08 X Y B J <br>
+G09 X Y I J Z K<br>
+<img width="512" height="309" src="Code/GCode_clip_image004_0003.jpg"> </p>
+                <p>　			</TD>
+            </TR>
+        </TABLE>
+        <TABLE height=20 border=0 cellPadding=0 cellSpacing=0 class="bar1" >
+            <TR>
+              <td height="20"><p><strong>在开始加工操作时切向进入 (G37)</strong><strong> </strong></p></td>
+            </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+            <TR>
+              <TD height=26  vAlign=top><br>
+                <p>利用功能 G37 可以连接两段无关的路径，而不用计算它们的交点。 <br>
+功能 G37 不是模态的，因此必须在希望启用带有切向进入的加工操作时编写。 <br>
+<img width="518" height="309" src="Code/GCode_clip_image002_0012.jpg"> <br>
+如果起点为 X0 Y30 且希望加工一圆弧 （靠近的是直线段），应编写为： <br>
+G90 G01  X40 <br>
+G02 X60 Y10 I20 J0<br>
+然而，如果在同样的例子中希望刀具切向进入，其半径为 5mm，应编写为： <br>
+<img width="518" height="305" src="Code/GCode_clip_image004_0004.jpg"> <br>
+G90 G01 G37 R5 X40 <br>
+G02 X60 Y10 I20 J0 <br>
+如图所示，CNC 修改了路径，以便刀具在开始加工时切向进入零件。 <br>
+必须在程序段中编写功能 G37 和 R 值，它包括需要修改的路径。 <br>
+在 G37 后始终接 R5.5 格式， 用于指定 CNC 获得切向进入工件的半径。R 的值必须始终是正的。 <br>
+功能 G37 必须编写在包含直线运动的程序段中 (G00 或 G01)，如果编写的程序段中包含圆弧运动 (G02 或 G03)， CNC 将显示相应的错误信息。 <br>
+              </p>
+              </TD>
+            </TR>
+        </TABLE>
+        <TABLE height=20 border=0 cellPadding=0 cellSpacing=0 class="bar1" >
+            <TR>
+              <td height="20"><p><strong>在加工操作结束时切向退出 (G38)</strong></p></td>
+            </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+            <TR>
+              <TD height=26  vAlign=top><br>
+                <p>功能 G38 在加工操作的结尾处使刀具切向退出。路径必须是直线 (G00 或 G01)，否则， CNC 将显示相应的错误信息。 <br>
+功能 G38 不是模态的，因此必须在希望刀具切向退出时编写。在 G38 后始终接 R5.5 数值格式， 用于指定 CNC 获得切向退出工件的圆弧半径。R 的 值必须始终是正的 <br>
+<img width="515" height="284" src="Code/GCode_clip_image002_0013.jpg"> <br>
+如果起点是 X0 Y30 而且希望加工一圆弧 （从直线段退出），应编写为 <br>
+G90 G01  X40 <br>
+G02 X80 I20 J0 <br>
+G00 X120<br>
+然而，如果在同样的例子中希望刀具切向退出，且圆弧半径为  5mm，应编写为： <br>
+G90 G01  X40 <br>
+G02 G38  R5 X80 I20 J0 <br>
+G00 X120<br>
+<img width="514" height="287" src="Code/GCode_clip_image004_0005.jpg"> </p>
+                <p><br>
+              </TD>
+            </TR>
+        </TABLE>
+        <TABLE width="100%" height=20 border=0 cellPadding=0 cellSpacing=0 class="bar1" >
+            <TR>
+              <td height="20"><p><strong>自动圆角过渡 (G36)</strong></p></td>
+            </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+            <TR>
+              <TD height=26  vAlign=top><br>
+                <p>在铣削操作时，利用功能 G36，可以利用特定的半径去圆一个角，而不必计算圆弧的中心点及起点和终点。 <br>
+功能 G36 不是模态的，因此必须在需要控制圆角过渡的地方编写。 <br>
+该功能必须编写在希望定义圆角的程序段。 <br>
+在 G36 后接 R5.5 数值，它表示 CNC 想得到圆角的半径。该 R 值必须始终是正的。 <br>
+<img width="520" height="464" src="Code/GCode_clip_image002_0014.jpg"> </p>
+                <p><br>
+              </TD>
+            </TR>
+        </TABLE>
+        <TABLE width="100%" height=20 border=0 cellPadding=0 cellSpacing=0 class="bar1" >
+            <TR>
+              <td height="20"><p><strong>倒角 (G39)</strong></p></td>
+            </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+            <TR>
+              <TD height=26  vAlign=top><br>
+                <p>在铣削操作时，有可能 （使用 G39）在 2 根直线之间倒角，而不需要计算交点。 <br>
+功能 G39 不是模态的，因此在需要倒角的地方要编写。 <br>
+该功能应编写在程序段中需要定义倒角的地方。 <br>
+G39 后接 R5.5 数值，它表示要完成倒角处端点间的距离。该  R 值必须始终是正的。 <br>
+<strong><img width="509" height="251" src="Code/GCode_clip_image002_0015.jpg"></strong></p>
+              <br>          </TD>
+            </TR>
+        </TABLE></TD>
+    </TR>
+  </TBODY>
+</TABLE>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+  <tr>
+    <th align="left" scope="col"><p><strong>加工螺纹 (G33) </strong></p></th>
+  </tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td align="left" scope="col"><p>如果机床主轴装有旋转编码器，可以利用 G33 功能加工螺纹。 <br>
+虽然加工螺纹通常是沿着一根轴的整个长度，但  CNC 可以同时对多根轴进行插补。 <br>
+编程格式： <br>
+<img width="508" height="136" src="Code/GCode_clip_image002_0016.jpg"> <span class="style1"><br>
+    </span>
+    </p></p>
+    </td>
+  </tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+  </tr>
+</table>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+  <tr>
+    <th align="left" scope="col"><p><strong>加工可变螺距的螺纹 (G34)</strong><strong> </strong></p></th>
+  </tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td align="left" scope="col"><p class="style1"><br>
+    </p>
+      <p>要加工可变螺距的螺纹，机床的主轴必须有旋转编码器。 <br>
+虽然加工螺纹通常是沿着一根轴的整个长度，但  CNC 可以同时对多根轴进行插补。 <br>
+编程格式： <br>
+G34 X.....C L Q K <br>
+<img width="493" height="140" src="Code/GCode_clip_image002_0017.jpg"> </p>
+      <p class="style1">        <br>
+        <br>
+      </p></td>
+  </tr>
+</table>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+  <tr>
+    <td align="left" scope="col"><p><strong>移动到限定点 (G52) </strong></p></td>
+  </tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td align="left" scope="col"><p class="style1"><br>
+    </p>
+      <p>利用功能 G52，可以编写程序使某根轴移动直到它碰到某一物体。这种功能可能对成型机床，活动尾座，棒料进料机等有用。 <br>
+编程格式为： <br>
+G52 X..C ±5.5 <br>
+在 G52 后，编写期望的轴和移动的目标点的坐标。 <br>
+该轴将向编写的目标坐标移动，直到碰到某物体。如果该轴到达编写的目标坐标，而没有碰到限定点，它将停止。 <br>
+功能 G52 不是模态的，因此，必须在每次需要这种操作时编写。 <br>
+同样，它假定功能 G01 和 G40 修改程序的历史，它与功能 G00, G02, G03,G33,G34， G41, G42, G75 和 G76 不兼容。 </p>
+      <p class="style1">&nbsp; </p></td>
+  </tr>
+</table>
+<br>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+  <tr>
+    <td align="left" scope="col"><p><strong>进给率 &quot;F&quot; 用作时间的倒数功能 (G32)</strong></p></td>
+  </tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td align="left" scope="col"><p>有的时候，定义机床各轴到达目标点的时间比定义通常意义的进给率容易些。 <br>
+典型的例子如当直线轴 (X, Y, Z) 和旋转轴 ( 以度为单位 ) 一起做插补运动时。 <br>
+功能 G32 表示 &quot;F&quot; 功能后设置的时间是到达目标点花费的时间。 <br>
+为了用大的 &quot;F&quot; 数值表示大的进给率，赋给 &quot;F&quot; 的值定义为 “时间的倒数功能”， 并假定该功能有效。 <br>
+&quot;F&quot; 单位： 1/min <br>
+例如： G32 X22 F4 <br>
+表示运动必须被执行在 . 分钟，即在 0.25 分钟。 <br>
+功能 G32 是模态的，与 G94 和 G95 不兼容。 <br>
+上电后，在执行了 M02, M30 或 EMERGENCY （急停）或 RESET  （复位）后， CNC 采用代码 G94 还是 G95，取决于通用机床参数 &quot;IFFED&quot; 的设置。 </p>
+      <p class="style1"><br>
+    </p></td>
+  </tr>
+</table>
+<br>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+  <tr>
+    <td align="left" scope="col"><p><strong>切向控制 (G45)</strong></p></td>
+  </tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td align="left" scope="col"><p>利用 &quot; 切向控制 &quot; 特性，轴可以保持与程序编写的路径相同的方向。 <br>
+        <img width="514" height="189" src="Code/GCode_clip_image002_0018.jpg"><br>
+路径由当前平面的轴定义。保持定向的轴必须是旋转翻转轴  (A, B 或 C)。 <br>
+编程格式： <br>
+G45 Axis （轴） Angle （角度） <br>
+Axis（轴）保持定向的轴 （A，B  或 C） <br>
+Angle （角度） <br>
+表示相对于路径的角的位置，以度为单位 (±359.9999)，如果没有编 <br>
+写，将采用 &quot;0&quot;。 <br>
+<img width="514" height="120" src="Code/GCode_clip_image004_0006.jpg"><br>
+要取消该功能，只编写 G45 （不要定义轴）。 <br>
+每次激活 G45 （切向控制），CNC 的动作如下： <br>
+1.定位切向轴，相对于编程位置的第一段。 <br>
+<img width="519" height="111" src="Code/GCode_clip_image006.jpg"><br>
+2. 一旦切向轴被定位，开始在平面进行轴的插补。 <br>
+3. 在直线部分保持切向轴的方向，在圆弧插补段，在整段路径保持编写的方向。 <br>
+<img width="509" height="149" src="Code/GCode_clip_image008.jpg"><br>
+4. 如果在各段的连接部分需要新的切向轴定向，将按下列步骤进行： <br>
+1. 结束当前部分。 <br>
+2. 使切向轴相对于下一段定向。 <br>
+3. 继续执行。 <br>
+<img width="513" height="100" src="Code/GCode_clip_image010.jpg"><br>
+当工作在圆角方式 (G05)，在拐角处不保持定向，因为它在结束当前段之前开 <br>
+始。推荐工作在方角方式 (G07)。然而，要工作在圆角方式 (G05)，为了保持在拐角刀具的定向应使用功能 G36 ( 自动圆角过渡） <br>
+5. 要取消切向控制功能，只编写  G45 ( 不用定义轴 )。 <br>
+甚至，当切向轴用 90° 或 -270° 编程时，采用相同的定向，但在方向改变时的转动方向取决于编程的数值。 </p>
+      <p><img width="513" height="107" src="Code/GCode_clip_image002_0019.jpg"></p>
+      <p class="style1"><br>
+    </p></td>
+  </tr>
+</table>
+<br>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+  <tr>
+    <th align="left" scope="col"><p><strong>G145. </strong><strong>暂时取消切向控制 </strong></p></th>
+  </tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td align="left" scope="col"><p><span class="style1"><br>
+    </span>功能 G145 可以被使用去暂时取消切向控制 (G45)。 <br>
+G145 K0 它暂时取消切向控制，当新功能 G145 来到时功能 G45 将被保留记录。如果没有 G45 被编写，G145 将被忽略。如果 K 没有被编写， K0 将被采用。G145 K1 它被取消之前采用带角度轴的切向控制，这时  G145 从记录中消失。 <br>
+      </p>
+    </td>
+  </tr>
+</table>
+<br>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+  <tr>
+    <td align="left" scope="col"><p><strong>中断程序段准备 (G04)</strong></p></td>
+  </tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td align="left" scope="col"><p class="style1"><br>
+    </p>
+      <p>CNC 在程序段执行前最多可以预读 20 段程序 , 用以预先计算下面的路径。 <br>
+每一个程序段在读入时就进行了求解，但是如果希望在执行时求解，就要使用功能G04。 <br>
+该功能保持准备程序段，等待询问中的程序段被执行以便再次执行准备程序段。 <br>
+有一种情况是程序段跳转输入的状态求解，它在程序段的开头定义。 <br>
+例如： <br>
+.. <br>
+G04 ; 中断程序段准备 <br>
+/1 G01  X10 Y20 ; 程序段跳转条件 “/1” <br>
+.. <br>
+功能 G04 不是模态的，因此需要在希望中断程序段准备的时候编写。 <br>
+它应该编写在一个单独的程序段，编写在要求解的程序段前。功能  G04 可以编写为G4。 <br>
+每次编写 G04 时，当前的半径和长度补偿被取消。 <br>
+基于这个原因，在使用该功能时必须小心，因为如果它被使用在带补偿状态的加工程序段时，就可能产生不希望的轮廓。 <br>
+例如：下列程序段在带有 G41 补偿的部分被执行： <br>
+... <br>
+N10 X50 Y80 <br>
+N15 G04 <br>
+/1 N17 M10 <br>
+N20 X50 Y50 <br>
+N30 X80 Y50 <br>
+... <br>
+程序段 N15 中断程序段准备并且 N10 段的执行将在 A 点完成。 <br>
+<img width="295" height="235" src="Code/GCode_clip_image002_0020.jpg"><br>
+一旦 N15 段的程序执行完成，CNC 从 N17 段开始继续准备程序段。 <br>
+假定与补偿路径对应的下一点是 “B” 点， CNC 把刀具移动到该点，执行路径 “A-B”。 <br>
+<img width="328" height="243" src="Code/GCode_clip_image004_0007.jpg"></p>
+    </td>
+  </tr>
+</table>
+<br>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+  <tr>
+    <td align="left" scope="col"><p><strong>G04  K0: </strong><strong>程序段准备中断和坐标更新 </strong></p></td>
+  </tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td align="left" scope="col"><p class="style1"><br>
+    </p>
+      <p>该功能相关的带 G04 K0 可以被使用去更新在完成特殊的 PLC 通道的运用之后轴的坐标。 <br>
+如下是 PLC 运用需要更新的通道的轴的坐标： <br>
+. PLC 运用使用 SWITCH* 标志。 <br>
+. PLC 运用在工件程序的执行期间一根轴进入 DRO 方式然后又返回正常轴的方式。 <br>
+G04 操作： <br>
+<img width="477" height="132" src="Code/GCode_clip_image002_0021.jpg"></p>
+      <p class="style1">&nbsp; </p></td>
+  </tr>
+</table>
+<br>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+  <tr>
+    <td align="left" scope="col"><p><strong>暂停 (G04 K)</strong></p></td>
+  </tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td align="left" scope="col"><p class="style1"><br>
+    </p>
+      <p>可以通过编写功能 G04 K 暂停。 <br>
+暂停的数值在编写时以百分之一秒为单位，格式为  K5 (1..99999)。 <br>
+例如： <br>
+G04 K50 ; 暂停 50 个百分之一秒 （0.5 秒）。 <br>
+G04 K200 ; 暂停 200 个百分之一秒 （2 秒）。 <br>
+功能 G04 K 不是模态的，因此在任何需要暂停的时候编写。功能 G04 K 可以编写为 G4 K。 <br>
+暂停在所编写的程序段的开始执行。 </p>
+<br>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+  <tr>
+    <td align="left" scope="col"><p><strong>工作在方角 (G07) 和圆角 (G05,G50) </strong></p></td>
+  </tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td align="left" scope="col"><p class="style1"><br>
+    </p>
+      <p>G07 ( 方角 ) <br>
+当工作在 G07 ( 方角 ) 时， CNC 直到到达当前程序段中编写的位置才执行下面的程序段。 <br>
+当轴从编程的位置到达 &quot;INPOSW&quot; （在位置区或死区）内时，CNC 认为编程的位置已经到达。 <br>
+<strong><img width="517" height="271" src="Code/GCode_clip_image002_0022.jpg"></strong><br>
+理论和实际轮廓一致，得到方角，如图中所示。 <br>
+功能 G07 是模态的，与 G05, G50 和 G51 不兼容。功能 G07 可以编写成 G7。 <br>
+上电后，在执行了 M02, M30 或 EMERGENCY （急停）或 RESET （复位）后， CNC 采用代码 G05 或 G07 取决于通用机床参数 “ICORNER” 的设置。 </p>
+<br>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+  <tr>
+    <td align="left" scope="col"><p><strong>G05 ( 圆角 )</strong></p></td>
+  </tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td align="left" scope="col"><p class="style1"><br>
+    </p>
+      <p>当工作在 G05 ( 圆角 ) 方式时， CNC 在当前程序段的理论插补一结束就开始执行程序中的下一段。它不等待轴到达编写的物理位置。CNC 开始执行下一段程序时离编写的程序位置的距离取决于轴的实际进给率。 <br>
+        <strong><img width="534" height="277" src="Code/GCode_clip_image002_0023.jpg"></strong><br>
+通过该功能，可以获得圆角，如图所示： <br>
+理论和实际轮廓之间的差别取决于程序的进给率  F 的数值。F 的数值越大，则两个轮廓的差别就越大。 <br>
+功能 G05 是模态的，与 G07, G50 和 G51 不兼容。功能 G05 可以编写成 G5。 <br>
+上电后，在执行了 M02, M30 或 EMERGENCY （急停）或 RESET （复位）后， CNC 采用代码 G05 或 G07 取决于通用机床参数 “ICORNER” 的设置。 </p>
+<br>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+  <tr>
+    <td align="left" scope="col"><p><strong>受控圆角 (G50) </strong><strong> </strong></p></td>
+  </tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td align="left" scope="col"><p class="style1"><br>
+    </p>
+      <p>当工作在 G50 ( 受控圆角 ) 时， 一旦当前程序段的理论插补完成， CNC 将等待轴进入由机床参数 &quot;INPOSW2&quot; 定义的区域，并且开始执行下面的程序段。 <br>
+        <img width="515" height="271" src="Code/GCode_clip_image002_0024.jpg"><br>
+功能 G50 保证理论和实际路径之间的差别小于由机床参数 &quot;INPOSW2&quot; 设定的值。 <br>
+另一方面，当工作在 G05 时， 理论和实际轮廓之间的差别取决于程序的进给率  F 的数值。F 的数值越大，这两个轮廓的差别越大。 <br>
+功能 G50 是模态的，与 G05, G07 和 G51 不兼容。 <br>
+上电后，在执行了 M02, M30 或 EMERGENCY （急停）或 RESET （复位）后， CNC 采用代码 G05 或 G07 取决于通用机床参数 “ICORNER” 的设置。 </p>
+<br>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+  <tr>
+    <td align="left" scope="col"><p><strong>预读 (G51) </strong></p></td>
+  </tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td align="left" scope="col"><p class="style1"><br>
+    </p>
+      <p>通常，当程序中包含移动量很小的程序段 (CAM, 数字化 , 等 ) 时，运行往往是很慢的。利用预读功能，对于这种类型程序的高速加工成为可能。 <br>
+预读功能预先分析被加工的路径 （最多 75 段程序）为了计算每段路径的最大进给率。对程序中非常小的移动量这个功能提供了更平滑和更快速的加工，甚至是微米建议在使用 LOOK-AHEAD （预读）功能时，系统应采用带有 CPU-TURBO 板的选项。 带有 “预读”功能操作时，最好调整轴使其跟随误差尽量小，因为轮廓误差将至少等于最小跟随误差。 <br>
+编程格式 <br>
+<img width="505" height="146" src="Code/GCode_clip_image002_0025.jpg"><br>
+参数 &quot;A&quot; 允许使用标准工作加速度，当执行具有预读功能时，使用其他加速度。 </p>
+<br>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+  <tr>
+    <td align="left" scope="col"><p><strong>图像镜像 (G10, G11. G12, G13, G14) </strong></p></td>
+  </tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td align="left" scope="col"><p class="style1"><br>
+    </p>
+      <p>下列图像镜像功能有效： <br>
+G10: 取消图像镜像 <br>
+G11: 相对于 X 轴的图像镜像 <br>
+G12: 相对于 Y 轴的图像镜像 <br>
+G13: 相对于 Z 轴的图像镜像 <br>
+G14: 相对于任何轴 (X..C) 的图像镜像或同时几个轴 <br>
+例如： <br>
+G14 W <br>
+G14 X Z A B <br>
+当 CNC 工作在镜像模式时，它在执行镜像选择的轴的运动时，符号发生变化。 <br>
+<strong><img width="328" height="453" src="Code/GCode_clip_image002_0026.jpg"></strong><br>
+功能 G11， G12， G13 和 G14 是模态的并且和 G10 不兼容。 <br>
+G11, G12 和 G13 可以编写在同一程序段内，因为它们互不兼容，功能  G14 必须编写 <br>
+在单独的程序段。 <br>
+如果功能 G73 ( 模型旋转 ) 在镜像程序中也有效， CNC 首先进行镜像，然后 进行 <br>
+模式旋转。 <br>
+如果在某个镜像功能 (G11, G12, G13 或 G14) 有效时，用 G92 设置了新的坐标零点， <br>
+该新坐标零点不受镜像功能的影响。 <br>
+上电后，在执行了 M02, M30 或 EMERGENCY （急停）或 RESET （复位）后， CNC 采用代码 G10。 </p>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+  <tr>
+    <td align="left" scope="col"><p><strong>预读 (G51) </strong></p></td>
+  </tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td align="left" scope="col"><p class="style1"><br>
+    </p>
+      <p>通常，当程序中包含移动量很小的程序段 (CAM, 数字化 , 等 ) 时，运行往往是很慢的。利用预读功能，对于这种类型程序的高速加工成为可能。 <br>
+预读功能预先分析被加工的路径 （最多 75 段程序）为了计算每段路径的最大进给率。对程序中非常小的移动量这个功能提供了更平滑和更快速的加工，甚至是微米建议在使用 LOOK-AHEAD （预读）功能时，系统应采用带有 CPU-TURBO 板的选项。 带有 “预读”功能操作时，最好调整轴使其跟随误差尽量小，因为轮廓误差将至少等于最小跟随误差。 <br>
+编程格式 <br>
+<img width="505" height="146" src="Code/GCode_clip_image002_0025.jpg"><br>
+参数 &quot;A&quot; 允许使用标准工作加速度，当执行具有预读功能时，使用其他加速度。 </p>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+  <tr>
+    <td align="left" scope="col"><p><strong>缩放比例因子 (G72) </strong></p></td>
+  </tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td align="left" scope="col"><p>通过使用功能 G72 ，可以对工件进行放大或缩小。 <br>
+这样一来，可以用同一个程序制造一系列形状相似，大小不同的零件。 <br>
+功能 G72 应单独编写在一个程序段中，有两种编写 G72 的格式： <br>
+. 缩放比例因子应用到所有的轴。 <br>
+. 缩放比列因子应用到一根或多根轴。 </p>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+  <tr>
+    <td align="left" scope="col"><p><strong>模型旋转 (G73) </strong></p></td>
+  </tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td align="left" scope="col"><p>功能 G73 可以用于旋转坐标系统，将坐标原点或编写的旋转中心作为当前的旋转中心。 <br>
+定义旋转的格式如下： <br>
+G73 Q+/5.5 I±5.5 J±5.5 <br>
+其中： <br>
+Q: 以度为单位表示旋转的角度 <br>
+I, J: 可选项，分别定义旋转中心的横坐标和纵坐标。如果没有定义，坐标 <br>
+原点将作为旋转中心。 <br>
+&quot;I&quot; 和 &quot;J&quot; 的数值用绝对坐标定义，相对于工作平面的坐标原点。这些坐标受有效的缩放比列因子和图像镜像的影响。 <br>
+<strong><img width="520" height="246" src="Code/GCode_clip_image002_0027.jpg"></strong><br>
+应记住 G73 是增量的，即编写的不同的 Q 进行相加 <br>
+<strong><img width="514" height="253" src="Code/GCode_clip_image004_0008.jpg"></strong><br>
+<strong><img width="513" height="586" src="Code/GCode_clip_image006_0000.jpg"></strong><br>
+如果在进行坐标旋转的程序中，有镜像功能，  CNC 将首先进行镜像，然后旋转。 <br>
+模型旋转功能可以通过编写 G72 （它自己，不带任何角度值）或通过 G16, G17, <br>
+G18, 或 G19, 或在上电，执行 M02, M30 或在急停或复位后取消。 </p>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+  <tr>
+    <td align="left" scope="col"><p><strong>从动轴</strong><strong> (G77)</strong><strong> </strong></p></td>
+  </tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td align="left" scope="col"><p>功能 G77 允许选择主动轴和从动轴。 <br>
+编程格式如下： <br>
+G77 &lt; 轴 1 &gt; &lt; 轴 2 &gt; &lt; 轴 3 &gt; &lt; 轴 4 &gt; &lt; 轴 5&gt; <br>
+其中 &lt; 轴 2 &gt; ，&lt; 轴 3 &gt;， &lt; 轴 4 &gt; 和 &lt; 轴 5&gt; 表示是期望偶合到主动轴 &lt; 轴 <br>
+1 &gt; 上的从动轴。必须定义 &lt; 轴 1 &gt; 和 &lt; 轴 2 &gt;, 其他的轴是可选的。 <br>
+例如： <br>
+G77 X Y U ; 将 Y 和 U 耦合到  X 轴 <br>
+在进行电子轴偶合时，必须遵守下列规则： <br>
+. 可以使用一个或两个不同的电子轴耦合。 <br>
+G77 X Y U ; 将 Y 和 U 轴耦合到  X 轴 <br>
+G77 V Z ; 将 Z 轴耦合到 V 轴 <br>
+. 不能将一根轴同时耦合到其它两根轴上。 <br>
+G77 V Y ; 将 Y 轴耦合到 V 轴 <br>
+G77 X Y ; 给出错误信号，因为 Y 轴被耦合到了 V 轴 <br>
+. 可以连续将几根轴耦合到一根轴上。 <br>
+G77 X Z ; 将 Z 轴耦合到 X 轴 <br>
+G77 X U ; 将 U 轴耦合到 X 轴 —&gt; Z U 被耦合到 X 轴。 <br>
+G77 X Y ; 将 Y 轴耦合到 X 轴 —&gt; Y Z U 被耦合到 X 轴。 <br>
+. 一对互相耦合的轴不能再耦合到其它的轴。 <br>
+G77 Y U ; 将 U 轴耦合到 Y 轴 <br>
+G77 X Y ; 给出错误信息，因为 Y 轴被耦合到了 U 轴 </p>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+  <tr>
+    <td align="left" scope="col"><p><strong>取消轴的耦合 , 从动轴 , (G78) </strong></p></td>
+  </tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td align="left" scope="col"><p>功能 G78 可以解除所有偶合的轴，或只解除指定的轴。 <br>
+例如： <br>
+G77 X Y U ; 将 Y 和 U 轴耦合到  X 轴 <br>
+G77 V Z ; 将 Z 轴耦合到 V 轴 <br>
+G78 Y ; 解除 Y 轴，但 U 对 X 和 Z 对  V 保持耦合。 <br>
+G78 ; 解除所有的轴 <br>
+G78 解除所有耦合的轴 </p>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+  <tr>
+    <td align="left" scope="col"><p><strong>轴切换 G28-G29 </strong></p></td>
+  </tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td align="left" scope="col"><p>利用该功能，可以在拥有两个工作台的机床上，使用一个工件程序在两个工作台上加工相同的工件。 <br>
+        <strong><img width="522" height="150" src="Code/GCode_clip_image002_0028.jpg"></strong><br>
+利用功能 G28 轴可以从一根切换到另一根，这样以来，G28 后与第一根轴相关的所有运动将发生在 G28 后的第二根轴上，反之亦然。 <br>
+编程格式： <br>
+G28 ( 轴 1) ( 轴 2) <br>
+要取消切换，执行功能 G29，后接要切换回来的轴，同时最多可以切换 3 对轴。 <br>
+在下列情况下不能切换主要的轴：跟踪时，功能  G48 或 G49 有效时， 或在车床上&quot;C&quot; 轴有效时。 <br>
+在 G48或G49 无效时，在上电后，在执行了M30后，或急停或复位后，轴被切换回来。 <br>
+例如，让我们假定工件程序是为工作台 1 定义的。 <br>
+1. 在工作台  1 上执行零件程序。 <br>
+2. G28 BC，切换 &quot;B&quot; 和 &quot;C&quot; 轴。 <br>
+3. 零点偏置在工作台  2 上加工。 <br>
+4. 执行工件程序。 <br>
+. 将在工作台  2 上加工。 <br>
+. 同时，用新的加工代替工作台  1 上的加工。 <br>
+5. G29 B， 将 &quot;B&quot; 和 &quot;C&quot; 轴切换回来。 <br>
+6. 取消零点偏置在工作台  1 上加工。 <br>
+7. 执行工件程序。 <br>
+. 将在工作台  1 上加工。 <br>
+. 同时，用新的加工代替工作台  2 上的加工 </p>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+  <tr>
+    <td align="left" scope="col"><p><strong>刀具半径补偿 (G40, G41, G42) </strong></p></td>
+  </tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td align="left" scope="col"><p>在正常的铣削操作中，有必要计算和定义刀具的路径，考虑它的半径，以便达到要求的工件尺寸。 <br>
+刀具半径补偿允许直接编写工件轮廓和刀具半径不必考虑刀具的尺寸。 <br>
+CNC 根据工件轮廓和与该刀具对应的存储在刀具偏置表中的半径值自动计算刀具路径。 <br>
+这里有三种用于刀具半径补偿的准备功能： <br>
+G40：取消刀具半径补偿 <br>
+G41：左手刀具半径补偿 <br>
+G42：右手刀具半径补偿 <br>
+G41 刀具在零件的左边，取决于加工方向。 <br>
+G42 刀具在零件的右边，取决于加工方向。 <br>
+刀具值 R, L, I, K 在开始加工前要存储在刀具偏置表中，或在程序的开始通过变量 TOR, TOL, TOI, TOK 加载。 <br>
+一旦通过 G16, G17, G18, 或 G19 选择了补偿所施加的平面， G41 或 G42 开始起作用，通过代码 D 选择刀具偏置值，或通过所选择刀具的刀具表显示刀具偏置。 <br>
+功能 G41 和 G42 是模态的，它们不互相兼容。它们被 G40, G04 ( 中断准备程序段,G53 ( 相对于机床零点编程 ), G74 ( 零点搜索 ), 加工固定循环 ( G81,G82, G83, G84,  G85, G86, G87, G88, G89) 及在上电，执行了  M02, M30 或 EMERGENCY （急停）或 RESET （复位）后被取消 </p>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+  <tr>
+    <td align="left" scope="col"><p><strong>G69. </strong><strong>组合深孔钻削 </strong></p></td>
+  </tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td align="left" scope="col"><p>该循环完成连续的钻削加工直到达到最终的编程坐标。在每次钻削后，刀具退回固定的量，可以选择每次 J 的钻入量，它退回到参考平面。在每次钻削后，可以编写停顿。 <br>
+在笛卡尔坐标系工作时，程序段的基本结构如下： <br>
+G69 G98/G99  X Y Z I B C D H J K L R <br>
+<strong><img width="513" height="333" src="Code/GCode_clip_image002_0029.jpg"></strong><br>
+[ G98/G99 ] 退回平面 <br>
+G98 一旦孔钻削完成，刀具退回到初始平面。 <br>
+G99 一旦孔钻削完成，刀具退回到参考平面。 <br>
+[ X/Y±5.5 ] 加工点坐标 <br>
+是可选项，用于定义主平面的轴运动到刀具的加工点。 <br>
+该点可以在笛卡尔坐标系或极坐标系编写，根据机床当时用  G90 或 G91，该坐标可以是绝对坐标或增量坐标。 <br>
+[ Z±5.5 ] 参考平面 <br>
+定义参考平面的坐标。可以用绝对坐标或增量坐标编写，在这种情况下是相对于初始平面的。如果没有编写， CNC 将采用刀具的当前位置作为参考平面。 <br>
+[ I±5.5 ] 钻削深度 <br>
+定义总的钻削深度。它可以用绝对坐标或增量坐标编写，既然这样将是相对于提到的工件表面。 <br>
+[ B5.5 ] 钻削步长 <br>
+定义沿纵向轴到主平面的钻削步长 <br>
+[ C5.5 ] 接近前一次钻削 <br>
+定义从前一次钻削，纵向轴快速移动（G00）多大的距离接近工件开始下一次钻削。 <br>
+如果没有编写，将采用 1 mm 。如果编写了数值  0， CNC 将显示相应的错误。 <br>
+[ D5.5 ] 参考平面 <br>
+定义参考平面和要进行钻削的工件表面之间的距离。 <br>
+在第一次钻削中，该数值将加在 B 上，如果没有编写，将采用数值 0。 <br>
+[ H±5.5 ] 钻削后退回 <br>
+在每次钻削后，纵向轴快速 (G00) 返回的距离或坐标位置。 <br>
+&quot;J&quot; 不是 &quot;0&quot; 表示距离，如果 &quot;J=0&quot; 表示退回的位置或绝对位置。 <br>
+当没有编写时，纵向轴将返回到参考平面。 <br>
+[ J4 ] 钻削多次后退回到开始平面 <br>
+定义在钻削多少次后，刀具以G00返回到参考平面。可以编写 0 和 9999之间的数值。 <br>
+当没有编写或编写的数值为 &quot;0&quot; 时，在每次钻削后返回到由 H 指定的位置。 <br>
+<img width="522" height="315" src="Code/GCode_clip_image004_0009.jpg"><br>
+. 当  &quot;J&quot; 大于 1，在每次钻入后，刀具返回由 &quot;H&quot; 指定的距离，每次步长为 &quot;J&quot; 到参 <br>
+考平面 (RP)。 <br>
+. 当  J1，每次钻入后它将返回到参考平面 (RP)。 <br>
+. 当  J0，它将返回到 H 指定的下降的位置。 <br>
+[ K5 ] 停顿 <br>
+定义在每次钻入后到开始退回的停顿时间， 以百分之一秒为单位。如果没有编写，CNC 将采用 &quot;K0&quot;<br>
+[ L5.5 ] 最小钻削的步距 <br>
+定义钻入的最小值，该参数用非 1 的 &quot;R&quot; 值，如果没有编写或编写了数值 0，它将采用数值 1 mm。 <br>
+[ R5.5 ] 减少钻削步长的比例因子 <br>
+减小钻削步长（步距） &quot;B&quot; 的比例因子，如果没有编写或编写了数值 0, 它将采用数值 1 。 <br>
+如果 R 等于 1, 所有的钻削步长将相等，即为编写的 &quot;B&quot; 值。 <br>
+如果 R 不等于 1, 第一次钻入步长为 &quot;B&quot;，第二次为 “R B”，第三次为 “R (RB)” 依次类推，换句话说，从第二次钻入后 , 新的钻入步长为因子 R 和前一步长的乘积。 <br>
+如果所选择的 R 不是 1， CNC 将不允许步长小于编写的 L</p>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+  <tr>
+    <td align="left" scope="col"><p><strong>刀具半径补偿 (G40, G41, G42) </strong></p></td>
+  </tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td align="left" scope="col"><p>在正常的铣削操作中，有必要计算和定义刀具的路径，考虑它的半径，以便达到要求的工件尺寸。 <br>
+刀具半径补偿允许直接编写工件轮廓和刀具半径不必考虑刀具的尺寸。 <br>
+CNC 根据工件轮廓和与该刀具对应的存储在刀具偏置表中的半径值自动计算刀具路径。 <br>
+这里有三种用于刀具半径补偿的准备功能： <br>
+G40：取消刀具半径补偿 <br>
+G41：左手刀具半径补偿 <br>
+G42：右手刀具半径补偿 <br>
+G41 刀具在零件的左边，取决于加工方向。 <br>
+G42 刀具在零件的右边，取决于加工方向。 <br>
+刀具值 R, L, I, K 在开始加工前要存储在刀具偏置表中，或在程序的开始通过变量 TOR, TOL, TOI, TOK 加载。 <br>
+一旦通过 G16, G17, G18, 或 G19 选择了补偿所施加的平面， G41 或 G42 开始起作用，通过代码 D 选择刀具偏置值，或通过所选择刀具的刀具表显示刀具偏置。 <br>
+功能 G41 和 G42 是模态的，它们不互相兼容。它们被 G40, G04 ( 中断准备程序段,G53 ( 相对于机床零点编程 ), G74 ( 零点搜索 ), 加工固定循环 ( G81,G82, G83, G84,  G85, G86, G87, G88, G89) 及在上电，执行了  M02, M30 或 EMERGENCY （急停）或 RESET （复位）后被取消 </p>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+  <tr>
+    <td align="left" scope="col"><p><strong>刀具长度补偿 (G43, G44, G15) </strong></p></td>
+  </tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td align="left" scope="col"><p>利用该功能可以补偿编程的刀具长度和实际使用的刀具长度之间的差值。 <br>
+用 功能  G15 说明刀具补偿所施加的轴，或缺省时，施加在垂直于主平面的轴。 <br>
+如果是 G17，刀具补偿在 Z 轴。 <br>
+如果是 G18，刀具补偿在 Y 轴。 <br>
+如果是 G19，刀具补偿在 X 轴。 <br>
+无论何时编写了 G17, G18 或 G19 ， CNC 假定新的纵轴 ( 施加刀具补偿的轴 ) 是垂直于所选择的平面的。 <br>
+另一方面，如果在功能 G17, G18 或 G19 有效时执行功能 G15，新的纵轴 ( 用 G15选择的 ) 将代替前面的轴。 <br>
+用于长度补偿的功能代码如下： <br>
+G43：激活刀具长度补偿。 <br>
+G44: 取消刀具长度补偿。 <br>
+功能 G43 只表示施加纵向补偿，CNC 在纵向轴 ( 垂直轴 ) 开始移动时施加补偿。 </p>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+  <tr>
+    <td align="left" scope="col"><p><strong>G69. </strong><strong>组合深孔钻削 </strong></p></td>
+  </tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td align="left" scope="col"><p>该循环完成连续的钻削加工直到达到最终的编程坐标。在每次钻削后，刀具退回固定的量，可以选择每次 J 的钻入量，它退回到参考平面。在每次钻削后，可以编写停顿。 <br>
+在笛卡尔坐标系工作时，程序段的基本结构如下： <br>
+G69 G98/G99  X Y Z I B C D H J K L R <br>
+<strong><img width="513" height="333" src="Code/GCode_clip_image002_0030.jpg"></strong><br>
+[ G98/G99 ] 退回平面 <br>
+G98 一旦孔钻削完成，刀具退回到初始平面。 <br>
+G99 一旦孔钻削完成，刀具退回到参考平面。 <br>
+[ X/Y±5.5 ] 加工点坐标 <br>
+是可选项，用于定义主平面的轴运动到刀具的加工点。 <br>
+该点可以在笛卡尔坐标系或极坐标系编写，根据机床当时用  G90 或 G91，该坐标可以是绝对坐标或增量坐标。 <br>
+[ Z±5.5 ] 参考平面 <br>
+定义参考平面的坐标。可以用绝对坐标或增量坐标编写，在这种情况下是相对于初始平面的。如果没有编写， CNC 将采用刀具的当前位置作为参考平面。 <br>
+[ I±5.5 ] 钻削深度 <br>
+定义总的钻削深度。它可以用绝对坐标或增量坐标编写，既然这样将是相对于提到的工件表面。 <br>
+[ B5.5 ] 钻削步长 <br>
+定义沿纵向轴到主平面的钻削步长 <br>
+[ C5.5 ] 接近前一次钻削 <br>
+定义从前一次钻削，纵向轴快速移动（G00）多大的距离接近工件开始下一次钻削。 <br>
+如果没有编写，将采用 1 mm 。如果编写了数值  0， CNC 将显示相应的错误。 <br>
+[ D5.5 ] 参考平面 <br>
+定义参考平面和要进行钻削的工件表面之间的距离。 <br>
+在第一次钻削中，该数值将加在 B 上，如果没有编写，将采用数值 0。 <br>
+[ H±5.5 ] 钻削后退回 <br>
+在每次钻削后，纵向轴快速 (G00) 返回的距离或坐标位置。 <br>
+&quot;J&quot; 不是 &quot;0&quot; 表示距离，如果 &quot;J=0&quot; 表示退回的位置或绝对位置。 <br>
+当没有编写时，纵向轴将返回到参考平面。 <br>
+[ J4 ] 钻削多次后退回到开始平面 <br>
+定义在钻削多少次后，刀具以G00返回到参考平面。可以编写 0 和 9999之间的数值。 <br>
+当没有编写或编写的数值为 &quot;0&quot; 时，在每次钻削后返回到由 H 指定的位置。 <br>
+<img width="522" height="315" src="Code/GCode_clip_image004_0010.jpg"><br>
+. 当  &quot;J&quot; 大于 1，在每次钻入后，刀具返回由 &quot;H&quot; 指定的距离，每次步长为 &quot;J&quot; 到参 <br>
+考平面 (RP)。 <br>
+. 当  J1，每次钻入后它将返回到参考平面 (RP)。 <br>
+. 当  J0，它将返回到 H 指定的下降的位置。 <br>
+[ K5 ] 停顿 <br>
+定义在每次钻入后到开始退回的停顿时间， 以百分之一秒为单位。如果没有编写，CNC 将采用 &quot;K0&quot;<br>
+[ L5.5 ] 最小钻削的步距 <br>
+定义钻入的最小值，该参数用非 1 的 &quot;R&quot; 值，如果没有编写或编写了数值 0，它将采用数值 1 mm。 <br>
+[ R5.5 ] 减少钻削步长的比例因子 <br>
+减小钻削步长（步距） &quot;B&quot; 的比例因子，如果没有编写或编写了数值 0, 它将采用数值 1 。 <br>
+如果 R 等于 1, 所有的钻削步长将相等，即为编写的 &quot;B&quot; 值。 <br>
+如果 R 不等于 1, 第一次钻入步长为 &quot;B&quot;，第二次为 “R B”，第三次为 “R (RB)” 依次类推，换句话说，从第二次钻入后 , 新的钻入步长为因子 R 和前一步长的乘积。 <br>
+如果所选择的 R 不是 1， CNC 将不允许步长小于编写的 L</p>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+  <tr>
+    <td align="left" scope="col"><p><strong>G81. 钻削固定循环</strong></p></td>
+  </tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td align="left" scope="col"><p>该循环完成连续的钻削加工直到达到最终的编程坐标，它可能在钻孔的底部编写停顿。 <br>
+在笛卡尔坐标系工作时，程序段的基本结构如下： <br>
+G81 G98/G99  X Y Z I K <br>
+<img width="525" height="339" src="Code/GCode_clip_image002_0031.jpg"><br>
+G98 一旦孔钻削完毕，刀具退回到初始平面。 <br>
+G99 一旦孔钻削完毕，刀具退回到参考平面。 <br>
+[ X/Y±5.5 ] 加工点坐标 <br>
+是可选项，用于定义主平面的轴运动到刀具的加工点。 <br>
+该点可以在笛卡尔坐标系或极坐标系编写，根据机床当时用  G90 或 G91，该坐标可以是绝对坐标或增量坐标。 <br>
+[ Z±5.5 ] 参考平面 <br>
+定义参考平面的坐标。可以用绝对坐标或增量坐标编写，在这种情况下是相对于初始平面的。 <br>
+如果没有编写， CNC 将采用刀具的当前位置作为参考平面。 <br>
+[ I±5.5 ] 钻削深度 <br>
+定义总的钻削深度。它可以用绝对坐标或相对坐标编写。在这种情况下是相对于参考平面的。 <br>
+[ K5 ] 停顿 <br>
+定义在每次钻入后到开始退回停顿时间， 以百分之一秒为单位。如果没有编写， <br>
+CNC 将采用 &quot;K0&quot;。 </p>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+  <tr>
+    <td align="left" scope="col"><p><strong>G82. 带停顿的钻削固定循环</strong></p></td>
+  </tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td align="left" scope="col"><p>该循环完成连续的钻削加工直到达到最终的编程坐标。然后执行在孔底部的停顿。 <br>
+在笛卡尔坐标系工作时，程序段的基本结构如下： <br>
+G82 G98/G99  X Y Z I K <br>
+<img width="518" height="337" src="Code/GCode_clip_image002_0032.jpg"><br>
+[ G98/G99 ] 退回平面 <br>
+G98 一旦孔钻削完毕，刀具退回到初始平面。 <br>
+G99 一旦孔钻削完毕，刀具退回到参考平面。 <br>
+[ X/Y±5.5 ] 加工点坐标 <br>
+是可选项，用于定义主平面的轴运动到刀具的加工点。 <br>
+该点可以在笛卡尔坐标系或极坐标系编写，根据机床当时用  G90 或 G91，该坐标可以是绝对坐标或增量坐标。 <br>
+[ Z±5.5 ] 参考平面 <br>
+定义参考平面的坐标。可以用绝对坐标或增量坐标编写，在这种情况下是相对于初始平面的。如果没有编写， CNC 将采用刀具的当前位置作为参考平面。 <br>
+[ I±5.5 ] 钻削深度 <br>
+定义总的钻削深度。它可以用绝对坐标或相对坐标编写。在这种情况下是相对于参考平面的。 <br>
+[ K5 ] 停顿 <br>
+定义在每次钻入后到开始退回停顿时间， 以百分之一秒为单位。如果没有编写， <br>
+CNC 将采用 K0</p>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+  <tr>
+    <td align="left" scope="col"><p><strong>G83. </strong><strong>带固定进给量的深孔钻固定循环 </strong></p></td>
+  </tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td align="left" scope="col"><p>该循环完成连续的钻削加工直到达到最终的编程坐标。 <br>
+在每次钻削后，刀具退回到参考平面。 <br>
+在笛卡尔坐标系工作时，程序段的基本结构如下： <br>
+G83 G98/G99  X Y Z I J <br>
+<img width="525" height="342" src="Code/GCode_clip_image002_0033.jpg"><br>
+[ G98/G99 ] 退回平面 <br>
+G98 一旦孔钻削完毕，刀具退回到初始平面。 <br>
+G99 一旦孔钻削完毕，刀具退回到参考平面。 <br>
+[ X/Y±5.5 ] 加工点坐标 <br>
+是可选项，用于定义主平面的轴运动到刀具的加工点。 <br>
+该点可以在笛卡尔坐标系或极坐标系编写，根据机床当时用  G90 或 G91，该坐标可以是绝对坐标或增量坐标。 <br>
+[ Z±5.5 ] 参考平面 <br>
+定义参考平面的坐标。可以用绝对坐标或增量坐标编写，在这种情况下是相对于初始平面的。 <br>
+如果没有编写， CNC 将采用刀具的当前位置作为参考平面。 <br>
+[ I±5.5 ] 每次钻削的深度 <br>
+定义沿主平面的纵向轴每次钻入的步长值 <br>
+[ J4 ] 钻削多次后退回到开始平面 <br>
+定义钻孔的步数。可以用 1 到 9999 之间的值编写 <br>
+<img width="513" height="310" src="Code/GCode_clip_image004_0011.jpg"></p>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+  <tr>
+    <td align="left" scope="col"><p><strong>G85. </strong><strong>铰削固定循环 </strong></p></td>
+  </tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td align="left" scope="col"><p>该循环在指定点完成铰削加工直到达到最终的编程坐标。 <br>
+可以编写在加工孔底部的停顿。 <br>
+在笛卡尔坐标系工作时，程序段的基本结构如下： <br>
+G85 G98/G99  X Y Z I K <br>
+<img width="521" height="342" src="Code/GCode_clip_image002_0034.jpg"><br>
+[ G98/G99 ] 退回平面 <br>
+G98 一旦孔铰削完毕，刀具退回到初始平面。 <br>
+G99 一旦孔铰削完毕，刀具退回到参考平面。 <br>
+[ X/Y±5.5 ] 加工点坐标 <br>
+是可选项，用于定义主平面的轴运动到刀具的加工点。 <br>
+该点可以在笛卡尔坐标系或极坐标系编写，根据机床当时用  G90 或 G91，该坐标可以是绝对坐标或增量坐标。 <br>
+[ Z±5.5 ] 参考平面 <br>
+定义参考平面的坐标。可以用绝对坐标或增量坐标编写，在这种情况下是相对于初始平面的。 <br>
+如果没有编写， CNC 将采用刀具的当前位置作为参考平面。 <br>
+[ I±5.5 ] 铰削深度 <br>
+可以用绝对坐标或增量坐标编写，在这种情况下是相对于参考平面的。 <br>
+[ K5 ] 停顿 <br>
+定义停顿时间，用百分之一秒为单位，指在每次铰入后到退回开始前的时间。如果没有编写，CNC 将采用 &quot;K0&quot;</p>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+  <tr>
+    <td align="left" scope="col"><p><strong>G86. 带  G00 退回的镗削固定循环</strong></p></td>
+  </tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td align="left" scope="col"><p>该循环在指定点完成镗削加工直到达到最终的编程坐标。 <br>
+可以编写在加工孔的底部的停顿。 <br>
+在笛卡尔坐标系工作时，程序段的基本结构如下： <br>
+G86 G98/G99  X Y Z I K<br>
+<img width="521" height="345" src="Code/GCode_clip_image002_0035.jpg"><br>
+[ G98/G99 ] 退回平面 <br>
+G98 一旦孔镗削完毕，刀具退回到初始平面。 <br>
+G99 一旦孔镗削完毕，刀具退回到参考平面。 <br>
+[ X/Y±5.5 ] 加工点坐标 <br>
+是可选项，用于定义主平面的轴运动到刀具的加工点。 <br>
+该点可以在笛卡尔坐标系或极坐标系编写，根据机床当时用  G90 或 G91，该坐标可以是绝对坐标或增量坐标。 <br>
+[ Z±5.5 ] 参考平面 <br>
+定义参考平面的坐标。可以用绝对坐标或增量坐标编写，在这种情况下是相对于初始平面的。 <br>
+如果没有编写， CNC 将采用刀具的当前位置作为参考平面。 <br>
+[ I±5.5 ] 镗削深度 <br>
+定义镗削深度。可以用绝对坐标或增量坐标编写，在这种情况下是相对于参考平面的。 <br>
+[ K5 ] 停顿 <br>
+定义停顿时间，用百分之一秒为单位，指在每次镗入后到退回开始 前的时间。如果没有编写，CNC 将采用 &quot;K0&quot;。 </p>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+  <tr>
+    <td align="left" scope="col"><p><strong>G87. </strong><strong>矩形型腔固定循环 </strong></p></td>
+  </tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td align="left" scope="col"><p>该循环在指定点执行矩形型腔加工直到达到最终的编程坐标。 <br>
+另外还可以编写铣削走刀和进给率，最终的精加工走刀和相应的进给率。 <br>
+为了在加工型腔的内壁时获得好的表面质量， 在每个切削操作期间，CNC 将在加工的最后走刀施加切向进入和切向退出。 <br>
+在笛卡尔坐标系工作时，程序段的基本结构如下： <br>
+G87 G98/G99  X Y Z I J K B C D H L V <br>
+<img width="523" height="395" src="Code/GCode_clip_image002_0036.jpg"><br>
+[ G98/G99 ] 退回平面 <br>
+G98 一旦型腔加工完毕，刀具退回到初始平面。 <br>
+G99 一旦型腔加工完毕，刀具退回到参考平面。 <br>
+[ X/Y±5.5 ] 加工点坐标 <br>
+是可选项，用于定义主平面的轴运动到刀具的加工点。 <br>
+该点可以在笛卡尔坐标系或极坐标系编写，根据机床当时用  G90 或 G91，该坐标可以是绝对坐标或增量坐标。 <br>
+[ Z±5.5 ] 参考平面 <br>
+定义参考平面的坐标。 <br>
+当用绝对坐标编程时，相对于工件零点，当用增量坐标编程时，相对于开始平面(P.P.)。 <br>
+如果没有编写，将采用刀具的当前位置作为参考平面。因此开始平面  (P.P.) 和参考平面 (P.R.) 将是相同的 <br>
+<img width="518" height="196" src="Code/GCode_clip_image004_0012.jpg"><br>
+[ I±5.5  ] 加工深度 <br>
+定义加工深度。 <br>
+当用绝对坐标编程时 ，是相对于工件零点的，当用相对坐标编程时，是相对于开始平面 (P.P.) 的。 <br>
+[ J±5.5 ] 型腔沿横坐标的一半宽度 <br>
+定义型腔中心到边沿横坐标的距离。符号表示型腔加工的方向。 <br>
+<img width="516" height="221" src="Code/GCode_clip_image006_0001.jpg"><br>
+[ K5.5 ] 型腔沿纵坐标的一半宽度 <br>
+定义型腔中心到边沿纵坐标的距离。 <br>
+<img width="512" height="201" src="Code/GCode_clip_image008_0000.jpg"><br>
+[ B±5.5  ] 走刀量 <br>
+定义沿纵向轴的切削深度。 <br>
+如果用正号编写，整个循环将用相同的加工走刀，该走刀等于或小于编写的走刀。 <br>
+如果用负号编写，整个型腔将用给定的走刀，最后一次走刀例外，它用于加工剩余的量。 <br>
+[ C±5.5 ] 铣削走刀 <br>
+定义沿主平面的铣削走刀。 <br>
+如果该数值为正，整个循环将用相同的加工走刀，该走刀等于或小于编写的走刀。 <br>
+如果该数值为负，整个型腔将用给定的走刀，最后一次走刀例外，它用于加工剩余的量。 <br>
+<img width="522" height="225" src="Code/GCode_clip_image010_0000.jpg"><br>
+如果没有编写，CNC 将采用所选择刀具直径的 3/4 作为该数值。 <br>
+如果编写的数值大于刀具直径，CNC 将发送相应的错误信息。 <br>
+如果编写了数值 0，CNC 将显示相应的错误。 <br>
+[ D5.5 ] 参考平面 <br>
+定义参考平面和所加工型腔所在表面之间的距离。 <br>
+在第一次切深操作中，该量将添加在增量深度“B”上。如果没有编写，将采用数值 0 <br>
+<img width="514" height="187" src="Code/GCode_clip_image012.jpg"><br>
+[ H.5.5 ] 精加工走刀的进给率 <br>
+定义精加工走刀的工作进给率。 <br>
+如果没有编写或编写了数值 0，将采用加工时的工作进给率 <br>
+[ L±5.5  ] 精加工余量 <br>
+定义沿主平面的精加工走刀的数值。 <br>
+如果该数值为正，精加工走刀用方角 （G07) 完成。 <br>
+如果该数值为负，精加工走刀用圆角 (G05) 完成。 <br>
+<img width="510" height="235" src="Code/GCode_clip_image014.jpg"><br>
+[ V.5.5 ] 刀具切入进给率 <br>
+定义刀具切入的进给率。 <br>
+如果没有编写或编写的数值为 0 ， CNC 将采用平面进给率 (F) 的 50% 。 </p>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+  <tr>
+    <td align="left" scope="col"><p><strong>G88. </strong><strong>圆形型腔固定循环 </strong></p></td>
+  </tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td align="left" scope="col"><p>该循环在指定点执行圆柱形型腔加工直到达到最终的编程坐标。 <br>
+另外还可以编写铣削走刀和进给率，最终的精加工走刀和相应的进给率。 <br>
+在笛卡尔坐标系工作时，程序段的基本结构如下： <br>
+G88 G98/G99  X Y Z I J B C D H L V <br>
+<img width="521" height="390" src="Code/GCode_clip_image002_0037.jpg"><br>
+[ G98/G99 ] 退回平面 <br>
+G98 一旦型腔加工完毕，刀具退回到初始平面。 <br>
+G99 一旦型腔加工完毕，刀具退回到参考平面。 <br>
+[ X/Y±5.5 ] 加工点坐标 <br>
+是可选项，用于定义主平面的轴运动到刀具的加工点。 <br>
+该点可以在笛卡尔坐标系或极坐标系编写，根据机床当时用  G90 或 G91，该坐标可以是绝对坐标或增量坐标。 <br>
+[ Z±5.5 ] 参考平面 <br>
+定义参考平面的坐标。可用绝对坐标编程时或用增量坐标编程，在这种情况下是相对于初始平面的。如果没有编写，将采用刀具的当前位置作为参考平面。 <br>
+[ I±5.5  ] 加工深度 <br>
+定义加工深度。 可用绝对坐标编程时或用增量坐标编程，在这种情况下是相对于参考平面的 <br>
+[ J±5.5 ] 型腔半径 <br>
+定义型腔的半径。符号表示加工型腔的方向 <br>
+<img width="516" height="222" src="Code/GCode_clip_image004_0013.jpg"><br>
+[ B±5.5  ] 走刀量 <br>
+定义沿纵向轴到主平面的切削走刀。 <br>
+. 如果该值是正的，整个循环将用相同的加工走刀，该走刀等于或小于编写的走刀。 <br>
+. 如果该值是负值，整个型腔将用给定的走刀，最后一次走刀例外，它用于加工剩余的量。 <br>
+<img width="517" height="223" src="Code/GCode_clip_image006_0002.jpg"><br>
+[ C±5.5 ] 铣削走刀 <br>
+定义沿主平面的铣削走刀。 <br>
+. 如果该值是正的，整个循环将用相同的加工走刀，该走刀等于或小于编写的走刀。 <br>
+. 如果该值是负的，整个型腔将用给定的走刀，最后一次走刀例外，它用于加工剩余的量。 <br>
+如果没有编写，CNC 将采用所选择刀具直径的 3/4 作为该数值。 <br>
+如果编写的数值大于刀具半径，CNC 将发送相应的错误信息。 <br>
+如果编写了数值 0，CNC 将显示相应的错误。 <br>
+[ D5.5 ] 参考平面 <br>
+定义参考平面和所加工型腔所在表面之间的距离。 <br>
+在第一次切深操作中，该量将添加在增量深度“B”上。如果没有编写，将采用数值 0 <br>
+<img width="516" height="205" src="Code/GCode_clip_image008_0001.jpg"><br>
+[ H5.5 ] 精加工走刀的进给率 <br>
+定义精加工走刀的工作进给率。 <br>
+如果没有编写或编写了数值 0，将采用加工时的工作进给率。 <br>
+[ L5.5 ] 精加工余量 <br>
+定义沿主平面的精加工走刀的数值。 <br>
+如果没有编写或编写的数值为 0 ，将不进行精加工。 <br>
+<img width="518" height="262" src="Code/GCode_clip_image010_0001.jpg"><br>
+[ V.5.5 ] 刀具切入进给率 <br>
+定义刀具切入的进给率。 <br>
+如果没有编写或编写的数值为 0 ， CNC 将采用平面进给率 (F) 的 50% <br>
+<img width="524" height="755" src="Code/GCode_clip_image012_0000.jpg"></p>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+  <tr>
+    <td align="left" scope="col"><p><strong>G89. 带 (G01) 退回的镗削固定循环</strong></p></td>
+  </tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td align="left" scope="col"><p>该循环在指定点完成镗削加工直到达到最终的编程坐标。 <br>
+可以编写在加工孔底部的停顿。 <br>
+在笛卡尔坐标系工作时，程序段的基本结构如下： <br>
+G89 G98/G99  X Y Z I K <br>
+<img width="525" height="342" src="Code/GCode_clip_image002_0038.jpg"><br>
+[ G98/G99 ] 退回平面 <br>
+G98 一旦孔镗削完毕，刀具退回到初始平面。 <br>
+G99 一旦孔镗削完毕，刀具退回到参考平面。 <br>
+[ X/Y±5.5 ] 加工点坐标 <br>
+是可选项，用于定义主平面的轴运动到刀具的加工点。 <br>
+该点可以在笛卡尔坐标系或极坐标系编写，根据机床当时用  G90 或 G91，该坐标可以是绝对坐标或增量坐标。 <br>
+[ Z±5.5 ] 参考平面 <br>
+定义参考平面的坐标。可以用绝对坐标或增量坐标编写，在这种情况下是相对于初始平面的。如果没有编写， CNC 将采用刀具的当前位置作为参考平面。 <br>
+[ I±5.5  ] 加工深度 <br>
+定义镗削的深度。 可以用绝对坐标或增量坐标编写，在这种情况下是相对于参考平面的。 <br>
+[ K5 ] 停顿 <br>
+定义停顿时间，用百分之一秒为单位，指在每次镗入后到退回开始 前的时间。如果没有编写，CNC 将采用 &quot;K0&quot;。 </p>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+  <tr>
+    <td align="left" scope="col"><p><strong>G60: 沿直线模式的多重加工</strong></p></td>
+  </tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td align="left" scope="col"><p>编程格式如下： </p>
+      <p><img width="542" height="348" src="Code/GCode_clip_image002_0039.jpg"><br>
+        A (+/- 5.5) 加工路径的角度 <br>
+        定义加工路径和横坐标轴之间形成的夹角。 它以度为单位，如果没有编写，采用A=0 。 <br>
+        X (+/- 5.5) 加工路径的长度 <br>
+        定义加工路径的长度。 <br>
+        I (5.5) 加工间距定义相邻加工点间的距离 . <br>
+        K (5) 加工操作数 <br>
+        定义在这部分的总的加工操作的数目，包括加工定义点。 <br>
+        由于实际加工可以用 X I K 中任意两个点定义，因此 CNC 允许下列定义组合 ：XI, XK, IK。然而，如果定义 XI 组合格式，注意应保证加工操作数为整数，否则 CNC 将显示相应的错误代码 .</p>
+      <table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+  <tr>
+    <td align="left" scope="col"><p><strong>G61: </strong><strong>沿矩形模式的多重加工 </strong></p></td>
+  </tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td align="left" scope="col"><p>编程格式如下 :<br>
+        <img width="523" height="350" src="Code/GCode_clip_image002_0040.jpg"><br>
+A (+/- 5.5) 加工路径与横坐标轴间的夹角 <br>
+定义加工路径和横坐标轴之间形成的夹角 . 它以度为单位表示 . 如果没有编写，采用 A=0 . <br>
+B (+/- 5.5) 路径间夹角 <br>
+定义两个加工路径间形成的角度 . 它以度为单位表示 . 如果没有编写，采用 B = 90 . <br>
+X (5.5) 沿横坐标轴加工路径的长度定义对应于横坐标轴的加工路径长度 . <br>
+I (5.5) 沿横坐标轴的加工间距定义沿横坐标轴相邻加工点之间的距离 . <br>
+K (5) 沿横坐标轴的加工操作数定义沿横坐标总的加工操作数，包括加工定义点 . <br>
+由于实际加工对应于横坐标可以用 X I K 中任意两个点定义，因此 CNC 允许下列定义组合 ：XI, XK, IK. 然而，如果定义 XI 组合格式，注意应保证加工操作数为整数，否则 CNC 将显示相应的错误代码 . <br>
+Y (5.5) 沿纵坐标轴加工路径的长度 <br>
+定义对应于纵坐标轴的加工路径长度 . <br>
+J (5.5) 沿纵坐标轴的加工间距 <br>
+定义沿纵坐标轴相邻加工点之间的距离 <br>
+D (5) 沿纵坐标轴的加工操作数 <br>
+定义沿纵坐标总的加工操作数，包括加工定义点  . <br>
+由于实际加工对应于纵坐标可以用 Y J D 中任意两个点定义，因此 CNC 允许下列定义组合 YJ, YD, JD. 然而，如果定义 YJ 组合格式，注意应保证加工操作数为整数，否则  CNC 将显示相应的错误代码 </p>
+<tr>
+    <td align="left" scope="col"><p><strong>G61: </strong><strong>沿矩形模式的多重加工 </strong></p></td>
+  </tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td align="left" scope="col"><p>编程格式如下 :<br>
+        <img width="523" height="350" src="Code/GCode_clip_image002_0040.jpg"><br>
+A (+/- 5.5) 加工路径与横坐标轴间的夹角 <br>
+定义加工路径和横坐标轴之间形成的夹角 . 它以度为单位表示 . 如果没有编写，采用 A=0 . <br>
+B (+/- 5.5) 路径间夹角 <br>
+定义两个加工路径间形成的角度 . 它以度为单位表示 . 如果没有编写，采用 B = 90 . <br>
+X (5.5) 沿横坐标轴加工路径的长度定义对应于横坐标轴的加工路径长度 . <br>
+I (5.5) 沿横坐标轴的加工间距定义沿横坐标轴相邻加工点之间的距离 . <br>
+K (5) 沿横坐标轴的加工操作数定义沿横坐标总的加工操作数，包括加工定义点 . <br>
+由于实际加工对应于横坐标可以用 X I K 中任意两个点定义，因此 CNC 允许下列定义组合 ：XI, XK, IK. 然而，如果定义 XI 组合格式，注意应保证加工操作数为整数，否则 CNC 将显示相应的错误代码 . <br>
+Y (5.5) 沿纵坐标轴加工路径的长度 <br>
+定义对应于纵坐标轴的加工路径长度 . <br>
+J (5.5) 沿纵坐标轴的加工间距 <br>
+定义沿纵坐标轴相邻加工点之间的距离 <br>
+D (5) 沿纵坐标轴的加工操作数 <br>
+定义沿纵坐标总的加工操作数，包括加工定义点  . <br>
+由于实际加工对应于纵坐标可以用 Y J D 中任意两个点定义，因此 CNC 允许下列定义组合 YJ, YD, JD. 然而，如果定义 YJ 组合格式，注意应保证加工操作数为整数，否则  CNC 将显示相应的错误代码 </p>
+<tr>
+    <td align="left" scope="col"><p><strong>G62: 沿网格模式的多重加工</strong></p></td>
+  </tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td align="left" scope="col"><p>编程格式如下 :<br>
+        <img width="537" height="348" src="Code/GCode_clip_image002_0041.jpg"><br>
+A (+/- 5.5) 加工路径与横坐标轴间的夹角 <br>
+定义加工路径和横坐标轴之间形成的夹角 . 它以度为单位表示 . 如果没有编写，采用 A=0. <br>
+B (+/- 5.5) 路径间夹角 <br>
+定义两个加工路径间形成的角度 . 它以度为单位表示 . 如果没有编写，采用 B = 90 <br>
+X (5.5) 沿横坐标轴加工路径的长度 <br>
+定义沿横坐标轴相邻加工点之间的距离 . <br>
+I (5.5) 沿横坐标轴的加工间距 <br>
+定义沿横坐标轴相邻加工点之间的距离 . <br>
+K (5) 沿横坐标轴的加工操作数 <br>
+定义沿横坐标总的加工操作数，包括加工定义点  . <br>
+由于实际加工对应于横坐标可以用 X I K 中任意两个点定义，因此 CNC 允许下列定义组合 ：XI, XK, IK. 然而，如果定义 XI 组合格式，注意应保证加工操作数为整数，否则 CNC 将显示相应的错误代码 .. <br>
+Y (5.5) 沿纵坐标轴加工路径的长度 <br>
+定义对应于纵坐标轴的加工路径长度 . <br>
+J (5.5) 沿纵坐标轴的加工间距 <br>
+定义沿纵坐标轴相邻加工点之间的距离 . <br>
+D (5) 沿纵坐标轴的加工操作数 <br>
+定义沿纵坐标总的加工操作数，包括加工定义点  . <br>
+由于实际加工对应于纵坐标可以用 Y J D 中任意两个点定义，因此 CNC 允许下列定义组合 YJ, YD, JD. 然而，如果定义 YJ 组合格式，注意应保证加工操作数为整数，否则  CNC 将显示相应的错误代码 . </p>
+<tr>
+    <td align="left" scope="col"><p><strong>G63: </strong><strong>沿圆周模式多重加工 </strong></p></td>
+  </tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td align="left" scope="col"><p>编程格式如下 : <br>
+        <img width="535" height="356" src="Code/GCode_clip_image002_0042.jpg"><br>
+X (+/- 5.5) 沿横坐标从加工起始点到圆心的距离 <br>
+定义沿横坐标从起始点到圆心的距离 . <br>
+Y (+/- 5.5) 沿纵坐标从加工起始点到圆心的距离 <br>
+定义沿纵坐标从起始点到圆心的距离 . <br>
+利用参数 X 和 Y 定义圆心就如同在圆弧插补 (G02, G03) 中用 I 和 J 一样  .<br>
+I (+/- 5.5) 相邻加工点间隔角度 <br>
+定义相邻加工操作点的间隔角度 . 当以 G00 或 G01 从某点移动到另一点时，符号表示方向，+ 表示逆时针 , - 表示顺时针 . <br>
+K (5) 加工操作总数 <br>
+定义沿着圆周总的加工操作数，包括加工定义点  . <br>
+在多重加工定义程序段中，编写 I 或 K 就足够了 . 然而，如果在多重加工中用 K 编程，其中点之间的运动用 G00 或 G01, 加工将以逆时针方向完成 . <br>
+C (0/1/2/3)  点到点运动类型 <br>
+指出在加工点之间如何运动 . 如果没有编写将采用 C=0 .<br>
+C=0: 快速进给率运动 (G00). <br>
+C=1: 直线插补运动 (G01). <br>
+C=2: 顺时针圆弧插补运动 (G02) <br>
+C=3: 逆时针圆弧插补运动 (G03) <br>
+F (5.5) 点到点之间移动进给率 <br>
+定义点到点之间移动进给率 . 很明显，只使用于 C 不为零时 . 如果没有编写，将采用 F0 ，选择由轴机床参数 MAXFEED 定义的最大进给率 </p> 
+<tr>
+    <td align="left" scope="col"><p><strong>G64: </strong><strong>沿圆弧模式的多重加工 </strong></p></td>
+  </tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td align="left" scope="col"><p><strong><img width="534" height="360" src="Code/GCode_clip_image002_0043.jpg"></strong><br>
+X (+/- 5.5) 沿横坐标从加工起始点到圆心的距离 <br>
+定义沿横坐标从起始点到圆心的距离 . <br>
+Y (+/- 5.5) 沿纵坐标从加工起始点到圆心的距离 <br>
+定义沿纵坐标从起始点到圆心的距离 . <br>
+利用参数 X 和 Y 定义圆心就如同在圆弧插补 (G02, G03) 中用 I 和 J 一样  . <br>
+B (5.5) 路径夹角 ( 从加工起点到终点 ) <br>
+定义加工路径的角度区间，以度为单位表示 . <br>
+I (+/- 5.5) 相邻加工点间隔角度 <br>
+定义相邻加工操作点的间隔角度 . 当以 G00 或 G01 从某点移动到另一点时，符号表示方向，+ 表示逆时针 , - 表示顺时针 . <br>
+K (5) 加工操作总数 <br>
+定义沿着圆弧总的加工操作数，包括加工定义点  . <br>
+在多重加工定义程序段中，编写 I 或 K 就足够了 . 然而，如果在多重加工中用 K 编程，其中点之间的运动用 G00 或 G01, 加工将以逆时针方向完成 . <br>
+C (0/1/2/3)  点到点运动类型 . <br>
+指出在加工点之间如何运动 . 如果没有编写将采用 C=0. <br>
+C=0: 快速进给率运动 (G00). <br>
+C=1: 直线插补运动 (G01). <br>
+C=2: 顺时针圆弧插补运动 (G02) <br>
+C=3: 逆时针圆弧插补运动 (G03) <br>
+F (5.5) 点到点之间移动进给率 </p> 
+定义点到点之间移动进给率 . 很明显，只使用于 C 不为零时 . 如果没有编写，将采用 F0 ，选择由轴机床参数 MAXFEED 定义的最大进给率 .
+    <tr>
+    <td align="left" scope="col"><p><strong>G65: </strong><strong>用圆弧 - 弦的方式进行多重加工 </strong></p></td>
+  </tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td align="left" scope="col"><p>该功能允许激活通过圆弧 - 弦编程的点执行加工 . 且只执行一个加工操作，编程格式如下 : <br>
+        <strong><img width="536" height="328" src="Code/GCode_clip_image002_0044.jpg"></strong><br>
+X (+/- 5.5) 沿横坐标从加工起始点到圆心的距离 <br>
+定义沿横坐标从起始点到圆心的距离 . <br>
+Y (+/- 5.5) 沿纵坐标从加工起始点到圆心的距离 <br>
+定义沿纵坐标从起始点到圆心的距离 . <br>
+利用参数 X 和 Y 定义圆心就如同在圆弧插补 (G02, G03) 中用 I 和 J 一样  . <br>
+A (+/- 5.5) 弦的夹角 <br>
+定义由弦的垂直平分线和横坐标轴形成的角度，以度为单位表示  . <br>
+I (+/- 5.5) 加工操作间距 ( 弦长 ) <br>
+定义弦的长度 . 当以 G00 或 G01 从某点移动到另一点时，符号表示方向，+ 表示逆时针 , - 表示顺时针 . <br>
+C (0/1/2/3)  点到点运动类型 . <br>
+指出在加工点之间如何运动 . 如果没有编写将采用 C=0. <br>
+C=0: 快速进给率运动 (G00). <br>
+C=1: 直线插补运动 (G01). <br>
+C=2: 顺时针圆弧插补运动 (G02) <br>
+C=3: 逆时针圆弧插补运动 (G03) <br>
+F (5.5) 点到点之间移动进给率 <br>
+定义点到点之间移动进给率 . 很明显，只使用于 C 不为零时 . 如果没有编写，将采用 F0 ，选择由轴机床参数 MAXFEED 定义的最大进给率 </p> 
+
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td align="left" scope="col"><p>&nbsp;</p> 
+ </tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td align="left" scope="col"><p>&nbsp;</p>
+      <p></p>
+      <p><br>
+            </p>
+    </body>
+</html>
+

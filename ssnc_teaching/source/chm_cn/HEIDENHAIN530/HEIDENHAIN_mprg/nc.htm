@@ -1,0 +1,86 @@
+
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title></title>
+<link href="../../helper_css.css" rel="stylesheet" type="text/css">
+</head>
+<body >
+<TABLE width="100%" height=24 border=0 cellPadding=0 cellSpacing=0 class="bar">
+  <TR>
+    <TD>M辅助代码　</TD>
+  </TR>
+</TABLE>
+<TABLE border=0 cellPadding=0 cellSpacing=0 height="100%" width=750>
+  <TBODY>
+    <TR>
+      <TD vAlign=top>&nbsp;</TD>
+    </TR>
+    <TR>
+      <TD vAlign=top ><table border="1" cellspacing="0" cellpadding="0">
+        <tr>
+          <td width="284" valign="500"><p>M00</p></td>
+          <td width="284" valign="500"><p>程序停止 </p></td>
+        </tr>
+        <tr>
+          <td width="284" valign="500"><p>M01</p></td>
+          <td width="284" valign="500"><p>选择停止 </p></td>
+        </tr>
+        <tr>
+          <td width="284" valign="500"><p>M03</p></td>
+          <td width="284" valign="500"><p>主轴正转 </p></td>
+        </tr>
+        <tr>
+          <td width="284" valign="500"><p>M04</p></td>
+          <td width="284" valign="500"><p>主轴反转 </p></td>
+        </tr>
+        <tr>
+          <td width="284" valign="500"><p>M05</p></td>
+          <td width="284" valign="500"><p>主轴停止 </p></td>
+        </tr>
+        <tr>
+          <td width="284" valign="500"><p>M06</p></td>
+          <td width="284" valign="500"><p>刀具交换 </p></td>
+        </tr>
+        <tr>
+          <td width="284" valign="500"><p>M08</p></td>
+          <td width="284" valign="500"><p>冷却液开 </p></td>
+        </tr>
+        <tr>
+          <td width="284" valign="500"><p>M09</p></td>
+          <td width="284" valign="500"><p>冷却液关 </p></td>
+        </tr>
+        <tr>
+          <td width="284" valign="500"><p>M18</p></td>
+          <td width="284" valign="500"><p>主轴定向取消 </p></td>
+        </tr>
+        <tr>
+          <td width="284" valign="500"><p>M19</p></td>
+          <td width="284" valign="500"><p>主轴定向 </p></td>
+        </tr>
+      </table>
+      <br>
+      <p>在实际加工中，机床特别设置了一些M代码指令，用于控制主轴旋转，冷却开关，程序结束等一般用M代码及后面的数字来指令。 <br>
+        本数控系统中M代码功能的规定如下：<br>
+        ●M00:程序停止 <br>
+        在程序执行到含有M00指令的程序段时，机床各运动轴经减速后停止运转，程序暂时停止继续运行，在程序停止时，所有的模态数据保持不变。 <br>
+        ●M01：程序选择停止 <br>
+        与M00功能一样，在执行到含有M01指令的程序段时，程序停止运行，按循环启动键程序将继续，但是M01功能只在系统预先选择设定了任选停功能后才执行。 <br>
+        ●M02:程序结束，所有运动轴和主轴停止运转（冷却不会自动停） <br>
+        ●M03:主轴正转 <br>
+        主轴俯视顺时针旋转，其代码指令格式为：M03_S_（数字） <br>
+        例如：M03 S1000;<br>
+        ●M04:主轴反转 <br>
+        主轴俯视逆时针旋转，其代码指令格式：M04_S_（数字） <br>
+        ●M05:主轴停 <br>
+        ●M06:自动换刀，与T指令一起使用。  例：M06 T02<br>
+        ●M08:冷却液开 <br>
+        ●M09:冷却液关 <br>
+        ●M18:主轴定向取消<br>
+        ●M19:主轴定向 <br>
+  <strong>注1</strong><strong>：</strong>一个程序段中可规定一个M代码，若同时规定了两个或以上的M代码时，只有最后的那个M代码指令生效。</p></TD>
+    </TR>
+  </TBODY>
+</TABLE>
+</body>
+</html>

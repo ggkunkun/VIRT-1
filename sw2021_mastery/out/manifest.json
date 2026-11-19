@@ -1,0 +1,80 @@
+{
+  "generated_at": "2026-11-18",
+  "baseline": {
+    "product": "SOLIDWORKS 2021",
+    "service_pack": "SP5.0",
+    "build": "29.5.0.0070",
+    "exe": "D:\\SOLIDWORKS (2)\\SLDWORKS.exe",
+    "revision_prefix": "29.",
+    "ui_language": "简体中文",
+    "verified_ui": false,
+    "evidence": "pending_native_screenshot"
+  },
+  "counts": {
+    "ops_inventory": 348,
+    "train_dataset": 6317,
+    "instruction_map": 18139,
+    "testcases": 524
+  },
+  "by_task_type": {
+    "operation": 4176,
+    "workflow": 120,
+    "assembly": 12,
+    "drawing": 8,
+    "troubleshooting": 696,
+    "annotation": 405,
+    "api": 480,
+    "mate": 420
+  },
+  "by_module": {
+    "草图": 532,
+    "特征": 742,
+    "装配": 1090,
+    "工程图": 917,
+    "曲面": 364,
+    "钣金": 364,
+    "焊件": 280,
+    "渲染仿真": 392,
+    "模具": 224,
+    "管道布线": 252,
+    "配置": 252,
+    "宏": 788,
+    "SKT": 24,
+    "FEA": 72,
+    "SM-": 12,
+    "WEL": 12
+  },
+  "testcase_by_module": {
+    "草图": 76,
+    "特征": 59,
+    "装配": 63,
+    "工程图": 43,
+    "曲面": 30,
+    "钣金": 30,
+    "焊件": 29,
+    "渲染仿真": 30,
+    "模具": 28,
+    "管道布线": 28,
+    "配置": 29,
+    "宏": 29,
+    "综合": 50
+  },
+  "files": {
+    "train_dataset.jsonl": {
+      "bytes": 8602740,
+      "sha256": "be1d3209f1f42fc511ea0cf7088d4a8f33a18d10dee0d200a2163a6ed672140c"
+    },
+    "instruction_map.jsonl": {
+      "bytes": 7257318,
+      "sha256": "65bfbbd16cfbb2084fe259bdf4043ed7afa5e4eed32cdfb6adf517e12af44b94"
+    },
+    "testcases.jsonl": {
+      "bytes": 513442,
+      "sha256": "3dff40dddc2458fd4a462d6a62fb4d1e45f40e21b4dc5b319e1258b706e8b666"
+    },
+    "coverage_matrix.csv": {
+      "bytes": 18288,
+      "sha256": "6ec7dc64de67364730d3add8299a127f18eb40b26bfe85ee66704f2edc806e35"
+    }
+  }
+}

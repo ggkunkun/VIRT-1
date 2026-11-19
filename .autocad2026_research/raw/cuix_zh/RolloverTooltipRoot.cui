@@ -1,0 +1,1193 @@
+<?xml version="1.0"?><!--
+Warning! Do not edit the contents of this file.
+If you attempt to edit this file using an XML editor, you could lose
+customization and migration functionality. If you need to change
+information in the customization file, use the Customize User Interface
+dialog in the product.
+To access the Customize User Interface dialog, click the Tools menu,
+Customization panel, User Interface button, or enter CUI on the command line.
+--><RolloverTooltipRoot xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <QuickObjectType>
+    <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+    <Name>三点角度标注</Name>
+    <QuickClassName>AcDb3PointAngularDimension</QuickClassName>
+    <QuickProperties>
+      <QuickObjectPropertyCategory CategoryId="-12">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00010816">常规</Name>
+        <QuickProperties>
+          <QuickObjectProperty Dispid="0" CompareByGuid="false">
+            <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_00010817">颜色</Name>
+          </QuickObjectProperty>
+          <QuickObjectProperty Dispid="0" CompareByGuid="false">
+            <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_00010818">图层</Name>
+          </QuickObjectProperty>
+          <QuickObjectProperty Dispid="0" CompareByGuid="false">
+            <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_00010819">线型</Name>
+          </QuickObjectProperty>
+        </QuickProperties>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-2">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00010825">其他</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-22">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00010832">直线和箭头</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-9">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00010851">文字</Name>
+        <QuickProperties>
+          <QuickObjectProperty Dispid="0" CompareByGuid="false">
+            <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_00010864">测量单位</Name>
+          </QuickObjectProperty>
+          <QuickObjectProperty Dispid="0" CompareByGuid="false">
+            <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_00010865">文字替代</Name>
+          </QuickObjectProperty>
+        </QuickProperties>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-21">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00010866">调整</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-19">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00010873">主单位</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-23">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00010881">公差</Name>
+      </QuickObjectPropertyCategory>
+    </QuickProperties>
+  </QuickObjectType>
+  <QuickObjectType>
+    <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+    <Name>对齐标注</Name>
+    <QuickClassName>AcDbAlignedDimension</QuickClassName>
+    <QuickProperties>
+      <QuickObjectPropertyCategory CategoryId="-12">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00011795">常规</Name>
+        <QuickProperties>
+          <QuickObjectProperty Dispid="0" CompareByGuid="false">
+            <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_00011796">颜色</Name>
+          </QuickObjectProperty>
+          <QuickObjectProperty Dispid="0" CompareByGuid="false">
+            <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_00011797">图层</Name>
+          </QuickObjectProperty>
+          <QuickObjectProperty Dispid="0" CompareByGuid="false">
+            <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_00011798">线型</Name>
+          </QuickObjectProperty>
+        </QuickProperties>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-2">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00011804">其他</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-22">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00011811">直线和箭头</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-9">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00011831">文字</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-21">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00011847">调整</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-19">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00011854">主单位</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-20">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00011866">换算单位</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-23">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00011878">公差</Name>
+      </QuickObjectPropertyCategory>
+    </QuickProperties>
+  </QuickObjectType>
+  <QuickObjectType>
+    <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+    <Name>角度标注</Name>
+    <QuickClassName>AcDb2LineAngularDimension</QuickClassName>
+    <QuickProperties>
+      <QuickObjectPropertyCategory CategoryId="-12">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00011963">常规</Name>
+        <QuickProperties>
+          <QuickObjectProperty Dispid="0" CompareByGuid="false">
+            <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_00011964">颜色</Name>
+          </QuickObjectProperty>
+          <QuickObjectProperty Dispid="0" CompareByGuid="false">
+            <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_00011965">图层</Name>
+          </QuickObjectProperty>
+          <QuickObjectProperty Dispid="0" CompareByGuid="false">
+            <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_00011966">线型</Name>
+          </QuickObjectProperty>
+        </QuickProperties>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-2">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00011972">其他</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-22">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00011979">直线和箭头</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-9">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00011998">文字</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-21">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00012013">调整</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-19">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00012020">主单位</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-23">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00012028">公差</Name>
+      </QuickObjectPropertyCategory>
+    </QuickProperties>
+  </QuickObjectType>
+  <QuickObjectType>
+    <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+    <Name>圆弧</Name>
+    <QuickClassName>AcDbArc</QuickClassName>
+    <QuickProperties>
+      <QuickObjectPropertyCategory CategoryId="-12">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00012065">常规</Name>
+        <QuickProperties>
+          <QuickObjectProperty Dispid="0" CompareByGuid="false">
+            <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_00012066">颜色</Name>
+          </QuickObjectProperty>
+          <QuickObjectProperty Dispid="0" CompareByGuid="false">
+            <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_00012067">图层</Name>
+          </QuickObjectProperty>
+          <QuickObjectProperty Dispid="0" CompareByGuid="false">
+            <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_00012068">线型</Name>
+          </QuickObjectProperty>
+        </QuickProperties>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-31">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00012074">三维效果</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="5">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00012076">几何图形</Name>
+      </QuickObjectPropertyCategory>
+    </QuickProperties>
+  </QuickObjectType>
+  <QuickObjectType>
+    <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+    <Name>弧长标注</Name>
+    <QuickClassName>AcDbArcDimension</QuickClassName>
+    <QuickProperties>
+      <QuickObjectPropertyCategory CategoryId="-12">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00012188">常规</Name>
+        <QuickProperties>
+          <QuickObjectProperty Dispid="0" CompareByGuid="false">
+            <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_00012189">颜色</Name>
+          </QuickObjectProperty>
+          <QuickObjectProperty Dispid="0" CompareByGuid="false">
+            <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_00012190">图层</Name>
+          </QuickObjectProperty>
+          <QuickObjectProperty Dispid="0" CompareByGuid="false">
+            <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_00012191">线型</Name>
+          </QuickObjectProperty>
+        </QuickProperties>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-2">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00012197">其他</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-22">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00012204">直线和箭头</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-9">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00012224">文字</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-21">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00012241">调整</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-19">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00012248">主单位</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-20">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00012260">换算单位</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-23">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00012272">公差</Name>
+      </QuickObjectPropertyCategory>
+    </QuickProperties>
+  </QuickObjectType>
+  <QuickObjectType>
+    <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+    <Name>块参照</Name>
+    <QuickClassName>AcDbBlockReference</QuickClassName>
+    <QuickProperties>
+      <QuickObjectPropertyCategory CategoryId="-12">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00012311">常规</Name>
+        <QuickProperties>
+          <QuickObjectProperty Dispid="0" CompareByGuid="false">
+            <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_00012312">颜色</Name>
+          </QuickObjectProperty>
+          <QuickObjectProperty Dispid="0" CompareByGuid="false">
+            <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_00012313">图层</Name>
+          </QuickObjectProperty>
+          <QuickObjectProperty Dispid="0" CompareByGuid="false">
+            <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_00012314">线型</Name>
+          </QuickObjectProperty>
+        </QuickProperties>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-31">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00012319">三维效果</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="5">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00012321">几何图形</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-2">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00012328">其他</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="2942">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00012335">自定义</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="2941">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00012337">属性</Name>
+      </QuickObjectPropertyCategory>
+    </QuickProperties>
+  </QuickObjectType>
+
+  <QuickObjectType>
+    <ModifiedRev MajorVersion="21" MinorVersion="0" UserVersion="0"/>
+    <Name xlate="true" UID="XLS_210_68988">圆心标记</Name>
+    <QuickClassName>AcDbSmartCenterMarkParameters</QuickClassName>
+    <QuickProperties>
+      <QuickObjectPropertyCategory CategoryId="-12">
+        <ModifiedRev MajorVersion="21" MinorVersion="0" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_210_BE421">常规</Name>
+        <QuickProperties>
+          <QuickObjectProperty Dispid="1302" CompareByGuid="false">
+            <ModifiedRev MajorVersion="21" MinorVersion="0" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_210_325C7">颜色</Name>
+          </QuickObjectProperty>
+          <QuickObjectProperty Dispid="1281" CompareByGuid="false">
+            <ModifiedRev MajorVersion="21" MinorVersion="0" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_210_9C968">图层</Name>
+          </QuickObjectProperty>
+          <QuickObjectProperty Dispid="1282" CompareByGuid="false">
+            <ModifiedRev MajorVersion="21" MinorVersion="0" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_210_BAC28">线型</Name>
+          </QuickObjectProperty>
+        </QuickProperties>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-31">
+        <ModifiedRev MajorVersion="21" MinorVersion="0" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_210_F22FA">三维效果</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="5">
+        <ModifiedRev MajorVersion="21" MinorVersion="0" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_210_00F52">几何图形</Name>
+        <QuickProperties>
+          <QuickObjectProperty Guid="{EB78E3A1-BA77-4204-9C34-22511A5D42B8}" CompareByGuid="false">
+            <ModifiedRev MajorVersion="21" MinorVersion="0" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_210_F16C8">显示延伸</Name>
+          </QuickObjectProperty>
+        </QuickProperties>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-2">
+        <ModifiedRev MajorVersion="21" MinorVersion="0" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_210_BE0BC">其他</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="2942">
+        <ModifiedRev MajorVersion="21" MinorVersion="0" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_210_0FE20">自定义</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="2941">
+        <ModifiedRev MajorVersion="21" MinorVersion="0" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_210_5471D">属性</Name>
+      </QuickObjectPropertyCategory>
+    </QuickProperties>
+  </QuickObjectType>
+  <QuickObjectType>
+    <ModifiedRev MajorVersion="21" MinorVersion="0" UserVersion="0"/>
+    <Name xlate="true" UID="XLS_210_EEA4B">中心线</Name>
+    <QuickClassName>AcDbSmartCenterLineParameters</QuickClassName>
+    <QuickProperties>
+      <QuickObjectPropertyCategory CategoryId="-12">
+        <ModifiedRev MajorVersion="21" MinorVersion="0" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_210_47164">常规</Name>
+        <QuickProperties>
+          <QuickObjectProperty Dispid="1302" CompareByGuid="false">
+            <ModifiedRev MajorVersion="21" MinorVersion="0" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_210_07C91">颜色</Name>
+          </QuickObjectProperty>
+          <QuickObjectProperty Dispid="1281" CompareByGuid="false">
+            <ModifiedRev MajorVersion="21" MinorVersion="0" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_210_704A2">图层</Name>
+          </QuickObjectProperty>
+          <QuickObjectProperty Dispid="1282" CompareByGuid="false">
+            <ModifiedRev MajorVersion="21" MinorVersion="0" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_210_4B11B">线型</Name>
+          </QuickObjectProperty>
+        </QuickProperties>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-31">
+        <ModifiedRev MajorVersion="21" MinorVersion="0" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_210_54E15">三维效果</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="5">
+        <ModifiedRev MajorVersion="21" MinorVersion="0" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_210_1B808">几何图形</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-2">
+        <ModifiedRev MajorVersion="21" MinorVersion="0" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_210_E110F">其他</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="2942">
+        <ModifiedRev MajorVersion="21" MinorVersion="0" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_210_3BA46">自定义</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="2941">
+        <ModifiedRev MajorVersion="21" MinorVersion="0" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_210_0477D">属性</Name>
+      </QuickObjectPropertyCategory>
+    </QuickProperties>
+  </QuickObjectType>
+  
+  <QuickObjectType>
+    <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+    <Name>圆</Name>
+    <QuickClassName>AcDbCircle</QuickClassName>
+    <QuickProperties>
+      <QuickObjectPropertyCategory CategoryId="-12">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00012358">常规</Name>
+        <QuickProperties>
+          <QuickObjectProperty Dispid="0" CompareByGuid="false">
+            <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_00012359">颜色</Name>
+          </QuickObjectProperty>
+          <QuickObjectProperty Dispid="0" CompareByGuid="false">
+            <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_00012360">图层</Name>
+          </QuickObjectProperty>
+          <QuickObjectProperty Dispid="0" CompareByGuid="false">
+            <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_00012361">线型</Name>
+          </QuickObjectProperty>
+        </QuickProperties>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-31">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00012367">三维效果</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="5">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00012369">几何图形</Name>
+      </QuickObjectPropertyCategory>
+    </QuickProperties>
+  </QuickObjectType>
+  <QuickObjectType>
+    <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+    <Name>直径标注</Name>
+    <QuickClassName>AcDbDiametricDimension</QuickClassName>
+    <QuickProperties>
+      <QuickObjectPropertyCategory CategoryId="-12">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00012461">常规</Name>
+        <QuickProperties>
+          <QuickObjectProperty Dispid="0" CompareByGuid="false">
+            <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_00012462">颜色</Name>
+          </QuickObjectProperty>
+          <QuickObjectProperty Dispid="0" CompareByGuid="false">
+            <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_00012463">图层</Name>
+          </QuickObjectProperty>
+          <QuickObjectProperty Dispid="0" CompareByGuid="false">
+            <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_00012464">线型</Name>
+          </QuickObjectProperty>
+        </QuickProperties>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-2">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00012470">其他</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-22">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00012477">直线和箭头</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-9">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00012488">文字</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-21">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00012503">调整</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-19">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00012509">主单位</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-20">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00012521">换算单位</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-23">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00012533">公差</Name>
+      </QuickObjectPropertyCategory>
+    </QuickProperties>
+  </QuickObjectType>
+  <QuickObjectType>
+    <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+    <Name>常规</Name>
+    <QuickClassName>AcDbEntity</QuickClassName>
+    <QuickProperties>
+      <QuickObjectPropertyCategory CategoryId="-12">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00012550">常规</Name>
+        <QuickProperties>
+          <QuickObjectProperty Dispid="0" CompareByGuid="false">
+            <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_00012551">颜色</Name>
+          </QuickObjectProperty>
+          <QuickObjectProperty Dispid="0" CompareByGuid="false">
+            <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_00012552">图层</Name>
+          </QuickObjectProperty>
+          <QuickObjectProperty Dispid="0" CompareByGuid="false">
+            <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_00012553">线型</Name>
+          </QuickObjectProperty>
+        </QuickProperties>
+      </QuickObjectPropertyCategory>
+    </QuickProperties>
+  </QuickObjectType>
+  <QuickObjectType>
+    <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+    <Name>图案填充</Name>
+    <QuickClassName>AcDbHatch</QuickClassName>
+    <QuickProperties>
+      <QuickObjectPropertyCategory CategoryId="-12">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00012586">常规</Name>
+        <QuickProperties>
+          <QuickObjectProperty Dispid="0" CompareByGuid="false">
+            <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_00012587">颜色</Name>
+          </QuickObjectProperty>
+          <QuickObjectProperty Dispid="0" CompareByGuid="false">
+            <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_00012588">图层</Name>
+          </QuickObjectProperty>
+          <QuickObjectProperty Dispid="0" CompareByGuid="false">
+            <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_00012589">线型</Name>
+          </QuickObjectProperty>
+        </QuickProperties>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-14">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00012594">图案</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-25">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00012613">几何图形</Name>
+      </QuickObjectPropertyCategory>
+    </QuickProperties>
+  </QuickObjectType>
+  <QuickObjectType>
+    <ModifiedRev MajorVersion="18" MinorVersion="0" UserVersion="0"/>
+    <Name>网格</Name>
+    <QuickClassName>AcDbSubDMesh</QuickClassName>
+    <QuickProperties>
+      <QuickObjectPropertyCategory CategoryId="-12">
+        <ModifiedRev MajorVersion="18" MinorVersion="0" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_OM_020">常规</Name>
+        <QuickProperties>
+          <QuickObjectProperty Dispid="0" CompareByGuid="false">
+            <ModifiedRev MajorVersion="18" MinorVersion="0" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_OM_021">图层</Name>
+          </QuickObjectProperty>
+        </QuickProperties>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-25">
+        <ModifiedRev MajorVersion="18" MinorVersion="0" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_OM_022">几何图形</Name>
+        <QuickProperties>
+          <QuickObjectProperty Dispid="1" CompareByGuid="false">
+            <ModifiedRev MajorVersion="18" MinorVersion="0" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_OM_024">平滑度</Name>
+          </QuickObjectProperty>
+        </QuickProperties>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-16">
+        <ModifiedRev MajorVersion="18" MinorVersion="0" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_OM_023">网格</Name>
+        <QuickProperties>
+          <QuickObjectProperty Dispid="6" CompareByGuid="false">
+            <ModifiedRev MajorVersion="18" MinorVersion="0" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_OM_025">面数</Name>
+          </QuickObjectProperty>
+        </QuickProperties>
+      </QuickObjectPropertyCategory>
+    </QuickProperties>
+  </QuickObjectType>
+  <QuickObjectType>
+    <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+    <Name>折弯标注</Name>
+    <QuickClassName>AcDbRadialDimensionLarge</QuickClassName>
+    <QuickProperties>
+      <QuickObjectPropertyCategory CategoryId="-12">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00012701">常规</Name>
+        <QuickProperties>
+          <QuickObjectProperty Dispid="0" CompareByGuid="false">
+            <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_00012702">颜色</Name>
+          </QuickObjectProperty>
+          <QuickObjectProperty Dispid="0" CompareByGuid="false">
+            <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_00012703">图层</Name>
+          </QuickObjectProperty>
+          <QuickObjectProperty Dispid="0" CompareByGuid="false">
+            <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_00012704">线型</Name>
+          </QuickObjectProperty>
+        </QuickProperties>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-2">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00012710">其他</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-22">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00012717">直线和箭头</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-9">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00012731">文字</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-21">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00012746">调整</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-19">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00012752">主单位</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-20">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00012764">换算单位</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-23">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00012776">公差</Name>
+      </QuickObjectPropertyCategory>
+    </QuickProperties>
+  </QuickObjectType>
+  <QuickObjectType>
+    <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+    <Name>引线</Name>
+    <QuickClassName>AcDbLeader</QuickClassName>
+    <QuickProperties>
+      <QuickObjectPropertyCategory CategoryId="-12">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00012816">常规</Name>
+        <QuickProperties>
+          <QuickObjectProperty Dispid="0" CompareByGuid="false">
+            <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_00012817">颜色</Name>
+          </QuickObjectProperty>
+          <QuickObjectProperty Dispid="0" CompareByGuid="false">
+            <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_00012818">图层</Name>
+          </QuickObjectProperty>
+          <QuickObjectProperty Dispid="0" CompareByGuid="false">
+            <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_00012819">线型</Name>
+          </QuickObjectProperty>
+        </QuickProperties>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="5">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00012825">几何图形</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-2">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00012830">其他</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-21">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00012835">调整</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-22">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00012837">直线和箭头</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-9">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00012842">文字</Name>
+      </QuickObjectPropertyCategory>
+    </QuickProperties>
+  </QuickObjectType>
+  <QuickObjectType>
+    <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+    <Name>直线</Name>
+    <QuickClassName>AcDbLine</QuickClassName>
+    <QuickProperties>
+      <QuickObjectPropertyCategory CategoryId="-12">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00012865">常规</Name>
+        <QuickProperties>
+          <QuickObjectProperty Dispid="0" CompareByGuid="false">
+            <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_00012866">颜色</Name>
+          </QuickObjectProperty>
+          <QuickObjectProperty Dispid="0" CompareByGuid="false">
+            <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_00012867">图层</Name>
+          </QuickObjectProperty>
+          <QuickObjectProperty Dispid="0" CompareByGuid="false">
+            <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_00012868">线型</Name>
+          </QuickObjectProperty>
+        </QuickProperties>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-31">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00012874">三维效果</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="5">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00012876">几何图形</Name>
+      </QuickObjectPropertyCategory>
+    </QuickProperties>
+  </QuickObjectType>
+  <QuickObjectType>
+    <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+    <Name>多行文字</Name>
+    <QuickClassName>AcDbMText</QuickClassName>
+    <QuickProperties>
+      <QuickObjectPropertyCategory CategoryId="-12">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00012921">常规</Name>
+        <QuickProperties>
+          <QuickObjectProperty Dispid="0" CompareByGuid="false">
+            <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_00012922">颜色</Name>
+          </QuickObjectProperty>
+          <QuickObjectProperty Dispid="0" CompareByGuid="false">
+            <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_00012923">图层</Name>
+          </QuickObjectProperty>
+          <QuickObjectProperty Dispid="0" CompareByGuid="false">
+            <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_00012924">线型</Name>
+          </QuickObjectProperty>
+        </QuickProperties>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-31">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00012929">三维效果</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-9">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00012931">文字</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="5">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00012954">几何图形</Name>
+      </QuickObjectPropertyCategory>
+    </QuickProperties>
+  </QuickObjectType>
+  <QuickObjectType>
+    <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+    <Name>多重引线</Name>
+    <QuickClassName>AcDbMLeader</QuickClassName>
+    <QuickProperties>
+      <QuickObjectPropertyCategory CategoryId="-12">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00012994">常规</Name>
+        <QuickProperties>
+          <QuickObjectProperty Dispid="0" CompareByGuid="false">
+            <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_00012995">颜色</Name>
+          </QuickObjectProperty>
+          <QuickObjectProperty Dispid="0" CompareByGuid="false">
+            <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_00012996">图层</Name>
+          </QuickObjectProperty>
+          <QuickObjectProperty Dispid="0" CompareByGuid="false">
+            <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_00012997">线型</Name>
+          </QuickObjectProperty>
+        </QuickProperties>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-2">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00013002">其他</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="1">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00013007">引线</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="2">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00013016">块</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="3">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00013019">文字</Name>
+      </QuickObjectPropertyCategory>
+    </QuickProperties>
+  </QuickObjectType>
+  <QuickObjectType>
+    <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+    <Name>坐标标注</Name>
+    <QuickClassName>AcDbOrdinateDimension</QuickClassName>
+    <QuickProperties>
+      <QuickObjectPropertyCategory CategoryId="-12">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00013108">常规</Name>
+        <QuickProperties>
+          <QuickObjectProperty Dispid="0" CompareByGuid="false">
+            <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_00013109">颜色</Name>
+          </QuickObjectProperty>
+          <QuickObjectProperty Dispid="0" CompareByGuid="false">
+            <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_00013110">图层</Name>
+          </QuickObjectProperty>
+          <QuickObjectProperty Dispid="0" CompareByGuid="false">
+            <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_00013111">线型</Name>
+          </QuickObjectProperty>
+        </QuickProperties>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-2">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00013117">其他</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-22">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00013124">直线和箭头</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-9">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00013132">文字</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-21">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00013145">调整</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-19">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00013148">主单位</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-20">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00013160">换算单位</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-23">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00013172">公差</Name>
+      </QuickObjectPropertyCategory>
+    </QuickProperties>
+  </QuickObjectType>
+  <QuickObjectType>
+    <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+    <Name>多段线</Name>
+    <QuickClassName>AcDbPolyline</QuickClassName>
+    <QuickProperties>
+      <QuickObjectPropertyCategory CategoryId="-12">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00013209">常规</Name>
+        <QuickProperties>
+          <QuickObjectProperty Dispid="0" CompareByGuid="false">
+            <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_00013210">颜色</Name>
+          </QuickObjectProperty>
+          <QuickObjectProperty Dispid="0" CompareByGuid="false">
+            <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_00013211">图层</Name>
+          </QuickObjectProperty>
+          <QuickObjectProperty Dispid="0" CompareByGuid="false">
+            <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_00013212">线型</Name>
+          </QuickObjectProperty>
+        </QuickProperties>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-31">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00013218">三维效果</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="5">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00013220">几何图形</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-2">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00013230">其他</Name>
+      </QuickObjectPropertyCategory>
+    </QuickProperties>
+  </QuickObjectType>
+  <QuickObjectType>
+    <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+    <Name>半径标注</Name>
+    <QuickClassName>AcDbRadialDimension</QuickClassName>
+    <QuickProperties>
+      <QuickObjectPropertyCategory CategoryId="-12">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00013312">常规</Name>
+        <QuickProperties>
+          <QuickObjectProperty Dispid="0" CompareByGuid="false">
+            <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_00013313">颜色</Name>
+          </QuickObjectProperty>
+          <QuickObjectProperty Dispid="0" CompareByGuid="false">
+            <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_00013314">图层</Name>
+          </QuickObjectProperty>
+          <QuickObjectProperty Dispid="0" CompareByGuid="false">
+            <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_00013315">线型</Name>
+          </QuickObjectProperty>
+        </QuickProperties>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-2">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00013321">其他</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-22">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00013328">直线和箭头</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-9">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00013337">文字</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-21">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00013352">调整</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-19">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00013358">主单位</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-20">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00013370">换算单位</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-23">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00013382">公差</Name>
+      </QuickObjectPropertyCategory>
+    </QuickProperties>
+  </QuickObjectType>
+  <QuickObjectType>
+    <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+    <Name>转角标注</Name>
+    <QuickClassName>AcDbRotatedDimension</QuickClassName>
+    <QuickProperties>
+      <QuickObjectPropertyCategory CategoryId="-12">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00013491">常规</Name>
+        <QuickProperties>
+          <QuickObjectProperty Dispid="0" CompareByGuid="false">
+            <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_00013492">颜色</Name>
+          </QuickObjectProperty>
+          <QuickObjectProperty Dispid="0" CompareByGuid="false">
+            <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_00013493">图层</Name>
+          </QuickObjectProperty>
+          <QuickObjectProperty Dispid="0" CompareByGuid="false">
+            <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_00013494">线型</Name>
+          </QuickObjectProperty>
+        </QuickProperties>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-2">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00013500">其他</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-22">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00013507">直线和箭头</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-9">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00013527">文字</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-21">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00013543">调整</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-19">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00013550">主单位</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-20">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00013562">换算单位</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-23">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00013574">公差</Name>
+      </QuickObjectPropertyCategory>
+    </QuickProperties>
+  </QuickObjectType>
+  <QuickObjectType>
+    <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+    <Name>表格</Name>
+    <QuickClassName>AcDbTable</QuickClassName>
+    <QuickProperties>
+      <QuickObjectPropertyCategory CategoryId="-12">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00013647">常规</Name>
+        <QuickProperties>
+          <QuickObjectProperty Dispid="0" CompareByGuid="false">
+            <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_00013648">颜色</Name>
+          </QuickObjectProperty>
+          <QuickObjectProperty Dispid="0" CompareByGuid="false">
+            <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_00013649">图层</Name>
+          </QuickObjectProperty>
+          <QuickObjectProperty Dispid="0" CompareByGuid="false">
+            <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_00013650">线型</Name>
+          </QuickObjectProperty>
+        </QuickProperties>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-31">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00013655">三维效果</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-24">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00013657">表格</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="5">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00013664">几何图形</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-32">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00013668">表格打断</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="0">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00013677">单元</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="1">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00013692">内容</Name>
+      </QuickObjectPropertyCategory>
+    </QuickProperties>
+  </QuickObjectType>
+  <QuickObjectType>
+    <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+    <Name>文字</Name>
+    <QuickClassName>AcDbText</QuickClassName>
+    <QuickProperties>
+      <QuickObjectPropertyCategory CategoryId="-12">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00013739">常规</Name>
+        <QuickProperties>
+          <QuickObjectProperty Dispid="0" CompareByGuid="false">
+            <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_00013740">颜色</Name>
+          </QuickObjectProperty>
+          <QuickObjectProperty Dispid="0" CompareByGuid="false">
+            <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_00013741">图层</Name>
+          </QuickObjectProperty>
+          <QuickObjectProperty Dispid="0" CompareByGuid="false">
+            <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_00013742">线型</Name>
+          </QuickObjectProperty>
+        </QuickProperties>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-31">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00013748">三维效果</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-9">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00013750">文字</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="5">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00013766">几何图形</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-2">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00013770">其他</Name>
+      </QuickObjectPropertyCategory>
+    </QuickProperties>
+  </QuickObjectType>
+  <QuickObjectType>
+    <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+    <Name>视口</Name>
+    <QuickClassName>AcDbViewport</QuickClassName>
+    <QuickProperties>
+      <QuickObjectPropertyCategory CategoryId="-12">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00013796">常规</Name>
+        <QuickProperties>
+          <QuickObjectProperty Dispid="0" CompareByGuid="false">
+            <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_00013797">颜色</Name>
+          </QuickObjectProperty>
+          <QuickObjectProperty Dispid="0" CompareByGuid="false">
+            <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_00013798">图层</Name>
+          </QuickObjectProperty>
+        </QuickProperties>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="5">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00013804">几何图形</Name>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-2">
+        <ModifiedRev MajorVersion="23" MinorVersion="0" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00013810">其他</Name>
+        <QuickProperties>
+          <QuickObjectProperty Dispid="0" CompareByGuid="false">
+            <ModifiedRev MajorVersion="23" MinorVersion="0" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_220_E5811">图层特性替代</Name>
+          </QuickObjectProperty>
+          <QuickObjectProperty Dispid="39" CompareByGuid="false">
+            <ModifiedRev MajorVersion="23" MinorVersion="0" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_220_E74D0">标准比例</Name>
+          </QuickObjectProperty>
+          <QuickObjectProperty Dispid="10" CompareByGuid="false">
+            <ModifiedRev MajorVersion="23" MinorVersion="0" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_220_075ED">自定义比例</Name>
+          </QuickObjectProperty>
+        </QuickProperties>
+      </QuickObjectPropertyCategory>
+    </QuickProperties>
+  </QuickObjectType>
+  <QuickObjectType>
+    <ModifiedRev MajorVersion="19" MinorVersion="1" UserVersion="0"/>
+    <Name xlate="true" UID="XLS_200_7F140">地理位置标记</Name>
+    <QuickClassName>AcDbGeoPositionMarker</QuickClassName>
+    <QuickProperties>
+      <QuickObjectPropertyCategory CategoryId="-12">
+        <ModifiedRev MajorVersion="19" MinorVersion="1" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_200_DC773">常规</Name>
+        <QuickProperties>
+          <QuickObjectProperty Dispid="1281" CompareByGuid="false">
+            <ModifiedRev MajorVersion="19" MinorVersion="1" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_200_F6CC0">图层</Name>
+          </QuickObjectProperty>
+        </QuickProperties>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="2">
+        <ModifiedRev MajorVersion="19" MinorVersion="1" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_200_46744">位置</Name>
+        <QuickProperties>
+          <QuickObjectProperty Dispid="16" CompareByGuid="false">
+            <ModifiedRev MajorVersion="19" MinorVersion="1" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_200_0B20F">纬度</Name>
+          </QuickObjectProperty>
+          <QuickObjectProperty Dispid="17" CompareByGuid="false">
+            <ModifiedRev MajorVersion="19" MinorVersion="1" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_200_0B20G">经度</Name>
+          </QuickObjectProperty>
+          <QuickObjectProperty Dispid="18" CompareByGuid="false">
+            <ModifiedRev MajorVersion="19" MinorVersion="1" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_200_0B20H">标高</Name>
+          </QuickObjectProperty>
+        </QuickProperties>
+      </QuickObjectPropertyCategory>
+    </QuickProperties>
+  </QuickObjectType>
+  <QuickObjectType>
+    <ModifiedRev MajorVersion="20" MinorVersion="0" UserVersion="0"/>
+    <Name xlate="true" UID="XLS_200_A68B7">GEOMAP 图像</Name>
+    <QuickClassName>AcDbGeoMap</QuickClassName>
+    <QuickProperties>
+      <QuickObjectPropertyCategory CategoryId="-12">
+        <ModifiedRev MajorVersion="20" MinorVersion="0" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_200_01094">常规</Name>
+        <QuickProperties>
+          <QuickObjectProperty Dispid="1302" CompareByGuid="false">
+            <ModifiedRev MajorVersion="20" MinorVersion="0" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_200_98B55">颜色</Name>
+          </QuickObjectProperty>
+          <QuickObjectProperty Dispid="1281" CompareByGuid="false">
+            <ModifiedRev MajorVersion="20" MinorVersion="0" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_200_89F84">图层</Name>
+          </QuickObjectProperty>
+          <QuickObjectProperty Dispid="1282" CompareByGuid="false">
+            <ModifiedRev MajorVersion="20" MinorVersion="0" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_200_38AF4">线型</Name>
+          </QuickObjectProperty>
+        </QuickProperties>
+      </QuickObjectPropertyCategory>
+      <QuickObjectPropertyCategory CategoryId="-2">
+        <ModifiedRev MajorVersion="20" MinorVersion="0" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_200_0B874">其他</Name>
+        <QuickProperties>
+          <QuickObjectProperty Dispid="8" CompareByGuid="false">
+            <ModifiedRev MajorVersion="20" MinorVersion="0" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_200_48500">地图类型</Name>
+          </QuickObjectProperty>
+          <QuickObjectProperty Dispid="9" CompareByGuid="false">
+            <ModifiedRev MajorVersion="20" MinorVersion="0" UserVersion="0"/>
+            <Name xlate="true" UID="XLS_200_B60A6">分辨率</Name>
+          </QuickObjectProperty>
+        </QuickProperties>
+      </QuickObjectPropertyCategory>
+    </QuickProperties>
+  </QuickObjectType>
+</RolloverTooltipRoot>

@@ -1,0 +1,32 @@
+{
+  "evidence_type": "measured_win32_menu_enum",
+  "software": "斯沃数控仿真软件 SSCNC",
+  "measured_version_hint": "7.2.2.0 (安装包目录名 + general.ini CNC=37)",
+  "main_window_class": "ClassName_Swansoft_CNC_Simulation",
+  "captured_system": "MITSUBISHI M80 (当前加载)",
+  "capture_date": "2026-11-18",
+  "menu_bar": [
+    {"index": 0, "name": "文件(&F)", "items": ["清空NC代码", "打开", "保存", "另存为...", "退出(&X)"]},
+    {"index": 1, "name": "视窗视图", "items": ["窗口切换", "整体放大", "整体缩小", "缩放", "平移", "旋转", "正视", "俯视", "侧视", "全屏显示", "双显示器显示", "双显示器显示交换", "显示工具条提示", "语言"]},
+    {"index": 2, "name": "显示模式", "items": ["床身显示模式", "加工声效", "显示坐标", "显示铁屑", "显示冷却液", "显示毛坯", "显示工件", "透明显示", "刀具交换装置(ACT)显示", "显示刀位号", "显示刀具", "显示透明刀具", "显示刀轨"]},
+    {"index": 3, "name": "机床操作", "items": ["参数设置", "冷却液调整", "基准芯棒选择", "寻边器选择", "Z向对刀仪选择(100mm)", "选择刀具", "舱门"]},
+    {"index": 4, "name": "工件操作", "items": ["选择毛坯", "工件装夹", "工件放置"]},
+    {"index": 5, "name": "工件测量", "items": ["刀路测量(调试)", "特征点", "特征线", "距离", "角度", "测量退出"]},
+    {"index": 6, "name": "习题与考试", "items": ["习题(网络版)", "考试(网络版)", "工件信息上载(网络版)"]},
+    {"index": 7, "name": "查看(&V)", "items": ["工具栏(&T)", "状态栏(&S)"]},
+    {"index": 8, "name": "帮助", "items": ["帮助", "关于...", "论坛", "检查更新"]}
+  ],
+  "toolbars_measured": ["标准", "录制", "广播", "工具(顶部)", "工具(左侧竖排)"],
+  "child_windows_measured": [
+    "MDIClient",
+    "AfxFrameOrView100s (NC程序编辑视图)",
+    "msctls_statusbar32 (状态栏)",
+    "#32770 进度信息 / 测量定位 / 考试 / 习题 / 冷却液软管调整 (对话框资源)"
+  ],
+  "notes": "面板为自绘画布(ClassName_Swansoft_CNC_Simulation)，按钮无Button/Static子控件，键位自动化需坐标点击；菜单为标准Win32菜单，可API枚举。与bridges/sscnc_bridge.py的panel_capability结论一致。",
+  "screenshots": [
+    "evidence/probe_launch_fullscreen.png",
+    "evidence/sscnc_main.png",
+    "evidence/sscnc_main_crop.png"
+  ]
+}

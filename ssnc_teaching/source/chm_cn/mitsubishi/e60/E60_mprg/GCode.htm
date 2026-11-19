@@ -1,0 +1,1225 @@
+
+<html xmlns="undefined">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title></title>
+<link href="../../../helper_css.css" rel="stylesheet" type="text/css">
+</head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar">
+  <tr>
+    <td>G 代码命令</td>
+  </tr>
+</table>
+<TABLE border=0 cellPadding=0 cellSpacing=0 height="100%" width=736>
+  <TBODY>
+    <TR>
+      <TD vAlign=top>&nbsp;</TD>
+    </TR>
+    <TR>
+      <TD><b>代码组及其含义</b><br>
+          <b>“模态代码” 和 “一般” 代码</b><br>
+“形式代码” 的功能在它被执行后会继续维持，而 “一般代码” 
+              仅仅在收到该命令时起作用。定义移动的代码通常是“模态代码”，像直线、圆弧和循环代码。反之，像原点返回代码就叫“一般代码”。<br>
+每一个代码都归属其各自的代码组。在“模态代码”里，当前的代码会被加载的同组代码替换。
+        <TABLE border=0 cellPadding=0 cellSpacing=0 height="1121">
+          
+          <TR>
+            <td height="879"><table border="0" cellpadding="2" cellspacing="1" bgcolor="#00309C" height="1005">
+                <tr >
+                  <td width="64" height="19" align="center" bgcolor="b2d4f6"><b>G代码</b></td>
+                  <td height="19" bgcolor="#FFFFFF" width="70" align="center"><p align="center"><b>组别</b></td>
+                  <td height="19" bgcolor="#FFFFFF" width="154" align="center"><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 解释</b></td>
+                  <td width="67" height="19" align="center" bgcolor="b2d4f6"><b>G代码</b></td>
+                  <td height="19" bgcolor="#FFFFFF" width="51" align="center"><p align="center"><b>组别</b></td>
+                  <td height="19" bgcolor="#FFFFFF" width="179" align="center"><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 解释</b></td>
+                </tr>
+                <tr >
+                  <td width="64" height="19" align="center" bgcolor="b2d4f6">※G00</td>
+                  <td height="91" bgcolor="#FFFFFF" width="70" rowspan="4" align="center">01</td>
+                  <td height="19" bgcolor="#FFFFFF" width="154" align="center">位置定位 (快速进给)</td>
+                  <td width="58" height="19" align="center" bgcolor="b2d4f6">G55</td>
+                  <td height="95" bgcolor="#FFFFFF" width="58" rowspan="5" align="center">12</td>
+                  <td height="19" bgcolor="#FFFFFF" width="173">工件坐标系2选择</td>
+                </tr>
+                <tr >
+                  <td width="64" height="19" align="center" bgcolor="b2d4f6">*G01</td>
+                  <td height="19" bgcolor="#FFFFFF" width="154" align="center">直线补间</td>
+                  <td width="58" height="19" align="center" bgcolor="b2d4f6">G56</td>
+                  <td height="19" bgcolor="#FFFFFF" width="173" align="center">工件坐标系3选择</td>
+                </tr>
+                <tr >
+                  <td width="64" height="19" align="center" bgcolor="b2d4f6">G02</td>
+                  <td height="19" bgcolor="#FFFFFF" width="154" align="center">顺时针切圆弧(CW)</td>
+                  <td width="58" height="19" align="center" bgcolor="b2d4f6">G57</td>
+                  <td height="19" bgcolor="#FFFFFF" width="173" align="center">工件坐标系4选择</td>
+                </tr>
+                <tr >
+                  <td width="64" height="19" align="center" bgcolor="b2d4f6">G03</td>
+                  <td height="19" bgcolor="#FFFFFF" width="154" align="center">逆时针切圆弧(CCW)</td>
+                  <td width="58" height="19" align="center" bgcolor="b2d4f6">G58</td>
+                  <td height="19" bgcolor="#FFFFFF" width="173" align="center">工件坐标系5选择</td>
+                </tr>
+                <tr >
+                  <td width="64" height="19" align="center" bgcolor="b2d4f6">G04</td>
+                  <td height="162" bgcolor="#FFFFFF" width="70" align="center" rowspan="7">00</td>
+                  <td height="19" bgcolor="#FFFFFF" width="154" align="center">暂停</td>
+                  <td width="58" height="19" align="center" bgcolor="b2d4f6">G59</td>
+                  <td height="19" bgcolor="#FFFFFF" width="173" align="center">工件坐标系6选择</td>
+                </tr>
+                <tr >
+                  <td width="64" height="18" align="center" bgcolor="b2d4f6">G05</td>
+                  <td height="18" bgcolor="#FFFFFF" width="154" align="center">高速加工模式</td>
+                  <td width="58" height="18" align="center" bgcolor="b2d4f6">G60</td>
+                  <td height="18" bgcolor="#FFFFFF" width="58" align="center">00</td>
+                  <td height="18" bgcolor="#FFFFFF" width="173" align="center">单方向位置定位</td>
+                </tr>
+                <tr >
+                  <td width="64" height="19" align="center" bgcolor="b2d4f6">G09</td>
+                  <td height="19" bgcolor="#FFFFFF" width="154" align="center">正确停止检查</td>
+                  <td width="67" height="19" align="center" bgcolor="b2d4f6">G61</td>
+                  <td height="76" bgcolor="#FFFFFF" width="58" rowspan="4" align="center">13</td>
+                  <td height="19" bgcolor="#FFFFFF" width="173" align="center">工确停止检查模式</td>
+                </tr>
+                <tr >
+                  <td width="64" height="19" align="center" bgcolor="b2d4f6">G10</td>
+                  <td height="19" bgcolor="#FFFFFF" width="154" align="center">程式参数输入/补正输入</td>
+                  <td width="67" height="19" align="center" bgcolor="b2d4f6">G62</td>
+                  <td height="19" bgcolor="#FFFFFF" width="173" align="center">自动转角进给率调整</td>
+                </tr>
+                <tr >
+                  <td width="64" height="19" align="center" bgcolor="b2d4f6">G11</td>
+                  <td height="19" bgcolor="#FFFFFF" width="154" align="center">程式参数输入取消</td>
+                  <td width="67" height="19" align="center" bgcolor="b2d4f6">G63</td>
+                  <td height="19" bgcolor="#FFFFFF" width="173" align="center">攻牙模式</td>
+                </tr>
+                <tr >
+                  <td width="64" height="19" align="center" bgcolor="b2d4f6">G12</td>
+                  <td height="19" bgcolor="#FFFFFF" width="154" align="center">圆切削CW</td>
+                  <td width="67" height="19" align="center" bgcolor="b2d4f6">*G64</td>
+                  <td height="19" bgcolor="#FFFFFF" width="173" align="center">切削模式</td>
+                </tr>
+                <tr >
+                  <td width="64" height="19" align="center" bgcolor="b2d4f6">G13</td>
+                  <td height="19" bgcolor="#FFFFFF" width="154" align="center">圆切削CCW</td>
+                  <td width="67" height="19" align="center" bgcolor="b2d4f6">G73</td>
+                  <td height="247" bgcolor="#FFFFFF" width="58" rowspan="13" align="center">09</td>
+                  <td height="19" bgcolor="#FFFFFF" width="173" align="center">固定循环（步进循环）</td>
+                </tr>
+                <tr >
+                  <td width="64" height="19" align="center" bgcolor="b2d4f6">*G17</td>
+                  <td height="57" bgcolor="#FFFFFF" width="70" rowspan="3" align="center">02</td>
+                  <td height="19" bgcolor="#FFFFFF" width="154" align="center">平面选择X－Y</td>
+                  <td width="67" height="19" align="center" bgcolor="b2d4f6">G74</td>
+                  <td height="19" bgcolor="#FFFFFF" width="173" align="center">固定循环（反向攻牙）</td>
+                </tr>
+                <tr >
+                  <td width="64" height="19" align="center" bgcolor="b2d4f6">※G18</td>
+                  <td height="19" bgcolor="#FFFFFF" width="154" align="center">平面选择Z－X</td>
+                  <td width="67" height="19" align="center" bgcolor="b2d4f6">G76</td>
+                  <td height="19" bgcolor="#FFFFFF" width="173" align="center">固定循环（精镗孔）</td>
+                </tr>
+                <tr >
+                  <td width="64" height="19" align="center" bgcolor="b2d4f6">G19</td>
+                  <td height="19" bgcolor="#FFFFFF" width="154" align="center">平面选择Y－Z</td>
+                  <td width="67" height="19" align="center" bgcolor="b2d4f6">*G80</td>
+                  <td height="19" bgcolor="#FFFFFF" width="173" align="center">固定循环取消</td>
+                </tr>
+                <tr >
+                  <td width="64" height="19" align="center" bgcolor="b2d4f6">※G20</td>
+                  <td height="38" bgcolor="#FFFFFF" width="70" rowspan="2" align="center">06</td>
+                  <td height="19" bgcolor="#FFFFFF" width="154" align="center">英制指令</td>
+                  <td width="67" height="19" align="center" bgcolor="b2d4f6">G81</td>
+                  <td height="19" bgcolor="#FFFFFF" width="173" align="center">固定循环（钻孔/铅孔）</td>
+                </tr>
+                <tr >
+                  <td width="64" height="19" align="center" bgcolor="b2d4f6">G21</td>
+                  <td height="19" bgcolor="#FFFFFF" width="154" align="center">公制指令</td>
+                  <td width="67" height="19" align="center" bgcolor="b2d4f6">G82</td>
+                  <td height="19" bgcolor="#FFFFFF" width="173" align="center">固定循环（钻孔/计数式镗孔）</td>
+                </tr>
+                <tr >
+                  <td width="64" height="19" align="center" bgcolor="b2d4f6">G27</td>
+                  <td height="95" bgcolor="#FFFFFF" width="70" rowspan="5" align="center">00</td>
+                  <td height="19" bgcolor="#FFFFFF" width="154" align="center">参考原点检查</td>
+                  <td width="67" height="19" align="center" bgcolor="b2d4f6">G83</td>
+                  <td height="19" bgcolor="#FFFFFF" width="173" align="center">固定循环（深钻孔）</td>
+                </tr>
+                <tr >
+                  <td width="64" height="19" align="center" bgcolor="b2d4f6">G28</td>
+                  <td height="19" bgcolor="#FFFFFF" width="154" align="center">参考原点复归</td>
+                  <td width="67" height="19" align="center" bgcolor="b2d4f6">G84</td>
+                  <td height="19" bgcolor="#FFFFFF" width="173" align="center">固定循环（攻牙）</td>
+                </tr>
+                <tr >
+                  <td width="64" height="19" align="center" bgcolor="b2d4f6">G29</td>
+                  <td height="19" bgcolor="#FFFFFF" width="154" align="center">开始点复归</td>
+                  <td width="67" height="19" align="center" bgcolor="b2d4f6">G85</td>
+                  <td height="19" bgcolor="#FFFFFF" width="173" align="center">固定循环（镗孔）</td>
+                </tr>
+                <tr >
+                  <td width="64" height="19" align="center" bgcolor="b2d4f6">G30</td>
+                  <td height="19" bgcolor="#FFFFFF" width="154" align="center">第2～4参考原点复归</td>
+                  <td width="67" height="19" align="center" bgcolor="b2d4f6">G86</td>
+                  <td height="19" bgcolor="#FFFFFF" width="173" align="center">固定循环（镗孔）</td>
+                </tr>
+                <tr >
+                  <td width="64" height="19" align="center" bgcolor="b2d4f6">G31</td>
+                  <td height="19" bgcolor="#FFFFFF" width="154" align="center">跳跃机能</td>
+                  <td width="67" height="19" align="center" bgcolor="b2d4f6">G87</td>
+                  <td height="19" bgcolor="#FFFFFF" width="173" align="center">固定循环（反镗孔）</td>
+                </tr>
+                <tr >
+                  <td width="64" height="19" align="center" bgcolor="b2d4f6">G33</td>
+                  <td height="19" bgcolor="#FFFFFF" width="70" align="center">01</td>
+                  <td height="19" bgcolor="#FFFFFF" width="154" align="center">螺纹切削</td>
+                  <td width="67" height="19" align="center" bgcolor="b2d4f6">G88</td>
+                  <td height="19" bgcolor="#FFFFFF" width="173" align="center">固定循环（镗孔）</td>
+                </tr>
+                <tr >
+                  <td width="64" height="19" align="center" bgcolor="b2d4f6">G37</td>
+                  <td height="57" bgcolor="#FFFFFF" width="70" rowspan="3" align="center">00</td>
+                  <td height="19" bgcolor="#FFFFFF" width="154" align="center">自动工具长测定</td>
+                  <td width="67" height="19" align="center" bgcolor="b2d4f6">G89</td>
+                  <td height="19" bgcolor="#FFFFFF" width="173" align="center">固定循环（镗孔）</td>
+                </tr>
+                <tr >
+                  <td width="64" height="19" align="center" bgcolor="b2d4f6">G38</td>
+                  <td height="19" bgcolor="#FFFFFF" width="154" align="center">刀具径补正向量指定</td>
+                  <td width="67" height="19" align="center" bgcolor="b2d4f6">*G90</td>
+                  <td height="38" bgcolor="#FFFFFF" width="58" rowspan="2" align="center">03</td>
+                  <td height="19" bgcolor="#FFFFFF" width="173" align="center">绝对值指令</td>
+                </tr>
+                <tr >
+                  <td width="64" height="19" align="center" bgcolor="b2d4f6">G39</td>
+                  <td height="19" bgcolor="#FFFFFF" width="154" align="center">刀具径补正转角圆弧补正</td>
+                  <td width="67" height="19" align="center" bgcolor="b2d4f6">*G91</td>
+                  <td height="19" bgcolor="#FFFFFF" width="173" align="center">增量值指令</td>
+                </tr>
+                <tr >
+                  <td width="64" height="19" align="center" bgcolor="b2d4f6">*G40</td>
+                  <td height="57" bgcolor="#FFFFFF" width="70" rowspan="3" align="center">07</td>
+                  <td height="19" bgcolor="#FFFFFF" width="154" align="center">刀具径补正取消</td>
+                  <td width="67" height="19" align="center" bgcolor="b2d4f6">G92</td>
+                  <td height="19" bgcolor="#FFFFFF" width="58" align="center">00</td>
+                  <td height="19" bgcolor="#FFFFFF" width="173" align="center">机械坐标系设定</td>
+                </tr>
+                <tr >
+                  <td width="64" height="19" align="center" bgcolor="b2d4f6">G41</td>
+                  <td height="19" bgcolor="#FFFFFF" width="154" align="center">刀具径补正左</td>
+                  <td width="67" height="19" align="center" bgcolor="b2d4f6">G93</td>
+                  <td height="57" bgcolor="#FFFFFF" width="58" rowspan="3" align="center">05</td>
+                  <td height="19" bgcolor="#FFFFFF" width="173" align="center">逆时针进给</td>
+                </tr>
+                <tr >
+                  <td width="64" height="19" align="center" bgcolor="b2d4f6">G42</td>
+                  <td height="19" bgcolor="#FFFFFF" width="154" align="center">刀具径补正右</td>
+                  <td width="67" height="19" align="center" bgcolor="b2d4f6">*G94</td>
+                  <td height="19" bgcolor="#FFFFFF" width="173" align="center">非同期切削（每分钟进给）</td>
+                </tr>
+                <tr >
+                  <td width="64" height="19" align="center" bgcolor="b2d4f6">G43</td>
+                  <td height="57" bgcolor="#FFFFFF" width="70" rowspan="3" align="center">08</td>
+                  <td height="19" bgcolor="#FFFFFF" width="154" align="center">刀具长补正量（＋）</td>
+                  <td width="67" height="19" align="center" bgcolor="b2d4f6">*G95</td>
+                  <td height="19" bgcolor="#FFFFFF" width="173" align="center">同期切削（每回钻进给）</td>
+                </tr>
+                <tr >
+                  <td width="64" height="19" align="center" bgcolor="b2d4f6">G44</td>
+                  <td height="19" bgcolor="#FFFFFF" width="154" align="center">刀具长补正量（－）</td>
+                  <td width="67" height="19" align="center" bgcolor="b2d4f6">*G96</td>
+                  <td height="38" bgcolor="#FFFFFF" width="58" rowspan="2" align="center">17</td>
+                  <td height="19" bgcolor="#FFFFFF" width="173" align="center">周速一定控制有效</td>
+                </tr>
+                <tr >
+                  <td width="64" height="19" align="center" bgcolor="b2d4f6">*G49</td>
+                  <td height="19" bgcolor="#FFFFFF" width="154" align="center">工具长补正量取消</td>
+                  <td width="67" height="19" align="center" bgcolor="b2d4f6">*G97</td>
+                  <td height="19" bgcolor="#FFFFFF" width="173" align="center">周速一定控制无效</td>
+                </tr>
+                <tr >
+                  <td width="64" height="17" align="center" bgcolor="b2d4f6">G52</td>
+                  <td height="36" bgcolor="#FFFFFF" width="70" rowspan="2" align="center">00</td>
+                  <td height="17" bgcolor="#FFFFFF" width="154" align="center">局部坐标系设定</td>
+                  <td width="67" height="17" align="center" bgcolor="b2d4f6">*G98</td>
+                  <td height="36" bgcolor="#FFFFFF" width="58" rowspan="2" align="center">10</td>
+                  <td height="17" bgcolor="#FFFFFF" width="173" align="center">固定循环起始点复归</td>
+                </tr>
+                <tr >
+                  <td width="64" height="19" align="center" bgcolor="b2d4f6">G53</td>
+                  <td height="19" bgcolor="#FFFFFF" width="154" align="center">机械坐标系选择</td>
+                  <td width="67" height="19" align="center" bgcolor="b2d4f6">G99</td>
+                  <td height="19" bgcolor="#FFFFFF" width="173" align="center">固定循环R点复归</td>
+                </tr>
+                <tr >
+                  <td width="64" height="19" align="center" bgcolor="b2d4f6">*G54</td>
+                  <td height="19" bgcolor="#FFFFFF" width="70" align="center">12</td>
+                  <td height="19" bgcolor="#FFFFFF" width="154" align="center">工件坐标系1选择</td>
+                  <td width="67" height="19" align="center" bgcolor="b2d4f6">　</td>
+                  <td height="19" bgcolor="#FFFFFF" width="58" align="center">　</td>
+                  <td height="19" bgcolor="#FFFFFF" width="173" align="center">　</td>
+                </tr>
+              </table></TD>
+          </TR>
+          <TR>
+            <TD height="72" width="587"><b>注意：</b><br>
+              在G之后没有接续数值指令中，在运转时将变成G00的动作。<br>
+              （注1）印有“*”记号表示初期状态应选择的指令码或被选择的指令码。印有“※”记号表示初期状态依参数所选定指令码或被选择的指令码。<br>
+              （注2）同一单节指定2个以上的G指令时，最后的G指令有效。<br>              </TD>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 height=20 class="bar">
+          <TR>
+            <TD>代码解释　</TD>
+          </TR>
+        </TABLE>
+        <TABLE height="24">
+      
+        </TABLE>
+　
+        <TABLE border=0 cellPadding=0 cellSpacing=0 height=20 class="bar1">
+          <TR>
+            <td height="20">G00&nbsp; 位置定位 (快速进给)</td>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+          <TR>
+            <TD height=26  class=contents1  vAlign=top> <br>
+              1. 格式 <br>
+              G00 X_ Y_ Z_α＿；（α为附加轴）<br>
+              依当时的G90或G91的状态而为绝对值或增量值表示。<br>
+              <br>
+               2. 机能及目的<br>
+               此一指令伴随坐标语，以现在点做为始点，坐标语指令值为终点，以直线或非直线路径作位置定位。<br>
+              <br>
+               3. 详细说明<br>
+               （1）一旦此指令指定时，此G00模式改变其它的G机能，直到G01，G02或G03指令指定为止，G00模式保持有效。G00模式有效时，其后的G00指令只需指定坐标语即可。<br>
+              （2）在G00模式，刀具总是在单节的始点被加速，终点被减速。当到位状态确定后行一单节，到位与否的宽度由参数设定。<br>
+              （3）09组的G机能（G72～G89）依G00指令出现而变成取消状态（G80）。<br>
+              （4）刀具的路径为直线或非直线依参数的选择而定，但是定位时间不改变。<br>
+              a　直线路径：与直线补间（G01）方式相同，速度受各轴快速进给速度的限制。<br>
+              b　非直线路径：各轴独立，以最大速度移动定位。<br>
+              <img border="0" src="Code/G00.GIF" width="336" height="330"><br>
+               4. 举例<br>
+              G91 G00 X－270000 Y300000 Z150000；<br> </TD>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 height=20 class="bar1">
+          <TR>
+            <td height="20">G01&nbsp; 直线补间</td>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+          <TR>
+            <TD height=26  class=contents1  vAlign=top>&nbsp;<br>
+              1. 格式 <br>
+              G01 X_ Y_ Z_F_<br>
+              按当时的G90或G91的状态，而为绝对值或增量值坐标。F为表示速度资料的数值。
+              <p>  2.机能目的<br>
+                此一指令伴随坐标语及速度指令，刀具人现在点起，坐标指定的终点止，以位址F所指定的速度移动。F指定的速度，通常为恨具中心进行方向的线速度。</p>
+              <p>  3.详细说明<br>
+                一旦此指令指定时，它将保持到01组中的其它G指令（G00，G02，G03，G33）被指定时，支委会改变G01的模式，因此，如果下一个指令还是G01，而且进给速度也相同，那么只需指定坐标语即可。<br>
+                如果在第一次出现G01指令的各式段中没有给F指令，则产生各式错误“P62”。旋转轴的进给速度以度/min（小数点定位单位）。（F300＝300度/min）09组的G机能（G72～G89）按G00指令出现而变成取消状态（G80）</p>
+              <p>  4. 举例<br>
+                 P1→P2→P3→P4→P1以进给速度300mm/min切削。但是，P0→P1为刀具的快速定位。<br>
+                <img border="0" src="edit/e05.gif" width="396" height="211"></p>
+              <p>G90 G00 X20000 Y20000；&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                P0→P1 <br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; G01 X20000 Y30000 F300&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                P1→P2 <br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; X30000 ；&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                P2→P3 <br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; X－20000 Y–30000；&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                P3→P4 <br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; X－30000 ；&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                P4→P1</p>
+              <p>&nbsp;</p></TD>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 height=20 class="bar1">
+          <TR>
+            <td>&nbsp;
+              G02/G03
+              G17/G18/G19&nbsp; 螺旋补间 
+              (G02/G03, G17/G18/G19)</td>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+          <TR>
+            <TD height=26  class=contents1  vAlign=top> <br>
+              1.功能及目的<br>
+               依据G02/G03之圆弧补间指令以及平面选择G指令（G17，G18，G19），在选择平面内，可以一边做圆弧补间，一边做第3轴的直线补间。一般而言，螺旋补间的速度被指定为包含第3轴补间成分的切线速度F，如图中的上图所示　无论如何，当圆弧平面成分的速度指定时，其被指定在圆弧平面切线速度F，就如图中的上图所示。NC会自动计算螺旋补间的切线速度F，所以在圆弧平面上的切线速度就是F。
+              <p><img border="0" src="edit/e06.gif" width="241" height="325"></p>
+              <p><br>
+                 2. 格式 <br>
+                圆弧在 XY 面上<br>
+                G17 G02 ( G03 ) G90 ( G91 ) X_ Y_ F_;<br>
+                或<br>
+                G17 G02 ( G03 ) G90 ( G91 ) I_ J_ F_;<br>
+                或<br>
+                G17 G02 ( G03 ) G90 ( G91 ) R_ F_;</p>
+              <p>圆弧在 XZ 面上<br>
+                G18 G02 ( G03 ) G90 ( G91 ) X_ Z_ F_;<br>
+                或<br>
+                G18 G02 ( G03 ) G90 ( G91 ) I_ K_ F_;<br>
+                或<br>
+                G18 G02 ( G03 ) G90 ( G91 ) R_ F_;</p>
+              <p>圆弧在 YZ 面上<br>
+                G19 G02 ( G03 ) G90 ( G91 ) Y_ Z_ F_;<br>
+                或<br>
+                G19 G02 ( G03 ) G90 ( G91 ) J_ K_ F_;<br>
+                或<br>
+                G19 G02 ( G03 ) G90 ( G91 ) R_ F_;</p>
+              <p>圆弧所在的平面用G17, G18 
+                和G19命令来指定。但是，只要已经在先前的程序块里定义了这些命令，也能够省略。圆弧的回转方向像下图表示那样，由 
+                G02/G03来指定。在圆弧回转方向指定后，指派切削终点坐标。 G90 是指定在绝对坐标方式下使用此命令；而 G91 
+                是在指定在增量坐标方式下使用此命令。另外，如果G90/G91已经在先前程序块里给出过，可以省略。圆弧的终点用包含在命令施加的平面里的两个轴的坐标值指定 
+                ( 例如，在 XY平面里，G17用 X, Y 坐标值 ) 。 终点坐标能够像 G00 和 G01 
+                命令一样地设置。圆弧中心的位置或者其半径应当在设定圆弧终点之后设置。圆弧中心设置为从圆弧起点的相对距离，并且对应于 X，Y 和Z 
+                轴表示为 I, J 和 K。圆弧起点坐标值减去圆弧中心对应的坐标值得到的结果对应分配给 I、J、K。<br>
+                <br>
+                 3. 举例<br>
+                <img border="0" src="Code/G02.GIF" width="331" height="253"><br>
+                <br>
+                圆弧起点的 X 坐标值 ------------ 30.<br>
+                圆弧中心的 X 坐标值 ------------ 10.<br>
+                因此，“I” 就是 20. (10 - 30 = 20)<br>
+                圆弧起点的 Y 坐标值 ------------ 10.<br>
+                圆弧中心的 Y 坐标值 ------------ 5.<br>
+                因此，“J” 就是 5. (10 – 5 = 5)<br>
+                <br>
+                结果，这个情况下圆弧命令如下所列：<br>
+                <br>
+                G17 G03 G90 X5. Y25. I-20. J-5.;<br>
+                或者，<br>
+                G17 G03 G91 X-25. Y15. I-20. J-5.;<br>
+                <br>
+                因为圆弧半径通常是已给了的，也能够用圆弧半径给命令赋值。<br>
+                <br>
+                在已给的例子里，圆弧半径是 20.616。因此，该命令能够如下表示：<br>
+                G17 G03 G90 X5. Y25. R20.616.;<br>
+                或者，<br>
+                G17 G03 G91 X-25. Y15. R20.616;<br>
+                <br>
+                注意 1) 把圆弧中心设置为 “I”, “J” 和 “K”时，必须设置为圆弧起点到圆弧中心的增量值 (增量命令).<br>
+                注意 2) 命令里的“I0”, “J0” 和 “K0” 可以省略。偏移值指定要求。
+              <p><br> 
+              </TD>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 height=20 class="bar1">
+          <TR>
+            <td height="20"> G09&nbsp; 正确停止检查 
+            (G09)</td>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+          <TR>
+            <TD height=26  class=contents1  vAlign=top> <br>
+              1.机能及目的<br>
+               刀具的进给速度急促变化时防止机械的振动，以及转角切削时防止圆角的发生，机械减速停止，到位状态确信后，次一单节的指令才开始执行。能达到这些目的机能为正确停止横坐标机能。<br>
+              <br>
+              2. 格式 <br>
+              G09；<br>
+              <br>
+               3. 举例<br>
+              N001　G09　G01　X100.000　F150；　　　　　减速停止，到位状态确认后，次单节才开始执行。<br>
+              N002 　　　　　　　Y100.000；<br>
+               <img border="0" src="edit/e07.gif" width="578" height="239">
+              <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="587" id="AutoNumber1">
+                <tr>
+                  <td align="center" class="bar1">G10刀具补正资料程式输入（G10）</td>
+                </tr>
+              </table>
+              <p>  1.机能及目的<br>
+                刀具补正量及工件坐标补正量可用G10指令设定或变更。绝对值（G90）模式时，指令补正量成为刀具的新补正量；增量值（G91）模式时， 
+                现在刀具的补正量加上指令补正量成为刀具的新祉正量</p>
+              <p>  2.格式<br>
+                <b>工件补正输入</b><br>
+                G90 G10 L2 P_X＿_Y＿_Z＿； <br>
+                G91 <br>
+                 G91模式时，补正量为增量值，程式执行时，补正量累绩加算。所以，在G10指令前的G90或G91模式需注意。 <br>
+                P︰0 外部工件坐标；<br>
+                &nbsp; 1 G54 <br>
+                &nbsp;&nbsp;&nbsp;&nbsp; 2 G55 <br>
+                &nbsp;&nbsp;&nbsp;&nbsp; 3 G56 <br>
+                &nbsp;&nbsp;&nbsp;&nbsp; 4 G57 <br>
+                &nbsp;&nbsp;&nbsp;&nbsp; 5 G58 <br>
+                &nbsp;&nbsp;&nbsp;&nbsp; 6 G59 <br>
+                P为0~6以外之数字时，P之值视为1。当P省略时，视为现在选择中的工件坐标补正量输入。</p>
+              <p><b>刀具補正輸入 </b><br>
+                &#8226; 刀具补正记忆1的场合格式<br>
+                G10 L10 P_R_；<br>
+                P︰补正号 <br>
+                R︰补正量<br>
+                &#8226; 刀具补正记忆2的场合格式<br>
+                G10 L10 P_R_； 长补正开关补正 <br>
+                G10 L11 P_R_； 长补正磨耗补正<br>
+                G10 L12 P_R_； 径形状补正<br>
+                G10 L13 P_R_； 径磨耗补正 <br>
+                工件坐标系统补正输入（工件坐标系统补正组数追加时）格式<br>
+                G90 G10 L20 Pn X＿ Y＿ Z＿α＿； (α为附加轴)<br>
+                G91 <br>
+                n=1~48 <br>
+                n=1~48 以外或P 指令省略时，视为现在选择中的工件坐标补正输入。 </p>
+              <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="587" id="AutoNumber2">
+                <tr>
+                  <td align="center" class="bar1">G12/G13圆切削（G12/G13）</td>
+                </tr>
+              </table>
+              <p>  1.机能及目的<br>
+                圆切削就是刀具由圆的中心出发作内圆切削，描绘全圆中心的一连串切削动作。</p>
+              <p>  2.格式 <br>
+                G12 (G13) I＿ D＿F＿；<br>
+                圆切削的旋转方向有G12，G13如以下的区别。<br>
+                G12：顺时针方向（CW）<br>
+                G13：反时针方向（CCW）<br>
+                I：圆的半径（增量值），符号忽略<br>
+                D：补正号码（补正号码和补正资料不显示在设定显示装置上）</p>
+              <p>  3.详细说明<br>
+                没有补正号码“D”或不正确的补正号码时，程式异警出现。<br>
+                “半径I－补正量”是0或负值时，程式异警圆半径错误出现。<br>
+                补正量的符号，＋表示缩小，－表示放大。<br>
+                圆切削由G17，G18，G19选择目前的平面执行。<br>
+                <img border="0" src="edit/e08.gif" width="549" height="324"></p>
+              <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="587" id="AutoNumber3">
+                <tr>
+                  <td height="18
+				  " class="bar1"><p align="center" class="bar1">G20/G21英制与公制指令的切换（G20/G21）</td>
+                </tr>
+              </table>
+              <p>  1.机能及目的<br>
+                按G指令指定，英制及公制指令的切换可以变更。</p>
+              <p>  2.格式 <br>
+                G20； 英制指令 <br>
+                G21； 公制指令 </p>
+              <p>  3.详细说明<br>
+                G20，G21的切换仅对直线轴有意义，对于旋转轴无意义。G20，G21仅对指令单位进行切换，输入单位不予切换。也就是说，在起始英制处于开关（OFF）时，即使是将加工程序的指令单位以G20切换成英制单位，刀具补正量等待各设定单位仍然保持公制单位不变，就对设定值予以注意。</p>
+              <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="587" id="AutoNumber4">
+                <tr>
+                  <td height="18" align="center" class="bar1">G28/G29参考原点复归（G28/G29）</td>
+                </tr>
+              </table>
+              <p>  1.机能及目的<br>
+                G28指令指定时，以G0速度定位至指令轴位置以后，各轴以快速进给速度做第1参考点复归。<br>
+                G29指令时，各轴以快速进给速度到达G28或G30的中间点以后，以G0速度定位至指令指置。</p>
+              <p> <img border="0" src="edit/e09.gif" width="469" height="304"></p>
+              <p>  2.格式<br>
+                G28 X_ Y_ Z_ α_；（α= 
+                附加轴）[自动参考点复归] <br>
+                G29 X_ Y_ Z_ α_；（α= 附加轴）[开始位置复归]</p>
+              <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="587" id="AutoNumber5">
+                <tr>
+                  <td ><p align="center" class="bar1">G30第2，第3，第4参考原点复归（G30）</td>
+                </tr>
+              </table>
+              <p>  1.机能及目的<br>
+                G30　P2（P3，P4）指令的指定，第2，第3或第4参考原点位置的复归可以执行。</p>
+              <p> <img border="0" src="edit/e10.gif" width="432" height="310"></p>
+              <p>  2.格式 <br>
+                G30 P2 (P3, P4) X＿ Y＿ Z＿ α＿;（α為附加軸。）</p>
+              <p>  3.详细说明 <br>
+                第2、第3或第4参考原点的复归以P2、P3或P4指定，P指定或P0、P1、P5以上的时忽略皆以第2参考原点复归执行。<br>
+                第2、第3或第4参考原点的复归与第1参考原点复归情形一样，经同G30指定的中间点以后，复归至第2、第3或第4参考点的位置。<br>
+                第2、第3或第4参考点位置坐标是机械囿的位置，可以在设定显示装置上确认。<br>
+                第2、第3或第4参考原点复归后，G29指令执行时，G29复归点位置是最后执行参考原点复归的中间点位置。</p>
+              <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="587" id="AutoNumber6">
+                <tr>
+                  <td ><p align="center" class="bar1">G33英制螺纹切削（G33）</td>
+                </tr>
+              </table>
+              <p>  1概要<br>
+                在G33指令中，若指定1英寸相当的牙数，刀具的进给控制可与主轴转速同步，等道程的直线螺纹切削及锥状螺纹切削等可以加工。</p>
+              <p>  2.格式<br>
+                G33 Z ＿ E ＿ Q ＿；<br>
+                Z：螺纹长轴方向的位址 (X, Y, Z) 及螺纹长。 <br>
+                E：长轴（移动量最多的轴）方向，1 英吋中含有的牙数（小数点指令亦可）。 <br>
+                Q：螺纹切削开始角度 (0~360°)。 </p>
+              <p>  3.详细说明 <br>
+                1英寸相当的牙数为长轴方向的牙数指定。<br>
+                E码亦用于精密道程长的指定，牙数的指定或精密道程长的指定，可按参数选择<br>
+                E 的指令值，在道程换算时需在道程值的范围內。 </p>
+              <p><br>
+              </p></TD>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 height=20 class="bar1">
+          <TR>
+            <td height="20" align="center" class="bar1" >G40/G41/G42&nbsp; 刀具径补正 (G40/G41/G42)</td>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+          <TR>
+            <TD height=26  class=contents1  vAlign=top><br>
+               1. 格式 <br>
+              G41 X_ Y_;<br>
+              G42 X_ Y_;
+              <p>当处理工件 (“A”) 时，就像下图所示，刀具路径 (“B”) 是基本路径，与工件 
+                (“A”)的距离至少为该刀具直径的一半。此处，路径 “B” 叫做由 A 经 R 
+                补偿的路径。因此，刀具直径偏置功能自动地由编程给出的路径 
+                A以及由分开设置的刀具偏置值，计算出补偿了的路径B。就是说，用户能够根据工件形状编制加工程序，同时不必考虑刀具直径。 
+                因此，在真正切削之前把刀具直径指派为刀具偏置值；用户能够获得精确的切削结果，就是因为系统本身计算了精确的补偿了的路径。<br>
+                <img border="0" src="Code/G41.GIF" width="256" height="213"></p>
+              <p> <br>
+                在编程时用户只要插入偏置向量的方向 (举例说， G41：左侧， G42： 右侧)和偏置内存地址 (例如， D2： 在“D” 
+                后面是从 01 到 32的两位数字)。所以用户只要输入偏移内存号码 D (根据 MDI)，只不<br>
+                <br>
+                过是由精确计算刀具直径得出的半径。<br>
+                <br>
+                 2. 偏置功能<br>
+                G40: 取消刀具直径偏置<br>
+                G41: 偏置在刀具行进方向的左侧<br>
+              G42: 偏置在刀具行进方向的右侧              
+              <p><br>
+              </TD>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 height=20 class="bar1">
+          <TR>
+            <td height="20" align="center" class="bar1" >G43，G44/G49&nbsp; 刀具长补正/取消 (G43，G44/G49)</td>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+          <TR>
+            <TD height=26  class=contents1  vAlign=top><br>
+               1.机能及目的<br>
+               依据这些指令，各轴移动指令的终点位置，可依设定的补正量做补正。所以，程式作成时假想刀具长的值与实际的值，可以用补正量方式设定，以提高程式的通用性。<br>
+              <br>
+                2.格式  <br>
+              刀具长补正＋<br>
+              G43 Z_ H_； 刀具长补正＋起点 <br>
+              G40 Z_；&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 刀具长补正取消<br>
+              <br>
+              刀具长补正-<br>
+              G44 Z＿ H＿； 刀具长补正－起点<br>
+              G49 Z_；&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 刀具长补正取消
+              <p>  3.详细说明<br>
+                在设置偏置的长度时，使用正/负号。如果改变了 (+/-) 符号， G43 和 G44 
+                在执行时会反向操作。因此，该命令有各种不同的表达方式。举例说：<br>
+                <br>
+                首先，遵循下列步骤度量刀具长度。<br>
+                1.把工件放在工作台面上。<br>
+                2.调整基准刀具轴线，使它接近工件表面上。 <br>
+                3.更换上要度量的刀具；把该刀具的前端调整到工件表面上。 <br>
+                4.此时 Z 轴的相对坐标系的坐标作为刀具偏置值输入内存。<br>
+                通过这么操作，如果刀具短于基准刀具时偏置值被设置为负值；如果长于基准刀具则为正值。因此，在编程时仅有 G43 
+                命令允许您做刀具长度偏置。</p>
+              <p> 4. 举例<br>
+                <br>
+                G00 ZO; <br>
+                G00 G43 Z0 H01; <br>
+                G00 G43 Z0 H03;<br>
+                或者 <br>
+                G00 G44 Z0 H02; <br>
+                或者<br>
+                G00 G44 Z0 H02;<br>
+                <br>
+                G43, G44 或 G49 命令一旦被发出，它们的功效会保持着，因为它们是 “模态命令”。因此， G43 或 G44 
+                命令在程序里紧跟在刀具更换之后一旦被发出；那么 G49 命令可能在该刀具作业结束，更换刀具之前发出。<br>
+                <br>
+                注意 1) 在用 G43 (G44) H 或者用 G 49 命令的指派来省略 Z 轴移动命令时，, 偏置操作就会像 G00 
+                G91 Z0 命令指派的那样执行。也就是说，用户应当时常小心谨慎，因为它就像有刀具长度偏置值那样移动。<br>
+                注意 2) 用户除了能够用 G49 命令来取消刀具长度补偿，还能够用偏置号码 H0 的设置(G43/G44 H0) 
+                来获得同样效果。<br>
+                注意 3) 若在刀具长度补偿期间修改偏置号码，先前设置的偏置值会被新近赋予的偏置值替换。<br>
+                标系就被取消。以上命令也能够用于取消局部坐标系。<br>
+                <br>
+                <b>注意 (1)</b>  当用户执行手动原点返回时，局部坐标系执行原点返回的轴的原点与工件坐标系就等同了。<br>
+                也就是说，这个操作与 [G52a0;] 命令一样 (a: 是执行原点返回进程的那个轴)。<br>
+                <b>注意 (2)</b> 即便已经设置了局部坐标，工件坐标系或者机床坐标系不会被改变。<br>
+                <b>注意 (3) </b>工件坐标系是用 G92 
+                命令设置的。如果各个坐标值未设置， 局部坐标系里未给坐标值的轴将被设置成先前各轴一样的值。<br>
+                <b>注意 (4)</b> 在刀具直径偏置方式下，用 G52 
+                命令来暂时取消该偏置功能。 <br>
+                <b>注意 (5)</b> 当移动命令紧跟在 G52 
+                程序块功能之后发出时，通常必须采用绝对命令。<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%" id="AutoNumber7">
+                <tr>
+                  <td ><p align="center" class="bar1">G52局部坐标系设定（G52）</td>
+                </tr>
+              </table>
+              <p>  1.机能及目的<br>
+                在G54~G59 
+                的各工件坐标系上可以用G52指令，指定局部坐标系的程式原点。G52指令可以取代G92指令，用来指定加工程式的原点与工件终点的偏移量。</p>
+              <p>  2.格式<br>
+                G54 (G54~G59) G52 X＿ Y＿ Z＿ ;  </p>
+              <p>  3.详细说明<br>
+                 G52指令指定后在次一G52指令指定前保持有效。且G52指令指定时不产生移动。G52指令可以不改变工件坐标系(G54~G59) 
+                而可以任意再设定加工的坐标系。<br>
+                电源投入后，参考原点复归及挡块式手动原点复归时局部坐标系被取消。<br>
+                (G54~G59) G52X 0 Y 0 Z 0；可取消局部坐标系。<br>
+                绝对值模式（G90）时的坐标指令会向局部坐标系的位置移动。<br>
+                </p></TD>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 height=20 class="bar1">
+          <TR>
+            <td height="20" align="center" class="bar1" > G53&nbsp; 基本机械坐标系 
+            (G53)</td>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+          <TR>
+            <TD height=26  class=contents1  vAlign=top><br>
+               1. 格式 <br>
+              ( G90 )
+              G53 X_ Y_ Z_;<br>
+              <br>
+               2. 功能<br>
+               基本机械坐标系为机械上固定位置（刀具交换位置、行程极限位置等）的坐标系。<br>
+              G53指令及坐标指令指定时，刀具向基本机械坐标系上的指令位置移动。<br>
+              <br>
+               3.详细说明<br>
+               基本机械坐标系在电源投入后，以自动或手动参考原点复归。决定的参考原点为基准，自动地建立起坐标系。<br>
+              基本机械坐标系不会因G92指定而改变。<br>
+              G53指令仅在指定的单节有效。<br>
+              G53指令在增量值指令（G91）时，以选择中的坐标系的增量值移动。<br>
+              即使G53指令指定时，指令轴的刀具径补正量不取消。<br>
+              第1参考原点的坐标值是以基本机械坐标系的零点（原点）起到参考原点复归位置的距离。<br>
+              所有G53命令均以快速进给方式移动。<br>
+              当G53命令和G28（零点复归）命令被指定在同一单节时，后续的命令有效。
+              <p> <img border="0" src="edit/e11.gif" width="369" height="162"> </TD>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 height=20 class="bar1">
+          <TR>
+            <td height="20" align="center" class="bar1" >G54-G59&nbsp; 工件坐标系
+            设定和工件坐标系补正(G54-G59)</td>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+          <TR>
+            <TD height=26  class=contents1  vAlign=top><br>
+               1. 格式 <br>
+              工件坐标系选择 (G54&#12316;G59) <br>
+              (G90) G54 X＿ Y＿ Z＿; 
+              <p>工件坐标系设定 <br>
+                (G54) G92 X＿ Y＿ Z＿;</p>
+              <p>  2.机能目的<br>
+                工件坐标是以加工工件的斟点做为原点，便于加工程式作成的坐标系。<br>
+                本指令的使用，可以移动工件坐标系的位置。工件坐标系于程式作成时可有6种(G54~G59) <br>
+                对于可以本指令所选择的现在的工件坐标系，刀具的现在位置变成以现在工件坐标系的指令坐标值重新设定。（刀具的现在位置含刀具径，刀具长。）<br>
+                本指令的使用，刀具的现在位置变成以假想机械坐标系的指令坐标值的设定。（刀具的现在位置含刀具径、刀具长。）(G54, G92)</p>
+              <p> <br>
+                 2. 功能<br>
+                G54&#12316;G59 
+                指令即使有工件坐标系的切换时，指令轴的刀具径的补正量亦不取消。<br>
+                电源投入时，G54坐标系被选择。<br>
+                G54&#12316;G59 指令是持续模式指令。<br>
+                G92指令的指定使坐标系移动。<br>
+                工件坐标补正量的设定量是以基本机械坐标系零点起的距离表示。</p>
+              <p> <img border="0" src="edit/e12.gif" width="452" height="229"></p>
+              <p> G54（工件坐标系）的模式时，以G92指令可以设定新工件坐标系。同时其它的工件坐标2~6 
+                （G55~G59）也与工件坐标系平行移动，从而设定新的工件坐标系2~6。<br>
+                新的工件参考点（原点）起，仅以工件坐标系补正量的移动位置构成假想机械坐标系。</p>
+              <p> <img border="0" src="edit/e13.gif" width="493" height="301"></p>
+              <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="587" id="AutoNumber8">
+                <tr>
+                  <td ><p align="center" class="bar1">G63攻牙模式（G63）</td>
+                </tr>
+              </table>
+              <p>  1.机能及目的<br>
+                G63指令可使NC系统建立最适合攻牙的控制模式说明如下：<br>
+                切削百分率固定为100%。<br>
+                单节间的减速指令无效。<br>
+                进给保持无效。<br>
+                单节停止无效。<br>
+                攻牙模式的信号输出。G63模式可用正确停止检查（G61），自动转角百分率调整。（G62）或切削模式（G64）取消。</p>
+              <p>  2.格式<br>
+                G63；</p>
+              <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="587" id="AutoNumber9" height="19">
+                <tr>
+                  <td height="19" ><p align="center" class="bar1">G64切削模式（G64）</td>
+                </tr>
+              </table>
+              <p>  1.机能及目的<br>
+                G64指令使用时，NC以平滑的切削面的切削模式加工此一模式在正确停止横坐标模式（G61）及逆向切削进给单节间不作减速停止，而是连续的执行次一单节。G64指令可用正确停止横坐标模式（G61），自动转角百分率调整（G62）或攻牙模式（G63）取消。</p>
+              <p>  2.格式<br>
+                G64；<br>
+                </p>
+              <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="587" id="AutoNumber10">
+                <tr>
+                  <td ><p align="center" class="bar1">固定循环　</td>
+                </tr>
+              </table>
+              <p> 标准固定循环；G80~G89, G73, G74, G76 </p>
+              <p>  1.机能及目的<br>
+                位置定位及钻孔和攻牙等的加工程式可以仅用1个单节的指令，按照一定的加工顺序执行的机能，称做固定循环。循环的加工顺序及机能一览表如下所示。另外，依据标准固定循环的编辑，使用者本身可以变更固定循环的加工顺序及登录，也可以自己把编辑的固定循环程式输入NC系统中。固定循环机能一览表如下表所示。</p>
+              <table border="1" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#00309C" width="100%" id="AutoNumber11" height="314">
+                <tr>
+                  <td width="13%" height="54" rowspan="2" align="center">G码</td>
+                  <td width="15%" height="54" rowspan="2" align="center">钻孔开始方向（－Z方向）</td>
+                  <td width="21%" height="27" colspan="2" align="center">在孔底的动作</td>
+                  <td width="17%" height="54" rowspan="2" align="center">旋转动作（＋Z方向）</td>
+                  <td width="17%" height="54" rowspan="2" align="center">用途</td>
+                </tr>
+                <tr>
+                  <td width="10%" height="27" align="center">暂停</td>
+                  <td width="11%" height="27" align="center">主轴</td>
+                </tr>
+                <tr>
+                  <td width="13%" height="19" align="center">G73</td>
+                  <td width="15%" height="19" align="center">间歇进给</td>
+                  <td width="10%" height="19" align="center">有</td>
+                  <td width="11%" height="19" align="center">－</td>
+                  <td width="17%" height="19" align="center">快速进给</td>
+                  <td width="17%" height="19" align="center">步进循环</td>
+                </tr>
+                <tr>
+                  <td width="13%" height="19" align="center">G74</td>
+                  <td width="15%" height="19" align="center">切削进给</td>
+                  <td width="10%" height="19" align="center">有</td>
+                  <td width="11%" height="19" align="center">正转</td>
+                  <td width="17%" height="19" align="center">切削进给</td>
+                  <td width="17%" height="19" align="center">反向攻牙循环</td>
+                </tr>
+                <tr>
+                  <td width="13%" height="19" align="center">G76</td>
+                  <td width="15%" height="19" align="center">切削进给</td>
+                  <td width="10%" height="19" align="center">－</td>
+                  <td width="11%" height="19" align="center">定位主轴停止</td>
+                  <td width="17%" height="19" align="center">快速进给</td>
+                  <td width="17%" height="19" align="center">精镗孔循环</td>
+                </tr>
+                <tr>
+                  <td width="13%" height="19" align="center">G80</td>
+                  <td width="15%" height="19" align="center">－</td>
+                  <td width="10%" height="19" align="center">－</td>
+                  <td width="11%" height="19" align="center">－</td>
+                  <td width="17%" height="19" align="center">－</td>
+                  <td width="17%" height="19" align="center">取消</td>
+                </tr>
+                <tr>
+                  <td width="13%" height="19" align="center">G81</td>
+                  <td width="15%" height="19" align="center">切削进给</td>
+                  <td width="10%" height="19" align="center">－</td>
+                  <td width="11%" height="19" align="center">－</td>
+                  <td width="17%" height="19" align="center">快速进给</td>
+                  <td width="17%" height="19" align="center">钻孔嵌镗孔循环</td>
+                </tr>
+                <tr>
+                  <td width="13%" height="19" align="center">G82</td>
+                  <td width="15%" height="19" align="center">切削进给</td>
+                  <td width="10%" height="19" align="center">有</td>
+                  <td width="11%" height="19" align="center">－</td>
+                  <td width="17%" height="19" align="center">快速进给</td>
+                  <td width="17%" height="19" align="center">钻孔计数式镗孔循环</td>
+                </tr>
+                <tr>
+                  <td width="13%" height="19" align="center">G83</td>
+                  <td width="15%" height="19" align="center">间歇进给</td>
+                  <td width="10%" height="19" align="center">－</td>
+                  <td width="11%" height="19" align="center">－</td>
+                  <td width="17%" height="19" align="center">快速进给</td>
+                  <td width="17%" height="19" align="center">钻深孔循环</td>
+                </tr>
+                <tr>
+                  <td width="13%" height="19" align="center">G84</td>
+                  <td width="15%" height="19" align="center">切削进给</td>
+                  <td width="10%" height="19" align="center">有</td>
+                  <td width="11%" height="19" align="center">反转</td>
+                  <td width="17%" height="19" align="center">切削进给</td>
+                  <td width="17%" height="19" align="center">攻牙循环</td>
+                </tr>
+                <tr>
+                  <td width="13%" height="19" align="center">G85</td>
+                  <td width="15%" height="19" align="center">切削进给</td>
+                  <td width="10%" height="19" align="center">－</td>
+                  <td width="11%" height="19" align="center">－</td>
+                  <td width="17%" height="19" align="center">切削进给</td>
+                  <td width="17%" height="19" align="center">镗孔循环</td>
+                </tr>
+                <tr>
+                  <td width="13%" height="19" align="center">G86</td>
+                  <td width="15%" height="19" align="center">切削进给</td>
+                  <td width="10%" height="19" align="center">有</td>
+                  <td width="11%" height="19" align="center">停止</td>
+                  <td width="17%" height="19" align="center">快速进给</td>
+                  <td width="17%" height="19" align="center">镗孔循环</td>
+                </tr>
+                <tr>
+                  <td width="13%" height="19" align="center">G87</td>
+                  <td width="15%" height="19" align="center">快速进给</td>
+                  <td width="10%" height="19" align="center">－</td>
+                  <td width="11%" height="19" align="center">正转</td>
+                  <td width="17%" height="19" align="center">切削进给</td>
+                  <td width="17%" height="19" align="center">反向镗孔循环</td>
+                </tr>
+                <tr>
+                  <td width="13%" height="19" align="center">G88</td>
+                  <td width="15%" height="19" align="center">切削进给</td>
+                  <td width="10%" height="19" align="center">有</td>
+                  <td width="11%" height="19" align="center">停止</td>
+                  <td width="17%" height="19" align="center">快速进给</td>
+                  <td width="17%" height="19" align="center">镗孔循环</td>
+                </tr>
+                <tr>
+                  <td width="13%" height="19" align="center">G89</td>
+                  <td width="15%" height="19" align="center">切削进给</td>
+                  <td width="10%" height="19" align="center">有</td>
+                  <td width="11%" height="19" align="center">－</td>
+                  <td width="17%" height="19" align="center">切削进给</td>
+                  <td width="17%" height="19" align="center">镗孔循环</td>
+                </tr>
+              </table>
+              <p>  2.格式<br>
+                <img border="0" src="edit/e14.gif" width="568" height="104"></p>
+              <p>  3.详细说明  <br>
+                孔加工模式有钻孔、反镗孔、攻牙和镗孔固定循环模式，孔定位资料用于X和Y轴的定位，也加工资料是实际加工资料，同期选择是由G84或G74指令选择同期或非同期或非同期攻牙方式。孔位置资料及重复次数是非持续模式，孔加工资料是持续模式。<br>
+                在固定循环中或固定循环同一单节中，M00，M01指定时，固定循环忽视M00，M01指令，在定位后M00，M01信号才输出。X，Y，Z，R中的任一人指定时，固定循环即可实施。<br>
+                实际的动作可分为下列7种<br>
+                &#8226;动作1：指示X，Y轴位置后以G00作位置定位。<br>
+                &#8226;动作2：位置定位完了后（到达始点），若是G87指令时，M19的指令从控制装置向机械侧输入；M指令执行且完了信号送回控制装置时，次一动作开始执行。其次如单节停止开关为ON时，位置定位完了后，单节众停止。</p>
+              <p> <img border="0" src="edit/e15.gif" width="302" height="190"></p>
+              <p>&#8226;动作3：到R点的定位，是以快速进给执行。<br>
+                &#8226;动作4：孔加工是以切削进给执行。<br>
+                &#8226;动作5：孔位置加工的动作，按固定循环的模式而异，有主轴停止（M05）、主轴反转（M04）、主轴正转（M03）、暂停、刀具位移等。<br>
+                &#8226;动作6：退回R点的动作，按固定循环的模式而异，有切削进给及快速进给等模式。<br>
+                &#8226;动作7：刀具快速进给回到起始点。但是，固定循环完了的动作为动作6或动作7，可按下列G指令作选择。<br>
+                G98　　起始点基准复归<br>
+                G99　　R点基准复归<br>
+                G98/G99指令是持续模式指令，例如G98一旦指定后，直到G99指定为止，一直保持有效。<br>
+                NC运转准备完了时的初始状态是G98模式。如果没有X，Y，Z或R指令，则孔加工资料忽略。</p>
+              <p>固定循环的位址及意义：</p>
+              <table border="1" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#00309C" width="100%" id="AutoNumber12" height="198">
+                <tr>
+                  <td width="18%" height="19" align="center">位址</td>
+                  <td width="82%" height="19" align="center">位址的意义</td>
+                </tr>
+                <tr>
+                  <td width="18%" height="19" align="center">G</td>
+                  <td width="82%" height="19" align="center">固定循环顺序的选择(G80~G89, G73, G74, 
+                    G76)</td>
+                </tr>
+                <tr>
+                  <td width="18%" height="19" align="center">X</td>
+                  <td width="82%" height="19" align="center">钻孔点位置（绝对值或增量值）的指定</td>
+                </tr>
+                <tr>
+                  <td width="18%" height="19" align="center">Y</td>
+                  <td width="82%" height="19" align="center">钻孔点位置（绝对值或增量值）的指定</td>
+                </tr>
+                <tr>
+                  <td width="18%" height="19" align="center">Z</td>
+                  <td width="82%" height="19" align="center">孔底部位置（绝对值或增量值）的指定</td>
+                </tr>
+                <tr>
+                  <td width="18%" height="19" align="center">P</td>
+                  <td width="82%" height="19" align="center">在孔底部位置时，暂停时间的指定（小数点以下忽略）</td>
+                </tr>
+                <tr>
+                  <td width="18%" height="19" align="center">Q</td>
+                  <td width="82%" height="19" align="center">G73, G83 中，每次的切入量，或G76, G87 
+                    中位移量的指定（增量值）</td>
+                </tr>
+                <tr>
+                  <td width="18%" height="19" align="center">R</td>
+                  <td width="82%" height="19" align="center">R点全置（绝对值或增量值）的指定</td>
+                </tr>
+                <tr>
+                  <td width="18%" height="19" align="center">F</td>
+                  <td width="82%" height="19" align="center">切削进给速度的指定</td>
+                </tr>
+                <tr>
+                  <td width="18%" height="18" align="center">L</td>
+                  <td width="82%" height="18" align="center">固定循环重复次数的指定0~9999</td>
+                </tr>
+              </table>
+              <p>绝对值指令与增量值指令的不同处：</p>
+              <p> <img border="0" src="edit/e16.gif" width="418" height="181"></p></TD>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 height=20 class="bar1">
+          <TR>
+            <td height="20" align="center" class="bar1" >G73&nbsp; 步进循环(G73)</td>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+          <TR>
+            <TD height=26  class=contents1  vAlign=top><br>
+               1. 格式 <br>
+              G73 Xx1 Yy1 Zz1 Qq1 Rr1 Ff1 Pp1 
+              ，Ii1，Jj1；<br>
+              P : 暂停指定<br>
+              <br>
+               2. 功能<br>
+              <img border="0" src="edit/e17.gif" width="510" height="339"> </TD>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 height=20 class="bar1">
+          <TR>
+            <td height="20" align="center" class="bar1" >G74&nbsp; 反向攻牙(G74) </td>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+          <TR>
+            <TD height=26  class=contents1  vAlign=top><br>
+               1. 格式 <br>
+              G74 Xx1 Yy1 Zz1 Rr1 Pp1 Rr2(or S1,S2) ,Ii1 ,Jj1;<br>
+              P : 暂停指定<br>
+              <br>
+               2. 功能<br>
+              <img border="0" src="edit/e18.gif" width="465" height="205">
+              <p>  当“r2”为1时，为同期攻牙模式，当“r2”为0时，为非同期攻牙模式。G74执行时，进给百分率调整无效，百分率调整自动地为100%。当暂时停止被按下快速进给时顺序③~⑥将无法立即停止，直到⑥执行完了后才停止，但如在①, 
+                ②, ⑨时，则立即暂停。单节停止运转时的停止位置为①, ②, 
+                ⑨指令完了时。G74及G84模式时，（攻牙中）的信号从NC输出。G74同步攻牙模式中M3, M4, M5 和S码不输出。<br>
+                此机能是在同期攻牙时，主轴及攻牙伺服轴之间的加减速速模式可以有最大有3段的选择。使行主轴的实际加减速模式更加接近速度回踟时的加减速模式，在各档的加减模式可最大也可以设定至3段加减速。              
+              <p><br>
+                
+              </TD>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 height=20 class="bar1">
+          <TR>
+            <td height="20" align="center" class="bar1" >G76&nbsp; 精镗孔循环(G76)</td>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+          <TR>
+            <TD height=26  class=contents1  vAlign=top><br>
+               1. 格式 <br>
+              G76 Xx1 Yy1 Zz1 Rr1 Iq1 Jq2 Ff1；<br>
+              <br>
+               2. 功能<br>
+              <img border="0" src="edit/e19.gif" width="477" height="268">
+              <p> 单节停止运转时的停止位置为①, ②, 
+                ⑦指令完了时。本指令的使用，在加工面上不会有伤痕，强以作高精度的镗孔加工。（切削后的退回与刀尖相反方向位移动作）<br>
+                位移量依位址I, J, K 如下的指定。 <br>
+                G17时：I, J <br>
+                G18时：K, I <br>
+                G19时：J, K <br>
+                位移量以直线补间执行进给速度以F指定。</p>
+              <p><br>
+              </p></TD>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 height=20 class="bar1">
+          <TR>
+            <td height="20" align="center" class="bar1" >G 
+              80&nbsp; 取消固定循环进程 
+              (G80)</td>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%" height="227">
+          <TR>
+            <TD height=227  class=contents1  vAlign=top><p><br>
+              1. 格式 <br>
+              G80;<br>
+              <br>
+              2. 功能<br>
+              这个命令取消固定循环方式，机床回到执行正常操作状态。孔的加工数据，包括 R 点， Z 
+              点等等，都被取消；但是移动速率命令会继续有效。<br>
+              <br>
+              <b>(注)</b> 要取消固定循环方式，用户除了发出G80 
+              命令之外，还能够用 G 代码 01 组 (G00, G01, G02, G03 等等) 中的任意一个命令。
+
+</TD>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 height=20 class="bar1">
+          <TR>
+            <td height="20" align="center" class="bar1" >G 
+              81&nbsp; 
+              
+              钻孔，铅孔(G81)</td>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+          <TR>
+            <TD height=26  class=contents1  vAlign=top><br>
+               1. 格式 <br>
+              G81 Xx1 Yy1 Zz1 Rr1 Ff1，Ii1 ，Jj1；<br>
+              <br>
+               2. 功能<br>
+              <img border="0" src="edit/e20.gif" width="407" height="205"><br>
+              G81 命令可用于一般的孔加工。 </TD>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 height=20 class="bar1">
+          <TR>
+            <td height="20" align="center" class="bar1" >G 
+              82&nbsp; 
+              钻孔，计数式镗孔(G82)</td>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+          <TR>
+            <TD height=26  class=contents1  vAlign=top><br>
+               1. 格式 <br>
+              G82 Xx1 Yy1 Zz1 Rf1 Ff1 Pp1，Ii1 ，Jj1；<br>
+              P : 暂停指定
+              <p> <br>
+                 2. 功能<br>
+                <img border="0" src="edit/e21.gif" width="396" height="195"></p></TD>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 height=20 class="bar1">
+          <TR>
+            <td height="20" align="center" class="bar1" >G83&nbsp; 深孔钻循环(G83)</td>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+          <TR>
+            <TD height=26  class=contents1  vAlign=top><br>
+               1. 格式 <br>
+              G83 Xx1 Yy1 Zz1 Rr1 Qq1 
+              Ff1，Ii1，Jj1； <br>
+              Q ： 每次切削量的指定，通常以增量值来指定<br>
+               <br>
+               2. 功能<br>
+              <img border="0" src="edit/e22.gif" width="532" height="244"><br>
+              </TD>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 height=20 class="bar1">
+          <TR>
+            <td height="20" align="center" class="bar1" >G84&nbsp; 攻牙循环(G84)</td>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+          <TR>
+            <TD height=26  class=contents1  vAlign=top><br>
+               1. 格式 <br>
+              G84 Xx1 Yy1 Zz1 Rr1 Ff1 Pp1 Rr2 (或 S1，S2) ，Ii1，Jj1；<br>
+              P_:暂停指定
+              <p> <br>
+                 2. 功能<br>
+                <img border="0" src="edit/e23.gif" width="426" height="235"><br>
+                </p>
+              <p> 当“r2”为1时，执行同期攻牙模式，当“r2”为0时执行非同期攻牙模式。G84执行时，进给百分率调整无效，百分率调整自动变为100%。空跑也无效。<br>
+                G84执行中，自动运转暂停按钮按下时，若加工顺序为③到⑥时，运转不暂停，直到顺序⑥完了后才停止，加工顺序为①， 
+                ②，⑨的快速进给时，运转立即停止。单节停止运转时的停止位置为①， ②，⑨的指令完了时。G84模式时，（攻牙中）的信号从NC输出。<br>
+                此机能是在同期攻牙时，主轴及攻牙伺服轴之间的加减速速模式可以有最大有3段的选择。使得主轴的实际加减速模式更加接近速度回路时的加减速模式，在各齿轮档的加减速模式可最大也可以设定至3段加减速。当攻牙至孔底后反转时，在反转的时，可以使用比主轴旋转速度更快的速度来快速反转，（例如：攻牙指令速度是2000转，而在攻牙反转时，可以4000转）在反转当中，主轴旋转速度将如同持续情报一样一直被保持住。</p>
+              <p><br>
+              </p></TD>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 height=20 class="bar1">
+          <TR>
+            <td height="20" align="center" class="bar1" >G85&nbsp; 镗孔循环(G85)</td>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+          <TR>
+            <TD height=26  class=contents1  vAlign=top><br>
+               1. 格式 <br>
+              G85 Xx1 Yy1 Zz1 Rr1 Ff1，Ii1 ，Jj1；<br>
+              <br>
+               2. 功能<br>
+              <img border="0" src="edit/e24.gif" width="412" height="174"><br>
+              </TD>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 height=20 class="bar1">
+          <TR>
+            <td height="20" align="center" class="bar1" >G86&nbsp; 镗孔(G86)</td>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+          <TR>
+            <TD height=26  class=contents1  vAlign=top><br>
+               1. 格式 <br>
+              G86 Xx1 Yy1 Zz1 Rr1 Ff1 Pp1；<br>
+              <br>
+              2. 功能<br>
+              <img border="0" src="edit/e25.gif" width="449" height="243"></TD>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 height=20 class="bar1">
+          <TR>
+            <td height="20" align="center" class="bar1" >G87&nbsp; 反镗孔循环(G87)</td>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+          <TR>
+            <TD height=26  class=contents1  vAlign=top><br>
+               1. 格式 <br>
+              G86 Xx1 Yy1 Zz1 Rr1 Iq1 Jq2 Ff1； <br>
+              注：<br>
+              请注意z1 及r1 的指定。（z1, r1 的符号相反）另外，无R点复归。
+              <p> <br>
+                 2. 功能<br>
+                <img border="0" src="edit/e26.gif" width="482" height="302"></p>
+              <p> 单节停止运转的停止位置为①④⑥ 
+                的指令完了时。本指令的使用，在加工面上不会有伤痕，可以作高精度的镗孔。（至孔底为止的位置定位有切削后的退回动作，以刀尖相反方向位移执行）<br>
+                移动量用位址I, J, K 指定，如下所示：<br>
+                G17 时︰I, J <br>
+                G18 时︰K, I <br>
+                G19 时︰J, K</p>
+              <p><br>
+              </p></TD>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 height=20 class="bar1">
+          <TR>
+            <td height="20" align="center" class="bar1" >G88&nbsp; 镗孔(G88)</td>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+          <TR>
+            <TD height=26  class=contents1  vAlign=top><br>
+               1. 格式 <br>
+              G88 Xx1 Yy1 Zz1 Rr1 Ff1 Pp1；
+              <p> <br>
+                 2. 功能<br>
+                <img border="0" src="edit/e27.gif" width="471" height="265"><br>
+                </p></TD>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 height=20 class="bar1">
+          <TR>
+            <td height="20" align="center" class="bar1" >G89&nbsp; 镗孔循环(G89)</td>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+          <TR>
+            <TD height=26  class=contents1  vAlign=top><br>
+               1. 格式 <br>
+              G89 Xx1 Yy1 Zz1 Rr1 Ff1 Pp1；
+              <p> <br>
+                 2. 功能<br>
+                <img border="0" src="edit/e28.gif" width="414" height="218"><br>
+                </p></TD>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 height=20 class="bar1">
+          <TR>
+            <td height="20" align="center" class="bar1" > G90/G91&nbsp; 绝对命令/增量命令 
+            (G90/G91)</td>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+          <TR>
+            <TD height=26  class=contents1  vAlign=top><br>
+               1.机能及目的<br>
+              依据G90，G91指令，可指定坐标指令为绝对值或增量值指令，但是，R指定圆弧半径或I, J, K 指定圆弧中心，通常为增量指定。
+              <p>  2.格式<br>
+                G9△ Xx1 Yy1 Zz1 αα1；（“α”为附加轴） <br>
+                G90︰绝对值指令 <br>
+                G91︰增量值指令</p>
+              <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%" id="AutoNumber13">
+                <tr>
+                  <td ><p align="center" class="bar1">G92坐标系设定（G92）</td>
+                </tr>
+              </table>
+              <p>  1.机能及目的<br>
+                G92指令指定时，机械不移动，但是绝对值坐标系及现在位置显示的值会按指令值更新设立。</p>
+              <p>  2.格式<br>
+                G92 X＿ Y＿ Z＿ α_；（α表示附加轴）</p>
+              <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%" id="AutoNumber14">
+                <tr>
+                  <td ><p align="center" class="bar1">G94/G95同期进给（G94/G95）</td>
+                </tr>
+              </table>
+              <p>  1.机能及目的<br>
+                按G95指令，可以用F指令方式指定每转相对的进给量，此指令使用时，需附有主轴编码器。G94指令提供切换回每分钟进给方式（非同期切削），在该方式下可指定每分钟相对进给量的进给方式。</p>
+              <p>  2.格式<br>
+                G94︰每分钟进給 (mm/min) （非同期切削） (F1=1mm/min) <br>
+                G95︰每转进給 (mm/rev) （同期切削） (F1=0.01mm/rev) <br>
+                G95指令为持续模式指令，直至G94指令使用为止均有效。</p></TD>
+          </TR>
+        </TABLE></TD>
+    </TR>
+  </TBODY>
+</TABLE>
+</body>
+</html>

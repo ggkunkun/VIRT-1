@@ -1,0 +1,865 @@
+{
+  "version": "1.0",
+  "created": "2026-11-18",
+  "total": 50,
+  "shuffle_seed": 20261118,
+  "note": "依据官方手册语料+本机实装+实测工具行为；答案为可核验事实，非主观判断",
+  "answer_distribution": {
+    "B": 13,
+    "D": 11,
+    "A": 16,
+    "C": 10
+  },
+  "questions": [
+    {
+      "id": "EX-001",
+      "domain": "边界与能力",
+      "level": "基础",
+      "question": "CIMCO Edit 2026 的 Machine Simulation（机床仿真）在官方手册中如何描述？",
+      "options": [
+        "A. 需单独下载安装的插件",
+        "B. 随软件安装但需有效 license key 才可用",
+        "C. 完全不存在",
+        "D. 完全内置免费功能"
+      ],
+      "answer": "B",
+      "answer_text": "随软件安装但需有效 license key 才可用",
+      "source": "simulation/machine-simulation/",
+      "explanation": "官方原文：add-on，已随 CIMCO Edit 安装，安装有效 license key 后功能可用",
+      "boundary": "B-01"
+    },
+    {
+      "id": "EX-002",
+      "domain": "边界与能力",
+      "level": "基础",
+      "question": "CIMCO Edit 2026 是否内建程序版本管理（version control）？",
+      "options": [
+        "A. 内建完整版本管理",
+        "B. 有 Git 集成",
+        "C. 有本地历史快照",
+        "D. 仅有 File Compare 文件差异对比，无版本管理"
+      ],
+      "answer": "D",
+      "answer_text": "仅有 File Compare 文件差异对比，无版本管理",
+      "source": "program-tabs/file-compare/ + 语料0命中",
+      "explanation": "version control 在161页语料0命中；版本管理属 NCBase/MDCMax",
+      "boundary": "B-02"
+    },
+    {
+      "id": "EX-003",
+      "domain": "边界与能力",
+      "level": "基础",
+      "question": "官方支持的仿真控制系统中是否包含华中数控（Huazhong）？",
+      "options": [
+        "A. 不在官方清单，只能 ISO_G-Code 通用近似",
+        "B. 部分支持",
+        "C. 原生支持",
+        "D. 需付费插件"
+      ],
+      "answer": "A",
+      "answer_text": "不在官方清单，只能 ISO_G-Code 通用近似",
+      "source": "simulation/supported-controls/*",
+      "explanation": "Huazhong 在官方清单0命中",
+      "boundary": "B-03"
+    },
+    {
+      "id": "EX-004",
+      "domain": "边界与能力",
+      "level": "基础",
+      "question": "CIMCO Edit 中 Posts/*.js 后处理的主要用途是？",
+      "options": [
+        "A. 通用 CAM 刀路后处理",
+        "B. CNC-Calc 后处理与反向后处理",
+        "C. 3D 建模",
+        "D. FEA 分析"
+      ],
+      "answer": "B",
+      "answer_text": "CNC-Calc 后处理与反向后处理",
+      "source": "editor-setup/file-types/setupfiletypes_cnc_calc/",
+      "explanation": "Post Process 在手册中仅见于 CNC-Calc 与 Transform",
+      "boundary": "B-04"
+    },
+    {
+      "id": "EX-005",
+      "domain": "边界与能力",
+      "level": "基础",
+      "question": "CIMCO Edit 2026 是否提供 2D 绘图与 3D 实体建模模块？",
+      "options": [
+        "A. 仅 3D",
+        "B. 不提供，职责为 NC 编辑/仿真/通信",
+        "C. 仅 2D",
+        "D. 提供完整 CAD"
+      ],
+      "answer": "B",
+      "answer_text": "不提供，职责为 NC 编辑/仿真/通信",
+      "source": "introduction/",
+      "explanation": "CIMCO Edit 是 NC 编辑器，无几何建模模块",
+      "boundary": "B-05"
+    },
+    {
+      "id": "EX-006",
+      "domain": "边界与能力",
+      "level": "基础",
+      "question": "本能力建设中的 20次实操/98%盲评指标如何处理？",
+      "options": [
+        "A. 编造日志",
+        "B. 用可复跑工程化等价手段替代并标明性质",
+        "C. 忽略",
+        "D. 直接宣称达标"
+      ],
+      "answer": "B",
+      "answer_text": "用可复跑工程化等价手段替代并标明性质",
+      "source": "CAPABILITY_BOUNDARIES.md",
+      "explanation": "诚实性硬约束：不得伪造人工实操或外部盲评",
+      "boundary": "B-06"
+    },
+    {
+      "id": "EX-007",
+      "domain": "边界与能力",
+      "level": "基础",
+      "question": "官方手册中 CIMCO Edit 被描述为？",
+      "options": [
+        "A. 3D CAD 系统",
+        "B. 只在 Linux 运行",
+        "C. CNC program editor（含编辑/仿真/通信）",
+        "D. 财务软件"
+      ],
+      "answer": "C",
+      "answer_text": "CNC program editor（含编辑/仿真/通信）",
+      "source": "introduction/",
+      "explanation": "官方：world's most popular CNC program editor, editing/simulation/communication tool",
+      "boundary": null
+    },
+    {
+      "id": "EX-008",
+      "domain": "边界与能力",
+      "level": "基础",
+      "question": "机床仿真（Machine Simulation）在 CIMCO Edit 中的定位是？",
+      "options": [
+        "A. 仅网页版",
+        "B. add-on（需许可）",
+        "C. 完全独立软件",
+        "D. 开源插件"
+      ],
+      "answer": "B",
+      "answer_text": "add-on（需许可）",
+      "source": "simulation/machine-simulation/",
+      "explanation": "官方明确 add-on；本机许可状态未核实",
+      "boundary": "B-01"
+    },
+    {
+      "id": "EX-009",
+      "domain": "边界与能力",
+      "level": "基础",
+      "question": "程序/版本管理属于哪个 CIMCO 产品域？",
+      "options": [
+        "A. VERICUT",
+        "B. NCBase / MDCMax",
+        "C. SOLIDWORKS",
+        "D. CIMCO Edit 本体"
+      ],
+      "answer": "B",
+      "answer_text": "NCBase / MDCMax",
+      "source": "CAPABILITY_BOUNDARIES.md B-02",
+      "explanation": "Edit 只有 File Compare；版本管理属 NCBase/MDCMax",
+      "boundary": "B-02"
+    },
+    {
+      "id": "EX-010",
+      "domain": "边界与能力",
+      "level": "基础",
+      "question": "本体系对拟人化培训指标采取的根本原则是？",
+      "options": [
+        "A. 引用他人成绩",
+        "B. 真实有效、可核验、不伪造",
+        "C. 口头保证即可",
+        "D. 结果导向可不择手段"
+      ],
+      "answer": "B",
+      "answer_text": "真实有效、可核验、不伪造",
+      "source": "EVIDENCE.md + CAPABILITY_BOUNDARIES.md",
+      "explanation": "用户价值观：实测证据、可量化可验证、不采信推断式保证",
+      "boundary": "B-06"
+    },
+    {
+      "id": "EX-011",
+      "domain": "编辑器与NC函数",
+      "level": "中等",
+      "question": "官方 .MAC [RENUM] 段的 SKIP 默认跳过的行前缀是？",
+      "options": [
+        "A. ;,#",
+        "B.  :,M",
+        "C. N,G",
+        "D. %,O"
+      ],
+      "answer": "D",
+      "answer_text": "%,O",
+      "source": "Samples/Formulas/Formulas.MAC [RENUM]",
+      "explanation": "实测本机 MAC 文件：SKIP = %,O；跳过程序起始符与程序号行",
+      "boundary": null
+    },
+    {
+      "id": "EX-012",
+      "domain": "编辑器与NC函数",
+      "level": "中等",
+      "question": "NC Functions 菜单下负责块号处理的子项是？",
+      "options": [
+        "A. Bookmarks",
+        "B. Transmission",
+        "C. Block Numbers",
+        "D. Colors"
+      ],
+      "answer": "C",
+      "answer_text": "Block Numbers",
+      "source": "program-tabs/nc-functions/blocknumbers/",
+      "explanation": "Block Numbers 为官方子项",
+      "boundary": null
+    },
+    {
+      "id": "EX-013",
+      "domain": "编辑器与NC函数",
+      "level": "中等",
+      "question": "NC Functions 中的 Transform 功能主要用于？",
+      "options": [
+        "A. 程序几何变换（镜像/旋转/缩放等）",
+        "B. 打印",
+        "C. 颜色设置",
+        "D. 传输文件"
+      ],
+      "answer": "A",
+      "answer_text": "程序几何变换（镜像/旋转/缩放等）",
+      "source": "program-tabs/nc-functions/transform/",
+      "explanation": "Transform 变换是 NC 函数子项",
+      "boundary": null
+    },
+    {
+      "id": "EX-014",
+      "domain": "编辑器与NC函数",
+      "level": "中等",
+      "question": "NC-Assistant 中用于定义用户自定义宏与公式的子项是？",
+      "options": [
+        "A. Macros / Formulas",
+        "B. Colors",
+        "C. Printing",
+        "D. Bookmarks"
+      ],
+      "answer": "A",
+      "answer_text": "Macros / Formulas",
+      "source": "program-tabs/nc-assistant/macros/",
+      "explanation": "官方含 Macros 与 Formulas in Macros",
+      "boundary": null
+    },
+    {
+      "id": "EX-015",
+      "domain": "编辑器与NC函数",
+      "level": "中等",
+      "question": "编辑器中 Bookmarks 功能属于哪个菜单？",
+      "options": [
+        "A. Transmission 菜单",
+        "B. Machine Models",
+        "C. Editor 菜单",
+        "D. DNC Setup"
+      ],
+      "answer": "C",
+      "answer_text": "Editor 菜单",
+      "source": "program-tabs/editor/bookmarks/",
+      "explanation": "Bookmarks 位于 Editor 菜单",
+      "boundary": null
+    },
+    {
+      "id": "EX-016",
+      "domain": "编辑器与NC函数",
+      "level": "中等",
+      "question": "官方语料中正则表达式（Regular Expressions）在何处说明？",
+      "options": [
+        "A. 独立 regex 章节",
+        "B. 系统需求页",
+        "C. 打印机设置",
+        "D. 许可证页"
+      ],
+      "answer": "A",
+      "answer_text": "独立 regex 章节",
+      "source": "regex/",
+      "explanation": "官方手册有独立 Regular Expressions 章节",
+      "boundary": null
+    },
+    {
+      "id": "EX-017",
+      "domain": "编辑器与NC函数",
+      "level": "中等",
+      "question": "多通道（Multi Channel）相关配置在哪个路径？",
+      "options": [
+        "A. editor-setup/file-types/multi-channel/",
+        "B. introduction/",
+        "C. system-requirements/",
+        "D. dnc-setup/"
+      ],
+      "answer": "A",
+      "answer_text": "editor-setup/file-types/multi-channel/",
+      "source": "editor-setup/file-types/multi-channel/",
+      "explanation": "官方有 multi-channel 与 configuration 子页",
+      "boundary": null
+    },
+    {
+      "id": "EX-018",
+      "domain": "编辑器与NC函数",
+      "level": "中等",
+      "question": "NC Functions 的 Scripts 子项支持什么？",
+      "options": [
+        "A. 播放音乐",
+        "B. 编写 NC 功能脚本",
+        "C. 联网下载",
+        "D. 3D 渲染"
+      ],
+      "answer": "B",
+      "answer_text": "编写 NC 功能脚本",
+      "source": "program-tabs/nc-functions/scripts/writing-scripts/",
+      "explanation": "官方有 Writing NC Function Scripts",
+      "boundary": null
+    },
+    {
+      "id": "EX-019",
+      "domain": "编辑器与NC函数",
+      "level": "中等",
+      "question": "外部命令（External Commands）配置位于？",
+      "options": [
+        "A. editor-setup/external-commands/",
+        "B. program-tabs/",
+        "C. simulation/",
+        "D. dnc-setup/ftp-client-protocol/"
+      ],
+      "answer": "A",
+      "answer_text": "editor-setup/external-commands/",
+      "source": "editor-setup/external-commands/",
+      "explanation": "官方有 External Commands 页",
+      "boundary": null
+    },
+    {
+      "id": "EX-020",
+      "domain": "编辑器与NC函数",
+      "level": "中等",
+      "question": "Mazatrol Viewer 在官方手册中位于哪个配置区？",
+      "options": [
+        "A. dnc-setup/",
+        "B. editor-setup/mazatrol-viewer/",
+        "C. simulation/tool-manager/",
+        "D. regex/"
+      ],
+      "answer": "B",
+      "answer_text": "editor-setup/mazatrol-viewer/",
+      "source": "editor-setup/mazatrol-viewer/",
+      "explanation": "官方有独立 Mazatrol Viewer 配置页",
+      "boundary": null
+    },
+    {
+      "id": "EX-021",
+      "domain": "仿真与背绘",
+      "level": "中等",
+      "question": "项目公理规定 G00 快速进给不得怎样？",
+      "options": [
+        "A. 与 G01 混用",
+        "B. 出现在程序中",
+        "C. 高速扎入毛坯",
+        "D. 用于退刀"
+      ],
+      "answer": "C",
+      "answer_text": "高速扎入毛坯",
+      "source": "AGENTS.md §2.E",
+      "explanation": "G00 碰撞哨兵公理：不得高速扎入毛坯",
+      "boundary": null
+    },
+    {
+      "id": "EX-022",
+      "domain": "仿真与背绘",
+      "level": "中等",
+      "question": "Simulation 窗口提供的两个版本是？",
+      "options": [
+        "A. Standard / Fast",
+        "B. Lite / Full",
+        "C. Basic / Pro",
+        "D. 2D / 3D"
+      ],
+      "answer": "A",
+      "answer_text": "Standard / Fast",
+      "source": "simulation/standard-version/ + simulation/fast-version/",
+      "explanation": "官方有 Simulation Window Standard/Fast Version",
+      "boundary": null
+    },
+    {
+      "id": "EX-023",
+      "domain": "仿真与背绘",
+      "level": "中等",
+      "question": "Geometry Manager 属于哪个仿真标签页？",
+      "options": [
+        "A. 独立 exe",
+        "B. DNC Setup",
+        "C. Editor 菜单",
+        "D. Simulation/Geometry Manager 停靠窗"
+      ],
+      "answer": "D",
+      "answer_text": "Simulation/Geometry Manager 停靠窗",
+      "source": "simulation/geometry-manager/",
+      "explanation": "官方：Backplot 打开时可同时看到 Geometry Manager",
+      "boundary": null
+    },
+    {
+      "id": "EX-024",
+      "domain": "仿真与背绘",
+      "level": "中等",
+      "question": "Presentation Viewer 的定位是？",
+      "options": [
+        "A. 代码编辑器",
+        "B. 刀具库",
+        "C. FTP 客户端",
+        "D. 独立仿真播放器（stand-alone simulation）"
+      ],
+      "answer": "D",
+      "answer_text": "独立仿真播放器（stand-alone simulation）",
+      "source": "simulation/presentation-viewer/",
+      "explanation": "官方：Presentation Viewer (Stand-alone simulation)",
+      "boundary": null
+    },
+    {
+      "id": "EX-025",
+      "domain": "仿真与背绘",
+      "level": "中等",
+      "question": "自定义机床（Custom Machines）用哪个编辑器配置？",
+      "options": [
+        "A. Registry Editor",
+        "B. FTP Client",
+        "C. Text Editor",
+        "D. Machine Configuration Editor"
+      ],
+      "answer": "D",
+      "answer_text": "Machine Configuration Editor",
+      "source": "editor-setup/custom-machines/configuration-editor/",
+      "explanation": "官方：Machine Configuration Editor",
+      "boundary": null
+    },
+    {
+      "id": "EX-026",
+      "domain": "仿真与背绘",
+      "level": "中等",
+      "question": "若自定机床缺失，CIMCO 可提供的半自动方式是？",
+      "options": [
+        "A. 不支持",
+        "B. 随机生成",
+        "C. 自动联网下载",
+        "D. 让 CIMCO 创建并通过邮件发送 .MacBundle"
+      ],
+      "answer": "D",
+      "answer_text": "让 CIMCO 创建并通过邮件发送 .MacBundle",
+      "source": "simulation/machine-simulation/",
+      "explanation": "官方原文：we will create the machine and email you a single .MacBundle",
+      "boundary": null
+    },
+    {
+      "id": "EX-027",
+      "domain": "仿真与背绘",
+      "level": "中等",
+      "question": "Tool Manager 中可编辑的对象包括？",
+      "options": [
+        "A. 仅颜色",
+        "B. Cutter / Holder / Assembly",
+        "C. 仅 Cutter",
+        "D. 仅块号"
+      ],
+      "answer": "B",
+      "answer_text": "Cutter / Holder / Assembly",
+      "source": "simulation/tool-manager/edit-cutter|edit-holder|edit-assembly/",
+      "explanation": "官方三个子页：edit-cutter/edit-holder/edit-assembly",
+      "boundary": null
+    },
+    {
+      "id": "EX-028",
+      "domain": "仿真与背绘",
+      "level": "中等",
+      "question": "本能力建设的 G00 哨兵实现位于？",
+      "options": [
+        "A. Windows 注册表",
+        "B. FTP 协议",
+        "C. 机床仿真 add-on",
+        "D. bridges/cimco_bridge.py 的静态几何检查"
+      ],
+      "answer": "D",
+      "answer_text": "bridges/cimco_bridge.py 的静态几何检查",
+      "source": "02_full_workflow/pipeline.py + cimco_bridge.py",
+      "explanation": "静态 G00 扎料哨兵，非机床仿真真实碰撞",
+      "boundary": "B-01"
+    },
+    {
+      "id": "EX-029",
+      "domain": "仿真与背绘",
+      "level": "中等",
+      "question": "当语法哨兵未运行时，cimco_bridge 返回的 status 是？",
+      "options": [
+        "A. success",
+        "B. ok",
+        "C. error",
+        "D. partial"
+      ],
+      "answer": "D",
+      "answer_text": "partial",
+      "source": "bridges/cimco_bridge.py",
+      "explanation": "哨兵异常时 status=partial 并附 CHECK_UNAVAILABLE，不伪装通过",
+      "boundary": null
+    },
+    {
+      "id": "EX-030",
+      "domain": "仿真与背绘",
+      "level": "中等",
+      "question": "FANUC Macro B 中 #500~#999 属于哪类变量？",
+      "options": [
+        "A. 局部变量",
+        "B. 公共变量",
+        "C. 系统变量",
+        "D. 常量"
+      ],
+      "answer": "C",
+      "answer_text": "系统变量",
+      "source": "knowledge_base/.../cimco/modules.md",
+      "explanation": "#1~#33 局部、#100~#199 公共、#500~#999 系统",
+      "boundary": null
+    },
+    {
+      "id": "EX-031",
+      "domain": "文件对比与DNC",
+      "level": "中等",
+      "question": "File Compare 中 Sync 功能的作用是？",
+      "options": [
+        "A. 同步刀具库",
+        "B. 同步许可证",
+        "C. 同步两个比较文件间的差异",
+        "D. 同步系统时间"
+      ],
+      "answer": "C",
+      "answer_text": "同步两个比较文件间的差异",
+      "source": "program-tabs/file-compare/sync/",
+      "explanation": "官方有 Sync 子项",
+      "boundary": null
+    },
+    {
+      "id": "EX-032",
+      "domain": "文件对比与DNC",
+      "level": "中等",
+      "question": "File Compare 设置中 Show all differences (No editing) 表示？",
+      "options": [
+        "A. 高亮所有差异且不可编辑",
+        "B. 自动合并",
+        "C. 删除差异",
+        "D. 仅显示第一行"
+      ],
+      "answer": "A",
+      "answer_text": "高亮所有差异且不可编辑",
+      "source": "editor-setup/file-types/file-compare/",
+      "explanation": "官方：show all lines with at least one difference, no editing",
+      "boundary": null
+    },
+    {
+      "id": "EX-033",
+      "domain": "文件对比与DNC",
+      "level": "中等",
+      "question": "Use smart marking 的作用是？",
+      "options": [
+        "A. 标记完整命令而非仅差异部分",
+        "B. 智能拼写",
+        "C. 压缩文件",
+        "D. 自动保存"
+      ],
+      "answer": "A",
+      "answer_text": "标记完整命令而非仅差异部分",
+      "source": "editor-setup/file-types/file-compare/",
+      "explanation": "官方：mark complete command not only different part",
+      "boundary": null
+    },
+    {
+      "id": "EX-034",
+      "domain": "文件对比与DNC",
+      "level": "中等",
+      "question": "DNC Setup 中官方支持的两个主要协议是？",
+      "options": [
+        "A. Standard Serial / FTP Client",
+        "B. TCP/UDP",
+        "C. CAN / Modbus",
+        "D. HTTP / SMTP"
+      ],
+      "answer": "A",
+      "answer_text": "Standard Serial / FTP Client",
+      "source": "dnc-setup/standard-serial-protocol/ + ftp-client-protocol/",
+      "explanation": "官方两大协议章节",
+      "boundary": null
+    },
+    {
+      "id": "EX-035",
+      "domain": "文件对比与DNC",
+      "level": "中等",
+      "question": "Standard Serial Protocol 含哪些配置子项？",
+      "options": [
+        "A. 刀具几何",
+        "B. 3D 模型",
+        "C. 颜色/字体",
+        "D. Port / Transmit / Receive / Directories"
+      ],
+      "answer": "D",
+      "answer_text": "Port / Transmit / Receive / Directories",
+      "source": "dnc-setup/standard-serial-protocol/*",
+      "explanation": "官方子页：Port/Transmit/Receive/Directories/Version Info",
+      "boundary": null
+    },
+    {
+      "id": "EX-036",
+      "domain": "文件对比与DNC",
+      "level": "中等",
+      "question": "本机 DNC 传输模板 .TPL 中包含以下哪个？",
+      "options": [
+        "A. XMODEM.TPL",
+        "B. Excel.TPL",
+        "C. Word.TPL",
+        "D. Photoshop.TPL"
+      ],
+      "answer": "A",
+      "answer_text": "XMODEM.TPL",
+      "source": "Templates/XMODEM.TPL（本机实装）",
+      "explanation": "本机安装目录实装 XMODEM/FANUC-FAPT/LSV2-HH 等 TPL",
+      "boundary": null
+    },
+    {
+      "id": "EX-037",
+      "domain": "文件对比与DNC",
+      "level": "中等",
+      "question": "FTP Client Protocol 的配置子项包括？",
+      "options": [
+        "A. 许可证",
+        "B. 块号/颜色",
+        "C. Port / Send-Receive / Version Info",
+        "D. 刀具/刀柄"
+      ],
+      "answer": "C",
+      "answer_text": "Port / Send-Receive / Version Info",
+      "source": "dnc-setup/ftp-client-protocol/*",
+      "explanation": "官方子页：Port/Send-Receive/Version Info",
+      "boundary": null
+    },
+    {
+      "id": "EX-038",
+      "domain": "文件对比与DNC",
+      "level": "中等",
+      "question": "Transmission 菜单中用于向机床发送程序的标签是？",
+      "options": [
+        "A. Transmission",
+        "B. Backplot",
+        "C. Geometry",
+        "D. Editor"
+      ],
+      "answer": "A",
+      "answer_text": "Transmission",
+      "source": "program-tabs/transmission/transmission/",
+      "explanation": "官方 Transmission 标签",
+      "boundary": null
+    },
+    {
+      "id": "EX-039",
+      "domain": "文件对比与DNC",
+      "level": "中等",
+      "question": "华中数控程序在本体系的适配策略是？",
+      "options": [
+        "A. ISO_G-Code 通用模板近似并现场验证",
+        "B. 官方原生 Mazatrol",
+        "C. 直接忽略",
+        "D. 只能手工输入"
+      ],
+      "answer": "A",
+      "answer_text": "ISO_G-Code 通用模板近似并现场验证",
+      "source": "CAPABILITY_BOUNDARIES.md",
+      "explanation": "B-03：非原生，通用模板近似",
+      "boundary": "B-03"
+    },
+    {
+      "id": "EX-040",
+      "domain": "文件对比与DNC",
+      "level": "中等",
+      "question": "File Compare 的设置仅对什么生效？",
+      "options": [
+        "A. 仅 CNC 文件",
+        "B. 所有文件永久",
+        "C. 仅网络文件",
+        "D. 当前选定的 File Type"
+      ],
+      "answer": "D",
+      "answer_text": "当前选定的 File Type",
+      "source": "editor-setup/file-types/file-compare/",
+      "explanation": "官方：settings only apply to selected File Type",
+      "boundary": null
+    },
+    {
+      "id": "EX-041",
+      "domain": "校验与故障",
+      "level": "高级",
+      "question": "校验器报 Unclosed WHILE DO 1 的根因是？",
+      "options": [
+        "A. WHILE 缺少配对 END",
+        "B. 缺程序号",
+        "C. 单位错误",
+        "D. 主轴未停"
+      ],
+      "answer": "A",
+      "answer_text": "WHILE 缺少配对 END",
+      "source": "cimco_bridge.py",
+      "explanation": "loop_stack 残留即未闭合 WHILE DO",
+      "boundary": null
+    },
+    {
+      "id": "EX-042",
+      "domain": "校验与故障",
+      "level": "高级",
+      "question": "校验器报 Spindle still on at program end (no M05) 应如何修复？",
+      "options": [
+        "A. 删除 M03",
+        "B. 在 M30 前补 M05",
+        "C. 改 G21",
+        "D. 加 G90"
+      ],
+      "answer": "B",
+      "answer_text": "在 M30 前补 M05",
+      "source": "cimco_bridge.py",
+      "explanation": "程序结束前需 M05 停主轴",
+      "boundary": null
+    },
+    {
+      "id": "EX-043",
+      "domain": "校验与故障",
+      "level": "高级",
+      "question": "END 1 without matching WHILE DO 表示？",
+      "options": [
+        "A. END 无对应 WHILE",
+        "B. 变量越界",
+        "C. 循环嵌套过深",
+        "D. 正常"
+      ],
+      "answer": "A",
+      "answer_text": "END 无对应 WHILE",
+      "source": "cimco_bridge.py",
+      "explanation": "loop_stack 为空时遇到 END 即报此错",
+      "boundary": null
+    },
+    {
+      "id": "EX-044",
+      "domain": "校验与故障",
+      "level": "高级",
+      "question": "桥接器对 G/M 代码的合法数值域检查是？",
+      "options": [
+        "A. 1~1000",
+        "B. 0~99",
+        "C. 无检查",
+        "D. 0~999"
+      ],
+      "answer": "D",
+      "answer_text": "0~999",
+      "source": "cimco_bridge.py",
+      "explanation": "num must be 0.0<=num<=999.0；G1005 越界被拦截",
+      "boundary": null
+    },
+    {
+      "id": "EX-045",
+      "domain": "校验与故障",
+      "level": "高级",
+      "question": "G 代码程序缺少 M02/M30 时校验器报？",
+      "options": [
+        "A. Tool error",
+        "B. Program end M02/M30 not found",
+        "C. Syntax error",
+        "D. 无错误"
+      ],
+      "answer": "B",
+      "answer_text": "Program end M02/M30 not found",
+      "source": "cimco_bridge.py",
+      "explanation": "program_end 标志未置位即报此错",
+      "boundary": null
+    },
+    {
+      "id": "EX-046",
+      "domain": "校验与故障",
+      "level": "高级",
+      "question": "CHECK_UNAVAILABLE 前缀的含义是？",
+      "options": [
+        "A. 程序完全合法",
+        "B. 机床碰撞",
+        "C. 哨兵未运行，不得当作检查通过",
+        "D. 网络故障"
+      ],
+      "answer": "C",
+      "answer_text": "哨兵未运行，不得当作检查通过",
+      "source": "cimco_bridge.py",
+      "explanation": "哨兵异常时以 CHECK_UNAVAILABLE 入错误清单，status=partial",
+      "boundary": null
+    },
+    {
+      "id": "EX-047",
+      "domain": "校验与故障",
+      "level": "高级",
+      "question": "全流程管线 S2 门为什么额外检查 errors 数组而不只看 is_valid？",
+      "options": [
+        "A. errors 永远空",
+        "B. 无理由",
+        "C. 桥接器把 M05缺失/G越界列为非critical error 但 is_valid 仍 true",
+        "D. is_valid 永远 false"
+      ],
+      "answer": "C",
+      "answer_text": "桥接器把 M05缺失/G越界列为非critical error 但 is_valid 仍 true",
+      "source": "02_full_workflow/pipeline.py",
+      "explanation": "实测发现：安全类 error 需额外拦截",
+      "boundary": null
+    },
+    {
+      "id": "EX-048",
+      "domain": "校验与故障",
+      "level": "高级",
+      "question": "FANUC 局部变量 #1~#33 与公共变量 #100~#199 的区分依据是？",
+      "options": [
+        "A. 行号",
+        "B. 变量号区间",
+        "C. 字母前缀",
+        "D. 程序名"
+      ],
+      "answer": "B",
+      "answer_text": "变量号区间",
+      "source": "knowledge_base/.../cimco/modules.md",
+      "explanation": "按变量号区间分类",
+      "boundary": null
+    },
+    {
+      "id": "EX-049",
+      "domain": "校验与故障",
+      "level": "高级",
+      "question": "Heidenhain 对话程序乱码时应选择哪个 TYP？",
+      "options": [
+        "A. Heidenhain_Conversational.TYP",
+        "B. Fanuc_30i.TYP",
+        "C. ISO_G-Code.TYP",
+        "D. Mazatrol.TYP"
+      ],
+      "answer": "A",
+      "answer_text": "Heidenhain_Conversational.TYP",
+      "source": "knowledge_base/.../cimco/runbook.md §4",
+      "explanation": "对话程序用专用 TYP；转 ISO 用 heidenhain.conv",
+      "boundary": null
+    },
+    {
+      "id": "EX-050",
+      "domain": "校验与故障",
+      "level": "高级",
+      "question": "Mazatrol 程序语法高亮错误时应？",
+      "options": [
+        "A. 改编码",
+        "B. 换机床",
+        "C. 选 Mazak_Mazatrol_*.TYP 而非 ISO_G-Code",
+        "D. 删除程序"
+      ],
+      "answer": "C",
+      "answer_text": "选 Mazak_Mazatrol_*.TYP 而非 ISO_G-Code",
+      "source": "knowledge_base/.../cimco/runbook.md §4",
+      "explanation": "Mazatrol 需专用 TYP",
+      "boundary": null
+    }
+  ]
+}

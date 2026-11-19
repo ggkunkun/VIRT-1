@@ -1,0 +1,130 @@
+BODY {
+	padding-right: 2px;
+	padding-left: 2px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	margin-top: 0px;
+	margin-left: 0px;
+	background-position: left;
+}
+table {
+	width: 100%;
+	color: #FFFFFF;
+}
+
+
+.bar {
+	border-bottom-color: #0099FF;
+	padding-right: 2px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	color: #0099FF;
+	text-align: left;
+	height: 18px;
+	width: 100%;
+	padding-top: 4px;
+	padding-bottom: 4px;
+	border-top-width: 6px;
+	border-top-style: solid;
+	border-top-color: #0099FF;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+.bar2 {
+	border-bottom-color: #0099FF;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	text-align: left;
+	height: 18px;
+	width: 100%;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	padding-bottom: 4px;
+	text-indent: 5px;
+	padding-top: 4px;
+}
+.intro {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: normal;
+	text-decoration: none;
+	text-align: justify;
+	text-indent: 1.5pc;
+	color: #000000;
+}
+
+td {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #000000;
+}
+.bar1 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	color: #0066FF;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #0066FF;
+	width: 100%;
+	text-align: left;
+	background-image: url(images/ie.gif);
+	background-repeat: no-repeat;
+	text-indent: 14px;
+	border-top-width: 1px;
+	border-top-style: solid;
+	border-top-color: #0066FF;
+	height: 20px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+A {
+	BORDER-RIGHT: 1px;
+	BORDER-TOP: 1px;
+	BORDER-LEFT: 1px;
+	COLOR: #003399;
+	BORDER-BOTTOM: 1px;
+	TEXT-DECORATION: none;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: normal;
+}
+A:hover {
+	BORDER-RIGHT: 1px; BORDER-TOP: 1px; BORDER-LEFT: 1px; COLOR: #B5D7F7; BORDER-BOTTOM: 1px; TEXT-DECORATION: underline
+}
+.bottom {
+	border-top-width: 1px;
+	border-top-style: solid;
+	border-top-color: #003399;
+}
+strong {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	color: #0000FF;
+	text-decoration: none;
+}
+.title {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	color: #FFFFFF;
+	text-decoration: none;
+	background-color: #0099FF;
+	padding-left: 4px;
+	padding-top: 4px;
+}
+h2 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	color: #000000;
+	text-decoration: none;
+}
+h3 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #6633FF;
+	text-decoration: none;
+}

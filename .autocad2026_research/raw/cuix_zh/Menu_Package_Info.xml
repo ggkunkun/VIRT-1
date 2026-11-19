@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<MenuPackageParts>
+  <PartData PartData_Name="/AcceleratorRoot.cui" PartData_Modified="2025-02-14T04:34:50.0026213-08:00" />
+  <PartData PartData_Name="/DigitizerButtonRoot.cui" PartData_Modified="2025-02-14T04:34:50.0066209-08:00" />
+  <PartData PartData_Name="/DoubleClickRoot.cui" PartData_Modified="2025-02-14T04:34:50.0066209-08:00" />
+  <PartData PartData_Name="/Header.cui" PartData_Modified="2025-02-14T04:34:50.0076211-08:00" />
+  <PartData PartData_Name="/ImageMenuRoot.cui" PartData_Modified="2025-02-14T04:34:50.0086207-08:00" />
+  <PartData PartData_Name="/MenuGroup.cui" PartData_Modified="2025-02-14T04:34:50.0086207-08:00" />
+  <PartData PartData_Name="/MouseButtonRoot.cui" PartData_Modified="2025-02-14T04:34:50.0316208-08:00" />
+  <PartData PartData_Name="/OverrideRoot.cui" PartData_Modified="2025-02-14T04:34:50.0316208-08:00" />
+  <PartData PartData_Name="/PopMenuRoot.cui" PartData_Modified="2025-02-14T04:34:50.0326233-08:00" />
+  <PartData PartData_Name="/QuickAccessToolbarRoot.cui" PartData_Modified="2025-02-14T04:34:50.0406219-08:00" />
+  <PartData PartData_Name="/QuickPropertiesRoot.cui" PartData_Modified="2025-02-14T04:34:50.0416210-08:00" />
+  <PartData PartData_Name="/RibbonRoot.cui" PartData_Modified="2025-02-14T04:34:50.0446198-08:00" />
+  <PartData PartData_Name="/RolloverTooltipRoot.cui" PartData_Modified="2025-02-14T04:34:50.0596226-08:00" />
+  <PartData PartData_Name="/ScreenMenuRoot.cui" PartData_Modified="2025-02-14T04:34:50.0606187-08:00" />
+  <PartData PartData_Name="/TabletMenuRoot.cui" PartData_Modified="2025-02-14T04:34:50.0686213-08:00" />
+  <PartData PartData_Name="/ToolbarRoot.cui" PartData_Modified="2025-02-14T04:34:50.0706218-08:00" />
+  <PartData PartData_Name="/WorkspaceRoot.cui" PartData_Modified="2025-02-14T04:34:50.0736216-08:00" />
+  <PartData PartData_Name="/VirtualMNRRoot" PartData_Modified="2025-02-14T04:34:50.0756213-08:00" />
+  <PartData PartData_Name="/Menu_Package_Info.xml" PartData_Modified="2025-02-14T04:34:50.0776207-08:00" />
+</MenuPackageParts>

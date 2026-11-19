@@ -1,0 +1,413 @@
+
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title></title>
+<link href="../../helper_css.css" rel="stylesheet" type="text/css">
+<style type="text/css">
+<!--
+.style1 {color: #000000}
+-->
+</style></head>
+<body>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar">
+  <tr>
+    <td>G代码解释</td>
+  </tr>
+</table>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+  <tr>
+    <td>G00 快速线性移动(G00)</td>
+  </tr>
+</table>
+<p><strong>1. </strong><strong>功能 </strong><br>
+  轴快速移动G0用于快速定位刀具，没有对工件进行加工。可以在几个轴上同时执行快速移动，由此产生一线性轨迹。 <br>
+  机床参数中规定每个坐标轴快速移动速度的最大值，一个坐标轴运行时就以此速度快速移动。如果快速移动同时在两个轴上执行，则移动速度为两个轴可能的最大速度。 <br>
+  用G0快速移动时在地址F下进给率无效。 <br>
+  <img width="265" height="293" src="code/gcode_clip_image001.jpg"><br>
+  <br>
+  G0一直有效，直到被G功能组中其它的指令(G1,G2,G3,…) 取代为止。 <br>
+  <strong>2. </strong><strong>编程举例 </strong><br>
+  N10  G0 X100 Y150 Z65 ；直角坐标系 <br>
+  … <br>
+  N50  G0 RP=16.78 AP=45 ；极坐标系 <br>
+  <strong>说明： </strong><br>
+  G功能组中还有其它的G指令用于定位功能，在用G60准确定位时，可以在窗口下选择不同的精度。另外，用于准确定位还有一个单程序段方式有效的指令：G9。 在进行准确定位时请注意对几种方式的选择。 </p>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+  <tr>
+    <td>G01 带进给率的线性插补(G01)</td>
+  </tr>
+</table>
+<p><strong>1. </strong><strong>功能 </strong><br>
+  刀具以直线从起始点移动到目标位置，按地址F下设置的进给速度运行。所有的坐标轴可以同时运行。 <br>
+  G1一直有效，直到被G功能组中其它的指令(G0,G2,G3,…) 取代为止。 <br>
+  <img width="222" height="151" src="code/gcode_clip_image002.jpg"></p>
+<p><strong>2. </strong><strong>编程举例 </strong><br>
+  N05 G0 G90  X40 Y48 Z2 S500 M3 ；刀具快速移动到P1,3个轴 方向同时移动，主轴转速= 500转/分, 顺时针旋转 <br>
+  N10  G1 Z-12 F100 ；进刀到Z-12,进给率100毫米/分 <br>
+  N15  X20 Y18 Z-10 ；刀具以直线运行到P2 <br>
+  N20  G0 Z100 ；快速移动空运行 <br>
+  N25  X-20 Y80 N30 M2 ；程序结束 </p>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+  <tr>
+    <td>G02/G03圆弧插补(G02/G03)</td>
+  </tr>
+</table>
+<p><strong>1. </strong><strong>功能 </strong><br>
+  刀具以圆弧轨迹从起始点移动到终点，方向由G指令确定: <br>
+  G2 顺时针方向 <br>
+  G3 逆时针方向 <br>
+  <img width="516" height="138" src="code/gcode_clip_image004.jpg"></p>
+<p>G2和G3一直有效，直到被G功能组中其它的指令(G0,G1,…)取代为止。 <br>
+  <strong>2. </strong><strong>编程 </strong><br>
+  G2/G3  X… Y… I… J… ；圆心和终点 <br>
+  G2/G3  CR=… X… Y… ；半径和终点 <br>
+  G2/G3  AR=… I… J… ；张角和圆心 <br>
+  G2/G3  AR=… X… J… ；张角和终点 <br>
+  <strong>3. </strong><strong>编程举例 </strong><br>
+  N5  G90 X30 Y40 ；用于N10的圆弧起始点 <br>
+  N10  G2 X50 Y40 I10 J-7 ；终点和圆心 <br>
+  <strong>说明：</strong> 圆心值与圆弧起始点相关。  　 <br>
+  N5  G90 X30 Y40 ；用于N10的圆弧起始点 <br>
+  N10  G2 X50 Y40 CR=12.207 ；终点和半径 <br>
+  <strong>说明：</strong> CR数值前带负号“-” 表明所选插补圆弧段大于半圆。 <br>
+  N5  G90 X30 Y40 ；用于N10的圆弧起始点 <br>
+  N10  G2 X50 Y40 AR=105 ；终点和张角 <br>
+  N5  G90 X30 Y40 ；用于N10的圆弧起始点 <br>
+  N10  G2 X50 Y40 AR=105 ；终点和张角 <br>
+  <strong></strong> <br>
+  N1  G17 ；X/Y平面 <br>
+  N5  G90 G0 X30 Y40 ；N10圆弧的起始点 <br>
+  N10  G111 X40 Y33 ；极点=圆心 <br>
+  N20  G2 RP=12.207 AP=21 ；极坐标 </p>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+  <tr>
+    <td>G05通过中间点进行圆弧插补(G05)</td>
+  </tr>
+</table>
+<p><strong>1. </strong><strong>功能 </strong><br>
+  如果不知道圆弧的圆心、半径或张角，但已知圆弧轮廓上三个点的坐标，则可以使用G5功能。通过起始点和终点之间的中间点位置确定圆弧的方向。 <br>
+  G5一直有效，直到被G功能组中其它的指令(G0,G1,G2,…)取代为止。 <br>
+  <strong>说明：</strong> G90或G91指令对终点和中间点有效。 <br>
+  <img width="319" height="198" src="code/gcode_clip_image005.jpg"></p>
+<p>已知终点和中间点的圆弧插补 <br>
+  <strong>2. </strong><strong>编程举例 </strong><br>
+  N5  G90 X30 Y40 ；用于N10的圆弧起始点 <br>
+  N10  G5 X50 Y40 IX=40 JY=45 ；终点和中间点 </p>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+  <tr>
+    <td>G75返回固定点(G75) </td>
+  </tr>
+</table>
+<p><strong>1. </strong><strong>功能 </strong><br>
+  用G75可以返回到机床中某个固定点, 比如换刀点。固定点位置固定地存储在机床数据中，它不会产生偏移。  每个轴的返回速度就是其快速移动速度。 <br>
+  G75需要一独立程序段，并按程序段方式有效。在G75之后的程序段中原先“插补方式” 组中的G指令(G0,G1,G2, …)将再次生效。 <br>
+  <strong>2. </strong><strong>编程举例 </strong><br>
+  N10  G75 X0 Y0 Z0 <br>
+  <strong>注释：</strong>程序段中X、Y和Z下编程的数值（这里为0）不识别。 </p>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+  <tr>
+    <td>G74回参考点(G74)</td>
+  </tr>
+</table>
+<p><strong>1. </strong><strong>功能 </strong><br>
+  用G74指令实现NC程序中回参考点功能, 每个轴的方向和速度存储在机床数据中。 <br>
+  G74需要一独立程序段，并按程序段方式有效。在G74之后的程序段中原先“插补方式” 组中的G指令(G0,G1,G2, …)将再次生效。 <br>
+  <strong>2. </strong><strong>编程举例 </strong><br>
+  N10  G74 X0 Y0 Z0 <br>
+  <strong>注释：</strong>程序段中X、Y和Z下编程的数值（这里为0）不识别。 </p>
+<p>G9/G60/G64 <br>
+   准确定位/连续路径加工(G9/G60/G64) <br>
+  <strong>1. </strong><strong>功能 </strong><br>
+  针对程序段转换时不同的性能要求，802S/c提供一组G功能用于进行最佳匹配的选择。比如：有时要求坐标轴快速定位；有时要求按轮廓编程对几个程序段进行连续路径加工。 <br>
+  <strong>2. </strong><strong>编程 </strong><br>
+  G60  准确定位--模态有效 <br>
+  G64 连续路径加工 <br>
+  G9 准确定位--单程序段有效 <br>
+  G601 精准确定位窗口 <br>
+  G602 粗准确定位窗口 <br>
+  <strong>3.</strong><strong>准确定位G60,G9</strong><br>
+  G60或G9功能生效时，当到达定位精度后，移动轴的进给速度减小到零。 </p>
+如果一个程序段的轴位移结束并开始执行下一个程序段，则可以设定
+<p>下一个模态有效的G功能: <br>
+  *  G601 精准确定位窗口 <br>
+  当所有的坐标轴都到达“精准确定位窗口” (机床数据中设定值) 后，开始进行程序段转换。 <br>
+  *  G602 粗准确定位窗口 <br>
+  当所有的坐标轴都到达“粗准确定位窗口” (机床数据中设定值)后，开始进行程序段转换。 <br>
+  在执行多次定位过程时，“准确定位窗口”  如何选择将对加工运行总时间影响很大。精确调整需要较多时间。 <br>
+  <strong>4.</strong><strong>编程举例 </strong><br>
+  N5  G602 ；粗准确定位窗口 <br>
+  N10  G0 G60 X… ；准确定位，模态方式 <br>
+  N20  X… Y… ；G60继续有效 <br>
+  … <br>
+  N50  G1 G601 … ；精准确定位窗口 <br>
+  N80  G64 X… ；转换到连续路径方式 <br>
+  … <br>
+  N100  G0 G9 X… ；准确定位，单程序段有效 <br>
+  N111  … ；仍为连续路径方式 <br>
+  <strong>注释：</strong>指令G9仅对自身程序段有效，而G60 准确定位一直有效，直到被G64取代为止。 <br>
+  <strong>5.</strong><strong>连续路径加工 G64</strong><br>
+  连续路径加工方式的目的就是在一个程序段到下一个程序段G64转换过程中避免进给停顿，并使其尽可能以相同的轨迹速度(切线过渡)转换到下一个程序段，并以可预见的速度过渡执行下一个程序段的功能。在有拐角的轨迹过渡时(非切线过渡)有时必须降低速度，从而保证程序段转换时不发生突然变化，或者加速度的改变受到限制（如果SOFT有效） <br>
+  <strong>6.</strong><strong>编程举例 </strong><br>
+  N10  G64 G1 X… F… ；连续路径加工 <br>
+  N20  Y… ；继续 <br>
+  … <br>
+  N180  G60… ；转换到准确定位 </p>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+  <tr>
+    <td>G4暂停(G4) </td>
+  </tr>
+</table>
+<p><strong>1. </strong><strong>功能 </strong><br>
+  通过在两个程序段之间插入一个G4程序段，可以使加工中断给定的时间，比如自由切削。G4程序段(含地址F或S)只对自身程序段有效，并暂停所给定的时间。在此之前程编的进给量F和主轴转速S保持存储状态。 <br>
+  <strong>2. </strong><strong>编程 </strong><br>
+  G4  F… 暂停时间(秒) <br>
+  G4  S… 暂停主轴转数 <br>
+  <strong>3. </strong><strong>编程举例 </strong><br>
+  N5  G1 F200 Z-50 S300 M3 ；进给率F,主轴转数S <br>
+  N10  G4 F2.5 ；暂停2.5秒 <br>
+  N20  Z70 <br>
+  N30  G4 S30 ；主轴暂停30转,相当于在S=300转/分钟 <br>
+  和转速修调100% 时暂停t=0.1分钟 <br>
+  N40  X… ；进给率和主轴转速继续有效 <br>
+  <strong>注释: </strong>G4 S… 只有在受控主轴情况下才有效(同样通过S…编程给定转速时)。 </p>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <th align="left" bordercolor="#FFFFFF" bgcolor="#FFFFFF" class="bar1" scope="col"><span class="bar1 style1">G9/G60/G64</span></th>
+  </tr>
+</table>
+<p>准确定位/连续路径加工（G9/G60/G64）<br>
+  1.功能<br>
+  针对程序段转换时不同的性能要求，802s/c提供一组G功能用于进行最佳匹配的选择。比如：有时要求坐标轴快速定位，有时要求按轮廓编程对几个程序段进行连续路径加工。<br>
+  2.编程<br>
+G60 准确定位－－模态有效<br>
+G64连续路径加工<br>
+G9准确定位——单程序段有效<br>
+G601精准确定位窗口<br>
+G602粗准确定位窗口<br>
+3.准确定位G60,G9<br>
+G60或G9功能生效时，当到达定位精度后，移动轴的进给速度减小到零。<br>
+如果一个程序段的轴位移结束并开始执行下一个程序段，则可以设定。<br>
+一下个模态有效的G功能：<br>
+G601精准确定位窗口<br>
+当所有的坐标轴都到达“精准确定位窗口”（机床数据中设定值）后，开始进行程序段转换。<br>
+G602粗准确定位窗口<br>
+当所有的坐标轴都到达“粗准确定位窗口”（机床数据中设定值）后，开始进行程序段转换。<br>
+在执行多次定位过程时，“准确定位窗口”如何选择将对加工运行总时间影响很大，精确调整需要较多时间。<br>
+4.编程举例<br>
+N5 G602 ;粗准确定位窗口<br>
+N10  G0  G60  X...;准确定位，模态方式<br>
+N20 X... Y... ;G60继续有效<br>
+...<br>
+N50  G1 G601...; 
+<br>
+N80 G64 X...; <br>
+转换到连续路径方式<br>
+...<br>
+N100 G0 G9 X...;准确定位，单程序段有效<br>
+N111 ...;仍为连续路径方式<br>
+注：指令G9仅对自身程序段有效，而G60准确定位
+一直有效，直到被G64取代为止.<br>
+5.连续路径加工G64<br>
+连续路径加工方式的目的就是在一个程序段到下一个程序段G64转换过程中避免进给停顿，并使其尽可能以相同的轨迹速度（切线过渡）转换到下一个程序段，并以可预见的速度过渡执行下一个程序段的功能。在有拐角的轨迹过渡时有时必须降低速度，从而保证程序段转换时不发生突然变化，或者加速度的改变受到限制。<br>
+6.编程举例<br>
+N10 G64 G1 X... F... ;连续路径加工<br>
+N20  Y...;继续<br>
+...<br>
+N180  G60...;转换到准确定位
+<br>
+</p>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+  <tr>
+    <td>F  进给率</td>
+  </tr>
+</table>
+<p><strong>1. </strong><strong>功能 </strong><br>
+  进给率F是刀具轨迹速度，它是所有移动坐标轴速度的矢量和。坐标轴速度是刀具轨迹速度在坐标轴上的分量。 进给率F在G1,G2,G3,G5插补方式中生效，并且一直有效，直到被一个新的地址F取代为止。 <br>
+  <strong>2. </strong><strong>编程 </strong><br>
+  F… <br>
+  <strong>注释：</strong>在取整数值方式下可以取消小数点后面的数据，如F300。 <br>
+  进给率F的单位由G功能确定: <br>
+  G94  直线进给率：毫米/分钟 <br>
+  G95  旋转进给率：毫米/转(只有主轴旋转才有意义!) <br>
+  <strong>3. </strong><strong>编程举例 </strong><br>
+  N10  G94 F310 ；进给量 毫米/分钟 <br>
+  N110  S200 M3 ；主轴旋转 <br>
+  N120  G95 F15.5 ；进给量 毫米/转 <br>
+  <strong>注释：</strong>G94和G95更换时要求写入一个新的地址F。 </p>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+  <tr>
+    <td>S  主轴转速/旋转方向 </td>
+  </tr>
+</table>
+<p><strong>1. </strong><strong>功能 </strong><br>
+  当机床具有受控主轴时，主轴的转速可以设置在地址S下，单位转/分钟。旋转方向和主轴运动起始点和终点通过M指令规定。 <br>
+  M3  主轴正转 <br>
+  M4  主轴反转 <br>
+  M5  主轴停止 <br>
+  <strong>注释：</strong>在S值取整情况下可以去除小数点后面的数据，比如S270<br>
+  <strong>说明:</strong> 如果在程序段中不仅有M3或M4指令，而且还写有坐标轴运行指令，则M指令在坐标轴运行之前生效。只有在主轴启动之后，坐标轴才开始运行。 <br>
+  <strong>2. </strong><strong>编程举例 </strong><br>
+  N10  G1 X70 Z20 F300 S270 M3 ；在X、Z轴运行之前，主轴以顺时针270 转/分启动 <br>
+  … <br>
+  N80  S450 … ；改变转速 <br>
+  … <br>
+  N170  G0 Z180 M5 ；主轴停止 </p>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+  <tr>
+    <td>G25/G26  主轴转速极限(G25/G26) </td>
+  </tr>
+</table>
+<p><strong>1. </strong><strong>功能 </strong><br>
+  通过在程序中写入G25或G26指令和地址S下的转速，可以限制特定情况下主轴的极限值范围。与此同时原来设定数据中的数据被覆盖。G25或G26指令均要求一独立的程序段。原先设置的转速S保持存储状态。 <br>
+  <strong>2. </strong><strong>编程 </strong><br>
+  G25  S … ；主轴转速下限 <br>
+  G26  S … ；主轴转速上限 <br>
+  <strong>说明:</strong> 主轴转速的最高极限值在机床参数中设定。通过面板操作可以激活用于其它极限情况的设定参数。 <br>
+  <strong>3. </strong><strong>编程举例 </strong><br>
+  N10  G25 S12 ；主轴转速下限：12转/分钟 <br>
+  N20  G26 S700 ；主轴转速上限：700转/分钟 </p>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+  <tr>
+    <td>T  刀具</td>
+  </tr>
+</table>
+<p> <strong>1. </strong><strong>功能</strong><br>
+  编程T指令可以选择刀具。在此，是用T指令直接更换刀具还是仅仅进行刀具的预选，这必须要在机床数据中确定: <br>
+    用T指令直接更换刀具(刀具调用)，或者 <br>
+    仅用T指令预选刀具，另外还要用M6指令才可进行刀具的更换。 <br>
+  <strong>注意:</strong> 在选用一个刀具后，程序运行结束以及系统关机/开机对此均没有影响，该刀具一直保持有效。如果手动更换一刀具，则更换情况必须要输入到系统中， 从而使系统可以正确地识别该刀具。比如，您可以在“MDA”方式下启动一个带新的T指令的程序段。 <br>
+  <strong>2. </strong><strong>编程 </strong><br>
+  T… 刀具号：1～32000，T0.没有刀具 <br>
+  <strong>提示: </strong>系统中最多可以同时存储30把刀具。 <br>
+  <strong>3. </strong><strong>编程举例 </strong><br>
+  不用M6更换刀具: <br>
+  N10  T1 ；刀具1 <br>
+  … <br>
+  N70  T588 ；刀具588 <br>
+  用M6更换刀具: <br>
+  N10  T14… ；预选刀具14 <br>
+  … <br>
+  N15  M6 ；执行刀具更换，刀具T14有效 </p>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+  <tr>
+    <td>D  刀具补偿号 </td>
+  </tr>
+</table>
+<p><strong>1. </strong><strong>功能 </strong><br>
+  一个刀具可以匹配从1到9几个不同补偿的数据组(用于多个切削刃)。另外可以用D及其对应的序号设置一个专门的切削刃。如果没有编写D指令，则D1自动生效。如果编程D0，则刀具补偿值无效。 <br>
+  <strong>提示: </strong>系统中最多可以同时存储64个刀具补偿数组(D号)。 <br>
+  <strong>2. </strong><strong>编程 </strong><br>
+  D…  ；刀具刀补号：1…9， <br>
+  D  0： ；没有补偿值有效! <br>
+  <strong>说明: </strong>刀具调用后，刀具长度补偿立即生效；如果没有设置D号，则D1值自动生效。先设置的长度补偿先执行，对应的坐标轴也先运行。注意有效平面G17～G19! 刀具半径补偿必须与G41/G42一起执行。 </p>
+<p><strong>3. </strong><strong>编程举例 </strong><br>
+  不用M6指令更换刀具(仅用T指令): <br>
+  N5  G17 ；确定用于补偿的坐标轴平面 <br>
+  N10  T1 ；刀具T1 D1值生效 <br>
+  N11  G0 Z… ；在G17中Z轴是长度补偿轴，在此对不同长度补偿的差值进行覆盖 <br>
+  N50  T4 D2 ；更换成刀具4，对应于T4中D2值生效 <br>
+  … <br>
+  N70  G0 Z… D1 ；刀具T4 D1值生效，在此仅更换切削刃 <br>
+  用M6指令更换刀具: <br>
+  N5  G17 ；确定用于补偿的坐标轴平面 <br>
+  N10  T1 ；刀具预选 <br>
+  … <br>
+  N15  M6 ；刀具更换,刀具T1 D1值生效 <br>
+  N16  G0 Z… ；在G17中Z轴是长度补偿轴，在此对不同长度补偿的差值进行覆盖 <br>
+  … <br>
+  N20  G0 Z… D2 ；刀具T1 D2值生效，在G17中Z轴是长度补偿轴, <br>
+  长度补偿D1-&gt;D2之间的差值在此进行覆盖 <br>
+  N50  T4 ；刀具预选T4, <br>
+  <strong>注意：</strong>刀具T1 D2值仍然有效! <br>
+  … <br>
+  N55  D3 M6 ；刀具更换，刀具T4  D3值有效 </p>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+  <tr>
+    <td>G41/G42  刀尖半径补偿(G41/G42) </td>
+  </tr>
+</table>
+<p><strong>1. </strong><strong>功能 </strong><br>
+  系统在所选择的平面G17～G19中以刀具半径补偿的方式进行加工。刀具必须有相应的刀补号才能有效。刀尖半径补偿通过G41/G42生效。控制器自动计算出当前刀具运行所产生的、与编程轮廓等距离的刀具轨迹。 <br>
+  <img width="180" height="148" src="code/gcode_clip_image001_0000.jpg"><br>
+  <strong>2. </strong><strong>编程 </strong><br>
+  G41  X… Y… ；在程序左边偏移 <br>
+  G42  X… Y… ；在程序右边偏移 <br>
+  刀具以直线回轮廓，并在轮廓起始点处与轨迹切向垂直。 <br>
+  正确选择起始点，可以保证刀具运行不发生碰撞。在通常情况下，在G41/G42程序段之后紧接着工件轮廓的第一个程序段。 <br>
+  <strong>注释：</strong>只有在线性插补时(G0,G1)才可以进行G41/G42的选择。 <br>
+  设置两个坐标轴(比如G17中:X,Y)。如果你只给出一个坐标轴的尺寸，则第二个坐标轴自动地以最后设置的尺寸赋值。 <br>
+  <strong>3. </strong><strong>编程举例 </strong><br>
+  N10  T… <br>
+  N20  G17 D2 F300 ；第二个刀补号,进给率300毫米/分 <br>
+  N25  X… Y… ；P0-起始点 <br>
+  N30  G1 G42 X… Y… ；选择工件轮廓右边补偿，P1 <br>
+  N30  X… Y… ；起始轮廓，圆弧或直线 <br>
+  在选择了刀具半径补偿之后也可以执行刀具移动或者M指令: <br>
+  … <br>
+  N20  G1 G41 X… Y… ；选择轮廓左边刀补 <br>
+  N21  Z… ；进刀 <br>
+  N22  X… Y… ；起始轮廓，圆弧或直线 <br>
+  … </p>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+  <tr>
+    <td>G40取消刀尖半径补偿(G40) </td>
+  </tr>
+</table>
+<p><strong>1. </strong><strong>功能 </strong><br>
+  用G40取消刀尖半径补偿，此状态也是编程开始时所处的状态。G40指令之前的程序段刀具以正常方式结束(结束时补偿矢量垂直于轨迹终点处切线)；与起始角无关。 <br>
+  在运行G40程序段之后，刀具中心到达编程终点。在选择G40程序段编程终点时要始终确保刀具运行不会发生碰撞。 <br>
+  <strong>2. </strong><strong>编程 </strong><br>
+  G40  X… Y… ；取消刀尖半径补偿 <br>
+  <strong>注释:</strong>只有在线性插补(G0，G1)情况下才可以取消补偿运行。 <br>
+  <strong>3. </strong><strong>编程举例 </strong><br>
+  N100  X… Y… ；最后程序段轮廓，圆弧或直线，P1 <br>
+  N110  G40 G1 X…Y… ；取消刀尖半径补偿，P2 </p>
+<p>子程序 <br>
+  <strong>1.</strong><strong>应用 </strong><br>
+  原则上讲主程序和子程序之间并没有区别。 <br>
+  用子程序编写经常重复进行的加工，比如某一确定的轮廓形状。子程序位于主程序中适当的地方，在需要时进行调用、运行。 <br>
+  加工循环是子程序的一种形式，加工循环包含一般通用的加工工序，比如钻削、攻丝、铣槽等等。通过给规定的计算参数赋值就可以实现各种具体的加工。 <br>
+  <img width="248" height="124" src="code/gcode_clip_image003.jpg"><br>
+  在一个工件上四次调用子程序 <br>
+  <strong>2.</strong><strong>结构 </strong><br>
+  子程序的结构与主程序的结构一样，在子程序中也是在最后一个程序段中用M2结束程序运行。子程序结束后返回主程序。 <br>
+  <strong>3.</strong><strong>程序结束 </strong><br>
+  除了用M2指令外，还可以用RET 指令结束子程序。 <br>
+  RET要求占用一个独立的程序段。 <br>
+  用RET指令结束子程序、返回主程序时不会中断G64连续路径运行方式。用M2指令则会中断G64运行方式，并进入停止状态。 <br>
+  <img width="335" height="234" src="code/gcode_clip_image005_0000.jpg"><br>
+  两次调用子程序 </p>
+<p><strong>4.</strong><strong>子程序名 </strong><br>
+  为了方便地选择某一子程序，必须给子程序取一个程序名。程序名可以自由选取，但必须符合以下规定: </p>
+<ol>
+  <ol>
+    <li>开始两个符号必须是字母 </li>
+    <li>其它符号为字母，数字或下划线 </li>
+    <li>最多8个字符 </li>
+    <li>没有分隔符 </li>
+  </ol>
+</ol>
+<p>其方法与主程序中程序名的选取方法一样，举例：LRAHMEN 7。 另外，在子程序中还可以使用地址字L…，其后的值可以有7位(只能为整数)。 <br>
+  <strong>注意：</strong>地址字L之后的每个零均有意义，不可省略。 <br>
+  举例：L128并非L0128或L00128! <br>
+  以上表示3个不同的子程序。 <br>
+  <strong>5.</strong><strong>子程序调用</strong> <br>
+  在一个程序中(主程序或子程序)可以直接用程序名调用子程序，子程序调用要求占用一个独立的程序段。 <br>
+  举例:<br>
+  N10  L785 ；调用子程序L785 <br>
+  N20  LRAHMEN7 ；调用子程序LRAHMEN7 <br>
+  <strong>6.</strong><strong>程序重复调用次数P …</strong> <br>
+  如果要求多次连续地执行某一子程序，则在设置时必须在所调用子程序的程序名后地址P下写入调用次数，最大次数可以为9999(P1…P9999)。 <br>
+  举例: <br>
+  N10  L785 P3 ；调用子程序L785，运行3次 <br>
+  <strong>7.</strong><strong>嵌套深度</strong> <br>
+  子程序不仅可以从主程序中调用，也可以从其它子程序中调用，这个过程称为子程序的嵌套。子程序的嵌套深度可以为三层，也就是四级程序界面(包括主程序界面)。 <br>
+  <strong>注释：</strong>在使用加工循环进行加工时，要注意加工循环程序也同样属于四级程序界面中的一级。 <br>
+  <img width="367" height="171" src="code/gcode_clip_image007.jpg"><br>
+  四级程序界面运行过程 <br>
+  <strong>8.</strong><strong>说明 </strong><br>
+  在子程序中可以改变模态有效的G功能，比如G90到G91的变换。在返回调用程序时请注意检查一下所有模态有效的功能指令，并按照要求进行调整。 <br>
+  对于R参数也需同样注意，不要无意识地用上级程序界面中所使用的计算参数来修改下级程序界面的计算参数。 </p>
+</body>
+</html>

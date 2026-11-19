@@ -1,0 +1,1131 @@
+<?xml version="1.0"?><!--
+Warning! Do not edit the contents of this file.
+If you attempt to edit this file using an XML editor, you could lose
+customization and migration functionality. If you need to change
+information in the customization file, use the Customize User Interface
+dialog in the product.
+To access the Customize User Interface dialog, click the Tools menu,
+Customization panel, User Interface button, or enter CUI on the command line.
+--><WorkspaceRoot xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <WorkspaceConfigRoot>
+    <WorkspaceConfig Display="true" myWorkspace="true" UID="WSCU_0001">
+      <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_00014364">草图与注释</Name>
+    </WorkspaceConfig>
+    <WorkspaceConfig Display="true" myWorkspace="false" UID="WSCU_0004">
+      <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_SM_00015925">三维基础</Name>
+    </WorkspaceConfig>
+    <WorkspaceConfig Display="true" myWorkspace="false" UID="WSCU_0002">
+      <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+      <Name xlate="true" UID="XLS_00014365">三维建模</Name>
+    </WorkspaceConfig>
+  </WorkspaceConfigRoot>
+  <Workspace StartOn="ignore" ScrollBars="ignore" ScreenMenus="off" StatusBar="ApplicationOnly" NavigationBar="on" MenuBar="off" LayoutModelTabs="on" DefaultWorkspace="true" UID="WS_Anno2DDraft">
+    <ModifiedRev MajorVersion="23" MinorVersion="0" UserVersion="0"/>
+    <Name xlate="true" UID="XLS_6639">草图与注释</Name>
+    <WSPopRoot>
+      <WSPop MenuGroup="ACAD" pUID="ID_MnFile" Display="1" UID="WSP_0199">
+        <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+      </WSPop>
+      <WSPop MenuGroup="ACAD" pUID="ID_MnEdit" Display="1" UID="WSP_0200">
+        <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+      </WSPop>
+      <WSPop MenuGroup="ACAD" pUID="ID_MnView" Display="1" UID="WSP_0201">
+        <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+      </WSPop>
+      <WSPop MenuGroup="ACAD" pUID="ID_MnInsert" Display="1" UID="WSP_0202">
+        <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+      </WSPop>
+      <WSPop MenuGroup="ACAD" pUID="ID_MnFormat" Display="1" UID="WSP_0203">
+        <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+      </WSPop>
+      <WSPop MenuGroup="ACAD" pUID="ID_MnTools" Display="1" UID="WSP_0204">
+        <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+      </WSPop>
+      <WSPop MenuGroup="ACAD" pUID="ID_MnDraw" Display="1" UID="WSP_0205">
+        <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+      </WSPop>
+      <WSPop MenuGroup="ACAD" pUID="ID_MnDimensi" Display="1" UID="WSP_0206">
+        <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+      </WSPop>
+      <WSPop MenuGroup="ACAD" pUID="ID_MnModify" Display="1" UID="WSP_0207">
+        <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+      </WSPop>
+      <WSPop MenuGroup="ACAD" pUID="ID_MnParametric" Display="1" UID="WSP_0213">
+        <ModifiedRev MajorVersion="18" MinorVersion="0" UserVersion="0"/>
+      </WSPop>
+      <WSPop MenuGroup="ACAD" pUID="ID_MnWindow" Display="1" UID="WSP_0208">
+        <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+      </WSPop>
+      <WSPop MenuGroup="ACAD" pUID="ID_MnHelp" Display="1" UID="WSP_0209">
+        <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+      </WSPop>
+      <WSPop MenuGroup="EXPRESS" pUID="ID_MNEXPRESS" Display="1" UID="WSP_0210">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+      </WSPop>
+    </WSPopRoot>
+    <WSToolbarRoot>
+      <WSToolbar MenuGroup="ACAD" pUID="ID_TbWorkspaces" Display="0" ToolbarOrient="top" xval="0" yval="0" rows="1" dockrow="0" dockcolumn="0" UID="WST_0077">
+        <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+      </WSToolbar>
+      <WSToolbar MenuGroup="ACAD" pUID="TB_0008" Display="0" ToolbarOrient="top" xval="0" yval="0" rows="1" dockrow="0" dockcolumn="1" UID="WST_0078">
+        <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+      </WSToolbar>
+      <WSToolbar MenuGroup="ACAD" pUID="TB_0009" Display="0" ToolbarOrient="floating" xval="200" yval="200" rows="1" dockrow="1" dockcolumn="1" UID="WST_0081">
+        <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+      </WSToolbar>
+      <WSToolbar MenuGroup="ACAD" pUID="TB_0010" Display="0" ToolbarOrient="floating" xval="200" yval="200" rows="1" dockrow="1" dockcolumn="1" UID="WST_0082">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+      </WSToolbar>
+    </WSToolbarRoot>
+    <WSQuickAccessToolbarRoot>
+      <WSQuickAccessToolbarReference MenuGroup="ACAD" ToolbarId="QAT_TOOLBAR1" Orientation="Above" UID="WSQAT_0100">
+        <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+      </WSQuickAccessToolbarReference>
+    </WSQuickAccessToolbarRoot>
+    <WSESWRoot>
+      <WSESW Display="no" DockFloat="ignore" Orientation="ignore" AllowDock="ignore" AutoHide="ignore" UseTransparency="ignore" xval="-2147483648" yval="-2147483648" Height="0" Width="0" dockxval="-2147483648" dockyval="-2147483648" dockwidth="0" dockheight="0" DefaultGroup="" ClassName="{0939E07C-FCEF-4C0D-8349-662031189B8A}" CommandName="LIGHTLIST" CommandPosition="0" UID="WSE_0125">
+        <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_6624">模型中的光源</Name>
+      </WSESW>
+      <WSESW Display="no" DockFloat="ignore" Orientation="ignore" AllowDock="ignore" AutoHide="ignore" UseTransparency="ignore" xval="-2147483648" yval="-2147483648" Height="0" Width="0" dockxval="-2147483648" dockyval="-2147483648" dockwidth="0" dockheight="0" DefaultGroup="" ClassName="{1A11B0B9-1AA0-4E71-95D1-C77737444340}" CommandName="EXTERNALREFERENCES" CommandPosition="0" UID="WSE_0127">
+        <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_6626">外部参照</Name>
+      </WSESW>
+      <WSESW Display="no" DockFloat="ignore" Orientation="ignore" AllowDock="ignore" AutoHide="ignore" UseTransparency="ignore" xval="-2147483648" yval="-2147483648" Height="0" Width="0" dockxval="-2147483648" dockyval="-2147483648" dockwidth="0" dockheight="0" DefaultGroup="" ClassName="{26C7CFE0-7187-4736-9B70-EF21C803A601}" CommandName="SUNPROPERTIES" CommandPosition="0" UID="WSE_0128">
+        <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_6627">阳光特性</Name>
+      </WSESW>
+      <WSESW Display="no" DockFloat="ignore" Orientation="ignore" AllowDock="ignore" AutoHide="ignore" UseTransparency="ignore" xval="-2147483648" yval="-2147483648" Height="0" Width="0" dockxval="-2147483648" dockyval="-2147483648" dockwidth="0" dockheight="0" DefaultGroup="" ClassName="{60284BE8-5CB0-474B-BD85-9D3335F5E471}" CommandName="VISUALSTYLES" CommandPosition="0" UID="WSE_0130">
+        <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_6629">视觉样式管理器</Name>
+      </WSESW>
+      <WSESW Display="no" DockFloat="ignore" Orientation="ignore" AllowDock="ignore" AutoHide="ignore" UseTransparency="no" xval="-2147483648" yval="-2147483648" Height="0" Width="0" dockxval="-2147483648" dockyval="-2147483648" dockwidth="0" dockheight="0" DefaultGroup="" ClassName="{6D32A2D9-832E-11D2-A83C-0060B0872C0B}" CommandName="PROPERTIES" CommandPosition="0" UID="WSE_0131">
+        <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_6630">特性</Name>
+      </WSESW>
+      <WSESW Display="no" DockFloat="ignore" Orientation="ignore" AllowDock="ignore" AutoHide="ignore" UseTransparency="ignore" xval="-2147483648" yval="-2147483648" Height="0" Width="0" dockxval="-2147483648" dockyval="-2147483648" dockwidth="0" dockheight="0" DefaultGroup="" ClassName="{888F0E83-D9B4-48A5-AEA9-3867A6121478}" CommandName="RPREF" CommandPosition="0" UID="WSE_0132">
+        <ModifiedRev MajorVersion="18" MinorVersion="0" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_6631">高级渲染设置</Name>
+      </WSESW>
+      <WSESW Display="no" DockFloat="ignore" Orientation="ignore" AllowDock="ignore" AutoHide="ignore" UseTransparency="ignore" xval="-2147483648" yval="-2147483648" Height="0" Width="0" dockxval="-2147483648" dockyval="-2147483648" dockwidth="0" dockheight="0" DefaultGroup="" ClassName="{9403002C-2B99-4281-B9DD-F708E0858542}" CommandName="MARKUP" CommandPosition="0" UID="WSE_0133">
+        <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_6632">标记集管理器</Name>
+      </WSESW>
+      <WSESW Display="no" DockFloat="ignore" Orientation="ignore" AllowDock="ignore" AutoHide="ignore" UseTransparency="ignore" xval="-2147483648" yval="-2147483648" Height="0" Width="0" dockxval="-2147483648" dockyval="-2147483648" dockwidth="0" dockheight="0" DefaultGroup="" ClassName="{ACA19CF8-C061-4301-8E75-49DACFF072AD}" CommandName="QuickCalc" CommandPosition="0" UID="WSE_0134">
+        <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_6633">快速计算</Name>
+      </WSESW>
+      <WSESW Display="no" DockFloat="ignore" Orientation="ignore" AllowDock="ignore" AutoHide="ignore" UseTransparency="ignore" xval="-2147483648" yval="-2147483648" Height="0" Width="0" dockxval="-2147483648" dockyval="-2147483648" dockwidth="0" dockheight="0" DefaultGroup="" ClassName="{B17B40A6-2761-4BCC-BC48-2B8A465AA5EB}" CommandName="TOOLPALETTES" CommandPosition="0" UID="WSE_0135">
+        <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_6634">工具选项板</Name>
+      </WSESW>
+      <WSESW Display="no" DockFloat="ignore" Orientation="ignore" AllowDock="ignore" AutoHide="ignore" UseTransparency="no" xval="-2147483648" yval="-2147483648" Height="0" Width="0" dockxval="-2147483648" dockyval="-2147483648" dockwidth="0" dockheight="0" DefaultGroup="" ClassName="{B371F8AA-7FF7-11D2-BA58-0060B0B5E151}" CommandName="ADCENTER" CommandPosition="0" UID="WSE_0136">
+        <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_6635">设计中心</Name>
+      </WSESW>
+      <WSESW Display="no" DockFloat="ignore" Orientation="ignore" AllowDock="ignore" AutoHide="ignore" UseTransparency="no" xval="-2147483648" yval="-2147483648" Height="0" Width="0" dockxval="-2147483648" dockyval="-2147483648" dockwidth="0" dockheight="0" DefaultGroup="" ClassName="{B6BCB9F4-84B2-11D2-A127-0060B0CE2DA0}" CommandName="DBCONNECT" CommandPosition="0" UID="WSE_0137">
+        <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_6636">数据库连接管理器</Name>
+      </WSESW>
+      <WSESW Display="no" DockFloat="ignore" Orientation="ignore" AllowDock="ignore" AutoHide="ignore" UseTransparency="no" xval="-2147483648" yval="-2147483648" Height="0" Width="0" dockxval="-2147483648" dockyval="-2147483648" dockwidth="0" dockheight="0" DefaultGroup="" ClassName="{BEBBB318-2898-4C03-ADA2-360DC6B7AA69}" CommandName="SHEETSET" CommandPosition="0" UID="WSE_0138">
+        <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_6637">图纸集管理器</Name>
+      </WSESW>
+      <WSESW Display="yes" DockFloat="docked" Orientation="bottom" AllowDock="ignore" AutoHide="ignore" UseTransparency="ignore" xval="-2147483648" yval="-2147483648" Height="0" Width="0" dockxval="-2147483648" dockyval="-2147483648" dockwidth="0" dockheight="0" DefaultGroup="" ClassName="{D5CF410D-3E11-4D0C-AE69-A75C9B788C47}" CommandName="COMMANDLINE" CommandPosition="0" UID="WSE_0139">
+        <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_6638">命令行</Name>
+      </WSESW>
+      <WSESW Display="yes" DockFloat="docked" Orientation="top" AllowDock="ignore" AutoHide="ignore" UseTransparency="ignore" xval="-2147483648" yval="-2147483648" Height="0" Width="0" dockxval="-2147483648" dockyval="-2147483648" dockwidth="0" dockheight="0" DefaultGroup="" ClassName="{B1AC3ED0-9573-4569-A97A-D9CAE382F5D2}" CommandName="_RIBBON" CommandPosition="0" UID="WSE_0143">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_7285">功能区</Name>
+      </WSESW>
+      <WSESW Display="no" DockFloat="ignore" Orientation="ignore" AllowDock="ignore" AutoHide="ignore" UseTransparency="ignore" xval="-2147483648" yval="-2147483648" Height="0" Width="0" dockxval="-2147483648" dockyval="-2147483648" dockwidth="0" dockheight="0" DefaultGroup="" ClassName="{F1517EC6-62B7-4600-A00C-127FA2170291}" CommandName="LAYER" CommandPosition="0" UID="WSE_0150">
+        <ModifiedRev MajorVersion="18" MinorVersion="0" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00014402">图层特性管理器</Name>
+      </WSESW>
+      <WSESW Display="no" DockFloat="docked" Orientation="right" AllowDock="yes" AutoHide="ignore" UseTransparency="ignore" xval="-2147483648" yval="-2147483648" Height="0" Width="0" dockxval="-2147483648" dockyval="-2147483648" dockwidth="300" dockheight="0" DefaultGroup="" ClassName="{9278AB26-9620-4FC2-87F1-E4C1187D2EEA}" CommandName="MATBROWSEROPEN" CommandPosition="0" UID="WSE_0152">
+        <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00021819">材质浏览器</Name>
+      </WSESW>
+      <WSESW Display="no" DockFloat="ignore" Orientation="left" AllowDock="yes" AutoHide="ignore" UseTransparency="ignore" xval="-2147483648" yval="-2147483648" Height="0" Width="0" dockxval="-2147483648" dockyval="-2147483648" dockwidth="325" dockheight="0" DefaultGroup="" ClassName="{2E558694-CA42-44DA-8B6B-9D455D210B2E}" CommandName="MATEDITOROPEN" CommandPosition="0" UID="WSE_0156">
+        <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00021830">材质编辑器</Name>
+      </WSESW>
+      <WSESW Display="no" DockFloat="ignore" Orientation="right" AllowDock="yes" AutoHide="ignore" UseTransparency="ignore" xval="50" yval="200" Height="640" Width="324" dockxval="-2147483648" dockyval="-2147483648" dockwidth="300" dockheight="0" DefaultGroup="" ClassName="{3F0454DB-405A-4AB5-986A-965A6E45675E}" CommandName="_DESIGNFEEDOPEN" CommandPosition="0" UID="WSE_0160">
+        <ModifiedRev MajorVersion="21" MinorVersion="0" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_7286">设计提要</Name>
+      </WSESW>
+      <WSESW Display="no" DockFloat="ignore" Orientation="ignore" AllowDock="ignore" AutoHide="ignore" UseTransparency="ignore" xval="-2147483648" yval="-2147483648" Height="0" Width="0" dockxval="-2147483648" dockyval="-2147483648" dockwidth="0" dockheight="0" DefaultGroup="" ClassName="{179F7AA7-82FB-4CD5-BBAA-D59AFFFE3CF2}" CommandName="BlocksPalette" CommandPosition="0" UID="WSE_0161">
+        <ModifiedRev MajorVersion="23" MinorVersion="1" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_7287">块</Name>
+      </WSESW>
+      <WSESW Display="no" DockFloat="ignore" Orientation="ignore" AllowDock="ignore" AutoHide="ignore" UseTransparency="ignore" xval="-2147483648" yval="-2147483648" Height="0" Width="0" dockxval="-2147483648" dockyval="-2147483648" dockwidth="0" dockheight="0" DefaultGroup="" ClassName="{DEF5EAB2-4398-460E-9934-46E2828818EF}" CommandName="COMMANDMACROS" CommandPosition="0" UID="WSE_12102021">
+        <ModifiedRev MajorVersion="24" MinorVersion="3" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_12102021">命令宏</Name>
+      </WSESW>
+      <WSESW Display="no" DockFloat="ignore" Orientation="ignore" AllowDock="ignore" AutoHide="ignore" UseTransparency="ignore" xval="-2147483648" yval="-2147483648" Height="0" Width="0" dockxval="-2147483648" dockyval="-2147483648" dockwidth="0" dockheight="0" DefaultGroup="" ClassName="{CE54472C-9C1E-4F64-8AC7-6E272AFD23CB}" CommandName="ACTIVITYINSIGHTSOPEN" CommandPosition="0" UID="WSE_05252022">
+        <ModifiedRev MajorVersion="24" MinorVersion="3" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_05252022">活动见解</Name>
+      </WSESW>
+      <WSESW Display="no" DockFloat="ignore" Orientation="ignore" AllowDock="ignore" AutoHide="ignore" UseTransparency="ignore" xval="-2147483648" yval="-2147483648" Height="0" Width="0" dockxval="-2147483648" dockyval="-2147483648" dockwidth="0" dockheight="0" DefaultGroup="" ClassName="{6B3144A6-1F3C-4A25-9FE4-B5B25ACF2565}" CommandName="ACTIVITYINSIGHTSSTARTPAGEOPEN" CommandPosition="0" UID="WSE_05252023">
+        <ModifiedRev MajorVersion="24" MinorVersion="3" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_05252023">活动见解起始页</Name>
+      </WSESW>
+	  <WSESW Display="no" DockFloat="ignore" Orientation="ignore" AllowDock="ignore" AutoHide="ignore" UseTransparency="ignore" xval="-2147483648" yval="-2147483648" Height="0" Width="0" dockxval="-2147483648" dockyval="-2147483648" dockwidth="0" dockheight="0" DefaultGroup="" ClassName="{E62AF0F4-317D-4CF8-B210-E837C5A052C2}" CommandName="TRACEPALETTEOPEN" CommandPosition="0" UID="WSE_05252024">
+        <ModifiedRev MajorVersion="25" MinorVersion="1" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_05252024">“跟踪”选项板</Name>
+      </WSESW>
+	   <WSESW Display="no" DockFloat="ignore" Orientation="ignore" AllowDock="ignore" AutoHide="ignore" UseTransparency="ignore" xval="-2147483648" yval="-2147483648" Height="0" Width="0" dockxval="-2147483648" dockyval="-2147483648" dockwidth="0" dockheight="0" DefaultGroup="" ClassName="{A2E6D88C-A87B-4051-B297-CE6E409B6301}" CommandName="ASSISTANTOPEN" CommandPosition="0" UID="WSE_05252025">
+        <ModifiedRev MajorVersion="25" MinorVersion="1" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_05252025">Autodesk 助手</Name>
+      </WSESW>
+	  <WSESW Display="no" DockFloat="ignore" Orientation="ignore" AllowDock="ignore" AutoHide="ignore" UseTransparency="ignore" xval="-2147483648" yval="-2147483648" Height="0" Width="0" dockxval="-2147483648" dockyval="-2147483648" dockwidth="0" dockheight="0" DefaultGroup="" ClassName="{9727DA32-10D8-440F-B46B-A578000C417E}" CommandName="PUSHTODOCSOPEN" CommandPosition="0" UID="WSE_05252026">
+        <ModifiedRev MajorVersion="25" MinorVersion="1" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_05252026">推送到 Autodesk Docs</Name>
+      </WSESW>
+	  <WSESW Display="no" DockFloat="ignore" Orientation="ignore" AllowDock="ignore" AutoHide="ignore" UseTransparency="ignore" xval="-2147483648" yval="-2147483648" Height="0" Width="0" dockxval="-2147483648" dockyval="-2147483648" dockwidth="0" dockheight="0" DefaultGroup="" ClassName="{78C4B9F4-D811-44C2-BA26-467BDFD0BCA5}" CommandName="PERFANALYZER" CommandPosition="0" UID="WSE_05252027">
+        <ModifiedRev MajorVersion="25" MinorVersion="1" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_05252027">性能分析仪</Name>
+      </WSESW>
+	  <WSESW Display="no" DockFloat="ignore" Orientation="ignore" AllowDock="ignore" AutoHide="ignore" UseTransparency="ignore" xval="-2147483648" yval="-2147483648" Height="0" Width="0" dockxval="-2147483648" dockyval="-2147483648" dockwidth="0" dockheight="0" DefaultGroup="" ClassName="{1B084257-F567-4C11-AF94-CA0961CA4875}" CommandName="SHAREDVIEWS" CommandPosition="0" UID="WSE_05252028">
+        <ModifiedRev MajorVersion="25" MinorVersion="1" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_05252028">共享视图</Name>
+      </WSESW>
+    </WSESWRoot>
+    <WSRibbonRoot AutoHideMode="None" LockMode="None" ShowPanelTitleInHorizontalOrientation="true" ShowPanelTitleInVerticalOrientation="true">
+      <ModifiedRev MajorVersion="20" MinorVersion="0" UserVersion="0"/>
+      <WSRibbonTabSourceReference MenuGroup="ACAD" TabId="ID_TabHome" Show="true" IsActive="false" UID="ID_WSR">
+        <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelDraw" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" UID="ID_WSR_0001">
+          <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelModify" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" UID="ID_WSR_0002">
+          <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelBasicAnnotation" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" PanelResizeOrder="100" UID="ID_WSR_0003">
+          <ModifiedRev MajorVersion="20" MinorVersion="0" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelLayers" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" PanelResizeOrder="100" UID="ID_WSR_0004">
+          <ModifiedRev MajorVersion="20" MinorVersion="0" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelHome_Blocks" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" UID="ID_WSR_0005">
+          <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelStandard_Properties" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" UID="ID_WSR_0006">
+          <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelGroup" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" UID="ID_WSR_0030">
+          <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelStandard_Clipboard" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" UID="ID_WSR_0007">
+          <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="RBN_00011049" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" UID="ID_WSR_0079">
+          <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+      </WSRibbonTabSourceReference>
+      <WSRibbonTabSourceReference MenuGroup="ACAD" TabId="ID_TabInsert" Show="true" IsActive="false" UID="ID_WSR_0008">
+        <ModifiedRev MajorVersion="19" MinorVersion="1" UserVersion="0"/>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelInsert_Block" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" UID="ID_WSR_0009">
+          <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelAttributes" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" UID="ID_WSR_0010">
+          <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelInsert_Reference" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" UID="ID_WSR_0011">
+          <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelInsert_Import" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" UID="ID_WSR_0012">
+          <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelInsert_Data" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" UID="ID_WSR_0013">
+          <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelInsert_DataLink" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" UID="ID_WSR_0014">
+          <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_Panel_Set_GeoLocation" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" PanelResizeOrder="100" UID="ID_WSR_200_FDB01">
+          <ModifiedRev MajorVersion="19" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+      </WSRibbonTabSourceReference>
+      <WSRibbonTabSourceReference MenuGroup="ACAD" TabId="ID_TabAnnotate" Show="true" IsActive="false" UID="ID_WSR_0015">
+        <ModifiedRev MajorVersion="21" MinorVersion="0" UserVersion="0"/>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelText" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" UID="ID_WSR_0016">
+          <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelDimensions" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" UID="ID_WSR_0017">
+          <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelCenterlines" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" UID="ID_WSR_0032">
+          <ModifiedRev MajorVersion="21" MinorVersion="0" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelMultileaders" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" UID="ID_WSR_0018">
+          <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelTables" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" UID="ID_WSR_0019">
+          <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelMarkup" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" UID="ID_WSR_0020">
+          <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelAnnotationScaling" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" UID="ID_WSR_0021">
+          <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+      </WSRibbonTabSourceReference>
+      <WSRibbonTabSourceReference MenuGroup="ACAD" TabId="ID_TabParametric" Show="true" IsActive="false" UID="WSR_0011">
+        <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelParametricGeometricConstraints" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" UID="ID_WSR_0027">
+          <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelParametricDimensionalConstraints" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" UID="ID_WSR_0029">
+          <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelParametricManage" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" UID="ID_WSR_0031">
+          <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+      </WSRibbonTabSourceReference>
+      <WSRibbonTabSourceReference MenuGroup="ACAD" TabId="ID_TAB_3D_TOOLS" Show="false" IsActive="false" UID="WSR_0829">
+        <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+        <WSRibbonPanelSourceReference PanelId="ID_PANEL_3DTOOLS_MODELING" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" PanelResizeOrder="100" UID="ID_WSR_0159">
+          <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PANEL_3DTOOLS_SOLID_EDITING" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" PanelResizeOrder="100" UID="ID_WSR_0160">
+          <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PANEL_3DTOOLS_SURFACES" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" PanelResizeOrder="100" UID="ID_WSR_0161">
+          <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PANEL_3DTOOLS_MESH" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" PanelResizeOrder="100" UID="ID_WSR_0162">
+          <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelSection" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" PanelResizeOrder="100" UID="ID_WSR_0163">
+          <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_3dBasics_PanelSelection" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" PanelResizeOrder="100" UID="ID_WSR_0164">
+          <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_3dBasics_PanelCoordinates" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" PanelResizeOrder="100" UID="ID_WSR_0165">
+          <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+      </WSRibbonTabSourceReference>
+      <WSRibbonTabSourceReference MenuGroup="ACAD" TabId="ID_TabRender" Show="false" IsActive="false" UID="WSR_0067">
+        <ModifiedRev MajorVersion="21" MinorVersion="0" UserVersion="0"/>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelLights" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" PanelResizeOrder="100" UID="ID_WSR_0166">
+          <ModifiedRev MajorVersion="20" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelSun" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" PanelResizeOrder="100" UID="ID_WSR_0167">
+          <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelMaterials" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" PanelResizeOrder="100" UID="ID_WSR_0168">
+          <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelCameras" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" PanelResizeOrder="100" UID="ID_WSR_0169">
+          <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelMotionPathAnimation" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" PanelResizeOrder="100" UID="ID_WSR_0170">
+          <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelRender" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" PanelResizeOrder="100" UID="ID_WSR_0171">
+          <ModifiedRev MajorVersion="20" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+      </WSRibbonTabSourceReference>
+      <WSRibbonTabSourceReference MenuGroup="ACAD" TabId="ID_TabView" Show="true" IsActive="false" UID="WSR_231_B4C1E">
+        <ModifiedRev MajorVersion="23" MinorVersion="1" UserVersion="0"/>
+        <WSRibbonPanelSourceReference PanelId="RBN_200_14623" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" PanelResizeOrder="100" UID="ID_WSR_231_F9076">
+          <ModifiedRev MajorVersion="23" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelNamedViews2" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" PanelResizeOrder="100" UID="ID_WSR_231_01D99">
+          <ModifiedRev MajorVersion="23" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelVisualStyles" Orientation="Docked" Show="false" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" PanelResizeOrder="100" UID="ID_WSR_231_7527D">
+          <ModifiedRev MajorVersion="23" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelViewports" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" PanelResizeOrder="100" UID="ID_WSR_231_EF1C4">
+          <ModifiedRev MajorVersion="23" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelCoord" Orientation="Docked" Show="false" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" PanelResizeOrder="100" UID="ID_WSR_231_B7273">
+          <ModifiedRev MajorVersion="23" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="RBN_231_E07B6" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" PanelResizeOrder="100" UID="ID_WSR_231_1259B">
+          <ModifiedRev MajorVersion="23" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="RBN_231_D4737" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" PanelResizeOrder="100" UID="ID_WSR_231_1259C">
+          <ModifiedRev MajorVersion="24" MinorVersion="0" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelPalettes" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" PanelResizeOrder="100" UID="ID_WSR_231_F6ACA">
+          <ModifiedRev MajorVersion="23" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelWindow" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" PanelResizeOrder="100" UID="ID_WSR_231_C17BC">
+          <ModifiedRev MajorVersion="23" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelViewNavigate2D" Orientation="Docked" Show="false" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" PanelResizeOrder="100" UID="ID_WSR_231_75553">
+          <ModifiedRev MajorVersion="23" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+      </WSRibbonTabSourceReference>
+      <WSRibbonTabSourceReference MenuGroup="ACAD" TabId="ID_TabManage" Show="true" IsActive="false" UID="ID_WSR_0022">
+        <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelActionRecorder" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" UID="ID_WSR_0028">
+          <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelCustomization" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" UID="ID_WSR_0033">
+          <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelScriptsAndMacros" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" UID="ID_WSR_0034">
+          <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelCADStandards" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" UID="ID_WSR_0035">
+          <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+      </WSRibbonTabSourceReference>
+      <WSRibbonTabSourceReference MenuGroup="ACAD" TabId="ID_TabOutput" Show="true" IsActive="false" UID="ID_WSR_0036">
+        <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelPlot" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" UID="ID_WSR_0037">
+          <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelExportPDFDWF2D" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" UID="ID_WSR_0039">
+          <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+      </WSRibbonTabSourceReference>
+      <WSRibbonTabSourceReference MenuGroup="ACAD" TabId="RBN_00012112" Show="true" IsActive="false" UID="WSR_0814">
+        <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+      </WSRibbonTabSourceReference>
+      <WSRibbonTabSourceReference MenuGroup="ACAD" TabId="ID_TabCollaborate" Show="true" IsActive="false" UID="ID_WSR_Anno2DDraft_TabCollaborate">
+        <ModifiedRev MajorVersion="23" MinorVersion="0" UserVersion="0"/>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelSharedViews" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" PanelResizeOrder="100" UID="ID_WSR_210_SHAREVIEW">
+          <ModifiedRev MajorVersion="23" MinorVersion="0" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelPlanGrid" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" PanelResizeOrder="100" UID="ID_WSR_210_PLANGRID">
+          <ModifiedRev MajorVersion="24" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelTrace" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" PanelResizeOrder="100" UID="ID_WSR_210_TRACE">
+          <ModifiedRev MajorVersion="24" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+      </WSRibbonTabSourceReference>
+      <WSRibbonTabSourceReference MenuGroup="ACAD" TabId="ID_TabAutomation" Show="false" IsActive="false" UID="ID_WSR_Anno2DDraft_TabAutomation">
+        <ModifiedRev MajorVersion="24" MinorVersion="2" UserVersion="0"/>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelMacroAdvisor" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" PanelResizeOrder="100" UID="ID_WSR_MACRO_ADVISOR">
+          <ModifiedRev MajorVersion="24" MinorVersion="2" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+      </WSRibbonTabSourceReference>
+  </WSRibbonRoot>
+  </Workspace>
+  <Workspace StartOn="Model" ScrollBars="off" ScreenMenus="off" StatusBar="ApplicationOnly" NavigationBar="on" MenuBar="off" LayoutModelTabs="on" DefaultWorkspace="false" UID="WS_3DModeling">
+    <ModifiedRev MajorVersion="23" MinorVersion="0" UserVersion="0"/>
+    <Name xlate="true" UID="XLS_6100">三维建模</Name>
+    <WSPopRoot>
+      <WSPop MenuGroup="ACAD" pUID="ID_MnFile" Display="1" UID="WSP_0028">
+        <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+      </WSPop>
+      <WSPop MenuGroup="ACAD" pUID="ID_MnEdit" Display="1" UID="WSP_0030">
+        <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+      </WSPop>
+      <WSPop MenuGroup="ACAD" pUID="ID_MnView" Display="1" UID="WSP_0032">
+        <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+      </WSPop>
+      <WSPop MenuGroup="ACAD" pUID="ID_MnInsert" Display="1" UID="WSP_0034">
+        <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+      </WSPop>
+      <WSPop MenuGroup="ACAD" pUID="ID_MnFormat" Display="1" UID="WSP_0036">
+        <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+      </WSPop>
+      <WSPop MenuGroup="ACAD" pUID="ID_MnTools" Display="1" UID="WSP_0038">
+        <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+      </WSPop>
+      <WSPop MenuGroup="ACAD" pUID="ID_MnDraw" Display="1" UID="WSP_0040">
+        <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+      </WSPop>
+      <WSPop MenuGroup="ACAD" pUID="ID_MnDimensi" Display="1" UID="WSP_0042">
+        <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+      </WSPop>
+      <WSPop MenuGroup="ACAD" pUID="ID_MnModify" Display="1" UID="WSP_0044">
+        <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+      </WSPop>
+      <WSPop MenuGroup="ACAD" pUID="ID_MnWindow" Display="1" UID="WSP_0048">
+        <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+      </WSPop>
+      <WSPop MenuGroup="ACAD" pUID="ID_MnHelp" Display="1" UID="WSP_0050">
+        <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+      </WSPop>
+      <WSPop MenuGroup="EXPRESS" pUID="ID_MNEXPRESS" Display="1" UID="WSP_0211">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+      </WSPop>
+      <WSPop MenuGroup="ACAD" pUID="ID_MnParametric" Display="1" UID="WSP_0214">
+        <ModifiedRev MajorVersion="18" MinorVersion="0" UserVersion="0"/>
+      </WSPop>
+    </WSPopRoot>
+    <WSToolbarRoot>
+      <WSToolbar MenuGroup="ACAD" pUID="ID_TbLayer" Display="0" ToolbarOrient="top" xval="-2147483648" yval="-2147483648" rows="1" dockrow="0" dockcolumn="2" UID="WST_0070">
+        <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+      </WSToolbar>
+      <WSToolbar MenuGroup="ACAD" pUID="ID_TbStandar" Display="0" ToolbarOrient="top" xval="-2147483648" yval="-2147483648" rows="1" dockrow="0" dockcolumn="1" UID="WST_0072">
+        <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+      </WSToolbar>
+      <WSToolbar MenuGroup="ACAD" pUID="ID_TbWorkspaces" Display="0" ToolbarOrient="top" xval="-2147483648" yval="-2147483648" rows="1" dockrow="0" dockcolumn="0" UID="WST_0074">
+        <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+      </WSToolbar>
+      <WSToolbar MenuGroup="ACAD" pUID="TB_0008" Display="0" ToolbarOrient="top" xval="0" yval="0" rows="1" dockrow="1" dockcolumn="1" UID="WST_0075">
+        <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+      </WSToolbar>
+      <WSToolbar MenuGroup="ACAD" pUID="TB_0009" Display="0" ToolbarOrient="floating" xval="200" yval="200" rows="1" dockrow="1" dockcolumn="1" UID="WST_0079">
+        <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+      </WSToolbar>
+      <WSToolbar MenuGroup="ACAD" pUID="TB_0010" Display="0" ToolbarOrient="floating" xval="200" yval="200" rows="1" dockrow="1" dockcolumn="1" UID="WST_0083">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+      </WSToolbar>
+    </WSToolbarRoot>
+    <WSQuickAccessToolbarRoot>
+      <WSQuickAccessToolbarReference MenuGroup="ACAD" ToolbarId="QAT_TOOLBAR1" Orientation="Above" UID="WSQAT_0101">
+        <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+      </WSQuickAccessToolbarReference>
+    </WSQuickAccessToolbarRoot>
+    <WSESWRoot>
+      <WSESW Display="no" DockFloat="floating" Orientation="floating" AllowDock="ignore" AutoHide="off" UseTransparency="ignore" xval="-2147483648" yval="-2147483648" Height="0" Width="0" dockxval="-2147483648" dockyval="-2147483648" dockwidth="0" dockheight="0" DefaultGroup="" ClassName="{6D32A2D9-832E-11D2-A83C-0060B0872C0B}" CommandName="PROPERTIES" CommandPosition="0" UID="WSE_0022">
+        <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_6090">特性</Name>
+      </WSESW>
+      <WSESW Display="no" DockFloat="floating" Orientation="floating" AllowDock="ignore" AutoHide="off" UseTransparency="ignore" xval="-2147483648" yval="-2147483648" Height="0" Width="0" dockxval="-2147483648" dockyval="-2147483648" dockwidth="0" dockheight="0" DefaultGroup="" ClassName="{888F0E83-D9B4-48A5-AEA9-3867A6121478}" CommandName="RPREF" CommandPosition="0" UID="WSE_0023">
+        <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_6091">高级渲染设置</Name>
+      </WSESW>
+      <WSESW Display="no" DockFloat="floating" Orientation="floating" AllowDock="ignore" AutoHide="off" UseTransparency="ignore" xval="-2147483648" yval="-2147483648" Height="0" Width="0" dockxval="-2147483648" dockyval="-2147483648" dockwidth="0" dockheight="0" DefaultGroup="" ClassName="{9403002C-2B99-4281-B9DD-F708E0858542}" CommandName="MARKUP" CommandPosition="0" UID="WSE_0024">
+        <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_6092">标记集管理器</Name>
+      </WSESW>
+      <WSESW Display="no" DockFloat="floating" Orientation="floating" AllowDock="ignore" AutoHide="off" UseTransparency="ignore" xval="-2147483648" yval="-2147483648" Height="0" Width="0" dockxval="-2147483648" dockyval="-2147483648" dockwidth="0" dockheight="0" DefaultGroup="" ClassName="{ACA19CF8-C061-4301-8E75-49DACFF072AD}" CommandName="QuickCalc" CommandPosition="0" UID="WSE_0026">
+        <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_6094">快速计算</Name>
+      </WSESW>
+      <WSESW Display="no" DockFloat="ignore" Orientation="ignore" AllowDock="ignore" AutoHide="ignore" UseTransparency="ignore" xval="773" yval="110" Height="0" Width="0" dockxval="1051" dockyval="725" dockwidth="227" dockheight="237" DefaultGroup="All Palettes" ClassName="{B17B40A6-2761-4BCC-BC48-2B8A465AA5EB}" CommandName="TOOLPALETTES" CommandPosition="1" UID="WSE_0027">
+        <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_6095">工具选项板</Name>
+      </WSESW>
+      <WSESW Display="no" DockFloat="floating" Orientation="floating" AllowDock="ignore" AutoHide="off" UseTransparency="ignore" xval="-2147483648" yval="-2147483648" Height="0" Width="0" dockxval="-2147483648" dockyval="-2147483648" dockwidth="0" dockheight="0" DefaultGroup="" ClassName="{B371F8AA-7FF7-11D2-BA58-0060B0B5E151}" CommandName="ADCENTER" CommandPosition="0" UID="WSE_0028">
+        <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_6096">设计中心</Name>
+      </WSESW>
+      <WSESW Display="no" DockFloat="floating" Orientation="floating" AllowDock="ignore" AutoHide="off" UseTransparency="ignore" xval="-2147483648" yval="-2147483648" Height="0" Width="0" dockxval="-2147483648" dockyval="-2147483648" dockwidth="0" dockheight="0" DefaultGroup="" ClassName="{B6BCB9F4-84B2-11D2-A127-0060B0CE2DA0}" CommandName="DBCONNECT" CommandPosition="0" UID="WSE_0029">
+        <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_6097">数据库连接管理器</Name>
+      </WSESW>
+      <WSESW Display="no" DockFloat="floating" Orientation="floating" AllowDock="yes" AutoHide="off" UseTransparency="no" xval="34" yval="110" Height="512" Width="256" dockxval="0" dockyval="0" dockwidth="200" dockheight="300" DefaultGroup="" ClassName="{BEBBB318-2898-4C03-ADA2-360DC6B7AA69}" CommandName="SHEETSET" CommandPosition="0" UID="WSE_0030">
+        <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_6098">图纸集管理器</Name>
+      </WSESW>
+      <WSESW Display="yes" DockFloat="docked" Orientation="bottom" AllowDock="yes" AutoHide="off" UseTransparency="no" xval="-2147483648" yval="-2147483648" Height="0" Width="0" dockxval="4" dockyval="899" dockwidth="1039" dockheight="67" DefaultGroup="" ClassName="{D5CF410D-3E11-4D0C-AE69-A75C9B788C47}" CommandName="COMMANDLINE" CommandPosition="1" UID="WSE_0031">
+        <ModifiedRev MajorVersion="19" MinorVersion="0" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_6099">命令行</Name>
+      </WSESW>
+      <WSESW Display="ignore" DockFloat="ignore" Orientation="ignore" AllowDock="ignore" AutoHide="ignore" UseTransparency="ignore" xval="-2147483648" yval="-2147483648" Height="0" Width="0" dockxval="-2147483648" dockyval="-2147483648" dockwidth="0" dockheight="0" DefaultGroup="" ClassName="{1A11B0B9-1AA0-4E71-95D1-C77737444340}" CommandName="EXTERNALREFERENCES" CommandPosition="0" UID="WSE_0119">
+        <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_6397">外部参照</Name>
+      </WSESW>
+      <WSESW Display="ignore" DockFloat="ignore" Orientation="ignore" AllowDock="ignore" AutoHide="ignore" UseTransparency="ignore" xval="-2147483648" yval="-2147483648" Height="0" Width="0" dockxval="-2147483648" dockyval="-2147483648" dockwidth="0" dockheight="0" DefaultGroup="" ClassName="{60284BE8-5CB0-474B-BD85-9D3335F5E471}" CommandName="VISUALSTYLES" CommandPosition="0" UID="WSE_0121">
+        <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_6399">视觉样式管理器</Name>
+      </WSESW>
+      <WSESW Display="ignore" DockFloat="ignore" Orientation="ignore" AllowDock="ignore" AutoHide="ignore" UseTransparency="ignore" xval="-2147483648" yval="-2147483648" Height="0" Width="0" dockxval="-2147483648" dockyval="-2147483648" dockwidth="0" dockheight="0" DefaultGroup="" ClassName="{0939E07C-FCEF-4C0D-8349-662031189B8A}" CommandName="LIGHTLIST" CommandPosition="0" UID="WSE_0140">
+        <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_6679">模型中的光源</Name>
+      </WSESW>
+      <WSESW Display="ignore" DockFloat="ignore" Orientation="ignore" AllowDock="ignore" AutoHide="ignore" UseTransparency="ignore" xval="-2147483648" yval="-2147483648" Height="0" Width="0" dockxval="-2147483648" dockyval="-2147483648" dockwidth="0" dockheight="0" DefaultGroup="" ClassName="{26C7CFE0-7187-4736-9B70-EF21C803A601}" CommandName="SUNPROPERTIES" CommandPosition="0" UID="WSE_0141">
+        <ModifiedRev MajorVersion="17" MinorVersion="1" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_6680">阳光特性</Name>
+      </WSESW>
+      <WSESW Display="yes" DockFloat="docked" Orientation="top" AllowDock="ignore" AutoHide="ignore" UseTransparency="ignore" xval="-2147483648" yval="-2147483648" Height="0" Width="0" dockxval="-2147483648" dockyval="-2147483648" dockwidth="0" dockheight="0" DefaultGroup="" ClassName="{B1AC3ED0-9573-4569-A97A-D9CAE382F5D2}" CommandName="_RIBBON" CommandPosition="0" UID="WSE_0144">
+        <ModifiedRev MajorVersion="17" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_7285">功能区</Name>
+      </WSESW>
+      <WSESW Display="no" DockFloat="ignore" Orientation="ignore" AllowDock="ignore" AutoHide="ignore" UseTransparency="ignore" xval="-2147483648" yval="-2147483648" Height="0" Width="0" dockxval="-2147483648" dockyval="-2147483648" dockwidth="0" dockheight="0" DefaultGroup="" ClassName="{F1517EC6-62B7-4600-A00C-127FA2170291}" CommandName="LAYER" CommandPosition="0" UID="WSE_0151">
+        <ModifiedRev MajorVersion="18" MinorVersion="0" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00014403">图层特性管理器</Name>
+      </WSESW>
+      <WSESW Display="no" DockFloat="docked" Orientation="right" AllowDock="yes" AutoHide="off" UseTransparency="no" xval="773" yval="110" Height="598" Width="300" dockxval="1051" dockyval="725" dockwidth="300" dockheight="530" DefaultGroup="" ClassName="{9278AB26-9620-4FC2-87F1-E4C1187D2EEA}" CommandName="MATBROWSEROPEN" CommandPosition="0" UID="WSE_0153">
+        <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00021820">材质浏览器</Name>
+      </WSESW>
+      <WSESW Display="no" DockFloat="ignore" Orientation="left" AllowDock="yes" AutoHide="ignore" UseTransparency="ignore" xval="-2147483648" yval="-2147483648" Height="0" Width="0" dockxval="-2147483648" dockyval="-2147483648" dockwidth="325" dockheight="0" DefaultGroup="" ClassName="{2E558694-CA42-44DA-8B6B-9D455D210B2E}" CommandName="MATEDITOROPEN" CommandPosition="0" UID="WSE_0157">
+        <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00021831">材质编辑器</Name>
+      </WSESW>
+      <WSESW Display="no" DockFloat="ignore" Orientation="ignore" AllowDock="ignore" AutoHide="ignore" UseTransparency="ignore" xval="-2147483648" yval="-2147483648" Height="0" Width="0" dockxval="-2147483648" dockyval="-2147483648" dockwidth="0" dockheight="0" DefaultGroup="" ClassName="{179F7AA7-82FB-4CD5-BBAA-D59AFFFE3CF2}" CommandName="BlocksPalette" CommandPosition="0" UID="WSE_0159">
+        <ModifiedRev MajorVersion="23" MinorVersion="1" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_7288">块</Name>
+      </WSESW>
+      <WSESW Display="no" DockFloat="ignore" Orientation="ignore" AllowDock="ignore" AutoHide="ignore" UseTransparency="ignore" xval="-2147483648" yval="-2147483648" Height="0" Width="0" dockxval="-2147483648" dockyval="-2147483648" dockwidth="0" dockheight="0" DefaultGroup="" ClassName="{DEF5EAB2-4398-460E-9934-46E2828818EF}" CommandName="COMMANDMACROS" CommandPosition="0" UID="WSE_12102021_3DM">
+        <ModifiedRev MajorVersion="24" MinorVersion="3" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_12102021_3DM">命令宏</Name>
+      </WSESW>
+      <WSESW Display="no" DockFloat="ignore" Orientation="ignore" AllowDock="ignore" AutoHide="ignore" UseTransparency="ignore" xval="-2147483648" yval="-2147483648" Height="0" Width="0" dockxval="-2147483648" dockyval="-2147483648" dockwidth="0" dockheight="0" DefaultGroup="" ClassName="{CE54472C-9C1E-4F64-8AC7-6E272AFD23CB}" CommandName="ACTIVITYINSIGHTSOPEN" CommandPosition="0" UID="WSE_05252022_3DM">
+        <ModifiedRev MajorVersion="24" MinorVersion="3" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_05252022_3DM">活动见解</Name>
+      </WSESW>
+	    <WSESW Display="no" DockFloat="ignore" Orientation="ignore" AllowDock="ignore" AutoHide="ignore" UseTransparency="ignore" xval="-2147483648" yval="-2147483648" Height="0" Width="0" dockxval="-2147483648" dockyval="-2147483648" dockwidth="0" dockheight="0" DefaultGroup="" ClassName="{6B3144A6-1F3C-4A25-9FE4-B5B25ACF2565}" CommandName="ACTIVITYINSIGHTSSTARTPAGEOPEN" CommandPosition="0" UID="WSE_05252023_3DM">
+        <ModifiedRev MajorVersion="25" MinorVersion="1" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_05252023">活动见解起始页</Name>
+      </WSESW>
+	  <WSESW Display="no" DockFloat="ignore" Orientation="ignore" AllowDock="ignore" AutoHide="ignore" UseTransparency="ignore" xval="-2147483648" yval="-2147483648" Height="0" Width="0" dockxval="-2147483648" dockyval="-2147483648" dockwidth="0" dockheight="0" DefaultGroup="" ClassName="{E62AF0F4-317D-4CF8-B210-E837C5A052C2}" CommandName="TRACEPALETTEOPEN" CommandPosition="0" UID="WSE_05252024_3DM">
+        <ModifiedRev MajorVersion="25" MinorVersion="1" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_05252024">“跟踪”选项板</Name>
+      </WSESW>
+	   <WSESW Display="no" DockFloat="ignore" Orientation="ignore" AllowDock="ignore" AutoHide="ignore" UseTransparency="ignore" xval="-2147483648" yval="-2147483648" Height="0" Width="0" dockxval="-2147483648" dockyval="-2147483648" dockwidth="0" dockheight="0" DefaultGroup="" ClassName="{A2E6D88C-A87B-4051-B297-CE6E409B6301}" CommandName="ASSISTANTOPEN" CommandPosition="0" UID="WSE_05252025_3DM">
+        <ModifiedRev MajorVersion="25" MinorVersion="1" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_05252025">Autodesk 助手</Name>
+      </WSESW>
+	  <WSESW Display="no" DockFloat="ignore" Orientation="ignore" AllowDock="ignore" AutoHide="ignore" UseTransparency="ignore" xval="-2147483648" yval="-2147483648" Height="0" Width="0" dockxval="-2147483648" dockyval="-2147483648" dockwidth="0" dockheight="0" DefaultGroup="" ClassName="{9727DA32-10D8-440F-B46B-A578000C417E}" CommandName="PUSHTODOCSOPEN" CommandPosition="0" UID="WSE_05252026_3DM">
+        <ModifiedRev MajorVersion="25" MinorVersion="1" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_05252026">推送到 Autodesk Docs</Name>
+      </WSESW>
+	  <WSESW Display="no" DockFloat="ignore" Orientation="ignore" AllowDock="ignore" AutoHide="ignore" UseTransparency="ignore" xval="-2147483648" yval="-2147483648" Height="0" Width="0" dockxval="-2147483648" dockyval="-2147483648" dockwidth="0" dockheight="0" DefaultGroup="" ClassName="{78C4B9F4-D811-44C2-BA26-467BDFD0BCA5}" CommandName="PERFANALYZER" CommandPosition="0" UID="WSE_05252027_3DM">
+        <ModifiedRev MajorVersion="25" MinorVersion="1" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_05252027">性能分析仪</Name>
+      </WSESW>
+	  <WSESW Display="no" DockFloat="ignore" Orientation="ignore" AllowDock="ignore" AutoHide="ignore" UseTransparency="ignore" xval="-2147483648" yval="-2147483648" Height="0" Width="0" dockxval="-2147483648" dockyval="-2147483648" dockwidth="0" dockheight="0" DefaultGroup="" ClassName="{1B084257-F567-4C11-AF94-CA0961CA4875}" CommandName="SHAREDVIEWS" CommandPosition="0" UID="WSE_05252028_3DM">
+        <ModifiedRev MajorVersion="25" MinorVersion="1" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_05252028">共享视图</Name>
+      </WSESW>	  
+    </WSESWRoot>
+    <WSRibbonRoot AutoHideMode="None" LockMode="None" ShowPanelTitleInHorizontalOrientation="true" ShowPanelTitleInVerticalOrientation="true">
+      <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+      <WSRibbonTabSourceReference MenuGroup="ACAD" TabId="ID_TabHome3D" Show="true" IsActive="false" UID="WSR_0015">
+        <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+        <WSRibbonPanelSourceReference PanelId="ID_Panel3D_Modeling" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" UID="ID_WSR_0040">
+          <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelMeshHome" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" UID="ID_WSR_0041">
+          <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelSolidEdit" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" UID="ID_WSR_0042">
+          <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelDraw3D" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" UID="ID_WSR_0043">
+          <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelModify3D" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" UID="ID_WSR_0044">
+          <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelSection" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" UID="ID_WSR_0045">
+          <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelCoord" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" UID="ID_WSR_0746">
+          <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelView3DHome" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" UID="ID_WSR_0046">
+          <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelSubObject" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" UID="ID_WSR_0047">
+          <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelLayers" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" UID="ID_WSR_0048">
+          <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelGroup" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" UID="ID_WSR_0377">
+          <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+      </WSRibbonTabSourceReference>
+      <WSRibbonTabSourceReference MenuGroup="ACAD" TabId="ID_SolidModeling" Show="true" IsActive="false" UID="WSR_0812">
+        <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+      </WSRibbonTabSourceReference>
+      <WSRibbonTabSourceReference MenuGroup="ACAD" TabId="ID_SurfaceTab" Show="true" IsActive="false" UID="WSR_00813">
+        <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        <WSRibbonPanelSourceReference PanelId="ID_RBN_Surface_Creation" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" UID="ID_WSR_0852">
+          <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_RBN_Surface_Edit" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" UID="ID_WSR_0853">
+          <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_RBN_SURFACE_CV" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" UID="ID_WSR_0854">
+          <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_RBN_SURFACE_Curves" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" UID="ID_WSR_0855">
+          <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_RBN_Surface_Project" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" UID="ID_WSR_0856">
+          <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_RBN_Surface_Analysis" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" UID="ID_WSR_0857">
+          <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+      </WSRibbonTabSourceReference>
+      <WSRibbonTabSourceReference MenuGroup="ACAD" TabId="ID_TabMeshModeling" Show="true" IsActive="false" UID="WSR_0016">
+        <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelPrimitives" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" UID="ID_WSR_0127">
+          <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelSmoothMesh" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" UID="ID_WSR_0128">
+          <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelMeshEdit" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" UID="ID_WSR_0129">
+          <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelConvertMesh" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" UID="ID_WSR_0076">
+          <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="RBN_01737906" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" UID="ID_WSR_0075">
+          <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelSubObject" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" UID="ID_WSR_0131">
+          <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+      </WSRibbonTabSourceReference>
+      <WSRibbonTabSourceReference MenuGroup="ACAD" TabId="ID_TabRender" Show="true" IsActive="false" UID="WSR_0010">
+        <ModifiedRev MajorVersion="23" MinorVersion="0" UserVersion="0"/>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelNamedViews2" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" PanelResizeOrder="100" UID="ID_WSR_220_052DA">
+          <ModifiedRev MajorVersion="23" MinorVersion="0" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelCoord" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" PanelResizeOrder="100" UID="ID_WSR_200_CC1AA">
+          <ModifiedRev MajorVersion="20" MinorVersion="0" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelViewports" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" PanelResizeOrder="100" UID="ID_WSR_200_BD6AD">
+          <ModifiedRev MajorVersion="20" MinorVersion="0" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelVisualStyles" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" PanelResizeOrder="100" UID="ID_WSR_200_217C2">
+          <ModifiedRev MajorVersion="20" MinorVersion="0" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelLights" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" PanelResizeOrder="100" UID="ID_WSR_200_44AE3">
+          <ModifiedRev MajorVersion="20" MinorVersion="0" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelSun" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" PanelResizeOrder="100" UID="ID_WSR_200_4BBFE">
+          <ModifiedRev MajorVersion="20" MinorVersion="0" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelMaterials" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" PanelResizeOrder="100" UID="ID_WSR_200_D1827">
+          <ModifiedRev MajorVersion="20" MinorVersion="0" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelMotionPathAnimation" Orientation="Docked" Show="false" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" PanelResizeOrder="100" UID="ID_WSR_200_0EE93">
+          <ModifiedRev MajorVersion="20" MinorVersion="0" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelCameras" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" PanelResizeOrder="100" UID="ID_WSR_200_D30FC">
+          <ModifiedRev MajorVersion="20" MinorVersion="0" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelRender" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" PanelResizeOrder="100" UID="ID_WSR_200_EC442">
+          <ModifiedRev MajorVersion="20" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+      </WSRibbonTabSourceReference>
+      <WSRibbonTabSourceReference MenuGroup="ACAD" TabId="ID_TabParametric" Show="true" IsActive="false" UID="ID_WSR_0186">
+        <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelParametricGeometricConstraints" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" PanelResizeOrder="100" UID="ID_WSR_0183">
+          <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelParametricDimensionalConstraints" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" PanelResizeOrder="100" UID="ID_WSR_0184">
+          <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelParametricManage" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" PanelResizeOrder="100" UID="ID_WSR_0185">
+          <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+      </WSRibbonTabSourceReference>
+      <WSRibbonTabSourceReference MenuGroup="ACAD" TabId="ID_TabInsert" Show="true" IsActive="false" UID="ID_WSR_0067">
+        <ModifiedRev MajorVersion="19" MinorVersion="1" UserVersion="0"/>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelInsert_Block" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" UID="ID_WSR_0056">
+          <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelAttributes" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" UID="ID_WSR_0057">
+          <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelInsert_Reference" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" UID="ID_WSR_0058">
+          <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelInsert_Import" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" UID="ID_WSR_0059">
+          <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelInsert_Data" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" UID="ID_WSR_0061">
+          <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelInsert_DataLink" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" UID="ID_WSR_0062">
+          <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_Panel_Set_GeoLocation" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" PanelResizeOrder="100" UID="ID_WSR_200_E3F4F">
+          <ModifiedRev MajorVersion="19" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+      </WSRibbonTabSourceReference>
+      <WSRibbonTabSourceReference MenuGroup="ACAD" TabId="ID_TabAnnotate" Show="true" IsActive="false" UID="ID_WSR_0074">
+        <ModifiedRev MajorVersion="21" MinorVersion="0" UserVersion="0"/>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelText" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" UID="ID_WSR_0063">
+          <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelDimensions" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" UID="ID_WSR_0064">
+          <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelCenterlines" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" UID="ID_WSR_0070">
+          <ModifiedRev MajorVersion="21" MinorVersion="0" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelMultileaders" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" UID="ID_WSR_0065">
+          <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelTables" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" UID="ID_WSR_0066">
+          <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelMarkup" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" UID="ID_WSR_0068">
+          <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelAnnotationScaling" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" UID="ID_WSR_0069">
+          <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+      </WSRibbonTabSourceReference>
+      <WSRibbonTabSourceReference MenuGroup="ACAD" TabId="ID_TabView3D" Show="true" IsActive="false" UID="WSR_231_910F5">
+        <ModifiedRev MajorVersion="23" MinorVersion="1" UserVersion="0"/>
+        <WSRibbonPanelSourceReference PanelId="RBN_200_14623" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" PanelResizeOrder="100" UID="ID_WSR_231_288A7">
+          <ModifiedRev MajorVersion="23" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelNamedViews2" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" PanelResizeOrder="100" UID="ID_WSR_231_E8FF2">
+          <ModifiedRev MajorVersion="23" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="RBN_231_E07B6" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" PanelResizeOrder="100" UID="ID_WSR_231_590F1">
+          <ModifiedRev MajorVersion="23" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="RBN_231_D4737" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" PanelResizeOrder="100" UID="ID_WSR_231_590F2">
+          <ModifiedRev MajorVersion="24" MinorVersion="0" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="RBN_200_97B23" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" PanelResizeOrder="100" UID="ID_WSR_231_273AC">
+          <ModifiedRev MajorVersion="23" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelWindow" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" PanelResizeOrder="100" UID="ID_WSR_231_2B067">
+          <ModifiedRev MajorVersion="23" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelViewNavigate3D" Orientation="Docked" Show="false" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" PanelResizeOrder="100" UID="ID_WSR_231_B80E4">
+          <ModifiedRev MajorVersion="23" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+      </WSRibbonTabSourceReference>
+      <WSRibbonTabSourceReference MenuGroup="ACAD" TabId="ID_TabManage" Show="true" IsActive="false" UID="ID_WSR_0081">
+        <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelActionRecorder" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" UID="ID_WSR_0077">
+          <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelCustomization" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" UID="ID_WSR_0082">
+          <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelScriptsAndMacros" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" UID="ID_WSR_0083">
+          <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelCADStandards" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" UID="ID_WSR_0084">
+          <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+      </WSRibbonTabSourceReference>
+      <WSRibbonTabSourceReference MenuGroup="ACAD" TabId="ID_TabOutput3D" Show="true" IsActive="false" UID="ID_WSR_0089">
+        <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelPlot" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" UID="ID_WSR_0086">
+          <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelExportPDFDWF3D" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" UID="ID_WSR_0080">
+          <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+      </WSRibbonTabSourceReference>
+      <WSRibbonTabSourceReference MenuGroup="ACAD" TabId="RBN_00012112" Show="true" IsActive="false" UID="WSR_0815">
+        <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+      </WSRibbonTabSourceReference>
+      <WSRibbonTabSourceReference MenuGroup="ACAD" TabId="ID_TabCollaborate" Show="true" IsActive="false" UID="ID_WSR_3DModeling_TabCollaborate">
+        <ModifiedRev MajorVersion="23" MinorVersion="0" UserVersion="0"/>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelSharedViews" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" PanelResizeOrder="100" UID="ID_WSR_310_SHAREVIEW">
+          <ModifiedRev MajorVersion="23" MinorVersion="0" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelPlanGrid" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" PanelResizeOrder="100" UID="ID_WSR_310_PLANGRID">
+          <ModifiedRev MajorVersion="24" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelTrace" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" PanelResizeOrder="100" UID="ID_WSR_310_TRACE">
+          <ModifiedRev MajorVersion="24" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+      </WSRibbonTabSourceReference>
+      <WSRibbonTabSourceReference MenuGroup="ACAD" TabId="ID_TabAutomation" Show="false" IsActive="false" UID="ID_WSR_3DModeling_TabAutomation">
+        <ModifiedRev MajorVersion="24" MinorVersion="2" UserVersion="0"/>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelMacroAdvisor" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" PanelResizeOrder="100" UID="ID_WSR_3DM_MACRO_ADVISOR">
+          <ModifiedRev MajorVersion="24" MinorVersion="2" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+      </WSRibbonTabSourceReference>
+    </WSRibbonRoot>
+  </Workspace>
+  <Workspace StartOn="ignore" ScrollBars="ignore" ScreenMenus="ignore" StatusBar="ApplicationOnly" NavigationBar="on" MenuBar="off" LayoutModelTabs="on" UID="WS_SM_0001">
+    <ModifiedRev MajorVersion="23" MinorVersion="0" UserVersion="0"/>
+    <Name xlate="true" UID="XLS_SM_00015924">三维基础</Name>
+    <WSPopRoot>
+      <WSPop MenuGroup="ACAD" pUID="ID_MnFile" Display="1" UID="WSP_0128">
+        <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+      </WSPop>
+      <WSPop MenuGroup="ACAD" pUID="ID_MnEdit" Display="1" UID="WSP_0130">
+        <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+      </WSPop>
+      <WSPop MenuGroup="ACAD" pUID="ID_MnView" Display="1" UID="WSP_0132">
+        <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+      </WSPop>
+      <WSPop MenuGroup="ACAD" pUID="ID_MnInsert" Display="1" UID="WSP_0134">
+        <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+      </WSPop>
+      <WSPop MenuGroup="ACAD" pUID="ID_MnFormat" Display="1" UID="WSP_0136">
+        <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+      </WSPop>
+      <WSPop MenuGroup="ACAD" pUID="ID_MnTools" Display="1" UID="WSP_0138">
+        <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+      </WSPop>
+      <WSPop MenuGroup="ACAD" pUID="ID_MnDraw" Display="1" UID="WSP_0140">
+        <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+      </WSPop>
+      <WSPop MenuGroup="ACAD" pUID="ID_MnDimensi" Display="1" UID="WSP_0142">
+        <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+      </WSPop>
+      <WSPop MenuGroup="ACAD" pUID="ID_MnModify" Display="1" UID="WSP_0144">
+        <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+      </WSPop>
+      <WSPop MenuGroup="ACAD" pUID="ID_MnWindow" Display="1" UID="WSP_0148">
+        <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+      </WSPop>
+      <WSPop MenuGroup="ACAD" pUID="ID_MnHelp" Display="1" UID="WSP_0150">
+        <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+      </WSPop>
+      <WSPop MenuGroup="EXPRESS" pUID="ID_MNEXPRESS" Display="1" UID="WSP_0151">
+        <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+      </WSPop>
+      <WSPop MenuGroup="ACAD" pUID="ID_MnParametric" Display="1" UID="WSP_0152">
+        <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+      </WSPop>
+    </WSPopRoot>
+    <WSToolbarRoot/>
+    <WSQuickAccessToolbarRoot>
+      <WSQuickAccessToolbarReference MenuGroup="ACAD" ToolbarId="QAT_TOOLBAR1" Orientation="Above" UID="WSQAT_SM_0001">
+        <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+      </WSQuickAccessToolbarReference>
+    </WSQuickAccessToolbarRoot>
+    <WSESWRoot>
+      <WSESW Display="ignore" DockFloat="ignore" Orientation="ignore" AllowDock="ignore" AutoHide="ignore" UseTransparency="ignore" xval="-2147483648" yval="-2147483648" Height="0" Width="0" dockxval="-2147483648" dockyval="-2147483648" dockwidth="0" dockheight="0" DefaultGroup="" ClassName="{0939E07C-FCEF-4C0D-8349-662031189B8A}" CommandName="LIGHTLIST" CommandPosition="0" UID="WSE_SM_0001">
+        <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_SM_00015908">模型中的光源</Name>
+      </WSESW>
+      <WSESW Display="ignore" DockFloat="ignore" Orientation="ignore" AllowDock="ignore" AutoHide="ignore" UseTransparency="ignore" xval="-2147483648" yval="-2147483648" Height="0" Width="0" dockxval="-2147483648" dockyval="-2147483648" dockwidth="0" dockheight="0" DefaultGroup="" ClassName="{1A11B0B9-1AA0-4E71-95D1-C77737444340}" CommandName="EXTERNALREFERENCES" CommandPosition="0" UID="WSE_SM_0002">
+        <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_SM_00015909">外部参照</Name>
+      </WSESW>
+      <WSESW Display="ignore" DockFloat="ignore" Orientation="ignore" AllowDock="ignore" AutoHide="ignore" UseTransparency="ignore" xval="-2147483648" yval="-2147483648" Height="0" Width="0" dockxval="-2147483648" dockyval="-2147483648" dockwidth="0" dockheight="0" DefaultGroup="" ClassName="{26C7CFE0-7187-4736-9B70-EF21C803A601}" CommandName="SUNPROPERTIES" CommandPosition="0" UID="WSE_SM_0003">
+        <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_SM_00015910">阳光特性</Name>
+      </WSESW>
+      <WSESW Display="ignore" DockFloat="ignore" Orientation="ignore" AllowDock="ignore" AutoHide="ignore" UseTransparency="ignore" xval="-2147483648" yval="-2147483648" Height="0" Width="0" dockxval="-2147483648" dockyval="-2147483648" dockwidth="0" dockheight="0" DefaultGroup="" ClassName="{60284BE8-5CB0-474B-BD85-9D3335F5E471}" CommandName="VISUALSTYLES" CommandPosition="0" UID="WSE_SM_0005">
+        <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_SM_00015912">视觉样式管理器</Name>
+      </WSESW>
+      <WSESW Display="ignore" DockFloat="ignore" Orientation="ignore" AllowDock="ignore" AutoHide="ignore" UseTransparency="ignore" xval="-2147483648" yval="-2147483648" Height="0" Width="0" dockxval="-2147483648" dockyval="-2147483648" dockwidth="0" dockheight="0" DefaultGroup="" ClassName="{6D32A2D9-832E-11D2-A83C-0060B0872C0B}" CommandName="PROPERTIES" CommandPosition="0" UID="WSE_SM_0006">
+        <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_SM_00015913">特性</Name>
+      </WSESW>
+      <WSESW Display="ignore" DockFloat="ignore" Orientation="ignore" AllowDock="ignore" AutoHide="ignore" UseTransparency="ignore" xval="-2147483648" yval="-2147483648" Height="0" Width="0" dockxval="-2147483648" dockyval="-2147483648" dockwidth="0" dockheight="0" DefaultGroup="" ClassName="{888F0E83-D9B4-48A5-AEA9-3867A6121478}" CommandName="RPREF" CommandPosition="0" UID="WSE_SM_0007">
+        <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_SM_00015914">“高级设置”对话框</Name>
+      </WSESW>
+      <WSESW Display="ignore" DockFloat="ignore" Orientation="ignore" AllowDock="ignore" AutoHide="ignore" UseTransparency="ignore" xval="-2147483648" yval="-2147483648" Height="0" Width="0" dockxval="-2147483648" dockyval="-2147483648" dockwidth="0" dockheight="0" DefaultGroup="" ClassName="{9403002C-2B99-4281-B9DD-F708E0858542}" CommandName="MARKUP" CommandPosition="0" UID="WSE_SM_0008">
+        <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_SM_00015915">标记集管理器</Name>
+      </WSESW>
+      <WSESW Display="ignore" DockFloat="ignore" Orientation="ignore" AllowDock="ignore" AutoHide="ignore" UseTransparency="ignore" xval="-2147483648" yval="-2147483648" Height="0" Width="0" dockxval="-2147483648" dockyval="-2147483648" dockwidth="0" dockheight="0" DefaultGroup="" ClassName="{ACA19CF8-C061-4301-8E75-49DACFF072AD}" CommandName="QuickCalc" CommandPosition="0" UID="WSE_SM_0009">
+        <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_SM_00015916">快速计算</Name>
+      </WSESW>
+      <WSESW Display="ignore" DockFloat="ignore" Orientation="ignore" AllowDock="ignore" AutoHide="ignore" UseTransparency="ignore" xval="-2147483648" yval="-2147483648" Height="0" Width="0" dockxval="-2147483648" dockyval="-2147483648" dockwidth="0" dockheight="0" DefaultGroup="" ClassName="{B17B40A6-2761-4BCC-BC48-2B8A465AA5EB}" CommandName="TOOLPALETTES" CommandPosition="0" UID="WSE_SM_0010">
+        <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_SM_00015917">工具选项板</Name>
+      </WSESW>
+      <WSESW Display="yes" DockFloat="docked" Orientation="top" AllowDock="ignore" AutoHide="ignore" UseTransparency="ignore" xval="-2147483648" yval="-2147483648" Height="0" Width="0" dockxval="-2147483648" dockyval="-2147483648" dockwidth="0" dockheight="0" DefaultGroup="" ClassName="{B1AC3ED0-9573-4569-A97A-D9CAE382F5D2}" CommandName="_RIBBON" CommandPosition="0" UID="WSE_SM_0011">
+        <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_SM_00015918">功能区</Name>
+      </WSESW>
+      <WSESW Display="ignore" DockFloat="ignore" Orientation="ignore" AllowDock="ignore" AutoHide="ignore" UseTransparency="ignore" xval="-2147483648" yval="-2147483648" Height="0" Width="0" dockxval="-2147483648" dockyval="-2147483648" dockwidth="0" dockheight="0" DefaultGroup="" ClassName="{B371F8AA-7FF7-11D2-BA58-0060B0B5E151}" CommandName="ADCENTER" CommandPosition="0" UID="WSE_SM_0012">
+        <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_SM_00015919">设计中心</Name>
+      </WSESW>
+      <WSESW Display="ignore" DockFloat="ignore" Orientation="ignore" AllowDock="ignore" AutoHide="ignore" UseTransparency="ignore" xval="-2147483648" yval="-2147483648" Height="0" Width="0" dockxval="-2147483648" dockyval="-2147483648" dockwidth="0" dockheight="0" DefaultGroup="" ClassName="{B6BCB9F4-84B2-11D2-A127-0060B0CE2DA0}" CommandName="DBCONNECT" CommandPosition="0" UID="WSE_SM_0013">
+        <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_SM_00015920">数据库连接管理器</Name>
+      </WSESW>
+      <WSESW Display="ignore" DockFloat="ignore" Orientation="ignore" AllowDock="ignore" AutoHide="ignore" UseTransparency="ignore" xval="-2147483648" yval="-2147483648" Height="0" Width="0" dockxval="-2147483648" dockyval="-2147483648" dockwidth="0" dockheight="0" DefaultGroup="" ClassName="{BEBBB318-2898-4C03-ADA2-360DC6B7AA69}" CommandName="SHEETSET" CommandPosition="0" UID="WSE_SM_0014">
+        <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_SM_00015921">图纸集管理器</Name>
+      </WSESW>
+      <WSESW Display="ignore" DockFloat="ignore" Orientation="ignore" AllowDock="ignore" AutoHide="ignore" UseTransparency="ignore" xval="-2147483648" yval="-2147483648" Height="0" Width="0" dockxval="-2147483648" dockyval="-2147483648" dockwidth="0" dockheight="0" DefaultGroup="" ClassName="{D5CF410D-3E11-4D0C-AE69-A75C9B788C47}" CommandName="COMMANDLINE" CommandPosition="0" UID="WSE_SM_0015">
+        <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_SM_00015922">命令行</Name>
+      </WSESW>
+      <WSESW Display="ignore" DockFloat="ignore" Orientation="ignore" AllowDock="ignore" AutoHide="ignore" UseTransparency="ignore" xval="-2147483648" yval="-2147483648" Height="0" Width="0" dockxval="-2147483648" dockyval="-2147483648" dockwidth="0" dockheight="0" DefaultGroup="" ClassName="{F1517EC6-62B7-4600-A00C-127FA2170291}" CommandName="LAYER" CommandPosition="0" UID="WSE_SM_0016">
+        <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_SM_00015923">图层特性管理器</Name>
+      </WSESW>
+      <WSESW Display="no" DockFloat="docked" Orientation="right" AllowDock="yes" AutoHide="ignore" UseTransparency="no" xval="-2147483648" yval="-2147483648" Height="0" Width="0" dockxval="-2147483648" dockyval="-2147483648" dockwidth="300" dockheight="0" DefaultGroup="" ClassName="{9278AB26-9620-4FC2-87F1-E4C1187D2EEA}" CommandName="MATBROWSEROPEN" CommandPosition="0" UID="WSE_0154">
+        <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00021821">材质浏览器</Name>
+      </WSESW>
+      <WSESW Display="no" DockFloat="ignore" Orientation="left" AllowDock="yes" AutoHide="ignore" UseTransparency="ignore" xval="-2147483648" yval="-2147483648" Height="0" Width="0" dockxval="-2147483648" dockyval="-2147483648" dockwidth="325" dockheight="0" DefaultGroup="" ClassName="{2E558694-CA42-44DA-8B6B-9D455D210B2E}" CommandName="MATEDITOROPEN" CommandPosition="0" UID="WSE_0158">
+        <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_00021832">材质编辑器</Name>
+      </WSESW>
+      <WSESW Display="no" DockFloat="ignore" Orientation="ignore" AllowDock="ignore" AutoHide="ignore" UseTransparency="ignore" xval="-2147483648" yval="-2147483648" Height="0" Width="0" dockxval="-2147483648" dockyval="-2147483648" dockwidth="0" dockheight="0" DefaultGroup="" ClassName="{179F7AA7-82FB-4CD5-BBAA-D59AFFFE3CF2}" CommandName="BlocksPalette" CommandPosition="0" UID="WSE_0162">
+        <ModifiedRev MajorVersion="23" MinorVersion="1" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_7289">块</Name>
+      </WSESW>
+      <WSESW Display="no" DockFloat="ignore" Orientation="ignore" AllowDock="ignore" AutoHide="ignore" UseTransparency="ignore" xval="-2147483648" yval="-2147483648" Height="0" Width="0" dockxval="-2147483648" dockyval="-2147483648" dockwidth="0" dockheight="0" DefaultGroup="" ClassName="{DEF5EAB2-4398-460E-9934-46E2828818EF}" CommandName="COMMANDMACROS" CommandPosition="0" UID="WSE_12102021_3D">
+        <ModifiedRev MajorVersion="24" MinorVersion="3" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_12102021_3D">命令宏</Name>
+      </WSESW>
+      <WSESW Display="no" DockFloat="ignore" Orientation="ignore" AllowDock="ignore" AutoHide="ignore" UseTransparency="ignore" xval="-2147483648" yval="-2147483648" Height="0" Width="0" dockxval="-2147483648" dockyval="-2147483648" dockwidth="0" dockheight="0" DefaultGroup="" ClassName="{CE54472C-9C1E-4F64-8AC7-6E272AFD23CB}" CommandName="ACTIVITYINSIGHTSOPEN" CommandPosition="0" UID="WSE_05252022_3D">
+        <ModifiedRev MajorVersion="24" MinorVersion="3" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_05252022_3D">活动见解</Name>
+      </WSESW>
+	    <WSESW Display="no" DockFloat="ignore" Orientation="ignore" AllowDock="ignore" AutoHide="ignore" UseTransparency="ignore" xval="-2147483648" yval="-2147483648" Height="0" Width="0" dockxval="-2147483648" dockyval="-2147483648" dockwidth="0" dockheight="0" DefaultGroup="" ClassName="{6B3144A6-1F3C-4A25-9FE4-B5B25ACF2565}" CommandName="ACTIVITYINSIGHTSSTARTPAGEOPEN" CommandPosition="0" UID="WSE_05252023_3D">
+        <ModifiedRev MajorVersion="25" MinorVersion="1" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_05252023">活动见解起始页</Name>
+      </WSESW>
+	  <WSESW Display="no" DockFloat="ignore" Orientation="ignore" AllowDock="ignore" AutoHide="ignore" UseTransparency="ignore" xval="-2147483648" yval="-2147483648" Height="0" Width="0" dockxval="-2147483648" dockyval="-2147483648" dockwidth="0" dockheight="0" DefaultGroup="" ClassName="{E62AF0F4-317D-4CF8-B210-E837C5A052C2}" CommandName="TRACEPALETTEOPEN" CommandPosition="0" UID="WSE_05252024_3D">
+        <ModifiedRev MajorVersion="25" MinorVersion="1" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_05252024">“跟踪”选项板</Name>
+      </WSESW>
+	   <WSESW Display="no" DockFloat="ignore" Orientation="ignore" AllowDock="ignore" AutoHide="ignore" UseTransparency="ignore" xval="-2147483648" yval="-2147483648" Height="0" Width="0" dockxval="-2147483648" dockyval="-2147483648" dockwidth="0" dockheight="0" DefaultGroup="" ClassName="{A2E6D88C-A87B-4051-B297-CE6E409B6301}" CommandName="ASSISTANTOPEN" CommandPosition="0" UID="WSE_05252025_3D">
+        <ModifiedRev MajorVersion="25" MinorVersion="1" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_05252025">Autodesk 助手</Name>
+      </WSESW>
+	  <WSESW Display="no" DockFloat="ignore" Orientation="ignore" AllowDock="ignore" AutoHide="ignore" UseTransparency="ignore" xval="-2147483648" yval="-2147483648" Height="0" Width="0" dockxval="-2147483648" dockyval="-2147483648" dockwidth="0" dockheight="0" DefaultGroup="" ClassName="{9727DA32-10D8-440F-B46B-A578000C417E}" CommandName="PUSHTODOCSOPEN" CommandPosition="0" UID="WSE_05252026_3D">
+        <ModifiedRev MajorVersion="25" MinorVersion="1" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_05252026">推送到 Autodesk Docs</Name>
+      </WSESW>
+	  <WSESW Display="no" DockFloat="ignore" Orientation="ignore" AllowDock="ignore" AutoHide="ignore" UseTransparency="ignore" xval="-2147483648" yval="-2147483648" Height="0" Width="0" dockxval="-2147483648" dockyval="-2147483648" dockwidth="0" dockheight="0" DefaultGroup="" ClassName="{78C4B9F4-D811-44C2-BA26-467BDFD0BCA5}" CommandName="PERFANALYZER" CommandPosition="0" UID="WSE_05252027_3D">
+        <ModifiedRev MajorVersion="25" MinorVersion="1" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_05252027">性能分析仪</Name>
+      </WSESW>
+	  <WSESW Display="no" DockFloat="ignore" Orientation="ignore" AllowDock="ignore" AutoHide="ignore" UseTransparency="ignore" xval="-2147483648" yval="-2147483648" Height="0" Width="0" dockxval="-2147483648" dockyval="-2147483648" dockwidth="0" dockheight="0" DefaultGroup="" ClassName="{1B084257-F567-4C11-AF94-CA0961CA4875}" CommandName="SHAREDVIEWS" CommandPosition="0" UID="WSE_05252028_3D">
+        <ModifiedRev MajorVersion="25" MinorVersion="1" UserVersion="0"/>
+        <Name xlate="true" UID="XLS_05252028">共享视图</Name>
+      </WSESW>
+    </WSESWRoot>
+    <WSRibbonRoot AutoHideMode="None" LockMode="None" ShowPanelTitleInHorizontalOrientation="true" ShowPanelTitleInVerticalOrientation="true">
+      <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+      <WSRibbonTabSourceReference MenuGroup="ACAD" TabId="ID_3dBasics_Home" Show="true" IsActive="false" UID="WSR_SM_0101">
+        <ModifiedRev MajorVersion="23" MinorVersion="1" UserVersion="0"/>
+        <WSRibbonPanelSourceReference PanelId="ID_3dBasics_PanelCreate" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" UID="ID_WSR_SM_0040">
+          <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_3dBasics_PanelEdit" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" UID="ID_WSR_SM_0041">
+          <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_3dBasics_PanelDraw" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" UID="ID_WSR_SM_0042">
+          <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_3dBasics_PanelModify" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" UID="ID_WSR_SM_0043">
+          <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_3dBasics_PanelSelection" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" UID="ID_WSR_SM_0044">
+          <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_3dBasics_PanelCoordinates" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" UID="ID_WSR_SM_0045">
+          <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_3dBasics_PanelLayersView" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" UID="ID_WSR_SM_0046">
+          <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelSection" Orientation="Docked" Show="false" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" UID="ID_WSR_SM_0047">
+          <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+      </WSRibbonTabSourceReference>
+      <WSRibbonTabSourceReference MenuGroup="ACAD" TabId="ID_3dBasics_Render" Show="true" IsActive="false" UID="WSR_SM_0028">
+        <ModifiedRev MajorVersion="23" MinorVersion="0" UserVersion="0"/>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelNamedViews2" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" PanelResizeOrder="100" UID="ID_WSR_220_052DC">
+          <ModifiedRev MajorVersion="23" MinorVersion="0" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelCoord" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" PanelResizeOrder="100" UID="ID_WSR_200_49683">
+          <ModifiedRev MajorVersion="20" MinorVersion="0" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelVisualStyles" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" PanelResizeOrder="100" UID="ID_WSR_200_F93E8">
+          <ModifiedRev MajorVersion="20" MinorVersion="0" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelViewports" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" PanelResizeOrder="100" UID="ID_WSR_200_ABEED">
+          <ModifiedRev MajorVersion="20" MinorVersion="0" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelLights" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" PanelResizeOrder="100" UID="ID_WSR_200_460A2">
+          <ModifiedRev MajorVersion="20" MinorVersion="0" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelSun" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" PanelResizeOrder="100" UID="ID_WSR_200_57EAC">
+          <ModifiedRev MajorVersion="20" MinorVersion="0" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelMaterials" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" PanelResizeOrder="100" UID="ID_WSR_200_67328">
+          <ModifiedRev MajorVersion="20" MinorVersion="0" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelRender" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" PanelResizeOrder="100" UID="ID_WSR_200_B28BE">
+          <ModifiedRev MajorVersion="20" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+      </WSRibbonTabSourceReference>
+      <WSRibbonTabSourceReference MenuGroup="ACAD" TabId="ID_3dBasics_Insert" Show="true" IsActive="false" UID="WSRU_SM_0051">
+        <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelInsert_Block" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" PanelResizeOrder="100" UID="ID_WSR_SM_0174">
+          <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelInsert_Reference" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" PanelResizeOrder="100" UID="ID_WSR_SM_0175">
+          <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelInsert_Import" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" PanelResizeOrder="100" UID="ID_WSR_SM_0176">
+          <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+      </WSRibbonTabSourceReference>
+      <WSRibbonTabSourceReference MenuGroup="ACAD" TabId="ID_TabView3D" Show="true" IsActive="false" UID="WSR_231_B5401">
+        <ModifiedRev MajorVersion="23" MinorVersion="1" UserVersion="0"/>
+        <WSRibbonPanelSourceReference PanelId="RBN_200_14623" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" PanelResizeOrder="100" UID="ID_WSR_231_23061">
+          <ModifiedRev MajorVersion="23" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelNamedViews2" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" PanelResizeOrder="100" UID="ID_WSR_231_92FBA">
+          <ModifiedRev MajorVersion="23" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="RBN_231_E07B6" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" PanelResizeOrder="100" UID="ID_WSR_231_2AB59">
+          <ModifiedRev MajorVersion="23" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="RBN_231_D4737" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" PanelResizeOrder="100" UID="ID_WSR_231_2AB60">
+          <ModifiedRev MajorVersion="24" MinorVersion="0" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="RBN_200_97B23" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" PanelResizeOrder="100" UID="ID_WSR_231_21BD4">
+          <ModifiedRev MajorVersion="23" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelWindow" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" PanelResizeOrder="100" UID="ID_WSR_231_A1F1E">
+          <ModifiedRev MajorVersion="23" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelViewNavigate3D" Orientation="Docked" Show="false" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" PanelResizeOrder="100" UID="ID_WSR_231_DD10C">
+          <ModifiedRev MajorVersion="23" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+      </WSRibbonTabSourceReference>
+      <WSRibbonTabSourceReference MenuGroup="ACAD" TabId="ID_TabManage" Show="true" IsActive="false" UID="WSR_SM_0050">
+        <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelActionRecorder" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" PanelResizeOrder="100" UID="ID_WSR_SM_0169">
+          <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelCustomization" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" PanelResizeOrder="100" UID="ID_WSR_SM_0171">
+          <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelScriptsAndMacros" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" PanelResizeOrder="100" UID="ID_WSR_SM_0172">
+          <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelCADStandards" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" PanelResizeOrder="100" UID="ID_WSR_SM_0173">
+          <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+      </WSRibbonTabSourceReference>
+      <WSRibbonTabSourceReference MenuGroup="ACAD" TabId="ID_TabOutput3D" Show="true" IsActive="false" UID="WSR_SM_0055">
+        <ModifiedRev MajorVersion="13" MinorVersion="1" UserVersion="0"/>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelPlot" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" PanelResizeOrder="100" UID="ID_WSR_SM_0056">
+          <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelExportPDFDWF3D" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" PanelResizeOrder="100" UID="ID_WSR_SM_0057">
+          <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+      </WSRibbonTabSourceReference>
+      <WSRibbonTabSourceReference MenuGroup="ACAD" TabId="RBN_00012112" Show="true" IsActive="false" UID="WSR_0816">
+        <ModifiedRev MajorVersion="18" MinorVersion="2" UserVersion="0"/>
+      </WSRibbonTabSourceReference>
+      <WSRibbonTabSourceReference MenuGroup="ACAD" TabId="ID_TabCollaborate" Show="true" IsActive="false" UID="ID_WSR_3DBasics_TabCollaborate">
+        <ModifiedRev MajorVersion="23" MinorVersion="0" UserVersion="0"/>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelSharedViews" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" PanelResizeOrder="100" UID="ID_WSR_410_SHAREVIEW">
+          <ModifiedRev MajorVersion="23" MinorVersion="0" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelPlanGrid" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" PanelResizeOrder="100" UID="ID_WSR_410_PLANGRID">
+          <ModifiedRev MajorVersion="24" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelTrace" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" PanelResizeOrder="100" UID="ID_WSR_410_TRACE">
+          <ModifiedRev MajorVersion="24" MinorVersion="1" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+      </WSRibbonTabSourceReference>
+      <WSRibbonTabSourceReference MenuGroup="ACAD" TabId="ID_TabAutomation" Show="false" IsActive="false" UID="ID_WSR_3DBasics_TabAutomation">
+        <ModifiedRev MajorVersion="24" MinorVersion="2" UserVersion="0"/>
+        <WSRibbonPanelSourceReference PanelId="ID_PanelMacroAdvisor" Orientation="Docked" Show="true" xval="0" yval="0" FloatingGroup="0" FloatingOrder="0" FloatingOrientation="Vertical" PanelResizeOrder="100" UID="ID_WSR_3DB_MACRO_ADVISOR">
+          <ModifiedRev MajorVersion="24" MinorVersion="2" UserVersion="0"/>
+        </WSRibbonPanelSourceReference>
+      </WSRibbonTabSourceReference>
+    </WSRibbonRoot>
+  </Workspace>
+</WorkspaceRoot>

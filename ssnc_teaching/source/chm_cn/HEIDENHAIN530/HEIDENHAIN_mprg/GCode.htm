@@ -1,0 +1,743 @@
+
+<html">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title></title>
+<link href="../../helper_css.css" rel="stylesheet" type="text/css">
+
+<style type="text/css">
+<!--
+.style1 {color: #000000}
+.STYLE4 {font-size: 14px}
+-->
+</style>
+</head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellpadding="0" cellspacing="5" class="bar">
+  <tr>
+    <td><span class="STYLE4">海德汉iTNC530 G代码</span></td>
+  </tr>
+  <tr>
+    <td></td>
+  </tr>
+</table>
+<TABLE border=0 cellPadding=0 cellSpacing=0 height="100%" width=60%>
+  <TBODY>
+    <TR>    </TR>
+    <TR>
+      <TD vAlign=top ><table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+        <tr>
+          <td><strong>G00-</strong><strong>直线快速定位</strong><strong></strong> <strong>
+            
+            G01-</strong><strong>直线插补带F进给</strong><strong></strong></td>
+        </tr>
+      </table>
+        <p><img width="240" height="133" src="images/GCode_clip_image002.jpg"><br>
+编程可以直接输入：<br>
+●直线中终点E的坐标 <br>
+●如果需要，需要加上半径补偿、进给率、辅助功能指令 <br>
+刀具移动轨迹从当前S的位置到终点E的位置 </p>
+        <p>编程格式：<br>
+            <img width="548" height="390" src="images/GCode_clip_image004.jpg"><br>
+            <img width="549" height="209" src="images/GCode_clip_image006.jpg"><br>
+          程序段输出结果显示：N25 G00 G42 G91 X+50 G90  Y+10 Z-20 M3* </p>
+        <p>程序举例： <br>
+          图中各点坐标 <br>
+  <img width="261" height="96" src="images/GCode_clip_image008.jpg"><br>
+          下刀深度<br>
+          Z=110mm
+          <br>
+  <img width="385" height="358" src="images/GCode_clip_image012.jpg"><br>
+        %S5121 G71*<br>
+        N10 G30 G17 X+0 Y+0 Z-20*<br>
+        N20 G31 G90 X+100 Y+100 Z+0*<br>
+        N30 G99 T1 L+0 R+5*<br>
+        N40 T1 G17 S2500*<br>
+        N50 G00 G40 G90 Z+100 M06*<br>
+        N60 X-10 Y-10*<br>
+        N70 Z-10 M03*<br>
+        N80 G01 G41 X+5 Y+5 F150*<br>
+        N90  Y+95*<br>
+        N100 X+95*<br>
+        N110 X+5*<br>
+        N120 X+5*<br>
+        N130 G00 G40 X-10 Y-10 M05*<br>
+        N140 Z+100 M02*<br>
+        N99999 %S5121 G71*</p>
+        <table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+          <tr>
+            <td><p><strong>G02/G03-</strong><strong>顺时针圆弧插补/逆时针圆弧插补</strong><strong> </strong></p></td>
+          </tr>
+        </table>
+        <p><strong>圆心坐标定义</strong></p>
+        <p>前提条件<br>
+          程序中圆心坐标I、J必须提前定义。<br>
+          刀具的起点在下图圆弧中的S点<br>
+  <img width="206" height="197" src="images/GCode_clip_image002_0000.jpg"><br>
+          定义旋转方向<br>
+          ●顺时针旋转：G02<br>
+          ●逆时针旋转：G03</p>
+        <p>输入数据 <br>
+          编程输入圆弧段的终点坐标值。 </p>
+        <p>对于整圆，在G02/G03程序段中的轮廓终点坐标要和起点坐标一样。 </p>
+        <p><img width="310" height="213" src="images/GCode_clip_image004_0000.jpg"><img width="222" height="204" src="images/GCode_clip_image006_0000.jpg"><br>
+          （圆弧段编程） （整圆编程）<br>
+          编程格式：<br>
+  <img width="550" height="232" src="images/GCode_clip_image008_0000.jpg"><br>
+  <br>
+  程序段输出结果显示：N25  G02 G91 X+50 G91 X+5 G90 Y-5* <br>
+          编程举例： <br>
+          圆心 I=50mm J=50mm <br>
+        圆弧的起点和终点 X=50mm Y=50mm 
+        <br>
+          铣削深度 Z=-5mm <br>
+          刀具半径R =15mm <br>
+          <br>
+          <img width="366" height="342" src="images/GCode_clip_image018.jpg"><br>
+          <br>
+          %S5201 G71*<br>
+          N10 G30 G17 X+1 Y+1 Z-20*<br>
+          N20 G31 G90 X+100 Y+100 Z+0*<br>
+          N30 G99 T6 L+0 R+15*<br>
+          N40 T6 G17 S1500*<br>
+          N50 G00 G40 G90 Z+100 M06*<br>
+          N60 X+50 Y-40*<br>
+          N70 Z-5 M03*<br>
+          N80 I+50 J+50*<br>
+          N90 G01 G41 X+50 Y+0 F100*<br>
+          N100 G26 R10*<br>
+          N110 G02 X50 Y+0*<br>
+          N120 G27 R10*<br>
+          N130 G00 G40 X+50 Y-40*<br>
+          N140 Z+100 M02*<br>
+        N99999 %S5201 G71* </p>
+        <p align="left">圆弧半径定义</p>
+        <p>定义旋转方向<br>
+          ●顺时针旋转：G02<br>
+          ●逆时针旋转：G03</p>
+        <p align="left">输入数据<br>
+          ●编程输入圆弧段的终点坐标值 <br>
+          ●编程输入圆弧的半径值 <br>
+  <img width="188" height="172" src="images/GCode_clip_image022.jpg"><br>
+          （S点到E点的编程输入圆弧半径值） <br>
+          注意： <br>
+          ●对于整圆，两个G02/G03程序段必须连续编程 <br>
+          ●圆弧起点到终点的距离不能大于圆的直径 <br>
+          ●最大可设定的半径值为100m<br>
+  <img width="230" height="158" src="images/GCode_clip_image024.jpg"></p>
+        <p>  （含有两个G02的程序段）</p>
+        <p>中心角CCA和圆弧半径R<br>
+          轮廓上的起始点S和终点E以一个半径R，可以构成四个不同的圆弧段，这些圆弧有不通过的长度和曲率。<br>
+          较大圆弧：CCA&gt;180°（圆弧长度大于半圆长度）<br>
+          输入：半径R为负数（R&lt;0）<br>
+          较小圆弧：CCA&lt;180°（圆弧长度小于半圆长度）<br>
+          输入：半径R为正数（R&gt;0）<br>
+  <img width="378" height="211" src="images/GCode_clip_image026.jpg"><br>
+          轮廓曲率和旋转方向<br>
+          旋转方向决定圆弧类型<br>
+          ●凸圆（向外弯曲） <br>
+  <img width="245" height="153" src="images/GCode_clip_image028.jpg"> <br>
+          ●凹圆（向内弯曲） </p>
+        <p><img width="234" height="114" src="images/GCode_clip_image030.jpg"><br>
+          编程格式：<br>
+  <img width="553" height="187" src="images/GCode_clip_image032.jpg"><br>
+  <br>
+          程序段输出结果显示：N25 G02 X+10 Y2 R-5*<br>
+          如有需要可以加上<br>
+          ●刀具半径补偿G42<br>
+          ●进给倍率F<br>
+          ●辅助功能M指令        </p>
+        <p>编程举例： <br>
+          半圆半径R=50mm<br> 
+          圆弧起始点坐标 X=0 Y=0 <br> 
+          圆弧终点坐标  X=100mm Y=0 
+          <br>
+          刀具半径 R=25mm <br> 
+          下刀深度Z=-18mm<br>
+          <br>
+          <img width="362" height="326" src="images/GCode_clip_image044.jpg"></p>
+        <p>%S5231 G71*<br>
+          N10 G30 G17 X+0 Y+0 Z-20*<br>
+          N20 G31 G90 X+100 Y+100 Z+0*<br>
+          N30 G99 T1 L+0 R+25*<br>
+          N40 T1 G17 S780*<br>
+          N50 G00 G40 G90 Z+100 M06*<br>
+          N60 X+25 Y-30*<br>
+          N70 Z-18 M03*<br>
+          N80 G01 G42 X+0 Y+0 F100*<br>
+          N90 G02 X+100 Y+0 R-50*<br>
+          N100 G00 G40 X+70 Y-30*<br>
+          N110 Z+100 M02*<br>
+        N99999 %S5231 G71*</p>
+        <table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+          <tr>
+            <td><p><strong>G04-</strong><strong>停留时间</strong><strong> </strong></p></td>
+          </tr>
+        </table>
+        <p><strong>应用</strong><strong><br>
+</strong><br>
+此循环是编程停留时间，这将引起正在运行的程序下个程序段的执行会被延迟。 <br>
+此停留时间循环可以达到断屑的目的。 </p>
+        <p><strong>激活</strong><strong><br>
+</strong><br>
+          此循环一旦被定义即将生效，模态条件下例如主轴旋转不受影响。 </p>
+        <p><strong>输入数据</strong><strong> </strong><br>
+          <br>
+          停留时间在G04后面加上F值，输入以秒（s）为单位 <br>
+          输入数值范围：0-30000s（约8.3小时）<br>
+          程序段输出结果显示：N125 G04 F3* </p>
+        <table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+          <tr>
+            <td><p><strong>G10-</strong><strong>极坐标中直线快速定位</strong><strong> </strong><strong>G11-</strong><strong>极坐标中直线插补带F进给</strong><strong> </strong></p> </td>
+          </tr>
+        </table>
+        <p>●角度H值允许输入的范围为：-360°~+360° <br>
+●H的符号取决于角度参考轴： <br>
+从角度参考轴到角度R为逆时针：H&gt;0<br>
+从角度参考轴到角度R为顺时针：H&lt;0<br>
+<img width="238" height="212" src="images/GCode_clip_image002_0001.jpg"></p>
+        <p>编程格式：<br>
+            <img width="553" height="126" src="images/GCode_clip_image004_0001.jpg"><br>
+          程序段输出结果显示：N25 G10 R+5 H30*</p>
+        <p>编程举例：<br>
+          拐点坐标<br>
+  <img width="260" height="143" src="images/GCode_clip_image006_0001.jpg"><br>
+          刀具半径 R=5mm <br>
+          下刀深度 Z=-10mm        </p>
+        <p>&nbsp;</p>
+        <p><img width="363" height="308" src="images/GCode_clip_image012_0001.jpg"><br>
+          <br>
+        %S5301 G71*<br>
+        N10 G30 G17 X+0 Y+0 Z-20*<br>
+        N20 G31 G90 X+100 Y+100 Z+0*<br>
+        N30 G99 T1 L+0 R+17*<br>
+        N40 T1 G17 S3200*<br>
+        N50 G00 G40 G90 Z+100 M06*<br>
+        N60 I+50 J+50*<br>
+        N70 G10 R+70 H-190*<br>
+        N80 Z-10 M03*<br>
+        N90 G11 G41 R+45 H+180 F100*<br>
+        N100 H+120* <br>
+          N110 H+60*<br>
+          N120 G91 H-60*<br>
+          N130 G90 H-60*<br>
+          N140 H+240*<br>
+          N150 H+180*<br>
+          N160 G10 G40 R+70 H+170*<br>
+          N170 Z+100 M02*<br>
+          N99999 %S5301 G71*<br>
+        </p>
+        <table width="100%" border="0" cellpadding="0" cellspacing="0">
+          <tr>
+            <th align="left" bordercolor="#FFFFFF" bgcolor="#FFFFFF" class="bar1" scope="col"><p><strong>G12/G13-</strong><strong>极坐标中顺时针圆弧插补/极坐标中逆时针圆弧插补</strong><strong> </strong></p></th>
+          </tr>
+        </table>
+        <p>极坐标半径也是圆弧半径，被定义成起点S到中心极点的距离。 </p>
+        <p><strong>输入</strong><strong> </strong><br>
+          <br>
+          ●圆弧终点极坐标角度H<br>
+          ●角度允许输入范围：-5400°~+5400° </p>
+        <p>定义旋转方向 <br>
+          ●顺时针  G12<br>
+        ●逆时针  G13</p>
+        <p><img width="237" height="206" src="images/GCode_clip_image002_0002.jpg"><br>
+          编程格式：<br>
+  <img width="553" height="102" src="images/GCode_clip_image004_0002.jpg"><br>
+          程序段输出结果显示：N25 G12 H30* <br>
+          如有需要可以加上<br>
+          ●刀具半径补偿G42<br>
+          ●进给倍率F<br>
+        ●辅助功能M指令 </p>
+        <p>编程举例： <br>
+        圆心坐标X=50mm Y=50mm <br> 
+        圆半径 R=50mm<br>
+        下刀深度 Z=-5mm<br>
+        刀具半径 R=15mm <br>
+        <br>
+          <img width="364" height="338" src="images/GCode_clip_image014_0002.jpg"><br>
+          <br>
+          %S5321 G71*<br>
+          N10 G30 G17 X+0 Y+0 Z-20*<br>
+          N20 G31 G90 X+100 Y+100 Z+0*<br>
+          N30 G99 T25 L+0 R+15*<br>
+          N40 T25 G17 S1500*<br>
+          N50 G00 G40 G90 Z+100 M06*<br>
+          N60 I+50 J+50*<br>
+          N70 G10 R+70 H+280*<br>
+          N80 Z-5 M03*<br>
+          N90 G11 G41 R+50 H-90 F100*<br>
+          N100 G26 R10* <br>
+          N110 G12 H+270*<br>
+          N120 G27 R10*<br>
+          N130 G10 G40 R+70 H-110*<br>
+          N140 Z+100 M02*<br>
+          N99999 %S5321 G71*<br>
+        </p>
+        <table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+          <tr>
+            <td><p><strong>G24-</strong><strong>倒棱</strong><strong> </strong></p></td>
+          </tr>
+        </table>
+        <p>倒棱指令含义为在两条直线的交点处以每条边相同的长度切除拐角。 <br>
+          <img width="228" height="247" src="images/GCode_clip_image002_0003.jpg"><br>
+          <strong>先决条件 </strong><br>
+          <br>
+●倒棱程序段的半径补偿前后必须一致 <br>
+●内倒角必须足够的大以至于能容纳当前的刀具 <br>
+<img width="224" height="220" src="images/GCode_clip_image004_0003.jpg"><br>
+<br>
+<strong>注意</strong><strong> </strong><br>
+<br>
+●在轮廓的起始位置不能使用G24<br>
+●倒棱仅仅在工作平面内有效 <br>
+●倒棱的进给率和当前的程序段进给率保持一致 <br>
+●被倒棱切除的拐角E点并不是编程轮廓的一部分 </p>
+        <p>编程格式： <br>
+            <img width="552" height="112" src="images/GCode_clip_image006_0003.jpg"><br>
+          程序段输出结果显示：N25 G24 R5* <br>
+        </p>
+        <p>编程举例：<br>
+          拐点E坐标 X=95mm Y=5mm <br> 
+          倒直角角边长 CHF=10mm<br>
+        刀具半径 R=+10mm<br>
+        下刀深度 Z=-15mm <br>
+        <br>
+          <img width="367" height="367" src="images/GCode_clip_image016_0001.jpg"><br>
+          <br>
+          程序<br>
+          %S5141 G71*<br>
+          N10 G30 G17 X+0 Y+0 Z-20*<br>
+          N20 G31 G90 X+100 Y+100 Z+0*<br>
+          N30 G99 T5 L+5 R+10*<br>
+          N40 T5 G17 S2000*<br>
+          N50 G00 G40 G90 Z+100 M06*<br>
+          N60 x-10 Y-5*<br>
+          N70 Z-15 M03*<br>
+          N80 G01 G42 X+5 Y+5 F200*<br>
+          N90 X+95*<br>
+          N100 G24 R10*<br>
+          N110 Y+100*<br>
+          N120 G00 G40 X+110 Y+110*<br>
+          N130 Z+100 M02*<br>
+        N99999 %S5141 G71*</p>
+        <table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+          <tr>
+            <td><p><strong>G25-</strong><strong>倒圆角</strong><strong> </strong></p></td>
+          </tr>
+        </table>
+        <p>刀具在前后两个轮廓切向连接的圆弧上移动，G25被用于倒圆角。 </p>
+        <p><strong>输入数据<br>
+        </strong><strong> </strong><br>
+          ●圆弧编程半径 <br>
+          ●圆弧编程进给率 </p>
+        <p>先决条件 <br>
+          倒圆半径必须足够大以至于能够容纳刀具 <br>
+  <img width="389" height="237" src="images/GCode_clip_image002_0004.jpg"><br>
+  <br>
+  <strong>注意</strong><strong> </strong><br>
+          ●在前后两个定位程序段中，两者坐标必须在圆弧平面内 <br>
+          ●G25程序段的进给率编程只在当前程序段有效，在G25程序段后，之前的进给率继续有效 <br>
+          ●被倒圆角切除的拐角E点不在编程轮廓上 </p>
+        <p>编程格式： <br>
+          编写两个轮廓元素之间的切向圆弧 <br>
+  <img width="552" height="189" src="images/GCode_clip_image004_0004.jpg"><br>
+          程序段输出结果显示：G25 R10 F100 * </p>
+        <p>编程举例： <br>
+          拐点坐标 X=95mm Y=5mm<br>
+          倒圆角半径 R=20mm<br>
+          下刀深度 Z=-15mm<br> 
+          刀具半径 R=10mm <br>
+          <br>
+  <img width="375" height="379" src="images/GCode_clip_image014_0004.jpg"><br>
+  <br>
+  %S5271 G71*<br>
+  N10 G30 G17 X+0 Y+0 Z-20*<br>
+  N20 G31 G90 X+100 Y+100 Z+0*<br>
+  N30 G99 T7 L+0 R+10*<br>
+  N40 T7 G17 S1500*<br>
+  N50 G00 G40 G90 Z+100 M06*<br>
+  N60 x-10 Y-5*<br>
+  N70 Z-15 M03*<br>
+  N80 G01 G42 X+0 Y+5 F100*<br>
+  N90 X+95*<br>
+  N100 G25 R20*<br>
+  N110 Y+100*<br>
+  N120 G00 G40 X+120 Y+120*<br>
+  N130 Z+100 M02*<br>
+  N99999 %S5271 G71*        </p>
+        <table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+          <tr>
+            <td><p><strong>G30/G31/G39</strong><strong></strong></p></td>
+          </tr>
+        </table>
+        <p><strong>G30-定义毛坯最小尺寸<br>
+          <br>
+        </strong>N10 G30 G17 X+0 Y+0 Z-40* <br>
+          <strong> </strong><br>
+          <strong>G31-</strong><strong>定义毛坯最大尺寸</strong><strong> </strong><br>
+          <br>
+        N20 G31 G90 X+100 Y+100 Z+0 * </p>
+        <p><strong>G39-</strong><strong>程序调用</strong><strong> </strong></p>
+        <p><strong>应用和激活</strong><strong> </strong><br>
+          由用户编写的主程序例如钻孔循环、曲线铣削、几何模块，可以作为子程序来调用。 </p>
+        <p><strong>输入数据</strong> <br>
+          输入被调用程序的文件名 </p>
+        <p>例子：程序调用 <br>
+          程序50为可调用的程序，并且是一个循环程序 <br>
+        部分程序<br>
+        .<br>
+        .<br>
+        G39 P01 50 程序50是一个循环程序<br>
+        G00 G40 X+20 Y+50 M99  调用程序50<br>
+        </p>
+        <table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+          <tr>
+            <td><p><strong>G41/G42-</strong><strong>刀具半径左补偿/刀具半径右补偿</strong><strong> </strong></p></td>
+          </tr>
+        </table>
+        <p>刀具移动带半径补偿 <br>
+  在零件轮廓铣削加工时，由于刀具半径尺寸影响，刀具的中心轨迹与零件轮廓往往不 <br>
+一致。为了避免计算刀具中心轨迹，直接按零件图样上的轮廓尺寸编程，海德汉统提供了 <br>
+刀具半径补偿功能。 </p>
+        <p><img width="547" height="184" src="images/GCode_clip_image002_0006.jpg"></p>
+        <table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+          <tr>
+            <td><strong>G43/G44-刀具长度正补偿/刀具长度负补偿</strong></td>
+          </tr>
+        </table>
+        <p>刀具长度补偿指令格式如下：<br>
+          格式：G43(G44) Z H<br>
+            其中：Z为补偿轴的终点值。H为刀具长度偏移量的储存器地址。<br>
+          把编程时假定的理想刀具长度与实际使用的刀具长度之差作为偏置设定在偏置存储器中，该指令不改变程序就可以实现对Z轴（或X.Y轴）运动指令的终点位置进行正向或负向补偿。<br>
+          使用G43指令时，实现正向偏置，用G44指令时，实现负向偏置。无论是绝对指令还是增量指令，由H代码指定的已存入偏置存储器中的偏置值在G43时加，<br>
+          在G44时则是从Z轴（或X.Y轴）运动指令的终点坐标值中减去。计算后的坐标值成为终点。<br>
+        </p>
+        <table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+          <tr>
+            <td><p><strong>G74-</strong><strong>键槽铣削循环</strong></p></td>
+          </tr>
+        </table>
+        <p><strong>加工过程 </strong><br>
+          <br>
+粗加工过程：<br>
+●刀具从起始位置穿透工件，然后沿着键槽纵向偏移，为了留有余量，加工至最大尺寸 <br>
+●最大尺寸被计算为键槽宽度-刀具直径的一半 <br>
+●当第一遍键槽铣进刀至键槽最后位置后即往相反的方向铣削，直到达到编程铣削的深度 </p>
+        <p>精加工过程： <br>
+          ●控制刀具在键槽底部以外轮廓的切向圆弧方向进行移动，随后开始铣削轮廓 <br>
+          ●在循环结束后，刀具快速返回至安全高度，如果进刀的数量增加，刀具将返回到主平面中安全高度水平的起始位置 </p>
+        <p><strong>所需刀具<br>
+        </strong><strong> </strong><br>
+          此循环要求中心切和铣削，铣刀直径必须要小于键槽宽度，大于键槽宽度的一半，键槽必须和当前坐标系中的轴平行。 </p>
+        <p><strong>输入数据<br>
+        </strong><strong> </strong><br>
+          ●安全高度<img width="24" height="15" src="images/GCode_clip_image002_0008.jpg"><br>
+          ●铣削深度<img width="20" height="18" src="images/GCode_clip_image004_0006.jpg">：键槽深度。代数符号决定加工方向（负值表示相反的工作方向）<br>
+          ●单次下刀深度<img width="21" height="18" src="images/GCode_clip_image006_0006.jpg"><br>
+          ●单次下刀的进给率：在下刀期间走刀的速度 <br>
+          ●第一边长度<img width="19" height="18" src="images/GCode_clip_image008_0005.jpg">：键槽长度，定义符号决定第一次铣削方向<br>
+          ●第二边长度<img width="18" height="18" src="images/GCode_clip_image010_0005.jpg">：键槽宽度<br>
+          ●进给率：在加工平面上刀具的运行速度 <br>
+  <img width="232" height="224" src="images/GCode_clip_image012_0005.jpg"></p>
+        <p><strong>起始点</strong><strong> </strong><br>
+          <br>
+          在循环调用之前，刀具必须在不加半径补偿的情况下移动至起始点：<br>
+          ●刀具轴移至工件表面的安全高度 <br>
+          ●在加工平面，键槽中心到键槽边的加工需要刀具半径进行补偿 <br>
+  <img width="232" height="218" src="images/GCode_clip_image014_0005.jpg"> <br>
+          程序举例： <br>
+  <img width="372" height="390" src="images/GCode_clip_image016_0003.jpg"><br>
+  <br>
+        %S8101 G71*<br>
+        N10 G30 G17 X+0 Y+0 Z-20*<br>
+        N20 G31 G90 X+100 Y+100 Z+0*<br>
+        N30 G99 T1 L+0 R+4*<br>
+        N40 T1 G17 S2000*<br>
+        N50 G74 P01 -2 P02 -15 P03 -5 P04 80 P05 X-50*<br>
+        P06 Y+10 P07 120*<br>
+        N60 G00 G40 G90 Z+ 100 M06*<br>
+        N70 X+76 Y+15 M03*<br>
+        N80 Z+2 M99*<br>
+        N90 G74 P01 -2 P02 -15 P03 -5 P04 80 P05 Y+80*<br>
+        N100 X+20 Y+14 M99*<br>
+        N110 Z+100 M02*<br>
+        N99999 %S8101 G71*<br>
+        </p>
+        <table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+          <tr>
+            <td><p><strong>G75/G76-</strong><strong>凹槽铣削循环</strong><strong> </strong></p></td>
+          </tr>
+        </table>
+        <p><strong>加工过程<br>
+        </strong><strong> </strong><br>
+矩形槽铣削是一个粗加工循环： <br>
+●刀具在起始位置（凹槽中心）下刀 <br>
+●刀具随后在编程路径中以定义的进给率运行 </p>
+        <p>铣刀开始正在长轴的正方向铣削，总是在方形槽的Y正方向开始直到循环结束，最后刀具返回到起始点位置。 </p>
+        <p><strong>所需刀具</strong><strong>/</strong><strong>局限性<br>
+        </strong><strong> </strong><br>
+          此循环在凹槽中心需要中心切和铣削或者定心钻，凹槽两边需要和坐标轴平行。 </p>
+        <p><img width="235" height="238" src="images/GCode_clip_image002_0009.jpg"></p>
+        <p>定义粗加工旋转方向<br>
+          ●顺时针：G75<br>
+          ●逆时针：G76<br>
+  <img width="226" height="201" src="images/GCode_clip_image004_0007.jpg"></p>
+        <p><strong>输入数据</strong><strong> </strong><br>
+          <br>
+          ●安全高度<img width="24" height="15" src="images/GCode_clip_image006_0007.jpg"><br>
+          ●铣削深度<img width="20" height="18" src="images/GCode_clip_image008_0006.jpg">代数符号决定加工方向（负值表示相反的工作方向）<br>
+          ●单次下刀深度<img width="21" height="18" src="images/GCode_clip_image010_0006.jpg"><br>
+          ●单次下刀的进给率：在下刀期间走刀的速度 <br>
+          ●第一边长度<img width="19" height="18" src="images/GCode_clip_image012_0006.jpg">：凹槽长度，定义符号决定第一次铣削方向<br>
+          ●第二边长度<img width="18" height="18" src="images/GCode_clip_image014_0006.jpg">：凹槽宽度<br>
+          ●进给率：在加工平面上刀具的运行速度 </p>
+        <p>计算 <br>
+          路径之间的比例k计算如下:<br>
+          k=K×R<br>
+          这里的K表示路径之间的比例（如图），R表示铣刀半径。 <br>
+  <img width="242" height="234" src="images/GCode_clip_image016_0004.jpg"><br>
+  <br>
+  <strong>拐角半径 </strong><br>
+  <br>
+          拐角半径由铣刀半径决定。</p>
+        <p><strong>起始点 </strong><br>
+          <br>
+          在循环调用之前，刀具必须不带半径补偿移动至起始点。<br>
+          ●刀具轴在工件表面的安全高度处 <br>
+          ●在加工平面上的凹槽中心位置 </p>
+        <p>程序举例： <br>
+            <img width="369" height="342" src="images/GCode_clip_image018_0003.jpg"><br>
+            <br>
+          程序<br>
+          %S8121 G71*<br>
+          N10 G30 G17 X+0 Y+0 Z-20*<br>
+          N20 G31 G90 X+110 Y+100 Z+0*<br>
+          N30 G99 T1 L+0 R+5*<br>
+          N40 T1 G17 S2000*<br>
+          N50 G76 P01 -2 P02 -10 P03 -4 P04 80 P05 X+80*<br>
+          P06 Y+40 P07 100*<br>
+          N60 G00 G40 G90 Z+ 100 M06*<br>
+          N70 X+60 Y+35 M03*<br>
+          N80 Z+2 M99*<br>
+          N90 Z+100 M02*<br>
+          N99999 %S8121 G71*<br>
+        </p>
+        <table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+          <tr>
+            <td><p><strong>G77/G78-</strong><strong>环形槽铣削循环</strong><strong> </strong></p></td>
+          </tr>
+        </table>
+        <p><strong>加工过程 </strong><br>
+          <br>
+          ●环形槽铣削是粗加工循环，刀具从起始位置（槽中心）开始下刀<br>
+          ●铣刀随后以螺旋路径进给，路径比例由k参数来决定<br>
+          ●动作过程一直重复，直到达到编程中所需的铣削深度 <br>
+●在循环结束后，刀具重返起始位置 <br>
+<br>
+<img width="240" height="233" src="images/GCode_clip_image002_0010.jpg"> <br>
+<br>
+<strong>所需刀具</strong><strong> </strong><br>
+<br>
+此循环需要中心切和铣削，或者在凹槽中心进行定心钻。 <br>
+<img width="224" height="232" src="images/GCode_clip_image004_0008.jpg"><br>
+<br>
+<strong>输入数据<br>
+</strong><strong> </strong><br>
+●安全高度<img width="24" height="15" src="images/GCode_clip_image006_0008.jpg"><br>
+●铣削深度<img width="20" height="18" src="images/GCode_clip_image008_0007.jpg">：凹槽深度，代数符号决定加工方向（负值表示相反的工作方向）<br>
+●单次下刀深度<img width="21" height="18" src="images/GCode_clip_image010_0007.jpg"><br>
+单次下刀的进给率：在下刀期间走刀的速度 <br>
+●圆半径<img width="18" height="16" src="images/GCode_clip_image012_0007.jpg">：圆槽的半径 <br>
+●进给率：在加工平面上刀具的运行速度 <br>
+        </p>
+        <p><strong>定义粗加工旋转方向</strong><strong> </strong><br>
+          <br>
+          ●顺时针：G75<br>
+          ●逆时针：G76</p>
+        <p><strong>起始点</strong><strong> </strong><br>
+          <br>
+          在循环调用之前，刀具必须在不加半径补偿的情况下移动至起始点：<br>
+          ●刀具轴移至工件表面的安全高度 <br>
+          ●在加工平面，键槽中心到键槽边的加工需要刀具半径进行补偿 <br>
+  <img width="233" height="210" src="images/GCode_clip_image014_0007.jpg"></p>
+        <p>编程举例：<br>
+            <img width="385" height="294" src="images/GCode_clip_image016_0005.jpg"><br>
+            <br>
+            %S8141 G71*<br>
+            N10 G30 G17 X+0 Y+0 Z-20*<br>
+            N20 G31 G90 X+100 Y+100 Z+0*<br>
+            N30 G99 T1 L+0 R+4*<br>
+            N40 T1 G17 S2000*<br>
+            N50 G77 P01 -2 P02 -12 P03 -6 P04 80 P05 35*<br>
+            P06 100*<br>
+            N60 G00 G40 G90 Z+ 100 M06*<br>
+            N70 X+60 Y+50 M03*<br>
+            N80 Z+2 M99*<br>
+            N90 Z+100 M02*<br>
+            N99999 %S8141 G71*<br>
+            <br>
+            <br>
+        </p>
+        <table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+          <tr>
+            <td><p><strong>G83-</strong><strong>钻削循环</strong><strong> </strong></p></td>
+          </tr>
+        </table>
+        <p><strong>加工过程</strong><strong> </strong><br>
+          <br>
+          ●刀具钻孔以编程进给速率从起始点到第一个下刀深度 <br>
+          ●当到达第一个下刀深度处，刀具快速重返起始位置，然后刀具移动至离第一次下刀距离t（根据计算）的位置处 <br>
+●刀具再以编程中的进给率进行下刀加工 <br>
+●钻孔与返回两者之间往复直到达到需要加工的孔深 <br>
+●在孔底停留时间后，刀具快速返回至初始位置以便断屑 <br>
+<img width="404" height="259" src="images/GCode_clip_image002_0012.jpg"><br>
+<br>
+<strong>输入数据</strong><strong><br>
+</strong><br>
+●安全高度<img width="24" height="15" src="images/GCode_clip_image004_0010.jpg">：起始位置的刀尖到工件表面的距离<br>
+●总的孔深<img width="20" height="18" src="images/GCode_clip_image006_0010.jpg">：工件表面和孔底的距离，代数符号决定加工方向（负值意味着方向相反）<br>
+●单次下刀深度<img width="21" height="18" src="images/GCode_clip_image008_0009.jpg">：每切一次的的进给深度，如果总的孔深和单次孔深一样，刀具将按照编程的孔深一次操作完成，否则要以成倍的次数完成；如果单次孔深大于总的孔深，下刀只下刀总的孔深处 <br>
+●停留时间：以秒S为单位，为了断屑在总孔深处底部保持一段时间<br>
+●进给率：在钻孔期间的运行速度 </p>
+        <p><strong>计算</strong><strong> </strong><br>
+          <br>
+          每次加工后的提刀距离t是系统自动计算控制<strong> </strong><br>
+          ●总的孔深达到30mm以内的，t=0.6mm<br>
+          ●总的孔深超过30mm的，t=总的孔深/50<br>
+          提刀距离t最大为7mm<br>
+          程序举例： <br>
+  <img width="337" height="290" src="images/GCode_clip_image010_0009.jpg"><br>
+  <br>
+          程序<br>
+          %S851 G71*<br>
+          N10 G30 G17 X+0 Y+0 Z-20*<br>
+          N20 G31 G90 X+100 Y+100 Z+0*<br>
+          N30 G99 T1 L+0 R+3*<br>
+          N40 T1 G17 S1200*<br>
+          N50 G83 P01 -2 P02 -15 P03 -10 P04 1 P05 80*<br>
+          N60 G00 G40 G90 Z+ 100 M06*<br>
+          N70 X+20 Y+30 M03*<br>
+          N80 Z+2 M99*<br>
+          N90 Z+80 Y+50 M99*<br>
+          N100 Z+100 M02*<br>
+        N99999 %S851 G71*        </p>
+        <table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+          <tr>
+            <td><p><strong>G84-</strong><strong>攻丝循环</strong><strong> </strong></p></td>
+          </tr>
+        </table>
+        <p><strong>加工过程</strong><strong> </strong><br>
+          <br>
+●螺纹加工前先加工一个所需加工的底孔 <br>
+●一旦刀具到达总的孔底深度处，主轴的旋转方向要改为逆转并且刀具在底部停留一段时间后返回至起始位置 <br>
+●到达其实位置后，主轴的旋转方向需要再次逆转 </p>
+        <p><strong>所需刀具</strong><strong> </strong><br>
+          <br>
+          ●一个浮动的攻丝夹持是必需的，它在攻丝过程中补偿进给速度和主轴转速之间的公差。 </p>
+        <p><strong>输入数据<br>
+        </strong><strong> </strong><br>
+          ●安全高度<img width="24" height="15" src="images/GCode_clip_image002_0013.jpg">：起始位置的刀尖到工件表面的距离<br>
+          ●总的孔深<img width="20" height="18" src="images/GCode_clip_image004_0011.jpg">（螺纹长度）：工件表面和螺纹底部的距离，代数符号决定加工方向（负值意味着方向相反）<br>
+          ●停留时间：输入停留的时间再0到0.5秒之间避免刀具在返回期间楔入 <br>
+          ●进给率：在攻丝过程中的进给速度 </p>
+        <p><strong>计算</strong><strong> </strong><br>
+          <br>
+          进给率计算如下： <br>
+          F=S×p<br>
+          这里的F指进给率（mm/min），S是指主轴速度（rpm），p指的是螺距（mm）。 </p>
+        <p><strong>注意：</strong><strong><br>
+</strong><br>
+          ●当循环开始运行时，主轴速度的倍率调节旋钮是无效的，进给倍率调节按钮也是受限制的，仅仅靠机床手动预置一个范围 <br>
+          ●对于攻丝右旋螺纹使用M3指令，左旋螺纹使用M4指令 </p>
+        <p>编程举例： </p>
+        <p><img width="365" height="249" src="images/GCode_clip_image006_0011.jpg"> </p>
+        <p>程序 <br>
+          %S871 G71*<br>
+          N10 G30 G17 X+0 Y+0 Z-20*<br>
+          N20 G31 G90 X+100 Y+100 Z+0*<br>
+          N30 G99 T1 L+0 R+3*<br>
+          N40 T1 G17 S100*<br>
+          N50 G84 P01 -5 P02 -20 P03 0.4 P04 100*<br>
+          N60 G00 G40 G90 Z+ 100 M06*<br>
+          N70 X+50 Y+20 M03*<br>
+          N80 Z+3 M99*<br>
+          N90 Z+100  M02*<br>
+          N99999 %S871 G71*<br>
+        </p>
+        <table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+          <tr>
+            <td><p><strong>G85-</strong><strong>刚性攻丝循环</strong><strong> </strong></p></td>
+          </tr>
+        </table>
+        <p>机床控制系统为了达到刚性攻丝的效果需要依靠机床手册来操作特定准备<br> 
+          <br>
+          <strong>加工过程</strong><strong> </strong><br>
+          <br>
+螺纹切削在一个或几个底孔上加工，如果没有浮动攻丝夹持装置，刚性攻丝提供以下比使用浮动攻丝夹持装置有优势的方法： <br>
+●加工过程中尽可能更高的转速 <br>
+●在同一个螺纹上重复攻丝，重复循环调用时能够通过主轴准停到0°的位置 <br>
+●由于没有浮动攻丝夹持装置需要增加主轴横向移动范围 </p>
+        <p><strong>注意：</strong><strong> </strong><br>
+          <br>
+          ●机床控制系统通过主轴转速计算进给率，如果在攻丝期间主轴转速过大，进给率将自动调整 <br>
+          ●攻丝过程进给倍率调整旋钮无效 </p>
+        <p><strong>输入数据</strong><strong><br>
+</strong><br>
+          ●安全高度<img width="24" height="15" src="images/GCode_clip_image002_0014.jpg">：起始位置的刀尖到工件表面的距离<br>
+          ●总的孔深<img width="20" height="18" src="images/GCode_clip_image004_0012.jpg">（螺纹长度）：工件表面和螺纹底部的距离，代数符号决定加工方向（负值意味着方向相反）<br>
+          ●螺距<img width="18" height="18" src="images/GCode_clip_image006_0012.jpg">：右旋螺纹和左旋螺纹的区分标志：<br>
+          + = 右旋螺纹<br>
+          - = 左旋螺纹<br>
+  <img width="236" height="243" src="images/GCode_clip_image008_0011.jpg"></p>
+        <table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+          <tr>
+            <td><p><strong>G86-</strong><strong>螺纹铣削循环</strong><strong> </strong></p></td>
+          </tr>
+        </table>
+        <p><strong>加工过程<br>
+        </strong><strong> </strong><br>
+G86循环螺纹铣削是主轴控制执行的，刀具在主轴转速下从当前位置移动至程序中输入下刀深度的位置。只要到达螺纹终点，主轴旋转才会停止；<br>
+刀具的逼近和离开都需要单独的编程，最便洁的方法就是通过定制循环，机床操作手册可以查到更多的信息。 </p>
+        <p>输入数据 <br>
+          ●螺纹深度<img width="15" height="16" src="images/GCode_clip_image002_0015.jpg">：当前刀具位置和螺纹终点之间的距离，代数符号决定加工方向：负值表示相反的加工方向<br>
+          ●螺距<img width="15" height="15" src="images/GCode_clip_image004_0013.jpg">：右旋螺纹和左旋螺纹的区分标志：<br>
+          + = 右旋螺纹<br>
+          - = 左旋螺纹</p>
+        <p><strong>注意： </strong><br>
+          <br>
+          ●机床控制系统通过主轴转速计算进给率，如果在攻丝期间主轴转速过大，进给率将自动调整 <br>
+          ●攻丝过程进给倍率调整旋钮无效 <br>
+          ●TNC系统自动激活和关闭主轴旋转功能，在循环调用之前不需要编程M3/M4</p>
+        <p>编程举例： <br>
+            <img width="388" height="374" src="images/GCode_clip_image006_0013.jpg"><br>
+            <br>
+          程序<br>
+          %C18 G71*<br>
+          N10 G30 G17 X+0 Y+0 Z-20*<br>
+          N20 G31 G90 X+100 Y+100 Z+0*<br>
+          N30 G99 T1 L+0 R+6*<br>
+          N40 T1 G17 S100*<br>
+          N50 G00 G40 G90 Z+50*<br>
+          N60 G86 P01 +30 P02 -1.75*<br>
+          N70 X+20 Y+20*<br>
+          N80 L1,0*<br>
+          N90 X+70 Y+70*<br>
+          N100 L1,0*<br>
+          N110 G00 Z+100 M2*<br>
+          N120 G98 L1*<br>
+          N130 G36 S0*<br>
+          N140 G00 G90 G91 X-2*<br>
+          N150 G00 G90 Z+5*<br>
+          N160 G01 Z-30 F 1000*<br>
+          N170 G91 X+2*<br>
+          N180 G79*<br>
+          N190 G98 L0*<br>
+        N99999 %C18 G71*        </p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>      </TD>
+    </TR>
+  </TBODY>
+</TABLE>
+</body>
+</html>

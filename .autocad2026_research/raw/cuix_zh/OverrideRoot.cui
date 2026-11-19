@@ -1,0 +1,634 @@
+<?xml version="1.0"?><!--
+Warning! Do not edit the contents of this file.
+If you attempt to edit this file using an XML editor, you could lose
+customization and migration functionality. If you need to change
+information in the customization file, use the Customize User Interface
+dialog in the product.
+To access the Customize User Interface dialog, click the Tools menu,
+Customization panel, User Interface button, or enter CUI on the command line.
+--><OverrideRoot xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Override UID="OVR_0001">
+    <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    <Key Code="0x2A"/>
+    <Name xlate="true" UID="XLS_1377">切换正交模式</Name>
+    <Description xlate="true" UID="XLS_0957">切换正交模式</Description>
+    <OverrideItem KeyState="down">
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1615"/>
+      </MenuItem>
+    </OverrideItem>
+    <OverrideItem KeyState="up">
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1650"/>
+      </MenuItem>
+    </OverrideItem>
+  </Override>
+  <Override UID="OVR_0011">
+    <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    <Key Code="0x36"/>
+    <Name xlate="true" UID="XLS_1386">切换正交模式</Name>
+    <Description xlate="true" UID="XLS_0967">切换正交模式</Description>
+    <OverrideItem KeyState="down">
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1615"/>
+      </MenuItem>
+    </OverrideItem>
+    <OverrideItem KeyState="up">
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1650"/>
+      </MenuItem>
+    </OverrideItem>
+  </Override>
+  <Override UID="OVR_0002">
+    <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    <Key Code="0x1E"/>
+    <Name xlate="true" UID="XLS_1378">切换对象捕捉模式</Name>
+    <Description xlate="true" UID="XLS_0958">切换对象捕捉模式</Description>
+    <OverrideItem KeyState="down">
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1616"/>
+      </MenuItem>
+    </OverrideItem>
+    <OverrideItem KeyState="up">
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1651"/>
+      </MenuItem>
+    </OverrideItem>
+  </Override>
+  <Override UID="OVR_0003">
+    <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    <Key Code="0x2D"/>
+    <Name xlate="true" UID="XLS_1379">切换极轴模式</Name>
+    <Description xlate="true" UID="XLS_0959">切换极轴模式</Description>
+    <OverrideItem KeyState="down">
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1617"/>
+      </MenuItem>
+    </OverrideItem>
+    <OverrideItem KeyState="up">
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1652"/>
+      </MenuItem>
+    </OverrideItem>
+  </Override>
+  <Override UID="OVR_0004">
+    <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    <Key Code="0x1F"/>
+    <Name xlate="true" UID="XLS_1380">启用强制对象捕捉</Name>
+    <Description xlate="true" UID="XLS_0960">启用强制对象捕捉</Description>
+    <OverrideItem KeyState="down">
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1618"/>
+      </MenuItem>
+    </OverrideItem>
+    <OverrideItem KeyState="up">
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1653"/>
+      </MenuItem>
+    </OverrideItem>
+  </Override>
+  <Override UID="OVR_0005">
+    <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    <Key Code="0x10"/>
+    <Name xlate="true" UID="XLS_1381">切换对象捕捉追踪模式</Name>
+    <Description xlate="true" UID="XLS_0961">切换对象捕捉追踪模式</Description>
+    <OverrideItem KeyState="down">
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1619"/>
+      </MenuItem>
+    </OverrideItem>
+    <OverrideItem KeyState="up">
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1654"/>
+      </MenuItem>
+    </OverrideItem>
+  </Override>
+  <Override UID="OVR_0006">
+    <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    <Key Code="0x12"/>
+    <Name xlate="true" UID="XLS_1382">对象捕捉替代: 端点</Name>
+    <Description xlate="true" UID="XLS_0962">对象捕捉替代: 端点</Description>
+    <OverrideItem KeyState="down">
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1620"/>
+      </MenuItem>
+    </OverrideItem>
+    <OverrideItem KeyState="up">
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1655"/>
+      </MenuItem>
+    </OverrideItem>
+  </Override>
+  <Override UID="OVR_0007">
+    <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    <Key Code="0x2F"/>
+    <Name xlate="true" UID="XLS_1383">对象捕捉替代: 中点</Name>
+    <Description xlate="true" UID="XLS_0963">对象捕捉替代: 中点</Description>
+    <OverrideItem KeyState="down">
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1621"/>
+      </MenuItem>
+    </OverrideItem>
+    <OverrideItem KeyState="up">
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1656"/>
+      </MenuItem>
+    </OverrideItem>
+  </Override>
+  <Override UID="OVR_0008">
+    <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    <Key Code="0x2E"/>
+    <Name xlate="true" UID="XLS_1384">对象捕捉替代: 圆心</Name>
+    <Description xlate="true" UID="XLS_0964">对象捕捉替代: 圆心</Description>
+    <OverrideItem KeyState="down">
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1622"/>
+      </MenuItem>
+    </OverrideItem>
+    <OverrideItem KeyState="up">
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1657"/>
+      </MenuItem>
+    </OverrideItem>
+  </Override>
+  <Override UID="OVR_0010">
+    <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    <Key Code="0x20"/>
+    <Name xlate="true" UID="XLS_1385">禁用所有捕捉和追踪</Name>
+    <Description xlate="true" UID="XLS_0966">禁用所有捕捉和追踪</Description>
+    <OverrideItem KeyState="down">
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1623"/>
+      </MenuItem>
+    </OverrideItem>
+    <OverrideItem KeyState="up">
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1658"/>
+      </MenuItem>
+    </OverrideItem>
+  </Override>
+  <Override UID="OVR_0012">
+    <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    <Key Code="0x28"/>
+    <Name xlate="true" UID="XLS_1387">切换对象捕捉模式</Name>
+    <Description xlate="true" UID="XLS_0968">切换对象捕捉模式</Description>
+    <OverrideItem KeyState="down">
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1625"/>
+      </MenuItem>
+    </OverrideItem>
+    <OverrideItem KeyState="up">
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1660"/>
+      </MenuItem>
+    </OverrideItem>
+  </Override>
+  <Override UID="OVR_0013">
+    <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    <Key Code="0x34"/>
+    <Name xlate="true" UID="XLS_1388">切换极轴模式</Name>
+    <Description xlate="true" UID="XLS_0969">切换极轴模式</Description>
+    <OverrideItem KeyState="down">
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1626"/>
+      </MenuItem>
+    </OverrideItem>
+    <OverrideItem KeyState="up">
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1661"/>
+      </MenuItem>
+    </OverrideItem>
+  </Override>
+  <Override UID="OVR_0014">
+    <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    <Key Code="0x27"/>
+    <Name xlate="true" UID="XLS_1389">启用强制对象捕捉</Name>
+    <Description xlate="true" UID="XLS_0970">启用强制对象捕捉</Description>
+    <OverrideItem KeyState="down">
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1627"/>
+      </MenuItem>
+    </OverrideItem>
+    <OverrideItem KeyState="up">
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1662"/>
+      </MenuItem>
+    </OverrideItem>
+  </Override>
+  <Override UID="OVR_0015">
+    <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    <Key Code="0x1B"/>
+    <Name xlate="true" UID="XLS_1390">切换对象捕捉追踪模式</Name>
+    <Description xlate="true" UID="XLS_0971">切换对象捕捉追踪模式</Description>
+    <OverrideItem KeyState="down">
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1628"/>
+      </MenuItem>
+    </OverrideItem>
+    <OverrideItem KeyState="up">
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1663"/>
+      </MenuItem>
+    </OverrideItem>
+  </Override>
+  <Override UID="OVR_0016">
+    <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    <Key Code="0x19"/>
+    <Name xlate="true" UID="XLS_1391">对象捕捉替代: 端点</Name>
+    <Description xlate="true" UID="XLS_0972">对象捕捉替代: 端点</Description>
+    <OverrideItem KeyState="down">
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1629"/>
+      </MenuItem>
+    </OverrideItem>
+    <OverrideItem KeyState="up">
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1664"/>
+      </MenuItem>
+    </OverrideItem>
+  </Override>
+  <Override UID="OVR_0017">
+    <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    <Key Code="0x32"/>
+    <Name xlate="true" UID="XLS_1392">对象捕捉替代: 中点</Name>
+    <Description xlate="true" UID="XLS_0973">对象捕捉替代: 中点</Description>
+    <OverrideItem KeyState="down">
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1630"/>
+      </MenuItem>
+    </OverrideItem>
+    <OverrideItem KeyState="up">
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1665"/>
+      </MenuItem>
+    </OverrideItem>
+  </Override>
+  <Override UID="OVR_0018">
+    <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    <Key Code="0x33"/>
+    <Name xlate="true" UID="XLS_1393">对象捕捉替代: 圆心</Name>
+    <Description xlate="true" UID="XLS_0974">对象捕捉替代: 圆心</Description>
+    <OverrideItem KeyState="down">
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1631"/>
+      </MenuItem>
+    </OverrideItem>
+    <OverrideItem KeyState="up">
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1666"/>
+      </MenuItem>
+    </OverrideItem>
+  </Override>
+  <Override UID="OVR_0020">
+    <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    <Key Code="0x26"/>
+    <Name xlate="true" UID="XLS_1394">禁用所有捕捉和追踪</Name>
+    <Description xlate="true" UID="XLS_0976">禁用所有捕捉和追踪</Description>
+    <OverrideItem KeyState="down">
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1632"/>
+      </MenuItem>
+    </OverrideItem>
+    <OverrideItem KeyState="up">
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1667"/>
+      </MenuItem>
+    </OverrideItem>
+  </Override>
+  <Override UID="OVR_0021">
+    <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    <Key Code="0x3D"/>
+    <Name xlate="true" UID="XLS_1395">切换对象捕捉模式</Name>
+    <Description xlate="true" UID="XLS_0977">切换对象捕捉模式</Description>
+    <OverrideItem KeyState="down">
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1633"/>
+      </MenuItem>
+    </OverrideItem>
+    <OverrideItem KeyState="up">
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1668"/>
+      </MenuItem>
+    </OverrideItem>
+  </Override>
+  <Override UID="OVR_0022">
+    <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    <Key Code="0x42"/>
+    <Name xlate="true" UID="XLS_1396">切换正交模式</Name>
+    <Description xlate="true" UID="XLS_0978">切换正交模式</Description>
+    <OverrideItem KeyState="down">
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1634"/>
+      </MenuItem>
+    </OverrideItem>
+    <OverrideItem KeyState="up">
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1669"/>
+      </MenuItem>
+    </OverrideItem>
+  </Override>
+  <Override UID="OVR_0023">
+    <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    <Key Code="0x43"/>
+    <Name xlate="true" UID="XLS_1397">切换捕捉模式</Name>
+    <Description xlate="true" UID="XLS_0979">切换捕捉模式</Description>
+    <OverrideItem KeyState="down">
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1635"/>
+      </MenuItem>
+    </OverrideItem>
+    <OverrideItem KeyState="up">
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1670"/>
+      </MenuItem>
+    </OverrideItem>
+  </Override>
+  <Override UID="OVR_0024">
+    <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    <Key Code="0x44"/>
+    <Name xlate="true" UID="XLS_1398">切换极轴模式</Name>
+    <Description xlate="true" UID="XLS_0980">切换极轴模式</Description>
+    <OverrideItem KeyState="down">
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1636"/>
+      </MenuItem>
+    </OverrideItem>
+    <OverrideItem KeyState="up">
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1671"/>
+      </MenuItem>
+    </OverrideItem>
+  </Override>
+  <Override UID="OVR_0025">
+    <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    <Key Code="0x57"/>
+    <Name xlate="true" UID="XLS_1399">切换对象捕捉追踪模式</Name>
+    <Description xlate="true" UID="XLS_0981">切换对象捕捉追踪模式</Description>
+    <OverrideItem KeyState="down">
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1637"/>
+      </MenuItem>
+    </OverrideItem>
+    <OverrideItem KeyState="up">
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1672"/>
+      </MenuItem>
+    </OverrideItem>
+  </Override>
+  <Override UID="OVR_0026">
+    <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    <Key Code="0x58"/>
+    <Name xlate="true" UID="XLS_1400">隐藏动态输入</Name>
+    <Description xlate="true" UID="XLS_0982">隐藏动态输入</Description>
+    <OverrideItem KeyState="down">
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1638"/>
+      </MenuItem>
+    </OverrideItem>
+    <OverrideItem KeyState="up">
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1673"/>
+      </MenuItem>
+    </OverrideItem>
+  </Override>
+  <Override UID="OVR_0027">
+    <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    <Key Code=""/>
+    <Name xlate="true" UID="XLS_1401">对象捕捉替代: 外观交点</Name>
+    <Description xlate="true" UID="XLS_1402">对象捕捉替代: 外观交点</Description>
+    <OverrideItem KeyState="down">
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1639"/>
+      </MenuItem>
+    </OverrideItem>
+    <OverrideItem KeyState="up">
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1674"/>
+      </MenuItem>
+    </OverrideItem>
+  </Override>
+  <Override UID="OVR_0028">
+    <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    <Key Code=""/>
+    <Name xlate="true" UID="XLS_1403">对象捕捉替代: 最近点</Name>
+    <Description xlate="true" UID="XLS_1404">对象捕捉替代: 最近点</Description>
+    <OverrideItem KeyState="down">
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1640"/>
+      </MenuItem>
+    </OverrideItem>
+    <OverrideItem KeyState="up">
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1675"/>
+      </MenuItem>
+    </OverrideItem>
+  </Override>
+  <Override UID="OVR_0029">
+    <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    <Key Code=""/>
+    <Name xlate="true" UID="XLS_1405">对象捕捉替代: 象限点</Name>
+    <Description xlate="true" UID="XLS_1406">对象捕捉替代: 象限点</Description>
+    <OverrideItem KeyState="down">
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1641"/>
+      </MenuItem>
+    </OverrideItem>
+    <OverrideItem KeyState="up">
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1676"/>
+      </MenuItem>
+    </OverrideItem>
+  </Override>
+  <Override UID="OVR_0030">
+    <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    <Key Code=""/>
+    <Name xlate="true" UID="XLS_1407">对象捕捉替代: 平行线</Name>
+    <Description xlate="true" UID="XLS_1408">对象捕捉替代: 平行线</Description>
+    <OverrideItem KeyState="down">
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1642"/>
+      </MenuItem>
+    </OverrideItem>
+    <OverrideItem KeyState="up">
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1677"/>
+      </MenuItem>
+    </OverrideItem>
+  </Override>
+  <Override UID="OVR_0032">
+    <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    <Key Code=""/>
+    <Name xlate="true" UID="XLS_1411">对象捕捉替代: 插入点</Name>
+    <Description xlate="true" UID="XLS_1412">对象捕捉替代: 插入点</Description>
+    <OverrideItem KeyState="down">
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1644"/>
+      </MenuItem>
+    </OverrideItem>
+    <OverrideItem KeyState="up">
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1679"/>
+      </MenuItem>
+    </OverrideItem>
+  </Override>
+  <Override UID="OVR_0033">
+    <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    <Key Code=""/>
+    <Name xlate="true" UID="XLS_1413">对象捕捉替代: 交点</Name>
+    <Description xlate="true" UID="XLS_1414">对象捕捉替代: 交点</Description>
+    <OverrideItem KeyState="down">
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1645"/>
+      </MenuItem>
+    </OverrideItem>
+    <OverrideItem KeyState="up">
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1680"/>
+      </MenuItem>
+    </OverrideItem>
+  </Override>
+  <Override UID="OVR_0034">
+    <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    <Key Code=""/>
+    <Name xlate="true" UID="XLS_1415">对象捕捉替代: 节点</Name>
+    <Description xlate="true" UID="XLS_1416">对象捕捉替代: 节点</Description>
+    <OverrideItem KeyState="down">
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1646"/>
+      </MenuItem>
+    </OverrideItem>
+    <OverrideItem KeyState="up">
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1681"/>
+      </MenuItem>
+    </OverrideItem>
+  </Override>
+  <Override UID="OVR_0035">
+    <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    <Key Code=""/>
+    <Name xlate="true" UID="XLS_1417">对象捕捉替代: 垂足</Name>
+    <Description xlate="true" UID="XLS_1418">对象捕捉替代: 垂足</Description>
+    <OverrideItem KeyState="down">
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1647"/>
+      </MenuItem>
+    </OverrideItem>
+    <OverrideItem KeyState="up">
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1682"/>
+      </MenuItem>
+    </OverrideItem>
+  </Override>
+  <Override UID="OVR_0036">
+    <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    <Key Code=""/>
+    <Name xlate="true" UID="XLS_1419">对象捕捉替代: 切点</Name>
+    <Description xlate="true" UID="XLS_1420">对象捕捉替代: 切点</Description>
+    <OverrideItem KeyState="down">
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1648"/>
+      </MenuItem>
+    </OverrideItem>
+    <OverrideItem KeyState="up">
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1683"/>
+      </MenuItem>
+    </OverrideItem>
+  </Override>
+  <Override UID="OVR_0037">
+    <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    <Key Code=""/>
+    <Name xlate="true" UID="XLS_1421">对象捕捉替代: 延长线</Name>
+    <Description xlate="true" UID="XLS_1422">对象捕捉替代: 延长线</Description>
+    <OverrideItem KeyState="down">
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1649"/>
+      </MenuItem>
+    </OverrideItem>
+    <OverrideItem KeyState="up">
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1684"/>
+      </MenuItem>
+    </OverrideItem>
+  </Override>
+  <Override UID="OVR_0038">
+    <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+    <Key Code="0x40"/>
+    <Name xlate="true" UID="XLS_1731">切换动态 UCS 模式</Name>
+    <Description xlate="true" UID="XLS_1730">切换动态 UCS 模式</Description>
+    <OverrideItem KeyState="down">
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1688"/>
+      </MenuItem>
+    </OverrideItem>
+    <OverrideItem KeyState="up">
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1689"/>
+      </MenuItem>
+    </OverrideItem>
+  </Override>
+  <Override UID="OVR_0039">
+    <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+    <Key Code="0x2C"/>
+    <Name xlate="true" UID="XLS_1735">切换动态 UCS 模式</Name>
+    <Description xlate="true" UID="XLS_1734">切换动态 UCS 模式</Description>
+    <OverrideItem KeyState="down">
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1690"/>
+      </MenuItem>
+    </OverrideItem>
+    <OverrideItem KeyState="up">
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1691"/>
+      </MenuItem>
+    </OverrideItem>
+  </Override>
+  <Override UID="OVR_0040">
+    <ModifiedRev MajorVersion="17" MinorVersion="0" UserVersion="0"/>
+    <Key Code="0x35"/>
+    <Name xlate="true" UID="XLS_1744">切换动态 UCS 模式</Name>
+    <Description xlate="true" UID="XLS_1743">切换动态 UCS 模式</Description>
+    <OverrideItem KeyState="down">
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1694"/>
+      </MenuItem>
+    </OverrideItem>
+    <OverrideItem KeyState="up">
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_1695"/>
+      </MenuItem>
+    </OverrideItem>
+  </Override>
+  <Override UID="OVR_243_EE23B">
+    <ModifiedRev MajorVersion="24" MinorVersion="3" UserVersion="0"/>
+    <Key Code="0x11"/>
+    <Name xlate="true" UID="XLS_243_2BE60">切换放置建议</Name>
+    <Description xlate="true" UID="XLS_243_DB264"/>
+    <OverrideItem KeyState="down">
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_243_171EF"/>
+      </MenuItem>
+    </OverrideItem>
+    <OverrideItem KeyState="up">
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_243_45658"/>
+      </MenuItem>
+    </OverrideItem>
+  </Override>
+  <Override UID="OVR_243_5D699">
+    <ModifiedRev MajorVersion="24" MinorVersion="3" UserVersion="0"/>
+    <Key Code="0x1A"/>
+    <Name xlate="true" UID="XLS_243_BDFEE">切换放置建议</Name>
+    <Description xlate="true" UID="XLS_243_B1BBC"/>
+    <OverrideItem KeyState="down">
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_243_171EF"/>
+      </MenuItem>
+    </OverrideItem>
+    <OverrideItem KeyState="up">
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_243_45658"/>
+      </MenuItem>
+    </OverrideItem>
+  </Override>
+</OverrideRoot>

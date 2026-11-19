@@ -1,0 +1,81 @@
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title></title>
+
+<link href="../../helper_css.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar">
+  <tr>
+    <td>坐标系统</td>
+  </tr>
+</table>
+<TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+  <TR>
+    <TD></TD>
+  </TR>
+  <TR>
+    <TD class=contents1 vAlign=top height="16">&nbsp;</TD>
+  </TR>
+  <TR>
+    <TD class=contents1 vAlign=top height="170"><p><strong>极坐标</strong><strong> </strong><br>
+当出现圆弧图形或角度尺寸时，  平面上的不同点的坐标 （2 轴）用极坐标表示更为容易。 <br>
+参考点叫作极坐标原点，  它是极坐标系统的起始点。 <br>
+该坐标下的点可以定义为： <br>
+<img width="388" height="283" src="Code/ref_frame_clip_image002.jpg"><br>
+. 半径 (R), 极坐标原点和该点之间的距离。 <br>
+. 极角 (Q), 由横坐标轴和连接极坐标原点和该点的直线形成 ( 度为单位 )。 <br>
+R 和 Q 的值可以是绝对的或增量的取决于 G90 或 G91 的工作方式，它们的编程格 <br>
+式为 R5.5 Q±5.5，半径值总是正的。 <br>
+R 和 Q 是增量坐标编程时，它们的编程格式是 R±5.5 Q±5.5。 <br>
+在用增量坐标编程时，允许编写负的 R ，但赋予半径的结果总是正的。 <br>
+如果在编写程序时， Q 的值大于 360 度，系统将用 360 度分割。因此，Q420 与 Q60 相同 , Q-420 与 Q-60 相同 <br>
+下面的例子中假定极坐标原点位于坐标的坐标系原点 <br>
+<img width="437" height="465" src="Code/ref_frame_clip_image004.jpg"><br>
+<img width="429" height="317" src="Code/ref_frame_clip_image006.jpg"><br>
+<strong>角度和一个笛卡尔坐标</strong><strong> </strong><br>
+主平面上的点可以用一个迪卡尔坐标和它前一路径的退出角度来定义。 <br>
+下面的例子中以半径编程 <br>
+<img width="469" height="412" src="Code/ref_frame_clip_image008.jpg"><br>
+工作区的定义 <br>
+在工作区内，CNC允许用定义的每根轴的上下限制刀具在每根轴的运动 <br>
+G20：定义期望的工作区下限 <br>
+G21：定义期望的工作区的上限 <br>
+这些功能的编程格式为： <br>
+G20  K X…C+/-5.5<br>
+其中： <br>
+K 表示期望定义的工作区（1，2.3或4） <br>
+X…C  表示用于限制轴运动范围的坐标，这些坐标以半径给出，相对于机床零点 <br>
+没有必要对所有的轴进行编程，因此只需要定义要限制的轴 <br>
+例如： <br>
+<img width="476" height="354" src="Code/ref_frame_clip_image010.jpg"> <br>
+坐标和零点偏置的设置 <br>
+CNC允许在编写程序时，不修改不同点的坐标实现零点偏置，使用相对于工件的平面坐标 <br>
+零点偏置被定义为工件零点和机床零点之间的距离 <br>
+<img width="335" height="313" src="Code/ref_frame_clip_image012.jpg"><br>
+零点偏置可以通过下列2种方式实现： <br>
+通过功能G92（坐标预置），CNC接受G92后的编程坐标为新的轴的位置值 <br>
+通过使用零点偏置（G54,G55,G56,G57,G58,G59）CNC接受新的工件零点，该零点相对于机床零点的距离由所选择的表指定。 <br>
+<strong>进给率</strong><strong> F </strong><br>
+机床的进给率可以从程序中选择，它将一直保持有效，直到编写了另一个进给率。 <br>
+用字母 F 表示。根据工作在 G94 还是 G95, 编写单位为 mm/ 分钟 (inches/ 分钟 ) 或 mm/ 转 (inches/ 转 ). 它的编程格式为 5.5 （以毫米为单位）， 4.5 （以英寸为单位）。 <br>
+每根轴的最大操作进给率由每根轴的机床参数 “MAXFEED” 限定，可以用 F0 表示或 给出 F 相应的数值。编写的进给率 F 作用于直线 (G01) 或圆弧 (G02, G03) 插补。 如果没有编写 F 功 能，CNC 将采用 F0。 当工作在快速定位 (G00) 方式时，机床将以轴机床参数“G00FEED” 指定的快速进给率移动，与编写的 F 值无关。 <br>
+编写的进给率 F 可用 PLC 或通过 DNC 在 0% 到 255% 之间变化，或用 CNC 操作面板 上的倍率旋钮在 0% 到 120% 之间变化。然而， CNC 可以用通用机床参数 “MAXFOVR” 来限制最大进给率的变化。如果工作在快速定位方式 (G00), 快速进给率将被固定在 100%, 也可以在 0% 到 100% 之间变化，这取决于机床参数 “RAPIDOVR” 的设置。 <br>
+当功能 G33 ( 螺纹切削 )， G34 ( 可变螺距的螺纹切削 ) 或 G84 ( 攻丝固定循环 ) 被执行时，进给率不能修改，它工作在编写的 F 值的 100% 倍率 <br>
+<strong>主轴转速</strong><strong> (S) </strong><br>
+主轴的转速直接用代码 S5.4，以 rpm 为单位编写。 <br>
+最大主轴转速值由主轴机床参数 “MAXGEAR1”， MAXGEAR2， MAXGEAR 3 和 <br>
+MAXGEAR4&quot;  限定，并取决于主轴档位的选择。也可以使用功能 G92 S5.4 在编程中限制它的最大值。 编写的主轴转速可以从 PLC, DNC, 或通过 CNC 操作面板上的 SPINDLE （主轴）键 “+” 和 “-” 来改变。 <br>
+该转速的变化范围由主轴机床参数 “MINSOVR&quot; 和 &quot;MAXSOVR” 设置的最大和最小值确定。使用 CNC 的操作面板上的 SPINDLE （主轴）键 “+” 和 “-” 来改变程序中编写的 S 值 的变化量由主轴机床参数 “SOVRSTEP” 设置。 <br>
+当功能 G33 ( 螺纹切削 )，G34( 可变螺距的螺纹切削 ) 或 G84 ( 攻丝固定循环 ) 被执行时，进给率不能改变 , 它被设置为 100% 程序编写的 S 值。 <br>
+刀具号 (T) 和刀具偏置 (D) <br>
+利用 &quot;T&quot; 功能可以去选择刀具，利用 &quot;D&quot; 功能可以去选择相关刀具偏置。当定义了 <br>
+这两个参数时，编程的顺序是 T D，例如： T6 D17
+    <p></TD>
+  </TR>
+</TABLE>
+</body>
+</html>

@@ -1,0 +1,1409 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<HTML>
+<HEAD>
+<meta name="GENERATOR" content="Microsoft&reg; HTML Help Workshop 4.1">
+<!-- Sitemap 1.0 -->
+</HEAD><BODY>
+<OBJECT type="text/site properties">
+	<param name="ImageType" value="Folder">
+</OBJECT>
+<UL>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="斯沃数控仿真">
+		<param name="Local" value="topic.htm">
+		<param name="ImageNumber" value="1">
+		</OBJECT>
+	<UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="功能介绍">
+			<param name="Local" value="intro.htm">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="主要界面">
+			<param name="Local" value="userguide/introskin.htm">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="菜单介绍">
+			<param name="Local" value="userguide/menu.htm">
+			</OBJECT>
+	</UL>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="斯沃数控服务器">
+		<param name="ImageNumber" value="1">
+		</OBJECT>
+	<UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="添加学生机">
+			<param name="Local" value="monitor/addclient.htm">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="上传工件">
+			<param name="Local" value="monitor/submitwp.htm">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="考务系统">
+			<param name="Local" value="monitor/testsys.htm">
+			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="考试操作">
+			<param name="Local" value="monitor/testopr.htm">
+			</OBJECT>
+	</UL>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="FANUC">
+		<param name="ImageNumber" value="1">
+		</OBJECT>
+	<UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="FANUC 0MD">
+			<param name="ImageNumber" value="1">
+			</OBJECT>
+		<UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="系统介绍">
+				<param name="Local" value="fanuc/fanuc0DM/fanuc0D_m_sys.htm">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="操作面板">
+				<param name="Local" value="fanuc/fanuc0DM/fanuc0D_m_panel.htm">
+				</OBJECT>
+		</UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="FANUC 0TD">
+			<param name="ImageNumber" value="1">
+			</OBJECT>
+		<UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="系统介绍">
+				<param name="Local" value="fanuc/fanuc0DT/fanuc0D_t_sys.htm">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="操作面板">
+				<param name="Local" value="fanuc/fanuc0DT/fanuc0D_t_panel.htm">
+				</OBJECT>
+		</UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="FANUC 0iM">
+			<param name="ImageNumber" value="1">
+			</OBJECT>
+		<UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="系统介绍">
+				<param name="Local" value="fanuc/fanuc0i_m/fanuc0i_m_sys.htm">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="操作面板">
+				<param name="Local" value="fanuc/fanuc0i_m/fanuc0i_m.htm">
+				</OBJECT>
+		</UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="FANUC 0iT">
+			<param name="ImageNumber" value="1">
+			</OBJECT>
+		<UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="系统介绍">
+				<param name="Local" value="fanuc/fanuc0i_t/fanuc0i_t_sys.htm">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="操作面板">
+				<param name="Local" value="fanuc/fanuc0i_t/fanuc0i_t.htm">
+				</OBJECT>
+		</UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="FANUC 18iM">
+			<param name="ImageNumber" value="1">
+			</OBJECT>
+		<UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="系统介绍">
+				<param name="Local" value="fanuc/fanuc18i/fanuc18i_m_sys.htm">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="操作面板">
+				<param name="Local" value="fanuc/fanuc18i/fanuc18i_m.htm">
+				</OBJECT>
+		</UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="FANUC 18iT">
+			<param name="ImageNumber" value="1">
+			</OBJECT>
+		<UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="系统介绍">
+				<param name="Local" value="fanuc/fanuc18i/fanuc18i_t_sys.htm">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="操作面板">
+				<param name="Local" value="fanuc/fanuc18i/fanuc18i_t.htm">
+				</OBJECT>
+		</UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="FANUC 18M">
+			<param name="ImageNumber" value="1">
+			</OBJECT>
+		<UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="系统介绍">
+				<param name="Local" value="fanuc/fanuc18i/fanuc18_m_sys.htm">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="操作面板">
+				<param name="Local" value="fanuc/fanuc18i/fanuc18_m.htm">
+				</OBJECT>
+		</UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="NC 编程">
+			<param name="ImageNumber" value="1">
+			</OBJECT>
+		<UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="FANUC 数控铣">
+				<param name="ImageNumber" value="1">
+				</OBJECT>
+			<UL>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="坐标系统">
+					<param name="Local" value="fanuc/fanuc_MPRG/ref_frame.htm">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="G 代码指令">
+					<param name="Local" value="fanuc/fanuc_MPRG/GCode.htm">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="M 辅助功能">
+					<param name="Local" value="fanuc/fanuc_MPRG/assistant.htm">
+					</OBJECT>
+			</UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="FANUC 数控车">
+				<param name="ImageNumber" value="1">
+				</OBJECT>
+			<UL>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="坐标系统">
+					<param name="Local" value="fanuc/fanuc_TPRG/ref_frame.htm">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="G 代码指令">
+					<param name="Local" value="fanuc/fanuc_TPRG/GCode.htm">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="M 辅助功能">
+					<param name="Local" value="fanuc/fanuc_TPRG/assistant.htm">
+					</OBJECT>
+			</UL>
+		</UL>
+	</UL>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="SINUMERIK">
+		<param name="ImageNumber" value="1">
+		</OBJECT>
+	<UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="SINUMERIK 801">
+			<param name="ImageNumber" value="1">
+			</OBJECT>
+		<UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="系统介绍">
+				<param name="Local" value="siemens/siemens801/siemens801_sys.htm">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="操作面板">
+				<param name="Local" value="siemens/siemens801/siemens801.htm">
+				</OBJECT>
+		</UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="SINUMERIK 802S/C M">
+			<param name="ImageNumber" value="1">
+			</OBJECT>
+		<UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="系统介绍">
+				<param name="Local" value="siemens/siemens802s_m/siemens802s_m_sys.htm">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="操作面板">
+				<param name="Local" value="siemens/siemens802s_m/siemens802s_m.htm">
+				</OBJECT>
+		</UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="SINUMERIK 802S/C T">
+			<param name="ImageNumber" value="1">
+			</OBJECT>
+		<UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="系统介绍">
+				<param name="Local" value="siemens/siemens802s_t/siemens802s_t_sys.htm">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="操作面板">
+				<param name="Local" value="siemens/siemens802s_t/siemens802s_t.htm">
+				</OBJECT>
+		</UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="SINUMERIK 802Se M">
+			<param name="ImageNumber" value="1">
+			</OBJECT>
+		<UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="系统介绍">
+				<param name="Local" value="siemens/siemens802se_m/siemens802se_m_sys.htm">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="操作面板">
+				<param name="Local" value="siemens/siemens802se_m/siemens802se_m.htm">
+				</OBJECT>
+		</UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="SINUMERIK 802Se T">
+			<param name="ImageNumber" value="1">
+			</OBJECT>
+		<UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="系统介绍">
+				<param name="Local" value="siemens/siemens802se_t/siemens802se_t_sys.htm">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="操作面板">
+				<param name="Local" value="siemens/siemens802se_t/siemens802se_t.htm">
+				</OBJECT>
+		</UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="SINUMERIK 802D M">
+			<param name="ImageNumber" value="1">
+			</OBJECT>
+		<UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="系统介绍">
+				<param name="Local" value="siemens/siemens802d_m/siemens802d_m_sys.htm">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="操作面板">
+				<param name="Local" value="siemens/siemens802d_m/siemens802d_m.htm">
+				</OBJECT>
+		</UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="SINUMERIK 802D T">
+			<param name="ImageNumber" value="1">
+			</OBJECT>
+		<UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="系统介绍">
+				<param name="Local" value="siemens/siemens802d_t/siemens802d_t_sys.htm">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="操作面板">
+				<param name="Local" value="siemens/siemens802d_t/siemens802d_t.htm">
+				</OBJECT>
+		</UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="SINUMERIK 810/840D M">
+			<param name="ImageNumber" value="1">
+			</OBJECT>
+		<UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="系统介绍">
+				<param name="Local" value="siemens/siemens810d_m/siemens810d_m_sys.htm">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="操作面板">
+				<param name="Local" value="siemens/siemens810d_m/siemens810dm.htm">
+				</OBJECT>
+		</UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="SINUMERIK 810/840D T">
+			<param name="ImageNumber" value="1">
+			</OBJECT>
+		<UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="系统介绍">
+				<param name="Local" value="siemens/siemens810d_t/siemens810d_t_sys.htm">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="操作面板">
+				<param name="Local" value="siemens/siemens810d_t/siemens810d_t.htm">
+				</OBJECT>
+		</UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="SINUMERIK 828D M">
+			<param name="ImageNumber" value="1">
+			</OBJECT>
+		<UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="系统介绍">
+				<param name="Local" value="siemens/siemens828d_m/siemens828d_m_sys.htm">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="操作面板">
+				<param name="Local" value="siemens/siemens828d_m/siemens828d_m.htm">
+				</OBJECT>
+		</UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="SINUMERIK 828D T">
+			<param name="ImageNumber" value="1">
+			</OBJECT>
+		<UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="系统介绍">
+				<param name="Local" value="siemens/siemens828d_t/siemens828d_t_sys.htm">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="操作面板">
+				<param name="Local" value="siemens/siemens828d_t/siemens828d_t.htm">
+				</OBJECT>
+		</UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="NC 编程">
+			<param name="ImageNumber" value="1">
+			</OBJECT>
+		<UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="SINUMERIK 数控铣">
+				<param name="ImageNumber" value="1">
+				</OBJECT>
+			<UL>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="坐标系统">
+					<param name="ImageNumber" value="1">
+					</OBJECT>
+				<UL>
+					<LI> <OBJECT type="text/sitemap">
+						<param name="Name" value="SINUMERIK 802S/C 802Se">
+						<param name="Local" value="siemens/siemens_MPRG/802s_ref_frame.html">
+						</OBJECT>
+					<LI> <OBJECT type="text/sitemap">
+						<param name="Name" value="SINUMERIK 802D 810/840D">
+						<param name="Local" value="siemens/siemens_MPRG/802d_ref_frame.html">
+						</OBJECT>
+				</UL>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="固定循环">
+					<param name="ImageNumber" value="1">
+					</OBJECT>
+				<UL>
+					<LI> <OBJECT type="text/sitemap">
+						<param name="Name" value="SINUMERIK 802S/C 802Se">
+						<param name="Local" value="siemens/siemens_MPRG/siemens802s_se_m_cycle.htm">
+						</OBJECT>
+					<LI> <OBJECT type="text/sitemap">
+						<param name="Name" value="SINUMERIK 802D">
+						<param name="Local" value="siemens/siemens_MPRG/siemens802d_m_cycle.htm">
+						</OBJECT>
+					<LI> <OBJECT type="text/sitemap">
+						<param name="Name" value="SINUMERIK 810/840D">
+						<param name="Local" value="siemens/siemens_MPRG/siemens810d_m_cycle.htm">
+						</OBJECT>
+					<LI> <OBJECT type="text/sitemap">
+						<param name="Name" value="SINUMERIK 828D">
+						<param name="Local" value="siemens/siemens_MPRG/siemens828d_m_cycle.htm">
+						</OBJECT>
+				</UL>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="G 代码指令">
+					<param name="Local" value="siemens/siemens_MPRG/GCode.htm">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="NC编译基本原理">
+					<param name="Local" value="siemens/siemens_MPRG/Nc.htm">
+					</OBJECT>
+			</UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="SINUMERIK 数控车">
+				<param name="ImageNumber" value="1">
+				</OBJECT>
+			<UL>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="坐标系统">
+					<param name="ImageNumber" value="1">
+					</OBJECT>
+				<UL>
+					<LI> <OBJECT type="text/sitemap">
+						<param name="Name" value="SINUMERIK 802S/C 802Se">
+						<param name="Local" value="siemens/siemens_TPRG/802s_ref_frame.htm">
+						</OBJECT>
+					<LI> <OBJECT type="text/sitemap">
+						<param name="Name" value="SINUMERIK 802D 810/840D">
+						<param name="Local" value="siemens/siemens_TPRG/802d_ref_frame.htm">
+						</OBJECT>
+				</UL>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="固定循环">
+					<param name="ImageNumber" value="1">
+					</OBJECT>
+				<UL>
+					<LI> <OBJECT type="text/sitemap">
+						<param name="Name" value="SINUMERIK 802S/C 802Se">
+						<param name="Local" value="siemens/siemens_TPRG/802s_t_cycle.htm">
+						</OBJECT>
+					<LI> <OBJECT type="text/sitemap">
+						<param name="Name" value="SINUMERIK 802D">
+						<param name="Local" value="siemens/siemens_TPRG/802d_t_cycle.htm">
+						</OBJECT>
+					<LI> <OBJECT type="text/sitemap">
+						<param name="Name" value="SINUMERIK 810/840D">
+						<param name="Local" value="siemens/siemens_TPRG/810d_t_cycle.htm">
+						</OBJECT>
+					<LI> <OBJECT type="text/sitemap">
+						<param name="Name" value="SINUMERIK 828D">
+						<param name="Local" value="siemens/siemens_TPRG/828d_t_cycle.htm">
+						</OBJECT>
+				</UL>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="G 代码指令">
+					<param name="Local" value="siemens/siemens_TPRG/GCode.htm">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="NC编译基本原理">
+					<param name="Local" value="siemens/siemens_TPRG/Nc.htm">
+					</OBJECT>
+			</UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="SINUMERIK 参数编程">
+				<param name="ImageNumber" value="1">
+				</OBJECT>
+			<UL>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="计算参数R">
+					<param name="Local" value="siemens/siemens_paramprg/calparamR.htm">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="程序跳转">
+					<param name="ImageNumber" value="1">
+					</OBJECT>
+				<UL>
+					<LI> <OBJECT type="text/sitemap">
+						<param name="Name" value="标记符--程序跳转目标">
+						<param name="Local" value="siemens/siemens_paramprg/mark.htm">
+						</OBJECT>
+					<LI> <OBJECT type="text/sitemap">
+						<param name="Name" value="绝对跳转">
+						<param name="Local" value="siemens/siemens_paramprg/absgoto.htm">
+						</OBJECT>
+					<LI> <OBJECT type="text/sitemap">
+						<param name="Name" value="有条件跳转">
+						<param name="Local" value="siemens/siemens_paramprg/goto.htm">
+						</OBJECT>
+					<LI> <OBJECT type="text/sitemap">
+						<param name="Name" value="程序跳转举例">
+						<param name="Local" value="siemens/siemens_paramprg/example.htm">
+						</OBJECT>
+				</UL>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="子程序">
+					<param name="Local" value="siemens/siemens_paramprg/subprg.htm">
+					</OBJECT>
+			</UL>
+		</UL>
+	</UL>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="MITSUBISHI">
+		<param name="ImageNumber" value="1">
+		</OBJECT>
+	<UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="EZMotion-NC E60 M">
+			<param name="ImageNumber" value="1">
+			</OBJECT>
+		<UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="系统介绍">
+				<param name="Local" value="mitsubishi/e60/E60M/E60_m_sys.htm">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="操作面板">
+				<param name="Local" value="mitsubishi/e60/E60M/E60_m.htm">
+				</OBJECT>
+		</UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="EZMotion-NC E60 T">
+			<param name="ImageNumber" value="1">
+			</OBJECT>
+		<UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="系统介绍">
+				<param name="Local" value="mitsubishi/e60/E60T/E60_t_sys.htm">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="操作面板">
+				<param name="Local" value="mitsubishi/e60/E60T/E60_t.htm">
+				</OBJECT>
+		</UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="EZMotion-NC E68 M">
+			<param name="ImageNumber" value="1">
+			</OBJECT>
+		<UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="系统介绍">
+				<param name="Local" value="mitsubishi/e68/E68M/E68_m_sys.htm">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="操作面板">
+				<param name="Local" value="mitsubishi/e68/E68M/E68_m.htm">
+				</OBJECT>
+		</UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="EZMotion-NC E68 T">
+			<param name="ImageNumber" value="1">
+			</OBJECT>
+		<UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="系统介绍">
+				<param name="Local" value="mitsubishi/e68/E68T/E68_t_sys.htm">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="操作面板">
+				<param name="Local" value="mitsubishi/e68/E68T/E68_t.htm">
+				</OBJECT>
+		</UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="NC 编程">
+			<param name="ImageNumber" value="1">
+			</OBJECT>
+		<UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="E60 数控铣">
+				<param name="ImageNumber" value="1">
+				</OBJECT>
+			<UL>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="坐标系统">
+					<param name="Local" value="mitsubishi/e60/E60_mprg/ref_frame.htm">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="G 代码指令">
+					<param name="Local" value="mitsubishi/e60/E60_mprg/GCode.htm">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="M 辅助功能">
+					<param name="Local" value="mitsubishi/e60/E60_mprg/assistant.htm">
+					</OBJECT>
+			</UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="E60 数控车">
+				<param name="ImageNumber" value="1">
+				</OBJECT>
+			<UL>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="坐标系统">
+					<param name="Local" value="mitsubishi/e60/E60_tprg/ref_frame.htm">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="G 代码指令">
+					<param name="Local" value="mitsubishi/e60/E60_tprg/GCode.htm">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="M 辅助功能">
+					<param name="Local" value="mitsubishi/e60/E60_tprg/assistant.htm">
+					</OBJECT>
+			</UL>
+		</UL>
+	</UL>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="PA8000">
+		<param name="ImageNumber" value="1">
+		</OBJECT>
+	<UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="PA8000">
+			<param name="ImageNumber" value="1">
+			</OBJECT>
+		<UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="系统介绍">
+				<param name="Local" value="pa8000/pa8000/pa8000_m_sys.htm">
+				</OBJECT>
+		</UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="NC 编程">
+			<param name="ImageNumber" value="1">
+			</OBJECT>
+		<UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="PA8000">
+				<param name="ImageNumber" value="1">
+				</OBJECT>
+			<UL>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="坐标系统">
+					<param name="Local" value="PA8000/pa8000_mprg/ref_frame.htm">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="G 代码指令">
+					<param name="Local" value="PA8000/pa8000_mprg/GCode.htm">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="M 辅助功能">
+					<param name="Local" value="PA8000/pa8000_mprg/assistant.htm">
+					</OBJECT>
+			</UL>
+		</UL>
+	</UL>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="FAGOR">
+		<param name="ImageNumber" value="1">
+		</OBJECT>
+	<UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="FAGOR8055 M">
+			<param name="ImageNumber" value="1">
+			</OBJECT>
+		<UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="坐标系统">
+				<param name="Local" value="fagor/fagor8055i_mprg/ref_frame.htm">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="G 代码指令">
+				<param name="Local" value="fagor/fagor8055i_mprg/GCode.htm">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="M 辅助功能">
+				<param name="Local" value="fagor/fagor8055i_mprg/assistant.htm">
+				</OBJECT>
+		</UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="FAGOR8055 T">
+			<param name="ImageNumber" value="1">
+			</OBJECT>
+		<UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="坐标系统">
+				<param name="Local" value="fagor/fagor8055i_tprg/ref_frame.htm">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="G 代码指令">
+				<param name="Local" value="fagor/fagor8055i_tprg/GCode.htm">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="M 辅助功能">
+				<param name="Local" value="fagor/fagor8055i_tprg/assistant.htm">
+				</OBJECT>
+		</UL>
+	</UL>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="HEIDENHAIN">
+		<param name="ImageNumber" value="1">
+		</OBJECT>
+	<UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="iTNC530">
+			<param name="ImageNumber" value="1">
+			</OBJECT>
+		<UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="系统及面板介绍">
+				<param name="Local" value="HEIDENHAIN530/HEIDENHAIN530/HEIDENHAIN530_m_sys.htm">
+				</OBJECT>
+		</UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="NC 编程">
+			<param name="ImageNumber" value="1">
+			</OBJECT>
+		<UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="iTNC530">
+				<param name="ImageNumber" value="1">
+				</OBJECT>
+			<UL>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="坐标变换">
+					<param name="Local" value="HEIDENHAIN530/HEIDENHAIN_mprg/ref_frame.htm">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="海德汉ISO编程">
+					<param name="ImageNumber" value="1">
+					</OBJECT>
+				<UL>
+					<LI> <OBJECT type="text/sitemap">
+						<param name="Name" value="G代码">
+						<param name="Local" value="HEIDENHAIN530/HEIDENHAIN_mprg/GCode.htm">
+						</OBJECT>
+					<LI> <OBJECT type="text/sitemap">
+						<param name="Name" value="M辅助代码">
+						<param name="Local" value="HEIDENHAIN530/HEIDENHAIN_mprg/nc.htm">
+						</OBJECT>
+				</UL>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="海德汉对话格式编程">
+					<param name="ImageNumber" value="1">
+					</OBJECT>
+				<UL>
+					<LI> <OBJECT type="text/sitemap">
+						<param name="Name" value="基础知识">
+						<param name="Local" value="HEIDENHAIN530/HEIDENHAIN_mprg/jczs.htm">
+						</OBJECT>
+					<LI> <OBJECT type="text/sitemap">
+						<param name="Name" value="编程准备">
+						<param name="Local" value="HEIDENHAIN530/HEIDENHAIN_mprg/bczb.htm">
+						</OBJECT>
+					<LI> <OBJECT type="text/sitemap">
+						<param name="Name" value="路径编程">
+						<param name="Local" value="HEIDENHAIN530/HEIDENHAIN_mprg/dhbcgc.htm">
+						</OBJECT>
+					<LI> <OBJECT type="text/sitemap">
+						<param name="Name" value="循环定义和调用">
+						<param name="Local" value="HEIDENHAIN530/HEIDENHAIN_mprg/xhdyhdy.htm">
+						</OBJECT>
+					<LI> <OBJECT type="text/sitemap">
+						<param name="Name" value="循环编程">
+						<param name="Local" value="HEIDENHAIN530/HEIDENHAIN_mprg/xhbc.htm">
+						</OBJECT>
+				</UL>
+			</UL>
+		</UL>
+	</UL>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="华中数控">
+		<param name="ImageNumber" value="1">
+		</OBJECT>
+	<UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="HNC-21M">
+			<param name="ImageNumber" value="1">
+			</OBJECT>
+		<UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="系统介绍">
+				<param name="Local" value="hnc21/HNC21M/HNC21_m_sys.htm">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="操作面板">
+				<param name="Local" value="hnc21/HNC21M/HNC21_m.htm">
+				</OBJECT>
+		</UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="HNC-21T">
+			<param name="ImageNumber" value="1">
+			</OBJECT>
+		<UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="系统介绍">
+				<param name="Local" value="hnc21/HNC21T/HNC21_t_sys.htm">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="操作面板">
+				<param name="Local" value="hnc21/HNC21T/HNC21_t.htm">
+				</OBJECT>
+		</UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="HNC-22T">
+			<param name="ImageNumber" value="1">
+			</OBJECT>
+		<UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="系统介绍">
+				<param name="Local" value="hnc21/HNC22T/HNC22_t_sys.htm">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="操作面板">
+				<param name="Local" value="hnc21/HNC22T/HNC22_t.htm">
+				</OBJECT>
+		</UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="NC 编程">
+			<param name="ImageNumber" value="1">
+			</OBJECT>
+		<UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="HNC 数控铣">
+				<param name="ImageNumber" value="1">
+				</OBJECT>
+			<UL>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="坐标系统">
+					<param name="Local" value="hnc21/HNC21_mprg/ref_frame.htm">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="G 代码指令">
+					<param name="Local" value="hnc21/HNC21_mprg/GCode.htm">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="M 辅助功能">
+					<param name="Local" value="hnc21/HNC21_mprg/assistant.htm">
+					</OBJECT>
+			</UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="HNC 数控车">
+				<param name="ImageNumber" value="1">
+				</OBJECT>
+			<UL>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="坐标系统">
+					<param name="Local" value="hnc21/hnc21_tprg/ref_frame.htm">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="G 代码指令">
+					<param name="Local" value="hnc21/hnc21_tprg/GCode.htm">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="M 辅助功能">
+					<param name="Local" value="hnc21/hnc21_tprg/assistant.htm">
+					</OBJECT>
+			</UL>
+		</UL>
+	</UL>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="北京凯恩帝">
+		<param name="ImageNumber" value="1">
+		</OBJECT>
+	<UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="KND100M">
+			<param name="ImageNumber" value="1">
+			</OBJECT>
+		<UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="系统介绍">
+				<param name="Local" value="knd/knd100m/knd100m_sys.htm">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="操作面板">
+				<param name="Local" value="knd/knd100m/knd100m.htm">
+				</OBJECT>
+		</UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="KND100T">
+			<param name="ImageNumber" value="1">
+			</OBJECT>
+		<UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="系统介绍">
+				<param name="Local" value="knd/knd100t/knd100t_sys.htm">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="操作面板">
+				<param name="Local" value="knd/knd100t/knd100t.htm">
+				</OBJECT>
+		</UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="KND1TB">
+			<param name="ImageNumber" value="1">
+			</OBJECT>
+		<UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="系统介绍">
+				<param name="Local" value="knd/knd1TB/knd1TB_sys.htm">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="操作面板">
+				<param name="Local" value="knd/knd1TB/knd1TB.htm">
+				</OBJECT>
+		</UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="NC 编程">
+			<param name="ImageNumber" value="1">
+			</OBJECT>
+		<UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="KND100M">
+				<param name="ImageNumber" value="1">
+				</OBJECT>
+			<UL>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="坐标系统">
+					<param name="Local" value="knd/knd100m_prg/ref_frame.htm">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="G 代码指令">
+					<param name="Local" value="knd/knd100m_prg/GCode.htm">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="M 辅助功能">
+					<param name="Local" value="knd/knd100m_prg/assistant.htm">
+					</OBJECT>
+			</UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="KND100T">
+				<param name="ImageNumber" value="1">
+				</OBJECT>
+			<UL>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="坐标系统">
+					<param name="Local" value="knd/knd100t_prg/ref_frame.htm">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="G 代码指令">
+					<param name="Local" value="knd/knd100t_prg/GCode.htm">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="M 辅助功能">
+					<param name="Local" value="knd/knd100t_prg/assistant.htm">
+					</OBJECT>
+			</UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="KND1TB">
+				<param name="ImageNumber" value="1">
+				</OBJECT>
+			<UL>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="G 代码指令">
+					<param name="Local" value="knd/knd1TB_prg/GCode.htm">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="M 辅助功能">
+					<param name="Local" value="knd/knd1TB_prg/assistant.htm">
+					</OBJECT>
+			</UL>
+		</UL>
+	</UL>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="成都广泰">
+		<param name="ImageNumber" value="1">
+		</OBJECT>
+	<UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="GREAT150i M">
+			<param name="ImageNumber" value="1">
+			</OBJECT>
+		<UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="系统介绍">
+				<param name="Local" value="great150i/great150im/great150i_m_sys.htm">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="操作面板">
+				<param name="Local" value="great150i/great150im/great150i_m.htm">
+				</OBJECT>
+		</UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="GREAT150i T">
+			<param name="ImageNumber" value="1">
+			</OBJECT>
+		<UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="系统介绍">
+				<param name="Local" value="great150i/great150iT/great150i_t_sys.htm">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="操作面板">
+				<param name="Local" value="great150i/great150iT/great150i_t.htm">
+				</OBJECT>
+		</UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="NC 编程">
+			<param name="ImageNumber" value="1">
+			</OBJECT>
+		<UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="GREAT 数控铣">
+				<param name="ImageNumber" value="1">
+				</OBJECT>
+			<UL>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="坐标系统">
+					<param name="Local" value="great150i/great150i_mprg/ref_frame.htm">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="G 代码指令">
+					<param name="Local" value="great150i/great150i_mprg/GCode.htm">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="M 辅助功能">
+					<param name="Local" value="great150i/great150i_mprg/assistant.htm">
+					</OBJECT>
+			</UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="GREAT 数控车">
+				<param name="ImageNumber" value="1">
+				</OBJECT>
+			<UL>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="坐标系统">
+					<param name="Local" value="great150i/great150i_tprg/ref_frame.htm">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="G 代码指令">
+					<param name="Local" value="great150i/great150i_tprg/GCode.htm">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="M 辅助功能">
+					<param name="Local" value="great150i/great150i_tprg/assistant.htm">
+					</OBJECT>
+			</UL>
+		</UL>
+	</UL>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="广州数控">
+		<param name="ImageNumber" value="1">
+		</OBJECT>
+	<UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="GSK990M">
+			<param name="ImageNumber" value="1">
+			</OBJECT>
+		<UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="系统介绍">
+				<param name="Local" value="gsk/GSK990M/GSK990M_sys.htm">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="操作面板">
+				<param name="Local" value="gsk/GSK990M/GSK990M.htm">
+				</OBJECT>
+		</UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="GSK928TA">
+			<param name="ImageNumber" value="1">
+			</OBJECT>
+		<UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="系统介绍">
+				<param name="Local" value="gsk/GSK928TA/GSK928TA_sys.htm">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="操作面板">
+				<param name="Local" value="gsk/GSK928TA/GSK928TA.htm">
+				</OBJECT>
+		</UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="GSK928TC">
+			<param name="ImageNumber" value="1">
+			</OBJECT>
+		<UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="系统介绍">
+				<param name="Local" value="gsk/gsk928tc/gsk928tc_sys.htm">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="操作面板">
+				<param name="Local" value="gsk/gsk928tc/gsk928tc.htm">
+				</OBJECT>
+		</UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="GSK980T">
+			<param name="ImageNumber" value="1">
+			</OBJECT>
+		<UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="系统介绍">
+				<param name="Local" value="gsk/GSK980T/gsk980_t_sys.htm">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="操作面板">
+				<param name="Local" value="gsk/GSK980T/gsk980_t.htm">
+				</OBJECT>
+		</UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="GSK983M">
+			<param name="ImageNumber" value="1">
+			</OBJECT>
+		<UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="系统介绍">
+				<param name="Local" value="gsk/GSK983M/GSK983M_sys.htm">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="操作面板">
+				<param name="Local" value="gsk/GSK983M/GSK983M.htm">
+				</OBJECT>
+		</UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="NC 编程">
+			<param name="ImageNumber" value="1">
+			</OBJECT>
+		<UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="GSK990M">
+				<param name="ImageNumber" value="1">
+				</OBJECT>
+			<UL>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="坐标系统">
+					<param name="Local" value="gsk/GSK990M_PRG/ref_frame.htm">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="G 代码指令">
+					<param name="Local" value="gsk/GSK990M_PRG/GCode.htm">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="M 辅助功能">
+					<param name="Local" value="gsk/GSK990M_PRG/assistant.htm">
+					</OBJECT>
+			</UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="GSK928TC">
+				<param name="ImageNumber" value="1">
+				</OBJECT>
+			<UL>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="坐标系统">
+					<param name="Local" value="gsk/gsk928tc_prg/ref_frame.htm">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="G 代码指令">
+					<param name="Local" value="gsk/gsk928tc_prg/GCode.htm">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="M 辅助功能">
+					<param name="Local" value="gsk/gsk928tc_prg/assistant.htm">
+					</OBJECT>
+			</UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="GSK980T">
+				<param name="ImageNumber" value="1">
+				</OBJECT>
+			<UL>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="坐标系统">
+					<param name="Local" value="gsk/gsk980t_prg/ref_frame.htm">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="G 代码指令">
+					<param name="Local" value="gsk/gsk980t_prg/GCode.htm">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="M 辅助功能">
+					<param name="Local" value="gsk/gsk980t_prg/assistant.htm">
+					</OBJECT>
+			</UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="GSK928TA">
+				<param name="ImageNumber" value="1">
+				</OBJECT>
+			<UL>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="G 代码指令">
+					<param name="Local" value="gsk/gsk928ta_prg/GCode.htm">
+					</OBJECT>
+			</UL>
+		</UL>
+	</UL>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="大连大森">
+		<param name="ImageNumber" value="1">
+		</OBJECT>
+	<UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="DASEN3iM">
+			<param name="ImageNumber" value="1">
+			</OBJECT>
+		<UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="系统介绍">
+				<param name="Local" value="dasen3i/DASEN3i/DASEN_m_sys.htm">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="操作面板">
+				<param name="Local" value="dasen3i/DASEN3i/DASEN_m.htm">
+				</OBJECT>
+		</UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="DASEN3iT">
+			<param name="ImageNumber" value="1">
+			</OBJECT>
+		<UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="系统介绍">
+				<param name="Local" value="dasen3i/DASEN3i/DASEN_t_sys.htm">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="操作面板">
+				<param name="Local" value="dasen3i/DASEN3i/DASEN_t.htm">
+				</OBJECT>
+		</UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="NC 编程">
+			<param name="ImageNumber" value="1">
+			</OBJECT>
+		<UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="DASEN3iM">
+				<param name="ImageNumber" value="1">
+				</OBJECT>
+			<UL>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="坐标系统">
+					<param name="Local" value="dasen3i/dasen3i_mprg/ref_frame.htm">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="G 代码指令">
+					<param name="Local" value="dasen3i/dasen3i_mprg/GCode.htm">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="M 辅助功能">
+					<param name="Local" value="dasen3i/dasen3i_mprg/assistant.htm">
+					</OBJECT>
+			</UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="DASEN3iT">
+				<param name="ImageNumber" value="1">
+				</OBJECT>
+			<UL>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="坐标系统">
+					<param name="Local" value="dasen3i/dasen3i_tprg/ref_frame.htm">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="G 代码指令">
+					<param name="Local" value="dasen3i/dasen3i_tprg/GCode.htm">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="M 辅助功能">
+					<param name="Local" value="dasen3i/dasen3i_tprg/assistant.htm">
+					</OBJECT>
+			</UL>
+		</UL>
+	</UL>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="南京华兴">
+		<param name="ImageNumber" value="1">
+		</OBJECT>
+	<UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="WA310M">
+			<param name="ImageNumber" value="1">
+			</OBJECT>
+		<UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="系统介绍">
+				<param name="Local" value="wa/wa310_m_sys.htm">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="操作面板">
+				<param name="Local" value="wa/wa310_m.htm">
+				</OBJECT>
+		</UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="WA310T">
+			<param name="ImageNumber" value="1">
+			</OBJECT>
+		<UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="系统介绍">
+				<param name="Local" value="wa/wa310_t_sys.htm">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="操作面板">
+				<param name="Local" value="wa/wa310_t.htm">
+				</OBJECT>
+		</UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="NC 编程">
+			<param name="ImageNumber" value="1">
+			</OBJECT>
+		<UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="WA310M">
+				<param name="ImageNumber" value="1">
+				</OBJECT>
+			<UL>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="坐标系统">
+					<param name="Local" value="wa/wa310_mprg/ref_frame.htm">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="G 代码指令">
+					<param name="Local" value="wa/wa310_mprg/GCode.htm">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="M 辅助功能">
+					<param name="Local" value="wa/wa310_mprg/assistant.htm">
+					</OBJECT>
+			</UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="WA310T">
+				<param name="ImageNumber" value="1">
+				</OBJECT>
+			<UL>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="坐标系统">
+					<param name="Local" value="wa/wa310_tprg/ref_frame.htm">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="G 代码指令">
+					<param name="Local" value="wa/wa310_tprg/GCode.htm">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="M 辅助功能">
+					<param name="Local" value="wa/wa310_tprg/assistant.htm">
+					</OBJECT>
+			</UL>
+		</UL>
+	</UL>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="江苏仁和">
+		<param name="ImageNumber" value="1">
+		</OBJECT>
+	<UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="RENHE32T">
+			<param name="ImageNumber" value="1">
+			</OBJECT>
+		<UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="系统介绍">
+				<param name="Local" value="RENHE/RENHE32T/RENHE32_T_sys.htm">
+				</OBJECT>
+		</UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="NC 编程">
+			<param name="ImageNumber" value="1">
+			</OBJECT>
+		<UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="RENHE32T">
+				<param name="ImageNumber" value="1">
+				</OBJECT>
+			<UL>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="坐标系统">
+					<param name="Local" value="RENHE/RENHE32_tprg/ref_frame.htm">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="G 代码指令">
+					<param name="Local" value="RENHE/RENHE32_tprg/GCode.htm">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="M 辅助功能">
+					<param name="Local" value="RENHE/RENHE32_tprg/assistant.htm">
+					</OBJECT>
+			</UL>
+		</UL>
+	</UL>
+	<LI> <OBJECT type="text/sitemap">
+		<param name="Name" value="南京四开">
+		<param name="ImageNumber" value="1">
+		</OBJECT>
+	<UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="SKY2003N">
+			<param name="ImageNumber" value="1">
+			</OBJECT>
+		<UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="系统介绍">
+				<param name="Local" value="SKY2003N/sky2003n/sky2003n_m_sys.htm">
+				</OBJECT>
+		</UL>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="NC 编程">
+			<param name="ImageNumber" value="1">
+			</OBJECT>
+		<UL>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="SKY2003N">
+				<param name="ImageNumber" value="1">
+				</OBJECT>
+			<UL>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="坐标系统">
+					<param name="Local" value="SKY2003N/sky2003n_mprg/ref_frame.htm">
+					</OBJECT>
+				<LI> <OBJECT type="text/sitemap">
+					<param name="Name" value="G 代码指令">
+					<param name="Local" value="SKY2003N/sky2003n_mprg/GCode.htm">
+					</OBJECT>
+				<UL>
+					<LI> <OBJECT type="text/sitemap">
+						<param name="Name" value="M 辅助功能">
+						<param name="Local" value="SKY2003N/sky2003n_mprg/assistant.htm">
+						</OBJECT>
+				</UL>
+			</UL>
+		</UL>
+	</UL>
+</UL>
+</BODY></HTML>

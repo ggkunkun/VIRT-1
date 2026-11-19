@@ -1,0 +1,990 @@
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title></title>
+<link href="../../helper_css.css" rel="stylesheet" type="text/css">
+<style type="text/css">
+<!--
+.style2 {color: #000000; }
+.STYLE3 {color: #0000FF}
+-->
+</style>
+</head>
+<body>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar">
+  <tr>
+    <td>固定循环</td>
+  </tr>
+</table>
+<table width="523" border="0" cellpadding="0" cellspacing="1" bgcolor="#0000FF">
+  <tr>
+    <td width="211" valign="top" bgcolor="#FFFFFF"><p class="style2">循环 </p></td>
+    <td width="312" valign="top" bgcolor="#FFFFFF"><p class="style2">说明 </p></td>
+  </tr>
+  <tr>
+    <td width="211" valign="top" bgcolor="#FFFFFF"><p class="style2">CYCLE81</p></td>
+    <td width="312" valign="top" bgcolor="#FFFFFF"><p class="style2">钻削，钻中心孔 </p></td>
+  </tr>
+  <tr>
+    <td width="211" valign="top" bgcolor="#FFFFFF"><p class="style2">CYCLE82</p></td>
+    <td width="312" valign="top" bgcolor="#FFFFFF"><p class="style2">钻削，锪平面</p></td>
+  </tr>
+  <tr>
+    <td width="211" valign="top" bgcolor="#FFFFFF"><p class="style2">CYCLE83</p></td>
+    <td width="312" valign="top" bgcolor="#FFFFFF"><p class="style2">深孔钻削</p></td>
+  </tr>
+  <tr>
+    <td width="211" valign="top" bgcolor="#FFFFFF"><p class="style2">CYCLE84/CYCLE840</p></td>
+    <td width="312" valign="top" bgcolor="#FFFFFF"><p class="style2">刚性攻丝/攻丝，带弹性卡头</p></td>
+  </tr>
+  <tr>
+    <td width="211" valign="top" bgcolor="#FFFFFF"><p class="style2">CYCLE85&nbsp;</p></td>
+    <td width="312" valign="top" bgcolor="#FFFFFF"><p class="style2">铰孔&nbsp;</p></td>
+  </tr>
+  <tr>
+    <td width="211" valign="top" bgcolor="#FFFFFF"><p class="style2">CYCLE86&nbsp;</p></td>
+    <td width="312" valign="top" bgcolor="#FFFFFF"><p class="style2">镗孔&nbsp;</p></td>
+  </tr>
+  <tr>
+    <td width="211" valign="top" bgcolor="#FFFFFF"><p class="style2">CYCLE801/HOLES1&nbsp;</p></td>
+    <td width="312" valign="top" bgcolor="#FFFFFF"><p class="style2">方阵,框架/成排孔&nbsp;</p></td>
+  </tr>
+  <tr>
+    <td width="211" valign="top" bgcolor="#FFFFFF"><p class="style2">CYCLE802/HOLES2&nbsp;</p></td>
+    <td width="312" valign="top" bgcolor="#FFFFFF"><p class="style2">任意位置/圆周孔&nbsp;</p></td>
+  </tr>
+  <tr>
+    <td width="211" valign="top" bgcolor="#FFFFFF"><p class="style2">CYCLE61&nbsp;</p></td>
+    <td width="312" valign="top" bgcolor="#FFFFFF"><p class="style2">端面铣削&nbsp;</p></td>
+  </tr>
+  <tr>
+    <td width="211" valign="top" bgcolor="#FFFFFF"><p class="style2">POCKET3&nbsp;</p></td>
+    <td width="312" valign="top" bgcolor="#FFFFFF"><p class="style2">铣削矩形腔&nbsp;</p></td>
+  </tr>
+  <tr>
+    <td width="211" valign="top" bgcolor="#FFFFFF"><p class="style2">POCKET4</p></td>
+    <td width="312" valign="top" bgcolor="#FFFFFF"><p class="style2">铣削圆形腔</p></td>
+  </tr>
+  <tr>
+    <td width="211" valign="top" bgcolor="#FFFFFF"><p class="style2">CYCLE76</p></td>
+    <td width="312" valign="top" bgcolor="#FFFFFF">铣削矩形凸台</td>
+	
+  </tr>
+  <tr>
+    <td width="211" valign="top" bgcolor="#FFFFFF"><p class="style2">CYCLE77</p></td>
+    <td width="312" valign="top" bgcolor="#FFFFFF">铣削圆形凸台</td>
+	
+  </tr>
+  <tr>
+    <td width="211" valign="top" bgcolor="#FFFFFF"><p class="style2">SLOT1</p></td>
+    <td width="312" valign="top" bgcolor="#FFFFFF">长槽</td>
+	
+  </tr>
+  <tr>
+    <td width="211" valign="top" bgcolor="#FFFFFF"><p class="style2">SLOT2</p></td>
+    <td width="312" valign="top" bgcolor="#FFFFFF">圆槽</td>
+	
+  </tr>
+  <tr>
+    <td width="211" valign="top" bgcolor="#FFFFFF"><p class="style2">LONGHOLE</p></td>
+    <td width="312" valign="top" bgcolor="#FFFFFF">长孔</td>
+	
+  </tr>
+  <tr>
+    <td width="211" valign="top" bgcolor="#FFFFFF"><p class="style2">CYCLE70</p></td>
+    <td width="312" valign="top" bgcolor="#FFFFFF">螺纹铣削</td>
+	
+  </tr>
+  
+</table>
+<br>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+  <tr>
+    <td>  <span class="STYLE3">CYCLE81钻削，钻中心孔</span></td>
+  </tr>
+</table>
+<p><strong>1. </strong><strong>编程<br>
+</strong><br>
+CYCLE81 (REAL RTP,REAL RFP,REAL SDIS,REAL DP,REAL DPR,REAL_DTB,INT_GMODE,INT_DMODE,INT_AMODE)<br>
+  <br>
+  <strong>2. </strong><strong>功能 </strong><br>
+  <br>
+  使用循环“钻中心孔”，刀具以编程的主轴转速和进给速度加工<br>
+  至编程的最终钻削深度或<br>
+  至一定深度，在该深度下达到编程的钻中心孔直径<br>
+  在编程的停留时间届满后刀具退回。
+  <br>
+  <br>
+  <strong>3.参数说明</strong>
+  <br>
+  <br>
+  <img width="437" height="322" src="pic1/siemens828d_m_cycle_clip_image006.jpg"><br>
+  <img width="125" height="114" src="pic1/siemens828d_m_cycle_clip_image008.jpg"><br>
+  <img width="310" height="205" src="pic1/siemens828d_m_cycle_clip_image010.jpg"><br>
+  <img width="310" height="242" src="pic1/siemens828d_m_cycle_clip_image012.jpg"><br>
+  <br>
+  <strong>4. </strong><strong>编程举例</strong><br>
+</p>
+<p><img width="527" height="350" src="pic1/siemens828d_m_cycle_clip_image014.jpg"><br>
+  WORKPIECE(,,””,”BOX”,112,0,-30,-80,0,0,75,75) <br>
+  G17 G71 G90  G94 <br>
+  G53 G0 Z-110  D0 M5 <br>
+  T01; BROCA D20 MM <br>
+  M6 <br>
+  G54 D01 S1800 M3 <br>
+  G0 X25 Y25 <br>
+  Z10 <br>
+  F100 <br>
+  <strong>MCALL  CYCLE81(5,0,2,-26,,0,0,0,22) </strong><br>
+  <strong>X25 Y25 </strong><br>
+  <strong>X50 Y50 </strong><br>
+  <strong>MCALL </strong><br>
+  G53 G0 Z-110  D0 M5 <br>
+M30</p>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+  <tr>
+    <td><strong>CYCLE82 钻削，锪平面</strong></td>
+  </tr>
+</table>
+<p><strong>1. </strong><strong>编程</strong> <br>
+  <br>
+CYCLE82 (REAL RTP,REAL RFP,REAL SDIS,REAL DP,REAL DPR,REAL_DTB,INT_GMODE,INT_DMODE,INT_AMODE)</p>
+<p><strong>2. </strong><strong>功能 </strong><br>
+  <br>
+  使用循环“钻孔”，刀具以写入的主轴转速和进给速度钻削至输入的最终钻深（相当于刀杆或刀尖）。<br>
+  在编程的停留时间届满后刀具退回。<br>
+  <br>
+  <strong>3. </strong><strong>编程举例</strong><br>
+  <br>
+  <img width="478" height="344" src="pic1/siemens828d_m_cycle_clip_image002_0002.jpg"><br>
+  <br>
+  WORKPIECE(,,””,”BOX”,112,0,-30,-80,0,0,75,75) <br>
+G17 G71 G90  G94 <br>
+G53 G0 Z-110  D0 M5 <br>
+T01; BROCA D20 MM <br>
+M6 <br>
+G54 D01 S1800 M3 <br>
+G0 X25 Y25 <br>
+Z10 <br>
+F100 <br>
+<strong>N100 MCALL  CYCLE82(5,0,2,-26,,0.5,10,1,12) </strong><br>
+<strong>X25 Y25 </strong><br>
+<strong>X50 Y50 </strong><br>
+<strong>MCALL </strong></p>
+G53 G0 Z-110<br>
+<br>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+  <tr>
+    <td><strong>CYCLE83深孔钻削</strong></td>
+  </tr>
+</table>
+<p><strong>1. </strong><strong>编程</strong> <br>
+    <br>
+  CYCLE83 (REAL RTP,REAL RFP,REAL SDIS,REAL DP,REAL DPR,REAL FDEP,REAL FDPR,REAL_DAM,REAL DTB,REAL DTS,REAL FRF,INT VARI,NT_AXN,REAL_MDEP,REAL_VRT,REAL_DTD,REAL_DISI,INT_GMODE,INT_DMODE,INT_AMODE)</p>
+<p><strong>2. </strong><strong>功能<br>
+</strong><br>
+  使用循环“深孔钻削”，刀具以指定的主轴钻速和进给速度、分多次插入到工件中，直至达到深度21.可以给定：<br>
+进刀次数，进刀量保持恒定或按照指定的百分比不断递减。<br>
+  不提刀进行断屑或提刀断屑。<br>
+  第1次进刀时的进给率百分比，用于降低或提高进给率<br>
+  停留时间<br>
+  深度相对于刀杆或刀尖
+  <br>
+  <br>
+  <strong>3. </strong><strong>参数说明 </strong><br>
+  <br>
+  <img width="465" height="327" src="pic1/siemens828d_m_cycle_clip_image002_0005.jpg"><br>
+  <img width="126" height="160" src="pic1/siemens828d_m_cycle_clip_image004_0000.jpg"><br>
+  <img width="310" height="307" src="pic1/siemens828d_m_cycle_clip_image006_0000.jpg"><br>
+  <img width="310" height="330" src="pic1/siemens828d_m_cycle_clip_image008_0000.jpg"><br>
+  <img width="310" height="346" src="pic1/siemens828d_m_cycle_clip_image010_0000.jpg"><br>
+  <img width="311" height="234" src="pic1/siemens828d_m_cycle_clip_image012_0000.jpg"><br>
+  <img width="308" height="118" src="pic1/siemens828d_m_cycle_clip_image014_0000.jpg"><br>
+  <img width="309" height="308" src="pic1/siemens828d_m_cycle_clip_image016.jpg"><br>
+  <img width="309" height="77" src="pic1/siemens828d_m_cycle_clip_image018.jpg"><br>
+  <br>
+  <strong>4. </strong><strong>编程举例</strong><br>
+  <br>
+  <br>
+  <img width="362" height="288" src="pic1/siemens828d_m_cycle_clip_image002_0006.jpg"><br>
+  WORKPIECE(,,””,”BOX”,112,0,-30,-80,0,0,75,75)<br>
+  G17 G71 G90 G94<br>
+  G53 G0 Z-110 D0<br>
+  T15; DRILL D16 MM<br>
+  M6<br>
+  G54 D01 S2000 M3<br>
+  G0 X17.5 Y20 <br>
+  Z7<br>
+  F200<br>
+  MCALL CYCLE83(5,0,2,-85,,-20,,90,1,0,1.2,1.4,0.6,1.6,10,1,11221112)<br>
+  X17.5 Y20<br>
+  X67.5<br>
+  MCALL<br>
+  G53 G0 Z-110 D0 M5<br>
+M30</p>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+  <tr>
+    <td><strong>CYCLE84/CYCLE840刚性攻丝/攻丝，带弹性卡头</strong></td>
+  </tr>
+</table>
+<p><strong>1. </strong><strong>编程 </strong><br>
+  <br>
+  CYCLE84 (REAL RTP,REAL RFP,REAL SDIS,REAL DP,REAL DPR,REAL DTB,INT SDAC,REAL MPIT,REAL PIT,REAL POSS,REAL SST,REAL SST1，INT_AXN,INT_PITA,INT_TECHNO,INT_VARI,REAL_DAM,REAL_VRT,STRING[15]_PITM,STRING[5]_PTAB,STRING[20]_PTABA,INT_GMODE,INT_DMODE,INT_AMODE)<br>
+  <br>
+  CYCLE840 (REAL RTP,REAL RFP,REAL SDIS,REAL DP,REAL DPR,REAL DTB,INT SDR,INT SDAC,INT ENC,REAL MPIT,REAL PIT,INT_AXN,INT_PITA,INT_TECHNO,STRING[15]_PITM,STRING[5]_PTAB,STRING[20]_PTABA,INT_GMODE,INT_DMODE,INT_AMODE)</p>
+<p><strong>2. </strong><strong>功能 </strong><br>
+  <br>
+  使用循环“攻丝”可以钻削内螺纹。<br>
+  刀具以有效的转速和快进速率移动至安全距离。<br>
+  然后同步主轴停止、主轴和进给率。接着刀具以编程的转速（取决于%S）插入工件。<br>
+  可以选择进行-刀钻削、断屑或是从工件回退进行退刀排屑。<br>
+  根据在栏“补偿夹具模式”中的选择生成以下循环调用。<br>
+  带有补偿夹具：CYCLE840<br>
+  不带补偿夹具：CYCLE84<br>
+  在带补偿夹具的攻丝中-刀加工出螺纹。如果主轴配备了测量系统，CYCLE84可以实现多刀式的攻丝。<br>
+  <br>
+  <strong>3. </strong><strong>参数说明 </strong><br>
+  <br>
+  <img width="447" height="328" src="pic1/siemens828d_m_cycle_clip_image002_0010.jpg"><br>
+  <img width="127" height="131" src="pic1/siemens828d_m_cycle_clip_image004_0001.jpg"><br>
+  <img width="309" height="210" src="pic1/siemens828d_m_cycle_clip_image006_0001.jpg"><br>
+  <img width="308" height="287" src="pic1/siemens828d_m_cycle_clip_image008_0001.jpg"><br>
+  <img width="310" height="269" src="pic1/siemens828d_m_cycle_clip_image010_0001.jpg"><br>
+  <img width="310" height="338" src="pic1/siemens828d_m_cycle_clip_image012_0001.jpg"><br>
+  <img width="311" height="346" src="pic1/siemens828d_m_cycle_clip_image014_0001.jpg"><br>
+  <img width="310" height="120" src="pic1/siemens828d_m_cycle_clip_image016_0000.jpg"><br>
+  <img width="309" height="255" src="pic1/siemens828d_m_cycle_clip_image018_0000.jpg"><br>
+  <img width="310" height="49" src="pic1/siemens828d_m_cycle_clip_image020.jpg"><br>
+  <img width="309" height="319" src="pic1/siemens828d_m_cycle_clip_image022.jpg"><br>
+  <img width="310" height="312" src="pic1/siemens828d_m_cycle_clip_image024.jpg"><br>
+  <img width="310" height="277" src="pic1/siemens828d_m_cycle_clip_image026.jpg"><br>
+  <img width="310" height="106" src="pic1/siemens828d_m_cycle_clip_image028.jpg"><br>
+  <br>
+  <strong>4. </strong><strong>编程举例</strong><br>
+  <br>
+  <img width="540" height="232" src="pic1/siemens828d_m_cycle_clip_image002_0011.jpg"><br>
+WORKPIECE(,,””,”BOX”,112,0,-15,-80,-65,-65,65,65)<br>
+G17 G71 G90 G94<br>
+G53 G0 Z-110 D0<br>
+T20; TAP M12X1.75<br>
+M6<br>
+G54 D01 S500 M3<br>
+G0 X0 Y35 <br>
+Z5<br>
+MCALL  CYCLE84(5,0,2,-18,,0.7,3,,1.75,5,500,5,0,1,0,1,5,1,,,,,1001,2001002)<br>
+RP=35 AP=90<br>
+AP=210<br>
+AP=330<br>
+MCALL<br>
+G53 G0 Z-110 D0 M5<br>
+M30</p>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+  <tr>
+    <td><strong>CYCLE85铰孔</strong></td>
+  </tr>
+</table>
+<p><strong>1. </strong><strong>编程 </strong><br>
+    <br>
+  CYCLE85 (REAL RTP,REAL RFP,REAL SDIS,REAL DP,REAL DPR,REAL DTB, INT_GMODE,INT_DMODE,INT_AMODE)</p>
+<p><strong>2. </strong><strong>功能 </strong><br>
+  <br>
+  使用循环“铰孔”，刀具以指定的主轴转速和F指定的进给率插入到工件中。<br>
+  在铰孔时如达到21并且停留时间结束，会以指定的退回进给率回到退回平面。<br>
+  <br>
+  <strong>3. </strong><strong>参数说明 </strong><br>
+  <br>
+  <img width="466" height="343" src="pic1/siemens828d_m_cycle_clip_image002_0014.jpg"><br>
+  <img width="126" height="161" src="pic1/siemens828d_m_cycle_clip_image004_0002.jpg"><br>
+<img width="309" height="211" src="pic1/siemens828d_m_cycle_clip_image006_0002.jpg"></p>
+<img width="309" height="242" src="pic1/siemens828d_m_cycle_clip_image008_0002.jpg">
+<p><br>
+  <strong>4. </strong><strong>编程举例 </strong><br>
+  <img width="360" height="359" src="pic1/siemens828d_m_cycle_clip_image002_0015.jpg"><br>
+:<br>
+G53 G0 Z-110 D0<br>
+T04<br>
+M6<br>
+G54 D1 S920 M3<br>
+G0 X70 Y0 <br>
+Z15<br>
+MCALL CYCLE85 (5,0,2,-15, ,1,100,500)<br>
+X70 Y0<br>
+X120<br>
+MCALL<br>
+G53 G0 Z-110 D0 M5</p>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+  <tr>
+    <td><strong>CYCLE86镗孔</strong></td>
+  </tr>
+</table>
+<p><strong>1. </strong><strong>编程<br>
+  <br>
+</strong>CYCLE86 (REAL RTP,REAL RFP,REAL SDIS,REAL DP,REAL DPR,REAL DTB,INT SDIR,REALRPA,REAL RPO,REAL RPAP,REAL POSS, INT_GMODE,INT_DMODE,INT_AMODE)<br>
+<br>
+  <strong>2. </strong><strong>功能<br>
+</strong><br>
+  使用“镗孔”循环，刀具可以在考虑退回平面和安全距离的前提下以快进速率移动到编程位置。然后刀具以编程进给率F插入到编程深度（Z1）。<br>
+  定向的主轴停止由SPOS指令执行，停留时间届满后，刀具退刀返回或不退刀返回。<br>
+  <br>
+  <strong>3. </strong><strong>参数说明<br>
+  </strong><br>
+  <img width="462" height="337" src="pic1/siemens828d_m_cycle_clip_image002_0018.jpg"><br>
+  <img width="126" height="161" src="pic1/siemens828d_m_cycle_clip_image004_0003.jpg"><br>
+  <img width="310" height="118" src="pic1/siemens828d_m_cycle_clip_image006_0003.jpg"><br>
+  <img width="309" height="252" src="pic1/siemens828d_m_cycle_clip_image008_0003.jpg"><br>
+  <img width="309" height="288" src="pic1/siemens828d_m_cycle_clip_image010_0002.jpg"><br>
+  <br>
+  <strong>4. </strong><strong>编程举例</strong><br>
+  <br>
+  <img width="539" height="211" src="pic1/siemens828d_m_cycle_clip_image002_0019.jpg"><br>
+WORKPIECE(,,””,”BOX”,112,0,-35,-80,0,-35,150,35)<br>
+G17 G71 G90 G94<br>
+G53 G0 Z-110 D0<br>
+T06<br>
+M6<br>
+G54 D01 S800 M3<br>
+G0 X0 Y0 <br>
+Z10<br>
+F300<br>
+MCALL CYCLE86(5,0,2,-15,,0.6,3,2,2,1,45,0,1,12)<br>
+G53 G0 Z-110 D0 M5<br>
+M30</p>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="#0000FF">
+  <tr>
+    <th align="left" bgcolor="#FFFFFF" scope="col"><p><strong>CYCLE801/  HOLES1方阵，框架/成排孔</strong></p></th>
+  </tr>
+</table>
+<br>
+<p><strong>1. </strong><strong>编程 </strong><br>
+    <br>
+  CYCLE801 (REAL_SPCA,REAL_SPCO,REAL_STA,REAL_DIS1,REAL_DIS2，INT_NUM1，INT_NUM2，INT_VARI,INT_UMODE,<br>
+  REAL_ANG1，REAL_ANG2，STRING[200]_HIDE,INT_NSP,INT_DMODE)<br>
+  <br>
+  HOLES1(REAL SPCA,REAL SPCO,REAL STA1，REAL FDIS,REAL DBH,INT NUM,INT_VARI,INT_UMODE,STRING[200]_HIDE,INT_NSP,INT_DMODE)<br>
+  <br>
+  <strong>2. </strong><strong>功能<br>
+  <br>
+  </strong>通过“位置模式”循环您可以编写以下模式：<br>
+  直线（HOLES1)<br>
+  使用选项“直线”可以编写任意多个和直线保持等距的位置。<br>
+  栅格（CYCLE801)<br>
+  如果位置在一条或几条平行的直线上等距分布，使用选项“栅格”可以编程任意数量的位置。<br>
+  如要编程菱形的栅格,则要输入角度αX或αY。<strong><br>
+  </strong>框架（CYCLE801)<br>
+  如果位置在一个框架上等距分布，使用选项“框架”可以编程任意数量的位置。该间距在两个轴上可以不相等。<br>
+  如果编程菱形的框架，则要输入角度αX或αY。<strong><br>
+  </strong><br>
+  <strong>3. </strong><strong>参数说明</strong><br>
+  <br>
+  <img width="296" height="197" src="pic1/siemens828d_m_cycle_clip_image002_0023.jpg">（HOLES1）<br>
+  <img width="433" height="317" src="pic1/siemens828d_m_cycle_clip_image004_0004.jpg"><br>
+  <img width="309" height="215" src="pic1/siemens828d_m_cycle_clip_image006_0004.jpg"><br>
+  <img width="309" height="317" src="pic1/siemens828d_m_cycle_clip_image008_0004.jpg"><br>
+  <img width="310" height="183" src="pic1/siemens828d_m_cycle_clip_image010_0003.jpg"><br>
+  <br>
+  <strong>4. </strong><strong>编程举例<br>
+  <br>
+</strong>例题1<br>
+<img width="273" height="244" src="pic1/siemens828d_m_cycle_clip_image002_0024.jpg"><br>
+G17 G71 G90 G94<br>
+G53 G0 Z-110 D0<br>
+T04<br>
+M6<br>
+G54 D01 S800 M3<br>
+G0 X20 Y10 <br>
+Z10<br>
+F200<br>
+MCALL CYCLE82(5,0,2,-26,,0.5,10,1,12)<br>
+HOLES1(20,10,0,0,20,4,,0,,,1)<br>
+HOLES1(110,40,90,0,20,3,,0,,,1)<br>
+MCALL<br>
+G53 G0 Z-110 D0 M5<br>
+M30</p>
+<p>例题2<br>
+    <img width="236" height="396" src="pic1/siemens828d_m_cycle_clip_image004_0005.jpg"><br>
+  WORKPIECE(,,””,”BOX”,112,0,-25,-80,0,0,-100,150)<br>
+  G17 G71 G90 G94<br>
+  G53 G0 Z0 D0<br>
+  T01<br>
+  M6<br>
+  G54 D01 S1800 M3<br>
+  G0 X25 Y25<br>
+  Z10<br>
+  F100<br>
+  MCALL CYCLE82(5,0,2,-26,,0.5,10,1,12)<br>
+  CYCLE801(-92.5,15,0,42.5,30,3,5,0,0,0,0,,,1)<br>
+  MCALL<br>
+  G53 G0 Z0 D0<br>
+  T02<br>
+  M6<br>
+  G54 D01 S1800 M3<br>
+  G0 X25 Y25<br>
+  Z10<br>
+  F100<br>
+  MCALL CYCLE84(5,0,2,-18,,0.7,3,,1.75,5,500,5,0,<br>
+  1,0,1,5,1,,,,,1001,2001002)<br>
+  CYCLE801(-92.5,15,0,42.5,30,3,5,0,0,0,0,,,1)<br>
+  MCALL<br>
+  G53 G0 Z0 D0<br>
+  M30</p>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="#0000FF">
+  <tr>
+    <th align="left" bgcolor="#FFFFFF" scope="col"><p class="style2"><strong>CYCLE802任意位置</strong></p></th>
+  </tr>
+</table>
+<br>
+<p><strong>1. </strong><strong>编程 </strong><br>
+    <br>
+  CYCLE801 (REAL_SPCA,REAL_SPCO,REAL_STA,REAL_DIS1,REAL_DIS2，INT_NUM1，INT_NUM2，<br>
+  INT_VARI,INT_UMODE,REAL_ANG1，REAL_ANG2，STRING[200]_HIDE,INT_NSP,INT_DMODE)<br>
+  <br>
+  HOLES1(REAL SPCA,REAL SPCO,REAL STA1，REAL FDIS,REAL DBH,INT NUM,INT_VARI,INT_UMODE,STRING[200]_HIDE,INT_NSP,INT_DMODE)<br>
+  <br>
+<strong>2. 功能<br>
+<br>
+</strong>通过“位置模式”循环您可以编写以下模式：<br>
+直线（HOLES1)<br>
+使用选项“直线”可以编写任意多个和直线保持等距的位置。<br>
+栅格（CYCLE801)<br>
+如果位置在一条或几条平行的直线上等距分布，使用选项“栅格”可以编程任意数量的位置。<br>
+如要编程菱形的栅格,则要输入角度αX或αY。<br>
+框架（CYCLE801)<br>
+如果位置在一个框架上等距分布，使用选项“框架”可以编程任意数量的位置。该间距在两个轴上可以不相等。<br>
+如果编程菱形的框架，则要输入角度αX或αY。<strong><br>
+</strong><br>
+  <strong>3. </strong><strong>参数说明</strong><br>
+  <br>
+  <img width="296" height="197" src="pic1/siemens828d_m_cycle_clip_image002_0023.jpg">（HOLES1）<br>
+  <img width="433" height="317" src="pic1/siemens828d_m_cycle_clip_image004_0004.jpg"><br>
+  <img width="309" height="215" src="pic1/siemens828d_m_cycle_clip_image006_0004.jpg"><br>
+  <img width="309" height="317" src="pic1/siemens828d_m_cycle_clip_image008_0004.jpg"><br>
+  <img width="310" height="183" src="pic1/siemens828d_m_cycle_clip_image010_0003.jpg"><br>
+  <br>
+  <strong>4. </strong><strong>编程举例<br>
+  <br>
+  </strong>例题1<br>
+  <img width="273" height="244" src="pic1/siemens828d_m_cycle_clip_image002_0024.jpg"><br>
+G17 G71 G90 G94<br>
+G53 G0 Z-110 D0<br>
+T04<br>
+M6<br>
+G54 D01 S800 M3<br>
+G0 X20 Y10 <br>
+Z10<br>
+F200<br>
+MCALL CYCLE82(5,0,2,-26,,0.5,10,1,12)<br>
+HOLES1(20,10,0,0,20,4,,0,,,1)<br>
+HOLES1(110,40,90,0,20,3,,0,,,1)<br>
+MCALL<br>
+G53 G0 Z-110 D0 M5<br>
+M30</p>
+<p>例题2<br>
+    <img width="236" height="396" src="pic1/siemens828d_m_cycle_clip_image004_0005.jpg"><br>
+  WORKPIECE(,,””,”BOX”,112,0,-25,-80,0,0,-100,150)<br>
+  G17 G71 G90 G94<br>
+  G53 G0 Z0 D0<br>
+  T01<br>
+  M6<br>
+  G54 D01 S1800 M3<br>
+  G0 X25 Y25<br>
+  Z10<br>
+  F100<br>
+  MCALL CYCLE82(5,0,2,-26,,0.5,10,1,12)<br>
+  CYCLE801(-92.5,15,0,42.5,30,3,5,0,0,0,0,,,1)<br>
+  MCALL<br>
+  G53 G0 Z0 D0<br>
+  T02<br>
+  M6<br>
+  G54 D01 S1800 M3<br>
+  G0 X25 Y25<br>
+  Z10<br>
+  F100<br>
+  MCALL CYCLE84(5,0,2,-18,,0.7,3,,1.75,5,500,5,0,<br>
+  1,0,1,5,1,,,,,1001,2001002)<br>
+  CYCLE801(-92.5,15,0,42.5,30,3,5,0,0,0,0,,,1)<br>
+  MCALL<br>
+  G53 G0 Z0 D0<br>
+  M30</p>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="#0000FF">
+  <tr>
+    <th align="left" bgcolor="#FFFFFF" scope="col"><p class="style2"><strong>HOLES2圆周孔</strong></p></th>
+  </tr>
+</table>
+<br>
+<p><strong>1. </strong><strong>编程 </strong><br>
+  <br>
+  HOLES2(REAL CPA,REAL CPO,REAL RAD,REAL STA1，REAL INDA,INT NUM,INT_VARI,INT_UMODE,STRING[200]_HIDE,INT_NSP,INT_DMODE)<br>
+  <br>
+  <strong>2. 功能<br>
+  <br>
+  </strong>使用循环“位置圆”可以编程带定义半径的.整圆或节距圆上的钻孔。用于第一位置的基本旋转角度取决于X轴。控制器按<br>
+  钻孔的数量继续行进一个计算出的角度。这个同样大小的角度适用于所有位置。<br>
+  可以按直线或者圆弧轨迹将刀具运行到下一位置。<strong><br>
+  </strong><br>
+  <strong>3. </strong><strong>参数说明</strong><br>
+  <br>
+  <img width="510" height="376" src="pic1/siemens828d_m_cycle_clip_image002_0027.jpg"><br>
+  <img width="311" height="129" src="pic1/siemens828d_m_cycle_clip_image004_0006.jpg"><br>
+  <img width="310" height="72" src="pic1/siemens828d_m_cycle_clip_image006_0005.jpg"><br>
+  <img width="310" height="201" src="pic1/siemens828d_m_cycle_clip_image008_0005.jpg"><br>
+  <img width="309" height="311" src="pic1/siemens828d_m_cycle_clip_image010_0004.jpg"><br>
+  <img width="307" height="160" src="pic1/siemens828d_m_cycle_clip_image012_0002.jpg"><br>
+  <br>
+  <strong>4. </strong><strong>编程举例<br>
+  <br>
+</strong><img width="491" height="441" src="pic1/siemens828d_m_cycle_clip_image002_0028.jpg"></p>
+<p><br>
+  N10  WORKPIECE(,,””,”CYLINDER”,64,0,-9,-80,135)<br>
+G17 G71 G90 G94<br>
+G53 G0 Z-110 D0<br>
+T08; DRILL D8 MM<br>
+M6<br>
+G54 D01 G64 CFIN<br>
+S1550 M3<br>
+G0 X0 Y0 <br>
+Z10<br>
+F230<br>
+MCALL CYCLE82(5,0,2,-26,,0.5,10,1,12)<br>
+HOLES2(0,0,50,108,30,5,1010,0,,,1)<br>
+MCALL<br>
+G53 G0 Z-110 D0 M5<br>
+M30</p>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="#0000FF">
+  <tr>
+    <th align="left" bgcolor="#FFFFFF" scope="col"><p class="style2"><strong>CYCLE61端面铣削</strong></p></th>
+  </tr>
+</table>
+<p><strong>1. </strong><strong>编程<br>
+</strong><br>
+  CYCLE61 (REAL_RTP,REAL_RFP,REAL_SDIS,REAL_DP,REAL_PA,REAL_PO,REAL_LENG,REAL_WID,REAL_MID,<br>
+  REAL_MIDA,REAL_FALD,REAL_FFP1，INT_VARI,INT_LIM,INT_DMODE,INT_AMODE)<br>
+  <br>
+  <strong>2. 功能<br>
+  <br>
+  </strong>使用循环“平面铣削”可以铣削任意一个工件的断面，此时通常加工矩形平面。<br>
+  可以铣出带或者不带边界的工件断面。<strong><br>
+  </strong><br>
+  <strong>3. </strong><strong>参数说明</strong><br>
+  <br>
+  <img width="552" height="403" src="pic1/siemens828d_m_cycle_clip_image002_0031.jpg"><br>
+  <img width="129" height="162" src="pic1/siemens828d_m_cycle_clip_image004_0007.jpg"><br>
+  <img width="311" height="268" src="pic1/siemens828d_m_cycle_clip_image006_0006.jpg"><br>
+  <img width="310" height="340" src="pic1/siemens828d_m_cycle_clip_image008_0006.jpg"><br>
+  <br>
+  <strong>4. </strong><strong>编程举例<br>
+  <br>
+  </strong><img width="426" height="245" src="pic1/siemens828d_m_cycle_clip_image002_0032.jpg"><br>
+WORKPIECE(,,””,”BOX”,112,5,-20,-80,0,0,370,250)<br>
+G53 G0 Z0 D0<br>
+T01<br>
+M6<br>
+G54 D01 S1800 M3<br>
+G0 X25 Y25<br>
+Z10<br>
+F100<br>
+CYCLE61(8,5,2,0,0,0,370,250,2,80,0.1,200,31,0,1,<br>
+11010)<br>
+CYCLE61(8,5,2,0,0,0,370,250,2,80,0,200,32,0,1,11<br>
+010)<br>
+G53 G0 Z0 D0<br>
+M30</p>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="#0000FF">
+  <tr>
+    <th align="left" bgcolor="#FFFFFF" scope="col"><p class="style2"><strong>POCKET3铣削矩形腔</strong></p></th>
+  </tr>
+</table>
+<br>
+<p><strong>1. </strong><strong>编程 </strong><br>
+    <br>
+  POCKET3(REAL_RTP,REAL_RFP,REAL_SDIS,REAL_DP,REAL_LENG,REAL_WID,REAL_CRAD,REAL_PA,REAL_PO,REAL_STA,REAL_MID,REAL_FAL,REAL_FALD,REAL_FFP1，REAL_FFD,INT_CDIR,INT_VARI,REAL_MIDA,REAL_AP1，REAL_AP2，REAL_AD,REAL_RAD1，REAL_DP1，INT_UMODE,REAL_FS,REAL_ZFS,INT_GMODE,INT_DMODE,INT_AMODE)<br>
+  <br>
+  <strong>2. 功能<br>
+  <br>
+  </strong>使用循环“铣削矩形腔“可以铣削任意的矩形腔。<br>
+  提供有下列加工类型：<br>
+  在立体材料上铣削矩形腔。<br>
+  如果铣刀没有切过中心，则首先在中心预钻孔矩形腔（依次编写钻孔，矩形腔和位置程序段）。<br>
+  加工预先加工过的矩形腔。<br>
+  按工件图纸中矩形腔的尺寸，可以为矩形腔选择一个相应的参考点。<strong><br>
+  </strong><br>
+  <strong>3. </strong><strong>参数说明</strong><br>
+  <br>
+  <img width="472" height="347" src="pic1/siemens828d_m_cycle_clip_image002_0035.jpg"><br>
+  <img width="128" height="181" src="pic1/siemens828d_m_cycle_clip_image004_0008.jpg"><br>
+  <img width="310" height="251" src="pic1/siemens828d_m_cycle_clip_image006_0007.jpg"><br>
+  <img width="310" height="271" src="pic1/siemens828d_m_cycle_clip_image008_0007.jpg"><br>
+  <img width="310" height="275" src="pic1/siemens828d_m_cycle_clip_image010_0005.jpg"><br>
+  <img width="310" height="211" src="pic1/siemens828d_m_cycle_clip_image012_0003.jpg"><br>
+  <img width="309" height="58" src="pic1/siemens828d_m_cycle_clip_image014_0002.jpg"><br>
+  <img width="309" height="190" src="pic1/siemens828d_m_cycle_clip_image016_0001.jpg"><br>
+  <img width="310" height="328" src="pic1/siemens828d_m_cycle_clip_image018_0001.jpg"><br>
+  <img width="310" height="212" src="pic1/siemens828d_m_cycle_clip_image020_0000.jpg"><br>
+<img width="310" height="108" src="pic1/siemens828d_m_cycle_clip_image022_0000.jpg"></p>
+<img width="308" height="350" src="pic1/siemens828d_m_cycle_clip_image024_0000.jpg">
+<p><br>
+  <strong>4. </strong><strong>编程举例<br>
+  <br>
+    </strong><img width="553" height="267" src="pic1/siemens828d_m_cycle_clip_image002_0036.jpg"><br>
+WORKPIECE(,,””,”BOX”,112,0,-20,-80,0,0,200,150)<br>
+G17 G71 G90 G94<br>
+G53 G0 Z0 D00<br>
+T01<br>
+M6<br>
+G54 D01 S1800 M3<br>
+G0 X0 Y0<br>
+Z10<br>
+F100<br>
+POCKET3(5,0,2,-10,150,100,15,100,75,0,2,0.1,0.1,200,0.1,0,21,50,8,3,15,10,1,0,1,2,1110<br>
+0,11,110)<br>
+POCKET3(5,0,2,-10,150,100,15,100,75,0,2,0.1,0.1,200,0.1,0,22,50,8,3,15,10,1,0,1,2,1110<br>
+0,11,110)<br>
+G53 G0 Z0 D0<br>
+M30</p>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="#0000FF">
+  <tr>
+    <th align="left" bgcolor="#FFFFFF" scope="col"><p class="style2"><strong>POCKET4铣削圆形腔</strong></p></th>
+  </tr>
+</table>
+<br>
+<p><strong>1. </strong><strong>编程<br>
+</strong><br>
+POCKET4(REAL_RTP,REAL_RFP,REAL_SDIS,REAL_DP,REAL_CDIAM,REAL_PA,REAL_PO,REAL_MID,REAL_FAL,<br>
+REAL_FALD,REAL_FFP1，REAL_FFD,INT_CDIR,INT_VARI.REAL_MIDA,REAL_AP1，REAL_AD,REAL_RAD1,REAL_DP1,<br>
+INT_UMODE,REAL_FS,REAL_ZFS,INT_GMODE,INT_DMODE,INT_AMODE)<br>
+<br>
+  <strong>2. 功能<br>
+  <br>
+  </strong>使用循环”圆形腔“可以铣削任意的圆形腔。为此可以提供如下加工方法：<br>
+  在立体材料上铣削圆形腔。<br>
+  如果铣刀没有切过中心，则首先在中心预钻孔圆形腔（依次编写钻孔，圆形腔和位置程序段）。<br>
+  加工预先加工过的圆形腔：完整加工 二次加工<br>
+  在铣削时使用”圆形腔“功能可以提供下列加工类型：平面方式 螺旋线<strong><br>
+  </strong><br>
+  <strong>3. </strong><strong>参数说明</strong><br>
+  <br>
+  <img width="489" height="358" src="pic1/siemens828d_m_cycle_clip_image002_0039.jpg"><br>
+  <img width="127" height="180" src="pic1/siemens828d_m_cycle_clip_image004_0009.jpg"><br>
+  <img width="308" height="335" src="pic1/siemens828d_m_cycle_clip_image006_0008.jpg"><br>
+  <img width="309" height="220" src="pic1/siemens828d_m_cycle_clip_image008_0008.jpg"><br>
+  <img width="310" height="256" src="pic1/siemens828d_m_cycle_clip_image010_0006.jpg"><br>
+  <img width="309" height="319" src="pic1/siemens828d_m_cycle_clip_image012_0004.jpg"><br>
+  <img width="311" height="83" src="pic1/siemens828d_m_cycle_clip_image014_0003.jpg"><br>
+  <img width="310" height="228" src="pic1/siemens828d_m_cycle_clip_image016_0002.jpg"><br>
+  <img width="310" height="315" src="pic1/siemens828d_m_cycle_clip_image018_0002.jpg"><br>
+  <img width="308" height="61" src="pic1/siemens828d_m_cycle_clip_image020_0001.jpg"><br>
+  <img width="310" height="187" src="pic1/siemens828d_m_cycle_clip_image022_0001.jpg"><br>
+  <img width="310" height="350" src="pic1/siemens828d_m_cycle_clip_image024_0001.jpg"><br>
+  <br>
+  <strong>4. </strong><strong>编程举例<br>
+  <br>
+  </strong><img width="549" height="315" src="pic1/siemens828d_m_cycle_clip_image002_0040.jpg"><br>
+  WORKPIECE(,,””,”BOX”,112,0,-20,-80,0,0,70,60)<br>
+G53 G0 Z0 D0<br>
+T01<br>
+M6<br>
+G54 D01 S1800 M3<br>
+G0 X0 Y0<br>
+Z10<br>
+F100<br>
+POCKET3(5,0,2,-10,150,100,15,100,75,0,2,0.1,0.1,200,0.1,0,21,50,8,3,15,10,1,0,1,2,1110<br>
+0,11,110)<br>
+POCKET4(5,0,2,-15,50,35,30,2,0.1,0.1,200,0.1,0,1011,60,9,15,0,2,0,1,2,10100,111,110)<br>
+POCKET4(5,0,2,-15,50,35,30,2,0.1,0.1,200,0.1,0,1012,60,9,15,0,2,0,1,2,10100,111,110)<br>
+M30
+<p>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="#0000FF">
+  <tr>
+    <th align="left" bgcolor="#FFFFFF" scope="col"><p class="style2"><strong>CYCLE76铣削矩形凸台</strong></p></th>
+  </tr>
+</table>
+<br>
+<p><strong>1. </strong><strong>编程 </strong><br>
+    <br>
+  CYCLE76(REAL_RTP,REAL_RFP,REAL_SDIS,REAL_DP,REAL_DPR,REAL_LENG,REAL_WID,REAL_CRAD,REAL_PA,<br>
+  REAL_PO,REAL_STA,REAL_MID,REAL_FAL,REAL_FALD,REAL_FFP1,REAL_FFD,<br>
+  INT_CDIR,INT_VARI,REAL_AP1,REAL_AP2,REAL_FS,REAL_ZFS,INT_GMODE,INT_DMODE,INT_AMODE)<br>
+  <br>
+  <br>
+  <strong>2. 功能<br>
+  <br>
+  </strong>使用循环“矩形凸台”可以铣出个各种矩形凸台。为此提供下列带有或者没有拐角半径的形状：<strong><br>
+  <img width="304" height="58" src="siemens828d_m_cycle_clip_image002.jpg"><br>
+  </strong>按工件图纸中矩形凸台的尺寸，可以为矩形凸台选择一个相应的参考点。<br>
+  除所需的矩形凸台外还必须定义一个毛坯凸台。毛坯凸台是外部没有其他材料的区域，<br>
+  即：可以采用快速移动到达该区域。毛坯凸台不能与相邻的毛坯凸台相交，而且循环<br>
+  会自动沿成品凸台中心放置一个毛坯凸台。<br>
+  矩形凸台只需一次进刀便可加工完毕。如果想多次进刀，必须采用不断变小的精加工余量<br>
+  来多次编写循环“矩形凸台”。<strong><br>
+  </strong><br>
+  <strong>3. </strong><strong>参数说明</strong><br>
+  <br>
+  <img width="472" height="347" src="pic1/siemens828d_m_cycle_clip_image002_0043.jpg"><br>
+  <img width="131" height="180" src="pic1/siemens828d_m_cycle_clip_image004_0010.jpg"><br>
+  <img width="311" height="325" src="pic1/siemens828d_m_cycle_clip_image006_0009.jpg"><br>
+  <img width="310" height="333" src="pic1/siemens828d_m_cycle_clip_image008_0009.jpg"><br>
+  <img width="311" height="332" src="pic1/siemens828d_m_cycle_clip_image010_0007.jpg"><br>
+  <img width="310" height="161" src="pic1/siemens828d_m_cycle_clip_image012_0005.jpg"><br>
+  <img width="128" height="181" src="pic1/siemens828d_m_cycle_clip_image004_0008.jpg"><br>
+  <img width="310" height="251" src="pic1/siemens828d_m_cycle_clip_image006_0007.jpg"><br>
+  <img width="310" height="271" src="pic1/siemens828d_m_cycle_clip_image008_0007.jpg"><br>
+  <img width="310" height="275" src="pic1/siemens828d_m_cycle_clip_image010_0005.jpg"><br>
+  <img width="310" height="211" src="pic1/siemens828d_m_cycle_clip_image012_0003.jpg"><br>
+  <img width="309" height="58" src="pic1/siemens828d_m_cycle_clip_image014_0002.jpg"><br>
+  <img width="309" height="190" src="pic1/siemens828d_m_cycle_clip_image016_0001.jpg"><br>
+  <img width="310" height="328" src="pic1/siemens828d_m_cycle_clip_image018_0001.jpg"><br>
+  <img width="310" height="212" src="pic1/siemens828d_m_cycle_clip_image020_0000.jpg"><br>
+<img width="310" height="108" src="pic1/siemens828d_m_cycle_clip_image022_0000.jpg"></p>
+<img width="308" height="350" src="pic1/siemens828d_m_cycle_clip_image024_0000.jpg"><br>
+<br>
+<strong>4. </strong><strong>编程举例<br>
+<br>
+  </strong><img width="548" height="334" src="pic1/siemens828d_m_cycle_clip_image002_0044.jpg"><br>
+WORKPIECE(,,””,”BOX”,112,0,-25,-80,0,0,80,55)<br>
+G17 G71 G90 G94<br>
+G53 G0 Z0 D0<br>
+T01<br>
+M6<br>
+G54 D01 S1800 M3<br>
+G0 X25 Y25<br>
+Z10<br>
+F100<br>
+CYCLE76(5,0,2,-10,,70,45,10,40,27.5,10,2,0.1,0.1,200,150,0,1,80,55,1,2,1100,1,102)<br>
+CYCLE76(5,0,2,-10,,70,45,10,40,27.5,10,2,0.1,0.1,200,150,0,1,80,55,1,2,1100,1,102)<br>
+G53 G0 Z0 D0<br>
+M30 <br>
+<br>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="#0000FF">
+  <tr>
+    <th align="left" bgcolor="#FFFFFF" scope="col"><p class="style2"><strong>CYCLE77铣削圆形凸台</strong></p></th>
+  </tr>
+</table>
+<br>
+<p><strong>1. </strong><strong>编程 </strong><br>
+    <br>
+  CYCLE77(REAL_RTP,REAL_RFP,REAL_SDIS,REAL_DP,REAL_DPR,REAL_CDIAM,REAL_PA,REAL_PO,REAL_MID,<br>
+  REAL_FAID,REAL_FFP1,REAL_FFD,INT_CDIR,INT_VARI,REAL_AP1,REAL_FS,REAL_ZFS,INT_GMODE,INT_DMODE,INT_AMODE)
+  <br>
+  <br>
+  <strong>2. 功能<br>
+  <br>
+  </strong>使用循环”圆形凸台”可以铣出各种圆形凸台。<br>
+  除所需的圆形凸台外还必须定义一个毛坯凸台。毛坯凸台确定了没有材料的区域，即：在该区域外可以快速进给。毛坯凸台不能与相邻的毛坯<br>
+  凸台相交，会自动绕成品凸台把毛坯凸台放置在中心上.<br>
+仅用一次进给加工出圆形凸台。如果想分多次进给来加工，必须用功能圆形凸台。多次编程一直减小的精加工余量。<br>
+<br>
+  <strong>3. </strong><strong>参数说明</strong><br>
+  <br>
+  <img width="483" height="356" src="pic1/siemens828d_m_cycle_clip_image002_0047.jpg"><br>
+  <img width="127" height="180" src="pic1/siemens828d_m_cycle_clip_image004_0011.jpg"><br>
+  <img width="310" height="313" src="pic1/siemens828d_m_cycle_clip_image006_0010.jpg"><br>
+  <img width="311" height="257" src="pic1/siemens828d_m_cycle_clip_image008_0010.jpg"><br>
+  <img width="310" height="311" src="pic1/siemens828d_m_cycle_clip_image010_0008.jpg"><br>
+  <br>
+  <strong>4. </strong><strong>编程举例<br>
+  <br>
+    </strong><br>
+    <img width="550" height="331" src="pic1/siemens828d_m_cycle_clip_image002_0048.jpg"><br>
+WORKPIECE(,,””,”BOX”,112,0,-20,-80,0,0,55,55)<br>
+G53 G0  Z0 D0<br>
+T01<br>
+M6<br>
+G54 D01 S1800 M3<br>
+G0 X25 Y25<br>
+Z10<br>
+F100<br>
+CYCLE76(5,0,2,-10,,70,45,10,40,27.5,10,2,0.1,0.1,200,150,0,1,80,55,1,2,1100,1,102)<br>
+CYCLE77(5,0,2,-15,,50,27.5,27.5,2,0.1,0.1,200,150,0,1,55,1,2,100,1,102)<br>
+CYCLE77(5,0,2,-15,,50,27.5,27.5,2,0.1,0.1,200,150,0,2,55,1,2,100,1,102)<br>
+M30</p>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="#0000FF">
+  <tr>
+    <th align="left" bgcolor="#FFFFFF" scope="col"><p class="style2"><strong>SLOT1长槽</strong></p></th>
+  </tr>
+</table>
+<br>
+<p><strong>1. </strong><strong>编程 </strong><br>
+  <br>
+    SLOT1(REAL RTP,REAL RFP,REAL SDIS,REAL_DP,REAL_DPR,INT NUM,REAL LENG,REAL WID,REAL_CPA,REAL_CPO,REAL RAD,REAL STA1,<br>
+  REAL INDA,REAL FFD,REAL FFP1,REAL_MID,INT CDIR,REAL_FAL,INT VARI,REAL_MIDF,REAL FFP2,REAL SSF,REAL_FALD,REAL_STA2,REAL_DP1,INT_UMODE,REAL_FS,REAL_ZFS,INT_GMODE,INT_DMODE,INT_AMODE)<br>
+  <br>
+  <strong>2. 功能<br>
+  <br>
+  </strong>使用循环&quot;纵向槽“可以铣出任意一个纵向槽。<br>
+  在”纵向槽“循环中提供以下加工方法：<br>
+  在整块材料上铣出纵向槽。<br>
+  如果铣刀不在中心上方切削，则首先在工件中心预钻纵向槽。<strong><br>
+  </strong><br>
+  <strong>3. </strong><strong>参数说明</strong><br>
+  <br>
+  <img width="454" height="334" src="pic1/siemens828d_m_cycle_clip_image002_0051.jpg"><br>
+  <img width="129" height="179" src="pic1/siemens828d_m_cycle_clip_image004_0012.jpg"><br>
+<img width="310" height="264" src="pic1/siemens828d_m_cycle_clip_image006_0011.jpg"></p>
+<p><img width="310" height="318" src="pic1/siemens828d_m_cycle_clip_image008_0011.jpg"><br>
+  <img width="310" height="273" src="pic1/siemens828d_m_cycle_clip_image010_0009.jpg"><br>
+  <img width="311" height="259" src="pic1/siemens828d_m_cycle_clip_image012_0006.jpg"><br>
+  <img width="310" height="276" src="pic1/siemens828d_m_cycle_clip_image014_0004.jpg"><br>
+  <img width="311" height="198" src="pic1/siemens828d_m_cycle_clip_image016_0003.jpg"><br>
+  <img width="310" height="170" src="pic1/siemens828d_m_cycle_clip_image018_0003.jpg"></p>
+<img width="308" height="61" src="pic1/siemens828d_m_cycle_clip_image020_0002.jpg">
+<p><img width="310" height="259" src="pic1/siemens828d_m_cycle_clip_image022_0002.jpg"><br>
+  <br>
+  <strong>4. </strong><strong>编程举例<br>
+  <br>
+    </strong><br>
+    <img width="553" height="290" src="pic1/siemens828d_m_cycle_clip_image002_0052.jpg"><br>
+:<br>
+N10  WORKPIECE(,,””,”CYLINDER”,64,0,-25,-80,140)<br>
+N20 G17 G71 G90 G94<br>
+N30 ;G53 G0 Z0 D00<br>
+N40 T01<br>
+N50 M6<br>
+N60 G54 D01 S1800 M3<br>
+N70 G0 X0 Y0<br>
+N80 Z10<br>
+N90 F100<br>
+MCALL  SLOT1(5,0,2,-3,,1,15,6,0,0,5,0,0,0.1,200,1,0,0,21,0.1,15,15,0,2,2,0,1,2,1100,1011,102)<br>
+HOLES2(0,0,30,45,30,4,1010,0,,,1)<br>
+MCALL<br>
+G53 G0  Z-110 D0<br>
+M30
+<p>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="#0000FF">
+  <tr>
+    <th align="left" bgcolor="#FFFFFF" scope="col"><p class="style2"><strong>SLOT2圆槽</strong></p></th>
+  </tr>
+</table>
+<br>
+<p><strong>1. </strong><strong>编程 </strong><br>
+    <br>
+  SLOT2(REAL RTP,REAL RFP,REAL SDIS,REAL_DP,REAL_DPR,INT NUM,REAL AFSL,REAL WID,REAL_CPA,REAL_CPO,REAL RAD,REAL <br>
+  STA1,REAL INDA,REAL FFD,REAL FFP1,REAL_MID,INT CDIR,REAL_FAL,INT VARI,REAL_MIDF,REAL FFP2,REAL SSF,REAL_FFCP,<br>
+  INT_UMODE,REAL_FS,REAL_ZFS,INT_GMODE,INT_DMODE,INT_AMODE)<br>
+  <br>
+  <strong>2. 功能<br>
+  <br>
+  </strong>使用循环圆弧槽可以在整圆或节距圆上铣削出一个或多个同样大小的圆弧槽。<br>
+  刀具大小<br>
+  请注意，加工圆弧槽时铣刀不能超过最小大小<br>
+  粗加工<br>
+  精加工<br>
+边沿精加工<br>
+<br>
+环形槽<br>
+如果想生成一个环形槽，必须为参数数字N和张角α1输入下面的值：<br>
+N=1<br>
+α1=360°<br>
+<br>
+  <strong>3. </strong><strong>参数说明</strong><br>
+  <br>
+  <img width="461" height="339" src="pic1/siemens828d_m_cycle_clip_image002_0056.jpg"><br>
+  <img width="128" height="178" src="pic1/siemens828d_m_cycle_clip_image004_0013.jpg"><br>
+  <img width="310" height="245" src="pic1/siemens828d_m_cycle_clip_image006_0012.jpg"><br>
+  <img width="310" height="250" src="pic1/siemens828d_m_cycle_clip_image008_0012.jpg"><br>
+  <img width="310" height="295" src="pic1/siemens828d_m_cycle_clip_image010_0010.jpg"><br>
+  <img width="310" height="191" src="pic1/siemens828d_m_cycle_clip_image012_0007.jpg"><br>
+  <img width="310" height="202" src="pic1/siemens828d_m_cycle_clip_image014_0005.jpg"><br>
+  <br>
+  <strong>4. </strong><strong>编程举例<br>
+  <br>
+    </strong><br>
+    <img width="454" height="282" src="pic1/siemens828d_m_cycle_clip_image002_0057.jpg"><br>
+:<br>
+N10  WORKPIECE(,,””,”CYLINDER”,64,0,-4.9,-80,140)<br>
+N20 G17 G71 G90 G94<br>
+N30 G53 G0 Z0 D00<br>
+N40 T01<br>
+N50 M6<br>
+N60 G54 D01 S1800 M3<br>
+N70 G0 X0 Y0<br>
+N80 Z10<br>
+N90 F100<br>
+N100  SLOT2(5,0,2,-5,,3,80,20,0,0,47.5,-20,90,200,200,2,0,0,1011,0,0,0,,0,1,2,100,1001,102)<br>
+N110 G53 G0  Z-110 D0<br>
+N120 M30</p>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="#0000FF">
+  <tr>
+    <th align="left" bgcolor="#FFFFFF" scope="col"><p class="style2"><strong>LONNGHOLE长孔</strong></p></th>
+  </tr>
+</table>
+<br>
+<p><strong>1. 编程<br>
+  <br>
+  </strong>LONGHOLE(REAL RTP,REAL RFP,REAL SDIS,REAL_DP,REAL_DPR,INT NUM,REAL LENG,REAL_CPA,REAL_CPO,REAL RAD,REAL STA1，REAL INDA,REAL FFD,REAL FFP1，REAL MID,INT_VARI,INT_UMODE,INT_GMODE,INT_DMODE,INT_AMODE)<br>
+  <br>
+  <strong>2. 功能<br>
+  <br>
+  </strong>与槽相反，长孔的宽度由刀具直径确定。<br>
+  循环内部会确定最佳的刀具运行行程，避免不必要的空行程。如果加工长孔需要多次深度进刀，会在终点时交替进刀。<br>
+  在每次进刀后，平面内沿着长孔纵向轴的退回轨迹都会换向。在过渡到下一个长孔时，循环会自动找出最短的路径。<strong><br>
+  </strong><br>
+  <strong>3. </strong><strong>参数说明</strong><br>
+  <br>
+  <img width="550" height="402" src="pic1/siemens828d_m_cycle_clip_image002_0060.jpg"><br>
+  <img width="311" height="92" src="pic1/siemens828d_m_cycle_clip_image004_0014.jpg"><br>
+  <img width="310" height="294" src="pic1/siemens828d_m_cycle_clip_image006_0013.jpg"><br>
+  <img width="310" height="273" src="pic1/siemens828d_m_cycle_clip_image008_0013.jpg"><br>
+  <img width="310" height="102" src="pic1/siemens828d_m_cycle_clip_image010_0011.jpg"><br>
+  <br>
+  <strong>4. </strong><strong>编程举例<br>
+  <br>
+    </strong><br>
+    <img width="552" height="294" src="pic1/siemens828d_m_cycle_clip_image002_0061.jpg"><br>
+ :<br>
+G53 G0  Z-110 D0 <br>
+T01<br>
+M6 <br>
+G54 D01 S2400 M3 G64  CFIN<br>
+G0 X0 Y0<br>
+Z10<br>
+LONGHOLE(5,0,2,-10,,2,53.5,0,0,8.5,30,120,150,500,2.5,1,0,2100,1001,2)<br>
+LONGHOLE(5,0,2,-10, ,2,53.5,0,0, 8.5,210,120,150,500,2.5)<br>
+G53 G0  Z-110 D0 M5<br>
+M30</p>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="#0000FF">
+  <tr>
+    <th align="left" bgcolor="#FFFFFF" scope="col"><p class="style2"><strong>CYCLE70螺纹铣削</strong></p></th>
+  </tr>
+</table>
+<br>
+<p><strong>1. </strong><strong>编程 </strong><br>
+  <br>
+    CYCLE70(REAL RTP,REAL RFP,REAL SDIS,REAL_DP,REAL_DIATH,REAL_HI,REAL_FAL,REAL_PIT,INT_NT,REAL_FFR,INT_TYPTH,REAL_PA,REAL_PO.<br>
+  REAL_NSP,INT_VARI,INT_PITA,STRING[15]_PITM,STRING[20]_PTAB,STRING[20]_PTABA,INT_GMODE,INT_DMODE,INT_AMODE)  <br>
+  <br>
+  <strong>2. 功能<br>
+  </strong>使用螺纹铣刀可以加工相同螺距的内螺纹与外螺纹。螺纹可以被加工成右旋螺纹或者左旋螺纹，可以从上至下<br>
+  或者相反地从下至上进行加工。<br>
+  加工公制螺纹（螺距P为毫米/转）时，该循环会将由螺距所计算出的值自动赋给参数螺纹深度H1。可以修改该值。必须通过机床数据激活默认设置。<br>
+  <br>
+  <strong>3. </strong><strong>参数说明</strong><br>
+  <br>
+  <img width="450" height="331" src="pic1/siemens828d_m_cycle_clip_image002_0064.jpg"><br>
+  <img width="129" height="180" src="pic1/siemens828d_m_cycle_clip_image004_0015.jpg"><br>
+  <img width="310" height="204" src="pic1/siemens828d_m_cycle_clip_image006_0014.jpg"><br>
+  <img width="311" height="159" src="pic1/siemens828d_m_cycle_clip_image008_0014.jpg"><br>
+  <img width="311" height="336" src="pic1/siemens828d_m_cycle_clip_image010_0012.jpg"><br>
+  <img width="310" height="265" src="pic1/siemens828d_m_cycle_clip_image012_0008.jpg"><br>
+<img width="310" height="154" src="pic1/siemens828d_m_cycle_clip_image014_0006.jpg"></p>
+<p><img width="310" height="286" src="pic1/siemens828d_m_cycle_clip_image016_0004.jpg"><br>
+  <img width="310" height="366" src="pic1/siemens828d_m_cycle_clip_image018_0004.jpg"><br>
+  <img width="310" height="167" src="pic1/siemens828d_m_cycle_clip_image020_0003.jpg"><br>
+  <br>
+  <strong>4. </strong><strong>编程举例<br>
+  <br>
+    </strong><br>
+    <img width="265" height="319" src="pic1/siemens828d_m_cycle_clip_image002_0065.jpg"><br>
+WORKPIECE(,,””,”CYLINDER”,64,0,-30,-80,100)<br>
+G17 G71 G90 G94<br>
+G53 G0  Z-110 D0<br>
+T01; <br>
+M6<br>
+G54 D01 S1800 M3<br>
+G0 X0 Y0<br>
+Z2<br>
+CYCLE70(5,0,2,-30,60,2.8,0,4,7,1,200,0,0,0,45,11,1,,,,,1,0)<br>
+G53 G0  Z-110 D0 M5<br>
+M30</p>
+<p>
+</body>
+</html>

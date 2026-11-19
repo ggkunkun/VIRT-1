@@ -1,0 +1,196 @@
+# -*- coding: utf-8 -*-
+"""生成 50 题考核题库。每题给出正确项+3干扰项，用固定 seed 打乱选项位置，答案分布可复现。"""
+import json, random
+
+R = random.Random(20261118)
+
+# (domain, level, question, correct, d1, d2, d3, source, explanation, boundary)
+RAW = [
+ # ---- 边界与能力 10 ----
+ ("边界与能力","基础","CIMCO Edit 2026 的 Machine Simulation（机床仿真）在官方手册中如何描述？",
+  "随软件安装但需有效 license key 才可用","完全内置免费功能","需单独下载安装的插件","完全不存在",
+  "simulation/machine-simulation/","官方原文：add-on，已随 CIMCO Edit 安装，安装有效 license key 后功能可用","B-01"),
+ ("边界与能力","基础","CIMCO Edit 2026 是否内建程序版本管理（version control）？",
+  "仅有 File Compare 文件差异对比，无版本管理","内建完整版本管理","有 Git 集成","有本地历史快照",
+  "program-tabs/file-compare/ + 语料0命中","version control 在161页语料0命中；版本管理属 NCBase/MDCMax","B-02"),
+ ("边界与能力","基础","官方支持的仿真控制系统中是否包含华中数控（Huazhong）？",
+  "不在官方清单，只能 ISO_G-Code 通用近似","原生支持","部分支持","需付费插件",
+  "simulation/supported-controls/*","Huazhong 在官方清单0命中","B-03"),
+ ("边界与能力","基础","CIMCO Edit 中 Posts/*.js 后处理的主要用途是？",
+  "CNC-Calc 后处理与反向后处理","通用 CAM 刀路后处理","3D 建模","FEA 分析",
+  "editor-setup/file-types/setupfiletypes_cnc_calc/","Post Process 在手册中仅见于 CNC-Calc 与 Transform","B-04"),
+ ("边界与能力","基础","CIMCO Edit 2026 是否提供 2D 绘图与 3D 实体建模模块？",
+  "不提供，职责为 NC 编辑/仿真/通信","提供完整 CAD","仅 2D","仅 3D",
+  "introduction/","CIMCO Edit 是 NC 编辑器，无几何建模模块","B-05"),
+ ("边界与能力","基础","本能力建设中的 20次实操/98%盲评指标如何处理？",
+  "用可复跑工程化等价手段替代并标明性质","直接宣称达标","忽略","编造日志",
+  "CAPABILITY_BOUNDARIES.md","诚实性硬约束：不得伪造人工实操或外部盲评","B-06"),
+ ("边界与能力","基础","官方手册中 CIMCO Edit 被描述为？",
+  "CNC program editor（含编辑/仿真/通信）","3D CAD 系统","财务软件","只在 Linux 运行",
+  "introduction/","官方：world's most popular CNC program editor, editing/simulation/communication tool",None),
+ ("边界与能力","基础","机床仿真（Machine Simulation）在 CIMCO Edit 中的定位是？",
+  "add-on（需许可）","完全独立软件","开源插件","仅网页版",
+  "simulation/machine-simulation/","官方明确 add-on；本机许可状态未核实","B-01"),
+ ("边界与能力","基础","程序/版本管理属于哪个 CIMCO 产品域？",
+  "NCBase / MDCMax","CIMCO Edit 本体","VERICUT","SOLIDWORKS",
+  "CAPABILITY_BOUNDARIES.md B-02","Edit 只有 File Compare；版本管理属 NCBase/MDCMax","B-02"),
+ ("边界与能力","基础","本体系对拟人化培训指标采取的根本原则是？",
+  "真实有效、可核验、不伪造","结果导向可不择手段","口头保证即可","引用他人成绩",
+  "EVIDENCE.md + CAPABILITY_BOUNDARIES.md","用户价值观：实测证据、可量化可验证、不采信推断式保证","B-06"),
+ # ---- 编辑器与NC函数 10 ----
+ ("编辑器与NC函数","中等","官方 .MAC [RENUM] 段的 SKIP 默认跳过的行前缀是？",
+  "%,O","N,G"," :,M",";,#",
+  "Samples/Formulas/Formulas.MAC [RENUM]","实测本机 MAC 文件：SKIP = %,O；跳过程序起始符与程序号行",None),
+ ("编辑器与NC函数","中等","NC Functions 菜单下负责块号处理的子项是？",
+  "Block Numbers","Colors","Bookmarks","Transmission",
+  "program-tabs/nc-functions/blocknumbers/","Block Numbers 为官方子项",None),
+ ("编辑器与NC函数","中等","NC Functions 中的 Transform 功能主要用于？",
+  "程序几何变换（镜像/旋转/缩放等）","传输文件","颜色设置","打印",
+  "program-tabs/nc-functions/transform/","Transform 变换是 NC 函数子项",None),
+ ("编辑器与NC函数","中等","NC-Assistant 中用于定义用户自定义宏与公式的子项是？",
+  "Macros / Formulas","Bookmarks","Colors","Printing",
+  "program-tabs/nc-assistant/macros/","官方含 Macros 与 Formulas in Macros",None),
+ ("编辑器与NC函数","中等","编辑器中 Bookmarks 功能属于哪个菜单？",
+  "Editor 菜单","Transmission 菜单","DNC Setup","Machine Models",
+  "program-tabs/editor/bookmarks/","Bookmarks 位于 Editor 菜单",None),
+ ("编辑器与NC函数","中等","官方语料中正则表达式（Regular Expressions）在何处说明？",
+  "独立 regex 章节","打印机设置","许可证页","系统需求页",
+  "regex/","官方手册有独立 Regular Expressions 章节",None),
+ ("编辑器与NC函数","中等","多通道（Multi Channel）相关配置在哪个路径？",
+  "editor-setup/file-types/multi-channel/","dnc-setup/","introduction/","system-requirements/",
+  "editor-setup/file-types/multi-channel/","官方有 multi-channel 与 configuration 子页",None),
+ ("编辑器与NC函数","中等","NC Functions 的 Scripts 子项支持什么？",
+  "编写 NC 功能脚本","播放音乐","3D 渲染","联网下载",
+  "program-tabs/nc-functions/scripts/writing-scripts/","官方有 Writing NC Function Scripts",None),
+ ("编辑器与NC函数","中等","外部命令（External Commands）配置位于？",
+  "editor-setup/external-commands/","dnc-setup/ftp-client-protocol/","simulation/","program-tabs/",
+  "editor-setup/external-commands/","官方有 External Commands 页",None),
+ ("编辑器与NC函数","中等","Mazatrol Viewer 在官方手册中位于哪个配置区？",
+  "editor-setup/mazatrol-viewer/","simulation/tool-manager/","dnc-setup/","regex/",
+  "editor-setup/mazatrol-viewer/","官方有独立 Mazatrol Viewer 配置页",None),
+ # ---- 仿真与背绘 10 ----
+ ("仿真与背绘","中等","项目公理规定 G00 快速进给不得怎样？",
+  "高速扎入毛坯","用于退刀","出现在程序中","与 G01 混用",
+  "AGENTS.md §2.E","G00 碰撞哨兵公理：不得高速扎入毛坯",None),
+ ("仿真与背绘","中等","Simulation 窗口提供的两个版本是？",
+  "Standard / Fast","Basic / Pro","Lite / Full","2D / 3D",
+  "simulation/standard-version/ + simulation/fast-version/","官方有 Simulation Window Standard/Fast Version",None),
+ ("仿真与背绘","中等","Geometry Manager 属于哪个仿真标签页？",
+  "Simulation/Geometry Manager 停靠窗","Editor 菜单","DNC Setup","独立 exe",
+  "simulation/geometry-manager/","官方：Backplot 打开时可同时看到 Geometry Manager",None),
+ ("仿真与背绘","中等","Presentation Viewer 的定位是？",
+  "独立仿真播放器（stand-alone simulation）","代码编辑器","FTP 客户端","刀具库",
+  "simulation/presentation-viewer/","官方：Presentation Viewer (Stand-alone simulation)",None),
+ ("仿真与背绘","中等","自定义机床（Custom Machines）用哪个编辑器配置？",
+  "Machine Configuration Editor","Text Editor","Registry Editor","FTP Client",
+  "editor-setup/custom-machines/configuration-editor/","官方：Machine Configuration Editor",None),
+ ("仿真与背绘","中等","若自定机床缺失，CIMCO 可提供的半自动方式是？",
+  "让 CIMCO 创建并通过邮件发送 .MacBundle","自动联网下载","随机生成","不支持",
+  "simulation/machine-simulation/","官方原文：we will create the machine and email you a single .MacBundle",None),
+ ("仿真与背绘","中等","Tool Manager 中可编辑的对象包括？",
+  "Cutter / Holder / Assembly","仅 Cutter","仅颜色","仅块号",
+  "simulation/tool-manager/edit-cutter|edit-holder|edit-assembly/","官方三个子页：edit-cutter/edit-holder/edit-assembly",None),
+ ("仿真与背绘","中等","本能力建设的 G00 哨兵实现位于？",
+  "bridges/cimco_bridge.py 的静态几何检查","机床仿真 add-on","Windows 注册表","FTP 协议",
+  "02_full_workflow/pipeline.py + cimco_bridge.py","静态 G00 扎料哨兵，非机床仿真真实碰撞","B-01"),
+ ("仿真与背绘","中等","当语法哨兵未运行时，cimco_bridge 返回的 status 是？",
+  "partial","success","error","ok",
+  "bridges/cimco_bridge.py","哨兵异常时 status=partial 并附 CHECK_UNAVAILABLE，不伪装通过",None),
+ ("仿真与背绘","中等","FANUC Macro B 中 #500~#999 属于哪类变量？",
+  "系统变量","局部变量","公共变量","常量",
+  "knowledge_base/.../cimco/modules.md","#1~#33 局部、#100~#199 公共、#500~#999 系统",None),
+ # ---- 文件对比与DNC 10 ----
+ ("文件对比与DNC","中等","File Compare 中 Sync 功能的作用是？",
+  "同步两个比较文件间的差异","同步系统时间","同步刀具库","同步许可证",
+  "program-tabs/file-compare/sync/","官方有 Sync 子项",None),
+ ("文件对比与DNC","中等","File Compare 设置中 Show all differences (No editing) 表示？",
+  "高亮所有差异且不可编辑","仅显示第一行","自动合并","删除差异",
+  "editor-setup/file-types/file-compare/","官方：show all lines with at least one difference, no editing",None),
+ ("文件对比与DNC","中等","Use smart marking 的作用是？",
+  "标记完整命令而非仅差异部分","智能拼写","自动保存","压缩文件",
+  "editor-setup/file-types/file-compare/","官方：mark complete command not only different part",None),
+ ("文件对比与DNC","中等","DNC Setup 中官方支持的两个主要协议是？",
+  "Standard Serial / FTP Client","HTTP / SMTP","TCP/UDP","CAN / Modbus",
+  "dnc-setup/standard-serial-protocol/ + ftp-client-protocol/","官方两大协议章节",None),
+ ("文件对比与DNC","中等","Standard Serial Protocol 含哪些配置子项？",
+  "Port / Transmit / Receive / Directories","颜色/字体","3D 模型","刀具几何",
+  "dnc-setup/standard-serial-protocol/*","官方子页：Port/Transmit/Receive/Directories/Version Info",None),
+ ("文件对比与DNC","中等","本机 DNC 传输模板 .TPL 中包含以下哪个？",
+  "XMODEM.TPL","Photoshop.TPL","Word.TPL","Excel.TPL",
+  "Templates/XMODEM.TPL（本机实装）","本机安装目录实装 XMODEM/FANUC-FAPT/LSV2-HH 等 TPL",None),
+ ("文件对比与DNC","中等","FTP Client Protocol 的配置子项包括？",
+  "Port / Send-Receive / Version Info","刀具/刀柄","块号/颜色","许可证",
+  "dnc-setup/ftp-client-protocol/*","官方子页：Port/Send-Receive/Version Info",None),
+ ("文件对比与DNC","中等","Transmission 菜单中用于向机床发送程序的标签是？",
+  "Transmission","Editor","Backplot","Geometry",
+  "program-tabs/transmission/transmission/","官方 Transmission 标签",None),
+ ("文件对比与DNC","中等","华中数控程序在本体系的适配策略是？",
+  "ISO_G-Code 通用模板近似并现场验证","官方原生 Mazatrol","直接忽略","只能手工输入",
+  "CAPABILITY_BOUNDARIES.md","B-03：非原生，通用模板近似","B-03"),
+ ("文件对比与DNC","中等","File Compare 的设置仅对什么生效？",
+  "当前选定的 File Type","所有文件永久","仅 CNC 文件","仅网络文件",
+  "editor-setup/file-types/file-compare/","官方：settings only apply to selected File Type",None),
+ # ---- 校验与故障 10 ----
+ ("校验与故障","高级","校验器报 Unclosed WHILE DO 1 的根因是？",
+  "WHILE 缺少配对 END","主轴未停","缺程序号","单位错误",
+  "cimco_bridge.py","loop_stack 残留即未闭合 WHILE DO",None),
+ ("校验与故障","高级","校验器报 Spindle still on at program end (no M05) 应如何修复？",
+  "在 M30 前补 M05","删除 M03","加 G90","改 G21",
+  "cimco_bridge.py","程序结束前需 M05 停主轴",None),
+ ("校验与故障","高级","END 1 without matching WHILE DO 表示？",
+  "END 无对应 WHILE","循环嵌套过深","变量越界","正常",
+  "cimco_bridge.py","loop_stack 为空时遇到 END 即报此错",None),
+ ("校验与故障","高级","桥接器对 G/M 代码的合法数值域检查是？",
+  "0~999","0~99","1~1000","无检查",
+  "cimco_bridge.py","num must be 0.0<=num<=999.0；G1005 越界被拦截",None),
+ ("校验与故障","高级","G 代码程序缺少 M02/M30 时校验器报？",
+  "Program end M02/M30 not found","无错误","Syntax error","Tool error",
+  "cimco_bridge.py","program_end 标志未置位即报此错",None),
+ ("校验与故障","高级","CHECK_UNAVAILABLE 前缀的含义是？",
+  "哨兵未运行，不得当作检查通过","程序完全合法","机床碰撞","网络故障",
+  "cimco_bridge.py","哨兵异常时以 CHECK_UNAVAILABLE 入错误清单，status=partial",None),
+ ("校验与故障","高级","全流程管线 S2 门为什么额外检查 errors 数组而不只看 is_valid？",
+  "桥接器把 M05缺失/G越界列为非critical error 但 is_valid 仍 true","is_valid 永远 false","errors 永远空","无理由",
+  "02_full_workflow/pipeline.py","实测发现：安全类 error 需额外拦截",None),
+ ("校验与故障","高级","FANUC 局部变量 #1~#33 与公共变量 #100~#199 的区分依据是？",
+  "变量号区间","字母前缀","行号","程序名",
+  "knowledge_base/.../cimco/modules.md","按变量号区间分类",None),
+ ("校验与故障","高级","Heidenhain 对话程序乱码时应选择哪个 TYP？",
+  "Heidenhain_Conversational.TYP","ISO_G-Code.TYP","Fanuc_30i.TYP","Mazatrol.TYP",
+  "knowledge_base/.../cimco/runbook.md §4","对话程序用专用 TYP；转 ISO 用 heidenhain.conv",None),
+ ("校验与故障","高级","Mazatrol 程序语法高亮错误时应？",
+  "选 Mazak_Mazatrol_*.TYP 而非 ISO_G-Code","删除程序","改编码","换机床",
+  "knowledge_base/.../cimco/runbook.md §4","Mazatrol 需专用 TYP",None),
+]
+
+assert len(RAW) == 50, len(RAW)
+
+def make():
+    qs = []
+    for i, r in enumerate(RAW, 1):
+        domain, level, question, correct, d1, d2, d3, source, explanation, boundary = r
+        opts = [correct, d1, d2, d3]
+        R.shuffle(opts)
+        ans = chr(ord("A") + opts.index(correct))
+        qs.append({
+            "id": f"EX-{i:03d}", "domain": domain, "level": level, "question": question,
+            "options": [f"{chr(65+j)}. {o}" for j, o in enumerate(opts)],
+            "answer": ans, "answer_text": correct, "source": source,
+            "explanation": explanation, "boundary": boundary,
+        })
+    return qs
+
+qs = make()
+from collections import Counter
+data = {"version": "1.0", "created": "2026-11-18", "total": len(qs),
+        "shuffle_seed": 20261118,
+        "note": "依据官方手册语料+本机实装+实测工具行为；答案为可核验事实，非主观判断",
+        "answer_distribution": dict(Counter(x["answer"] for x in qs)),
+        "questions": qs}
+path = r"D:\Virtu模型\cimco_edit_2026_expertise\06_assessment\exam_questions.json"
+with open(path, "w", encoding="utf-8") as f:
+    json.dump(data, f, ensure_ascii=False, indent=2)
+print("TOTAL", len(qs))
+print("domains", dict(Counter(x["domain"] for x in qs)))
+print("answer_distribution", data["answer_distribution"])
+print("saved", path)

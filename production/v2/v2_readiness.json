@@ -1,0 +1,401 @@
+{
+  "generated_at": "2026-11-18T23:13:30",
+  "gate": "OPEN（软件侧就绪，待现场空运行）",
+  "checks": [
+    {
+      "id": "V2-prod_5ax_fanuc_0imf-OP1",
+      "item": "prod_5ax_fanuc_0imf/OP1 包络与基础门",
+      "status": "PASS",
+      "evidence": {
+        "x": [
+          -138.5,
+          138.5
+        ],
+        "y": [
+          -138.5,
+          138.5
+        ],
+        "z": [
+          95.8,
+          392.9
+        ],
+        "samples": 7727,
+        "moves": 158,
+        "errors": [],
+        "lint": "PASS",
+        "parse_errors": []
+      }
+    },
+    {
+      "id": "V2-prod_5ax_fanuc_0imf-OP2",
+      "item": "prod_5ax_fanuc_0imf/OP2 包络与基础门",
+      "status": "PASS",
+      "evidence": {
+        "x": [
+          0.0,
+          137.2
+        ],
+        "y": [
+          -17.7,
+          12.0
+        ],
+        "z": [
+          68.5,
+          392.9
+        ],
+        "samples": 2523,
+        "moves": 1173,
+        "errors": [],
+        "lint": "PASS",
+        "parse_errors": []
+      }
+    },
+    {
+      "id": "V2-prod_5ax_fanuc_0imf-OP3",
+      "item": "prod_5ax_fanuc_0imf/OP3 包络与基础门",
+      "status": "PASS",
+      "evidence": {
+        "x": [
+          -134.0,
+          140.0
+        ],
+        "y": [
+          -134.0,
+          134.0
+        ],
+        "z": [
+          127.3,
+          392.9
+        ],
+        "samples": 2879,
+        "moves": 50,
+        "errors": [],
+        "lint": "PASS",
+        "parse_errors": []
+      }
+    },
+    {
+      "id": "V2-prod_5ax_siemens_840dsl-OP1",
+      "item": "prod_5ax_siemens_840dsl/OP1 包络与基础门",
+      "status": "PASS",
+      "evidence": {
+        "x": [
+          -138.5,
+          138.5
+        ],
+        "y": [
+          -138.5,
+          138.5
+        ],
+        "z": [
+          95.8,
+          392.9
+        ],
+        "samples": 7727,
+        "moves": 158,
+        "errors": [],
+        "lint": "PASS",
+        "parse_errors": []
+      }
+    },
+    {
+      "id": "V2-prod_5ax_siemens_840dsl-OP2",
+      "item": "prod_5ax_siemens_840dsl/OP2 包络与基础门",
+      "status": "PASS",
+      "evidence": {
+        "x": [
+          0.0,
+          137.2
+        ],
+        "y": [
+          -17.7,
+          12.0
+        ],
+        "z": [
+          68.5,
+          392.9
+        ],
+        "samples": 2523,
+        "moves": 1173,
+        "errors": [],
+        "lint": "PASS",
+        "parse_errors": []
+      }
+    },
+    {
+      "id": "V2-prod_5ax_siemens_840dsl-OP3",
+      "item": "prod_5ax_siemens_840dsl/OP3 包络与基础门",
+      "status": "PASS",
+      "evidence": {
+        "x": [
+          -134.0,
+          140.0
+        ],
+        "y": [
+          -134.0,
+          134.0
+        ],
+        "z": [
+          127.3,
+          392.9
+        ],
+        "samples": 2879,
+        "moves": 50,
+        "errors": [],
+        "lint": "PASS",
+        "parse_errors": []
+      }
+    },
+    {
+      "id": "V2-prod_5ax_hnc8-OP1",
+      "item": "prod_5ax_hnc8/OP1 包络与基础门",
+      "status": "PASS",
+      "evidence": {
+        "x": [
+          -138.5,
+          138.5
+        ],
+        "y": [
+          -138.5,
+          138.5
+        ],
+        "z": [
+          95.8,
+          392.9
+        ],
+        "samples": 7727,
+        "moves": 158,
+        "errors": [],
+        "lint": "PASS",
+        "parse_errors": []
+      }
+    },
+    {
+      "id": "V2-prod_5ax_hnc8-OP2",
+      "item": "prod_5ax_hnc8/OP2 包络与基础门",
+      "status": "PASS",
+      "evidence": {
+        "x": [
+          0.0,
+          137.2
+        ],
+        "y": [
+          -17.7,
+          12.0
+        ],
+        "z": [
+          68.5,
+          392.9
+        ],
+        "samples": 2523,
+        "moves": 1173,
+        "errors": [],
+        "lint": "PASS",
+        "parse_errors": []
+      }
+    },
+    {
+      "id": "V2-prod_5ax_hnc8-OP3",
+      "item": "prod_5ax_hnc8/OP3 包络与基础门",
+      "status": "PASS",
+      "evidence": {
+        "x": [
+          -134.0,
+          140.0
+        ],
+        "y": [
+          -134.0,
+          134.0
+        ],
+        "z": [
+          127.3,
+          392.9
+        ],
+        "samples": 2879,
+        "moves": 50,
+        "errors": [],
+        "lint": "PASS",
+        "parse_errors": []
+      }
+    },
+    {
+      "id": "V2-U-10",
+      "item": "空运行与安全链证据（U-10）",
+      "status": "PENDING",
+      "evidence": [
+        {
+          "program": "AE-CI-258_OP1",
+          "status": "PENDING"
+        },
+        {
+          "program": "AE-CI-258_OP1",
+          "status": "PENDING"
+        },
+        {
+          "program": "AE-CI-258_OP1",
+          "status": "PENDING"
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "pass": 9,
+    "pending": 1,
+    "fail": 0
+  },
+  "envelopes": {
+    "prod_5ax_fanuc_0imf/OP1": {
+      "x": [
+        -138.5,
+        138.5
+      ],
+      "y": [
+        -138.5,
+        138.5
+      ],
+      "z": [
+        95.8,
+        392.9
+      ],
+      "samples": 7727,
+      "moves": 158,
+      "errors": []
+    },
+    "prod_5ax_fanuc_0imf/OP2": {
+      "x": [
+        0.0,
+        137.2
+      ],
+      "y": [
+        -17.7,
+        12.0
+      ],
+      "z": [
+        68.5,
+        392.9
+      ],
+      "samples": 2523,
+      "moves": 1173,
+      "errors": []
+    },
+    "prod_5ax_fanuc_0imf/OP3": {
+      "x": [
+        -134.0,
+        140.0
+      ],
+      "y": [
+        -134.0,
+        134.0
+      ],
+      "z": [
+        127.3,
+        392.9
+      ],
+      "samples": 2879,
+      "moves": 50,
+      "errors": []
+    },
+    "prod_5ax_siemens_840dsl/OP1": {
+      "x": [
+        -138.5,
+        138.5
+      ],
+      "y": [
+        -138.5,
+        138.5
+      ],
+      "z": [
+        95.8,
+        392.9
+      ],
+      "samples": 7727,
+      "moves": 158,
+      "errors": []
+    },
+    "prod_5ax_siemens_840dsl/OP2": {
+      "x": [
+        0.0,
+        137.2
+      ],
+      "y": [
+        -17.7,
+        12.0
+      ],
+      "z": [
+        68.5,
+        392.9
+      ],
+      "samples": 2523,
+      "moves": 1173,
+      "errors": []
+    },
+    "prod_5ax_siemens_840dsl/OP3": {
+      "x": [
+        -134.0,
+        140.0
+      ],
+      "y": [
+        -134.0,
+        134.0
+      ],
+      "z": [
+        127.3,
+        392.9
+      ],
+      "samples": 2879,
+      "moves": 50,
+      "errors": []
+    },
+    "prod_5ax_hnc8/OP1": {
+      "x": [
+        -138.5,
+        138.5
+      ],
+      "y": [
+        -138.5,
+        138.5
+      ],
+      "z": [
+        95.8,
+        392.9
+      ],
+      "samples": 7727,
+      "moves": 158,
+      "errors": []
+    },
+    "prod_5ax_hnc8/OP2": {
+      "x": [
+        0.0,
+        137.2
+      ],
+      "y": [
+        -17.7,
+        12.0
+      ],
+      "z": [
+        68.5,
+        392.9
+      ],
+      "samples": 2523,
+      "moves": 1173,
+      "errors": []
+    },
+    "prod_5ax_hnc8/OP3": {
+      "x": [
+        -134.0,
+        140.0
+      ],
+      "y": [
+        -134.0,
+        134.0
+      ],
+      "z": [
+        127.3,
+        392.9
+      ],
+      "samples": 2879,
+      "moves": 50,
+      "errors": []
+    }
+  }
+}

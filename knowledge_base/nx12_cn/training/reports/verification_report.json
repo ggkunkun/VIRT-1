@@ -1,0 +1,144 @@
+{
+  "report_type": "中文版 NX 12.0 专项训练体系验证报告",
+  "generated_at": "2026-11-18T23:42:11+08:00",
+  "version_scope": "NX12.0-CN",
+  "basis": "本机 NX 12.0.2.9 安装介质实测解析 + 静态一致性验证",
+  "summary": {
+    "automated_checks": 15,
+    "passed": 15,
+    "failed": 0,
+    "gui_acceptance": "未完成（如实标注，不虚构分数）"
+  },
+  "checks": [
+    {
+      "check": "V1.1 命令 ID 唯一",
+      "pass": true,
+      "detail": "命令数=4424, 唯一ID=4424"
+    },
+    {
+      "check": "V1.2 14个要求模块均有功能点",
+      "pass": true,
+      "detail": "缺失=无; 模块数=15"
+    },
+    {
+      "check": "V1.3 证据等级分布",
+      "pass": true,
+      "detail": "{\"E1-MEDIA\": 1675, \"E2-MENU\": 1039, \"E3-UNTR\": 1710}"
+    },
+    {
+      "check": "V2 介质溯源抽样(60条命令ID)",
+      "pass": true,
+      "detail": "命中=60/60; 未命中样例=[]"
+    },
+    {
+      "check": "V3 知识库功能点覆盖",
+      "pass": true,
+      "detail": "知识库ID=4424, 目录ID=4424, 差集=0"
+    },
+    {
+      "check": "V4 测试用例全覆盖(每点3场景)",
+      "pass": true,
+      "detail": "用例=13272, 覆盖命令=4424/4424, 每点场景数=3"
+    },
+    {
+      "check": "V5 快捷键与术语来自介质",
+      "pass": true,
+      "detail": "快捷键=75, 目录记录=75"
+    },
+    {
+      "check": "V6.1 外挂注册表完整",
+      "pass": true,
+      "detail": "外挂=13, 命令=1639, 中文=1055"
+    },
+    {
+      "check": "V6.2 每外挂可溯源",
+      "pass": true,
+      "detail": "缺源文件/证据=无"
+    },
+    {
+      "check": "V6.3 VERSION≠120 已标记阻断",
+      "pass": true,
+      "detail": "漏标=无"
+    },
+    {
+      "check": "V6.4 32bit 目录已排除",
+      "pass": true,
+      "detail": "泄漏=无"
+    },
+    {
+      "check": "V6.5 外挂分册齐全",
+      "pass": true,
+      "detail": "分册文件=14, 期望=14(含总索引)"
+    },
+    {
+      "check": "V7.1 复合键可解析(抽样20)",
+      "pass": true,
+      "detail": "命中=20/20"
+    },
+    {
+      "check": "V7.2 重名ID被拦截",
+      "pass": true,
+      "detail": "code=AMBIGUOUS_COMMAND"
+    },
+    {
+      "check": "V7.3 能力卡可生成",
+      "pass": true,
+      "detail": "能力卡=13"
+    }
+  ],
+  "plugin_channel": {
+    "plugins": 13,
+    "commands": 1639,
+    "zh": 1055,
+    "dup_ids": 180
+  },
+  "acceptance_dimensions": [
+    {
+      "dimension": "基础操作",
+      "pass_line": 95,
+      "current_score": null,
+      "status": "NOT_VERIFIED",
+      "reason": "S1 静态可核对命令存在性与路径；实际 GUI 逐步操作与鼠标精度未取证。"
+    },
+    {
+      "dimension": "复杂项目",
+      "pass_line": 95,
+      "current_score": null,
+      "status": "NOT_VERIFIED",
+      "reason": "端到端多模块流程需在设计项目中实测，当前未构造验收项目。"
+    },
+    {
+      "dimension": "故障排查",
+      "pass_line": 95,
+      "current_score": null,
+      "status": "NOT_VERIFIED",
+      "reason": "报错代码库为登记表，需真实触发错误并验证解法。"
+    },
+    {
+      "dimension": "版本区分",
+      "pass_line": 95,
+      "current_score": null,
+      "status": "PARTIAL_STATIC",
+      "reason": "本版本介质事实已固定；与其它版本对比项为待核对清单，未取证。"
+    }
+  ],
+  "evidence": {
+    "catalog": "catalog/nx12_cn_full_catalog.json",
+    "knowledge_manifest": "knowledge/_manifest.json",
+    "test_cases": "tests/test_cases_all.json",
+    "source_sha256": {
+      "NXBIN/ugraf.exe": "72e1c09b3bc666376d1f28807fd285014964e8c69131d43b239760707ed8c80f",
+      "UGII/menus/definitions_main.btn": "e142f49130694ad60274874134e9980d2b45bb33d5dc4c2d4d38c94f4d5ea119",
+      "UGII/menus/ug_main.men": "93bb79dd91c0cce157771a41666962326fce223355338f406867c7264774603c",
+      "MACH/application/ug_cam.men": "3a7487d775c914abda8860107f63d91fbeec70075d727163dec7a1c10c832ebe",
+      "LOCALIZATION/translations/simpl_chinese/definitions_main_btn_simpl_chinese.txt": "d98cbfbf19643263dc2bab27a97cfa738e3e9ea3a58d7078cfded045424097f3"
+    }
+  },
+  "not_verified_disclosure": [
+    "每个功能点 ≥3 场景的 GUI 实际执行与截图证据（当前为可执行用例，非已执行结果）。",
+    "复杂项目端到端流程在 NX 12.0 中文界面的完整跑通。",
+    "报错代码→解法的实测有效性。",
+    "与 NX 10 / 1847 / 2000 系列的具体差异结论（当前为核对清单）。",
+    "第三方外挂命令（E3，1710 条）的中文显示名与官方归属性。"
+  ]
+}

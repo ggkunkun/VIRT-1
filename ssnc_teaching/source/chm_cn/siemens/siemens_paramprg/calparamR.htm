@@ -1,0 +1,50 @@
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title></title>
+<link href="../../helper_css.css" rel="stylesheet" type="text/css">
+</head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar">
+  <tr>
+    <td>计算参数R</td>
+  </tr>
+</table>
+<p><strong>1.</strong><strong>功能 </strong><br>
+ 要使一个NC程序不仅仅适用于特定数值下的一次加工，或者必须要计算出数值， <br>
+两种情况均可以使用计算参数，你可以在程序运行时由控制器计算或设定所需要的数值； <br>
+可以通过操作面板设定参数数值。如果参数已经赋值，则它们可以在程序中对由变量确定 <br>
+地址进行赋值。 </p>
+<p><strong>2.</strong><strong>编程 </strong><br>
+  R0=...<br>
+  到 <br>
+R249=...</p>
+<p><strong>3.</strong><strong>说明 </strong><br>
+  一共250个计算参数可供使用。 <br>
+  R0...R99 - 可以自由使用 <br>
+  R100...R249 -加工循环传递参数 <br>
+如果你没有用到加工循环，则这部分计算参数也同样可以自由使用。 </p>
+<p><br>
+  <strong>4.</strong><strong>赋值 </strong><br>
+  <strong>举例一</strong>： <br>
+  R0=3.5678  R1=-37.3 R2=2 R3=-7  R4=-45678.1234<br>
+  用指数表示法可以赋值更大的数值范围： <br>
+  （10－300...10＋300）.<br>
+  指数值写在EX符号之后；最大符号数：10（包括符号和小数点）.<br>
+  EX值范围：－300到＋300<br>
+  <strong>举例二： </strong><br>
+  R0=-0.1EX-5  ；意义：R0=-0.000 0001<br>
+  R1=1.874EX8  ；意义：R1=187 400 000<br>
+  注释：一个程序段中可以有多个赋值语句；也可以用计算表达式赋值。 </p>
+<p><strong>5.</strong><strong>给其他的地址赋值 </strong><br>
+  通过给其它的NC地址分配计算参数或参数表达式，可以增加NC程序的通用性。可以用数值、算术表达式或R参数对任意NC地址赋值。但对地址N、G和L例外。 <br>
+  赋值时在地址符之后写入符号“＝” <br>
+  赋值语句也可以赋值－负号。 <br>
+  给坐标轴地址（运行指令）赋值时，要求有一独立的程序段。 <br>
+  举例： <br>
+N10 G0 X=R2 ；给X轴赋值 </p>
+<p><strong>6.</strong><strong>参数的计算 </strong><br>
+在计算参数时也遵循通常的数学运算规则。原括号内的运算优先进行。另外，乘法和除法运算优先于加法和减法运算。 </p>
+</body>
+</html>

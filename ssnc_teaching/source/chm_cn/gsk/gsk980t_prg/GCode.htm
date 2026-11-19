@@ -1,0 +1,821 @@
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title></title>
+<link href="../../helper_css.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar">
+  <tr>
+    <td>G 代码命令</td>
+  </tr>
+</table>
+<TABLE border=0 cellPadding=0 cellSpacing=0 height="100%" width=750>
+  <TBODY>
+    <TR>
+      <TD vAlign=top width="590"><TABLE border=0 cellPadding=0 cellSpacing=0 width="100%" height="743">
+
+          <TR>
+            <td height="11" class="contents1" valign="top">&nbsp;</TD>
+          </TR>
+          <TR>
+            <td height="11" class="contents1" valign="top"><b>代码组及其含义</b><br>
+              G功能由G代码及后接2位数表示，规定其所在的程序段的意义。G代码有经下两种类型。
+              <table border="1"  cellpadding="0" cellspacing="0" style="border-collapse=collapse" bordercolor="#00309C">
+      <tr>
+        <td width="50%" align="center">种类</td>
+        <td width="50%" align="center">&nbsp; 意义</td>
+      </tr>
+      <tr>
+        <td width="50%" align="center">一次性代码</td>
+        <td width="50%" align="center">&nbsp;只在被指令的程序段有效</td>
+      </tr>
+      <tr>
+        <td width="50%" align="center">模态G代码</td>
+        <td width="50%" align="center">在同组其它G代码指令前一直有效</td>
+      </tr>
+    </table>
+              <p>&nbsp;</p>
+              <table border="1"  cellpadding="0" cellspacing="0" style="border-collapse=collapse" bordercolor="#00309C">
+      <tr>
+        <td width="21%" align="center"><b>G代码 </b></td>
+                    <td width="17%" align="center"><b>组别</b></td>
+                    <td width="62%" align="center"><b>功能</b></td>
+                </tr>
+      <tr>
+        <td width="21%" align="center">G00</td>
+                    <td width="17%" rowspan="4" align="center">01</td>
+                    <td width="62%" align="center">定位（快速移动）</td>
+                </tr>
+      <tr>
+        <td width="21%" align="center">*G01</td>
+                    <td width="62%" align="center">直线插补（切削进给）</td>
+                </tr>
+      <tr>
+        <td width="21%" align="center">G02</td>
+                    <td width="62%" align="center">圆弧插补CW（顺时针）</td>
+                </tr>
+      <tr>
+        <td width="21%" align="center">G03</td>
+                    <td width="62%" align="center">圆弧插补CCW（逆时针）</td>
+                </tr>
+      <tr>
+        <td width="21%" align="center">&nbsp;G04&nbsp;</td>
+                    <td width="17%" rowspan="2" align="center">00</td>
+                    <td width="62%" align="center">暂停，准停</td>
+                </tr>
+      <tr>
+        <td width="21%" align="center">&nbsp;G28&nbsp;</td>
+                    <td width="62%" align="center">返回参考点</td>
+                </tr>
+      <tr>
+        <td width="21%" align="center">&nbsp;&nbsp;&nbsp;&nbsp;   
+          G32&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td width="17%" align="center">01</td>
+                    <td width="62%" align="center">螺纹切削</td>
+                </tr>
+      <tr>
+        <td width="21%" align="center">&nbsp;&nbsp;&nbsp;&nbsp;   
+          G50&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td width="17%" align="center">00</td>
+                    <td width="62%" align="center">坐标系设定</td>
+                </tr>
+      <tr>
+        <td width="21%" align="center">&nbsp;&nbsp;   
+          G65&nbsp;&nbsp;&nbsp;</td>
+                    <td width="17%" align="center">&nbsp;00&nbsp;</td>
+                    <td width="62%" align="center">宏程序命令</td>
+                </tr>
+      <tr>
+        <td width="21%" align="center">G70</td>
+                    <td width="17%" rowspan="6" align="center">&nbsp;   
+                      00&nbsp;&nbsp;</td>
+                    <td width="62%" align="center">精加工循环</td>
+                </tr>
+      <tr>
+        <td width="21%" align="center">G71</td>
+                    <td width="62%" align="center">外圆粗车循环</td>
+                </tr>
+      <tr>
+        <td width="21%" align="center">G72</td>
+                    <td width="62%" align="center">端面粗车循环</td>
+                </tr>
+      <tr>
+        <td width="21%" align="center">G73</td>
+                    <td width="62%" align="center">封闭切削循环</td>
+                </tr>
+      <tr>
+        <td width="21%" align="center">G74</td>
+                    <td width="62%" align="center">端面深孔加工循环</td>
+                </tr>
+      <tr>
+        <td width="21%" align="center">G75</td>
+                    <td width="62%" align="center">外圆，内圆切槽循环</td>
+                </tr>
+      <tr>
+        <td width="21%" align="center">&nbsp;&nbsp;&nbsp;   
+          G90&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td width="17%" rowspan="3" align="center">01</td>
+                    <td width="62%" align="center">外圆，内圆车削循环</td>
+                </tr>
+      <tr>
+        <td width="21%" align="center">G92</td>
+                    <td width="62%" align="center">螺纹切削循环</td>
+                </tr>
+      <tr>
+        <td width="21%" align="center">&nbsp;&nbsp;   
+          G94&nbsp;&nbsp;&nbsp;</td>
+                    <td width="62%" align="center">端面切削循环</td>
+                </tr>
+      <tr>
+        <td width="21%" align="center">&nbsp;   
+          G96&nbsp;&nbsp;</td>
+                    <td width="17%" rowspan="2" align="center">02</td>
+                    <td width="62%" align="center">恒线速开</td>
+                </tr>
+      <tr>
+        <td width="21%" align="center">G97</td>
+                    <td width="62%" align="center">恒线速关</td>
+                </tr>
+      <tr>
+        <td width="21%" align="center">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   
+          *G98&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td width="17%" rowspan="2" align="center">03</td>
+                    <td width="62%" align="center">每分进给</td>
+                </tr>
+      <tr>
+        <td width="21%" align="center">G99</td>
+                    <td width="62%" align="center">每转进给</td>
+                </tr>
+    </table></TD></TR>
+          <TR>
+            <TD height="72"><p >注1：带有*记号的G代码，当电源接通时，系统处于这个G代码的状态。 </p>
+              <p >注2：00组的G代码是一次性G代码。 </p>
+              <p >注3：如果使用了G代码一览表中未列出的G代码，则出现报警（NO.010），或指令了不具有的选择功能的G代码，也报警。 </p>
+              <p >注4: 在同一个程序段中可以指令几个不同组的G代码，如果在同一个程序段中指令了两个以上的同组G代码时，后一个G代码有效。 </p>
+              <p >注5：在恒线速控制下，可设定主轴最大转速（G50）。 </p>
+              <p >注6：G代码分别用各组号表示。 </p>
+              <p >注7：G02，G03的顺逆方向由坐标系方向决定。
+              <p ><br>            
+            </TD>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 height=20 class="bar1">
+          <TR>
+            <TD align=middle class=title2>代码解释　</TD>
+          </TR>
+        </TABLE>
+        
+        <TABLE border=0 cellPadding=0 cellSpacing=0 height=20 class="bar1">
+          <TR>
+            <td height="20">G00&nbsp;  
+            定位(G00)</td>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+          <TR>
+            <TD height=26  class=contents1  vAlign=top><br>
+              格式 <br>
+              G00（U）_Z(W)_； 
+              <p >用G00定位，刀具以快速移动速度到指定的位置。 </p>
+              <p >刀具以各轴独立的快速移动速度定位。</p>
+              <img border="0" src="Code/G00.GIF" width="289" height="120">
+              </p>
+              <p >注：G00时各轴单独的快速移动速度由机床厂家设定（参数NO.022~023j）。受快速倍率开关控制（F0，25%，50%，100%），用F指定的进给速度无效。</p>
+              <p ><br>
+              </p></TD>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 height=20 class="bar1">
+          <TR>
+            <td height="20">G01&nbsp;  
+            直线插补(G01)</td>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+          <TR>
+            <TD height=26  class=contents1  vAlign=top><br>
+              格式 <br>
+              G01 X(U)_ Z(W)_ F_ ;  <img border="0" src="Code/G01.GIF" width="241" height="126"> 
+              </p>
+              <p >利用这条指令可以进行直线插补。根据指令的X，Z/U，W分别为绝对值或增量值，由F指定进给速度，F在没有新的指令以前，总是有效的，因此不需一一指定。 </p>
+              （程序实例）
+              </p>
+              <img border="0" src="Code/G01_1.GIF" width="394" height="231">
+              </p>
+              <br>
+              ① 绝对坐标程序 <br>
+              G01 X50. Z75. F0.2 ;<br>
+              X100.; <br>
+              <br>
+              ② 增量坐标程序<br>
+              G01 U0.0 W-75. F0.2 ;<br>
+              U50.
+              </p>
+              <p >注：各轴方向的速度如下：</p>
+              <img border="0" src="mban/a30.jpg" width="204" height="163">
+              </p></TD>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 height=20 class="bar1">
+          <TR>
+            <td height="20"> G02/G03&nbsp; 圆弧插补         
+            (G02, G03)</td>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+          <TR>
+            <TD height=26  class=contents1  vAlign=top>
+              <br><p>格式 
+                G02 X_Z_ R_F  G03    
+              X_Z_ I_K_F</p>
+              <table border="1"  cellpadding="0" cellspacing="0" style="border-collapse=collapse" bordercolor="#00309C">
+                <tr>
+                  <td width="33%" align="center"><b> &nbsp;&nbsp;&nbsp; 指 定 内 容&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  </b></td>
+                  <td width="33%" align="center"><b>命</b><b> 令&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
+                  <td width="34%" align="center"><b>意</b><b> 义</b></td>
+                </tr>
+                <tr>
+                  <td width="33%" rowspan="2" align="center">回转方向</td>
+                  <td width="33%" align="center"> G02&nbsp;</td>
+                  <td width="34%" align="center">顺时针转CW</td>
+                </tr>
+                <tr>
+                  <td width="33%" align="center"> G03&nbsp;</td>
+                  <td width="34%" align="center">反时针转CCW</td>
+                </tr>
+                <tr>
+                  <td width="33%" align="center">绝对值</td>
+                  <td width="33%" align="center"> X、Z&nbsp;</td>
+                  <td width="34%" align="center">零件坐标系中的终点位置</td>
+                </tr>
+                <tr>
+                  <td width="33%" align="center"> 终点位置&nbsp;&nbsp;&nbsp;&nbsp; 相对值&nbsp;</td>
+                  <td width="33%" align="center"> U、W</td>
+                  <td width="34%" align="center"> 从始点到终点的距离</td>
+                </tr>
+                <tr>
+                  <td width="33%" align="center">从始点到圆心的距离</td>
+                  <td width="33%" align="center">&nbsp;I、K&nbsp;</td>
+                  <td width="34%" align="center">　</td>
+                </tr>
+                <tr>
+                  <td width="33%" align="center">圆弧半径</td>
+                  <td width="33%" align="center"> R&nbsp;</td>
+                  <td width="34%" align="center">圆弧半径（半径指定）</td>
+                </tr>
+                <tr>
+                  <td width="33%" align="center"> 进给速度</td>
+                  <td width="33%" align="center"> F&nbsp;</td>
+                  <td width="34%" align="center"> 沿圆弧的速度</td>
+                </tr>
+              </table><br>
+              <p >所谓顺时针和反时针是指在右手直角坐标系中，对于ZX平面，从Z轴的正方向往负方向看而言，如下图例。</p>
+              <img border="0" src="Code/G02.GIF" width="284" height="137">
+              </p>
+              <p><b>举例</b>
+              <p><img border="0" src="Code/G02_1.gif" width="389" height="284">
+              <p> ① 绝对坐标系程序<br>
+                G02 X100. Z90. I50. K0. F0.2<br>
+                或<br>
+                G02 X100. Z90. R50. F02;<br>
+                ② 增量坐标系程序<br>
+                G02 U20. W-30. I50. K0. F0.2;<br>
+                或<br>
+            G02 U20. W-30. R50. F0.2; 
+              <p><br>
+            </TD>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 height=20 class="bar1">
+          <TR>
+            <td height="20">G32&nbsp; 切螺纹(G32)</td>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+          <TR>
+            <TD height=26  class=contents1  vAlign=top><br>
+              <p >用G32指令，可以切削相等导程的直螺纹，锥螺纹和端面螺纹。<br>
+              用下列指令按F代码后续的数值指定的螺距，进行公制螺纹切削。<br>
+              格式&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; G32 X（U）__Z(W)__F__；（公制螺纹）<br>
+              F是长轴方向的导程（0.001—500.000MM）。<br>
+              用下列指令按I代码后续的数值指定的牙数，进行英制螺纹切削。<br>
+              格式&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; G32 X（U）__Z(W)__I__；（英制螺纹）<br>
+              I是长轴方向的每英寸牙数（0.060—254000.000牙/英寸） 
+              </p>
+              （程序实例） 
+              </p>
+              <img border="0" src="Code/G32.gif" width="389" height="272">
+              </p>
+              </p>
+              <p >G00 X29.4; (1循环切削)<br>
+                G32 Z-23. F0.2;<br>
+                G00 X32;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Z4.;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; X29.;(2循环切削)<br>
+                G32 Z-23. F0.2;<br>
+                G00 X32.;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Z4.</p>
+              <p ><br>
+              </p></TD>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 height=20 class="bar1">
+          <TR>
+            <td height="20">G28&nbsp; 自动返回机械原点(G28)</td>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+          <TR>
+            <TD height=26  class=contents1  vAlign=top><br>
+              &nbsp;格式 
+               G28 X（U）__Z(W)__；<br>
+              利用上面指令，可以使指令的轴自动返回到参考点。X（U）__Z(W)__指定返回到参考点路途经过的中间点，用绝对值指令或增量值指令。注1：在电源接通后，如果一次也没进行手动返回参考点，指令G28时，从中间点到参考点的运动和手动返回参考点时相同，此时从中间点运动的方向为参数（NO.006    
+                ZMZ）设定的返回参考点的方向。<br>
+              注2：若程序加工起点与参考点（机械原点）一致，可执行G28返回程序加工起点。<br>
+              注3：若程序加工起点与参考点（机械原点）不一致，不可执行G28返回程序加工起点，可通快速定位指令或回程序起点方式回程序加工起点。              
+              <p ><br>
+            </TD>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 height=20 class="bar1">
+          <TR>
+            <td height="20">G04&nbsp; 暂停(G04)</td>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%" height="170">
+          <TR>
+            <TD height=162  class=contents1  vAlign=top><br>
+              1. 格式 <br>
+                G04    
+              P__；或者G04    
+              X；或者G04    
+              U__；<br>
+              利用暂停指令，可以推迟下个程序段的执行，推迟时间为指令的时间。  &nbsp;&nbsp;&nbsp;&nbsp;<br>
+              以秒为单位指令暂停时间。指令范围从0.001～99999.999秒。如果省略了P，X，指令则可看作是准确停。 <br></td>
+          </tr>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 height=20 class="bar1">
+          <TR>
+            <td height="20">G50&nbsp; 坐标系设定(G50)</td>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+          <TR>
+            <TD height=26  class=contents1  vAlign=top><br>
+              1. 格式 <br>
+               G50    
+              X(x) Z(z)；<br>
+              根据此指令，建立一个坐标系，使刀具上的某一点，例如刀尖在此坐标系中的坐标为（x,z）。 此坐标称为零件坐标系。坐标系一旦建立后，后面指令中绝对值指令的位置都是用此坐标系中该点位置的坐标值来表示的。<br>
+              当直径指定时，X值是直径值，半径指定时是半径值。<br>
+              注：在补偿状态，如果用G50设定的坐标系，那么补偿前的位置是用G50设定的坐标系中的位置。
+              <p ><br>
+              </p></TD>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 height=20 class="bar1">
+          <TR>
+            <td height="20">G98&nbsp; 每分进给(G98)</td>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+          <TR>
+            <TD height=26  class=contents1  vAlign=top><br>
+               G98是每分进给状态。 
+              <p >刀具每分钟走的距离，用F后续的数值直接指令。 </p>
+              <p>G98是模态的，一旦指令了G98状态，在G99（每转进给）指令之前，一直有效。              
+              <p><br>
+              </TD>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 height=20 class="bar1">
+          <TR>
+            <td height="20">G99&nbsp; 每转进给</td>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+          <TR>
+            <TD height=26  class=contents1  vAlign=top><br>G99是每转进给状态。主轴每转刀具的进给量用F后续的数值直接指令。 
+              </p>
+              G99是模态的，一旦指令性了G99状态，在G98（每分进给）指令之前，一直有效。
+              </p>
+              <table border="1"  cellpadding="0" cellspacing="0" style="border-collapse=collapse" bordercolor="#00309C">
+                <tr>
+                  <td width="22%" align="center">　</td>
+                  <td width="39%" align="center">每分进给</td>
+                  <td width="39%" align="center">每转进给</td>
+                </tr>
+                <tr>
+                  <td width="22%" align="center">指定地址</td>
+                  <td width="39%" align="center">F&nbsp;</td>
+                  <td width="39%" align="center">F</td>
+                </tr>
+                <tr>
+                  <td width="22%" align="center">指定代码</td>
+                  <td width="39%" align="center">G98</td>
+                  <td width="39%" align="center">G99</td>
+                </tr>
+                <tr>
+                  <td width="22%" align="center">指定范围</td>
+                  <td width="39%" align="center">1～8000mm/min(F1～F8000)</td>
+                  <td width="39%" align="center">&nbsp;0.01～500.00mm/re(F1～F50000)</td>
+                </tr>
+                <tr>
+                  <td width="22%" align="center">限制值</td>
+                  <td width="78%" colspan="2" align="center">每分进给、每转进给都限制在某一固定的速度上。此限制值由机床厂家设定。（限制值是倍率后的数值）</td>
+                </tr>
+                <tr>
+                  <td width="22%" align="center">倍率</td>
+                  <td width="78%" colspan="2" align="center">每分进给、每转进给都可用0~150%的倍率（10%一挡）</td>
+                </tr>
+              </table>
+              <p >注1：当位置编码器的转速在1转/分以下时，速度会出现不均匀地加工，可用1转/分以下的转速，这种不均匀会达到什么程度，不能一概而论，不过在1转/分以下，转速越慢，越不均匀。 </p>
+              <p >注2：G98，G99是模态的，一旦指令了，在另一个代码出现前，一直有效。 </p>
+              <p >注3：F代码最多允许输入7们，但是，即使输入进给速度值超过限制值，移动时也限制值上。 </p>
+              注4：使用每转进给时，主轴上必须装有位置编码器。<br>  </TD>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 height=20 class="bar1">
+          <TR>
+            <td height="20">G96，G97&nbsp; 恒线速控制（G96，G97）</td>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+          <TR>
+            <TD height=26  class=contents1  vAlign=top><br><p >所谓的恒线速控制是指S后面的线速度是恒定的，随着刀具的位置变化，根据线速度计算出主轴转速，并把与其对应的电压值输出给主轴控制部分，使得刀具瞬间的位置与工件表面保持恒定的关系。 </p>
+              <p >线速度的单位如下：</p>
+              <table border="1"  cellpadding="0" cellspacing="0" style="border-collapse=collapse" bordercolor="#00309C">
+                <tr>
+                  <td width="50%" align="center">输入单位 </td>
+                  <td width="50%" align="center">线速度单位</td>
+                </tr>
+                <tr>
+                  <td width="50%" align="center">公制</td>
+                  <td width="50%" align="center">米/分</td>
+                </tr>
+              </table>
+              <p >线速度单位根据机械厂家不同有时会不同。 </p>
+              <p >恒线速控制指令如下： </p>
+               G96 S__； 
+              </p>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; S后指定线速度 
+              </p>
+              <p >恒线速控制指令取消如下： </p>
+               G97 S__； 
+              </p>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; S后指令主轴转速 
+              </p>
+              <p >恒线速控制时，旋转轴必须设定在零件坐标的Z轴（X=0）上来。 </p>
+              （1）主轴速度倍率 
+              </p>
+              <p >对于指定的线速度或转速，根据主轴的倍率选择，可以使用50，60，70，80，90，100，110，120%的倍率。 </p>
+              （2）主轴最高转速限制 
+              </p>
+              <p >用G50  
+                S后续的数值，可以指令恒线速控制的主轴最高转速（转/分）。 </p>
+               G50 S__； 
+              </p>
+              <p >在恒线速控制时，当主轴转速高于上述程序中指定的值时，则被限制在主轴最高转速上。 </p>
+              （3）快速进给（G00）时的恒线速控制 
+              </p>
+              <p >对于用G00指令的快速进给程序段，当恒线速控制时，不进行时刻变化的刀具位置的线速度控制，而是计算程序段终点位置的线速度。这是因为快速不进行切削的缘故。 </p>
+              <p >注1：当电源接通时，对于没设定主轴最高转速的状态，即为不限制状态。 </p>
+              <p >注2：对于限制，只适用于G96状态，G97状态时不限制。 </p>
+              <p >注3：G50，S0；意味着限制到0米/分。 </p>
+              <p >注4：在G96状态中，被指令的S值，即使在G97状态中也保持着。当返回到G96状态时，其值恢复。 </p>
+               G96 S50；（50米/分） 
+              </p>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; G97 S1000；（1000转/分） 
+              </p>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; G96 X3000；（50米/分） 
+              </p>
+              <p >注5：机床锁住时，机械不动，对应程序中X坐标值的变化，进行恒线速控制。 </p>
+              <p >注6：切螺纹时，恒线速控制也是有效的，因此切螺纹时，用G97方式使恒线速控制无效，以使主轴以同一转速转动。 </p>
+              <p >注7：每转进给（G99），在恒线速控制方式下（G96），虽然无使用意义，但仍有效。 </p>
+              <p >注8：从G96状态变为G97状态时，G97程序段如果没有指令S码（转/分），那么G96状态的最后转速作为G97状态的S码使用。 </p>
+               N100 G97 S800；（800转/分） 
+              </p>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; … 
+              </p>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; N200 G96 S100；（100米/分）
+              </p>
+              … 
+              </p>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; … 
+              </p>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; N300 G97；（X转/分） 
+              </p>
+              X是N300前一个程序段的转速，即从G96状态变为G97状态时，主轴速度不变。G97—G96时，G96状态的S值有效。如果S值没有指令，则S=0米/分。 
+              </p>
+              <p >注9：恒线速控制中指定的线速度是相对于编程轨迹的，而不是刀补后的位置的线条速度。</p>
+              <p ><br>
+              </p></TD>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 height=20 class="bar1">
+          <TR>
+            <td height="20">G90  &nbsp; 外圆，内圆车削循环（G90） </td>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+          <TR>
+            <TD height=26  class=contents1  vAlign=top>　
+              </p>
+              <p><img border="0" src="Code/G90.GIF" width="293" height="209">
+                </p>
+              </p>
+              <p>
+                (a)用下述指令，可以进行圆柱切削循环。
+              </p>
+                G90  
+                X(U)__ Z(W)__ F__;
+              </p>
+              <p >增量值指令时，地址U、W后的数值的方向，由轨迹1和2的方向来决定。在上述循环中，U是负，W也是负。</p>
+              <p >在单程序段时，用循环下去进行1，2，3，4动作。</p>
+              (b)用下述指令，可以进行圆锥切削循环。 
+              </p>
+              G90  
+              X(U)__ Z(W)__ R__ F__;
+              </p>
+              外圆切削循环
+              </p>
+              1. U&lt;0, W&lt;0, R&lt;0
+              </p>
+              <p><img border="0" src="Code/G90R1.GIF" width="293" height="209"></p>
+              <p> 2. U&gt;0, W&lt;0, R&gt;0</p>
+              <p><img border="0" src="Code/G90R2.GIF" width="293" height="209"></p>
+              <p> 3. U&lt;0, W&lt;0, R&gt;0</p>
+              <p><img border="0" src="Code/G90R3.GIF" width="293" height="209"></p>
+              <p> 4. U&gt;0, W&lt;0, R&lt;0</p>
+            <p><img border="0" src="Code/G90R4.GIF" width="293" height="209"></p></TD>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 height=20 class="bar1">
+          <TR>
+            <td height="20">G92&nbsp; 螺纹切削循环（G92切螺纹可以不需退刀槽）</td>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+          <TR>
+            <TD height=26  class=contents1  vAlign=top><br>
+                (a)用下述指令，可以进行直螺纹切削循环。  G92X（U）__Z(W)__F__；（公制螺纹）  
+              </p>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <img border="0" src="mban/a46.jpg" width="220" height="42"> 
+              </p>
+              G92X（U）__Z(W)__I__；（英制螺纹） 
+              </p>
+               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <img border="0" src="mban/a47.jpg" width="278" height="40"> 
+              </p>
+              英制螺纹导程‘I’为非模态指令，不能省略。
+              </p>
+              <img border="0" src="Code/G92.GIF" width="524" height="367">
+              </p>
+              <p >增量值指令的地址U、W后续数值的符号，根据地轨迹1和2的方向决定。即，如果轨迹1的方向是X轴的负向时，则U的数值为负。螺纹导程范围，主轴速度限制等，与G32的螺纹切削相同。 </p>
+              <p >单程序段时，1，2，3，4的动作单段有效。 </p>
+              <p >参数019THDCH为退尾长度设置，螺纹倒角宽度=THDCH*1/10*螺距。 </p>
+              <p >注1：关于螺纹切削的注意事项，与G32螺纹切削相同。但是，螺纹切削循环中的进给保持的停止为下述情况：进给保持……3的动作结束后停止。  </p>
+              (b)用下述指令，可以进行圆锥螺纹切削循环。 
+              </p>
+              G92X（U）__Z(W)___R__F__； 
+              </p>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <img border="0" src="mban/a46.jpg" width="220" height="42"> 
+              </p>
+              G92X（U）__Z(W)___R__I__；
+              </p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <img border="0" src="mban/a47.jpg" width="278" height="40">
+              </p>
+              英制螺纹导程‘I’为非模态指令，不能省略。 
+              <p><img border="0" src="Code/G92R.GIF" width="524" height="367"></p></TD>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 height=20 class="bar1">
+          <TR>
+            <td height="20">G94&nbsp; 端面车削循环（G94）</td>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+          <TR>
+            <TD height=26  class=contents1  vAlign=top><br>
+               <br>
+              </p>
+              <img border="0" src="Code/G94.GIF" width="303" height="320"><br>
+              </p>
+              (a)用下述指令，可以进行端面切削循环。  G94  
+             X（U）__Z(W)__F__；<br>
+              <p >增量指令性时，地址U、W后续数值的符号由轨迹1和2的方向来决定。即，如果轨迹1的方向是Z轴的负向，则W为负值。单程序段时，用循环起动进行1，2，3，4动作。 </p>
+              (b)用下述指令性时，可以进行锥度端面切削循环。
+              </p>
+              G94  
+              X（U）__Z(W)__R__F__；
+              </p>
+              <img border="0" src="Code/G94R.GIF" width="303" height="320">
+              </p>
+              <p >注1：固定循环中的数据X（U），Z（W），R和G90，G92。G94一样，都是模态值，所以当没有指定新的X（U），Z（W），R的数据，当指令了G04以外的非模态G代码或G90，G92，G94以外的01级的代码时，被清除。</p>
+              <p >注2：下述三种情况是允许的 </p>
+              <p>(1)在固定循环的程序段后面是只有EOB（；）的程序段或者无移动指令的程序时，则重复此固定循环。 
+              </p>
+              (2)用录入方式指令固定循环时，当此程序逻辑段结束后，只用起动按钮，可以进行和前面同样的固定循环。 
+              </p>
+              (3)在固定循环状态中，如果指令了M，S，T，那么，固定循环可以和M，S，T功能同时进行。如果不巧，象下述例子那样指令M，S，T后取消了固定循环（由于指令G00，G01）进，请再次指令固定循环<br></p>
+            </TD>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 height=20 class="bar1">
+          <TR>
+            <td height="20">G71&nbsp; 外圆粗车循环（G71）</td>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+          <TR>
+            <TD height=26  class=contents1  vAlign=top><br>
+              如图所示，在程序中，给出A—A`—B之间的精加工形状，留出△U/2，△W精加工余量，用△D表示每次的切削深量。 
+              <p><img border="0" src="Code/G71.GIF" width="285" height="185"></p>
+              <p >格式  </p>
+              <p><img border="0" src="mban/a55.jpg" width="500" height="228">
+                </p>
+              </p>
+              <p>△D：切深，无符号。切入方向由AA`方向决定。（半径指定）。该指定是模态的，一直到下个指定以前均有效。并且用参数（NO.051）也可指定。根据程序指令，参数值也改变。 
+                </p>
+              E：退刀量。是模态值，在下次指定前均有效。用参数(No.052)也可设定，用程序指令时，参数值也改变。 
+              </p>
+              NS：精加工形状程序段群的第一个程序段的顺序号。 
+              </p>
+              NF：精加工形状程序段群的最后一个程序段的顺序号。 
+              </p>
+              △U：X轴方向精加工余量的距离及方向（直径/半径指定）。 
+              </p>
+              △W：Z轴方向精加工余量的距离及方向。 
+              </p>
+              F，S，T：在G71循环中，顺序号NS~NF之间程序段中的F，S，T功能都无效，全部忽略，仅在有G71指令的程序段中，F，S，T是有效的。  
+              </p>
+              注1：△D，△U都用同一地址U指定，其区分是根据该程序段有无指定P，Q区别。 
+              </p>
+              </p>
+              <p >注2：循环动作由P，Q指定的G71指令进行。 </p>
+              <p >在A至B间的移动指令中的F，S及T无效，G71程序段或以前指令的F，S，T有效。另外，在带有恒线速控制选择功能时，在A到B间的移动指令中的G96或G97无效，在含G71或以前程序段指令的有效。 </p>
+              <p >在A至A`间，顺序号NS的程序段中，可含有G00或G01指令，但不能含有Z轴指令。在A`至B间，X轴，Z轴必须都是单调增大或减小。 </p>
+              <p >注3：在顺序号NS到NF的程序段中，不能调用子程序。</p>
+              <p ><br>
+              </p></TD>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 height=20 class="bar1">
+          <TR>
+            <td height="20">G72  &nbsp; 端面粗车循环（G72） </td>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+          <TR>
+            <TD height=26  class=contents1  vAlign=top><br>
+               如图所示，与G71相同，用与X轴平行的动作进行切削。 
+              <p><img border="0" src="Code/G72.GIF" width="285" height="185"></p>
+              <p >格式  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+                
+              G72 W（△D） R（E）； 
+              </p>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; G72 P（NS） Q（NF） U（△U） W（△W） F（F） S（S） T（T）； 
+              </p>
+              △D，E，NS，△U，△W，F，S，T和G71相同。 
+              </p>
+            在A至A`之间，在顺序号NS的程序段中，可含有G00或G01指令，但不能含有X轴的指令。在A`至B之间，X轴，Z轴方向必须都是单调增大或减小的图形。<br>  </TD>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 height=20 class="bar1">
+          <TR>
+            <td height="20">G73&nbsp; 封闭切削循环（G73）</td>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+          <TR>
+            <TD height=26  class=contents1  vAlign=top><br>利用该循环，可以按同一轨迹重复切削，每次切削刀具向前移动一次，因此对于锻造，铸造等粗加工已初步形成的我坯，可以高效率地加工。</p>
+              <img border="0" src="Code/G73.GIF" width="285" height="188">
+              </p>
+              <p >程序中指令的图形，A点—A`点—B点</p>
+              <p >格式  </p>
+              <p><img border="0" src="mban/a60.jpg" width="451" height="214">              </p>
+              <p>△I：X轴方向退刀的距离及方向（半径指定）。这个指定是模态的，一直到下次指定前均有效。并且，用参数（No53）也可设定。根据程序指令，参数值也改变。              </p>
+              △K：Z轴方向退刀距离及方向。这个指定是模态的，一直到下次指定之前均有效。另外，用参数（No054）也可设定。根据程序指令，参数值也改变。 
+              </p>
+              D：分割次数……等于粗车次数。该指定是模态的，直到下次指定前均有效。也可以用参数（No055）设定。根据程序指令，参数值也改变。 
+              </p>
+              NS：构成精加工形状的程序段群的第一个程序段的顺序号。 
+              </p>
+              NF：构成精加工形状的程序段群的最后一个程序段的顺序号。 
+              </p>
+              △U：X轴方向的精加工余量（直径/半径指定）。 
+              </p>
+              △W：Z轴方向的精加工余量。 
+              </p>
+              F，S，T：在NS～NF间任何一个程序段上的F，S，T功能均无效。仅在G73中指定的F，S，T功能有效。 
+              </p>
+              </p>
+              <p >注1：△I，△K，△U，△W都用地址U，W指定，它们的区别，根据有无指定P，Q来判断。 </p>
+              <p >注2：循环动作G73指令的P，Q来进行。切削形状可分为四种，编程时请注意△U，△W，△I，△K的符号。循环结束后，刀具就返回A点。</p>
+              <p ><br>
+              </p></TD>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 height=20 class="bar1">
+          <TR>
+            <td height="20">G70&nbsp; 精加工循环（G70）</td>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+          <TR>
+            <TD height=26  class=contents1  vAlign=top><p >格式  </p>
+                
+              G70 P(ns) Q(nf)；
+              </p>
+              <p >在用G71，G72，G73粗车后时，可以用上述指令精车。</p>
+              NS：构成精加工形状的程序段群的第一个程序段的顺序号。
+              </p>
+              NF：构成精加工形状的程序段群的最后一个程序段的顺序号。
+              </p>
+              NS与NF顺序号之间只有包含五个程序段。 
+              </p>
+              注1：在含G71，G72，G73程序段中指令的F，S，T对于G70的程序段无效，而顺序号NS~NF间指令的F，S，T为有效。
+              </p>
+              <p >注2：G70的循环一结束，刀具就用快速进给返回始点，并开始读入G70循环的下个程序段。</p>
+              注3：在G70~G73间被使用的顺序号NS~NF间程序段中，不能调用子程序。 <br> </TD>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 height=20 class="bar1">
+          <TR>
+            <td height="20">G74&nbsp; 端面深孔加工循环（G74）</td>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+          <TR>
+            <TD height=26  class=contents1  vAlign=top><br>
+               按照下面程序指令，进行如图所示的动作。在此循环中，可以处理外形切削的断屑，另外，如果省略X（U），P，只是Z轴动作，则为深孔钻循环。 
+              <p><img border="0" src="Code/G74.GIF" width="355" height="160"></p>
+              <p >格式  </p>
+              G74 R（e）； 
+              </p>
+              G74 X（U） Z（W） P（△i）Q(△k)  
+              R(△d)&nbsp; F(f)； 
+              </p>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; e：每次沿Z方向切削△k后的退刀量。另外，没有指定R（e）时，用参数（No056）也可以设定，根据程序指令，参数值也改变。 
+              </p>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; X：B点的X方向绝对坐标值。 
+              </p>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; U：A到B的增量。 
+              </p>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Z：C点的Z方向绝对坐标值。 
+              </p>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; W：A到C的增量。 
+              </p>
+              △i：X方向的每次循环移动量（无符号）（直径）。 
+              </p>
+              △k：Z方向的每次切削移动量（无符号）。 
+              </p>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; △d：切削到终点时X方向的退刀量（直径），通常不指定，省略X（U）和△I时，则视为0。 
+              </p>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; f：进给速度。 
+              </p>
+              注1：e和△d都用地址R指定，它们的区别根据有无指定X（U），也就是说，如果X（U）被指令了，则为△d。 
+              </p>
+            注2：循环动作用含X（U）指定的G74指令进行。  <br></TD>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 height=20 class="bar1">
+          <TR>
+            <td height="20">G75&nbsp; 外圆、内圆切槽循环（G75）</td>
+          </TR>
+        </TABLE>
+        <TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+          <TR>
+            <TD height=26  class=contents1  vAlign=top><br>
+              根据下面程序指今，进行如所示的动作。相当于在G74是，把X和Z调换，在此循环中，可以进行端面的断屑处理，并且可以对外径进行沟槽加工和切断加工（省略Z、W、Q）  
+              <p >格式  </p>
+              <p>G75R（E）；              </p>
+              G75X（U）Z（W）P（△I）Q（△K）R（△D）F（F）；
+              </p>
+              <img border="0" src="Code/G75.gif" width="404" height="281">
+              </p>
+              </p>
+              <p>e：每次沿Z方向切削△i后的退刀量。另外，用参数（No056）也可以设定，根据程序指令，参数值也改变。              </p>
+              <p>X：C点的X方向绝对坐标值。
+  </p>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; U：A到C的增量。
+  </p>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Z：B点的Z方向绝对坐标值。
+  </p>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; W：A到B的增量。
+                                                                △i：X方向的每次循环移动量（无符号）（直径）。 
+                                                                                                                                                                                                                                                                                        </p>
+                                                                                                                               △k：Z方向的每次切削移动量（无符号）。 
+                                                                                                                                  </p>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; △d：切削到终点时Z方向的退刀量，通常用不指定，省略X（U）和△I时，则视为0。
+  </p>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; f：进给速度。
+  </p>
+                                                                        G74，G75都可用于切断、切槽或孔加工。可以使刀具进行自动退刀。<br>
+</p>
+                                                                                                                                                                </TD>
+          </TR>
+        </TABLE></TD>
+    </TR>
+  </TBODY>
+</TABLE>
+</body>
+</html>

@@ -1,0 +1,526 @@
+{
+  "meta": {
+    "title": "CIMCO Edit 2026 场景化实操技能——50 个真实工业场景案例库索引",
+    "version": "1.0",
+    "date": "2026-11-18",
+    "source_doc": "50工业场景案例库.md",
+    "count": 50,
+    "categories": {
+      "A": "程序编辑与优化 (10)",
+      "B": "FANUC/SIEMENS/华中数控适配 (9)",
+      "C": "背绘与仿真调试 (9)",
+      "D": "NC 错误代码与故障排查 (9)",
+      "E": "文件对比与传输 (7)",
+      "F": "批量自动化处理 (6)"
+    },
+    "capability_boundaries": ["B-01", "B-02", "B-03", "B-04", "B-05", "B-06"],
+    "verification_tools": [
+      "bridges/cimco_bridge.py::validate_fanuc_macro_b",
+      "bridges/cimco_bridge.py::validate_gcode",
+      "cadcam_cimco_validate(validate_macro|launch)",
+      "官方 Ctrl+T / Ctrl+H / Ctrl+F / Ctrl+J / Ctrl+Shift+P / File Compare / DNC Setup"
+    ]
+  },
+  "cases": [
+    {
+      "id": "SC-001",
+      "title": "混乱块号重编与规范化",
+      "category": "A 程序编辑与优化",
+      "controllers": ["FANUC", "SIEMENS"],
+      "difficulty": "初级",
+      "key_issue": "块号跳跃、步长不一导致对单困难；用 Renumber/Ctrl+T 统一起始值与步长",
+      "tags": ["块号", "Renumber", "Ctrl+T", "配置块编号"],
+      "keywords": ["N号", "重编", "步长", "Result to new window", "Go to Line"]
+    },
+    {
+      "id": "SC-002",
+      "title": "Transform 镜像加工对称轮廓",
+      "category": "A 程序编辑与优化",
+      "controllers": ["FANUC"],
+      "difficulty": "中级",
+      "key_issue": "镜像后必须人工互换 G02/G03 与 G41/G42 并修正 I/J 符号",
+      "tags": ["Transform", "Mirror", "镜像", "轮廓"],
+      "keywords": ["对称轮廓", "Turning Program", "圆弧方向", "刀补互换", "Result to new window"]
+    },
+    {
+      "id": "SC-003",
+      "title": "Transform 旋转阵列孔位",
+      "category": "A 程序编辑与优化",
+      "controllers": ["FANUC"],
+      "difficulty": "中级",
+      "key_issue": "绕指定点按角度旋转复制点位；静态几何复制不等于 G68 坐标旋转",
+      "tags": ["Transform", "Rotate", "旋转", "阵列孔"],
+      "keywords": ["Point(X,Y)", "Angle", "Arc type", "G81", "孔位阵列"]
+    },
+    {
+      "id": "SC-004",
+      "title": "Transform 平移整个轮廓到新坐标",
+      "category": "A 程序编辑与优化",
+      "controllers": ["FANUC", "SIEMENS"],
+      "difficulty": "初级",
+      "key_issue": "整体偏移 X/Y/Z，不改变形状与圆弧半径，安全可逆",
+      "tags": ["Transform", "Translate", "平移", "轮廓"],
+      "keywords": ["Translate(X,Y,Z)", "Arc type", "Auto detect", "坐标偏移", "工装改位"]
+    },
+    {
+      "id": "SC-005",
+      "title": "批量查找替换换刀具号与进给",
+      "category": "A 程序编辑与优化",
+      "controllers": ["FANUC", "SIEMENS", "华中数控"],
+      "difficulty": "初级",
+      "key_issue": "Replace/Ctrl+H 批量替换；刀补号 H/D 与刀具号匹配须人工核对",
+      "tags": ["Find/Replace", "Ctrl+H", "批量替换", "刀具号"],
+      "keywords": ["Replace All", "Replace All from File", "进给", "T0101", "F300"]
+    },
+    {
+      "id": "SC-006",
+      "title": "注释清理与##转义防误判",
+      "category": "A 程序编辑与优化",
+      "controllers": ["FANUC"],
+      "difficulty": "中级",
+      "key_issue": "宏模板行首 # 为块号占位，字面 # 用 ##；清理注释勿误删合法宏变量",
+      "tags": ["注释", "宏变量", "##转义", "清理"],
+      "keywords": ["Regular Expressions", "variables_count", "#101", "宏插入", "空行"]
+    },
+    {
+      "id": "SC-007",
+      "title": "多段程序合并为单一主程序",
+      "category": "A 程序编辑与优化",
+      "controllers": ["FANUC"],
+      "difficulty": "中级",
+      "key_issue": "合并时只保留一个 %/O/M30，换刀前补 M05，避免重复结束符",
+      "tags": ["程序合并", "Insert/Remove", "换刀", "M30"],
+      "keywords": ["粗精合并", "单一主程序", "M05", "装夹", "program_end"]
+    },
+    {
+      "id": "SC-008",
+      "title": "按工步拆分主程序",
+      "category": "A 程序编辑与优化",
+      "controllers": ["FANUC"],
+      "difficulty": "中级",
+      "key_issue": "按 T 换刀行拆分，每段补齐 %/O/M30 与安全初始化行",
+      "tags": ["程序拆分", "Insert/Remove", "工步", "换刀"],
+      "keywords": ["分段调试", "独立文件", "G90 G54 G21", "M30", "模态自洽"]
+    },
+    {
+      "id": "SC-009",
+      "title": "进给与主轴转速批量倍率调整",
+      "category": "A 程序编辑与优化",
+      "controllers": ["FANUC", "SIEMENS"],
+      "difficulty": "初级",
+      "key_issue": "Adjust Feedrate/Spindle Speed 按百分比缩放并限幅，只改 F/S 不改 G00",
+      "tags": ["Transform", "Adjust Feedrate", "倍率", "限幅"],
+      "keywords": ["New feedrate", "Minimum value", "Maximum value", "Adjust spindle speed", "百分比"]
+    },
+    {
+      "id": "SC-010",
+      "title": "程序信息统计与批量插入安全行",
+      "category": "A 程序编辑与优化",
+      "controllers": ["FANUC", "SIEMENS"],
+      "difficulty": "初级",
+      "key_issue": "用 Info 统计行数/刀具/进给基线，Insert/Remove 插入 G90 G54 G40 G49 G80 G21",
+      "tags": ["Info", "Insert/Remove", "程序统计", "安全初始化"],
+      "keywords": ["line_count", "G90 G54", "模态初始化", "行数对比", "NC Assistant"]
+    },
+    {
+      "id": "SC-011",
+      "title": "FANUC Macro B 公共变量赋值与##转义",
+      "category": "B 控制系统适配",
+      "controllers": ["FANUC Macro B"],
+      "difficulty": "中级",
+      "key_issue": "#100~#199 公共变量分类采集；宏模板字面 # 需 ##；收尾必须有 M05",
+      "tags": ["Macro B", "变量", "公共变量", "##转义"],
+      "keywords": ["#100", "#500", "variables_count", "parser_verified", "BZJ-A-01"]
+    },
+    {
+      "id": "SC-012",
+      "title": "FANUC WHILE/DO/END 分层循环",
+      "category": "B 控制系统适配",
+      "controllers": ["FANUC Macro B"],
+      "difficulty": "高级",
+      "key_issue": "WHILE/DO 必须与同号 END 配对；IF 限幅保证最后一层停在目标深度",
+      "tags": ["WHILE", "DO", "END", "分层铣削"],
+      "keywords": ["Unclosed WHILE DO", "Mismatched END", "AP_STEP", "TARGET_Z", "死循环风险"]
+    },
+    {
+      "id": "SC-013",
+      "title": "FANUC G83 啄钻固定循环与 G80 取消",
+      "category": "B 控制系统适配",
+      "controllers": ["FANUC"],
+      "difficulty": "中级",
+      "key_issue": "G83 Z/R/Q/F 啄钻参数；必须用 G80 取消循环避免后续误钻",
+      "tags": ["G83", "G80", "啄钻", "固定循环"],
+      "keywords": ["PCD", "断屑", "Z-25.0", "R2.0", "Q5.0", "模态残留"]
+    },
+    {
+      "id": "SC-014",
+      "title": "SIEMENS CYCLE 固定循环的编辑与可视化",
+      "category": "B 控制系统适配",
+      "controllers": ["SIEMENS"],
+      "difficulty": "中级",
+      "key_issue": "CYCLE 为代码文本，CIMCO 只编辑/背绘不执行；静态哨兵可能不识别 CYCLE 参数语法",
+      "tags": ["SIEMENS", "CYCLE83", "Control Type", "高亮"],
+      "keywords": ["Siemens Milling", "File Type", "方言", "No valid G-code words", "B-04"]
+    },
+    {
+      "id": "SC-015",
+      "title": "SIEMENS 程序结构与模态初始化",
+      "category": "B 控制系统适配",
+      "controllers": ["SIEMENS"],
+      "difficulty": "初级",
+      "key_issue": "FANUC T0101 移植到 SIEMENS 常用 T1 D1；G90 在车削中含义不同需查手册",
+      "tags": ["SIEMENS", "移植", "T1 D1", "模态"],
+      "keywords": ["G90 绝对", "刀补 D", "程序结构", "空运行", "B-04"]
+    },
+    {
+      "id": "SC-016",
+      "title": "华中数控 ISO_G-Code 通用模板近似适配",
+      "category": "B 控制系统适配",
+      "controllers": ["华中数控(HNC)", "ISO_G-Code"],
+      "difficulty": "中级",
+      "key_issue": "官方无 Huazhong 原生支持；仅 ISO 通用模板近似，必须上机验证",
+      "tags": ["华中数控", "ISO_G-Code", "B-03", "通用模板"],
+      "keywords": ["ISO Milling", "supported-controls", "近似适配", "机床验证", "非原生"]
+    },
+    {
+      "id": "SC-017",
+      "title": "G90/G91 绝对与增量模态混用排查",
+      "category": "B 控制系统适配",
+      "controllers": ["FANUC", "SIEMENS"],
+      "difficulty": "中级",
+      "key_issue": "G90/G91 为模态代码；静态校验不追踪模态，需 Ctrl+F 搜索 + 背绘确认",
+      "tags": ["G90", "G91", "模态", "排查"],
+      "keywords": ["绝对编程", "增量移动", "G91 G28 Z0", "颜色区分", "背绘"]
+    },
+    {
+      "id": "SC-018",
+      "title": "G21/G20 公制英制单位混淆",
+      "category": "B 控制系统适配",
+      "controllers": ["FANUC", "SIEMENS"],
+      "difficulty": "中级",
+      "key_issue": "G20/G21 单位混用造成 25.4 倍尺寸偏差；坐标与 F 值须同步换算",
+      "tags": ["G21", "G20", "单位", "换算"],
+      "keywords": ["公制", "英制", "25.4", "F 值", "背绘测量"]
+    },
+    {
+      "id": "SC-019",
+      "title": "G54~G59 坐标系与 G43 长度补偿跨系统核对",
+      "category": "B 控制系统适配",
+      "controllers": ["FANUC", "SIEMENS"],
+      "difficulty": "中级",
+      "key_issue": "核对 G54~G59 工件坐标系与 G43 Hxx 补偿号；静态校验不核对 H/T 对应",
+      "tags": ["G54", "G43", "工件坐标系", "长度补偿"],
+      "keywords": ["G55", "H02", "T0202", "G49", "刀补号"]
+    },
+    {
+      "id": "SC-020",
+      "title": "G00 快速段扎料哨兵（项目公理）",
+      "category": "C 背绘与仿真调试",
+      "controllers": ["FANUC"],
+      "difficulty": "高级",
+      "key_issue": "G00 高速扎入毛坯即报警；静态几何哨兵 ≠ 机床仿真真实碰撞检测",
+      "tags": ["G00", "扎料", "哨兵", "项目公理"],
+      "keywords": ["CRITICAL", "G01 下刀", "安全平面", "静态几何", "B-01"]
+    },
+    {
+      "id": "SC-021",
+      "title": "用 Ctrl+Shift+P 做刀轨可视化核查",
+      "category": "C 背绘与仿真调试",
+      "controllers": ["FANUC", "SIEMENS", "全系统"],
+      "difficulty": "初级",
+      "key_issue": "Ctrl+Shift+P 打开 Backplot（左程序/中仿真/右 Geometry Manager），核查刀路走向",
+      "tags": ["Backplot", "Ctrl+Shift+P", "刀轨", "可视化"],
+      "keywords": ["Geometry Manager", "View", "异常跨刀", "程序标签页", "视觉核查"]
+    },
+    {
+      "id": "SC-022",
+      "title": "Control Type 选择导致的解析差异",
+      "category": "C 背绘与仿真调试",
+      "controllers": ["FANUC", "SIEMENS", "Heidenhain"],
+      "difficulty": "中级",
+      "key_issue": "Control Type 选错导致高亮/循环识别异常；Machine Setup 须先选定",
+      "tags": ["Control Type", "Fanuc Turning", "解析", "高亮"],
+      "keywords": ["Machine Setup", "Control Settings", "G71", "supported-controls", "File Type"]
+    },
+    {
+      "id": "SC-023",
+      "title": "Geometry Manager 配置毛坯与工件",
+      "category": "C 背绘与仿真调试",
+      "controllers": ["FANUC"],
+      "difficulty": "中级",
+      "key_issue": "Workpiece 为最终产品 STL，用于与毛坯比较；CIMCO 无 3D 建模模块",
+      "tags": ["Geometry Manager", "毛坯", "STL", "工件"],
+      "keywords": ["Workpiece", "Stock", "漏加工", "B-05", "外部 CAD"]
+    },
+    {
+      "id": "SC-024",
+      "title": "Tool Manager 配置刀具与刀柄",
+      "category": "C 背绘与仿真调试",
+      "controllers": ["FANUC"],
+      "difficulty": "中级",
+      "key_issue": "Edit Cutter/Holder/Assembly 配置刀具几何，影响球头刀残留显示但不改 G 代码",
+      "tags": ["Tool Manager", "刀具", "刀柄", "球头刀"],
+      "keywords": ["Cutter", "Holder", "Assembly", "残留高度", "H02"]
+    },
+    {
+      "id": "SC-025",
+      "title": "add-on 机床仿真许可边界辨析",
+      "category": "C 背绘与仿真调试",
+      "controllers": ["全系统"],
+      "difficulty": "高级",
+      "key_issue": "Machine Simulation 为 add-on，许可未核实按未验证处理，严禁宣称碰撞检测可用",
+      "tags": ["Machine Simulation", "add-on", "B-01", "许可"],
+      "keywords": ["collision detection", "license key", "未验证", "静态哨兵", "不伪造"]
+    },
+    {
+      "id": "SC-026",
+      "title": "Backplot Find 定位特定刀轨段",
+      "category": "C 背绘与仿真调试",
+      "controllers": ["全系统"],
+      "difficulty": "初级",
+      "key_issue": "Backplot 内 Find 搜索刀号/字符串，跳到对应刀轨段核查换刀点",
+      "tags": ["Backplot", "Find", "定位", "刀轨段"],
+      "keywords": ["T0202", "换刀点", "高亮", "程序视图", "界面功能"]
+    },
+    {
+      "id": "SC-027",
+      "title": "DXF 导出与全屏视图核查",
+      "category": "C 背绘与仿真调试",
+      "controllers": ["全系统"],
+      "difficulty": "初级",
+      "key_issue": "Other 菜单含 DXF export 与 Full screen；导出的是刀轨图形非 3D 实体",
+      "tags": ["DXF", "Other", "全屏", "导出"],
+      "keywords": ["圆弧半径", "AutoCAD", "B-05", "刀轨图形", "视图"]
+    },
+    {
+      "id": "SC-028",
+      "title": "多通道程序背绘核查",
+      "category": "C 背绘与仿真调试",
+      "controllers": ["FANUC"],
+      "difficulty": "高级",
+      "key_issue": "Multi Channel 配置后分通道背绘；静态校验忽略通道注释，不验证同步/干涉",
+      "tags": ["多通道", "Multi Channel", "车铣复合", "背绘"],
+      "keywords": ["NC Assistant", "G54/G55", "副主轴", "分通道", "通道标识"]
+    },
+    {
+      "id": "SC-029",
+      "title": "程序末尾缺 M05 主轴未停",
+      "category": "D 故障排查",
+      "controllers": ["FANUC"],
+      "difficulty": "初级",
+      "key_issue": "桥接器检测 M03 后无 M05 报 no M05；注意 is_valid 可能仍 true，必须读 errors",
+      "tags": ["M05", "主轴", "故障排查", "program_end"],
+      "keywords": ["Spindle still on", "M03", "G91 G28 Z0", "errors 数组", "parser_verified"]
+    },
+    {
+      "id": "SC-030",
+      "title": "WHILE/DO 缺配对 END",
+      "category": "D 故障排查",
+      "controllers": ["FANUC Macro B"],
+      "difficulty": "中级",
+      "key_issue": "循环栈非空报 Unclosed WHILE DO（critical，is_valid=false），补同号 END",
+      "tags": ["WHILE", "END", "配对", "故障排查"],
+      "keywords": ["Unclosed WHILE DO", "loop_stack", "critical", "嵌套", "DO1"]
+    },
+    {
+      "id": "SC-031",
+      "title": "END 无匹配 WHILE",
+      "category": "D 故障排查",
+      "controllers": ["FANUC Macro B"],
+      "difficulty": "中级",
+      "key_issue": "多写 END 或编号不符报 END without matching / Mismatched END",
+      "tags": ["END", "WHILE", "编号不符", "故障排查"],
+      "keywords": ["Mismatched END", "expected END", "DO1↔END1", "循环配对", "is_valid=false"]
+    },
+    {
+      "id": "SC-032",
+      "title": "G/M 代码超范围",
+      "category": "D 故障排查",
+      "controllers": ["FANUC", "SIEMENS"],
+      "difficulty": "中级",
+      "key_issue": "正则提取 G/M 数值，超出 0~999 报 out-of-range；不验证代码在机床是否真实存在",
+      "tags": ["G代码", "M代码", "超范围", "故障排查"],
+      "keywords": ["out-of-range", "G9999", "M1200", "数值范围", "行号定位"]
+    },
+    {
+      "id": "SC-033",
+      "title": "无 M30 程序收尾",
+      "category": "D 故障排查",
+      "controllers": ["FANUC"],
+      "difficulty": "初级",
+      "key_issue": "未匹配 M0?[23]0 报 Program end M02/M30 not found，补 M30 且 M05 在前",
+      "tags": ["M30", "程序收尾", "故障排查", "M02"],
+      "keywords": ["program_end", "M05", "收尾", "M99", "结束符"]
+    },
+    {
+      "id": "SC-034",
+      "title": "哨兵不可用 CHECK_UNAVAILABLE 的正确处置",
+      "category": "D 故障排查",
+      "controllers": ["全系统"],
+      "difficulty": "高级",
+      "key_issue": "status=partial/syntax_checked=false + CHECK_UNAVAILABLE 表示未检查，绝不读作通过",
+      "tags": ["CHECK_UNAVAILABLE", "partial", "哨兵", "诚实退路"],
+      "keywords": ["syntax_checked", "is_valid", "gbnf_grammar", "未验证", "bugfix"]
+    },
+    {
+      "id": "SC-035",
+      "title": "注释未闭合",
+      "category": "D 故障排查",
+      "controllers": ["FANUC"],
+      "difficulty": "中级",
+      "key_issue": "圆括号注释必须成对；未闭合使后续 G 代码被吞，哨兵报 No valid G-code words",
+      "tags": ["注释", "未闭合", "括号", "故障排查"],
+      "keywords": ["(", ")", "No valid G-code words", "白名单豁免", "搜索配对"]
+    },
+    {
+      "id": "SC-036",
+      "title": "方言 File Type 配置错误导致高亮异常",
+      "category": "D 故障排查",
+      "controllers": ["全系统"],
+      "difficulty": "中级",
+      "key_issue": "File Type 选错导致 CYCLE 等不高亮；ncfilter_*.dll 方言过滤器提供着色（INS-04）",
+      "tags": ["File Type", "高亮", "方言", "ncfilter"],
+      "keywords": ["Siemens", "着色", "Colors", "复制 File Type", "显示层"]
+    },
+    {
+      "id": "SC-037",
+      "title": "Heidenhain 对话格式程序乱码/解析异常",
+      "category": "D 故障排查",
+      "controllers": ["Heidenhain"],
+      "difficulty": "高级",
+      "key_issue": "区分对话格式与 ISO 格式；选 Heidenhain Control Type，编码不匹配致乱码",
+      "tags": ["Heidenhain", "对话格式", "乱码", "Control Type"],
+      "keywords": ["ISO Milling", "文件编码", "BEGIN PGM", "方言过滤器", "解析异常"]
+    },
+    {
+      "id": "SC-038",
+      "title": "两版本程序差异对比（含版本管理边界）",
+      "category": "E 文件对比与传输",
+      "controllers": ["全系统"],
+      "difficulty": "初级",
+      "key_issue": "File Compare 仅 diff/Goto/Sync，无版本管理（版本管理属 NCBase/MDCMax）",
+      "tags": ["File Compare", "B-02", "差异对比", "版本管理边界"],
+      "keywords": ["Compare with File", "逐行差异", "NCBase", "MDCMax", "0 命中"]
+    },
+    {
+      "id": "SC-039",
+      "title": "File Compare Sync 联动同步",
+      "category": "E 文件对比与传输",
+      "controllers": ["全系统"],
+      "difficulty": "初级",
+      "key_issue": "Sync 使两窗口滚动/光标联动，Goto 跳到差异行；不自动合并修改",
+      "tags": ["Sync", "Goto", "File Compare", "联动"],
+      "keywords": ["滚动同步", "差异行", "逐段对照", "查看辅助", "版本A/B"]
+    },
+    {
+      "id": "SC-040",
+      "title": "DNC 标准串口参数配置",
+      "category": "E 文件对比与传输",
+      "controllers": ["全系统(串口机床)"],
+      "difficulty": "中级",
+      "key_issue": "官方速记 COM1,9600,7E2 = 端口/波特率/7数据位/偶校验/2停止位；流控 XOn/XOff 或 RTS/CTS",
+      "tags": ["DNC Setup", "Standard Serial Protocol", "串口", "7E2"],
+      "keywords": ["COM1", "Baud rate", "Parity", "Stop bits", "Flow control", "Transmit"]
+    },
+    {
+      "id": "SC-041",
+      "title": "FTP 客户端协议传输配置",
+      "category": "E 文件对比与传输",
+      "controllers": ["全系统(支持FTP机床)"],
+      "difficulty": "中级",
+      "key_issue": "速记 cimco@192.168.254.231 = 用户名@CNC IP；分窗 FTP Transfer Dialog 上传",
+      "tags": ["FTP", "FTP Client Protocol", "传输", "分窗"],
+      "keywords": ["Username", "CNC IP", "Port", "Split Window", "远程目录"]
+    },
+    {
+      "id": "SC-042",
+      "title": "串口握手与流控模板（XMODEM 诉求的正向替代）",
+      "category": "E 文件对比与传输",
+      "controllers": ["全系统(串口机床)"],
+      "difficulty": "中级",
+      "key_issue": "XMODEM 在官方语料 0 命中，不作功能宣称；以 XOn/XOff、RTS/CTS、超时/延迟参数替代",
+      "tags": ["XMODEM边界", "流控", "XOn/XOff", "RTS/CTS"],
+      "keywords": ["Handshake timeout", "Delay before each line", "XOn character", "0 命中", "诚实退路"]
+    },
+    {
+      "id": "SC-043",
+      "title": "接收端校验与奇偶错误处置",
+      "category": "E 文件对比与传输",
+      "controllers": ["全系统(串口机床)"],
+      "difficulty": "中级",
+      "key_issue": "Check parity + Insert on parity error 定位字符错误；Parity 五种取值需两端一致",
+      "tags": ["接收校验", "奇偶校验", "Check parity", "错误定位"],
+      "keywords": ["Insert on parity error", "Even", "Odd", "Mark/Space", "File Compare"]
+    },
+    {
+      "id": "SC-044",
+      "title": "传输失败排查（超时/流控/参数）",
+      "category": "E 文件对比与传输",
+      "controllers": ["全系统(串口与FTP)"],
+      "difficulty": "高级",
+      "key_issue": "系统排查物理连接、流控类型、Handshake timeout、每线延迟、FTP 账号/端口权限",
+      "tags": ["传输失败", "超时", "排查", "流控"],
+      "keywords": ["Handshake timeout", "Delay per line", "Break after characters", "分段发送", "7E2"]
+    },
+    {
+      "id": "SC-045",
+      "title": "批量语法校验多份 NC 程序",
+      "category": "F 批量自动化处理",
+      "controllers": ["FANUC"],
+      "difficulty": "中级",
+      "key_issue": "脚本批量调用 validate_fanuc_macro_b，保留 status/is_valid/syntax_checked/errors 四字段",
+      "tags": ["批量校验", "validate_fanuc_macro_b", "脚本", "CSV报告"],
+      "keywords": ["parser_verified", "90 条", "eng自测", "partial", "B-06"]
+    },
+    {
+      "id": "SC-046",
+      "title": "批量格式转换（Converters 与文件类型）",
+      "category": "F 批量自动化处理",
+      "controllers": ["FANUC", "SIEMENS"],
+      "difficulty": "中级",
+      "key_issue": "本机 4 个 .conv 转换器 + Load/Save 配置；单位换算仍须人工确认（B-04 非通用 CAM 后处理）",
+      "tags": ["格式转换", "Converters", ".conv", "Load/Save"],
+      "keywords": ["EIA/ISO", "英制转公制", "G20/G21", "B-04", "人工换算"]
+    },
+    {
+      "id": "SC-047",
+      "title": "批量块号重编脚本化",
+      "category": "F 批量自动化处理",
+      "controllers": ["FANUC", "SIEMENS"],
+      "difficulty": "中级",
+      "key_issue": "用 NC Function Script 或外部脚本统一 Renumber（Start=10/Increment=10），输出到新目录",
+      "tags": ["块号", "Renumber", "脚本化", "批量"],
+      "keywords": ["Configure Block Numbering", "Start/Increment", "保留原件", "抽检", "B-06"]
+    },
+    {
+      "id": "SC-048",
+      "title": "NC Function Scripts 宏脚本自动化思路",
+      "category": "F 批量自动化处理",
+      "controllers": ["FANUC"],
+      "difficulty": "高级",
+      "key_issue": "官方 Scripts/Writing NC Function Scripts 是内建自动化；宏模板字面 # 用 ##",
+      "tags": ["Scripts", "宏脚本", "自动化", "官方脚本"],
+      "keywords": ["Writing NC Function Scripts", "##", "validate_macro", "save_as", "B-06"]
+    },
+    {
+      "id": "SC-049",
+      "title": "校验与传输日志分析",
+      "category": "F 批量自动化处理",
+      "controllers": ["FANUC"],
+      "difficulty": "中级",
+      "key_issue": "解析 errors 统计错误类型频次；CHECK_UNAVAILABLE 单列未验证类别",
+      "tags": ["日志分析", "errors", "频次统计", "质量报告"],
+      "keywords": ["no M05", "Unclosed WHILE DO", "CHECK_UNAVAILABLE", "status", "B-06"]
+    },
+    {
+      "id": "SC-050",
+      "title": "多程序一致性批量检查",
+      "category": "F 批量自动化处理",
+      "controllers": ["FANUC"],
+      "difficulty": "高级",
+      "key_issue": "跨程序比较 G21/G54/H/M05/M30/G80 等关键字段，发现单位/坐标系不一致",
+      "tags": ["一致性检查", "批量", "跨程序", "模态字段"],
+      "keywords": ["G20 vs G21", "基准程序", "差异清单", "静态字段", "B-06"]
+    }
+  ]
+}

@@ -1,0 +1,912 @@
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title></title>
+<link href="../../helper_css.css" rel="stylesheet" type="text/css">
+<style type="text/css">
+<!--
+.style1 {color: #000000}
+-->
+</style>
+</head>
+<body>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar">
+  <tr>
+    <td>固定循环</td>
+  </tr>
+</table>
+<table width="523" border="0" cellpadding="0" cellspacing="1" bgcolor="#0000FF">
+  <tr>
+    <td width="211" valign="top" bgcolor="#FFFFFF"><p>循环 </p></td>
+    <td width="312" valign="top" bgcolor="#FFFFFF"><p>说明 </p></td>
+  </tr>
+  <tr>
+    <td width="211" valign="top" bgcolor="#FFFFFF"><p>CYCLE82</p></td>
+    <td width="312" valign="top" bgcolor="#FFFFFF"><p>中心钻孔 </p></td>
+  </tr>
+  <tr>
+    <td width="211" valign="top" bgcolor="#FFFFFF"><p>CYCLE83</p></td>
+    <td width="312" valign="top" bgcolor="#FFFFFF"><p>深孔钻削 </p></td>
+  </tr>
+  <tr>
+    <td width="211" valign="top" bgcolor="#FFFFFF"><p>CYCLE84</p></td>
+    <td width="312" valign="top" bgcolor="#FFFFFF"><p>刚性攻丝 </p></td>
+  </tr>
+  <tr>
+    <td width="211" valign="top" bgcolor="#FFFFFF"><p>CYCLE85</p></td>
+    <td width="312" valign="top" bgcolor="#FFFFFF"><p>铰孔 </p></td>
+  </tr>
+  <tr>
+    <td width="211" valign="top" bgcolor="#FFFFFF"><p>CYCLE86</p></td>
+    <td width="312" valign="top" bgcolor="#FFFFFF"><p>镗孔 </p></td>
+  </tr>
+  <tr>
+    <td width="211" valign="top" bgcolor="#FFFFFF"><p>CYCLE88</p></td>
+    <td width="312" valign="top" bgcolor="#FFFFFF"><p>带停止镗孔 </p></td>
+  </tr>
+  <tr>
+    <td width="211" valign="top" bgcolor="#FFFFFF"><p>CYCLE71</p></td>
+    <td width="312" valign="top" bgcolor="#FFFFFF"><p>端面铣削 </p></td>
+  </tr>
+  <tr>
+    <td width="211" valign="top" bgcolor="#FFFFFF"><p>LONGHOLE </p></td>
+    <td width="312" valign="top" bgcolor="#FFFFFF"><p>一个圆弧上的长方形孔 </p></td>
+  </tr>
+  <tr>
+    <td width="211" valign="top" bgcolor="#FFFFFF"><p>POCKET4</p></td>
+    <td width="312" valign="top" bgcolor="#FFFFFF"><p>环形凹槽铣削 </p></td>
+  </tr>
+  <tr>
+    <td width="211" valign="top" bgcolor="#FFFFFF"><p>POCKET3</p></td>
+    <td width="312" valign="top" bgcolor="#FFFFFF"><p>矩形凹槽铣削 </p></td>
+  </tr>
+  <tr>
+    <td width="211" valign="top" bgcolor="#FFFFFF"><p>SLOT1</p></td>
+    <td width="312" valign="top" bgcolor="#FFFFFF"><p>一个圆弧上的键槽 </p></td>
+  </tr>
+  <tr>
+    <td width="211" valign="top" bgcolor="#FFFFFF"><p>SLOT2</p></td>
+    <td width="312" valign="top" bgcolor="#FFFFFF"><p>环行槽 </p></td>
+  </tr>
+</table>
+<br>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+  <tr>
+    <td>CYCLE82中心钻孔</td>
+  </tr>
+</table>
+<p> <strong>1. </strong><strong>编程 </strong><br>
+  <strong>CYCLE82</strong><strong>（RTP，RFP，SDIS，DP，DPR，DTB） </strong>
+  </h2>
+</p>
+<table border="1"  cellpadding="0" cellspacing="0" style="border-collapse=collapse" bordercolor="#00309C">
+  <tr>
+    <td width="100"><br>
+      RTP </td>
+    <td width="100"><p align="center">Real</p></td>
+    <td width="358"><p align="center">返回平面（绝对坐标） </p></td>
+  </tr>
+  <tr>
+    <td width="100"><p align="center">RFP</p></td>
+    <td width="100"><p align="center">Real</p></td>
+    <td width="358"><p align="center">参考平面（绝对坐标） </p></td>
+  </tr>
+  <tr>
+    <td width="100"><p align="center">SDIS</p></td>
+    <td width="100"><p align="center">Real</p></td>
+    <td width="358"><p align="center">安全高度（无正负符号输入） </p></td>
+  </tr>
+  <tr>
+    <td width="100"><p align="center">DP</p></td>
+    <td width="100"><p align="center">Real</p></td>
+    <td width="358"><p align="center">最后钻孔深度（绝对坐标） </p></td>
+  </tr>
+  <tr>
+    <td width="100"><p align="center">DPR</p></td>
+    <td width="100"><p align="center">Real</p></td>
+    <td width="358"><p align="center">相对于参考平面的最后钻孔深度（无正负号输入） </p></td>
+  </tr>
+  <tr>
+    <td width="100"><p align="center">DTB</p></td>
+    <td width="100"><p align="center">Real</p></td>
+    <td width="358"><p align="center">到达最后钻孔深度时的停顿时间（断屑） </p></td>
+  </tr>
+</table>
+<p><strong>2. </strong><strong>功能 </strong><br>
+  刀具按照设置的主轴速度和进给率钻孔直至输入的最后的钻孔深度。到达最后钻孔深度时允许停顿时间。 <br>
+  <strong>3. </strong><strong>操作顺序 </strong><br>
+  <strong>循环执行前已到达</strong><strong>X Y</strong><strong>轴位置：</strong><strong> </strong><br>
+  钻孔位置是所选平面的两个坐标轴中的位置。 <br>
+  <strong>循环形成以下的运行顺序：</strong><strong> </strong><br>
+    使用G0回到安全高度。 <br>
+    按循环调用前所设置的进给率（G1）移动到最后的钻孔深度。 <br>
+    在最后钻孔深度处的停顿时间。 <br>
+    使用G0返回到返回平面。 <br>
+  <strong>4. </strong><strong>参数说明 </strong><br>
+  <img width="177" height="202" src="pic/siemens802d_m_cycle_clip_image001.gif"><br>
+</p>
+<p><strong>RFP</strong><strong>和RTP（参考平面和返回平面） </strong><br>
+  通常，参考平面（RFP）为工件原点。返回平面（RTP）用来设定钻头到达深度后，抬刀的绝对坐标，再移动到下一个位置钻孔。在循环中，返回平面高于参考平面。这说明从返回平面到最后钻孔深度的距离大于参考平面到最后钻孔深度间的距离。 <br>
+  <strong>SDIS</strong><strong>（安全距离） </strong><br>
+  安全距离为相对于参考平面刀具抬刀的安全高度，为相对值。 <br>
+  <strong>DP</strong><strong>（最后钻孔深度） </strong><br>
+  钻孔深度为参考平面的绝对坐标。 <br>
+  <strong>DPR</strong><strong>（钻孔深度） </strong><br>
+  钻孔深度为相对参考平面的相对值。 <br>
+  <strong>DTB</strong><strong>（停止时间） </strong><br>
+  到达最后钻孔深度的停顿时间（用来断削），单位为秒。 <br>
+  <strong>5. </strong><strong>编程举例 </strong><br>
+  <img width="266" height="189" src="pic/siemens802d_m_cycle_clip_image002.jpg"><br>
+  G54 G17 G90；工件基本坐标系设定 <br>
+  T1D1；刀具选择 <br>
+  G00 X0 Y0 Z100 M03 S800<br>
+  Z50<br>
+  CYCLE82 (50,  0, 2, -30, 30, 0.5 ) ；调用钻孔循环 <br>
+  M05<br>
+M2</p>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+  <tr>
+    <td>CYCLE83 深孔钻削</td>
+  </tr>
+</table>
+<p><strong>1. </strong><strong>编程</strong> <br>
+  <strong>CYCLE83</strong><strong>（RTP，RFP，SDIS，DP，DPR，FDEP，FDPR，DAM，DTB，DTS，FRF，VARI） </strong></p>
+<table border="1"  cellpadding="0" cellspacing="0" style="border-collapse=collapse" bordercolor="#00309C">
+  <tr>
+    <td width="94"><p align="center">RTP</p></td>
+    <td width="94"><p align="center">Real</p></td>
+    <td width="370"><p align="center">返回平面（绝对坐标） </p></td>
+  </tr>
+  <tr>
+    <td width="94"><p align="center">RFP</p></td>
+    <td width="94"><p align="center">Real</p></td>
+    <td width="370"><p align="center">参考平面（绝对坐标） </p></td>
+  </tr>
+  <tr>
+    <td width="94"><p align="center">SDIS</p></td>
+    <td width="94"><p align="center">Real</p></td>
+    <td width="370"><p align="center">安全高度（无符号输入） </p></td>
+  </tr>
+  <tr>
+    <td width="94"><p align="center">DP</p></td>
+    <td width="94"><p align="center">Real</p></td>
+    <td width="370"><p align="center">最后钻孔深度（绝对坐标） </p></td>
+  </tr>
+  <tr>
+    <td width="94"><p align="center">DPR</p></td>
+    <td width="94"><p align="center">Real</p></td>
+    <td width="370"><p align="center">相对参考平面的最后钻孔深度（无符号输入） </p></td>
+  </tr>
+  <tr>
+    <td width="94"><p align="center">FDEP</p></td>
+    <td width="94"><p align="center">Real</p></td>
+    <td width="370"><p align="center">第一次钻孔深度（绝对坐标） </p></td>
+  </tr>
+  <tr>
+    <td width="94"><p align="center">FDPR</p></td>
+    <td width="94"><p align="center">Real</p></td>
+    <td width="370"><p align="center">相对于参考平面的第一次钻孔深度（无符号输入） </p></td>
+  </tr>
+  <tr>
+    <td width="94"><p align="center">DAM</p></td>
+    <td width="94"><p align="center">Real</p></td>
+    <td width="370"><p align="center">递减量（无符号输入） </p></td>
+  </tr>
+  <tr>
+    <td width="94"><p align="center">DTB</p></td>
+    <td width="94"><p align="center">Real</p></td>
+    <td width="370"><p align="center">最后钻孔深度时的停顿时间（断屑） </p></td>
+  </tr>
+  <tr>
+    <td width="94"><p align="center">DTS</p></td>
+    <td width="94"><p align="center">Real</p></td>
+    <td width="370"><p align="center">起始点处和用于排屑的停顿时间 </p></td>
+  </tr>
+  <tr>
+    <td width="94"><p align="center">FRF</p></td>
+    <td width="94"><p align="center">Real</p></td>
+    <td width="370"><p align="center">第一次钻孔深度的进给率系数    范围：0.001…1</p></td>
+  </tr>
+  <tr>
+    <td width="94"><p align="center">VARI</p></td>
+    <td width="94"><p align="center">Int</p></td>
+    <td width="370"><p align="center">加工类型：断屑=0 排屑=1</p></td>
+  </tr>
+</table>
+<p><strong>2. </strong><strong>功能 </strong><br>
+  刀具以设置的主轴速度和进给率开始钻孔，直至最后钻孔深度。深孔钻削是钻头每次进给指定增量退刀排屑，再重复进给直至最后钻孔深度。钻头可以在每次进给深度完以后回到安全距离用于排屑，或者每次退回1mm用于断屑。 <br>
+  <strong>3. </strong><strong>操作顺序 </strong><br>
+  <strong>循环启动前到达位置：</strong><strong> </strong><br>
+  钻孔位置在所选平面的两个进给轴中。 <br>
+  <img width="222" height="196" src="pic/siemens802d_m_cycle_clip_image003.jpg"></p>
+<p>深孔钻削排屑(VARI=1)</p>
+<p><img width="227" height="192" src="pic/siemens802d_m_cycle_clip_image004.jpg">
+</p>
+<p>深孔钻削排屑(VARI=0)  </p>
+<p><strong>循环形成以下动作顺序：</strong><strong> </strong><br>
+  <strong>深孔钻削排屑时（</strong><strong>VARI=1</strong><strong>）</strong><strong> </strong><br>
+   使用G0回到安全高度。 <br>
+   使用G1移动到第一次钻孔深度，进给率为程序调用中的进给率，它取决于参数FRF（进给率系数）。 <br>
+   在最后钻孔深度处的停顿时间（参数DTB）。 <br>
+   使用G0返回到安全高度，用于排削。 <br>
+   起始点停顿时间（参数DTS）。 <br>
+   使用G0回到上次到达的钻孔深度，并保持预留量距离。 <br>
+   使用G1钻削到下一个钻孔深度（持续动作顺序直至到达最后钻孔深度）。 <br>
+   使用G0移动到返回平面。 <br>
+  <strong>深孔钻削断削屑时（</strong><strong>VARI=0</strong><strong>）：</strong><strong> </strong><br>
+   用G0返回到安全高度。 <br>
+   用G1钻孔到起始深度，进给率为程序设定进给率×参数FRF。 <br>
+   最后钻孔深度的停顿时间。 <br>
+   使用G1从当前钻孔深度后退1mm，采用程序设置的进给率（用于断屑）。 <br>
+   使用G1进给率执行下一次钻孔切削（该过程一直重复进行，直至到达最终钻削深度）。 <br>
+   使用G0回到返回平面。 <br>
+  <strong>4. </strong><strong>参数说明 </strong><br>
+  <img width="177" height="191" src="pic/siemens802d_m_cycle_clip_image006.jpg"><br>
+  <br>
+  <strong>说明：</strong><strong> </strong><br>
+  对于参数RIP，RFP，SDIS，DP，DPR，参见CYCLE82。 <br>
+    首先，进行首次钻深，只要不超过总的钻孔深度。 <br>
+    从第二次钻孔开始，到达的深度由上一次钻深减去每次切削量获得的，但要求钻深大于所设置的每次切削量。 <br>
+    当剩余量大于两倍的递减量时，以后的钻削量等于递减量。 <br>
+    最终的两次钻削行程被平分，所以始终大于一半的递减量。 <br>
+    如果第一次的钻深值和总钻深不符，则输出错误信息61107“首次钻深定义错误”而且不执行循环程序。 <br>
+  <strong>DTP</strong><strong>（停顿时间）</strong><strong> </strong><br>
+  设置到达最终钻深的停顿时间（断屑），单位为秒。 <br>
+  <strong>DTS</strong><strong>（停顿时间）</strong><strong> </strong><br>
+  起始点的停顿时间只在VARI=1（排屑）是执行。 <br>
+  <strong>FRF</strong><strong>（进给率系数）</strong><strong> </strong><br>
+  对于此参数，可以输入进给率的系数，该系数只使用于循环中的首次钻孔深度。 <br>
+  <strong>VARI</strong><strong>（加工类型）</strong><strong> </strong><br>
+  如果参数VARI=0，钻头在每次到达钻深后退回1mm用于断屑。 <br>
+  如果VARI=1（用于排屑），钻头每次移动到参考平面+安全高度。 <br>
+  <strong>注意：</strong>预期量的大小由循环内部计算所得： <br>
+   如果钻深为30mm，预期量的值始终是0.6mm。 <br>
+   对于更大钻深，使用公式钻深/50（最大值7mm）。 <br>
+  <strong>5. </strong><strong>编程举例 </strong><br>
+  <br>
+  T1  D1  ；刀具选择 <br>
+  G54  G90 G0 F200 ；工件基本坐标系设定 <br>
+  X0  Y0<br>
+  Z50<br>
+  M3  S1200<br>
+  M8<br>
+  CYCLE83  ( 50.000, 0.000, 2.000, -30.000,  ；调用钻孔循环 <br>
+  30.000, -5.000, 5.000, 3.000, 0.000,<br>
+  0.000, 0.500, 1  )<br>
+  G0  Z50<br>
+  M5 M9<br>
+M2</p>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+  <tr>
+    <td>CYCLE84 刚性攻丝</td>
+  </tr>
+</table>
+<p><strong>1. </strong><strong>编程</strong> <br>
+  <strong>CYCLE84</strong><strong>（RTP，RFP，SDIS，DP，DPR，DTB，SDAC，MPIT，PIT，SPOS，SST，SST1） </strong></p>
+<table border="1"  cellpadding="0" cellspacing="0" style="border-collapse=collapse" bordercolor="#00309C">
+  <tr>
+    <td width="82"><br>
+      RTP </td>
+    <td width="82"><p align="center">Real</p></td>
+    <td width="394" valign="top"><p align="center">返回平面（绝对坐标） </p></td>
+  </tr>
+  <tr>
+    <td width="82"><p align="center">RFP</p></td>
+    <td width="82"><p align="center">Real</p></td>
+    <td width="394" valign="top"><p align="center">参考平面（绝对坐标） </p></td>
+  </tr>
+  <tr>
+    <td width="82"><p align="center">SDIS</p></td>
+    <td width="82"><p align="center">Real</p></td>
+    <td width="394" valign="top"><p align="center">安全高度（无符号输入） </p></td>
+  </tr>
+  <tr>
+    <td width="82"><p align="center">DP</p></td>
+    <td width="82"><p align="center">Real</p></td>
+    <td width="394" valign="top"><p align="center">最后钻孔深度（绝对坐标） </p></td>
+  </tr>
+  <tr>
+    <td width="82"><p align="center">DPR</p></td>
+    <td width="82"><p align="center">Real</p></td>
+    <td width="394" valign="top"><p align="center">相对参考平面的最后钻孔深度（无符号输入） </p></td>
+  </tr>
+  <tr>
+    <td width="82"><p align="center">DTB</p></td>
+    <td width="82"><p align="center">Real</p></td>
+    <td width="394" valign="top"><p align="center">停顿时间（断屑） </p></td>
+  </tr>
+  <tr>
+    <td width="82"><p align="center">SDAC</p></td>
+    <td width="82"><p align="center">Int</p></td>
+    <td width="394" valign="top"><p align="center">循环结束后的旋转方向 值：3，4，或5（用于M3，M4和M5） </p></td>
+  </tr>
+  <tr>
+    <td width="82"><p align="center">MPIT</p></td>
+    <td width="82"><p align="center">Real</p></td>
+    <td width="394" valign="top"><p align="center">螺距由螺纹尺寸决定（有符号）范围3（用于M3）…48（用于M48） <br>
+      ；符号决定了在螺纹中的旋转方向 </p></td>
+  </tr>
+  <tr>
+    <td width="82"><p align="center">PIT</p></td>
+    <td width="82"><p align="center">Real</p></td>
+    <td width="394" valign="top"><p align="center">螺纹由螺距决定（有符号）范围：0.001…2000.000mm<br>
+      ； 符号决定了在螺纹中的旋转方向 </p></td>
+  </tr>
+  <tr>
+    <td width="82"><p align="center">SPOS</p></td>
+    <td width="82"><p align="center">Real</p></td>
+    <td width="394" valign="top"><p align="center">循环中主轴定位停止角度 </p></td>
+  </tr>
+  <tr>
+    <td width="82"><p align="center">SST</p></td>
+    <td width="82"><p align="center">Real</p></td>
+    <td width="394" valign="top"><p align="center">攻丝进给速度 </p></td>
+  </tr>
+  <tr>
+    <td width="82"><p align="center">SST1</p></td>
+    <td width="82"><p align="center">Real</p></td>
+    <td width="394" valign="top"><p align="center">退回速度 </p></td>
+  </tr>
+</table>
+<p><strong>2. </strong><strong>功能 </strong><br>
+  刀具以设置的主轴转速和进给率进行攻丝，直至最终螺纹深度，用于刚性攻丝。 <br>
+  <strong>注意：</strong><strong> </strong><br>
+  只有主轴在技术上进行位置控制，才可以使用CYCLE84。对于带补偿夹具的攻丝，需要一个另外的循环CYCLE840。 <br>
+  <strong>3. </strong><strong>操作顺序 </strong><br>
+  <strong>循环启动前到达位置：</strong><strong> </strong><br>
+  孔位置在所选平面的两个进给轴中。 <br>
+  <strong>循环形成以下动作顺序：</strong><strong> </strong><br>
+   使用G0回参考平面加安全高度处。 <br>
+   主轴定位停止（值在参数SPOS中）以及将主轴转换为进给轴模式。 <br>
+   攻丝至最终深度.，速度为SST。 <br>
+   螺纹深度处停留时间（参数DTB）。 <br>
+   退回到参考平面加安全高度处，速度为SST1且方向相反。 <br>
+   使用G0退回到返回平面；通过在循环调用前重新设置有效的主轴速度以及SDAC下设置的旋转方向，从而改变主轴模式。 <br>
+  <strong>4. </strong><strong>参数说明 </strong><br>
+  <img width="177" height="202" src="pic/siemens802d_m_cycle_clip_image001_0000.gif"><br>
+  <br>
+  <strong>说明：</strong><strong> </strong><br>
+  对于参数RTP，RFP，SDIS，DP，DPR，参见CYCLE82<br>
+  <strong>DTB</strong><strong>（停顿时间）</strong><strong> </strong><br>
+  停顿时间以秒编程。攻螺纹时，建议忽略停顿时间。 <br>
+  <strong>SDAC</strong><strong>（循环结束后的旋转方向）</strong><strong> </strong><br>
+  在SDAC下设置循环结束后的旋转方向，循环内部自动执行攻丝时的反方向。 <br>
+  <strong>MPIT</strong><strong>和PIT（作为螺纹大小或者螺距） </strong><br>
+  可以将螺纹的值定义为螺纹大小（公称螺纹只在M2和M8之间）或一个值（螺距）。不需要的参数在调用中省略或赋值为零。 <br>
+  <strong>RH</strong><strong>或LH螺纹由螺距参数符号定义： </strong><br>
+   正值→RH（用于M3） <br>
+   负值→LH（用于M4） <br>
+  如果两个螺纹螺距参数的值有冲突，循环将产生报警61001“螺纹螺距错误”且循环终止。 <br>
+  <strong>SPOS</strong><strong>（主轴角度）</strong><strong> </strong><br>
+  攻丝前，使用SPOS命令使主轴准确定位停止并转换成位置控制。SPOS为主轴角度。 <br>
+  <strong>SST</strong><strong>（速度）</strong><strong> </strong><br>
+  参数SST包含用于攻丝的主轴转速。 <br>
+  <strong>SST1</strong><strong>（退回速度）</strong><strong> </strong><br>
+  使用G332设置攻丝完退回的速度。如果该参数的值为零，则按照SST下设置的速度退回。 <br>
+  <strong>5. </strong><strong>编程举例 </strong><br>
+  <img width="259" height="200" src="pic/siemens802d_m_cycle_clip_image002.gif"></p>
+<p>T1D1 ；刀具选择 <br>
+  G54  G90 G0 F200 ；工件基本坐标系设定 <br>
+  X0  Y0<br>
+  Z50<br>
+  M3  S1200<br>
+  M8<br>
+  CYCLE84  ( 50.000, 0.000, 2.000, -20.000, ；调用攻丝循环 <br>
+  20.000,  , 4, 20, ,<br>
+  0.000, 200.000, 400.000)<br>
+  Z50<br>
+  M5  M9<br>
+  M2</p>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+  <tr>
+    <td>CYCLE85 铰孔</td>
+  </tr>
+</table>
+<p><strong>1. </strong><strong>编程 </strong><br>
+  <strong>CYCLE85</strong><strong>（RTP，RFP，SDIS，DP，DPR，DTB，FFR，RFF） </strong></p>
+<table border="1"  cellpadding="0" cellspacing="0" style="border-collapse=collapse" bordercolor="#00309C">
+  <tr>
+    <td width="94"><br>
+      RTP </td>
+    <td width="94"><p align="center">Real</p></td>
+    <td width="370"><p align="center">返回平面（绝对坐标） </p></td>
+  </tr>
+  <tr>
+    <td width="94"><p align="center">RFP</p></td>
+    <td width="94"><p align="center">Real</p></td>
+    <td width="370"><p align="center">参考平面（绝对坐标） </p></td>
+  </tr>
+  <tr>
+    <td width="94"><p align="center">SDIS</p></td>
+    <td width="94"><p align="center">Real</p></td>
+    <td width="370"><p align="center">安全高度（无符号输入） </p></td>
+  </tr>
+  <tr>
+    <td width="94"><p align="center">DP</p></td>
+    <td width="94"><p align="center">Real</p></td>
+    <td width="370"><p align="center">最后铰孔深度（绝对坐标） </p></td>
+  </tr>
+  <tr>
+    <td width="94"><p align="center">DPR</p></td>
+    <td width="94"><p align="center">Real</p></td>
+    <td width="370"><p align="center">相对参考平面的最后铰孔深度（无符号输入） </p></td>
+  </tr>
+  <tr>
+    <td width="94"><p align="center">DTB</p></td>
+    <td width="94"><p align="center">Real</p></td>
+    <td width="370"><p align="center">最后铰孔深度时停顿时间（断屑） </p></td>
+  </tr>
+  <tr>
+    <td width="94"><p align="center">FFR</p></td>
+    <td width="94"><p align="center">Real</p></td>
+    <td width="370"><p align="center">铰孔进给率 </p></td>
+  </tr>
+  <tr>
+    <td width="94"><p align="center">RFF</p></td>
+    <td width="94"><p align="center">Real</p></td>
+    <td width="370"><p align="center">退回进给率 </p></td>
+  </tr>
+</table>
+<p><strong>2. </strong><strong>功能 </strong><br>
+  刀具按设置的主轴转速和进给率铰孔直至最后深度。切削和退刀的进给率分别是参数FFR和RFF的值。 <br>
+  <strong>3. </strong><strong>操作顺序 </strong><br>
+  <strong>循环启动前到达位置：</strong><strong> </strong><br>
+  铰孔位置在所选平面的两个进给轴中。 <br>
+  <strong>循环形成以下动作顺序：</strong><strong> </strong><br>
+   使用G0回到参考平面加安全高度处。 <br>
+   使用G1并且按参数FFR所设置的进给率铰孔至最终深度。 <br>
+   最后铰孔深度时停顿时间。 <br>
+   使用G1返回到参考平面加安全高度处，进给率是参数FFR所设置值。 <br>
+   使用G0退回到返回平面。 <br>
+  <strong>4. </strong><strong>参数说明 </strong><br>
+  <img width="177" height="202" src="pic/siemens802d_m_cycle_clip_image003.gif"><br>
+  <br>
+  <strong>说明：</strong><strong> </strong><br>
+  对于参数RTP，RFP，SDIS，DP，参见CYCLE82。 <br>
+  <strong>DTP</strong><strong>（停顿时间） </strong><br>
+  DTB设置到最后铰孔深度时的停顿时间，单位为秒。 <br>
+  <strong>FFR</strong><strong>（进给率） </strong><br>
+  铰孔时FFR下设置的进给率值有效。 <br>
+  <strong>RFF</strong><strong>（退回进给率） </strong><br>
+  从孔底退回到参考平面加安全高度时，RFF下设置的进给率值有效。 <br>
+  <strong>5. </strong><strong>编程举例 </strong><br>
+  (如图7.3-2)<br>
+  G54  G90 G17 ；工件基本坐标系设定 <br>
+  G0  X0 Y0 Z100 M03 S800 F200<br>
+  T5D1 ；刀具选择<strong> </strong><br>
+  Z50<br>
+  CYCLE85 ( 50, 0, 2, -30, 30, 0.5, 100, 200 ) ；调用铰孔循环 <br>
+  M05<br>
+  M2</p>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+  <tr>
+    <td>CYCLE86 镗孔 </td>
+  </tr>
+</table>
+<p><strong>1. </strong><strong>编程 </strong><br>
+  <strong>CYCLE86</strong><strong>（RTP，RFP，SDIS，DP，DRP，DTB，SDIR，RPA，RPO，RPAP，SPOS） </strong></p>
+<table border="1"  cellpadding="0" cellspacing="0" style="border-collapse=collapse" bordercolor="#00309C">
+  <tr>
+    <td width="103"><br>
+      RTP </td>
+    <td width="96"><p align="center">Real</p></td>
+    <td width="358"><p align="center">返回平面（绝对坐标） </p></td>
+  </tr>
+  <tr>
+    <td width="103"><p align="center">RFP</p></td>
+    <td width="96"><p align="center">Real</p></td>
+    <td width="358"><p align="center">参考平面（绝对坐标） </p></td>
+  </tr>
+  <tr>
+    <td width="103"><p align="center">SDIS</p></td>
+    <td width="96"><p align="center">Real</p></td>
+    <td width="358"><p align="center">安全高度（无符号输入） </p></td>
+  </tr>
+  <tr>
+    <td width="103"><p align="center">DP</p></td>
+    <td width="96"><p align="center">Real</p></td>
+    <td width="358"><p align="center">最后镗孔深度（绝对坐标） </p></td>
+  </tr>
+  <tr>
+    <td width="103"><p align="center">DRP</p></td>
+    <td width="96"><p align="center">Real</p></td>
+    <td width="358"><p align="center">相对参考平面的最后镗孔深度（无符号输入） </p></td>
+  </tr>
+  <tr>
+    <td width="103"><p align="center">DTB</p></td>
+    <td width="96"><p align="center">Real</p></td>
+    <td width="358"><p align="center">到最后镗孔深度时停顿时间（断屑） </p></td>
+  </tr>
+  <tr>
+    <td width="103"><p align="center">SDIR</p></td>
+    <td width="96"><p align="center">Int</p></td>
+    <td width="358"><p align="center">旋转方向值：3（用于M3）/4（用于M4） </p></td>
+  </tr>
+  <tr>
+    <td width="103"><p align="center">RPA</p></td>
+    <td width="96"><p align="center">Real</p></td>
+    <td width="358"><p align="center">平面中第一轴上的返回路径（增量，带符号输入） </p></td>
+  </tr>
+  <tr>
+    <td width="103"><p align="center">RPO</p></td>
+    <td width="96"><p align="center">Real</p></td>
+    <td width="358"><p align="center">平面中第二轴上的返回路径（增量，带符号输入） </p></td>
+  </tr>
+  <tr>
+    <td width="103"><p align="center">RPAP</p></td>
+    <td width="96"><p align="center">Real</p></td>
+    <td width="358"><p align="center">镗孔轴上的返回路径（增量，带符号输入） </p></td>
+  </tr>
+  <tr>
+    <td width="103"><p align="center">SPOS</p></td>
+    <td width="96"><p align="center">Real</p></td>
+    <td width="358"><p align="center">循环中主轴定位停止角度 </p></td>
+  </tr>
+</table>
+<p><strong>2. </strong><strong>功能 </strong><br>
+  此循环可以用来镗孔，刀具按照设置的主轴转速和进给率进行镗孔，直至达到最后深度。镗孔时，一旦到达镗孔深度，便激活了主轴定位停止功能。然后，主轴从返回平面快速回到设置的返回位置。 <br>
+  <strong>3. </strong><strong>操作顺序 </strong><br>
+  <strong>循环启动前的到达的位置：</strong><strong> </strong><br>
+  钻孔位置在所选平面的两个进给轴中。 <br>
+  <strong>循环形成以下动作顺序：</strong><strong> </strong><br>
+   使用G0回到参考平面加安全高度处。 <br>
+   循环调用前使用G1及所设置的进给率移到最终钻孔深度处。 <br>
+   最后镗孔深度处停顿时间。 <br>
+   主轴定位停止在SPOS下设置的角度。 <br>
+   使用G0在三个方向上返回。 <br>
+   使用G0在镗孔轴方向返回到参考平面加安全高度处。 <br>
+   使用G0在退回到返回平面。 <br>
+  <strong>4. </strong><strong>参数说明 </strong><br>
+  <img width="177" height="202" src="pic/siemens802d_m_cycle_clip_image004.gif"><br>
+  <br>
+  <strong>说明：</strong><strong> </strong><br>
+  对于参数RTP，RFP，SDIS，DP，DPR，参见CYCLE82<br>
+  <strong>DTB</strong><strong>（停顿时间）</strong><strong> </strong><br>
+  DTB设置到最后铰孔深度时的停顿时间，单位为秒。 <br>
+  <strong>SDIR</strong><strong>（旋转方向）</strong><strong> </strong><br>
+  使用此参数，可以定义循环中进行镗孔时的旋转方向。如果参数的值不是3或4（M3/M4），则产生报警61102“未编程主轴方向”且不执行循环。 <br>
+  <strong>RPA</strong><strong>（第一轴上的返回路径）</strong><strong> </strong><br>
+  使用此参数定义在第一轴上（横坐标）的返回路径，当到达最后镗孔深度并执行了主轴定位停止后执行此返回路径。 <br>
+  <strong>RPO</strong><strong>（第二轴上的返回路径）</strong><strong> </strong><br>
+  使用此参数定义在第二轴上（纵坐标）的返回路径，当到达最后镗孔深度并执行了主轴定位停止后执行此返回路径。 <br>
+  <strong>RPAP</strong><strong>（镗孔轴上的返回路径）</strong><strong> </strong><br>
+  使用此参数定义在镗孔轴上的返回路径，当到达最后镗孔深度并执行了主轴定位停止后执行此返回路径。 <br>
+  <strong>SPOS</strong><strong>（主轴位置）</strong><strong> </strong><br>
+  使用SPOS设置主轴定位停止的角度，该功能在到达最后钻孔深度后执行。 <br>
+  <strong>注意： </strong>主轴在技术上能够进行角度定位，则可以使用CYCLE86。 <br>
+  <strong>5. </strong><strong>编程举例 </strong><br>
+  <br>
+  T1 D1 ；刀具选择 <br>
+  G54 G90 G0 X0 Y0 F200 ；基本工件坐标系设定 <br>
+  Z50<br>
+  M3 S1200<br>
+  M8<br>
+  CYCLE86 (50.000, 0.000, 2.000, -30.000, ；调用镗孔循环 <br>
+  30.000,  0.500, 3,<br>
+  0.000,  0.000, 0.000, 0.000)<br>
+  Z50<br>
+  M5 M9<br>
+  M2</p>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+  <tr>
+    <td>CYCLE88 带停止镗孔 </td>
+  </tr>
+</table>
+<p><strong>1. </strong><strong>编程 </strong><br>
+  <strong>CYCLE88</strong><strong>（RTP，RFP，SDIS，DP，DPR，DTB，SDIR） </strong></p>
+<table border="1"  cellpadding="0" cellspacing="0" style="border-collapse=collapse" bordercolor="#00309C">
+  <tr>
+    <td width="103"><br>
+      RTP </td>
+    <td width="108"><p align="center">Real</p></td>
+    <td width="346"><p align="center">返回平面（绝对坐标） </p></td>
+  </tr>
+  <tr>
+    <td width="103"><p align="center">RFP</p></td>
+    <td width="108"><p align="center">Real</p></td>
+    <td width="346"><p align="center">参考平面（绝对坐标） </p></td>
+  </tr>
+  <tr>
+    <td width="103"><p align="center">SDIS</p></td>
+    <td width="108"><p align="center">Real</p></td>
+    <td width="346"><p align="center">安全高度（无符号输入） </p></td>
+  </tr>
+  <tr>
+    <td width="103"><p align="center">DP</p></td>
+    <td width="108"><p align="center">Real</p></td>
+    <td width="346"><p align="center">最后镗孔深度（绝对坐标） </p></td>
+  </tr>
+  <tr>
+    <td width="103"><p align="center">DRP</p></td>
+    <td width="108"><p align="center">Real</p></td>
+    <td width="346"><p align="center">相对参考平面的最后镗孔深度（无符号输入） </p></td>
+  </tr>
+  <tr>
+    <td width="103"><p align="center">DTB</p></td>
+    <td width="108"><p align="center">Real</p></td>
+    <td width="346"><p align="center">最后镗孔深度时停顿时间（断屑） </p></td>
+  </tr>
+  <tr>
+    <td width="103"><p align="center">SDIR</p></td>
+    <td width="108"><p align="center">Int</p></td>
+    <td width="346"><p align="center">旋转方向值：3（用于M3）4（用于M4） </p></td>
+  </tr>
+</table>
+<p><br>
+  <strong>2. </strong><strong>功能 </strong><br>
+  刀具按照设置的主轴转速和进给率进行镗孔，直至到达最后镗孔深度。 <br>
+  <strong>3. </strong><strong>操作顺序 </strong><br>
+  <strong>循环启动前的到达的位置：</strong><strong> </strong><br>
+  镗孔位置在所选平面的两个进给轴中。 <br>
+  <strong>循环形成以下动作顺序：</strong><strong> </strong><br>
+   使用G0回到参考平面加安全高度处。 <br>
+   循环调用前使用G1及所设置的进给率进给到最终镗孔深度处。 <br>
+   最后镗孔深度处停顿时间。 <br>
+   使用G1 返回到参考平面加安全距离处，进给率是由参数RFF设定。 <br>
+   使用G0在退回到返回平面。 <br>
+  <strong>4. </strong><strong>参数说明 </strong><br>
+  <img width="177" height="202" src="pic/siemens802d_m_cycle_clip_image005.gif"><br>
+  <br>
+  <strong>说明：</strong><strong> </strong><br>
+  对于参数RTP，RFP，SDIS，DP，DPR，参见CYCLE82<br>
+  <strong>DTB</strong><strong>（停顿时间）</strong><strong> </strong><br>
+  DTB设置到最后铰孔深度时的停顿时间，单位为秒。 <br>
+  <strong>SDIR</strong><strong>（旋转方向）</strong><strong> </strong><br>
+  所设置的旋转方向对于到最后镗孔深度的距离有效，如果参数的值不是3或4（M3/M4），则产生报警61102“未编程主轴方向”及循环终止。 <br>
+  <strong>5. </strong><strong>编程举例 </strong><br>
+  N10  T1 D1<br>
+  N20  G17 G54 G90 F1 S450 ；基本工件参数设定 <br>
+  N30  G0 X80 Y90 Z105 ；接近钻孔位置 <br>
+  N40  CYCLE88（50，0，2，-30，30，1，4） ；主轴反镗孔循环 <br>
+  N50  M2 ；程序结束 </p>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" bordercolor="#FFFFFF" bgcolor="#0000FF">
+  <tr>
+    <th align="left" bgcolor="#FFFFFF" scope="col"><span class="style1">CYCLE71 端面铣削 </span></th>
+  </tr>
+</table>
+<br>
+<p>编程 <br>
+  CYCLE71 (_RTP, _RFP, _SDIS,  _DP, _PA, _PO, _LENG, _WID, _STA,_MID, _MIDA,<br>
+  _FDP, _FALD, _FFP1, _VARI,  _FDP1)<br>
+  参数 <br>
+  下面的输入参数始终要求： <br>
+  _RTP real 退回平面（绝对） <br>
+  _RFP real 基准面（绝对） <br>
+  _SDIS real 安全距离（加到基准面，不输入符号） <br>
+  _DP real 深度（绝对） <br>
+  _PA real 起始点，横坐标（绝对） <br>
+  _PO real 起始点，纵坐标（绝对） <br>
+  _LENG real 矩形在第一轴上的长度，增量。 <br>
+  由符号给出此角（由此角标注尺寸）。 <br>
+  _WID real 矩形在第二轴上的长度，增量。 <br>
+  由符号给出此角（由此角标注尺寸）。 <br>
+  _STA real 矩形纵向轴和平面第一轴之间的夹角（横坐标，不输入符号）； <br>
+  值范围:0° ≤?_STA ??180°<br>
+  _MID real 最大进刀深度（不输入符号） <br>
+  _MIDA real 在平面中进行剥离时最大的进刀宽度，作为数值（不输入符号） <br>
+  _FDP real 切削方向空运行行程（增量，不输入符号） <br>
+  _FALD real 深度方向精加工余量（增量，不输入符号）。在精加工加工方式中_FALD表示平 <br>
+  面中的剩余材料。 <br>
+  _FFP1 real 表面加工的进给 <br>
+  _VARI integer 加工方式：（不输入符号） <br>
+  个位： <br>
+  值： ?1...粗加工 <br>
+  2...精加工 <br>
+  十位： <br>
+  值： ?1...平行于横坐标，在一个方向 <br>
+  2...平行于纵坐标，在一个方向 <br>
+  3...平行于横坐标，方向交替 <br>
+  4...平行于纵坐标，方向交替 <br>
+  _FDP1 real 在平面横向进给方向溢出行程（增量，不输入符号） </p>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="#0000FF">
+  <tr>
+    <th align="left" bgcolor="#FFFFFF" scope="col"><p><strong>LONGHOLE?? </strong><strong>一个圆弧上的长方形孔 </strong></p></th>
+  </tr>
+</table>
+<br>
+<p>编程 <br>
+  LONGHOLE (RTP, RFP, SDIS, DP,  DPR, NUM, LENG, CPA, CPO, RAD, STA1, INDA,<br>
+  FFD, FFP1, MID)<br>
+  参数 <br>
+  RTP real 退回平面（绝对） <br>
+  RFP real 基准面（绝对） <br>
+  SDIS real 安全距离（不输入符号） <br>
+  DP real 长方形孔深度（绝对） <br>
+  DPR real 相对于基准面的长方形孔深度（不输入符号） <br>
+  NUM integer 长方形孔个数 <br>
+  LENG real 长方形孔长度（不输入符号） <br>
+  CPA real 圆弧的圆心，横坐标（绝对） <br>
+  CPO real 圆弧的圆心，纵坐标（绝对） <br>
+  RAD real 圆弧半径（不输入符号） <br>
+  STA1 real 起始角 <br>
+  INDA real 增量角度 <br>
+  FFD real 深度方向的进给 <br>
+  FFP1 real 表面加工的进给 <br>
+  MID real 一个横向进给的最大进刀深度（不输入符号） </p>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="#0000FF">
+  <tr>
+    <th align="left" bgcolor="#FFFFFF" scope="col"><p><strong>环形凹槽铣削 - POCKET4</strong></p></th>
+  </tr>
+</table>
+<br>
+<p>编程 <br>
+  POCKET4 (_RTP, _RFP, _SDIS,  _DP, _PRAD, _PA, _PO, _MID, _FAL, _FALD,<br>
+  _FFP1, _FFD, _CDIR, _VARI,  _MIDA, _AP1, _AD, _RAD1, _DP1)<br>
+  参数 <br>
+  下面的输入参数始终要求： <br>
+  _RTP real 退回平面（绝对） <br>
+  _RFP real 基准面（绝对） <br>
+  _SDIS real 安全距离（加到基准面，不输入符号） <br>
+  _DP real 凹槽深度（绝对） <br>
+  _PRAD real 凹槽半径 <br>
+  _PA real 凹槽中心点，横坐标（绝对） <br>
+  _PO real 凹槽中心点，纵坐标（绝对） <br>
+  _MID real 最大进刀深度（不输入符号） <br>
+  _FAL real 槽边缘的精加工余量（不输入符号） <br>
+  _FALD real 底部精加工余量（不输入符号） <br>
+  _FFP1 real 表面加工的进给 <br>
+  _FFD real 深度方向的进给 <br>
+  _CDIR integer 铣削方向：（不输入符号） <br>
+  值： ?0...同向铣削 (与主轴转向一致)<br>
+  1...逆向铣削 <br>
+  2...用 G2 (与主轴转向无关)<br>
+  3...用 G3<br>
+  _VARI integer 加工方式：（不输入符号） <br>
+  个位： <br>
+  值： ?1...粗加工 <br>
+  2...精加工 <br>
+  十位： <br>
+  值： 0...以G0垂直于凹槽中心 <br>
+  1...以G1垂直于凹槽中心 <br>
+  2...以螺旋轨迹 <br>
+  下面的参数可以选择进行规定，它们确定插入方案以及扩孔时的搭接：（不输入符号） <br>
+  _MIDA real 在平面中扩孔时最大的进刀宽度，作为数值 <br>
+  _AP1 real 毛坯尺寸，凹槽半径 <br>
+  _AD real 毛坯尺寸，槽到基准面的深度 <br>
+  _RAD1 real 插入时螺旋轨迹的半径（与刀具中心点轨迹相关） <br>
+  _DP1 real 每360°-旋转时插入深度，在螺旋轨迹上 </p>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="#0000FF">
+  <tr>
+    <th align="left" bgcolor="#FFFFFF" scope="col"><p><strong>矩形凹槽铣削 - POCKET3</strong></p></th>
+  </tr>
+</table>
+<br>
+<p>编程 <br>
+  POCKET3 (_RTP, _RFP, _SDIS,  _DP, _LENG, _WID, _CRAD, _PA, _PO, _STA, _MID,<br>
+  _FAL, _FALD, _FFP1, _FFD,  _CDIR, _VARI, _MIDA, _AP1, _AP2, _AD, _RAD1,<br>
+  _DP1)<br>
+  参数 <br>
+  下面的输入参数始终要求： <br>
+  _RTP real 退回平面（绝对） <br>
+  _RFP real 基准面（绝对） <br>
+  _SDIS real 安全距离（加到基准面，不输入符号） <br>
+  _DP real 凹槽深度（绝对） <br>
+  _LENG real 凹槽长度，在标注拐角尺寸时带符号 <br>
+  _WID real 凹槽宽度，在标注拐角尺寸时带符号 <br>
+  _CRAD real 凹槽拐角半径（不输入符号） <br>
+  _PA real 凹槽基准点，横坐标（绝对） <br>
+  _PO real 凹槽基准点，纵坐标（绝对） <br>
+  _STA real 凹槽纵向轴和平面第一轴之间的夹角（横坐标，不输入符号）； <br>
+  值范围:0° ≤?_STA ??180°<br>
+  _MID real 最大进刀深度（不输入符号） <br>
+  _FAL real 槽边缘的精加工余量（不输入符号） <br>
+  _FALD real 底部精加工余量（不输入符号） <br>
+  _FFP1 real 表面加工的进给 <br>
+  _FFD real 深度方向的进给 <br>
+  _CDIR integer 铣削方向：（不输入符号） <br>
+  值： ?0...同向铣削 (与主轴转向一致)<br>
+  1...逆向铣削 <br>
+  2...用 G2 (与主轴转向无关)<br>
+  3...用 G3<br>
+  _VARI integer 加工方式：（不输入符号） <br>
+  个位： <br>
+  值： ?1...粗加工 <br>
+  2...精加工 <br>
+  十位： <br>
+  值： ?0...以G0垂直于凹槽中心 <br>
+  1...以G1垂直于凹槽中心 <br>
+  2...以螺旋轨迹 <br>
+  3...以凹槽纵向轴摆动 <br>
+  下面的参数可以选择进行规定，它们确定插入方案以及扩孔时的搭接：（不输入符号） <br>
+  _MIDA real 在平面中扩孔时最大的进刀宽度，作为数值 <br>
+  _AP1 real 毛坯尺寸，凹槽长度 <br>
+  _AP2 real 毛坯尺寸，槽宽度 <br>
+  _AD real 毛坯尺寸，槽到基准面的深度 <br>
+  _RAD1 real 在插入时螺旋轨迹半径（与刀具中心点轨迹有关）或者摆动运动时最大 <br>
+  的再入角 <br>
+  _DP1 real 每360°-旋转时插入深度，在螺旋轨迹上 </p>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="#0000FF">
+  <tr>
+    <th align="left" bgcolor="#FFFFFF" scope="col"><p><strong>一个圆弧上的键槽 - SLOT1</strong> </p></th>
+  </tr>
+</table>
+<br>
+<p>一个圆弧上的键槽 - SLOT1<br>
+  编程 <br>
+  SLOT1 (RTP, RFP, SDIS, DP,  DPR, NUM, LENG, WID, CPA, CPO, RAD, STA1, INDA,<br>
+  FFD, FFP1, MID, CDIR, FAL,  VARI, MIDF, FFP2, SSF, _FALD, _STA2)<br>
+  参数 <br>
+  RTP real 退回平面（绝对） <br>
+  RFP real 基准面（绝对） <br>
+  SDIS real 安全距离（不输入符号） <br>
+  DP real 键槽深度（绝对） <br>
+  DPR real 相对于基准面的键槽深度（不输入符号） <br>
+  NUM integer 键槽数量 <br>
+  LENG real 键槽长度（不输入符号） <br>
+  WID real 键槽宽度（不输入符号） <br>
+  CPA real 圆弧的圆心，横坐标（绝对） <br>
+  CPO real 圆弧的圆心，纵坐标（绝对） <br>
+  RAD real 圆弧半径（不输入符号） <br>
+  STA1 real 起始角 <br>
+  INDA real 增量角度 <br>
+  FFD real 深度方向的进给 <br>
+  FFP1 real 表面加工的进给 <br>
+  MID real 一个横向进给的最大进刀深度（不输入符号） <br>
+  CDIR integer 键槽加工的铣削方向 <br>
+  值： 0...同向铣削 (与主轴转向一致)<br>
+  1...逆向铣削 <br>
+  2...用 G2 (与主轴转向无关)<br>
+  3...用 G3<br>
+  FAL real 键槽边缘的精加工余量（不输入符号） <br>
+  VARI integer 加工方式（不输入符号）个位： <br>
+  值： ?0...全套加工 <br>
+  1...粗加工 <br>
+  2...精加工 <br>
+  十位： <br>
+  值：0...以 G0 垂直 <br>
+  1...以 G1 垂直 <br>
+  2...以 G1 摆动 <br>
+  MIDF real 精加工最大进刀深度 <br>
+  FFP2 real 精加工进给 <br>
+  SSF real 精加工时速度 <br>
+  _FALD real 键槽底部精加工余量 <br>
+  _STA2 real 摆动运动时最大插入角 <br>
+  功能 <br>
+  循环SLOT1是一个组合的粗加工－精加工循环。使用该循环您可以加工以圆弧排列的键槽，其纵向轴径向对齐。与长方形孔相反，这里要给键槽宽规定一个值。 </p>
+<table width="100%" border="0" cellpadding="0" cellspacing="1" bgcolor="#0000FF">
+  <tr>
+    <th align="left" bgcolor="#FFFFFF" scope="col"><p><strong>环形槽 - SLOT2</strong></p></th>
+  </tr>
+</table>
+<br>
+<p>编程 <br>
+  SLOT2 (RTP, RFP, SDIS, DP,  DPR, NUM, AFSL, WID, CPA, CPO, RAD, STA1, INDA,<br>
+  FFD, FFP1, MID, CDIR, FAL,  VARI, MIDF, FFP2, SSF, _FFCP)<br>
+  参数 <br>
+  RTP real 退回平面（绝对） <br>
+  RFP real 基准面（绝对） <br>
+  SDIS real 安全距离（不输入符号） <br>
+  DP real 键槽深度（绝对） <br>
+  DPR real 相对于基准面的键槽深度（不输入符号） <br>
+  NUM integer 键槽数量 <br>
+  AFSL real 用于键槽长度的角度（不输入符号） <br>
+  WID real 环形槽宽度（不输入符号） <br>
+  CPA real 圆弧的圆心，横坐标（绝对） <br>
+  CPO real 圆弧的圆心，纵坐标（绝对） <br>
+  RAD real 圆弧半径（不输入符号） <br>
+  STA1 real 起始角 <br>
+  INDA real 增量角度 <br>
+  FFD real 深度方向的进给 <br>
+  FFP1 real 表面加工的进给 <br>
+  MID real 一个横向进给的最大进刀深度（不输入符号） <br>
+  CDIR integer 环形槽加工的铣削方向 <br>
+  值：2 (用于 G2)<br>
+  3 (用于 G3)<br>
+  FAL real 键槽边缘的精加工余量（不输入符号） <br>
+  VARI integer 加工方式 <br>
+  个位： <br>
+  值：0=综合加工 <br>
+  1=粗加工 <br>
+  2=精加工 <br>
+  十位 (自软件版本 SW 6.3起)<br>
+  值：0=以G0并在直线上由槽到槽的定位 <br>
+  1=以进给并在环形轨道上由槽到槽的定位 <br>
+  MIDF real 精加工最大进刀深度 <br>
+  FFP2 real 精加工进给 <br>
+  SSF real 精加工时速度_FFCP(自软件版本)<br>
+  real 中间定位进给，环形轨道，单位毫米/分钟，该循环要求一个铣刀带“过中心的端面齿切削”（DIN844）。 <br>
+  功能 <br>
+  循环SLOT2是一个组合的粗加工－精加工循环。 <br>
+  使用该循环您可以加工环形槽，这些槽位于一个圆弧上。 </p>
+</body>
+</html>

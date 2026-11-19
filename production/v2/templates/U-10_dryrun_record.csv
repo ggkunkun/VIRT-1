@@ -1,0 +1,10 @@
+﻿程序,控制器,报警数,超程数,最大主轴负载(%),急停停止时间(s),门锁测试(OK/NG),结论(PASS/FAIL),签字
+AE-CI-258_OP1,prod_5ax_fanuc_0imf,,,,,,,
+AE-CI-258_OP1,prod_5ax_siemens_840dsl,,,,,,,
+AE-CI-258_OP1,prod_5ax_hnc8,,,,,,,
+AE-CI-258_OP2,prod_5ax_fanuc_0imf,,,,,,,
+AE-CI-258_OP2,prod_5ax_siemens_840dsl,,,,,,,
+AE-CI-258_OP2,prod_5ax_hnc8,,,,,,,
+AE-CI-258_OP3,prod_5ax_fanuc_0imf,,,,,,,
+AE-CI-258_OP3,prod_5ax_siemens_840dsl,,,,,,,
+AE-CI-258_OP3,prod_5ax_hnc8,,,,,,,

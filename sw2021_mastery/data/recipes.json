@@ -1,0 +1,200 @@
+{
+  "parts": [
+    {
+      "id": "P01", "name": "阶梯轴", "family": "回转体-轴类", "material": "45钢", "blank": "圆钢 Ø45×190",
+      "ops": ["SKT-06", "FEAT-03", "FEAT-11", "SKT-17", "FEAT-02", "FEAT-22", "DRW-01", "DRW-08", "DRW-21"],
+      "base": {"D": 40, "L": 180, "d2": 28, "key_w": 8, "key_h": 7, "ra": 1.6},
+      "sweep": {"D": [30, 40, 55], "L": [120, 180, 240], "d2": [22, 28, 35]},
+      "drawing": "A3 第一视角，主视图+键槽剖视，标注 H7/g6 配合"
+    },
+    {
+      "id": "P02", "name": "法兰盘", "family": "回转体-盘套类", "material": "Q235B", "blank": "钢板 Ø160×20",
+      "ops": ["SKT-06", "FEAT-03", "FEAT-29", "FEAT-11", "FEAT-17", "DRW-01", "DRW-28", "DRW-15"],
+      "base": {"D": 150, "d": 60, "t": 18, "hole_n": 6, "hole_d": 11, "pcd": 120},
+      "sweep": {"D": [120, 150, 200], "d": [50, 60, 80], "hole_n": [4, 6, 8]},
+      "drawing": "A3 主视图+剖视图，均布孔标注 6×Ø11 均布于 Ø120"
+    },
+    {
+      "id": "P03", "name": "轴承座", "family": "板类-异形", "material": "HT200", "blank": "铸件 180×120×80",
+      "ops": ["FEAT-01", "FEAT-24", "FEAT-17", "FEAT-11", "DRW-05", "DRW-08", "DRW-22"],
+      "base": {"w": 180, "h": 120, "b": 80, "bore": 62, "rib_t": 10, "bolt": 12},
+      "sweep": {"w": [140, 180, 220], "bore": [47, 62, 80], "rib_t": [8, 10, 14]},
+      "drawing": "A3 主视+俯视+局部剖，轴承孔标注 Ø62 H7 与同轴度"
+    },
+    {
+      "id": "P04", "name": "齿轮坯", "family": "回转体-盘套类", "material": "40Cr", "blank": "锻件 Ø140×45",
+      "ops": ["FEAT-03", "FEAT-02", "FEAT-29", "FEAT-11", "FEAT-17", "DRW-15", "DRW-22"],
+      "base": {"Da": 132, "m": 3, "z": 42, "b": 40, "bore": 32, "web": 12},
+      "sweep": {"Da": [96, 132, 168], "b": [30, 40, 55], "bore": [25, 32, 40]},
+      "drawing": "A3 主视图+剖视，标注分度圆 Ø126 与齿部参数表"
+    },
+    {
+      "id": "P05", "name": "L 型支架", "family": "板类", "material": "Q235B", "blank": "钢板 160×120×12",
+      "ops": ["FEAT-01", "FEAT-02", "FEAT-11", "FEAT-17", "DRW-05", "DRW-22", "DRW-21"],
+      "base": {"a": 160, "b": 120, "t": 12, "hole": 13, "fillet": 8},
+      "sweep": {"a": [120, 160, 200], "t": [8, 12, 16], "hole": [9, 13, 17]},
+      "drawing": "A4 三视图，标注垂直度 0.05 A 与孔位尺寸链"
+    },
+    {
+      "id": "P06", "name": "端盖", "family": "回转体-盘套类", "material": "HT150", "blank": "铸件 Ø110×25",
+      "ops": ["FEAT-03", "FEAT-23", "SKT-24", "FEAT-17", "FEAT-11", "DRW-08", "DRW-24"],
+      "base": {"D": 105, "t": 22, "wall": 6, "groove": 3.2, "bolt_n": 4, "bolt": 9},
+      "sweep": {"D": [85, 105, 130], "wall": [5, 6, 8], "bolt_n": [4, 4, 6]},
+      "drawing": "A4 剖视图，标注密封槽 3.2×2.4 与 Ra3.2"
+    },
+    {
+      "id": "P07", "name": "联轴器", "family": "回转体-盘套类", "material": "45钢", "blank": "圆钢 Ø120×90",
+      "ops": ["FEAT-01", "FEAT-02", "FEAT-17", "FEAT-29", "FEAT-11", "FEAT-22", "DRW-15"],
+      "base": {"D": 110, "L": 84, "bore": 35, "key_w": 10, "bolt_n": 6, "bolt": 11},
+      "sweep": {"D": [90, 110, 140], "L": [70, 84, 100], "bore": [28, 35, 42]},
+      "drawing": "A3 主视+左视，标注 Ø35 H7 与键槽 10N9"
+    },
+    {
+      "id": "P08", "name": "减速器箱体", "family": "箱体类", "material": "HT200", "blank": "铸件 320×240×180",
+      "ops": ["FEAT-01", "FEAT-23", "FEAT-17", "FEAT-28", "FEAT-11", "DRW-10", "DRW-31"],
+      "base": {"w": 320, "d": 240, "h": 180, "wall": 10, "bore1": 80, "bore2": 95, "bolt": 14},
+      "sweep": {"w": [260, 320, 400], "wall": [8, 10, 12], "bore1": [72, 80, 90]},
+      "drawing": "A2 主视+俯视+左视，局部剖，标注孔系位置度 Ø0.05 A"
+    },
+    {
+      "id": "P09", "name": "钣金弯板", "family": "钣金件", "material": "SUS304", "blank": "板 1.5×400×300",
+      "ops": ["SM-01", "SM-02", "SM-21", "SM-08", "SM-24", "DRW-01", "DRW-24"],
+      "base": {"t": 1.5, "w": 380, "len": 260, "flange": 40, "k": 0.44},
+      "sweep": {"t": [1.0, 1.5, 2.0], "w": [300, 380, 460], "flange": [25, 40, 60]},
+      "drawing": "A4 展开图，标注折弯线向上 R1.5 与展开长度"
+    },
+    {
+      "id": "P10", "name": "焊接框架", "family": "焊件", "material": "Q235B", "blank": "型材 GB 方管 50×50×3",
+      "ops": ["WELD-01", "WELD-03", "WELD-06", "WELD-08", "WELD-18", "DRW-34", "DRW-25"],
+      "base": {"w": 900, "d": 600, "h": 750, "profile": "50×50×3", "gusset_t": 6, "weld": 5},
+      "sweep": {"w": [700, 900, 1200], "h": [600, 750, 900], "gusset_t": [5, 6, 8]},
+      "drawing": "A2 装配图，切割清单+焊接符号+件号"
+    }
+  ],
+  "assembly": {
+    "id": "A01", "name": "单级圆柱齿轮减速器", "part_count": 36,
+    "components": [
+      {"name": "箱体", "qty": 1}, {"name": "箱盖", "qty": 1}, {"name": "输入轴", "qty": 1},
+      {"name": "输出轴", "qty": 1}, {"name": "小齿轮", "qty": 1}, {"name": "大齿轮", "qty": 1},
+      {"name": "深沟球轴承 6206", "qty": 4}, {"name": "深沟球轴承 6208", "qty": 2},
+      {"name": "轴承端盖", "qty": 4}, {"name": "骨架油封", "qty": 2}, {"name": "平键 8×7×40", "qty": 2},
+      {"name": "六角螺栓 M10×35", "qty": 12}, {"name": "弹簧垫圈 10", "qty": 12},
+      {"name": "定位销 Ø8×30", "qty": 2}, {"name": "垫片", "qty": 4}, {"name": "透气塞", "qty": 1}
+    ],
+    "mates": ["ASM-03", "ASM-07", "ASM-09", "ASM-10", "ASM-26", "ASM-28", "ASM-38", "ASM-44"],
+    "checks": ["无过约束（MateXpert 0 冲突）", "无欠约束（自由度分析闭合）", "干涉体积 0", "最小间隙 ≥1mm", "BOM 层级正确"]
+  },
+  "drawings": [
+    {"id": "D01", "name": "轴类零件图", "size": "A3", "views": ["主视图", "键槽剖面", "局部放大"], "std": "GB/T 4458.1-2002", "dims": ["Ø40h6", "Ø28k6", "长度链"], "ra": "Ra1.6/Ra3.2"},
+    {"id": "D02", "name": "盘类零件图", "size": "A3", "views": ["主视图", "全剖"], "std": "GB/T 4458.6-2002", "dims": ["Ø150", "6×Ø11 均布"], "ra": "Ra3.2"},
+    {"id": "D03", "name": "支架零件图", "size": "A4", "views": ["三视图"], "std": "GB/T 4458.1-2002", "dims": ["尺寸链", "垂直度 0.05 A"], "ra": "Ra6.3"},
+    {"id": "D04", "name": "箱体零件图", "size": "A2", "views": ["主视", "俯视", "左视", "局部剖"], "std": "GB/T 4458.6-2002", "dims": ["孔系坐标", "位置度 Ø0.05 A"], "ra": "Ra1.6~Ra12.5"},
+    {"id": "D05", "name": "钣金展开图", "size": "A4", "views": ["展开图", "折弯示意"], "std": "GB/T 4458.1-2002", "dims": ["展开长度", "折弯线"], "ra": "不标注"},
+    {"id": "D06", "name": "焊件装配图", "size": "A2", "views": ["主视", "俯视", "轴测"], "std": "GB/T 4458.2-2003", "dims": ["件号", "焊接符号"], "ra": "焊缝标注"},
+    {"id": "D07", "name": "减速器装配图", "size": "A1", "views": ["主视全剖", "俯视", "左视"], "std": "GB/T 4458.2-2003", "dims": ["配合尺寸", "安装尺寸", "外形尺寸"], "ra": "配合面 Ra1.6"},
+    {"id": "D08", "name": "剖视图专项图", "size": "A3", "views": ["旋转剖", "阶梯剖", "断面图"], "std": "GB/T 4458.6-2002", "dims": ["剖面线方向", "剖切符号"], "ra": "Ra3.2"}
+  ],
+  "mates": [
+    {"id": "M01", "type": "同轴心", "op": "ASM-07", "a": "轴 Ø35k6 外圆", "b": "轴承内圈内孔", "param": "无", "check": "径向自由度为 0，轴向可动"},
+    {"id": "M02", "type": "重合", "op": "ASM-03", "a": "轴承外圈端面", "b": "箱体轴承孔台阶面", "param": "无", "check": "轴向定位，法向一致"},
+    {"id": "M03", "type": "距离", "op": "ASM-09", "a": "端盖止口面", "b": "箱体端面", "param": "0.5mm 垫片", "check": "0.5mm 间隙，可调"},
+    {"id": "M04", "type": "平行", "op": "ASM-04", "a": "两轴承孔轴线", "b": "箱体底面", "param": "无", "check": "轴线平行度 ≤0.02"},
+    {"id": "M05", "type": "垂直", "op": "ASM-05", "a": "输入轴轴线", "b": "输出轴轴线所在平面", "param": "无", "check": "正交 90°"},
+    {"id": "M06", "type": "相切", "op": "ASM-06", "a": "皮带轮外圆", "b": "皮带内表面", "param": "无", "check": "包角合理"},
+    {"id": "M07", "type": "角度", "op": "ASM-10", "a": "连杆轴线", "b": "机架基准面", "param": "30°~150°", "check": "摆动范围无干涉"},
+    {"id": "M08", "type": "宽度", "op": "ASM-13", "a": "滑块凸台", "b": "导轨槽两面", "param": "无", "check": "自动居中，无侧隙"},
+    {"id": "M09", "type": "对称", "op": "ASM-12", "a": "两支撑臂", "b": "中分基准面", "param": "无", "check": "关于中面对称"},
+    {"id": "M10", "type": "槽口", "op": "ASM-18", "a": "销轴", "b": "腰形槽", "param": "行程 40mm", "check": "沿槽滑动不脱出"},
+    {"id": "M11", "type": "齿轮", "op": "ASM-20", "a": "小齿轮 Ø42", "b": "大齿轮 Ø126", "param": "传动比 3:1", "check": "转向相反，齿比正确"},
+    {"id": "M12", "type": "螺旋", "op": "ASM-22", "a": "丝杠", "b": "螺母", "param": "导程 4mm", "check": "一转前进 4mm"},
+    {"id": "M13", "type": "铰链", "op": "ASM-19", "a": "门板", "b": "箱体", "param": "0~110°", "check": "开合无干涉"},
+    {"id": "M14", "type": "线性耦合", "op": "ASM-15", "a": "主动滑块", "b": "从动滑块", "param": "比例 2:1", "check": "位移比 2:1"}
+  ],
+  "gb_annotations": [
+    {"id": "G01", "name": "图纸幅面 A3", "ref": "GB/T 14689-2008", "rule": "420×297，留装订边 25mm，其余 5mm", "check": "幅面与图框线一致"},
+    {"id": "G02", "name": "图纸幅面 A4", "ref": "GB/T 14689-2008", "rule": "297×210，竖装，装订边 25mm", "check": "竖装方向正确"},
+    {"id": "G03", "name": "比例系列", "ref": "GB/T 14690-1993", "rule": "优先 1:1，缩小 1:2/1:5/1:10，放大 2:1/5:1", "check": "比例标注在标题栏"},
+    {"id": "G04", "name": "粗实线", "ref": "GB/T 17450-1998", "rule": "可见轮廓线 0.5~1.0mm，取 0.7mm", "check": "线宽全图统一"},
+    {"id": "G05", "name": "细实线", "ref": "GB/T 17450-1998", "rule": "尺寸线/剖面线，宽度为粗线 1/2", "check": "0.35mm"},
+    {"id": "G06", "name": "细点画线", "ref": "GB/T 17450-1998", "rule": "中心线，超出轮廓 3~5mm", "check": "点画比例一致"},
+    {"id": "G07", "name": "虚线", "ref": "GB/T 17450-1998", "rule": "不可见轮廓，线段 4mm 间隔 1mm", "check": "与实线不重叠"},
+    {"id": "G08", "name": "字体高度", "ref": "GB/T 14691-1993", "rule": "汉字 3.5/5/7mm，字母数字同高", "check": "字高一致，长仿宋"},
+    {"id": "G09", "name": "主视图选择", "ref": "GB/T 4458.1-2002", "rule": "反映零件主要形状特征的方向作主视", "check": "主视方向与加工/装配一致"},
+    {"id": "G10", "name": "视图数量", "ref": "GB/T 4458.1-2002", "rule": "以最少视图表达完整形状", "check": "无重复表达"},
+    {"id": "G11", "name": "第一视角投影", "ref": "GB/T 4458.1-2002", "rule": "左视图放右侧，俯视图放下方", "check": "投影关系对齐"},
+    {"id": "G12", "name": "剖视图标注", "ref": "GB/T 4458.6-2002", "rule": "剖切符号+箭头+大写字母 A-A", "check": "剖切位置与视图对应"},
+    {"id": "G13", "name": "剖面线", "ref": "GB/T 4458.6-2002", "rule": "45° 细实线，同零件同向同距", "check": "相邻零件方向相反"},
+    {"id": "G14", "name": "局部剖边界", "ref": "GB/T 4458.6-2002", "rule": "波浪线不与其他线重合", "check": "波浪线不穿越孔"},
+    {"id": "G15", "name": "断裂边界", "ref": "GB/T 4458.6-2002", "rule": "双折线或波浪线", "check": "断裂两端一致"},
+    {"id": "G16", "name": "尺寸线", "ref": "GB/T 4458.4-2003", "rule": "细实线，与被注线段平行", "check": "不与其他线相交"},
+    {"id": "G17", "name": "尺寸界线", "ref": "GB/T 4458.4-2003", "rule": "超出尺寸线 2~3mm", "check": "与轮廓留 1mm 间隙"},
+    {"id": "G18", "name": "箭头", "ref": "GB/T 4458.4-2003", "rule": "长宽比 3:1，长度 4~6mm", "check": "全图统一"},
+    {"id": "G19", "name": "线性尺寸数字", "ref": "GB/T 4458.4-2003", "rule": "字头向上或向左，写在尺寸线上方", "check": "不被图线穿过"},
+    {"id": "G20", "name": "直径标注", "ref": "GB/T 4458.4-2003", "rule": "Ø + 数值，圆内标注", "check": "Ø 符号不省略"},
+    {"id": "G21", "name": "半径标注", "ref": "GB/T 4458.4-2003", "rule": "R + 数值，引线指向圆心", "check": "R 符号正确"},
+    {"id": "G22", "name": "球面标注", "ref": "GB/T 4458.4-2003", "rule": "SØ 或 SR", "check": "S 前缀不省略"},
+    {"id": "G23", "name": "倒角标注", "ref": "GB/T 4458.4-2003", "rule": "C2 或 2×45°", "check": "与图样一致"},
+    {"id": "G24", "name": "螺纹标注", "ref": "GB/T 4459.1-1995", "rule": "M20×1.5-6H，粗牙省略螺距", "check": "公差带代号正确"},
+    {"id": "G25", "name": "螺纹画法", "ref": "GB/T 4459.1-1995", "rule": "大径粗实线，小径细实线约 0.85d", "check": "小径线画入倒角"},
+    {"id": "G26", "name": "键槽标注", "ref": "GB/T 1095-2003", "rule": "b×t 及公差 N9/JS9", "check": "键槽宽度公差正确"},
+    {"id": "G27", "name": "中心孔标注", "ref": "GB/T 4459.5-1999", "rule": "中心孔代号 + 标准号", "check": "代号与轴端一致"},
+    {"id": "G28", "name": "尺寸公差注法", "ref": "GB/T 4458.5-2003", "rule": "基本尺寸 + 上下偏差，或配合代号", "check": "偏差单位 mm 且小数位对齐"},
+    {"id": "G29", "name": "配合代号", "ref": "GB/T 1800.1-2020", "rule": "Ø40 H7/g6，孔在前轴在后", "check": "基孔制优先"},
+    {"id": "G30", "name": "未注公差", "ref": "GB/T 1804-2000", "rule": "线性尺寸 m 级，标题栏注明", "check": "技术要求有声明"},
+    {"id": "G31", "name": "形位公差框格", "ref": "GB/T 1182-2018", "rule": "符号+公差值+基准，从左到右", "check": "框格高度 2h"},
+    {"id": "G32", "name": "基准符号", "ref": "GB/T 1182-2018", "rule": "方框字母 A/B/C，连线指向基准面", "check": "基准字母不重复"},
+    {"id": "G33", "name": "未注形位公差", "ref": "GB/T 1184-1996", "rule": "K 级，标题栏注明", "check": "技术要求有声明"},
+    {"id": "G34", "name": "表面结构符号", "ref": "GB/T 131-2006", "rule": "去除材料符号，Ra 值注在横线上", "check": "符号朝向正确"},
+    {"id": "G35", "name": "表面结构统一注法", "ref": "GB/T 131-2006", "rule": "标题栏右上角统一注写，个别另注", "check": "不重复标注"},
+    {"id": "G36", "name": "镀涂表面", "ref": "GB/T 131-2006", "rule": "镀层前后 Ra 分别标注", "check": "与工艺一致"},
+    {"id": "G37", "name": "技术要求条目", "ref": "GB/T 4458.1-2002", "rule": "1.材料 2.热处理 3.未注圆角 4.未注公差 5.表面处理", "check": "条目齐全有序"},
+    {"id": "G38", "name": "标题栏", "ref": "GB/T 10609.1-2008", "rule": "含名称/图号/材料/比例/重量/设计审核", "check": "签署栏完整"},
+    {"id": "G39", "name": "明细栏", "ref": "GB/T 10609.2-2009", "rule": "序号/代号/名称/数量/材料/备注，自下而上", "check": "与件号一一对应"},
+    {"id": "G40", "name": "件号编排", "ref": "GB/T 4458.2-2003", "rule": "顺时针或逆时针顺序，字高大于尺寸字", "check": "无漏号重号"},
+    {"id": "G41", "name": "装配图必要尺寸", "ref": "GB/T 4458.2-2003", "rule": "外形/安装/配合/极限位置尺寸", "check": "四类齐全"},
+    {"id": "G42", "name": "焊接符号", "ref": "GB/T 324-2008", "rule": "焊缝形式+尺寸+数量，箭头指向焊缝", "check": "符号与坡口一致"},
+    {"id": "G43", "name": "展开图折弯线", "ref": "GB/T 4458.1-2002", "rule": "折弯线用细点画线，注明向上/向下", "check": "折弯方向明确"},
+    {"id": "G44", "name": "孔表", "ref": "GB/T 4458.4-2003", "rule": "以基准孔为原点，标注 X/Y 坐标", "check": "原点唯一"},
+    {"id": "G45", "name": "图样折叠与装订", "ref": "GB/T 10609.3-2009", "rule": "A0 折成 A4，标题栏外露", "check": "折叠方向正确"}
+  ],
+  "macro_topics": [
+    {"id": "X01", "api": "SldWorks.Application", "goal": "连接当前会话", "param": "visible", "check": "对象非空且版本为 29.x"},
+    {"id": "X02", "api": "ISldWorks.NewDocument", "goal": "按模板新建零件", "param": "template", "check": "返回 ModelDoc2 非空"},
+    {"id": "X03", "api": "IModelDoc2.SketchManager", "goal": "插入草图并绘制直线", "param": "plane", "check": "草图实体数 +1"},
+    {"id": "X04", "api": "ISketchManager.CreateCircle", "goal": "绘制圆", "param": "diameter", "check": "半径与输入一致"},
+    {"id": "X05", "api": "IFeatureManager.FeatureExtrusion2", "goal": "创建拉伸凸台", "param": "depth", "check": "体积增量 > 0"},
+    {"id": "X06", "api": "IFeatureManager.FeatureCut4", "goal": "创建拉伸切除", "param": "depth", "check": "体积增量 < 0"},
+    {"id": "X07", "api": "IFeatureManager.FeatureFillet", "goal": "创建圆角", "param": "radius", "check": "面数增加"},
+    {"id": "X08", "api": "IFeatureManager.FeatureLinearPattern", "goal": "线性阵列", "param": "count", "check": "实例数正确"},
+    {"id": "X09", "api": "IModelDocExtension.SelectByID2", "goal": "按名称选择实体", "param": "name", "check": "选择数 = 1"},
+    {"id": "X10", "api": "IAssemblyDoc.AddComponent5", "goal": "插入零部件", "param": "path", "check": "零部件数 +1"},
+    {"id": "X11", "api": "IAssemblyDoc.AddMate3", "goal": "添加配合", "param": "mate_type", "check": "自由度递减"},
+    {"id": "X12", "api": "IDrawingDoc.CreateView", "goal": "创建工程图视图", "param": "view_type", "check": "视图数 +1"},
+    {"id": "X13", "api": "IDrawingDoc.InsertModelAnnotations3", "goal": "插入模型尺寸", "param": "source", "check": "尺寸数 > 0"},
+    {"id": "X14", "api": "IModelDocExtension.CustomPropertyManager", "goal": "写自定义属性", "param": "key", "check": "读回值一致"},
+    {"id": "X15", "api": "IModelDoc2.FirstFeature", "goal": "遍历特征树", "param": "depth", "check": "遍历数 = 特征数"},
+    {"id": "X16", "api": "IModelDoc2.SaveAs3", "goal": "另存为指定格式", "param": "format", "check": "文件存在且 >0 字节"},
+    {"id": "X17", "api": "IModelDocExtension.SaveAs", "goal": "导出 STEP/PDF/DXF", "param": "format", "check": "可被目标软件打开"},
+    {"id": "X18", "api": "SldWorks.SetUserPreferenceIntegerValue", "goal": "设置系统选项", "param": "option", "check": "读回值一致"},
+    {"id": "X19", "api": "IModelDoc2.EditRebuild3", "goal": "重建模型", "param": "force", "check": "无重建错误"},
+    {"id": "X20", "api": "IModelDoc2.Extension.GetWhatsWrong", "goal": "读取重建错误", "param": "count", "check": "错误数与诊断一致"},
+    {"id": "X21", "api": "IEquationMgr.Add3", "goal": "添加方程式", "param": "expr", "check": "方程式数 +1"},
+    {"id": "X22", "api": "IConfigurationManager.AddConfiguration", "goal": "新增配置", "param": "name", "check": "配置数 +1"},
+    {"id": "X23", "api": "ISldWorks.RunCommand", "goal": "调用内置命令", "param": "command_id", "check": "命令被执行"},
+    {"id": "X24", "api": "IExportPdfData", "goal": "批量导出 PDF", "param": "sheet", "check": "页数与图纸数一致"}
+  ],
+  "workflows": [
+    {"id": "W01", "name": "零件参数化建模闭环", "stages": ["草图绘制", "特征建模", "配置"], "ops": ["SKT-02", "SKT-33", "FEAT-01", "FEAT-11", "CFG-11"], "gate": "草图全约束 + 体积守恒 + 方程式驱动成功"},
+    {"id": "W02", "name": "回转体零件建模", "stages": ["草图绘制", "特征建模", "工程图"], "ops": ["SKT-06", "SKT-22", "FEAT-03", "FEAT-02", "FEAT-22", "DRW-08"], "gate": "壁厚均匀 + 剖视表达完整"},
+    {"id": "W03", "name": "装配约束闭环", "stages": ["装配设计", "校验"], "ops": ["ASM-01", "ASM-07", "ASM-03", "ASM-25", "ASM-26", "ASM-28"], "gate": "0 过约束 + 0 干涉 + 间隙达标"},
+    {"id": "W04", "name": "GB 工程图出图", "stages": ["工程图", "标注", "输出"], "ops": ["DRW-01", "DRW-04", "DRW-08", "DRW-21", "DRW-22", "DRW-35", "DRW-36"], "gate": "线宽合规 + 公差齐全 + PDF 1:1"},
+    {"id": "W05", "name": "钣金展开闭环", "stages": ["钣金", "展开", "输出"], "ops": ["SM-01", "SM-02", "SM-08", "SM-24"], "gate": "K 因子一致 + 展开长度误差 ≤0.2mm"},
+    {"id": "W06", "name": "焊件框架闭环", "stages": ["焊件", "清单", "工程图"], "ops": ["WELD-01", "WELD-03", "WELD-05", "WELD-08", "DRW-34"], "gate": "切割清单与实体一致"},
+    {"id": "W07", "name": "曲面转实体", "stages": ["曲面", "缝合", "加厚"], "ops": ["SURF-05", "SURF-10", "SURF-22"], "gate": "缝合无缝隙 + 加厚成功"},
+    {"id": "W08", "name": "模具分型闭环", "stages": ["模具"], "ops": ["MOLD-04", "MOLD-05", "MOLD-06", "MOLD-07", "MOLD-08"], "gate": "分型线闭合 + 型腔型心分离"},
+    {"id": "W09", "name": "管道布线闭环", "stages": ["管道布线"], "ops": ["ROUT-01", "ROUT-02", "ROUT-05", "ROUT-08", "ROUT-17"], "gate": "从-到清单完整 + 无碰撞"},
+    {"id": "W10", "name": "仿真校核闭环", "stages": ["渲染仿真"], "ops": ["REND-11", "REND-12", "REND-13", "REND-14", "REND-19", "REND-21", "REND-23"], "gate": "网格收敛 + FOS ≥1.5"},
+    {"id": "W11", "name": "宏自动化闭环", "stages": ["宏"], "ops": ["MACRO-01", "MACRO-06", "MACRO-09", "MACRO-20", "MACRO-21"], "gate": "批处理 10 件无中断 + 日志完整"},
+    {"id": "W12", "name": "设计表系列化", "stages": ["配置", "工程图"], "ops": ["CFG-01", "CFG-06", "CFG-08", "CFG-17", "DRW-31"], "gate": "10 配置全部重建通过"}
+  ]
+}

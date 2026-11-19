@@ -1,0 +1,40 @@
+{
+  "tool": "macro1_batch_validate",
+  "run_at": "2026-11-18 23:35:53",
+  "dir": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\tmpxelz46te",
+  "total": 2,
+  "passed": 1,
+  "failed": 1,
+  "elapsed_sec": 0.03,
+  "honest_note": "本地静态校验(CIMCO桥接)，非CIMCO内核/非机床仿真",
+  "rows": [
+    {
+      "file": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\tmpxelz46te\\bad.nc",
+      "verdict": "FAIL",
+      "status": "success",
+      "is_valid": false,
+      "syntax_checked": true,
+      "lines": 8,
+      "vars": 1,
+      "errors": [
+        "Line 5: Unclosed WHILE DO 1.",
+        "Spindle still on at program end (no M05)."
+      ],
+      "real_errors": [
+        "Line 5: Unclosed WHILE DO 1.",
+        "Spindle still on at program end (no M05)."
+      ]
+    },
+    {
+      "file": "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\tmpxelz46te\\good.nc",
+      "verdict": "PASS",
+      "status": "success",
+      "is_valid": true,
+      "syntax_checked": true,
+      "lines": 8,
+      "vars": 0,
+      "errors": [],
+      "real_errors": []
+    }
+  ]
+}

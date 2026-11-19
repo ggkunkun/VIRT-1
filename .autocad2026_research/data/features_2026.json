@@ -1,0 +1,206 @@
+{
+  "source": "https://www.autodesk.com.cn/products/autocad/features （Autodesk 欧特克官网 AutoCAD 2026 功能页）",
+  "source_note": "Autodesk 官方中国站发布的 AutoCAD 2026 功能说明，简体中文，一手权威",
+  "version": "AutoCAD 2026 (内部版本 R25.1)",
+  "language": "zh-CN",
+  "new_features_2026": [
+    {
+      "name": "文件打开和启动速度提升",
+      "type": "全新功能",
+      "desc": "迄今最快的 AutoCAD 版本。与 AutoCAD 2025 相比，文件打开速度平均提高 11 倍，启动速度提高 4 倍。",
+      "commands": [],
+      "category": "性能"
+    },
+    {
+      "name": "连接的支持文件",
+      "type": "全新功能",
+      "desc": "CAD 管理人员可为 Autodesk Docs 项目定义一组项目感知支持文件和设置，团队无需额外配置即可用预期支持文件查看和编辑 DWG。",
+      "commands": [],
+      "category": "协作"
+    },
+    {
+      "name": "Autodesk Docs 标记导入和标记辅助",
+      "type": "增强功能",
+      "desc": "从 Autodesk Docs 导入并连接 JPG、PNG、PDF 标记。同步后在 AutoCAD 跟踪图层中继续更新，用标记辅助审查合并反馈，查看 Docs 问题。",
+      "commands": [
+        "MARKUPIMPORT",
+        "MARKUP"
+      ],
+      "category": "协作",
+      "command_note": "标记辅助(Markup Assist)通过功能区上下文调用，无独立命令行命令；MARKUPIMPORT/MARKUP 为官方标记相关命令。"
+    },
+    {
+      "name": "智能块：检测和转换",
+      "type": "增强功能/技术预览",
+      "desc": "借助 Autodesk AI 自动识别要转换为块的对象，提高设计效率、节省清理图形时间。仍为技术预览。",
+      "commands": [],
+      "category": "AI/块",
+      "command_note": "技术预览，通过功能区『智能块』上下文选项调用，R25.1 官方命令表暂无独立命令。"
+    },
+    {
+      "name": "智能块：搜索和转换",
+      "type": "增强功能",
+      "desc": "借助 Autodesk AI 快速搜索图形中的对象、匹配文本和变量文本，将其转换为新块、现有/最近使用块或块库中建议块的实例。",
+      "commands": [],
+      "category": "AI/块",
+      "command_note": "通过功能区/设计中心智能块工作流调用，R25.1 官方命令表暂无独立命令。"
+    },
+    {
+      "name": "活动见解",
+      "type": "增强功能",
+      "desc": "通过多用户事件日志了解设计数据，跟踪 35 种以上活动类型，含版本历史、文件比较工具和新的『更改内容』见解。支持 Docs、本地及第三方远程存储文件。",
+      "commands": [
+        "ACTIVITYINSIGHTSOPEN",
+        "ACTIVITYINSIGHTSCLOSE",
+        "ACTIVITYINSIGHTSSTATE"
+      ],
+      "category": "AI/见解",
+      "command_note": ""
+    },
+    {
+      "name": "网页版多用户标记（抢先体验）",
+      "type": "抢先体验",
+      "desc": "通过 Autodesk Docs 标记工具（网页端抢先体验）收集和分享图形反馈，创建标记链接支持多用户同时访问，无需复制或锁定文件。",
+      "commands": [],
+      "category": "协作",
+      "command_note": "AutoCAD 网页端应用功能，桌面端命令表无对应命令。"
+    },
+    {
+      "name": "Autodesk 助手",
+      "type": "增强功能",
+      "desc": "通过 Autodesk AI 对话界面快速访问支持和解决方案，无需离开 AutoCAD 即可了解功能与设计挑战，生成指导、总结性回答和学习资源。",
+      "commands": [],
+      "category": "AI/助手",
+      "command_note": "Autodesk Assistant 通过界面助手面板调用，R25.1 官方命令表暂无独立命令。"
+    },
+    {
+      "name": "我的见解",
+      "type": "增强功能",
+      "desc": "根据 AutoCAD 使用情况查看个人或团队见解，提供个性化功能、宏和提示，助力更快完成项目。",
+      "commands": [],
+      "category": "AI/见解",
+      "command_note": "通过状态栏/功能区『我的见解』调用，R25.1 官方命令表暂无独立命令。"
+    },
+    {
+      "name": "智能块：放置",
+      "type": "增强功能",
+      "desc": "根据当前 DWG 中相同块的插入位置，自动以正确位置和比例放置块，减少单击次数。",
+      "commands": [],
+      "category": "AI/块",
+      "command_note": "智能块自动放置通过 BLOCK 功能区上下文调用；R25.1 官方命令表中块替换命令为 BREPLACE。"
+    },
+    {
+      "name": "智能块：替换",
+      "type": "增强功能",
+      "desc": "通过机器学习建议、最近使用的块和手动选择，快速查找并替换一个或多个块。",
+      "commands": [
+        "BREPLACE"
+      ],
+      "category": "AI/块",
+      "command_note": "官方命令表中的块替换命令为 BREPLACE（替换）；机器学习建议通过智能块界面调用。"
+    },
+    {
+      "name": "填充图案增强",
+      "type": "增强功能",
+      "desc": "对 HATCH 命令的便捷更新，通过图案、填充和路径向绘图添加纹理，无需预定义形状或封闭边界。",
+      "commands": [
+        "HATCH"
+      ],
+      "category": "二维草图",
+      "command_note": ""
+    },
+    {
+      "name": "计数",
+      "type": "增强功能",
+      "desc": "自动对选定区域或整个图形中的块或对象实例计数，基于特性导航、过滤和查看，创建字段和表显示计数。",
+      "commands": [
+        "COUNT",
+        "COUNTLIST"
+      ],
+      "category": "二维草图",
+      "command_note": ""
+    },
+    {
+      "name": "标记导入和标记辅助（图纸/PDF）",
+      "type": "增强功能",
+      "desc": "从移动设备或 PDF 导入打印图纸反馈，自动将更改添加到图形。AutoCAD 利用 AI 检测并执行标记文本中的 MOVE、COPY、DELETE 等命令指令。",
+      "commands": [
+        "MARKUPIMPORT"
+      ],
+      "category": "协作",
+      "command_note": "标记文本指令识别(MOVE/COPY/DELETE)由 AI 自动执行，无需单独命令。"
+    },
+    {
+      "name": "跟踪（桌面端）",
+      "type": "增强功能",
+      "desc": "除网页和移动应用外，可在 AutoCAD 桌面添加设计更改注释和标记，无需更改现有图形。",
+      "commands": [],
+      "category": "协作",
+      "command_note": "通过『跟踪』面板/标记集调用，MARKUP 为标记集管理器命令。"
+    },
+    {
+      "name": "ArcGIS 底图",
+      "type": "功能",
+      "desc": "使用 ArcGIS 底图根据真实世界地理信息构建场地平面图，访问高分辨率卫星/航空图像、OpenStreetMaps、Streets 五种底图及浅灰/深灰单色样式。",
+      "commands": [
+        "GEOMAP",
+        "GEOMAPIMAGE"
+      ],
+      "category": "协作/地理",
+      "command_note": ""
+    },
+    {
+      "name": "AutoLISP 与 Visual LISP IDE",
+      "type": "功能",
+      "desc": "构建和运行 AutoLISP 简化工作流并执行 CAD 标准，支持 LSP、FAS、VLX 文件类型。",
+      "commands": [
+        "VLISP",
+        "APPLOAD"
+      ],
+      "category": "自定义/自动化",
+      "command_note": "官方命令表中 Visual LISP 编辑器命令为 VLISP（原 VLIDE 为旧称）。"
+    }
+  ],
+  "core_feature_modules": [
+    "二维草图、图形和注释",
+    "三维建模和可视化",
+    "协作",
+    "安装和自定义",
+    "阵列",
+    "中心标记和中心线",
+    "数据提取",
+    "数据链接",
+    "尺寸标注",
+    "动态块",
+    "字段",
+    "布局",
+    "引线",
+    "参数化约束",
+    "清理",
+    "修订远程服务",
+    "表格",
+    "文本设定",
+    "视图",
+    "三维导航（动态观察、ViewCube、控制盘）",
+    "模型文档",
+    "点云",
+    "渲染",
+    "云渲染",
+    "截面平面",
+    "实体/曲面/网格建模",
+    "视觉样式",
+    "DGN 文件",
+    "DWG 比较",
+    "地理位置和联机地图",
+    "参照和导入模型",
+    "PDF 文件",
+    "图纸集管理器",
+    "保存到 Web 和移动设备",
+    "共享视图",
+    "外部参照比较",
+    "动作录制器",
+    "应用程序编程接口(API)",
+    "Autodesk Access",
+    "浮动窗口"
+  ]
+}

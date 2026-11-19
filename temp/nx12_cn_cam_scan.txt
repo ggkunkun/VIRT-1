@@ -1,0 +1,13 @@
+scanned=5632 elapsed=150.1s
+
+== 型腔铣 (0) ==
+
+== 深度轮廓铣 (0) ==
+
+== 平面铣 (0) ==
+
+== 面铣 (0) ==
+
+== 钻孔 (2) ==
+  MACH\html_files\simpl_chinese\cam_express.html
+  MACH\html_files\simpl_chinese\cam_samples_index.html

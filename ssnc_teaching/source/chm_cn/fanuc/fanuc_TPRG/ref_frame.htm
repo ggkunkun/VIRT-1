@@ -1,0 +1,76 @@
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>无标题文档</title>
+<script type="text/JavaScript">
+<!--
+
+
+
+function MM_preloadImages() { //v3.0
+  var d=document; if(d.images){ if(!d.MM_p) d.MM_p=new Array();
+    var i,j=d.MM_p.length,a=MM_preloadImages.arguments; for(i=0; i<a.length; i++)
+    if (a[i].indexOf("#")!=0){ d.MM_p[j]=new Image; d.MM_p[j++].src=a[i];}}
+}
+//-->
+</script>
+<link href="../../helper_css.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar">
+  <tr>
+    <td>坐标系统</td>
+  </tr>
+</table>
+<TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+  <TR>
+    <TD></TD>
+  </TR>
+  <TR>
+    <TD class=contents1 vAlign=top height="16">&nbsp;</TD>
+  </TR>
+  <TR>
+    <TD class=contents1 vAlign=top height="170"><span class="title6"><b>程序原点</b><br>
+      </span> 在程序开发开始之前必须决定坐标系和程序的原点。<br>
+      通常把程序原点确定为便于程序开发和加工的点。<br>
+      <img border="0" src="Code/TurnCoordSys.GIF" width="455" height="291">
+      <p> 在多数情况下，把 Z 轴与 X 轴的交点设置为程序原点<br>
+          <img border="0" src="Code/CoordOrigin.GIF" width="309" height="176"><br>
+          <br>
+          <span class="title6"><b>坐标原点</b><br>
+          </span> 1. 机床坐标系统<br>
+        这个坐标系统用一个固定的机床的点作为其原点。在执行返回原点操作时，机床移动到此机床原点。 <br>
+        <br>
+        2. 绝对坐标系统<br>
+        用户能够可建立此坐标系统。它的原点可以设置在任意位置，而它的原点以机床坐标值显示。<br>
+        <br>
+        3. 相对坐标系统<br>
+        这个坐标系统把当前的机床位置当作原点，在此需要以相对值指定机床位置时使用。<br>
+        <br>
+        4. 剩余移动距离<br>
+        此功能不属于坐标系。它仅仅显示移动命令发出后目的位置与当前机床位置之间的距离。仅当各个轴的剩余距离都为 零 
+        时，这个移动命令才完成。<br>
+                          <br>
+                          <img border="0" src="Code/PosDefine.GIF" width="486" height="364">
+      <p> <span class="title6"><br>
+            <b>设置坐标系</b><br>
+        </span> 开发程序首先要决定坐标系。程序原点与刀具起点之间的关系构成坐标系；这个关系应当随着程序的执行输入给 NC 机床，这个过程能够用 
+        G50 命令来实现。<br>
+        在切削进程开始时，刀具应当在指定的位置；
+        由于上面所述设置原点的过程已经完成，工件坐标系和刀具起始位置就定了；刀具更换也在这个被叫为起点的位置操作。<br>
+                          <img border="0" src="Code/SetOrigin.GIF" width="339" height="240"><br>
+                          <span class="title6"><br>
+                          <b>绝对/增量 坐标系编程</b><br>
+                          </span> NC 车床有两个控制轴；对这种 2 
+        轴系统有两种编程方法：绝对坐标命令方法和增量坐标命令方法。此外，这些方法能够被结合在一个指令里。对于X 轴和 Z 
+        轴寻址所要求的增量指令是 U 和 W。<br>
+                          <img border="0" src="Code/AbsRelPos.GIF" width="339" height="240"><br>
+        ① 绝对坐标程序---X40.Z5.;<br>
+        ② 增量坐标程序---U20.W-40.;<br>
+        ③ 混合坐标程序---X40.W-40.;</TD>
+  </TR>
+</TABLE>
+</body>
+</html>

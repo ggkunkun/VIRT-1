@@ -1,0 +1,53 @@
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title></title>
+<link href="../../helper_css.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar">
+  <tr>
+    <td><span class="title2">坐标系设定机能</span></td>
+  </tr>
+</table>
+<TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+  <TR>
+    <TD>&nbsp;</TD>
+  </TR>
+  <TR>
+    <TD><b>坐标系和控制轴&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></span></font>
+        <p> 标准规格的控制轴数为3轴，各加工方向的指定及其相对应的文字坐标术语如下所示：</font></p>
+      <p> <br>
+                <img border="0" src="edit/e01.gif" width="321" height="237"></span></font></p>
+      <p>　</TD>
+  </TR>
+  <TR>
+    <TD>  基本机械坐标系、工件坐标系及局部坐标系</span></font>
+        <p>  基本机械坐标系是机械上固定的坐标系。工件坐标系是程式作成时使用的坐标系，以工件上的基准点设定为坐标原点的坐标系。局部坐标系是在工件坐标系上作成的坐标系，以便与部分加工程式的作成。</span></p>
+      <img border="0" src="edit/e02.gif" width="502" height="472">
+      <p>  机械原点与第2、第3、第4参考原点机械原点是基本机械坐标系的基准点，参考原点是复归时机械上固定的点。第2、第3、第4参考原点是从基本机械坐标系的原点起，用参数设定的坐标值的位置点。</span></p>
+      <p> <img border="0" src="edit/e03.gif" width="410" height="273"><br>
+        </span></font>
+      <p> 基本机械坐标系</span></font><br>
+            （1）机能及目的<br>
+              基本机械坐标系为机械上固定位置（刀具交换位置、行程极限位置等）的坐标系。<br>
+              G53指令及坐标指令指定时，刀具向基本机械坐标系上的指令位置移动。</span></p>
+      <p>（2）指令格式 </span></p>
+      <p>基本机械坐标系选择（G90）G53 Xx Yy Zz αα；（α表示附加轴）</span></p>
+      <p>（3）详细说明</font></p>
+      <p>1) 
+        基本机械坐标系在电源投入后，以自动或手动参考原点复归。决定的参考原点为基准，自动地建立起坐标系。<br>
+        2) 基本机械坐标系不会因G92指定而必变。<br>
+        3) G53指令仅在指定的单节有效。<br>
+        4) G53指令在增量值指令G91时，以选择中的坐标系的增量值移动。<br>
+        5) 即使G53指令指定时，指令轴的刀具径补正量不取消。<br>
+        6) 第1参考原点的坐标值是以基本机械坐标系的零点（原点）起到参考原点归位置的距离。<br>
+        7) 所有G53命令均以快速进给方式移动。<br>
+        8) 当G53命令和G28（零点复归）命令被指定在同一单节时，后续的命令有效。</span></p>
+      <p> <img border="0" src="edit/e04.gif" width="376" height="166"></TD>
+  </TR>
+</TABLE>
+</body>
+</html>

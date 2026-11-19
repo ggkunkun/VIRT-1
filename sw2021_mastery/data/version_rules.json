@@ -1,0 +1,43 @@
+{
+  "baseline": {
+    "product": "SOLIDWORKS 2021",
+    "service_pack": "SP5.0",
+    "build": "29.5.0.0070",
+    "exe": "D:\\SOLIDWORKS (2)\\SLDWORKS.exe",
+    "progid": "SldWorks.Application",
+    "clsid": "{0A5BC87B-FDBF-4A0B-BC8A-DE1271220E81}",
+    "local_server32": "D:\\SOLIDWORKS (2)\\sldworks.exe",
+    "ui_language": "简体中文",
+    "evidence": "注册表 Uninstall 项 + SLDWORKS.exe VersionInfo + HKCR\\SldWorks.Application\\CLSID\\LocalServer32",
+    "checked_at": "2026-11-18"
+  },
+  "coexistence_risk": {
+    "other_version": "SOLIDWORKS 2026 SP03.2 (34.3.2.3)",
+    "other_install": "D:\\Program Files\\SOLIDWORKS Corp2026",
+    "risk": "同机双版本。2026 保存的文件无法被 2021 打开；若误用 2026 做界面验证，全部操作路径证据失效。",
+    "control": [
+      "训练与验证一律用绝对路径 D:\\SOLIDWORKS (2)\\SLDWORKS.exe 启动，禁止裸调 SldWorks.Application",
+      "每次会话启动后立即断言 Application.RevisionNumber 以 29. 开头，否则中止并记 FAIL",
+      "训练产出文件统一存于 sw2021_mastery/work/，不写入 2026 的最近文档与模板目录",
+      "验证截图必须包含标题栏版本字样与当前文件路径"
+    ]
+  },
+  "allowed_ui_tabs": [
+    "文件", "编辑", "视图", "插入", "工具", "窗口", "帮助",
+    "草图", "特征", "曲面", "钣金", "焊件", "模具工具", "装配体", "工程图", "注解", "布局", "评估",
+    "Routing", "Simulation", "PhotoView 360", "ConfigurationManager", "DimXpert", "DisplayManager"
+  ],
+  "banned_tokens": [
+    {"token": "SOLIDWORKS 2022", "reason": "版本串味", "confidence": "high"},
+    {"token": "SOLIDWORKS 2023", "reason": "版本串味", "confidence": "high"},
+    {"token": "SOLIDWORKS 2024", "reason": "版本串味", "confidence": "high"},
+    {"token": "SOLIDWORKS 2025", "reason": "版本串味", "confidence": "high"},
+    {"token": "SOLIDWORKS 2026", "reason": "版本串味", "confidence": "high"},
+    {"token": "另存为旧版本", "reason": "降版保存为 2023 及以后能力，2021 不具备", "confidence": "medium"},
+    {"token": "SaveAsPreviousVersion", "reason": "同上，API 在 2021 不存在", "confidence": "medium"},
+    {"token": "3DEXPERIENCE 平台任务", "reason": "2021 无平台任务面板工作流", "confidence": "medium"}
+  ],
+  "whitelist_rule": "每条操作路径必须能拆成 allowed_ui_tabs 中的选项卡 + 2021 存在的命令名；未命中白名单的路径一律进人工核验队列，不得直接入库",
+  "required_record_fields": ["id", "module", "task_type", "instruction", "steps", "version", "source", "review"],
+  "review_states": ["pending", "screenshot_verified", "rejected", "regression_passed"]
+}

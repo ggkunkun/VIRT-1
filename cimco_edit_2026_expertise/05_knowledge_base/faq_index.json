@@ -1,0 +1,2668 @@
+[
+  {
+    "id": "FAQ-001",
+    "question": "双击安装程序没有任何反应，装不上 CIMCO Edit 2026",
+    "category": "安装与启动",
+    "keywords": [
+      "安装",
+      "管理员权限",
+      "UAC",
+      "setup"
+    ],
+    "root_cause_summary": "官方安装章节要求先以具有完全管理员权限的账户登录，再运行安装程序；普通权限账户会被 UAC 拦截。",
+    "solution_summary": "换用管理员账户，右键 CIMCOEdit_2026xxxx.exe → 以管理员身份运行，按 Setup Wizard 完成安装。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-002",
+    "question": "安装前需要满足哪些最低系统配置",
+    "category": "安装与启动",
+    "keywords": [
+      "系统要求",
+      "运行库",
+      ".NET 4.8",
+      "VC++"
+    ],
+    "root_cause_summary": "官方 General System Requirements：客户端最低双核处理器、2 GB RAM、2 GB 可用磁盘空间；安装包内含 Microsoft Visual C++ v14 Redistributable（VS 2017-2026）与 .NET Framework 4.8。",
+    "solution_summary": "按客户端最低配置准备；低于配置先升级内存或改用 64 位 Windows。服务端场景才需要 4 逻辑核/4 GB 起。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-003",
+    "question": "安装完成后找不到 CIMCO Edit 2026 的启动入口",
+    "category": "安装与启动",
+    "keywords": [
+      "快捷方式",
+      "开始菜单",
+      "启动入口"
+    ],
+    "root_cause_summary": "官方安装说明：安装完成后会在开始菜单的 CIMCO 2026 程序组和桌面各放一个快捷方式；本机实装快捷方式解析目标为 CIMCOEdit_20260102\\CIMCO 2026\\CIMCOEdit。",
+    "solution_summary": "从开始菜单 CIMCO 2026 组启动，或直连 E:\\仿真软件\\CIMCOEdit_20260102\\CIMCO 2026\\CIMCOEdit\\CIMCOEdit.exe。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-004",
+    "question": "拿到 .CimcoLicense 许可文件后如何安装",
+    "category": "安装与启动",
+    "keywords": [
+      "许可文件",
+      "CimcoLicense",
+      "License File Viewer"
+    ],
+    "root_cause_summary": "官方安装章节：安装完成后双击该许可文件会打开 CIMCO License File Viewer，点击 Install license file 安装；如需激活会显示激活选项。",
+    "solution_summary": "通过 License File Viewer 的 Install license file 装入许可，重启 CIMCO Edit。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-005",
+    "question": "About 里没有公司名或显示 Demo version",
+    "category": "安装与启动",
+    "keywords": [
+      "About",
+      "Licensed to",
+      "Demo version",
+      "许可未生效"
+    ],
+    "root_cause_summary": "官方要求启动后核对 About 框 Licensed to 字段；若未显示公司名说明许可文件未正确安装。评估版的许可名固定为 Demo version。",
+    "solution_summary": "重新安装许可文件并重启；确为评估版则接受 Demo version 状态。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-006",
+    "question": "在线激活失败或没有网络时如何激活许可",
+    "category": "安装与启动",
+    "keywords": [
+      "在线激活",
+      "离线激活",
+      "request",
+      "activation"
+    ],
+    "root_cause_summary": "官方软件激活章节：选择需激活的许可文件后弹窗，能联网直接点 Yes 自动完成；不能联网走离线激活流程。",
+    "solution_summary": "联网用 Yes；离线用「.request → 官网激活 → .activation → Use activated request」闭环。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-007",
+    "question": "更换电脑后许可报「License File already activated」",
+    "category": "安装与启动",
+    "keywords": [
+      "换机",
+      "重置激活",
+      "already activated"
+    ],
+    "root_cause_summary": "官方：许可文件可通过激活锁定到某台机器；换机需先重置激活，否则会报已激活错误。重装/升级操作系统但硬件（CPU、硬盘、MAC）未变通常不需重置。",
+    "solution_summary": "由经销商/官方支持重置激活后再激活；仅重装系统则直接重新激活即可。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-008",
+    "question": "Backplot 标签不见了，无法背绘",
+    "category": "安装与启动",
+    "keywords": [
+      "Backplot标签",
+      "Professional许可",
+      "插件开关"
+    ],
+    "root_cause_summary": "官方 Plugins 章节：Disable Backplot 会移除 Backplot 标签，且 Backplot 需要 CIMCO Edit Professional 许可。",
+    "solution_summary": "在 Editor Setup → Plugins 取消 Disable Backplot，并确认 Professional 许可。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-009",
+    "question": "Machine Simulation 菜单/机床仿真用不了",
+    "category": "安装与启动",
+    "keywords": [
+      "机床仿真",
+      "add-on",
+      "许可",
+      "碰撞检测"
+    ],
+    "root_cause_summary": "官方明确：Machine Simulation 是 CIMCO Edit 2026 的 add-on，只有安装有效许可后才出现；本机许可状态未核实，按未验证处理。禁止宣称「全维度机床模拟与碰撞检测」已可用。",
+    "solution_summary": "有 add-on 许可：装机器模型后从 Backplot → Machine Simulation 启动。无许可：仅用 Backplot，并按 B-01 标注边界。",
+    "boundary": "B-01"
+  },
+  {
+    "id": "FAQ-010",
+    "question": "Transform/Info 等高级 NC 功能菜单消失",
+    "category": "安装与启动",
+    "keywords": [
+      "高级NC功能",
+      "Transform",
+      "Info",
+      "Professional"
+    ],
+    "root_cause_summary": "官方 Plugins：Disable advanced NC-Functions 会移除 Transform 与 Info 菜单；高级 NC 功能需要 CIMCO Edit Professional 许可。",
+    "solution_summary": "取消 Disable advanced NC-Functions 并确认 Professional 许可。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-011",
+    "question": "DNC/串口传输菜单不可用",
+    "category": "安装与启动",
+    "keywords": [
+      "DNC许可",
+      "串口",
+      "Transmission灰色"
+    ],
+    "root_cause_summary": "官方 Plugins：Disable DNC/Serial communication 会禁用该模块，且需要 DNC-Option 许可；Transmission 章节亦说明 DNC 操作需相应授权。",
+    "solution_summary": "启用 DNC 模块、确认许可，并在 DNC Setup 建好机器配置。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-012",
+    "question": "CNC-Calc 或 Mazatrol Viewer 菜单找不到",
+    "category": "安装与启动",
+    "keywords": [
+      "CNC-Calc",
+      "Mazatrol Viewer",
+      "扩展许可"
+    ],
+    "root_cause_summary": "官方 Plugins：Disable CNC-Calc 会禁用该模块（CNC-Calc 需要 CIMCO Edit Professional 的扩展许可）；Disable Mazatrol Viewer 同理需要扩展许可。",
+    "solution_summary": "取消相应 Disable 开关并确认扩展许可，重启后使用菜单。",
+    "boundary": "B-04"
+  },
+  {
+    "id": "FAQ-013",
+    "question": "多开实例编辑同一文件时弹出访问冲突警告",
+    "category": "安装与启动",
+    "keywords": [
+      "访问冲突",
+      "多实例",
+      "隐藏文件",
+      "权限"
+    ],
+    "root_cause_summary": "官方 General：Warn about access conflicts 启用后会提示另一实例正在打开同一文件；该功能依赖隐藏文件，目录权限必须至少为 Read 或 Full，若可创建但不可删除会残留隐藏文件。",
+    "solution_summary": "无需多开则关闭该警告；需多开则修复目录权限并保证权限可删文件。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-014",
+    "question": "配置、宏、刀具库应该放安装目录还是用户目录",
+    "category": "安装与启动",
+    "keywords": [
+      "配置路径",
+      "AppData",
+      "多用户",
+      "ConfigPaths"
+    ],
+    "root_cause_summary": "官方安装说明：勾选 Place configuration in install directory 会把配置/宏/刀具库放到安装目录供所有用户共用；不勾选则放到各用户 AppData\\Roaming\\CIMCO 2026\\CIMCOEdit。本机 ConfigPaths.cfg 显示 ROOTDIR 指向 %APPDATA% 再派生 CFG/DATA/MACHINES/TYPES/TOOLLIBS。",
+    "solution_summary": "共用安装目录方案勾选该选项；按用户隔离保持默认 AppData 方案。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-015",
+    "question": "如何把 CIMCO Edit 界面切换成中文",
+    "category": "安装与启动",
+    "keywords": [
+      "语言",
+      "中文",
+      "重启"
+    ],
+    "root_cause_summary": "官方 General：Language 下拉可选 Chinese 等 23 种语言，改变后必须重启编辑器生效。",
+    "solution_summary": "General → Language 选 Chinese，重启编辑器。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-016",
+    "question": "忘记了 Editor Setup 的配置密码",
+    "category": "安装与启动",
+    "keywords": [
+      "配置密码",
+      "Ctrl+Shift",
+      "忘记密码"
+    ],
+    "root_cause_summary": "官方 Plugins：Enable configuration password protection 可锁 Editor Setup；忘记密码时，启动编辑器期间按住 Ctrl+Shift 即可绕过。",
+    "solution_summary": "启动时按住 Ctrl+Shift 进入设置，取消 Enable configuration password protection。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-017",
+    "question": "如何备份和迁移整套配置到另一台电脑",
+    "category": "安装与启动",
+    "keywords": [
+      "Export",
+      "Import",
+      "配置迁移",
+      "zip"
+    ],
+    "root_cause_summary": "官方 Editor Setup 底部按钮：Export 把整个配置导出为 .zip（可作备份或用于另一台 PC）；Import 导入配置，且需重启生效。",
+    "solution_summary": "用 Export/Import .zip 迁移，导入后务必重启。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-018",
+    "question": "能否用命令行直接打开一个 NC 程序",
+    "category": "安装与启动",
+    "keywords": [
+      "命令行",
+      "无COM",
+      "--no-bring-to-front",
+      "桥接"
+    ],
+    "root_cause_summary": "CIMCO 无 COM 自动化（confirmed-negative），自动化通道是命令行拉起加外部 Python 桥接；官方 Pending Updates 记载 --no-bring-to-front 与 --savebundle path 等命令行开关。",
+    "solution_summary": "用 CIMCOEdit.exe <file.nc> 拉起；自动化校验用 D:\\Virtu模型\\bridges\\cimco_bridge.py。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-019",
+    "question": "想让 AI 智能体帮忙编辑 NC，怎么接",
+    "category": "安装与启动",
+    "keywords": [
+      "AI Agent",
+      "Ultra许可",
+      "Claude",
+      "Codex"
+    ],
+    "root_cause_summary": "官方 Connect to AI Agents：Help → Connect to AI Agents... 可连接 Claude/Codex；需要 Ultra 许可，无许可时菜单不出现。AI 可执行 Ribbon 命令、背绘/仿真、读写机床类型等，但不能收发程序、不能删 NC-Base 程序。",
+    "solution_summary": "有 Ultra 许可时在 Help → Connect to AI Agents... 完成连接；无许可则不宣称该功能可用。",
+    "boundary": "B-01"
+  },
+  {
+    "id": "FAQ-020",
+    "question": "提示有新版本，但不想每次启动都提醒",
+    "category": "安装与启动",
+    "keywords": [
+      "新版本提醒",
+      "Download Latest Version"
+    ],
+    "root_cause_summary": "官方 General：Show new version reminder 控制启动时提醒；Hide 'Download Latest Version' 隐藏帮助菜单里的链接（改后需重启）。",
+    "solution_summary": "按需关闭 Show new version reminder / 勾选 Hide 'Download Latest Version' 并重启。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-021",
+    "question": "打开的 NC 程序乱码、颜色不对、语法不高亮",
+    "category": "文件打开/导入与格式",
+    "keywords": [
+      "File Type",
+      "TYP",
+      "乱码",
+      "着色"
+    ],
+    "root_cause_summary": "官方 File Type 菜单说明：文件类型决定着色、语法、块号重编方式、换刀识别、背绘设置与保存目录等；选错 File Type 会全部错。选对类型是打开文件的第一步。",
+    "solution_summary": "在 Editor → File Type 选择与实际系统匹配的类型（如 ISO_G-Code），必要时重设颜色。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-022",
+    "question": "Mazatrol 程序语法高亮和背绘全错",
+    "category": "文件打开/导入与格式",
+    "keywords": [
+      "Mazatrol",
+      "Mazak_Mazatrol",
+      "高亮错",
+      "TYP选择"
+    ],
+    "root_cause_summary": "runbook §4 明确：Mazatrol 程序应选 Mazak_Mazatrol_*.TYP 而非 ISO_G-Code；Mazatrol 是对话/专用格式，用通用 G 代码类型解析必然错。",
+    "solution_summary": "改用 Mazak_Mazatrol_*.TYP 并把 Control Type 设为 Mazak 对应类型。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-023",
+    "question": "Heidenhain 对话程序打开乱码",
+    "category": "文件打开/导入与格式",
+    "keywords": [
+      "Heidenhain",
+      "对话程序",
+      "乱码",
+      "heidenhain.conv"
+    ],
+    "root_cause_summary": "runbook §4：Heidenhain 对话程序要用 Heidenhain_Conversational.TYP；转 ISO 用 heidenhain.conv。对话格式（Klartext）与 ISO G 代码是两套语法。",
+    "solution_summary": "用 Heidenhain_Conversational.TYP 打开；需转换时用 heidenhain.conv。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-024",
+    "question": "文件类型下拉在哪里、它到底控制什么",
+    "category": "文件打开/导入与格式",
+    "keywords": [
+      "File Type",
+      "设置作用域",
+      "Editor Setup"
+    ],
+    "root_cause_summary": "官方 File Type 菜单：决定 renumbering 方式、换刀识别、背绘设置、颜色、文件保存位置等；Editor Setup → File Types 下每个类型可独立配置 Colors/Block Numbers/Load-Save/Machine/Backplot/Scanning/Multi Channel/Tool List/Other/CNC-Calc。",
+    "solution_summary": "通过 Editor → File Type 切换类型；在 Editor Setup → File Types 针对该类型细配各子项。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-025",
+    "question": "打开对话框里看不到要打开的 .nc 文件",
+    "category": "文件打开/导入与格式",
+    "keywords": [
+      "Additional extensions",
+      "扩展名",
+      "打开过滤"
+    ],
+    "root_cause_summary": "官方 Load/Save：只有 Additional extension(s) 中定义的扩展名才会在 Open 窗口显示；可用逗号分隔多个扩展名。",
+    "solution_summary": "把所需扩展名加入 Additional extensions 并保存设置。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-026",
+    "question": "每次打开都跳到错误的默认目录",
+    "category": "文件打开/导入与格式",
+    "keywords": [
+      "Default load path",
+      "默认目录"
+    ],
+    "root_cause_summary": "官方 Load/Save：Default load path 指定 Open 对话框首次指向路径；留空则使用上次加载目录；Use separate load/and save directories 可独立记忆加载与保存位置。",
+    "solution_summary": "设置 Default load path（并按需分离加载/保存目录）。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-027",
+    "question": "在 Windows 资源管理器双击 .nc 没有用 CIMCO 打开",
+    "category": "文件打开/导入与格式",
+    "keywords": [
+      "文件关联",
+      "Register extension",
+      "双击打开"
+    ],
+    "root_cause_summary": "官方 Load/Save：Register default extension 与 Register additional extensions 把扩展名注册到 Windows；General 的 Associate file extensions 可一次性重关联各 File Type 定义的所有扩展名。",
+    "solution_summary": "用 Register 或 Associate file extensions 把 .NC 等关联到 CIMCO Edit。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-028",
+    "question": "只记得部分文件名或文件内容，怎么把文件找出来",
+    "category": "文件打开/导入与格式",
+    "keywords": [
+      "Advanced Open",
+      "按内容搜索",
+      "Ctrl+Alt+O"
+    ],
+    "root_cause_summary": "官方 File 菜单：Advanced Open（Ctrl+Alt+O）可按文件名、文件内容、创建/修改日期等条件搜索定位文件。",
+    "solution_summary": "用 Advanced Open 按内容/日期/名称组合检索。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-029",
+    "question": "打开超长行文件时被强制只读",
+    "category": "文件打开/导入与格式",
+    "keywords": [
+      "只读",
+      "1024字符",
+      "wrapped lines"
+    ],
+    "root_cause_summary": "官方 General：Open files with wrapped lines read only 会把含超过 1024 字符长行的文件以只读方式打开以防损坏；Open all files as read-only 则打开所有文件均只读。",
+    "solution_summary": "按需取消只读相关选项；确实含异常长行时先修复源文件再编辑。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-030",
+    "question": "文件在外部被改了，编辑器提示是否重载",
+    "category": "文件打开/导入与格式",
+    "keywords": [
+      "外部修改",
+      "reload",
+      "Check external changes"
+    ],
+    "root_cause_summary": "官方 General：Check external changes 启用后会监视文件外部修改，发现变更时提示是否重新加载。",
+    "solution_summary": "保持 Check external changes 开启；按提示选择 Reload 或保留本地版本。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-031",
+    "question": "同一个程序想在两个窗口同时看",
+    "category": "文件打开/导入与格式",
+    "keywords": [
+      "多窗口",
+      "Open file multiple times",
+      "平铺"
+    ],
+    "root_cause_summary": "官方 General：Open file multiple times 允许同一文件在编辑器多个窗口打开；Window 菜单提供 Cascade/Tile Horizontally/Tile Vertically 排列。",
+    "solution_summary": "开启多开后再次打开同一文件，并用 Window 菜单平铺。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-032",
+    "question": "保存后的换行符和机床要求不一致",
+    "category": "文件打开/导入与格式",
+    "keywords": [
+      "linefeed",
+      "CRLF",
+      "换行符",
+      "保存"
+    ],
+    "root_cause_summary": "官方 Load/Save：Save with linefeed type 可选 Auto（不改变类型，新文件用 DOS/Windows）、DOS/Windows（CR LF = ASCII 13 10）、Unix（LF = ASCII 10）、Mac（CR = ASCII 13）。",
+    "solution_summary": "设置正确的 Save with linefeed type，并与 DNC Transmit 的 CR/LF 保持一致。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-033",
+    "question": "UNICODE 文件加载/保存出现异常字符",
+    "category": "文件打开/导入与格式",
+    "keywords": [
+      "UNICODE",
+      "乱码",
+      "编码",
+      "保存编码"
+    ],
+    "root_cause_summary": "官方 Load/Save 的 UNICODE Files：Message when loading UNICODE 控制加载提示；Prompt to save files as UNICODE、Always save files as UNICODE、Always save files as regular text 决定保存编码；三者互斥。",
+    "solution_summary": "按下游系统能力在「始终存为普通文本 / 始终存为 UNICODE」间二选一，避免混用。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-034",
+    "question": "想让每次保存都自动留一份旧版本",
+    "category": "文件打开/导入与格式",
+    "keywords": [
+      "备份",
+      ".bak",
+      "Save backup file"
+    ],
+    "root_cause_summary": "官方 General：Save backup file 在保存时备份上一版本，默认扩展名 .bak；Backup Extension 可自定义。",
+    "solution_summary": "开启 Save backup file（默认 .bak）。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-035",
+    "question": "编辑器能否定时自动保存",
+    "category": "文件打开/导入与格式",
+    "keywords": [
+      "自动保存",
+      "Auto save interval"
+    ],
+    "root_cause_summary": "官方 Load/Save：Auto save interval 设置自动保存间隔；注意自动保存会覆盖原文件（不是另存副本）。",
+    "solution_summary": "设定 Auto save interval 并配合 Save backup file。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-036",
+    "question": "程序里的 # 变量或中文注释传到机床后丢失",
+    "category": "文件打开/导入与格式",
+    "keywords": [
+      "#变量丢失",
+      "ASCII 0",
+      "Remove white spaces"
+    ],
+    "root_cause_summary": "官方 Transmit：Remove ASCII 0's、Remove white spaces、Replace tabs with spaces 等会改写发送内容；官方 Editor Settings：Remove ASCII 0's 若关闭则 ASCII 0 被替换为 ASCII 128，用 7 位数据位传输时 ASCII 128 又变成 ASCII 0。",
+    "solution_summary": "按机床约定保留必要字符，必要时关闭删除/替换选项，并统一 7/8 数据位。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-037",
+    "question": ".ptp / .cnc / .bef / .min 等特殊扩展名打不开",
+    "category": "文件打开/导入与格式",
+    "keywords": [
+      "扩展名",
+      ".ptp",
+      ".bef",
+      ".min"
+    ],
+    "root_cause_summary": "本机实装证据 E-203：样例包含 .nc/.ptp/.cnc、Roeders .bef、Traub .min 等；官方 Load/Save 只允许 Additional extensions 中的扩展名显示在 Open 窗口。",
+    "solution_summary": "把需要的扩展名加入 Additional extensions，并选匹配的文件类型。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-038",
+    "question": "Traub 机床导出的 .prg 文件解析异常",
+    "category": "文件打开/导入与格式",
+    "keywords": [
+      "TRAUB",
+      "WinFlex",
+      ".prg"
+    ],
+    "root_cause_summary": "官方 General：Enable TRAUB WinFlex file parsing 启用后编辑器会尝试识别并解析 TRAUB CNC（WinFlex .prg 等）文件。",
+    "solution_summary": "启用 Enable TRAUB WinFlex file parsing 后重新载入。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-039",
+    "question": "仿真时提示找不到子程序",
+    "category": "文件打开/导入与格式",
+    "keywords": [
+      "子程序",
+      "Subprogram folder",
+      "仿真"
+    ],
+    "root_cause_summary": "官方 Simulation Settings：仿真子程序时 CIMCO Edit 默认在主程序同目录搜索子程序文件；可用 Subprogram folder 指定其它搜索目录。",
+    "solution_summary": "统一子程序目录或设置 Subprogram folder。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-040",
+    "question": "改错文件类型设置后所有同类文件都异常",
+    "category": "文件打开/导入与格式",
+    "keywords": [
+      "配置恢复",
+      "Default",
+      "Export/Import",
+      "File Types"
+    ],
+    "root_cause_summary": "官方 Editor Setup 底部有 Export（备份配置）、Import（导入）、Default（恢复默认设置）按钮；File Types 可从预定义模板 Add 新类型，避免直接改坏内置类型。",
+    "solution_summary": "用 Export 备份、Import 恢复；必要时新建类型而非改内置类型。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-041",
+    "question": "批量把 T1 改成 T10，但不要动注释",
+    "category": "编辑器操作与查找替换",
+    "keywords": [
+      "替换",
+      "Match whole string",
+      "Ctrl+H",
+      "刀号"
+    ],
+    "root_cause_summary": "官方 Find/Replace：Ctrl+H 的 Replace 提供 Match whole string（整串匹配）、Ignore case、Replace in selection only、Result to new window、Use regular expression 等选项；注释若不希望被改，可用整串/正则限定。",
+    "solution_summary": "用 Ctrl+H + Match whole string 做整词替换；不确定时先用 Result to new window 生成副本核对。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-042",
+    "question": "只想替换选中区域里的文本",
+    "category": "编辑器操作与查找替换",
+    "keywords": [
+      "选区替换",
+      "Replace in selection only"
+    ],
+    "root_cause_summary": "官方 Replace 对话框：Replace in selection only 使替换只作用于被选中的行。",
+    "solution_summary": "选中目标行 → Ctrl+H → 勾 Replace in selection only → Replace All。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-043",
+    "question": "需要跨多行做查找和替换",
+    "category": "编辑器操作与查找替换",
+    "keywords": [
+      "多行替换",
+      "Multiline"
+    ],
+    "root_cause_summary": "官方 Replace：Multiline 选项允许在 Find what 与 Replace with 中输入多行文本。",
+    "solution_summary": "启用 Multiline 后做多行替换。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-044",
+    "question": "有一张 T1;T10 这样的替换清单，想一次性导入",
+    "category": "编辑器操作与查找替换",
+    "keywords": [
+      "Replace All from File",
+      "Delimiter",
+      "批量替换"
+    ],
+    "root_cause_summary": "官方 Replace All from File：可从外部文件导入一条行一个 find/replace 对，需指定 Delimiter（如分号），再点 Replace All 选该文件。",
+    "solution_summary": "用 Replace All from File + Delimiter 批量导入替换对。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-045",
+    "question": "用正则查找双括号中间的内容",
+    "category": "编辑器操作与查找替换",
+    "keywords": [
+      "正则",
+      "Use regular expression",
+      "POSIX ERE"
+    ],
+    "root_cause_summary": "官方 Find：Use regular expression 会把 Find what 当正则解析，示例 \\(\\((.*?)\\) 用于查找 (( 与 )) 之间文本；CIMCO 正则基于 POSIX ERE，并支持 <> 捕获。",
+    "solution_summary": "用 Use regular expression + POSIX ERE 表达式做结构化查找。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-046",
+    "question": "查找时大小写和整词匹配怎样控制",
+    "category": "编辑器操作与查找替换",
+    "keywords": [
+      "全字匹配",
+      "Ignore case",
+      "大小写"
+    ],
+    "root_cause_summary": "官方 Find：Match whole string 只匹配完整字符串，Ignore case 忽略大小写；两者可组合。",
+    "solution_summary": "按需要组合 Match whole string 与 Ignore case。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-047",
+    "question": "搜索到文件末尾就停，不从头继续",
+    "category": "编辑器操作与查找替换",
+    "keywords": [
+      "Wrap Searches",
+      "回绕搜索"
+    ],
+    "root_cause_summary": "官方 Editor Settings：Wrap Searches 使搜索在到文件末尾未命中时从文件顶部继续。",
+    "solution_summary": "启用 Wrap Searches。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-048",
+    "question": "要在所有已打开文件中一起搜索",
+    "category": "编辑器操作与查找替换",
+    "keywords": [
+      "Search all",
+      "Find All",
+      "F6"
+    ],
+    "root_cause_summary": "官方 Find：Search all 在所有打开文件中搜索；Find All 把结果列到 Search results 对话框（显示命中数与文件数），可用 Filter search results（F6）过滤。",
+    "solution_summary": "用 Search all + Find All 汇总，再用 F6 过滤。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-049",
+    "question": "想快速定位换刀、进给或主轴转速",
+    "category": "编辑器操作与查找替换",
+    "keywords": [
+      "Find NC Command",
+      "换刀",
+      "Next Tool Change"
+    ],
+    "root_cause_summary": "官方 Find：Find NC Command 下拉可搜索 Tool Change、Feedrate、Spindle Speed；这些指令的识别规则在 Editor Setup → File Types 中配置。另有 Next Tool Change / Previous Tool Change 直接跳转。",
+    "solution_summary": "用 Find NC Command / Next Tool Change；识别不准时先修 File Types 触发规则。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-050",
+    "question": "如何跳到指定行号或块号",
+    "category": "编辑器操作与查找替换",
+    "keywords": [
+      "Ctrl+J",
+      "跳转行号",
+      "Go to Line"
+    ],
+    "root_cause_summary": "官方 Find：Go to Line/Block Number（Ctrl+J）把光标移动到当前文件的指定行号或块号。",
+    "solution_summary": "Ctrl+J 输入行/块号直接定位。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-051",
+    "question": "查找结果的下一个/上一个快捷键是什么",
+    "category": "编辑器操作与查找替换",
+    "keywords": [
+      "F3",
+      "Shift+F3",
+      "F8",
+      "快捷键"
+    ],
+    "root_cause_summary": "官方 Find：Find Next = F3，Find Previous = Shift+F3；Find All 结果列表中用 Next > = F8、< Previous = Shift+F8。",
+    "solution_summary": "记住 F3/Shift+F3 与 F8/Shift+F8 两组快捷键分工。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-052",
+    "question": "给关键程序行加书签并快速跳转",
+    "category": "编辑器操作与查找替换",
+    "keywords": [
+      "书签",
+      "F2",
+      "F5",
+      "Show line numbers"
+    ],
+    "root_cause_summary": "官方 Bookmarks：Add/Remove Bookmark = F2；Go to Next = F5，Go to Previous = Shift+F5；书签以行号高亮显示，需在 Editor Settings 开启 Show line numbers；文档保存后书签才出现在 Bookmarks 对话框。",
+    "solution_summary": "F2 加签、F5/Shift+F5 跳转；保存文档后可在书签对话框集中管理。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-053",
+    "question": "把所有搜索结果一次性加成书签",
+    "category": "编辑器操作与查找替换",
+    "keywords": [
+      "Bookmark All",
+      "批量书签"
+    ],
+    "root_cause_summary": "官方 Find：Bookmark All 按钮可从所有搜索结果创建书签；配合 Find All 的结果列表使用。",
+    "solution_summary": "用 Find All + Bookmark All 批量生成书签。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-054",
+    "question": "把整段程序转成全大写或全小写",
+    "category": "编辑器操作与查找替换",
+    "keywords": [
+      "Uppercase",
+      "Ctrl+U",
+      "大小写转换"
+    ],
+    "root_cause_summary": "官方 Insert/Remove：Uppercase（Ctrl+U）与 Lowercase（Ctrl+Shift+U）会把文本（包括注释）转换为大写/小写。另 General → Editor Settings 的 Always UPPER CASE 可强制全大写。",
+    "solution_summary": "用 Ctrl+U / Ctrl+Shift+U 转换大小写。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-055",
+    "question": "批量删除空行、注释或多余空格",
+    "category": "编辑器操作与查找替换",
+    "keywords": [
+      "删除空行",
+      "Remove Comments",
+      "Remove Spaces"
+    ],
+    "root_cause_summary": "官方 Insert/Remove：Remove Empty Lines 删除空行；Remove Comments 删除括号或 Machine configuration 定义注释符内的注释；Remove Spaces 删除空格与制表符（在 Insert Spaces 的下拉里）。",
+    "solution_summary": "用 Insert/Remove 下的 Remove 系列命令清理；清理前先备份或开新窗口。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-056",
+    "question": "在行首/行尾/匹配串前后插入字符串",
+    "category": "编辑器操作与查找替换",
+    "keywords": [
+      "Insert Strings",
+      "行首插入",
+      "Where"
+    ],
+    "root_cause_summary": "官方 Insert Strings：Where 可指定 Insert at start of line、Insert at end of line、Insert after block number、Insert before/after matched string、Insert on new line before/after matched string，并可配 On lines matching string 或 Regular Expression。",
+    "solution_summary": "用 Insert Strings 的 Where 选项精确控制插入位置。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-057",
+    "question": "删除或修改一段连续行号/块号范围",
+    "category": "编辑器操作与查找替换",
+    "keywords": [
+      "Mark/Delete",
+      "Ctrl+M",
+      "范围删除"
+    ],
+    "root_cause_summary": "官方 Edit/Insert-Remove：Mark/Delete Range（Ctrl+M）可指定行或块号范围进行更新、选择或删除，还能从换刀/进给/主轴值选到下一个。",
+    "solution_summary": "Ctrl+M 定义行/块号范围后执行标记或删除。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-058",
+    "question": "程序段前面的跳段符（/）怎么批量加删",
+    "category": "编辑器操作与查找替换",
+    "keywords": [
+      "跳段符",
+      "Block Skips",
+      "/"
+    ],
+    "root_cause_summary": "官方 Insert/Remove：Insert Block Skips 在行首加跳段符（选中行才加，未选则全加）；Remove Block Skips 删除跳段符。跳段字符在 Machine configuration 中定义。",
+    "solution_summary": "选区 + Insert Block Skips 加跳段符；Remove Block Skips 恢复。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-059",
+    "question": "拖动文本时误删或误粘",
+    "category": "编辑器操作与查找替换",
+    "keywords": [
+      "拖放编辑",
+      "粘贴光标",
+      "误操作"
+    ],
+    "root_cause_summary": "官方 Editor Settings：Drag-and-drop text editing 控制拖放编辑；Copy without selection 可不选区即复制光标行；Don't move cursor after paste 让光标停在粘贴文本开头。",
+    "solution_summary": "关闭拖放编辑或调整粘贴/复制行为。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-060",
+    "question": "误操作后如何撤销到打开时的状态",
+    "category": "编辑器操作与查找替换",
+    "keywords": [
+      "Undo",
+      "Redo",
+      "Ctrl+Z",
+      "不可撤销"
+    ],
+    "root_cause_summary": "官方 Edit：Undo = Ctrl+Z，Redo = Ctrl+Y，可重做自文件上次打开以来的所有 Undo；Editor Settings 的 Prompt when unable to undo 会在执行不可撤销操作（如大文件重编号）前提醒。",
+    "solution_summary": "用 Ctrl+Z/Ctrl+Y 撤销重做， risky 操作前留意不可撤销提示。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-061",
+    "question": "怎样给整个程序重新编号",
+    "category": "NC 函数与块号/变换/脚本",
+    "keywords": [
+      "重编号",
+      "Renumber",
+      "Ctrl+T",
+      "块号"
+    ],
+    "root_cause_summary": "官方 Block Numbers：Renumber（Ctrl+T）插入或重编块号；若 Editor Setup → Block Numbers 启用 Show quick setup，会弹出快速设置对话框。",
+    "solution_summary": "用 Ctrl+T 重编，开启 quick setup 时按提示设定参数。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-062",
+    "question": "高级重编号 Advanced Renumbering 怎么配",
+    "category": "NC 函数与块号/变换/脚本",
+    "keywords": [
+      "Advanced Renumbering",
+      "Rule groups",
+      "Control type"
+    ],
+    "root_cause_summary": "官方 Advanced Renumbering：Rule groups 可保存多套设置；Control type 决定格式；Start/Increment 定义起始与增量；Skip lines starting with/containing 跳过特定行。",
+    "solution_summary": "用 Rule groups 建多套方案，按 Control type 配 Start/Increment 与跳过规则。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-063",
+    "question": "重编号把 G70 精加工循环的 P/Q 行号改坏了",
+    "category": "NC 函数与块号/变换/脚本",
+    "keywords": [
+      "G70",
+      "P/Q",
+      "Rules",
+      "Triggers",
+      "重编破坏循环"
+    ],
+    "root_cause_summary": "官方 Advanced Renumbering：Rules/Triggers/Labels 用于保护这类结构——例如触发器设为 G70、标签设为 P/Q，重编时会据此确定要处理的行范围，避免破坏循环引用。",
+    "solution_summary": "为 G70 等引用行号的循环配置 Trigger=族指令、Labels=P,Q 规则。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-064",
+    "question": "想一次性去掉所有块号",
+    "category": "NC 函数与块号/变换/脚本",
+    "keywords": [
+      "Remove",
+      "删除块号"
+    ],
+    "root_cause_summary": "官方 Block Numbers：Remove 删除 CNC 程序中所有块号。",
+    "solution_summary": "用 Block Numbers → Remove 清除全部块号。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-065",
+    "question": "编辑时想让新行自动带上行号",
+    "category": "NC 函数与块号/变换/脚本",
+    "keywords": [
+      "Auto block numbering",
+      "自动行号",
+      "Interval"
+    ],
+    "root_cause_summary": "官方 Block Numbers 设置：Auto block numbering 按 Block format 自动插入行号，新行按 Interval 递增；在中间插行时取前后行号的中间值。",
+    "solution_summary": "启用 Auto block numbering 并配置 Format/Interval/块号字符。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-066",
+    "question": "怎样让行号按 0001 四位或 Auto 间隔分配",
+    "category": "NC 函数与块号/变换/脚本",
+    "keywords": [
+      "Format 0001",
+      "Interval",
+      "Auto 1000"
+    ],
+    "root_cause_summary": "官方 Block Numbers：Format 选 0001 可得四位行号；Interval 预置 1/2/5/10/20/100/1000/Auto；选 Auto 1000 时，间隔会把行号均匀分布在不超过 1000 的范围内（483 行的程序分配到 0~964）。",
+    "solution_summary": "按机床要求选 Format 与 Interval（固定或 Auto）。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-067",
+    "question": "重编号时想跳过 %/O 开头或注释行",
+    "category": "NC 函数与块号/变换/脚本",
+    "keywords": [
+      "Skip lines starting with",
+      "Restart",
+      "O号"
+    ],
+    "root_cause_summary": "官方 Block Numbers：Skip lines starting with 指定要跳过的行首字符串（如 %、O、(，多个用逗号）；Restart on lines starting with 可在遇到 O 号时重置行号，用于一个文件里多段程序。",
+    "solution_summary": "用 Skip lines starting with / Restart on lines starting with 控制跳过与重启。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-068",
+    "question": "Renumber 一按就弹窗，想关掉或直接进高级模式",
+    "category": "NC 函数与块号/变换/脚本",
+    "keywords": [
+      "Show quick setup",
+      "Disable standard renumbering"
+    ],
+    "root_cause_summary": "官方 Block Numbers：Show quick setup 控制是否弹快速设置；Disable standard renumbering 会让 Ctrl+T 直接打开 Advanced Renumbering 对话框；Disable undo prompt for large files 可关闭大文件不可撤销提示。",
+    "solution_summary": "按习惯切换 Show quick setup / Disable standard renumbering。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-069",
+    "question": "把进给速度整体提高到 120%",
+    "category": "NC 函数与块号/变换/脚本",
+    "keywords": [
+      "Adjust Feedrate",
+      "进给倍率",
+      "Maximum value"
+    ],
+    "root_cause_summary": "官方 Adjust Feedrate：New feedrate 输入百分比；Decimals 设小数位；Minimum/Maximum value 限定范围；When equal/greater/less than 限定只改满足条件的 F；可用 Result to new window 保留原件。",
+    "solution_summary": "用 Adjust Feedrate 设百分比并用 Maximum value 限幅；先在新窗口核对。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-070",
+    "question": "把主轴转速统一调低或限制范围",
+    "category": "NC 函数与块号/变换/脚本",
+    "keywords": [
+      "Adjust spindle speed",
+      "主轴转速"
+    ],
+    "root_cause_summary": "官方 Adjust spindle speed：New spindle speed 输入百分比，Minimum/Maximum value 限定 rev/min 范围，When equal/greater/less than 限定条件，另有 Result to new window/Selection only。",
+    "solution_summary": "用 Adjust spindle speed 配百分比与 Minimum/Maximum value。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-071",
+    "question": "对所有 X 值统一加偏置或乘系数",
+    "category": "NC 函数与块号/变换/脚本",
+    "keywords": [
+      "Simple math",
+      "参数运算",
+      "Keep decimals"
+    ],
+    "root_cause_summary": "官方 Simple math functions：可勾选多个参数（Other 支持 Ø 等多字符地址），做 Addition/Subtraction/Multiplication/Division，配 Value、Maximum/Minimum value、Decimals、Keep decimals、Strip trailing/leading 0's、Ignore case。",
+    "solution_summary": "用 Simple math functions 批量运算并用 Keep decimals/Strip 0's 控制格式。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-072",
+    "question": "把整条刀路平移一个坐标偏移",
+    "category": "NC 函数与块号/变换/脚本",
+    "keywords": [
+      "Translate",
+      "平移",
+      "Arc type",
+      "Assume G91"
+    ],
+    "root_cause_summary": "官方 Translate：Translate (X,Y,Z) 输入偏移量；Arc type 可选 Auto detect/Relative to start/Relative to end/Absolute arc center；Assume G91 用于控制系统预设相对坐标；Comma as decimal symbol 支持逗号小数点。",
+    "solution_summary": "用 Translate 设偏移量，按机床圆弧/增量模式选 Arc type 与 Assume G91。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-073",
+    "question": "把刀路绕某点旋转一个角度",
+    "category": "NC 函数与块号/变换/脚本",
+    "keywords": [
+      "Rotate",
+      "旋转",
+      "Reverse tool path"
+    ],
+    "root_cause_summary": "官方 Rotate：Point (X,Y) 设旋转中心，Angle 设角度；Arc type、Assume G91、Strip trailing 0's、Decimals、Reverse tool path（反转轨迹）可选。",
+    "solution_summary": "用 Rotate 设中心与角度，按需勾 Reverse tool path。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-074",
+    "question": "把刀路做镜像（含车削）",
+    "category": "NC 函数与块号/变换/脚本",
+    "keywords": [
+      "Mirror",
+      "镜像",
+      "Turning Program"
+    ],
+    "root_cause_summary": "官方 Mirror：Point (X,Y) 与 Angle 定义镜像轴；Turning Program 用于车削（会禁用自定义 Point/Angle）；另有 Arc type、Assume G91、Reverse tool path。",
+    "solution_summary": "用 Mirror 配镜像轴，车削勾选 Turning Program。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-075",
+    "question": "按刀具半径给轮廓加 G41/G42 补偿",
+    "category": "NC 函数与块号/变换/脚本",
+    "keywords": [
+      "刀补",
+      "G41",
+      "G42",
+      "Tool compensation"
+    ],
+    "root_cause_summary": "官方 Tool compensation：Offset 输入补偿值；Offset Left (G41)/Offset Right (G42) 按进给方向左/右偏；Arc type、Assume G91、Comma as decimal symbol 可选。",
+    "solution_summary": "用 Tool compensation 设 Offset 与 G41/G42 方向。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-076",
+    "question": "Heidenhain 与 ISO 程序互相转换",
+    "category": "NC 函数与块号/变换/脚本",
+    "keywords": [
+      "Heidenhain",
+      "ISO",
+      "转换器"
+    ],
+    "root_cause_summary": "官方 Transform：Heidenhain / ISO Converter 可在海德汉与 ISO 间互转。",
+    "solution_summary": "用 Heidenhain / ISO Converter 做双向转换（复杂情况配合 .conv，见 FAQ-077）。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-077",
+    "question": "用 .conv 转换器做格式转换与 NCI 中间格式",
+    "category": "NC 函数与块号/变换/脚本",
+    "keywords": [
+      "conv",
+      "转换器",
+      "NCI",
+      "longhand cycles"
+    ],
+    "root_cause_summary": "官方 Convert NC code：需为选定目标格式指定转换器文件（.conv），CIMCO Edit 在程序目录 \\Converters 下附带若干；可勾 Convert to NCI format（中间格式）、Use longhand cycles（展开固定循环为逐行）、Result to new window、Selection only。",
+    "solution_summary": "用对应 .conv 转换；需要展开循环勾 Use longhand cycles，需要中间格式勾 Convert to NCI。",
+    "boundary": "B-04"
+  },
+  {
+    "id": "FAQ-078",
+    "question": "统计加工时间/刀路长度并导出",
+    "category": "NC 函数与块号/变换/脚本",
+    "keywords": [
+      "Toolpath Statistics",
+      "加工时间",
+      "导出CSV",
+      "Graph"
+    ],
+    "root_cause_summary": "官方 Info → Toolpath Statistics：显示各刀具 min/max XYZ、总时间、最小/最大主轴转速（无主轴显示 N/A）；可设 Tool change time、Rapid speed、单位（Metric/Imperial、Unit/Min 或 Unit/Rev）、导出 Standard 或 CSV，并可打开 Toolpath Graphs。",
+    "solution_summary": "用 Toolpath Statistics 配时间/快移速度后导出或绘图。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-079",
+    "question": "生成刀具清单 Tool List / Combined Tool List",
+    "category": "NC 函数与块号/变换/脚本",
+    "keywords": [
+      "Tool List",
+      "刀具清单",
+      "Tool trigger"
+    ],
+    "root_cause_summary": "官方 Info：Make Tool List 基于当前程序生成刀具清单（新文档）；Combined Tool List 可合并多个已打开程序；触发规则在 Editor Setup → File Types → Tool List 配（Tool trigger 如 T，支持正则）。",
+    "solution_summary": "用 Make Tool List / Combined Tool List，触发不准时先修 Tool trigger。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-080",
+    "question": "NC Function Scripts（.ncjs）不能用或跑了没效果",
+    "category": "NC 函数与块号/变换/脚本",
+    "keywords": [
+      "ncjs",
+      "Ultra许可",
+      "脚本不运行",
+      "ES5"
+    ],
+    "root_cause_summary": "官方 Scripts：需 Ultra 许可且高级 NC 功能未被关闭，否则无 Scripts 组；脚本为 ES5 JavaScript（.ncjs），output 为 replace/new，参数最多 40、自动运行最多 60 秒；不在菜单常见原因：目录层级超过一层、名为 Examples、排在 64 个之后、非 .ncjs 文件。",
+    "solution_summary": "按「许可→位置→自动运行设置→脚本报错」顺序排查；脚本本身按 ES5 编写（var/function，不用 let/const/箭头函数）。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-081",
+    "question": "怎么校验带 # 变量的 FANUC Macro B 程序",
+    "category": "FANUC Macro B 与语法校验",
+    "keywords": [
+      "FANUC Macro B",
+      "#变量",
+      "静态校验器",
+      "validate_fanuc_macro_b"
+    ],
+    "root_cause_summary": "本地静态校验器 D:\\Virtu模型\\bridges\\cimco_bridge.py::validate_fanuc_macro_b 检查 # 变量、WHILE/DO/END 配对、G/M 范围、M02/M30 收尾、M05 停主轴，并调用 gbnf 语法哨兵；它不是 CIMCO 内核。",
+    "solution_summary": "用桥接的 validate_fanuc_macro_b 做静态校验，结论必须附原始字段；GUI 侧用 编辑→Cycle Macro 展开配合背绘。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-082",
+    "question": "#500 被当成局部变量报警，对吗",
+    "category": "FANUC Macro B 与语法校验",
+    "keywords": [
+      "#500",
+      "公共变量",
+      "局部变量",
+      "变量区间"
+    ],
+    "root_cause_summary": "桥接按 FANUC 约定区分：#1~#33 为局部变量、#100~#199 为公共变量、#500~#999 为系统/保持型公共变量；runbook §4 指出 #500 误判为局部变量是常见错误。",
+    "solution_summary": "按区间解释 #500；若第三方工具误报，以桥接 variables 列表与 FANUC 手册为准。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-083",
+    "question": "WHILE/DO/END 配对错误的几种报错怎么看",
+    "category": "FANUC Macro B 与语法校验",
+    "keywords": [
+      "WHILE",
+      "DO",
+      "END",
+      "配对",
+      "Mismatched"
+    ],
+    "root_cause_summary": "桥接用 loop_stack 解析 WHILE[..]DO n 与 END n：无对应 WHILE 的 END 报 'END n without matching WHILE DO.'；编号不符报 'Mismatched END n, expected END m from line X.'；未闭合报 'Unclosed WHILE DO n.'。这三类都属 critical，直接使 is_valid=false。",
+    "solution_summary": "按行号修正 DO n / END n 的配对与编号，必要时用 Cycle Macro 展开确认。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-084",
+    "question": "程序结尾没有 M02/M30 会怎样",
+    "category": "FANUC Macro B 与语法校验",
+    "keywords": [
+      "M30",
+      "M02",
+      "程序结束"
+    ],
+    "root_cause_summary": "桥接检查 program_end 标志，仅当出现 M02 或 M30（正则 M0?[23]0）才置位；缺失即追加 'Program end M02/M30 not found.'，属普通错误但影响完整性。",
+    "solution_summary": "在程序结束处加入 M30（推荐）或 M02。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-085",
+    "question": "收尾时主轴没停（缺 M05）报什么",
+    "category": "FANUC Macro B 与语法校验",
+    "keywords": [
+      "M05",
+      "M03",
+      "M04",
+      "主轴未停"
+    ],
+    "root_cause_summary": "桥接用 spindle_on 状态机：遇到 M03/M04 置 true，遇到 M05（正则 M0?5）置 false；若程序结束时仍为 true，则报 'Spindle still on at program end (no M05).'。",
+    "solution_summary": "在主轴停转位置补 M05，保持 M03/M04 → M05 → M30 顺序。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-086",
+    "question": "G 或 M 代码超出范围被判错",
+    "category": "FANUC Macro B 与语法校验",
+    "keywords": [
+      "out-of-range",
+      "G代码范围",
+      "M代码范围"
+    ],
+    "root_cause_summary": "桥接对以 G/M/O 开头的行提取 G/M 数值，要求 0.0 ≤ num ≤ 999.0，越界报 'Line n: out-of-range G###.'。",
+    "solution_summary": "把越界地址改为合法 G/M 代码（0~999）或正确写入 X/Y/Z 等参数。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-087",
+    "question": "什么是 CHECK_UNAVAILABLE，能当成通过吗",
+    "category": "FANUC Macro B 与语法校验",
+    "keywords": [
+      "CHECK_UNAVAILABLE",
+      "partial",
+      "哨兵不可用",
+      "未检查非通过"
+    ],
+    "root_cause_summary": "CAPABILITY_BOUNDARIES §三与桥接 L111-L121：当 gbnf 语法哨兵导入/运行失败时，syntax_checked=false，status 降为 partial，并把不可用原因以 'CHECK_UNAVAILABLE: ...' 前缀写入 errors。未检查绝不等于检查通过。",
+    "solution_summary": "把 partial + CHECK_UNAVAILABLE 明确报告为「未能完成语法检查」，不得写「校验通过」。",
+    "boundary": "B-06"
+  },
+  {
+    "id": "FAQ-088",
+    "question": "报告「校验通过」必须附哪些原始字段",
+    "category": "FANUC Macro B 与语法校验",
+    "keywords": [
+      "校验通过",
+      "原始字段",
+      "披露"
+    ],
+    "root_cause_summary": "CAPABILITY_BOUNDARIES §三：凡报告校验通过，必须同时给出 status / syntax_checked / errors 原始字段，不得只写结论；桥接还返回 is_valid、variables、line_count。",
+    "solution_summary": "按 status / syntax_checked / errors / is_valid 四字段原样披露，再给结论。",
+    "boundary": "B-06"
+  },
+  {
+    "id": "FAQ-089",
+    "question": "status=success 但 errors 不为空，算合格吗",
+    "category": "FANUC Macro B 与语法校验",
+    "keywords": [
+      "status",
+      "is_valid",
+      "critical",
+      "errors"
+    ],
+    "root_cause_summary": "桥接：status=success 仅表示语法哨兵确实运行过（syntax_checked=true）；is_valid 才综合了严重错误——is_valid = syntax_checked and not critical，其中 critical 含 CRITICAL/Unclosed/without matching/Mismatched。普通 errors 不阻断 is_valid 但必须处理。",
+    "solution_summary": "以 is_valid 判断是否可执行，以 errors 是否为空判断是否完全干净，二者分开报告。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-090",
+    "question": "Cycle Macro 展开和 NC-Assistant 宏是一回事吗",
+    "category": "FANUC Macro B 与语法校验",
+    "keywords": [
+      "Cycle Macro",
+      "NC-Assistant宏",
+      "MAC文件"
+    ],
+    "root_cause_summary": "runbook §1.1：编辑→Cycle Macro 用于展开程序中的 #100/#500 等宏变量；官方 NC-Assistant 宏是预定义/自定义的代码块（$.MAC 文件在 %appdata%\\CIMCO 2026\\CIMCOEdit\\Types\\），用 $1/$2 输入变量与 @N{} 公式。两者机制不同。",
+    "solution_summary": "按目的选用：变量展开用 Cycle Macro；结构化代码块用 NC-Assistant。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-091",
+    "question": "在 NC-Assistant 宏里输出字面 # 号被当成块号",
+    "category": "FANUC Macro B 与语法校验",
+    "keywords": [
+      "##转义",
+      "块号",
+      "FANUC变量",
+      "竖线"
+    ],
+    "root_cause_summary": "官方 Macro Setup：宏定义中以 # 开头会被替换为块号；需要输出字面 '#'（如 Fanuc Macro B 变量）时写 '##'。Variables 后紧跟字符时用竖线 |（如 $2|100）。",
+    "solution_summary": "用 ## 转义字面 #，用 | 分隔变量与后接字符。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-092",
+    "question": "宏里怎么做数学计算（圆面积等）",
+    "category": "FANUC Macro B 与语法校验",
+    "keywords": [
+      "宏公式",
+      "@N{}",
+      "PI",
+      "sqrt"
+    ],
+    "root_cause_summary": "官方 Formulas in Macros：公式写作 @N{...}（如 @3{sqrt($1*$1 + $2*$2)}、@2{PI*$1*$1}），支持 + - * / %、括号嵌套、abs/acos/asin/atan/cos/cosh/floor/ln/log/sign/sin/sinh/sqrt/tan/tanh；角度用度，三角函数输入加括号 sin($1)。",
+    "solution_summary": "用 @N{公式} 定义计算，三角函数用度并加括号。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-093",
+    "question": "用户输入变量和系统变量怎么区分",
+    "category": "FANUC Macro B 与语法校验",
+    "keywords": [
+      "输入变量",
+      "系统变量",
+      "Info variable"
+    ],
+    "root_cause_summary": "官方 Macro Setup：User (input) variables 用 $ 加数字（$1、$2…升序），可在 Description 配置；System variables 用 $ 加大写变量名，由系统插入日期/时间/文件名等信息，不可修改，用 Info variable 下拉查看并 Add Info 插入。",
+    "solution_summary": "$N 做输入、$大写名做系统信息，分别用 Add User Input / Add Info。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-094",
+    "question": "限制宏参数的取值范围或给默认值",
+    "category": "FANUC Macro B 与语法校验",
+    "keywords": [
+      "Min/Max",
+      "默认值",
+      "Predefined values",
+      "参数校验"
+    ],
+    "root_cause_summary": "官方 Macro Setup 参数配置：Min/Max 超限时立即提示纠正；Default value 设默认；Predefined values + Configure choices 可强制从列表选；Allow negative values 未勾时负号被忽略、按绝对值输出；Parameter is required 控制必填。",
+    "solution_summary": "用 Min/Max、Default、Predefined values 与 Allow negative values 约束输入。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-095",
+    "question": "让宏记住上一次填的值（如多次钻孔）",
+    "category": "FANUC Macro B 与语法校验",
+    "keywords": [
+      "Remember value",
+      "G81",
+      "盲孔",
+      "参数记忆"
+    ],
+    "root_cause_summary": "官方 Remember value：勾选后下一次调用该宏会用上次输入值填充；示例 G81 盲孔加工中 $1/$3/$4 勾 Remember value，而模态 Z 值 $2 不勾（显示 * 且初始为空），即可快速打 Z10/Z16/Z20。",
+    "solution_summary": "按参数是否变化分别设置 Remember value。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-096",
+    "question": "宏里输入的文字没有括号导致机床不认",
+    "category": "FANUC Macro B 与语法校验",
+    "keywords": [
+      "Allow letters",
+      "括号",
+      "ISO约定"
+    ],
+    "root_cause_summary": "官方 Allow letters：按 ISO 约定 NC 程序中的文本必须写在括号中；勾选 Allow letters 后 CIMCO 自动生成括号，同时 Min/Max/Decimals/Digits/Allow negative values 变灰；Uppercase 可强制大写。",
+    "solution_summary": "用 Allow letters（必要时 Uppercase）让文本自动加括号。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-097",
+    "question": "CIMCO 的正则和常用 PCRE 写法一样吗",
+    "category": "FANUC Macro B 与语法校验",
+    "keywords": [
+      "正则",
+      "POSIX ERE",
+      "捕获",
+      "<>"
+    ],
+    "root_cause_summary": "官方 Regular Expressions：CIMCO 使用基于 POSIX ERE 的正则（有简化）；<> 为捕获（如 G<[0-9]+> 只捕获数字），<> 内用于多通道同步等高级触发；支持 . ^ $ [] [^] * + ? | {n} {n,} {,m} {m,n} () <>。",
+    "solution_summary": "按 POSIX ERE 重写表达式，用 <> 做捕获。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-098",
+    "question": "仿真报告里的语法错误怎么看、怎么跳到出错行",
+    "category": "FANUC Macro B 与语法校验",
+    "keywords": [
+      "Simulation Report",
+      "语法错误",
+      "跳转行号"
+    ],
+    "root_cause_summary": "官方 Simulation Tab：Simulation Report 列出错误所在行号、类型、描述与 ACTION（CIMCO 将采取的处置，如忽略指令或高亮碰撞）；点击条目会跳到对应 NC 行并高亮；报告随 NC 改动自动更新，修正后条目消失。",
+    "solution_summary": "用 Simulation Report 条目定位并修正；必要时调整错误显示设置。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-099",
+    "question": "宏赋值行被哨兵误报 'No valid G-code words'",
+    "category": "FANUC Macro B 与语法校验",
+    "keywords": [
+      "No valid G-code words",
+      "白名单",
+      "宏赋值"
+    ],
+    "root_cause_summary": "桥接对 gbnf 报的 'No valid G-code words' 行做白名单：若源行以 #、WHILE、END 开头或含 '['，则视为合法 FANUC 宏结构并跳过该报错。若仍报，说明该行不是这些形式。",
+    "solution_summary": "属白名单内的宏行可忽略该哨兵报错；否则修正该行语法。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-100",
+    "question": "能不能把 AI 静态校验说成「官方校验通过」",
+    "category": "FANUC Macro B 与语法校验",
+    "keywords": [
+      "校验措辞",
+      "非CIMCO内核",
+      "工程自测",
+      "B-06"
+    ],
+    "root_cause_summary": "CAPABILITY_BOUNDARIES §三明确 validate_fanuc_macro_b 是本地静态校验器（非 CIMCO 内核）；B-06 要求拟人化指标（20 次实操、98% 盲评）用可复跑工程化等价手段替代，报告须标明自测/工程验证性质。",
+    "solution_summary": "统一措辞为「本地静态校验（工程自测）」并披露原始字段，不宣称官方内核认证。",
+    "boundary": "B-06"
+  },
+  {
+    "id": "FAQ-101",
+    "question": "怎样启动背绘以及界面分成哪几块",
+    "category": "背绘与仿真",
+    "keywords": [
+      "Backplot",
+      "Ctrl+Shift+P",
+      "界面布局"
+    ],
+    "root_cause_summary": "官方 Backplot：Ctrl+Shift+P 启动当前程序仿真，窗口同时显示 NC 程序（左）、仿真（中）、Geometry Manager 停靠面板（右）；Ctrl+Shift+Q 关闭。Backplot File 可直接背绘磁盘文件而不先打开。",
+    "solution_summary": "用 Ctrl+Shift+P 启动，Ctrl+Shift+Q 关闭；需直接看文件时用 Backplot File。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-102",
+    "question": "背绘提示 G00 快速段扎入毛坯",
+    "category": "背绘与仿真",
+    "keywords": [
+      "G00扎料",
+      "静态几何哨兵",
+      "安全高度",
+      "碰撞检测边界"
+    ],
+    "root_cause_summary": "项目公理（AGENTS.md §2.D/E）：背绘/校验必须检查 G00 快速段不得高速扎入毛坯，落入毛坯即报警；这是静态几何哨兵，不等同于机床仿真的真实碰撞检测（后者属 add-on，见 B-01）。",
+    "solution_summary": "把 G00 改成安全平面内定位 + G01 进给切入；用桥接/背绘复核。",
+    "boundary": "B-01"
+  },
+  {
+    "id": "FAQ-103",
+    "question": "怎样给背绘添加毛坯（矩形/圆柱/STL）",
+    "category": "背绘与仿真",
+    "keywords": [
+      "Add Stock",
+      "毛坯",
+      "Geometry Manager",
+      "STL"
+    ],
+    "root_cause_summary": "官方 Geometries：Add Stock 按刀路数据插入默认矩形毛坯；Dimensions 用高宽长+中心点定义；Min/Max 用上下角点；Cylinder 用中心/直径/高度/轴/原点；STL、DXF 可从文件载入。启用 Scanning 时 Add Stock 行为改为自动从 NC 或 setup 扫描。",
+    "solution_summary": "用 Geometries 的 Add Stock 系列添加毛坯并在 Geometry Manager 调参数。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-104",
+    "question": "Stock Compare 红色蓝色绿色各代表什么",
+    "category": "背绘与仿真",
+    "keywords": [
+      "Stock Compare",
+      "过切",
+      "欠切",
+      "Fast version"
+    ],
+    "root_cause_summary": "官方 Stock Compare：红=过切（去除太多，刀具切到设计模型）、蓝=欠切（去除不足）、绿=在公差范围内；需同时设置 Stock（毛坯）与 Workpiece（STL 设计模型）。Stock to leave 设预期留量，Compare range 设公差带。仅 Fast version 可用。",
+    "solution_summary": "配好 Stock+Workpiece 后开启 Stock Compare，并按预期留量/公差调参。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-105",
+    "question": "工件、夹具、毛坯的显示隐藏在哪",
+    "category": "背绘与仿真",
+    "keywords": [
+      "Workpiece",
+      "Fixture",
+      "显示隐藏"
+    ],
+    "root_cause_summary": "官方 Geometries：Workpiece 显示/隐藏工件（下箭头可 Add Workpiece，启用零件碰撞检查与 Stock Compare）；Fixture 显示/隐藏夹具（可 Add Fixture）；Solid Model 显示/隐藏毛坯实体模型（下箭头 Add Stock/Simulate）。",
+    "solution_summary": "用 Geometries 组切换 Workpiece/Fixture/Solid Model 显隐。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-106",
+    "question": "Control Type 选错导致刀路解析全乱",
+    "category": "背绘与仿真",
+    "keywords": [
+      "Control Type",
+      "控制器语法",
+      "解析错"
+    ],
+    "root_cause_summary": "官方 Control Type：必须先选对机床对应的 Control Type（包含控制器专用语法与命令，用于准确解释/仿真程序）；Machine 与 Control 必须在开始背绘前选好；具体文件类型的 Control Type 在 Editor Setup → File Types → Backplot 配置。",
+    "solution_summary": "选对 Control Type 并在 File Types → Backplot 固化，避免每次手选。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-107",
+    "question": "背绘前必须选 Machine 吗，没选会怎样",
+    "category": "背绘与仿真",
+    "keywords": [
+      "Machine Setup",
+      "必须先选",
+      "Axes support"
+    ],
+    "root_cause_summary": "官方 Control Type 章节明确：Machine（Machine Setup）必须在开始 Backplot 或 Machine Simulation 之前选定；Axes support 显示当前机器支持的轴（X/Y/Z/A/B/C）。",
+    "solution_summary": "先选 Machine（必要时用自定义机床），再启动背绘。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-108",
+    "question": "Fast 与 Standard 仿真引擎怎么选",
+    "category": "背绘与仿真",
+    "keywords": [
+      "Fast version",
+      "Standard version",
+      "仿真引擎",
+      "enhanced quality"
+    ],
+    "root_cause_summary": "官方 Simulation：CIMCO Edit 2026 有 Standard 与 Fast 两个引擎，Fast 现为默认；在 Editor Setup → File Types → Backplot 的 Simulation Window 下拉切换；Enable enhanced quality (Beta) 仅对 Fast 有效且默认开启。",
+    "solution_summary": "一般使用默认 Fast；需要旧行为时可切 Standard（注意 Stock Compare/Zoom 等功能仅 Fast 有）。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-109",
+    "question": "背绘里怎么显示/隐藏刀具和刀柄",
+    "category": "背绘与仿真",
+    "keywords": [
+      "Show Tool Holder",
+      "刀具显隐",
+      "Tool Manager"
+    ],
+    "root_cause_summary": "官方 Tool：Show/Hide Tool 切换仿真刀具；下箭头有 Show Tool Holder、Show Tool Transparent、Show Tool Colors、Show Tool Vector、Show All Tools、Tool 1-N 单独显隐；Tool Setup 打开 Tool Manager。",
+    "solution_summary": "用 Tool 菜单的显隐选项定制刀具显示。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-110",
+    "question": "刀库/刀具装配（Assembly）在哪里编辑",
+    "category": "背绘与仿真",
+    "keywords": [
+      "Tool Manager",
+      "Assembly",
+      "Cutter",
+      "Holder"
+    ],
+    "root_cause_summary": "官方 Tool Manager：在仿真中查看/修改程序中的刀具，配置刀具类型、颜色；可编辑 Assembly（cutter+holder）、Cutter、Holder；Backplot → Tool → Tool Setup 打开。",
+    "solution_summary": "用 Tool Manager 编辑对应刀具/刀柄装配。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-111",
+    "question": "只想看切削段或快速段，隐藏点怎么弄",
+    "category": "背绘与仿真",
+    "keywords": [
+      "Show Cutting Moves",
+      "Toolpath Mode",
+      "Highlight Arcs"
+    ],
+    "root_cause_summary": "官方 Toolpath：Show Rapid Moves 显示快速非切削运动；Show Cutting Moves 显示切削运动；Show Points 显示刀路点；Highlight Arcs 高亮圆弧；Hide Toolpath 隐藏全部；Large Points 放大点。Mode 下有 Animate/Show From start、Show Entire Z-Level、Show Tail、Show From Last Rapid/Tool Change 等动画模式。",
+    "solution_summary": "用 Toolpath 显隐与 Mode 动画模式聚焦关心的刀路。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-112",
+    "question": "Stop Conditions 里各项是什么意思",
+    "category": "背绘与仿真",
+    "keywords": [
+      "Stop Conditions",
+      "碰撞",
+      "Rapid To Stock",
+      "add-on"
+    ],
+    "root_cause_summary": "官方 Toolpath → Stop Conditions（仅 Machine Simulation 可用）：Tool Change、Collision、Rapid To Stock（快速移动撞毛坯）、Stopped Spindle Cuts（主轴停还在切削）、Holder To Stock、Tool And Models、Travel Limits、Optional（M00/M01/M02/M30）。",
+    "solution_summary": "在整机仿真（add-on）中配置 Stop Conditions；标准背绘下若不可用，退回 G00 静态哨兵并标注 B-01。",
+    "boundary": "B-01"
+  },
+  {
+    "id": "FAQ-113",
+    "question": "仿真视图常用快捷键和视角有哪些",
+    "category": "背绘与仿真",
+    "keywords": [
+      "F9",
+      "视角",
+      "Measure Distance"
+    ],
+    "root_cause_summary": "官方 View：Fit to Window = F9（鼠标中键同效），滚轮缩放；View from Top (XY/G17)、Front (XZ/G18)、Left (YZ/G19) 等标准视角；Measure Distance 可测两点距离（Fast 版左侧出现测量面板，Standard 版在 Information Bar 显示）。",
+    "solution_summary": "用 F9/滚轮与标准视角导航，用 Measure Distance 量尺寸。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-114",
+    "question": "让仿真循环播放或只跟踪刀具",
+    "category": "背绘与仿真",
+    "keywords": [
+      "Track Tool",
+      "Loop Simulation",
+      "动画模式"
+    ],
+    "root_cause_summary": "官方 Toolpath：Track Tool 让刀具固定在屏幕某点；Loop Simulation 重复播放直到停止；Animate Tool Only 显示整段刀路只动画刀具；Remember Animation Mode Between Sessions 记住动画模式。",
+    "solution_summary": "用 Track Tool / Loop Simulation / Animate Tool Only 组合。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-115",
+    "question": "大程序仿真时卡住或循环跑不完",
+    "category": "背绘与仿真",
+    "keywords": [
+      "Maximum Loop Iteration Limit",
+      "循环卡住",
+      "自动脚本60秒"
+    ],
+    "root_cause_summary": "官方 Simulation Settings：Maximum Loop Iteration Limit 限制循环迭代次数，达到后按 Behavior When Limit is Reached（Ignore the limit / Break out of the loop / Prompt for decision）处理；脚本自动运行最多 60 秒、手动运行用 Stop 停止。",
+    "solution_summary": "设置循环上限与到达行为；必要时关掉有问题的自动脚本。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-116",
+    "question": "怎样安装机床模型用于整机仿真",
+    "category": "背绘与仿真",
+    "keywords": [
+      "Machine Models",
+      "add-on",
+      "Bundled",
+      "机床安装"
+    ],
+    "root_cause_summary": "官方：Machine Models 区段仅在 Machine Simulation add-on 激活后可见；勾选机器 Install 列并点 Install 安装，下载好的机器名带 (Bundled) 后缀；未安装无法在整机仿真中显示机床。本机许可状态未核实，按 B-01 处理。",
+    "solution_summary": "有许可时装机器模型；无许可时按 B-01 标注未验证，只用标准背绘。",
+    "boundary": "B-01"
+  },
+  {
+    "id": "FAQ-117",
+    "question": "现有机床库没有我的机床，怎么自己建",
+    "category": "背绘与仿真",
+    "keywords": [
+      "Custom Machines",
+      "MachineCfg",
+      "STL原点",
+      "自定义机床"
+    ],
+    "root_cause_summary": "官方 Custom Machines：可用 Machine Configuration Editor 配置自定义机床（支持共线轴、转台、主轴、刀塔等复杂结构）；Advanced Machine Configuration Editor 能自动建大部分设置但不支持共线轴/转塔/主轴；配置保存在 MachineCfg 目录；机床几何用 STL，须以主轴鼻端为原点。",
+    "solution_summary": "用 Custom Machines 编辑器建机床，注意 STL 原点与单位；复杂结构用完整编辑器。",
+    "boundary": "B-01"
+  },
+  {
+    "id": "FAQ-118",
+    "question": "把刀路导出为 DXF 给别的软件用",
+    "category": "背绘与仿真",
+    "keywords": [
+      "DXF导出",
+      "Always linearize arcs",
+      "Arc quality tolerance"
+    ],
+    "root_cause_summary": "官方 Backplot → Other → Export as DXF File 可把刀路数据导出为矢量 DXF；Editor Setup → File Types → Other 可配 Always linearize arcs（把圆弧离散成直线）、Export turning toolpath in XY-plane、Arc quality tolerance。",
+    "solution_summary": "用 Export as DXF File，按需linearize 圆弧并设公差。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-119",
+    "question": "把仿真结果打包发给同事或客户",
+    "category": "背绘与仿真",
+    "keywords": [
+      "Save Presentation",
+      "Presentation Bundle",
+      "Viewer"
+    ],
+    "root_cause_summary": "官方 Backplot → Other → Save Presentation：可保存为 Simulation File（仅仿真数据，体积小）或 Presentation Bundle（含 Presentation Viewer 程序，可发给支持）；Viewer 只需安装一次；仿真包会自动打包引用的外部子程序。",
+    "solution_summary": "按对方是否装有 Viewer 选 Simulation File 或 Bundle。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-120",
+    "question": "打开文件或开始背绘时自动运行检查脚本",
+    "category": "背绘与仿真",
+    "keywords": [
+      "Run automatically",
+      "fileOpen",
+      "backplot",
+      "condition"
+    ],
+    "root_cause_summary": "官方 Script setup：Run automatically 对该机器类型开启；When 可选 When a program is opened（fileOpen）/ When backplot or simulation starts（backplot）/ 两者。自动运行作用于整个程序、无对话框，最多 60 秒；脚本可先 condition 判断是否需要运行。",
+    "solution_summary": "用 Run automatically + When + condition 组合实现自动检查（脚本为 ES5，见 FAQ-080）。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-121",
+    "question": "怎样开始比较两个 NC 程序",
+    "category": "文件对比",
+    "keywords": [
+      "File Compare",
+      "Compare with Window",
+      "启动对比"
+    ],
+    "root_cause_summary": "官方 File Compare 菜单：Compare with Window 把当前窗口与另一窗口比较（多文件时会让你选）；Compare with File 与通过 Open 对话框选的文件比较；Compare File with File 比较两个未打开的文件；End File Compare 停止并保留两文件打开。",
+    "solution_summary": "用 Compare with Window/File/File with File 三种方式之一启动对比。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-122",
+    "question": "怎样逐条跳到下一处/上一处差异",
+    "category": "文件对比",
+    "keywords": [
+      "Go To",
+      "Ctrl+Down",
+      "Ctrl+Up",
+      "差异导航"
+    ],
+    "root_cause_summary": "官方 Go To 菜单：Next Difference = Ctrl+Down Arrow，Previous Difference = Ctrl+Up Arrow，另有 Go to First Difference / Go to Last Difference。",
+    "solution_summary": "用 Ctrl+Down / Ctrl+Up 与 First/Last Difference 导航差异。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-123",
+    "question": "Sync Left / Sync Right 到底往哪边复制",
+    "category": "文件对比",
+    "keywords": [
+      "Sync Left",
+      "Sync Right",
+      "同步方向"
+    ],
+    "root_cause_summary": "官方 Sync：Sync Left（Ctrl+Left Arrow）把当前差异从右窗口复制到左窗口；Sync Right（Ctrl+Right Arrow）从左窗口复制到右窗口。方向由菜单名指明。",
+    "solution_summary": "记住：Sync Left = 右→左，Sync Right = 左→右。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-124",
+    "question": "同步完那行高亮就没了，正常吗",
+    "category": "文件对比",
+    "keywords": [
+      "同步后高亮",
+      "设计行为"
+    ],
+    "root_cause_summary": "官方 Sync 说明：文本从一个窗口移到另一个后，该行不再高亮，因为两窗口文本已相同——这是预期行为。",
+    "solution_summary": "把高亮消失理解为同步成功的信号，而非异常。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-125",
+    "question": "只想比较实质改动，忽略行号/空格/注释差异",
+    "category": "文件对比",
+    "keywords": [
+      "Ignore Block numbers",
+      "Ignore White spaces",
+      "Ignore Comments",
+      "Ignore Numeric format"
+    ],
+    "root_cause_summary": "官方 File Compare Ignore Options：Ignore Block numbers、Ignore White spaces、Ignore Comments（需为文件类型关联的 Machine template 配正确 Comment start/end）、Ignore Case、Ignore Numeric format（X+14.10 匹配 X14.1）。",
+    "solution_summary": "在 File Compare 设置中启用对应 Ignore 项，使比较聚焦真实改动。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-126",
+    "question": "Mark Changes only / smart marking / Show all differences 怎么选",
+    "category": "文件对比",
+    "keywords": [
+      "Mark Changes only",
+      "smart marking",
+      "Show all differences"
+    ],
+    "root_cause_summary": "官方 File Compare 设置：Mark Changes only 只高亮差异部分而非整行；Use smart marking 若命令含差异则标记整个命令；Show all differences (No editing) 同时高亮所有有差异的行且不可编辑；Single line step 逐行单步处理连续差异。",
+    "solution_summary": "按检查粒度选择 Mark Changes only / smart marking / Show all differences / Single line step。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-127",
+    "question": "Tab 键在对比窗口里不能输入制表符了",
+    "category": "文件对比",
+    "keywords": [
+      "Use tab to switch window",
+      "Tab键"
+    ],
+    "root_cause_summary": "官方 File Compare：Use tab to switch window 启用后可用 Tab 在两文件间切换，但此时无法在文件中插入 Tab 字符。",
+    "solution_summary": "按是否需要插入 Tab 决定 Use tab to switch window 的开关。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-128",
+    "question": "同步后想自动跳到下一处差异",
+    "category": "文件对比",
+    "keywords": [
+      "Jump to next difference after sync",
+      "minimap"
+    ],
+    "root_cause_summary": "官方 File Compare：Jump to next difference after sync 启用后，每次同步完自动跳到下一处差异。另有 Show minimap 显示对比缩略图。",
+    "solution_summary": "启用 Jump to next difference after sync 实现连续同步。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-129",
+    "question": "把有差异的行导出成文本存档",
+    "category": "文件对比",
+    "keywords": [
+      "Save Compare File",
+      "导出差异",
+      "txt"
+    ],
+    "root_cause_summary": "官方 File Compare → Other → Save Compare File：把含差异的行保存为 .txt 文件。",
+    "solution_summary": "用 Save Compare File 导出差异行文本。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-130",
+    "question": "连续几行差异想只同步光标那一行",
+    "category": "文件对比",
+    "keywords": [
+      "Single Step Through Differences",
+      "单行同步"
+    ],
+    "root_cause_summary": "官方 Other → Single Step Through Differences：默认按块同步（连续两三行有差异时一起同步）；启用后只同步光标所在行。Editor Setup 里对应 Single line step。",
+    "solution_summary": "启用 Single Step Through Differences / Single line step 做单行同步。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-131",
+    "question": "File Compare 的设置在哪里、会影响其它文件类型吗",
+    "category": "文件对比",
+    "keywords": [
+      "File Compare Setup",
+      "File Type作用域"
+    ],
+    "root_cause_summary": "官方：File Compare 菜单的 Setup 与 Other → File Compare Setup 都会进入 Editor Setup 的 File Compare 区段；该区段设置只对当前 File Type 生效（看对话框标题）。",
+    "solution_summary": "按文件类型分别配置 File Compare 设置。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-132",
+    "question": "打印对比结果时只打差异行",
+    "category": "文件对比",
+    "keywords": [
+      "Print only differences",
+      "打印差异"
+    ],
+    "root_cause_summary": "官方 File Compare Print Options：Print only differences 只打印两文件间有差异的行。",
+    "solution_summary": "启用 Print only differences 后打印。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-133",
+    "question": "对比两个尚未打开的文件",
+    "category": "文件对比",
+    "keywords": [
+      "Compare File with File",
+      "未打开文件对比"
+    ],
+    "root_cause_summary": "官方 File Compare：Compare File with File 比较两个不在窗口中的文件，两个文件都通过 Open file 对话框选择。",
+    "solution_summary": "用 Compare File with File 直接选两个文件路径。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-134",
+    "question": "打开了三个以上文件，Compare with Window 比的是哪个",
+    "category": "文件对比",
+    "keywords": [
+      "Compare with Window",
+      "多文件选择"
+    ],
+    "root_cause_summary": "官方 Compare with Window：当打开多于两个文件时，CIMCO Edit 会询问要与哪个文件比较。",
+    "solution_summary": "按提示明确选择对比目标，避免误比。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-135",
+    "question": "为什么一次同步好几行而不是一行",
+    "category": "文件对比",
+    "keywords": [
+      "块同步",
+      "连续差异",
+      "单行"
+    ],
+    "root_cause_summary": "官方 Other：默认 CIMCO Edit 按块同步（连续两或三行含差异时成块处理）；Single Step Through Differences 可改为只同步光标行。",
+    "solution_summary": "按需要切换块同步/单行同步模式。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-136",
+    "question": "能不能用文件对比做版本管理/回滚",
+    "category": "文件对比",
+    "keywords": [
+      "版本管理",
+      "B-02",
+      "NCBase",
+      "MDCMax"
+    ],
+    "root_cause_summary": "CAPABILITY_BOUNDARIES B-02：官方 161 页语料中 version control 0 命中；File Compare 仅提供 diff/Goto/Sync；程序与版本管理属 NCBase/MDCMax 产品域，不是 Edit 本体能力。",
+    "solution_summary": "仅使用 diff/Goto/Sync；版本管理需求转 NCBase/MDCMax 并按 B-02 标注。",
+    "boundary": "B-02"
+  },
+  {
+    "id": "FAQ-137",
+    "question": "两个程序只是块号不同，怎么忽略掉",
+    "category": "文件对比",
+    "keywords": [
+      "Ignore Block numbers",
+      "块号差异"
+    ],
+    "root_cause_summary": "官方 Ignore Options：Ignore Block numbers 会忽略块号的值及其有无（一个文件有、另一个没有也忽略）。",
+    "solution_summary": "启用 Ignore Block numbers。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-138",
+    "question": "两个程序大小写不同怎么当成相同",
+    "category": "文件对比",
+    "keywords": [
+      "Ignore Case",
+      "大小写差异"
+    ],
+    "root_cause_summary": "官方 Ignore Options：Ignore Case 勾选后忽略字母大小写差异。",
+    "solution_summary": "启用 Ignore Case。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-139",
+    "question": "X+14.10 和 X14.1 被当成不同，怎么忽略",
+    "category": "文件对比",
+    "keywords": [
+      "Ignore Numeric format",
+      "数值格式"
+    ],
+    "root_cause_summary": "官方 Ignore Options：Ignore Numeric format 会忽略前导/后导零以及可选的 '+' 号，使 X+14.10 匹配 X14.1。",
+    "solution_summary": "启用 Ignore Numeric format。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-140",
+    "question": "差异的高亮颜色在哪里改",
+    "category": "文件对比",
+    "keywords": [
+      "差异颜色",
+      "Global Colors",
+      "compare background"
+    ],
+    "root_cause_summary": "官方 File Types → Colors 提供 File compare background for different lines / different text / missing lines，以及 Global Colors 的 File compare difference wave；颜色列表靠前的优先。",
+    "solution_summary": "在 File Types → Colors / Global Colors 调整对比相关颜色。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-141",
+    "question": "DNC Setup 对话框在哪里打开",
+    "category": "DNC 通信与传输",
+    "keywords": [
+      "DNC Setup",
+      "入口",
+      "独立于Editor Setup"
+    ],
+    "root_cause_summary": "官方 Transmission/DNC Setup：DNC Setup 可从 Transmission 菜单或 Transmission 标签下的 Setup 菜单打开；它独立于 Editor Setup，不能从 Editor Setup 进入。DNC 操作需要相应许可。",
+    "solution_summary": "从 Transmission 菜单或标签的 Setup 打开 DNC Setup（不是 Editor Setup）。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-142",
+    "question": "端口信息 'COM1, 9600, 7E2' 是什么意思",
+    "category": "DNC 通信与传输",
+    "keywords": [
+      "COM1 9600 7E2",
+      "端口简写",
+      "串口参数"
+    ],
+    "root_cause_summary": "官方 Port information：'COM1, 9600, 7E2' 表示 Port=COM1、Baud rate=9600、Data bits=7、Parity=E（even 偶校验）、Stop bits=2；FTP 的 'cimco@192.168.254.231' 表示用户名 cimco、CNC IP 192.168.254.231。",
+    "solution_summary": "按 COM口/波特率/数据位/校验/停止位逐项对照机床手册。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-143",
+    "question": "串口波特率、数据位、停止位该怎么选",
+    "category": "DNC 通信与传输",
+    "keywords": [
+      "Baud rate",
+      "Data bits",
+      "Stop bits",
+      "串口参数"
+    ],
+    "root_cause_summary": "官方 Port：Baud rate 为传输速度（bit/s）；Data bits 默认 NC 数据用 7 位 ASCII；Stop bits 数量取决于 CNC 控制，参考机床手册；Port 从本机串口列表中选。",
+    "solution_summary": "严格按机床手册设定 Baud/Data bits/Stop bits/Parity，端口选实际 COM 口。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-144",
+    "question": "Parity 的 None/Even/Odd/Mark/Space 怎么选",
+    "category": "DNC 通信与传输",
+    "keywords": [
+      "Parity",
+      "Even",
+      "Odd",
+      "校验位"
+    ],
+    "root_cause_summary": "官方 Parity：None=不校验；Even=每个字符 1 的个数为偶；Odd=为奇；Mark/Space 仅特殊测试用（校验位恒为 1 / 恒为 0）。",
+    "solution_summary": "生产环境只用 None/Even/Odd，与机床一致。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-145",
+    "question": "发送时 CR/LF 怎么设，\\13 \\10 是什么",
+    "category": "DNC 通信与传输",
+    "keywords": [
+      "CRLF",
+      "\\13",
+      "\\10",
+      "行尾"
+    ],
+    "root_cause_summary": "官方 Transmit：CR/LF 可选下拉或直接输入；ASCII 13 与 ASCII 10 无字符表示，必须写成 \\13 与 \\10；也可用 $* 形式输入 ASCII 字符（$ = ASCII 36）或 \\36。",
+    "solution_summary": "用 \\13\\10 表示 CR/LF，并与机床、保存文件三方一致。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-146",
+    "question": "Flow control 该选 Software 还是 Hardware",
+    "category": "DNC 通信与传输",
+    "keywords": [
+      "Flow control",
+      "XOn/XOff",
+      "RTS/CTS",
+      "握手"
+    ],
+    "root_cause_summary": "官方 Flow control：Software 用 XOn/XOff 字符，Hardware 用 RS-232 的 RTS/CTS 线，可 None/Software/Hardware/Hardware and Software；另有 Enable DTR、Enable RTS 把对应线置高；Handshake timeout 是收到 XOff/CTS Low 后等待的最长时间。",
+    "solution_summary": "按机床握手类型选 Flow control，并设合理 Handshake timeout。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-147",
+    "question": "自定义 XOn/XOff 字符和校验错误插入字符",
+    "category": "DNC 通信与传输",
+    "keywords": [
+      "XOn",
+      "XOff",
+      "Check parity",
+      "Insert on parity error"
+    ],
+    "root_cause_summary": "官方 Advanced Port Settings：XOn character/XOff character 留空用标准字符，可填非标准；Insert on parity error 指定收到校验错误时插入的字符（留空不插）；字符可写 $（ASCII 36）或 \\36。",
+    "solution_summary": "用 $ 或 \\n 形式填写非标准 XOn/XOff 与错误插入字符。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-148",
+    "question": "只发送程序中的某一段怎么做",
+    "category": "DNC 通信与传输",
+    "keywords": [
+      "Start trigger",
+      "End trigger",
+      "Send Selected Lines"
+    ],
+    "root_cause_summary": "官方 Transmit：Start trigger 从含指定触发字符的第一行开始发送；End trigger 所在行不发送；Send at start of feed / Send at end of feed 在传输首尾发指定字符；Omit lines containing 排除含特定字符的行；另有 Break after receiving characters、Delay before each line (ms)、Wait for XOn、Wait for 'Start' button。",
+    "solution_summary": "用 Start/End trigger 限定发送范围，配合 Omit/握手选项。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-149",
+    "question": "7 位数据位传输时 ASCII 0/128 出问题",
+    "category": "DNC 通信与传输",
+    "keywords": [
+      "ASCII 0",
+      "7位数据位",
+      "字符丢失"
+    ],
+    "root_cause_summary": "官方 Editor Settings：Remove ASCII 0's 若关闭，ASCII 0 被替换为 ASCII 128；用 7 位数据位传输时 ASCII 128 又变成 ASCII 0。官方 Transmit 也有 Remove ASCII 0's、Remove white spaces、Replace tabs with spaces 选项。",
+    "solution_summary": "按数据位与机床约定统一 ASCII 0 处理与空白字符策略。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-150",
+    "question": "接收程序时怎么设置开始/结束触发和超时",
+    "category": "DNC 通信与传输",
+    "keywords": [
+      "Receive timeout",
+      "Start trigger",
+      "End trigger",
+      "Auto CR/LF"
+    ],
+    "root_cause_summary": "官方 Receive：CR/LF 可 Auto 自动探测；Omit lines containing / Omit lines with string / Remove characters / Omit empty lines 过滤；Start trigger 为开始保存的首个序列，End trigger 为停止保存的末序列；Receive timeout (seconds) 为最后字符后判定结束的等待时间（无 End trigger 时必须设）；Send XOn 与 Send at start of reception 可主动发字符。",
+    "solution_summary": "用 Start/End trigger 界定范围并设置 Receive timeout 收尾。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-151",
+    "question": "传输失败时怎么判断是哪一端的问题",
+    "category": "DNC 通信与传输",
+    "keywords": [
+      "传输失败",
+      "Signals",
+      "Terminal Window",
+      "Stop"
+    ],
+    "root_cause_summary": "官方 Transmit/Receive Dialogs：Signals 区显示 RS-232-C 关键信号（点亮表示激活）；Information 显示机器名/文件名/已发字节；进度条 0-100%；Terminal Window 显示明文程序，可 Show CR/LF；Hide 后用 Machine 菜单的 Status 再显示；Stop 可中止并确认。",
+    "solution_summary": "按信号→字节数→终端文本→参数顺序定位，必要时 Stop 重来。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-152",
+    "question": "FTP 客户端的服务器地址和目录怎么填",
+    "category": "DNC 通信与传输",
+    "keywords": [
+      "FTP",
+      "Server address",
+      "default path"
+    ],
+    "root_cause_summary": "官方 FTP Client Protocol → Port：Server address 填 FTP 服务器 IP（示例 127.0.0.1）；Username/Password 为连接凭据；PC default path 留空则用 C:\\；FTP server default path 需 FTP 兼容格式 /[DIR] 或 /[DIR]/，从服务器根目录算的绝对路径。",
+    "solution_summary": "按 IP/账号/密码 + 合规目录格式配置 FTP 连接。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-153",
+    "question": "FTP 分窗里为什么不能新建/改名/删除",
+    "category": "DNC 通信与传输",
+    "keywords": [
+      "FTP分窗",
+      "Remote deletion",
+      "Use split window"
+    ],
+    "root_cause_summary": "官方 FTP Send/Receive：New folder/Rename/Delete 分别要求 Send/Receive 设置中的 Local/Remote directory creation、renaming、deletion 对应选项启用；Use split window 控制发送时是否用分窗（接收时总是用）；Receive to default PC directory 控制是否总是收到默认本地目录。",
+    "solution_summary": "在 Send/Receive 中启用对应权限项。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-154",
+    "question": "FTP Transfer 分窗左右两边分别是什么",
+    "category": "DNC 通信与传输",
+    "keywords": [
+      "FTP Transfer",
+      "Split Window",
+      "左右侧"
+    ],
+    "root_cause_summary": "官方 FTP Transfer Dialog（Split Window）：左侧本地 PC、右侧远程 FTP 服务器（CNC）；PC path 下拉选本地路径（文件夹图标回上级），CNC path 为远程路径；Refresh 刷新两侧；Send to remote / Receive from remote 双向传文件；File Type 指定发送文件类型。",
+    "solution_summary": "记住左 PC 右 CNC，用 Refresh 与方向按钮操作。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-155",
+    "question": "Machine Type 在传输里起什么作用",
+    "category": "DNC 通信与传输",
+    "keywords": [
+      "Machine Type",
+      "默认目录",
+      "换刀检测"
+    ],
+    "root_cause_summary": "官方 DNC Setup：Machine Type 用于确定默认加载/保存目录、传输中如何检测换刀等；机床类型在 Editor Setup 的 File Types 中配置。",
+    "solution_summary": "选对 Machine Type 以复用 File Types 的目录与换刀规则。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-156",
+    "question": "如何在 DNC Setup 里新增一台机器",
+    "category": "DNC 通信与传输",
+    "keywords": [
+      "Add New",
+      "机器配置",
+      "模板"
+    ],
+    "root_cause_summary": "官方 DNC Setup：Add New 弹窗要求输入名称并选择预配置模板（FTP Client、Generic Serial Connected CNC、Okuma Template，或现有机器配置）；Delete 删除会要求确认；Rename 重命名。",
+    "solution_summary": "用 Add New + 模板快速建机，再用 Setup 细化。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-157",
+    "question": "传输模板 .TPL 有哪些、放在哪",
+    "category": "DNC 通信与传输",
+    "keywords": [
+      "TPL",
+      "XMODEM",
+      "FANUC-FAPT",
+      "LSV2-HH"
+    ],
+    "root_cause_summary": "本机实装证据 E-203/E-217：Templates 下有 326 个 TPL/TYP；DNC 模板含 XMODEM、FANUC-FAPT、LSV2-HH、MAZAK、OKUMA、FTPSERVER、BROTHERQD3、AGIECUT、NETWORK、GENERIC-MONMACROS、GENERIC-PERCENT 等（路径 CIMCOEdit\\Templates）。",
+    "solution_summary": "按机床系统选对应 .TPL，配置随机器保存。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-158",
+    "question": "Send/Send File/Receive 等菜单项有什么区别",
+    "category": "DNC 通信与传输",
+    "keywords": [
+      "Send File",
+      "Receive File",
+      "菜单区别",
+      "FTP限制"
+    ],
+    "root_cause_summary": "官方 Transmission 菜单：Send 发当前程序（FTP 不可用）；Send Selected Lines 发行选区（FTP 不可用）；Send File 选文件发送（FTP 下仅当 Use split window 启用才弹 FTP Transfer 对话框）；Receive File 收文件保存而不打开；Receive 收文件并新窗口打开（FTP 不可用）；Receive Into Current Window 插入当前窗口（FTP 不可用）。",
+    "solution_summary": "按「当前程序/选区/文件」「是否打开」「串口/FTP」选择正确菜单项。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-159",
+    "question": "传输状态对话框里那些信号和按钮干什么",
+    "category": "DNC 通信与传输",
+    "keywords": [
+      "Transmit Status",
+      "Hide Terminal",
+      "Machine Status"
+    ],
+    "root_cause_summary": "官方 Transmit/Receive Dialogs：Signals 显示 RS-232-C 关键信号；Information 显示机器名/文件名/已发字节等；进度条 0-100%；Hide Terminal 切换底部终端窗口；Hide 隐藏对话框（用 Machine 菜单 Status 再显示）；Stop 停止并二次确认。",
+    "solution_summary": "用状态窗口监控信号/进度/终端，必要时 Hide/Stop。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-160",
+    "question": "怎么重新发送/接收最近用过的文件",
+    "category": "DNC 通信与传输",
+    "keywords": [
+      "最近文件",
+      "下拉列表",
+      "重传"
+    ],
+    "root_cause_summary": "官方 Transmission：Send File 的下拉箭头列出最近发送的文件；Receive File 的下拉箭头列出最近接收的文件。",
+    "solution_summary": "用 Send File / Receive File 的下拉最近列表快速重传。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-161",
+    "question": "CIMCO Edit 里说的「后处理」到底指什么",
+    "category": "后处理/转换/刀具库",
+    "keywords": [
+      "后处理",
+      "B-04",
+      "CNC-Calc",
+      "CAM侧后处理"
+    ],
+    "root_cause_summary": "CAPABILITY_BOUNDARIES B-04：官方语料中 Post Process 仅出现在 CNC-Calc 与 Transform 两处；Posts\\Mill|Lathe\\*.js 属 CNC-Calc 后处理与反向后处理。通用 CAM 后处理在 CAM 软件侧，不在 Edit 本体。",
+    "solution_summary": "把通用 CAM 后处理路由到 CAM 软件；CIMCO 侧只用 CNC-Calc 后处理与反向后处理。",
+    "boundary": "B-04"
+  },
+  {
+    "id": "FAQ-162",
+    "question": "Posts 目录下的 .js 后处理器怎么用",
+    "category": "后处理/转换/刀具库",
+    "keywords": [
+      "Posts",
+      "fanuc.js",
+      "Post Process",
+      "后处理"
+    ],
+    "root_cause_summary": "本机实装：Posts\\Mill|Lathe 共 30 个 js（fanuc.js、haas.js、heidenhain.js、Siemens 840D.js、Fagor 8055i.js、Universal Iso.js，车削 IsoLathe_X_*_Z_*_Processor.js 等）；经 Post Process 菜单调用（PostProcessor.dll 机制）。",
+    "solution_summary": "用 Post Process 菜单选匹配控制系统的 Posts .js 后处理。",
+    "boundary": "B-04"
+  },
+  {
+    "id": "FAQ-163",
+    "question": "CNC-Calc 是什么、需要什么许可",
+    "category": "后处理/转换/刀具库",
+    "keywords": [
+      "CNC-Calc",
+      "扩展许可",
+      "2D CAM"
+    ],
+    "root_cause_summary": "官方 Plugins：CNC-Calc 模块需要 CIMCO Edit Professional 的扩展许可，可用 Disable CNC-Calc 开关禁用；本机有 CNCCalc.dll 与 cnc-calc_*.chm 帮助。CNC-Calc 是内置 2D CAD/CAM，可从几何生成刀路并经后处理输出 NC。",
+    "solution_summary": "确认许可与插件开关后使用 CNC-Calc；无许可则按 B-04 不宣称后处理可用。",
+    "boundary": "B-04"
+  },
+  {
+    "id": "FAQ-164",
+    "question": "CNC-Calc 的后处理器参数在哪里配",
+    "category": "后处理/转换/刀具库",
+    "keywords": [
+      "CNC-Calc设置",
+      "Selected Post Processor",
+      "后处理器"
+    ],
+    "root_cause_summary": "官方 Editor Setup → File Types → CNC-Calc：Turning（车削）、Diameter programming（直径编程）、Number of decimals、Maximum arc output angle、Spline substitution tolerance、Selected Post Processor（选择输出格式化的后处理器）、Open（打开后处理 PDF 手册）、Show grid/Grid size/Show sub-grid/Show origin、Axis substitution name/tolerance。",
+    "solution_summary": "用 CNC-Calc 设置页选后处理器并配精度/圆弧/样条参数。",
+    "boundary": "B-04"
+  },
+  {
+    "id": "FAQ-165",
+    "question": "什么是反向后处理，CIMCO 能做吗",
+    "category": "后处理/转换/刀具库",
+    "keywords": [
+      "反向后处理",
+      "B-04",
+      "CNC-Calc"
+    ],
+    "root_cause_summary": "CAPABILITY_BOUNDARIES B-04：允许的正确表述是「CIMCO Edit 的后处理是 CNC-Calc 后处理与反向后处理」。反向后处理即由 NC 程序反推 CNC-Calc 可处理的刀路/几何，属 CNC-Calc 域。",
+    "solution_summary": "在 CNC-Calc 域做反向后处理；把它与通用 CAM 后处理明确区分。",
+    "boundary": "B-04"
+  },
+  {
+    "id": "FAQ-166",
+    "question": "Post Process 菜单是灰的或找不到",
+    "category": "后处理/转换/刀具库",
+    "keywords": [
+      "Post Process灰色",
+      "CNC-Calc许可"
+    ],
+    "root_cause_summary": "官方 Plugins：CNC-Calc 需要 Professional 扩展许可且未被 Disable CNC-Calc 禁用；后处理属 CNC-Calc 能力域（B-04）。",
+    "solution_summary": "启用 CNC-Calc 模块并确认许可与当前文档类型。",
+    "boundary": "B-04"
+  },
+  {
+    "id": "FAQ-167",
+    "question": ".conv 转换器与 Posts .js 后处理有什么区别",
+    "category": "后处理/转换/刀具库",
+    "keywords": [
+      "conv",
+      "Post Processor",
+      "js后处理",
+      "区别"
+    ],
+    "root_cause_summary": "官方 Transform → Convert NC code：需要「converter file, also known as a Post Processor」来定义目标格式，.conv 位于程序目录 \\Converters，本机 4 个（fanuc/heidenhain/SinumerikTurning/NumeripathTurning）。Posts\\*.js 服务于 CNC-Calc 输出格式化（B-04）。二者作用对象不同。",
+    "solution_summary": "按数据来源选择 .conv（NC 转换）或 Posts .js（CNC-Calc 输出）。",
+    "boundary": "B-04"
+  },
+  {
+    "id": "FAQ-168",
+    "question": "Convert to NCI format 有什么用",
+    "category": "后处理/转换/刀具库",
+    "keywords": [
+      "NCI",
+      "中间格式",
+      "Convert NC code"
+    ],
+    "root_cause_summary": "官方 Convert NC code：Convert to NCI format 把 NC 转成 NCI——一种通用/中间格式，表示刀路在经后处理器转成最终 NC 之前的状态。",
+    "solution_summary": "需要中间刀路数据时勾 Convert to NCI format。",
+    "boundary": "B-04"
+  },
+  {
+    "id": "FAQ-169",
+    "question": "Use longhand cycles 展开固定循环",
+    "category": "后处理/转换/刀具库",
+    "keywords": [
+      "longhand cycles",
+      "固定循环展开",
+      "G81"
+    ],
+    "root_cause_summary": "官方 Convert NC code：Use longhand cycles 把每次运动或循环输出为单独代码行，而不是简写/固定循环。",
+    "solution_summary": "用 Use longhand cycles 把固定循环展开为逐行代码。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-170",
+    "question": "转换后圆弧走向/圆心解释错了",
+    "category": "后处理/转换/刀具库",
+    "keywords": [
+      "Arc Type",
+      "圆弧圆心",
+      "G02/G03"
+    ],
+    "root_cause_summary": "官方 Arc type 四种：Auto detect（默认）、Relative to start、Relative to end、Absolute arc center；仿真设置 Arc Type 另有 As in G-code / Auto-detect / Relative to start / Absolute arc center / Radius value。圆弧解释方式取决于控制系统。",
+    "solution_summary": "按机床圆心定义选 Arc Type，并用背绘验证圆弧走向。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-171",
+    "question": "刀具库 .tmlib 文件放在哪、有哪些",
+    "category": "后处理/转换/刀具库",
+    "keywords": [
+      "tmlib",
+      "刀具库",
+      "ToolLibs",
+      "Predefined"
+    ],
+    "root_cause_summary": "本机实装：ToolLibs 下 14 个 .tmlib（Predefined 含 ISO Mills MM、Drills、Taps、Spot drills、Counter sinks、Holders，另有 ISCAR/Seco 刀柄等）；SIM 相关为 Assemblies/Cutters/Holders。",
+    "solution_summary": "从 ToolLibs\\Predefined 选择匹配机床单位（MM/Inch）的 .tmlib。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-172",
+    "question": "让仿真自动加载刀具库",
+    "category": "后处理/转换/刀具库",
+    "keywords": [
+      "自动加载刀具",
+      "Tool Library",
+      "Backplot设置"
+    ],
+    "root_cause_summary": "官方 File Types → Backplot：Automatically import tools from a tool library 启用后，开始仿真时自动从指定 Tool Library 加载刀具；加载结果可在 Tool Manager 上部 current tools 列表看到（Assemblies/Cutters/Holders）。",
+    "solution_summary": "在 Backplot 设置中启用自动导入并选库。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-173",
+    "question": "在 Tool Manager 里怎么建新刀具/改装配",
+    "category": "后处理/转换/刀具库",
+    "keywords": [
+      "Tool Manager",
+      "Assembly",
+      "Cutter",
+      "Holder"
+    ],
+    "root_cause_summary": "官方 Tools：Tool Manager 可查看/修改程序中的刀具、配置类型与颜色；Editing an Assembly / Editing a Cutter / Editing a Holder 分别编辑装配、刀具、刀柄；可从 Backplot → Tool → Tool Setup 打开。",
+    "solution_summary": "在 Tool Manager 编辑 Assembly/Cutter/Holder 并保存。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-174",
+    "question": "刀具清单模板文件在哪、有哪些",
+    "category": "后处理/转换/刀具库",
+    "keywords": [
+      "模板",
+      "ToolList.txt",
+      "SYS目录",
+      "HTML"
+    ],
+    "root_cause_summary": "官方 Tool List：预装三个模板在 C:\\Users\\<user>\\AppData\\Roaming\\CIMCO 2026\\CIMCOEdit\\SYS：Toollist.txt（简单）、NewToolList.txt（高级）、NewToolListHtmlSample.txt（HTML 示例）。",
+    "solution_summary": "复制示例模板后再改，不动系统原件。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-175",
+    "question": "如何生成 HTML 格式的刀具清单",
+    "category": "后处理/转换/刀具库",
+    "keywords": [
+      "HTML刀具清单",
+      "TOOL_TRIGGER_REGEX",
+      "$TOOLINFO"
+    ],
+    "root_cause_summary": "官方 Advanced Configuration (HTML Tool List)：勾 Use advanced configuration template；Tool Trigger 必须填非空（HTML 不用但空会报错）；模板含 [CONFIG_BEGIN]~[CONFIG_END] 与 [HEADER_BEGIN] 起段；用 TOOL_TRIGGER_REGEX 提取名称（如 T=\"([[:space:]0-9a-zA-Z/]+)\"）、COMMENT_START=; 、$TOOLINFO、NUMBER_OF_COMMENTS、[EXTRACT_FROM_TOOL_COMMENT_*] 提取 $INFO1；HTML 用 <img> 插图。",
+    "solution_summary": "用高级 HTML 模板 + 非空 Tool Trigger 生成并保存 .html。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-176",
+    "question": "Tool trigger 与 $TOOL1 高级触发怎么配",
+    "category": "后处理/转换/刀具库",
+    "keywords": [
+      "Tool trigger",
+      "$TOOL1",
+      "R<[0-9]+>",
+      "去重"
+    ],
+    "root_cause_summary": "官方 Tool List：Tool trigger 填 T 识别 T01；$TOOL1/$TOOL2 Trigger 用高级正则从行内提取，例如 R<[0-9]+> 把 R33 赋给 $TOOL1；Filter comments with advanced trigger 可用 [A-Z0-9 ]+ 过滤注释；Sort tool list 去重；Ignore duplicate info 使 T020202 按 T02；Ignore 0's 使 T02=T2。",
+    "solution_summary": "用 Tool trigger + $TOOL1 正则提取附加信息。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-177",
+    "question": "多程序的刀具清单怎么合并",
+    "category": "后处理/转换/刀具库",
+    "keywords": [
+      "Combined Tool List",
+      "合并刀具清单"
+    ],
+    "root_cause_summary": "官方 Info：Combined Tool List 基于两个或多个已打开程序生成合并刀具清单（新文档）；单程序用 Make Tool List。车削导出 DXF 时可勾 Export turning toolpath in XY-plane。",
+    "solution_summary": "用 Combined Tool List 汇总多个已打开程序。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-178",
+    "question": "后处理生成的 NC 怎样验证才能上机",
+    "category": "后处理/转换/刀具库",
+    "keywords": [
+      "后处理验证",
+      "背绘",
+      "静态校验",
+      "试切"
+    ],
+    "root_cause_summary": "工程实践：后处理/转换结果必须用独立手段复核——CIMCO 背绘看刀路与 G00 安全、桥接 validate_fanuc_macro_b/validate_gcode 做静态校验（附 status/syntax_checked/errors）、必要时 File Compare 与原程序比对；不得只凭后处理成功就宣称可用。",
+    "solution_summary": "执行「背绘 + 静态校验 + 差异对比 + 机床验证」四步，不跳过任一步。",
+    "boundary": "B-04"
+  },
+  {
+    "id": "FAQ-179",
+    "question": "通用 CAM 后处理需求应如何路由",
+    "category": "后处理/转换/刀具库",
+    "keywords": [
+      "CAM后处理",
+      "路由",
+      "B-04"
+    ],
+    "root_cause_summary": "CAPABILITY_BOUNDARIES B-04：Post Process 在官方语料仅见于 CNC-Calc 与 Transform；通用 CAM 后处理在 CAM 软件侧。CIMCO Edit 不承担把 CAM 刀轨转 NC 的通用后处理职责。",
+    "solution_summary": "把通用 CAM 后处理明确路由到 CAM 软件侧，CIMCO 侧做校验/仿真/传输。",
+    "boundary": "B-04"
+  },
+  {
+    "id": "FAQ-180",
+    "question": "自带脚本里的 Fanuc to Heidenhain Klartext 示例能直接用吗",
+    "category": "后处理/转换/刀具库",
+    "keywords": [
+      "示例脚本",
+      "Fanuc to Heidenhain",
+      "Klartext",
+      "警告"
+    ],
+    "root_cause_summary": "官方示例说明：Fanuc to Heidenhain Klartext 是示例转换器，把 Fanuc 铣削程序写为新的 Heidenhain Klartext 程序；无法转换的块保留为注释并给出警告。示例脚本在 Script setup 中可 Edit（只读），保存会把副本写入 scripts 文件夹。",
+    "solution_summary": "以示例为模板另存再用，并检查警告与保留的注释块。",
+    "boundary": "B-04"
+  },
+  {
+    "id": "FAQ-181",
+    "question": "Editor Setup 的整体结构和底部按钮是什么",
+    "category": "配置/自定义/控制系统适配",
+    "keywords": [
+      "Editor Setup",
+      "搜索栏",
+      "Export/Import",
+      "Default"
+    ],
+    "root_cause_summary": "官方 Editor Setup：左侧为导航菜单，右侧为所选区段的设置；顶部搜索栏可快速过滤区段；顶部问号图标可点选任一选项查看说明。底部按钮：Export（导出配置 .zip）、Import（导入后需重启）、Help、Default（恢复默认）、Cancel、OK。",
+    "solution_summary": "善用搜索栏与问号帮助，改前 Export、改坏 Import/Default。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-182",
+    "question": "对话框里某个字段不懂，有内置说明吗",
+    "category": "配置/自定义/控制系统适配",
+    "keywords": [
+      "问号帮助",
+      "F1",
+      "字段说明"
+    ],
+    "root_cause_summary": "官方 Help：许多对话框内置帮助——右上角问号图标，点击后再点某选项/字段，光标附近会显示简短说明；也可点中字段后按 F1 查看。",
+    "solution_summary": "用问号图标或 F1 获取字段级官方说明。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-183",
+    "question": "常用快捷键有哪些（文件/编辑/查找/背绘）",
+    "category": "配置/自定义/控制系统适配",
+    "keywords": [
+      "快捷键",
+      "Ctrl+N",
+      "Ctrl+Shift+P",
+      "Ctrl+H"
+    ],
+    "root_cause_summary": "官方语料汇总：File 新建 Ctrl+N、打开 Ctrl+O、高级打开 Ctrl+Alt+O、保存 Ctrl+S、打印 Ctrl+P、关闭 Ctrl+F4；Edit 复制 Ctrl+C/剪切 Ctrl+X/粘贴 Ctrl+V/全选 Ctrl+A/撤销 Ctrl+Z/重做 Ctrl+Y/Mark-Delete Ctrl+M/大写 Ctrl+U/小写 Ctrl+Shift+U；Find Ctrl+F、替换 Ctrl+H、Go to Ctrl+J、F3/Shift+F3；Backplot Ctrl+Shift+P、关闭 Ctrl+Shift+Q；书签 F2/F5/Shift+F5；Compare Ctrl+Down/Up/Left/Right；NC-Assistant 侧栏 Ctrl+Shift+A。",
+    "solution_summary": "按组记忆并随用随查菜单标注。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-184",
+    "question": "能不能换一套键盘映射方案",
+    "category": "配置/自定义/控制系统适配",
+    "keywords": [
+      "键盘映射",
+      "Keyboard Mapping",
+      "Keyboard acceleration"
+    ],
+    "root_cause_summary": "官方 General：Keyboard/ Mouse Mapping 下拉可选择键盘映射；Editor Settings 另有 Keyboard acceleration（光标移动更快）等细项。",
+    "solution_summary": "用 General 的 Keyboard/Mouse Mapping 切换映射。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-185",
+    "question": "多通道视图怎么开启和切换",
+    "category": "配置/自定义/控制系统适配",
+    "keywords": [
+      "多通道",
+      "Multi Channel",
+      "Wait code",
+      "Ctrl+Down"
+    ],
+    "root_cause_summary": "官方 Multi Channel：必须先在 Editor Setup → File Types → Multi Channel 勾 Enable multi channel view（否则 NC-Assistant 的多通道项也禁用）；然后 NC-Assistant → Multi Channel → Window（当前程序）或 Files（多文件），Close 关闭；Next/Previous（Ctrl+Down/Up）跳同步点；匹配的 Wait code 显示黄色，缺失的显示紫色。",
+    "solution_summary": "先启用配置再开视图；用 Ctrl+Down/Up 与颜色标记检查同步。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-186",
+    "question": "多通道同步命令（Wait code）怎么配",
+    "category": "配置/自定义/控制系统适配",
+    "keywords": [
+      "同步命令",
+      "Advanced正则",
+      "M300",
+      "Channel number"
+    ],
+    "root_cause_summary": "官方 Multi Channel Configuration：Synchronization command 可用 String（如 !1/!2 用 !）或 Advanced（正则需用 <> 捕获，如 M3<[0-9][0-9]> 匹配 M300-M399）；示例 Macodel ([^A-Za-z]?)M<9[0-9]{2}>($|[^0-9])、DMG Mori M<1[0-9]{2}>、Star M<[2-8][0-9]{2}>，Channel number 填 1,2；Channel start/end 可用 O、M30 等，Channel order 默认 1,2,3,4。",
+    "solution_summary": "按机床同步 M 代码写 Advanced 正则并用 <> 捕获通道号，测试后保存模板。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-187",
+    "question": "Multi Channel 菜单项是灰的",
+    "category": "配置/自定义/控制系统适配",
+    "keywords": [
+      "多通道灰色",
+      "Enable multi channel view"
+    ],
+    "root_cause_summary": "官方 Multi Channel：必须先在 Editor Setup 针对该文件类型配置 Multi Channel 并勾 Enable multi channel view，否则 NC-Assistant 的多通道查看选项也被禁用。",
+    "solution_summary": "先启用并配置该文件类型的 Multi Channel，再使用菜单。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-188",
+    "question": "华中数控（HNC）程序怎么适配",
+    "category": "配置/自定义/控制系统适配",
+    "keywords": [
+      "华中数控",
+      "HNC",
+      "B-03",
+      "非原生适配",
+      "ISO_G-Code"
+    ],
+    "root_cause_summary": "CAPABILITY_BOUNDARIES B-03：官方 supported-controls 清单中 Huazhong 0 命中；华中数控只能走 ISO_G-Code 通用模板近似适配，需在实际机床上验证，不属于官方原生支持。禁止宣称原生适配。",
+    "solution_summary": "用 ISO_G-Code 近似 + 实机验证；对外表述为「通用模板近似适配」，不得称原生。",
+    "boundary": "B-03"
+  },
+  {
+    "id": "FAQ-189",
+    "question": "官方支持哪些控制系统",
+    "category": "配置/自定义/控制系统适配",
+    "keywords": [
+      "Supported Controls",
+      "控制系统清单",
+      "Fanuc",
+      "Siemens"
+    ],
+    "root_cause_summary": "官方 Supported Controls 子章节：Brother、Centroid、Delectron、Fagor、Fanuc、Fidia、Flexium、Haas、Heidenhain、Hurco、Mazak、Mitsubishi、NumeriPath、OSAI、Okuma、Roeders、Siemens（ milling/turning 变体见各页）。清单中无 Huazhong。",
+    "solution_summary": "从官方 17 类控制系统中选择，不擅自扩展清单。",
+    "boundary": "B-03"
+  },
+  {
+    "id": "FAQ-190",
+    "question": "我的控制系统不在支持清单里怎么办",
+    "category": "配置/自定义/控制系统适配",
+    "keywords": [
+      "不在清单",
+      "ISO_G-Code",
+      "Control Settings",
+      "实机验证"
+    ],
+    "root_cause_summary": "官方支持清单有限（FAQ-189）；B-03 给出的可行退路是用 ISO_G-Code 通用模板近似适配并需实机验证，不宣称原生支持。",
+    "solution_summary": "用 ISO_G-Code 近似 + Control Settings 调参 + 实机验证，并标注边界。",
+    "boundary": "B-03"
+  },
+  {
+    "id": "FAQ-191",
+    "question": "Control Settings 改了会不会影响其它文件类型",
+    "category": "配置/自定义/控制系统适配",
+    "keywords": [
+      "Control Settings",
+      "作用域",
+      "文件类型独立"
+    ],
+    "root_cause_summary": "官方 Control Settings：对所选控制与文件类型配置的参数随该文件类型保存，不覆盖控制本身配置；因此多个文件类型可共用同一控制而参数各异。",
+    "solution_summary": "按文件类型分别设置 Control Settings，不必担心互相覆盖。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-192",
+    "question": "怎么配置外部命令（调用其它程序处理 NC）",
+    "category": "配置/自定义/控制系统适配",
+    "keywords": [
+      "External Commands",
+      "$FILE",
+      "$OUTFILE",
+      "外部命令"
+    ],
+    "root_cause_summary": "官方 External Commands：可配两个外部命令（命令行调用），在 NC Functions 的 Commands 菜单出现；参数变量 $FILE（无路径文件名）、$FILENOEXT（无扩展名）、$PATH（路径）、$FILEPATH（带路径文件名）、$OUTFILE（输出文件）；Wait for output from program 会锁编辑器直到结束。示例：参数 -g $FILE $OUTFILE，Output file 填 $PATH\\$FILENOEXT.NEW。",
+    "solution_summary": "用变量组合配置命令与输出文件，按需等待输出。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-193",
+    "question": "外部命令的 Ribbon 图标怎么设",
+    "category": "配置/自定义/控制系统适配",
+    "keywords": [
+      "Ribbon icon",
+      "暗色主题图标",
+      "ico"
+    ],
+    "root_cause_summary": "官方 External Commands：Ribbon icon (.ico) 指定按钮图标，留空用默认图标（明暗主题通用）；勾 Separate icon for dark theme 可为暗色主题单独指定 .ico（留空则用默认）。",
+    "solution_summary": "用 .ico 文件设置图标，必要时为暗色主题另设。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-194",
+    "question": "怎么把配置目录改到共享位置",
+    "category": "配置/自定义/控制系统适配",
+    "keywords": [
+      "配置路径",
+      "共享目录",
+      "ConfigPaths",
+      "Edit configuration paths"
+    ],
+    "root_cause_summary": "官方 Plugins → Edit configuration paths：可更改 CIMCO Edit 各配置文件目录（下拉选路径、下方字段修改），可选择把现有配置复制到新目录或恢复默认。本机 ConfigPaths.cfg 的 ROOTDIR 指向 %APPDATA%，再派生 CFG/DATA/MACHINES/TYPES/TOOLLIBS 等。",
+    "solution_summary": "用 Edit configuration paths 改路径并复制配置；与安装时的 Place configuration 选项保持一致。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-195",
+    "question": "如何启用深色主题",
+    "category": "配置/自定义/控制系统适配",
+    "keywords": [
+      "深色主题",
+      "Dark Theme",
+      "Dark Mode"
+    ],
+    "root_cause_summary": "官方：Window 菜单的 Dark Theme 可启用暗色主题；General 也有 Use 'Dark Mode' colors 选项。",
+    "solution_summary": "用 Window → Dark Theme 或 General 的 Dark Mode 选项。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-196",
+    "question": "打印设置怎么配（多列、页眉页脚、Raw print）",
+    "category": "配置/自定义/控制系统适配",
+    "keywords": [
+      "打印",
+      "多列",
+      "页眉页脚",
+      "Raw print"
+    ],
+    "root_cause_summary": "官方 Printing：Syntax highlight/Use colors、Print headers/footers、Raw print（简单文本，用于大程序点阵打印机，此时颜色/语法高亮/首页页眉禁用，改启用 Send form feed/Print on endless paper/Paper height）、左右边距（厘米，英寸写 1in）、Paper width/height、多列打印；页眉页脚变量 %p 页码、%P 总页、%f 文件名、%F 带路径、%t 时间、%d 日期、%c 公司、%U Windows 用户。",
+    "solution_summary": "按输出目标配置页眉页脚、边距、多列与 Raw print。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-197",
+    "question": "字体、Tab 宽度、启动行为在哪设",
+    "category": "配置/自定义/控制系统适配",
+    "keywords": [
+      "字体",
+      "Tab width",
+      "Re-open files",
+      "光标位置"
+    ],
+    "root_cause_summary": "官方 General：Tab width（字符数）、Language、Show file size in、Recent list size；Editor Settings 的 Select font 改编辑窗口字体；General 另有 Re-open files（重启恢复上次会话文件）、Remember cursor position、Confirm program exit、Open windows maximized 等。",
+    "solution_summary": "在 General 与 Editor Settings 中集中设置字体、Tab 与启动行为。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-198",
+    "question": "状态栏里的文件大小显示怪怪的",
+    "category": "配置/自定义/控制系统适配",
+    "keywords": [
+      "Show file size in",
+      "linefeed characters",
+      "状态栏"
+    ],
+    "root_cause_summary": "官方 General：Show file size in 可把大小显示为 bytes、meter 或 feet；Number of linefeed characters 用于计算状态栏文件大小时要计入的换行符数（例：设 2 且文件 12 行，则多加 24 字节）。",
+    "solution_summary": "按文件行尾类型设置 Number of linefeed characters 并选择显示单位。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-199",
+    "question": "如何让 CIMCO 启动时直接恢复上次工作现场",
+    "category": "配置/自定义/控制系统适配",
+    "keywords": [
+      "Re-open files",
+      "启动恢复",
+      "Remember cursor position"
+    ],
+    "root_cause_summary": "官方 General：Re-open files 在启动时恢复上次会话的文件；Remember cursor position 把光标放回上次位置；Start maximized / Open windows maximized 控制窗口最大化；Confirm program exit 控制退出确认。",
+    "solution_summary": "用 Re-open files + Remember cursor position 搭建「回到现场」启动体验。",
+    "boundary": "无"
+  },
+  {
+    "id": "FAQ-200",
+    "question": "交付文档里能力边界应如何统一表述",
+    "category": "配置/自定义/控制系统适配",
+    "keywords": [
+      "能力边界",
+      "B-01",
+      "B-02",
+      "B-03",
+      "B-04",
+      "B-05",
+      "B-06",
+      "诚实性"
+    ],
+    "root_cause_summary": "CAPABILITY_BOUNDARIES 汇总：B-01 机床仿真是需单独授权的 add-on、本机许可未核实按未验证处理；B-02 仅文件差异对比（diff/Goto/Sync），版本管理属 NCBase/MDCMax；B-03 华中数控非原生，仅 ISO_G-Code 近似+实机验证；B-04 后处理是 CNC-Calc 后处理与反向后处理，通用 CAM 后处理在 CAM 侧；B-05 无 2D/3D 几何建模（路由 AutoCAD/NX/SOLIDWORKS）；B-06 拟人化指标用工程化自测替代并标明性质。",
+    "solution_summary": "统一采用 B-01~B-06 的正确表述，所有校验结论附原始字段并标明工程自测性质。",
+    "boundary": "B-01/B-02/B-03/B-04/B-05/B-06"
+  }
+]

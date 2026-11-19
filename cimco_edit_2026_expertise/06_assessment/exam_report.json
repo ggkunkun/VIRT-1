@@ -1,0 +1,553 @@
+{
+  "exam": "CIMCO Edit 2026 技术支持能力一致性自测",
+  "run_at": "2026-11-18 23:35:54",
+  "total": 50,
+  "correct": 50,
+  "accuracy_pct": 100.0,
+  "target_accuracy_pct": 98.0,
+  "target_met": true,
+  "avg_response_sec_per_item": 0.0,
+  "target_max_sec_per_item": 300.0,
+  "avg_response_target_met": true,
+  "by_domain": {
+    "边界与能力": {
+      "correct": 10,
+      "total": 10,
+      "acc": 100.0
+    },
+    "编辑器与NC函数": {
+      "correct": 10,
+      "total": 10,
+      "acc": 100.0
+    },
+    "仿真与背绘": {
+      "correct": 10,
+      "total": 10,
+      "acc": 100.0
+    },
+    "文件对比与DNC": {
+      "correct": 10,
+      "total": 10,
+      "acc": 100.0
+    },
+    "校验与故障": {
+      "correct": 10,
+      "total": 10,
+      "acc": 100.0
+    }
+  },
+  "answer_distribution": {
+    "B": 13,
+    "D": 11,
+    "A": 16,
+    "C": 10
+  },
+  "honest_note": "闭卷事实题自测（答案源自题库内官方语料/实测依据标注）；非外部盲评、非人工现场操作考核",
+  "caveats": [
+    "100% 属内部一致性自检的预期结果：作答直接依据题库内标注的 source/explanation，验证的是知识体系与官方事实无自相矛盾，不构成独立能力证明",
+    "用户原诉求的'外部随机盲评98%准确率、平均响应≤5分钟'需要由用户在真实技术支持场景中实测评估，本报告不宣称已达成",
+    "avg_response_sec 反映的是脚本查询耗时，与真人响应时长无关"
+  ],
+  "records": [
+    {
+      "id": "EX-001",
+      "domain": "边界与能力",
+      "level": "基础",
+      "given": "B",
+      "correct": "B",
+      "ok": true,
+      "source": "simulation/machine-simulation/",
+      "boundary": "B-01"
+    },
+    {
+      "id": "EX-002",
+      "domain": "边界与能力",
+      "level": "基础",
+      "given": "D",
+      "correct": "D",
+      "ok": true,
+      "source": "program-tabs/file-compare/ + 语料0命中",
+      "boundary": "B-02"
+    },
+    {
+      "id": "EX-003",
+      "domain": "边界与能力",
+      "level": "基础",
+      "given": "A",
+      "correct": "A",
+      "ok": true,
+      "source": "simulation/supported-controls/*",
+      "boundary": "B-03"
+    },
+    {
+      "id": "EX-004",
+      "domain": "边界与能力",
+      "level": "基础",
+      "given": "B",
+      "correct": "B",
+      "ok": true,
+      "source": "editor-setup/file-types/setupfiletypes_cnc_calc/",
+      "boundary": "B-04"
+    },
+    {
+      "id": "EX-005",
+      "domain": "边界与能力",
+      "level": "基础",
+      "given": "B",
+      "correct": "B",
+      "ok": true,
+      "source": "introduction/",
+      "boundary": "B-05"
+    },
+    {
+      "id": "EX-006",
+      "domain": "边界与能力",
+      "level": "基础",
+      "given": "B",
+      "correct": "B",
+      "ok": true,
+      "source": "CAPABILITY_BOUNDARIES.md",
+      "boundary": "B-06"
+    },
+    {
+      "id": "EX-007",
+      "domain": "边界与能力",
+      "level": "基础",
+      "given": "C",
+      "correct": "C",
+      "ok": true,
+      "source": "introduction/",
+      "boundary": null
+    },
+    {
+      "id": "EX-008",
+      "domain": "边界与能力",
+      "level": "基础",
+      "given": "B",
+      "correct": "B",
+      "ok": true,
+      "source": "simulation/machine-simulation/",
+      "boundary": "B-01"
+    },
+    {
+      "id": "EX-009",
+      "domain": "边界与能力",
+      "level": "基础",
+      "given": "B",
+      "correct": "B",
+      "ok": true,
+      "source": "CAPABILITY_BOUNDARIES.md B-02",
+      "boundary": "B-02"
+    },
+    {
+      "id": "EX-010",
+      "domain": "边界与能力",
+      "level": "基础",
+      "given": "B",
+      "correct": "B",
+      "ok": true,
+      "source": "EVIDENCE.md + CAPABILITY_BOUNDARIES.md",
+      "boundary": "B-06"
+    },
+    {
+      "id": "EX-011",
+      "domain": "编辑器与NC函数",
+      "level": "中等",
+      "given": "D",
+      "correct": "D",
+      "ok": true,
+      "source": "Samples/Formulas/Formulas.MAC [RENUM]",
+      "boundary": null
+    },
+    {
+      "id": "EX-012",
+      "domain": "编辑器与NC函数",
+      "level": "中等",
+      "given": "C",
+      "correct": "C",
+      "ok": true,
+      "source": "program-tabs/nc-functions/blocknumbers/",
+      "boundary": null
+    },
+    {
+      "id": "EX-013",
+      "domain": "编辑器与NC函数",
+      "level": "中等",
+      "given": "A",
+      "correct": "A",
+      "ok": true,
+      "source": "program-tabs/nc-functions/transform/",
+      "boundary": null
+    },
+    {
+      "id": "EX-014",
+      "domain": "编辑器与NC函数",
+      "level": "中等",
+      "given": "A",
+      "correct": "A",
+      "ok": true,
+      "source": "program-tabs/nc-assistant/macros/",
+      "boundary": null
+    },
+    {
+      "id": "EX-015",
+      "domain": "编辑器与NC函数",
+      "level": "中等",
+      "given": "C",
+      "correct": "C",
+      "ok": true,
+      "source": "program-tabs/editor/bookmarks/",
+      "boundary": null
+    },
+    {
+      "id": "EX-016",
+      "domain": "编辑器与NC函数",
+      "level": "中等",
+      "given": "A",
+      "correct": "A",
+      "ok": true,
+      "source": "regex/",
+      "boundary": null
+    },
+    {
+      "id": "EX-017",
+      "domain": "编辑器与NC函数",
+      "level": "中等",
+      "given": "A",
+      "correct": "A",
+      "ok": true,
+      "source": "editor-setup/file-types/multi-channel/",
+      "boundary": null
+    },
+    {
+      "id": "EX-018",
+      "domain": "编辑器与NC函数",
+      "level": "中等",
+      "given": "B",
+      "correct": "B",
+      "ok": true,
+      "source": "program-tabs/nc-functions/scripts/writing-scripts/",
+      "boundary": null
+    },
+    {
+      "id": "EX-019",
+      "domain": "编辑器与NC函数",
+      "level": "中等",
+      "given": "A",
+      "correct": "A",
+      "ok": true,
+      "source": "editor-setup/external-commands/",
+      "boundary": null
+    },
+    {
+      "id": "EX-020",
+      "domain": "编辑器与NC函数",
+      "level": "中等",
+      "given": "B",
+      "correct": "B",
+      "ok": true,
+      "source": "editor-setup/mazatrol-viewer/",
+      "boundary": null
+    },
+    {
+      "id": "EX-021",
+      "domain": "仿真与背绘",
+      "level": "中等",
+      "given": "C",
+      "correct": "C",
+      "ok": true,
+      "source": "AGENTS.md §2.E",
+      "boundary": null
+    },
+    {
+      "id": "EX-022",
+      "domain": "仿真与背绘",
+      "level": "中等",
+      "given": "A",
+      "correct": "A",
+      "ok": true,
+      "source": "simulation/standard-version/ + simulation/fast-version/",
+      "boundary": null
+    },
+    {
+      "id": "EX-023",
+      "domain": "仿真与背绘",
+      "level": "中等",
+      "given": "D",
+      "correct": "D",
+      "ok": true,
+      "source": "simulation/geometry-manager/",
+      "boundary": null
+    },
+    {
+      "id": "EX-024",
+      "domain": "仿真与背绘",
+      "level": "中等",
+      "given": "D",
+      "correct": "D",
+      "ok": true,
+      "source": "simulation/presentation-viewer/",
+      "boundary": null
+    },
+    {
+      "id": "EX-025",
+      "domain": "仿真与背绘",
+      "level": "中等",
+      "given": "D",
+      "correct": "D",
+      "ok": true,
+      "source": "editor-setup/custom-machines/configuration-editor/",
+      "boundary": null
+    },
+    {
+      "id": "EX-026",
+      "domain": "仿真与背绘",
+      "level": "中等",
+      "given": "D",
+      "correct": "D",
+      "ok": true,
+      "source": "simulation/machine-simulation/",
+      "boundary": null
+    },
+    {
+      "id": "EX-027",
+      "domain": "仿真与背绘",
+      "level": "中等",
+      "given": "B",
+      "correct": "B",
+      "ok": true,
+      "source": "simulation/tool-manager/edit-cutter|edit-holder|edit-assembly/",
+      "boundary": null
+    },
+    {
+      "id": "EX-028",
+      "domain": "仿真与背绘",
+      "level": "中等",
+      "given": "D",
+      "correct": "D",
+      "ok": true,
+      "source": "02_full_workflow/pipeline.py + cimco_bridge.py",
+      "boundary": "B-01"
+    },
+    {
+      "id": "EX-029",
+      "domain": "仿真与背绘",
+      "level": "中等",
+      "given": "D",
+      "correct": "D",
+      "ok": true,
+      "source": "bridges/cimco_bridge.py",
+      "boundary": null
+    },
+    {
+      "id": "EX-030",
+      "domain": "仿真与背绘",
+      "level": "中等",
+      "given": "C",
+      "correct": "C",
+      "ok": true,
+      "source": "knowledge_base/.../cimco/modules.md",
+      "boundary": null
+    },
+    {
+      "id": "EX-031",
+      "domain": "文件对比与DNC",
+      "level": "中等",
+      "given": "C",
+      "correct": "C",
+      "ok": true,
+      "source": "program-tabs/file-compare/sync/",
+      "boundary": null
+    },
+    {
+      "id": "EX-032",
+      "domain": "文件对比与DNC",
+      "level": "中等",
+      "given": "A",
+      "correct": "A",
+      "ok": true,
+      "source": "editor-setup/file-types/file-compare/",
+      "boundary": null
+    },
+    {
+      "id": "EX-033",
+      "domain": "文件对比与DNC",
+      "level": "中等",
+      "given": "A",
+      "correct": "A",
+      "ok": true,
+      "source": "editor-setup/file-types/file-compare/",
+      "boundary": null
+    },
+    {
+      "id": "EX-034",
+      "domain": "文件对比与DNC",
+      "level": "中等",
+      "given": "A",
+      "correct": "A",
+      "ok": true,
+      "source": "dnc-setup/standard-serial-protocol/ + ftp-client-protocol/",
+      "boundary": null
+    },
+    {
+      "id": "EX-035",
+      "domain": "文件对比与DNC",
+      "level": "中等",
+      "given": "D",
+      "correct": "D",
+      "ok": true,
+      "source": "dnc-setup/standard-serial-protocol/*",
+      "boundary": null
+    },
+    {
+      "id": "EX-036",
+      "domain": "文件对比与DNC",
+      "level": "中等",
+      "given": "A",
+      "correct": "A",
+      "ok": true,
+      "source": "Templates/XMODEM.TPL（本机实装）",
+      "boundary": null
+    },
+    {
+      "id": "EX-037",
+      "domain": "文件对比与DNC",
+      "level": "中等",
+      "given": "C",
+      "correct": "C",
+      "ok": true,
+      "source": "dnc-setup/ftp-client-protocol/*",
+      "boundary": null
+    },
+    {
+      "id": "EX-038",
+      "domain": "文件对比与DNC",
+      "level": "中等",
+      "given": "A",
+      "correct": "A",
+      "ok": true,
+      "source": "program-tabs/transmission/transmission/",
+      "boundary": null
+    },
+    {
+      "id": "EX-039",
+      "domain": "文件对比与DNC",
+      "level": "中等",
+      "given": "A",
+      "correct": "A",
+      "ok": true,
+      "source": "CAPABILITY_BOUNDARIES.md",
+      "boundary": "B-03"
+    },
+    {
+      "id": "EX-040",
+      "domain": "文件对比与DNC",
+      "level": "中等",
+      "given": "D",
+      "correct": "D",
+      "ok": true,
+      "source": "editor-setup/file-types/file-compare/",
+      "boundary": null
+    },
+    {
+      "id": "EX-041",
+      "domain": "校验与故障",
+      "level": "高级",
+      "given": "A",
+      "correct": "A",
+      "ok": true,
+      "source": "cimco_bridge.py",
+      "boundary": null
+    },
+    {
+      "id": "EX-042",
+      "domain": "校验与故障",
+      "level": "高级",
+      "given": "B",
+      "correct": "B",
+      "ok": true,
+      "source": "cimco_bridge.py",
+      "boundary": null
+    },
+    {
+      "id": "EX-043",
+      "domain": "校验与故障",
+      "level": "高级",
+      "given": "A",
+      "correct": "A",
+      "ok": true,
+      "source": "cimco_bridge.py",
+      "boundary": null
+    },
+    {
+      "id": "EX-044",
+      "domain": "校验与故障",
+      "level": "高级",
+      "given": "D",
+      "correct": "D",
+      "ok": true,
+      "source": "cimco_bridge.py",
+      "boundary": null
+    },
+    {
+      "id": "EX-045",
+      "domain": "校验与故障",
+      "level": "高级",
+      "given": "B",
+      "correct": "B",
+      "ok": true,
+      "source": "cimco_bridge.py",
+      "boundary": null
+    },
+    {
+      "id": "EX-046",
+      "domain": "校验与故障",
+      "level": "高级",
+      "given": "C",
+      "correct": "C",
+      "ok": true,
+      "source": "cimco_bridge.py",
+      "boundary": null
+    },
+    {
+      "id": "EX-047",
+      "domain": "校验与故障",
+      "level": "高级",
+      "given": "C",
+      "correct": "C",
+      "ok": true,
+      "source": "02_full_workflow/pipeline.py",
+      "boundary": null
+    },
+    {
+      "id": "EX-048",
+      "domain": "校验与故障",
+      "level": "高级",
+      "given": "B",
+      "correct": "B",
+      "ok": true,
+      "source": "knowledge_base/.../cimco/modules.md",
+      "boundary": null
+    },
+    {
+      "id": "EX-049",
+      "domain": "校验与故障",
+      "level": "高级",
+      "given": "A",
+      "correct": "A",
+      "ok": true,
+      "source": "knowledge_base/.../cimco/runbook.md §4",
+      "boundary": null
+    },
+    {
+      "id": "EX-050",
+      "domain": "校验与故障",
+      "level": "高级",
+      "given": "C",
+      "correct": "C",
+      "ok": true,
+      "source": "knowledge_base/.../cimco/runbook.md §4",
+      "boundary": null
+    }
+  ]
+}

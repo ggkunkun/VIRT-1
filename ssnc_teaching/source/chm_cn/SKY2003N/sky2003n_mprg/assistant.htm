@@ -1,0 +1,103 @@
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title></title>
+<link href="../../helper_css.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar">
+  <tr>
+    <td><span class="title2">辅助功能(M 
+    功能)</span></td>
+  </tr>
+</table>
+<TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+  <TR>
+    <TD class=contents1 vAlign=top>&nbsp;</TD>
+  </TR>
+  <TR>
+    <TD class=contents1 vAlign=top><p>在实际加工中，机床特别设置了一些M代码指令，用于控制主轴旋转，冷却开关，程序结束等一般用M代码及后面的数字来指令。 <br>
+      本数控系统中M代码功能的规定如下：<br>
+      1）M00:程序停止 <br>
+      在程序执行到含有M00指令的程序段时，机床各运动轴经减速后停止运转，程序暂时停止继续运行，在程序停止时，所有的模态数据保持不变，按运行键“F6”则程序将继续运行。 <br>
+      2）M01：程序选择停止 <br>
+      与M00功能一样，在执行到含有M01指令的程序段时，程序停止运行，按运行键“F6”程序将继续，但是M01功能只在系统预先选择设定了任选停功能后才执行。 <br>
+      3）M02:程序结束，所有运动轴和主轴停止运转（冷却不会自动停） <br>
+      4）M03:主轴正转 <br>
+      主轴俯视顺时针旋转，其代码指令格式为：M03+S+（数字） <br>
+      例如：M03 S1000;<br>
+      5）M04:主轴反转 <br>
+      主轴俯视逆时针旋转，其代码指令格式：M04+S+（数字） <br>
+      6）M05:主轴停 <br>
+      7）M06:自动换刀，与T指令一起使用。 例：M06 T02<br>
+      8) M08:冷却液开 <br>
+      9）M09:冷却液关 <br>
+      10）M98:调用子程序 <br>
+      11）M99:子程序返回 <br>
+    注1：一个程序段中可规定一个M代码，若同时规定了两个或以上的M代码时，只有最后的那个M代码指令生效。<br>
+    注2：M功能代码分组表<br>
+</p></TD>
+  </TR>
+  <TR>
+    <td height="150" class="contents1"><table width="590" border="0" cellpadding="2" cellspacing="1" bgcolor="#00309C">
+      <tr class="contents1">
+        <td width="83" height="20" align="center" bgcolor="b2d4f6"><b>M代码</b></td>
+        <td height="20" bgcolor="#FFFFFF" width="438"><b>说明</b></td>
+      </tr>
+      <tr class="contents1">
+        <td width="83" height="20" align="center" bgcolor="b2d4f6">M00</td>
+        <td height="20" bgcolor="#FFFFFF" width="438">程序停止</td>
+      </tr>
+      <tr class="contents1">
+        <td width="83" height="20" align="center" bgcolor="b2d4f6">M01</td>
+        <td height="20" bgcolor="#FFFFFF" width="438">程序选择停</td>
+      </tr>
+      <tr class="contents1">
+        <td width="83" height="20" align="center" bgcolor="b2d4f6">M02</td>
+        <td height="20" bgcolor="#FFFFFF" width="438">程序结束</td>
+      </tr>
+      <tr class="contents1">
+        <td width="83" height="20" align="center" bgcolor="b2d4f6">M03</td>
+        <td height="20" bgcolor="#FFFFFF" width="438">主轴正转</td>
+      </tr>
+      <tr class="contents1">
+        <td width="83" height="20" align="center" bgcolor="b2d4f6">M04</td>
+        <td height="20" bgcolor="#FFFFFF">主轴反转</td>
+      </tr>
+      <tr class="contents1">
+        <td width="83" height="20" align="center" bgcolor="b2d4f6">M05</td>
+        <td height="20" bgcolor="#FFFFFF">主轴停</td>
+      </tr>
+      <tr class="contents1">
+        <td width="83" height="20" align="center" bgcolor="b2d4f6">M06</td>
+        <td height="20" bgcolor="#FFFFFF" width="438">自动换刀</td>
+      </tr>
+      <tr class="contents1">
+        <td width="83" height="20" align="center" bgcolor="b2d4f6">M98</td>
+        <td height="20" bgcolor="#FFFFFF">调用子程序</td>
+      </tr>
+      <tr class="contents1">
+        <td width="83" height="20" align="center" bgcolor="b2d4f6">M99</td>
+        <td height="20" bgcolor="#FFFFFF">子程序返回</td>
+      </tr>
+      <tr class="contents1">
+        <td width="83" height="20" align="center" bgcolor="b2d4f6">M08</td>
+        <td height="20" bgcolor="#FFFFFF">冷却液开</td>
+      </tr>
+      <tr class="contents1">
+        <td width="83" height="20" align="center" bgcolor="b2d4f6">M09</td>
+        <td height="20" bgcolor="#FFFFFF" width="438">冷却液关</td>
+      </tr>
+    </table></TD>
+  </TR>
+  <TR>
+    <TD>&nbsp;<br>
+    <br>
+      <br>
+    </span></font></TD>
+  </TR>
+</TABLE>
+</body>
+</html>

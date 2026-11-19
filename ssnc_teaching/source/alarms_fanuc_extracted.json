@@ -1,0 +1,638 @@
+[
+  {
+    "code": "000",
+    "meaning": "请关电源"
+  },
+  {
+    "code": "001",
+    "meaning": "TH奇偶校验报警"
+  },
+  {
+    "code": "002",
+    "meaning": "TV奇偶校验报警"
+  },
+  {
+    "code": "003",
+    "meaning": "数字位太多"
+  },
+  {
+    "code": "004",
+    "meaning": "地址没找到"
+  },
+  {
+    "code": "005",
+    "meaning": "地址后面无数据"
+  },
+  {
+    "code": "006",
+    "meaning": "非法使用负号"
+  },
+  {
+    "code": "007",
+    "meaning": "非法使用小数点"
+  },
+  {
+    "code": "009",
+    "meaning": "输入非法地址"
+  },
+  {
+    "code": "010",
+    "meaning": "不正确的G代码"
+  },
+  {
+    "code": "011",
+    "meaning": "无进给速度指令"
+  },
+  {
+    "code": "014",
+    "meaning": "非法导程指令"
+  },
+  {
+    "code": "015",
+    "meaning": "指令了太多的轴"
+  },
+  {
+    "code": "020",
+    "meaning": "超出半位公差"
+  },
+  {
+    "code": "021",
+    "meaning": "指令了非法平面轴"
+  },
+  {
+    "code": "022",
+    "meaning": "没有圆弧半径"
+  },
+  {
+    "code": "023",
+    "meaning": "非法半径指令"
+  },
+  {
+    "code": "025",
+    "meaning": "在G02/G03 中不能指令F0"
+  },
+  {
+    "code": "027",
+    "meaning": "在G43/G44 中没有轴指令"
+  },
+  {
+    "code": "028",
+    "meaning": "非法的平面选择"
+  },
+  {
+    "code": "029",
+    "meaning": "非法偏置值"
+  },
+  {
+    "code": "030",
+    "meaning": "非法补偿号"
+  },
+  {
+    "code": "031",
+    "meaning": "G10中指令了非法P"
+  },
+  {
+    "code": "032",
+    "meaning": "G10中的非法补偿值"
+  },
+  {
+    "code": "033",
+    "meaning": "在循环冗余码校验中无结果"
+  },
+  {
+    "code": "034",
+    "meaning": "圆弧指令时不能起刀或取消刀补"
+  },
+  {
+    "code": "036",
+    "meaning": "不能指令G31"
+  },
+  {
+    "code": "037",
+    "meaning": "在循环冗余码校验中不能改变平面"
+  },
+  {
+    "code": "038",
+    "meaning": "在圆弧程序段中的干涉"
+  },
+  {
+    "code": "040",
+    "meaning": "G90/G94段有干涉"
+  },
+  {
+    "code": "041",
+    "meaning": "刀尖半径补偿中可能产生过切"
+  },
+  {
+    "code": "046",
+    "meaning": "非法的参考点返回指令"
+  },
+  {
+    "code": "051",
+    "meaning": "在CHF/CNR之后错误移动"
+  },
+  {
+    "code": "052",
+    "meaning": "在CHF/CNR之后不是G01代码"
+  },
+  {
+    "code": "053",
+    "meaning": "太多的地址指令"
+  },
+  {
+    "code": "055",
+    "meaning": "CHF/CNR 中没有结束点和角度"
+  },
+  {
+    "code": "056",
+    "meaning": "终点和角度都没有指定"
+  },
+  {
+    "code": "057",
+    "meaning": "不能正确计算出程序段终点"
+  },
+  {
+    "code": "058",
+    "meaning": "未发现终点"
+  },
+  {
+    "code": "059",
+    "meaning": "未发现程序号"
+  },
+  {
+    "code": "060",
+    "meaning": "未发现顺序号"
+  },
+  {
+    "code": "061",
+    "meaning": "G70~G73 中未发现地址P/Q"
+  },
+  {
+    "code": "062",
+    "meaning": "在G71-G76 中有非法指令"
+  },
+  {
+    "code": "063",
+    "meaning": "没有发现顺序号"
+  },
+  {
+    "code": "064",
+    "meaning": "图形程序为非单调的"
+  },
+  {
+    "code": "065",
+    "meaning": "G71-G73中的非法指令"
+  },
+  {
+    "code": "066",
+    "meaning": "G71-G73 中的不正确的G代码"
+  },
+  {
+    "code": "067",
+    "meaning": "在MDI 方式下不能运行"
+  },
+  {
+    "code": "069",
+    "meaning": "G70-G73中格式错误"
+  },
+  {
+    "code": "070",
+    "meaning": "存储器中无程序空间"
+  },
+  {
+    "code": "071",
+    "meaning": "没有发现数据"
+  },
+  {
+    "code": "072",
+    "meaning": "程序太多"
+  },
+  {
+    "code": "073",
+    "meaning": "程序号已被使用"
+  },
+  {
+    "code": "074",
+    "meaning": "非法程序号"
+  },
+  {
+    "code": "075",
+    "meaning": "保护"
+  },
+  {
+    "code": "076",
+    "meaning": "没有定义地址P"
+  },
+  {
+    "code": "077",
+    "meaning": "子程序嵌套错误"
+  },
+  {
+    "code": "078",
+    "meaning": "没有找到程序号"
+  },
+  {
+    "code": "079",
+    "meaning": "程序检验错"
+  },
+  {
+    "code": "080",
+    "meaning": "未捕捉到G37到达信号"
+  },
+  {
+    "code": "081",
+    "meaning": "G37中没有发现偏移号"
+  },
+  {
+    "code": "082",
+    "meaning": "G37中不允许T代码"
+  },
+  {
+    "code": "083",
+    "meaning": "G37中的非法轴指令"
+  },
+  {
+    "code": "085",
+    "meaning": "通讯错误"
+  },
+  {
+    "code": "086",
+    "meaning": "DR信号断开"
+  },
+  {
+    "code": "087",
+    "meaning": "缓冲区溢出"
+  },
+  {
+    "code": "090",
+    "meaning": "返回参考点未完成"
+  },
+  {
+    "code": "091",
+    "meaning": "没有完成参考点返回"
+  },
+  {
+    "code": "092",
+    "meaning": "轴不在参考点"
+  },
+  {
+    "code": "094",
+    "meaning": "不允许P 类型(COORDCHG)"
+  },
+  {
+    "code": "095",
+    "meaning": "不允许P类型(EXTOFSCHG)"
+  },
+  {
+    "code": "096",
+    "meaning": "不允许P 类型(WRKOFSCHG)"
+  },
+  {
+    "code": "097",
+    "meaning": "不允许P 类型(自动执行)"
+  },
+  {
+    "code": "098",
+    "meaning": "在顺序返回中发现G28"
+  },
+  {
+    "code": "099",
+    "meaning": "检索后不允许执行MDI"
+  },
+  {
+    "code": "100",
+    "meaning": "参数写允许"
+  },
+  {
+    "code": "101",
+    "meaning": "请清除存储器"
+  },
+  {
+    "code": "112",
+    "meaning": "被零除"
+  },
+  {
+    "code": "113",
+    "meaning": "不正确的指令"
+  },
+  {
+    "code": "114",
+    "meaning": "宏程序中格式错误"
+  },
+  {
+    "code": "115",
+    "meaning": "非法变量号"
+  },
+  {
+    "code": "116",
+    "meaning": "写保护变量"
+  },
+  {
+    "code": "118",
+    "meaning": "括号嵌套错误"
+  },
+  {
+    "code": "122",
+    "meaning": "4重宏模态调用"
+  },
+  {
+    "code": "123",
+    "meaning": "DNC 中不能使用宏指令"
+  },
+  {
+    "code": "124",
+    "meaning": "缺少结束语句"
+  },
+  {
+    "code": "125",
+    "meaning": "宏中格式错误"
+  },
+  {
+    "code": "126",
+    "meaning": "非法循环数"
+  },
+  {
+    "code": "127",
+    "meaning": "在同一程序段中有NC和宏语句"
+  },
+  {
+    "code": "128",
+    "meaning": "非法宏顺序号"
+  },
+  {
+    "code": "129",
+    "meaning": "非法自变量地址"
+  },
+  {
+    "code": "130",
+    "meaning": "非法轴操作"
+  },
+  {
+    "code": "131",
+    "meaning": "外部报警信息太多"
+  },
+  {
+    "code": "132",
+    "meaning": "没有发现报警号"
+  },
+  {
+    "code": "133",
+    "meaning": "在外部报警信息中的非法数据"
+  },
+  {
+    "code": "135",
+    "meaning": "请执行主轴定向"
+  },
+  {
+    "code": "136",
+    "meaning": "C/H 代码和移动指令在同一程序段中"
+  },
+  {
+    "code": "137",
+    "meaning": "M 代码和移动指令在同一程序段中"
+  },
+  {
+    "code": "139",
+    "meaning": "不能改变PMC控制轴"
+  },
+  {
+    "code": "145",
+    "meaning": "非法指令G112/G113"
+  },
+  {
+    "code": "146",
+    "meaning": "不正确的G代码"
+  },
+  {
+    "code": "150",
+    "meaning": "非法刀具组号"
+  },
+  {
+    "code": "151",
+    "meaning": "没有发现刀具组号"
+  },
+  {
+    "code": "152",
+    "meaning": "没有空间用于刀具的存储"
+  },
+  {
+    "code": "153",
+    "meaning": "没有发现T代码"
+  },
+  {
+    "code": "155",
+    "meaning": "MO6中的非法T代码"
+  },
+  {
+    "code": "156",
+    "meaning": "没有发现P/L指令"
+  },
+  {
+    "code": "157",
+    "meaning": "刀具组太多"
+  },
+  {
+    "code": "158",
+    "meaning": "非法刀具寿命数据"
+  },
+  {
+    "code": "159",
+    "meaning": "没有完成刀具数据设定"
+  },
+  {
+    "code": "175",
+    "meaning": "非法G107指令"
+  },
+  {
+    "code": "176",
+    "meaning": "G107 中的不正确G 代码"
+  },
+  {
+    "code": "190",
+    "meaning": "非法轴选择"
+  },
+  {
+    "code": "194",
+    "meaning": "在同步方式中的主轴指令"
+  },
+  {
+    "code": "197",
+    "meaning": "在主轴方式下指令了C轴"
+  },
+  {
+    "code": "199",
+    "meaning": "指令未定义"
+  },
+  {
+    "code": "200",
+    "meaning": "非法S代码指令"
+  },
+  {
+    "code": "201",
+    "meaning": "刚性攻丝中没有发现进给速度"
+  },
+  {
+    "code": "202",
+    "meaning": "位置LSI溢出"
+  },
+  {
+    "code": "203",
+    "meaning": "刚性攻丝时程序错误"
+  },
+  {
+    "code": "204",
+    "meaning": "非法轴操作"
+  },
+  {
+    "code": "205",
+    "meaning": "刚性方式DI信号关断"
+  },
+  {
+    "code": "210",
+    "meaning": "不能指令M198/M099"
+  },
+  {
+    "code": "211",
+    "meaning": "G99中不允许G31(高)"
+  },
+  {
+    "code": "212",
+    "meaning": "非法平面选择"
+  },
+  {
+    "code": "213",
+    "meaning": "同步方式下非法指令"
+  },
+  {
+    "code": "214",
+    "meaning": "同步方式下非法指令"
+  },
+  {
+    "code": "217",
+    "meaning": "G251(指令)重复"
+  },
+  {
+    "code": "218",
+    "meaning": "G251 中没有发现P/Q指令"
+  },
+  {
+    "code": "219",
+    "meaning": "G250/G251独立指令"
+  },
+  {
+    "code": "220",
+    "meaning": "同步方式中的非法指令"
+  },
+  {
+    "code": "221",
+    "meaning": "同步方式中的非法指令"
+  },
+  {
+    "code": "224",
+    "meaning": "返回参考点"
+  },
+  {
+    "code": "231",
+    "meaning": "在G10 或L50 中格式错误"
+  },
+  {
+    "code": "233",
+    "meaning": "设备忙"
+  },
+  {
+    "code": "239",
+    "meaning": "BP/S报警"
+  },
+  {
+    "code": "240",
+    "meaning": "BP/S报警"
+  },
+  {
+    "code": "241",
+    "meaning": "渐开线插补指令中没有指定结束点I，J，K 或R"
+  },
+  {
+    "code": "242",
+    "meaning": "渐开线插补指令中指定了无效的值"
+  },
+  {
+    "code": "243",
+    "meaning": "包含起点的渐开线终点不在渐开线上"
+  },
+  {
+    "code": "244",
+    "meaning": "P/S报警"
+  },
+  {
+    "code": "245",
+    "meaning": "在此程序段中不允许有T代码"
+  },
+  {
+    "code": "246",
+    "meaning": "加密程序号错误"
+  },
+  {
+    "code": "247",
+    "meaning": "使用了输出的非法代码"
+  },
+  {
+    "code": "250",
+    "meaning": "指定了Z 轴径向移动指令"
+  },
+  {
+    "code": "251",
+    "meaning": "ATC错误"
+  },
+  {
+    "code": "252",
+    "meaning": "ATC主轴定位过程中发生超差错误"
+  },
+  {
+    "code": "253",
+    "meaning": "G05无效"
+  },
+  {
+    "code": "506",
+    "meaning": "超程:+"
+  },
+  {
+    "code": "507",
+    "meaning": "超程:-"
+  },
+  {
+    "code": "2001",
+    "meaning": "WHENEVER EMERGENCY BUTTON IS PRESSED OR OVERTRAVLE OF AXES IS DETECTED ,RELEASE EMERGENCY BUTTON AND LIMITE SWITCH FOR OVERTRAVLE CHECK."
+  },
+  {
+    "code": "5010",
+    "meaning": "记录结束"
+  },
+  {
+    "code": "5018",
+    "meaning": "多边形轴速度错误"
+  },
+  {
+    "code": "5020",
+    "meaning": "再启动参数错误"
+  },
+  {
+    "code": "5059",
+    "meaning": "半径超过范围"
+  },
+  {
+    "code": "5073",
+    "meaning": "没有小数点"
+  },
+  {
+    "code": "5074",
+    "meaning": "地址重复错误"
+  },
+  {
+    "code": "5195",
+    "meaning": "无法判断方向"
+  },
+  {
+    "code": "5257",
+    "meaning": "MDI方式中不允许G41/G42"
+  }
+]

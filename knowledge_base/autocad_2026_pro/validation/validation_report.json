@@ -1,0 +1,27 @@
+{
+  "round1_command_library": {
+    "total": 877,
+    "passed": 877,
+    "rate": 1.0,
+    "fails": []
+  },
+  "round2_task_delivery": {
+    "total": 108,
+    "passed": 108,
+    "rate": 1.0,
+    "avg_latency_ms": 1.025475000258464,
+    "max_latency_ms": 20.685200001025805,
+    "fails": []
+  },
+  "round3_version_features": {
+    "total": 32,
+    "passed": 32,
+    "rate": 1.0,
+    "fails": []
+  },
+  "meta": {
+    "version": "AutoCAD 2026 (R25.1) 简体中文正式版",
+    "total_duration_ms": 479.1126999989501,
+    "data_sources": "官方 CUIX + acad.pgp (R25.1/chs) + Autodesk 官网"
+  }
+}

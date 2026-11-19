@@ -1,0 +1,234 @@
+
+<html xmlns="undefined">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title></title>
+<link href="../../helper_css.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar">
+  <tr>
+    <td>辅助功能</td>
+  </tr>
+</table>
+<p>移动指令和 M同在一个程序段中时，移动指令和M指令同时开始执行。(例) N1   G91 G01 X50.0  Y-50.0 M05 ；(主轴停止) <br>
+  <br>
+  移动指令及主轴停止指令同时开始执行 <br>
+  <br>
+  <img width="177" height="175" src="pic/move.GIF">  <br>
+  辅助功能(M功能) 如果在地址M后面指令了2位数值, 那麽就把对应的信号送给机床，用来控制机床的ON/OFF。M 代码在一个程序段中只允许一个有效。 <br>
+  M 代码：<br>
+  M03 ：主轴正转。<br>
+  <br>
+  M04 ：主轴反转。<br>
+  M05 ：主轴停止。<br>
+  M08 ：冷却液开。<br>
+  <br>
+  M09 ：冷却液关。<br>
+  M10 ：卡紧。<br>
+  <br>
+  M11 ：松开。<br>
+  M32 ：润滑开。<br>
+  <br>
+  M33 ：润滑关。<br>
+  M00 ：程序暂停，按‘循环起动’程序继续执行。<br>
+  <br>
+  M30 ：程序结束，程序返回开始。<br>
+  M98 ：调用子程序。<br>
+  <br>
+  M99 ：子程序返回。<br>
+  除M00，M30 外，其它 M 代码的执行时间可由诊断号№208设定。<br>
+  <br>
+  设定值：0～255 （128毫秒～32.640毫秒）<br>
+设定时间 = 设定值×128 毫秒。(如果设置0时同设置1) </p>
+<p>&nbsp;主轴正反转,主轴停止,主轴制动时序图及设定时间: <br>
+<img src="pic/timeset.GIF" width="270" height="66"></p>
+<img src="pic/ttable.GIF" width="489" height="232">
+<p><br>
+T1: 主轴在转动时,当发出主轴停止(自动或手动)命令后,先使能轴互锁信号,延迟T1 后, <br>
+  发出主轴停止信号. 设定在诊断号№214. T2: 从发出主轴停止信号到发出主轴制动信号的延迟时间. 设定在诊断号№215/216. T3: 主轴制动时间,设定在诊断号№217/218. <br>
+  注：1. 当在程序中指定了上述以外的M 代码时，系统将产生以下报警并停止执行。 <br>
+  01：M 代码错 <br>
+  2. M 起动后，即使方式改变，也仍然保持，用手动方式的键也无法关闭，可按‘RESET’关闭。 <br>
+  下面的M代码规定了特殊的使用意义。 <br>
+  1. M30(程序结束) <br>
+  （1) 表示主程序结束。 <br>
+  （2) 停止自动运转, 处于复位状态。 <br>
+  （3) 返回到主程序开头。 <br>
+  （4) 加工件数加1。 </p>
+<p>2. M00: 程序停 <br>
+  当执行了M00的程序段后, 停止自动运转。与单程序段停同样, 把其前面的模态信息全部保存起来。CNC开始运转后, 再开始自动运转。 <br>
+  3. M98(调用子程序) 用于调用子程序。 <br>
+  2. 执行M98和 M99时, 代码信号不送出。 </p>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td align="center" class="bar1">辅助机能参数</td>
+  </tr>
+</table>
+<p>诊断号№160～223 为电池保持性PLC参数，用户可根据实际情况进行设定，设定码为二进制数。</p>
+<p>设定：打开程序保护开关，在录入方式下，选择诊断画面，移动光标至要设定的序号 </p>
+<p>注: 1. M00，M30的下一个程序段即使存在, 也存不进缓冲存储器中去。 <br>
+  前，键入二进制数据，按〖输入〗键后，键入的数据输入。移动光标的方法： <br>
+  （1）用页及光标键 <br>
+  （2）用检索的方法：P→要检索的诊断号→光标键↓。 </p>
+<table border="1"  cellpadding="0" cellspacing="0" style="border-collapse=collapse" bordercolor="#00309C">
+  <tr>
+    <td width="123" valign="top"><p align="right">№208： </p></td>
+    <td colspan="2" valign="top"><p>M 代码处理时间。 </p></td>
+  </tr>
+  <tr>
+    <td width="123" valign="top">&nbsp;</td>
+    <td colspan="2"><p>设定单位：128 毫秒 </p></td>
+  </tr>
+  <tr>
+    <td width="123" valign="top">&nbsp;</td>
+    <td width="45"><p>设定码 </p></td>
+    <td width="750"><p>0～255 </p></td>
+  </tr>
+  <tr>
+    <td width="123" valign="top">&nbsp;</td>
+    <td width="45"><p>设定值 </p></td>
+    <td width="750"><p>(№208＋1)×128毫秒 </p></td>
+  </tr>
+  <tr>
+    <td width="123" valign="top">&nbsp;</td>
+    <td colspan="2"><p>设定范围：128毫秒～32.768    秒 </p></td>
+  </tr>
+  <tr>
+    <td width="123"><p align="right">№209： </p></td>
+    <td colspan="2"><p>S 代码处理时间。 </p></td>
+  </tr>
+  <tr>
+    <td width="123" valign="top">&nbsp;</td>
+    <td colspan="2"><p>设定单位：128 毫秒 </p></td>
+  </tr>
+  <tr>
+    <td width="123" valign="top">&nbsp;</td>
+    <td width="45"><p>设定码 </p></td>
+    <td width="750"><p>0～255 </p></td>
+  </tr>
+  <tr>
+    <td width="123" valign="top">&nbsp;</td>
+    <td width="45"><p>设定值 </p></td>
+    <td width="750"><p>(№209＋1)×128 毫秒 </p></td>
+  </tr>
+  <tr>
+    <td width="123" valign="top">&nbsp;</td>
+    <td colspan="2"><p>设定范围：128毫秒～32.768    秒 </p></td>
+  </tr>
+  <tr>
+    <td width="123"><p align="right">№214： </p></td>
+    <td colspan="2"><p>发出主轴停止命令后到发出主轴停止信号的延迟时间T1。 </p></td>
+  </tr>
+  <tr>
+    <td width="123" valign="top">&nbsp;</td>
+    <td colspan="2"><p>设定单位：16 毫秒 </p></td>
+  </tr>
+  <tr>
+    <td width="123" valign="top">&nbsp;</td>
+    <td width="45"><p>设定码</p></td>
+    <td width="750"><p>0～255 </p></td>
+  </tr>
+  <tr>
+    <td width="123" valign="top">&nbsp;</td>
+    <td width="45"><p>设定值</p></td>
+    <td width="750"><p>№214×16 毫秒 </p></td>
+  </tr>
+  <tr>
+    <td valign="top">&nbsp;</td>
+    <td colspan="2" valign="bottom">设定范围：0～4.096 秒 </td>
+  </tr>
+  <tr>
+    <td align="right">№215，216：</td>
+    <td colspan="2" valign="bottom">从发出主轴停止信号到发出主轴制动信号的延迟时间。</td>
+  </tr>
+  <tr>
+    <td valign="top">&nbsp;</td>
+    <td colspan="2" valign="bottom">设定单位：16 毫秒</td>
+  </tr>
+  <tr>
+    <td valign="top">&nbsp;</td>
+    <td valign="bottom">设定码 </td>
+    <td valign="bottom">0～65535</td>
+  </tr>
+  <tr>
+    <td valign="top">&nbsp;</td>
+    <td valign="bottom">设定值</td>
+    <td valign="bottom">(№216×256＋№215)×16 毫秒</td>
+  </tr>
+  <tr>
+    <td valign="top">&nbsp;</td>
+    <td colspan="2" valign="bottom">设定范围：0～1048.560 秒</td>
+  </tr>
+  <tr>
+    <td align="right" valign="top">№217，218：</td>
+    <td colspan="2" valign="bottom">主轴制动时间。</td>
+  </tr>
+  <tr>
+    <td valign="top">&nbsp;</td>
+    <td colspan="2" valign="bottom">设定单位：16 毫秒</td>
+  </tr>
+  <tr>
+    <td valign="top">&nbsp;</td>
+    <td valign="bottom">设定码</td>
+    <td valign="bottom">0～65535</td>
+  </tr>
+  <tr>
+    <td valign="top">&nbsp;</td>
+    <td valign="bottom">设定值</td>
+    <td valign="bottom">(№218×256＋№217)×16毫秒</td>
+  </tr>
+  <tr>
+    <td valign="top">&nbsp;</td>
+    <td colspan="2" valign="bottom">设定范围：0～1048.560 秒 </td>
+  </tr>
+  <tr>
+    <td align="right" valign="top">№219：</td>
+    <td colspan="2" valign="bottom">发出外部蜂鸣器输出信号的时间。</td>
+  </tr>
+  <tr>
+    <td valign="top">&nbsp;</td>
+    <td colspan="2" valign="bottom">设定单位：32  毫秒</td>
+  </tr>
+  <tr>
+    <td valign="top">&nbsp;</td>
+    <td valign="bottom">设定码</td>
+    <td valign="bottom">0～255</td>
+  </tr>
+  <tr>
+    <td valign="top">&nbsp;</td>
+    <td valign="bottom">设定值</td>
+    <td valign="bottom">№219×32  毫秒</td>
+  </tr>
+  <tr>
+    <td width="123" valign="top">&nbsp;</td>
+    <td colspan="2" valign="bottom"><p>设定范围：0～8.192  秒</p></td>
+  </tr>
+</table>
+<br>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td align="center" class="bar1">与辅助机能有关的报警</td>
+  </tr>
+</table>
+<p>与辅助机能有关的报警通过外部信息画面显示，当产生报警时，系统自动切换到外部信息画面，在显示器的上部显示出报警的详细内容，在显示器的下端闪烁显示‘报警’。 <br>
+  01：M 代码错。<br>
+  程序中编入了非法的M 代码。<br>
+  <br>
+  02：S 代码错。<br>
+  程序中编入了非法的S 代码。<br>
+  <br>
+  03：T 代码错。<br>
+  程序中编入了非法的T 代码。<br>
+  <br>
+  06：M03，M04   码指定错。主轴正转（反转）时，没有经过停止而又指定了主轴反转（正转）。<br>
+  07：主轴旋转时指定了S。<br>
+  当主轴正在旋转时，指定了S 代码进行主轴换挡。<br>
+  <br>
+  09：请进行手动主轴换挡，完成后，按循环起动（参数P012 BIT5 SMANL=1）。 <br>
+  10：请进行手动换刀，完成后，按循环起动（参数P012 BIT6 TMANL=1）。 <br>
+  11：主轴单元报警。 <br>
+  12：请手动换主轴低档，完成后，按CAN及循环起动（选择模拟主轴时）。 <br>
+  15：请手动换主轴高档，完成后，按CAN及循环起动（选择模拟主轴时）。 </p>
+</body>
+</html>

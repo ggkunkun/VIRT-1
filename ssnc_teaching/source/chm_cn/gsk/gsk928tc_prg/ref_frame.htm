@@ -1,0 +1,62 @@
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title></title>
+<link href="../../helper_css.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar">
+  <tr>
+    <td>坐标系统</td>
+  </tr>
+</table>
+<TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+  <TR>
+    <TD></TD>
+  </TR>
+  <TR>
+    <TD class=contents1 vAlign=top height="16">&nbsp;</TD>
+  </TR>
+  <TR>
+    <TD class=contents1 vAlign=top height="170"><b>程序原点</b><br>
+        在程序开发开始之前必须决定坐标系和程序的原点。<br>
+        通常把程序原点确定为便于程序开发和加工的点。<br>
+          <img border="0" src="Code/TurnCoordSys.GIF" width="455" height="291">
+      <p> 在多数情况下，把 Z 轴与 X 轴的交点设置为程序原点<br>
+            <br>
+         <b> 机械原点</b><b> </b>
+          <o:p> </o:p>
+          
+      <p >机械原点安装在车床上的固定位置，通常机械原点安装在X轴和Z轴的正方向的最大行程处。若你的车床上没有安装机械原点，请不要使用本系统提供的有关机械原点的功能&nbsp;&nbsp; （如G28）。</p>
+      <p > <b>编程坐标</b></p>
+      <p >本系统可用绝对坐标（X，Z字段），相对坐标（U，W字段），或混合坐标（X/Z，U/W字段，绝对和相对坐标同时使用）进行编程。相对坐标是相对于当前的坐标，对于X轴，还可使用直径编程或半径编程。</p>
+      <p >（1）绝对坐标值&nbsp;</p>
+      <p >“距坐标系原点的距离”即刀具要移到的坐标位置。</p>
+      <p ><img border="0" src="mban/a25.jpg" width="311" height="199"></p>
+      <p >刀具从A点移动到B点，使用B点的坐标值，其指令如下：</p>
+      <p > X30.0&nbsp;&nbsp; Z70.0；</p>
+      <p >（2）增量坐标值</p>
+      <p >指令从前一个位置到下一个位置的距离。</p>
+      <p ><img border="0" src="mban/a26.jpg" width="355" height="237"></p>
+      <p >刀具从A点移动到B点，其指令如下：</p>
+      <p > &nbsp; U-30.0 W-40.0；</p>
+      <p > <b>坐标的单位及范围</b></p>
+      <p >本系统的最小单位为0.001mm，编程的最大移动范围是±9999.999</p>
+      <p >X轴：最小设定单位0.001mm&nbsp; 最小移动单位0.0005mm(直径编程)</p>
+      <p >最小设定单位0.001mm&nbsp; 最小移动单位0.001mm（半径编程）</p>
+      <p > Z轴：最小设定单位0.001mm&nbsp;&nbsp; 最小移动单位0.001mm 。</p>
+      <p > <b>初态，模态</b></p>
+      <p >初态是指运行加工程序之前的系统编程状态。模态是指相应字段的值一经设置，以后一直有效，直至某程序段又对该字段重新设置。模态的另一意义是设置之后，以后的程序段中若使用相同的功能，可以不必再输入该字段。</p>
+      <p > <b>加工程序的开头</b></p>
+      <p >开始执行加工程序时，系统（刀尖的位置）应处于加工程序的起点位置（即加工原点，或机械零点）。刀具为程序要使用的第一把刀，并且刀偏为0（即无刀偏状态）。一般情况下，程序的第一把刀的刀具偏值应烛（0，0）即无刀偏。</p>
+      <p > <b>加工程序的结束</b></p>
+      <p >程序的最后一段以M30来结束加工程序的运行。执行这结束程序功能之前必须使系统回到加工原点，取消刀具偏置。</p>
+      <p >　</p>
+      <p> <br>
+    </TD>
+  </TR>
+</TABLE>
+</body>
+</html>

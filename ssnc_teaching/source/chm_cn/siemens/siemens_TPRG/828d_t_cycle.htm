@@ -1,0 +1,271 @@
+
+<html xmlns="undefined">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>无标题文档</title>
+<link href="../../helper_css.css" rel="stylesheet" type="text/css">
+</head>
+<body bgcolor="#FFFFFF">
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar">
+  <tr>
+    <td>固定循环</td>
+  </tr>
+</table>
+<table border="1"   " cellpadding="0" cellspacing="0" bordercolor="#00309C" style=" margin-bottom:10;" >
+  <tr>
+    <td width="100">循环</td>
+    <td width="358">说明</p></td>
+  </tr>
+  <tr>
+    <td width="100">CYCLE95</p></td>
+    <td width="358">车削循环</p></td>
+  </tr>
+  <tr>
+    <td width="100">CYCLE951</p></td>
+    <td width="358">轮廓车削</p></td>
+  </tr>
+  <tr>
+    <td width="100">CYCLE930</p></td>
+    <td width="358">切槽</p></td>
+  </tr>
+  <tr>
+    <td width="100">CYCLE940</p></td>
+    <td width="358">退刀槽</p></td>
+  </tr>
+  <tr>
+    <td width="100">CYCLE99</p></td>
+    <td width="358">螺纹车削</p></td>
+  </tr>
+  <tr>
+    <td width="100">CYCLE98</p></td>
+    <td width="358">螺纹链</p></td>
+  </tr>
+  <tr>
+    <td width="100">CYCLE92</p></td>
+    <td width="358">切断</p></td>
+  </tr>
+  <tr>
+    
+  </tr>
+</table>
+<table width="100%" border="0" cellpadding-up="5" cellspacing="0" class="bar1" style=" margin-bottom:10;" >
+  <tr>
+    <td><div align="left"><strong>CYCLE95车削循环</strong></div></td>
+  </tr>
+</table>
+<p><strong>1. </strong><strong>编程 </strong><br>
+  <br>
+CYSLE95（STRING[140] NPP ,REAL MID,REAL,FALZ,REAL FALX,REAL FAL,REAL FF1,REAL FF2,REAL FF3,INT VARI,REAL DT,<br>
+  REAL DAM,REAL_VRT,INT_GMODE,INT_DMODE)
+  <br>
+  <br>
+  <strong>2. </strong><strong>参数说明<br>
+</strong><br>
+<img width="549" height="403" src="828d_t_cycle_clip_image002_0000.jpg"></p>
+<table width="500" border="1"  cellpadding="0" cellspacing="0"bordercolor="#00309C" style=" margin-bottom:10;" >
+  <tr>
+    <td width="50%" valign="top" bordercolor="#000000"><p>参数</p></td>
+    <td width="50%" valign="top"><p>说明</p></td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top" bordercolor="#000000"><p>加工</p></td>
+    <td width="50%" valign="top"><p>加工方式（粗加工/精加工）</p></td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top" bordercolor="#000000"><p>F</p></td>
+    <td width="50%" valign="top"><p>进给率</p></td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top" bordercolor="#000000"><p>FR</p></td>
+    <td width="50%" valign="top"><p>底切逼近进给</p></td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top" bordercolor="#000000"><p>D</p></td>
+    <td width="50%" valign="top"><p>最大切深</p></td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top" bordercolor="#000000"><p>U</p></td>
+    <td width="50%" valign="top"><p>与轮廓平行的精加工余量</p></td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top" bordercolor="#000000"><p>UX</p></td>
+    <td width="50%" valign="top"><p>在X的精加工余量</p></td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top" bordercolor="#000000"><p>UZ</p></td>
+    <td width="50%" valign="top"><p>在Z的精加工余量</p></td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top" bordercolor="#000000"><p>DI</p></td>
+    <td width="50%" valign="top"><p>在0处连续切削</p></td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top" bordercolor="#000000"><p>VRT</p></td>
+    <td width="50%" valign="top"><p>0时离开轮廓的自动退刀路径</p></td>
+  </tr>
+</table>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+  <tr>
+    <td><div align="left"><strong>CYCLE951轮廓车削</strong></div></td>
+  </tr>
+</table>
+<p> <strong>1. </strong><strong>编程</strong> <br>
+  <br>
+CYCLE951(REAL_SPD,REAL_SPL,REAL_EPD,REAL_EPL,REAL_ZPD,REAL_ZPL,INT_LAGE,REAL_MID,REAL_FALX,<br>
+REAL_FALZ,INT_VARI,REAL_RF1,REAL_RF2,REAL_RF3,REAL_SDIS,REAL_FF1,INT_NR,INT_DMODE,INT_AMODE)</p>
+<p><strong>2. </strong><strong>功能 </strong><br>
+  <br>
+  使用”切削“循环可以在外轮廓或内轮廓的拐角上进行纵向或横向切削。<br>
+  <br>
+  <strong>3. </strong><strong>参数说明 </strong><br>
+  <br>
+  <img width="551" height="403" src="828d_t_cycle_clip_image002_0003.jpg"><br>
+  <img width="533" height="87" src="828d_t_cycle_clip_image004.jpg"><br>
+  <img width="533" height="321" src="828d_t_cycle_clip_image006.jpg"><br>
+  <img width="534" height="375" src="828d_t_cycle_clip_image008.jpg"><br>
+  <img width="533" height="149" src="828d_t_cycle_clip_image010.jpg"><br>
+  <img width="534" height="305" src="828d_t_cycle_clip_image012.jpg"><br>
+  <img width="533" height="282" src="828d_t_cycle_clip_image014.jpg"><br>
+  <img width="535" height="128" src="828d_t_cycle_clip_image016.jpg"></p>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+  <tr>
+    <td><div align="left"><strong>CYCLE930切槽</strong></div></td>
+  </tr>
+</table>
+<p><strong> </strong><strong>1. </strong><strong>编程 </strong><br>
+  <br>
+CYCLE930(REAL_SPD,REAL_SPL,REAL_WIDG,REAL_WIDG2,REAL_DIAG,REAL_DIAG2,REAL_STA,REAL_ANG1，REAL_ANG2，REAL_RCO1,REAL_RCI1,REAL_RCI2,REAL_RCO2,REAL_FAL,REAL_IDEP1,REAL_SDIS,INT_VARI,INT_DN,INT_NUM,REAL_DBH,REAL_FF1,<br>
+INT_NR,REAL_FALX,REAL_FALZ,INT_DMODE,INT_AMODE)</p>
+<p><strong>2. </strong><strong>功能<br>
+</strong><br>
+  使用”切槽“循环可以在任意直线轮廓单元上加工对称和不对称的凹槽。<br>
+  可以沿着纵向和横向加工外退刀槽或内退刀槽。用参数切槽宽度和切槽深度确定切槽形状。如果切槽比有效的刀具宽，则以多步切削宽度。刀具<br>
+  每次切割时移动刀具宽度的80%（最大）。<br>
+  可以为切槽底部和边缘指定精加工余量，粗加工时切削至该余量。<br>
+  在设定数据中确定了切削和回退之间的停留时间。<br>
+  <br>
+  <strong>3. </strong><strong>参数说明 </strong><br>
+  <br>
+  <img width="551" height="404" src="828d_t_cycle_clip_image002_0006.jpg"><br>
+  <img width="534" height="147" src="828d_t_cycle_clip_image004_0000.jpg"><br>
+  <img width="533" height="377" src="828d_t_cycle_clip_image006_0000.jpg"><br>
+  <img width="533" height="349" src="828d_t_cycle_clip_image008_0000.jpg"><br>
+  <img width="533" height="125" src="828d_t_cycle_clip_image010_0000.jpg"><br>
+  <img width="533" height="317" src="828d_t_cycle_clip_image012_0000.jpg"><br>
+  <img width="533" height="350" src="828d_t_cycle_clip_image014_0000.jpg"><br>
+  <img width="534" height="109" src="828d_t_cycle_clip_image018.jpg"><strong> </strong><br>
+<img width="534" height="126" src="828d_t_cycle_clip_image016_0000.jpg"></p>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+  <tr>
+    <td align="left"><strong>CYCLE940退刀槽</strong></td>
+  </tr>
+</table>
+<p><strong>1.</strong><strong>编程 </strong><br>
+  <br>
+  CYCLE940(REAL_SPD,REAL_SPL,CHAR_FORM,INT_LAGE,REAL_SDIS,REAL_FFP,INT_VARI,REAL_EPD,REAL_EPL,<br>
+  REAL_R1,REAL_R2,REAL_STA,REAL_VRT,REAL_MID,REAL_FAL,REAL_FALX,REAL_FALZ,INT_PITI,STRING[5]_PTAB,<br>
+  STRING[20]_PTABA,INT_DMODE,INT_AMODE)<br>
+  <br>
+  <strong>2. </strong><strong>功能 </strong><br>
+  <br>
+  使用&quot;E&quot;形退刀槽或”F&quot;形退刀槽功能可以车削出符合DIN 509的E形或F形退刀槽。<br>
+  通过CYCLE940可以写入不同形状的退刀槽，但是，有些退刀槽的编程参数明显不同。<br>
+  参数表中添加了一列，指出参数适用的退刀槽形状。退刀槽形状标识和循环对话框中的垂直选择软键一一对应。<br>
+  E:E 形退刀槽<br>
+  F:F 形退刀槽<br>
+  A-D:DIN 螺纹退刀槽<br>
+  T:螺纹退刀槽（形状自由定义）
+  <br>
+  <br>
+  <strong>3. </strong><strong>参数说明 </strong><br>
+  <br>
+  <img width="478" height="349" src="828d_t_cycle_clip_image002_0011.jpg"><br>
+  <img width="533" height="335" src="828d_t_cycle_clip_image004_0001.jpg"><br>
+  <img width="533" height="335" src="828d_t_cycle_clip_image006_0001.jpg"><br>
+  <img width="533" height="206" src="828d_t_cycle_clip_image008_0001.jpg"><br>
+  <img width="534" height="345" src="828d_t_cycle_clip_image010_0001.jpg"><br>
+  <img width="534" height="265" src="828d_t_cycle_clip_image014_0001.jpg"><br>
+  <img width="534" height="182" src="828d_t_cycle_clip_image012_0001.jpg"></p>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+  <tr>
+    <td align="left"><strong> CYCLE99螺纹车削</strong></td>
+  </tr>
+</table>
+<p><strong>1. </strong><strong>编程<br>
+</strong><br>
+CYCLE99(REAL_SPL,REAL_SPD,REAL_FPL,REAL_FPD,REAL_APP,REAL_ROP,REAL_TDEP,REAL_FAL,REAL_IANG,REAL_NSP,<br>
+INT_NRC,INT_NID,REAL_PIT,INT_VARI,INT_NUMTH,REAL_SDIS,REAL_MID,REAL_GDEP,REAL_PITI,REAL_FDEP,INT_GST,INT_GUD,<br>
+REAL_IFLANK,INT_PITA,STRING[15]_PITM,STRING[20]_PTAB,STRING[20]_PTABA,INT_DMODE,INT_AMODE)</p>
+<p><strong>2. </strong><strong>功能 </strong><br>
+  <br>
+  使用”纵向螺纹“、”锥形螺纹“、”横向螺纹“循环可以用固定或可变螺距进行外螺纹和内螺纹的车削。<br>
+  螺纹可以是单头螺纹，也可以说多头螺纹。<br>
+  加工公制螺纹（螺距P为毫米/转）时，循环使用由螺距所计算出的值对参数螺纹深度H1进行预设置，可以修改该值。<br>
+  <br>
+<strong>3. </strong><strong>参数说明 </strong></p>
+<p><img width="551" height="407" src="828d_t_cycle_clip_image002_0014.jpg"><br>
+  <img width="535" height="369" src="828d_t_cycle_clip_image004_0002.jpg"><br>
+  <img width="532" height="291" src="828d_t_cycle_clip_image006_0002.jpg"><br>
+  <img width="533" height="291" src="828d_t_cycle_clip_image010_0002.jpg"><br>
+  <img width="534" height="206" src="828d_t_cycle_clip_image012_0002.jpg"></p>
+<p><img width="534" height="224" src="828d_t_cycle_clip_image014_0002.jpg"><br>
+    <img width="533" height="318" src="828d_t_cycle_clip_image016_0001.jpg"><br>
+    <img width="533" height="153" src="828d_t_cycle_clip_image018_0000.jpg"><br>
+<img width="534" height="175" src="828d_t_cycle_clip_image008_0002.jpg"></p>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+  <tr>
+    <td align="left"><strong>CYCLE98螺纹链</strong></td>
+  </tr>
+</table>
+<p><strong>1. </strong><strong>编程 </strong><br>
+    <br>
+  CYCLE98(REAL_PO1,REAL_DM1,REAL_P02,REAL_DM2,REAL_PO3,REAL_DM3,REAL_PO4,REAL_DM4,REAL APP,<br>
+  REAL ROP,REAL TDEP,REAL FAL,REAL_IANG,REAL NSP,INT NRC,INT NID,REAL_PP1,REAL_PP2,REAL_PP3,<br>
+  INT_VARI,INT_NUMTH,REAL_VRT,REAL_MID,REAL_GDEP,REAL_IFLANK,INT_PITA,STRING[15]_PITM1,STRING[15]_PITM2,STRING[15]_PITM3,INT_DMODE,INT_AMODE)</p>
+<p><strong>2. </strong><strong>功能 </strong><br>
+  <br>
+  用此循环可以加工几个相连的圆柱螺纹或者圆锥螺纹，具有恒定的螺距，在纵向和平面加工，其螺距可以不同。<br>
+  螺纹可以是单线螺纹，也可以是多线螺纹。对于多头螺纹，依次对各个螺纹线进行加工。<br>
+  右旋或左旋螺纹由主轴旋转方向和进给方向来决定。<br>
+  自动以恒定进给深度或恒定切削截面进给。<br>
+  对于恒定切削深度，切削截面会随切削递增。粗加工后，一次切削切除精加工余量。<br>
+  在螺纹深度较小时，恒定的进给深度能创造较好的切削条件。<br>
+  对于恒定切削截面，切削压力对所有粗切削保持不变，进给深度会递减。<br>
+  <br>
+  <strong>3. </strong><strong>参数说明 </strong><br>
+  <br>
+  <img width="551" height="402" src="828d_t_cycle_clip_image002_0017.jpg"><br>
+  <img width="535" height="300" src="828d_t_cycle_clip_image004_0003.jpg"><br>
+  <img width="533" height="181" src="828d_t_cycle_clip_image006_0003.jpg"><br>
+  <img width="534" height="355" src="828d_t_cycle_clip_image008_0003.jpg"><br>
+  <img width="533" height="256" src="828d_t_cycle_clip_image010_0003.jpg"><br>
+  <img width="533" height="359" src="828d_t_cycle_clip_image012_0003.jpg"><br>
+  <img width="534" height="337" src="828d_t_cycle_clip_image014_0003.jpg"><br>
+  <img width="534" height="134" src="828d_t_cycle_clip_image016_0002.jpg"><br>
+  <img width="533" height="319" src="828d_t_cycle_clip_image018_0001.jpg"><br>
+<img width="534" height="302" src="828d_t_cycle_clip_image020.jpg"></p>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar1">
+  <tr>
+    <td align="left"><strong>CYCLE92切断</strong></td>
+  </tr>
+</table>
+<p><strong>1. </strong><strong>编程<br>
+</strong><br>
+  CYCLE92(REAL_SPD,REAL_SPL,REAL_DIAG1,REAL_DIAG2,REAL_RC,REAL_SDIS,REAL_SV1,REAL_SV2,<br>
+INT_SDAC,REAL_FF1,REAL_FF2,REAL_SS2,REAL_DIAGM,INT_VARI,INT_DN,INT_DMODE,INT_AMODE)</p>
+<p><strong>2. </strong><strong>功能 </strong><br>
+  <br>
+  如果要切断旋转对称的零件，可以使用切断循环。<br>
+  可以在被加工零件的边缘上编程倒角或倒圆。可以恒定切削速率V或旋转速度S加工深度X1，然后再只以恒定速度加工工件。也可以从深度X1编写降低的<br>
+进给率FR或降低的旋转速度SR，以便使速度适应减小的直径。<br>
+  用参数X2输入您希望通过切断所到达的最后深度。比如空心体，不需要完全切到中心，而是略超过空心体的壁厚就可以切断了。<br>
+  <br>
+  <strong>3. </strong><strong>参数说明</strong><br>
+  <br>
+  <img width="550" height="402" src="828d_t_cycle_clip_image002_0020.jpg"><br>
+  <img width="534" height="328" src="828d_t_cycle_clip_image004_0004.jpg"><br>
+<img width="534" height="336" src="828d_t_cycle_clip_image006_0004.jpg"></p>
+<p><img width="533" height="282" src="828d_t_cycle_clip_image008_0004.jpg"></p>
+<p>&nbsp;</p>
+</body>
+</html>

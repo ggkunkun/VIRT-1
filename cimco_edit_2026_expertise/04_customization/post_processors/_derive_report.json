@@ -1,0 +1,21 @@
+{
+ "generated_at": "2026-11-18",
+ "base": "official CIMCO Edit 2026 Posts/*.js (copied as _base_*)",
+ "cases": {
+  "CASE1_Fanuc_NOK": [
+   "序列号保持开启",
+   "序列号起始改为1000",
+   "序列号步长改为10",
+   "小数点保持"
+  ],
+  "CASE2_Huazhong_ISO": [
+   "螺旋线性化开启(兼容HNC无螺旋插补)",
+   "螺旋线性化容差放宽至0.02",
+   "保持增量圆心(IJK)",
+   "首刀XY先行(安全)"
+  ],
+  "CASE3_Heidenhain_Finish": [
+   "公差收紧至0.005mm(精加工)"
+  ]
+ }
+}

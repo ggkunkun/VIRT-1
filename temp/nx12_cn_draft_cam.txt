@@ -1,0 +1,139 @@
+== ug_drafting.men (35) ==
+  UG_DRAFT_EDIT_VALUE_LABEL | &Feature Dimension... | 特征尺寸(&F)...
+  UG_DRAFT_EDIT_VALUE_TOOLBAR_LABEL | Edit Feature Dimension | 编辑特征尺寸
+  UG_DRAFT_DRW_AUTOBALLOON_VIEW_LABEL | Aut&o Balloon | 自动符号标注(&O)
+  UG_DRAFT_DRW_AUTOBALLOON_VIEW_TOOLBAR_LABEL | Auto Balloon | 自动符号标注
+  UG_DRAFT_DRW_AUTOBALLOON_VIEW_POPUP_LABEL | Aut&o Balloon | 自动符号标注(&O)
+  UG_DRAFT_DRW_NEW_LABEL | S&heet... | 图纸页(&H)...
+  UG_DRAFT_DRW_NEW_TOOLBAR_LABEL | New Sheet | 新建图纸页
+  UG_DRAFT_DRW_NEW_POPUP_LABEL | New S&heet... | 新建图纸页(&H)...
+  UG_DRAFT_CRE_DIMENSIONS_LABEL | Di&mension | 尺寸(&M)
+  UG_DRAFT_CRE_ANNOTATION_LABEL | &Annotation | 注释(&A)
+  UG_DRAFT_DRW_IMPORT_VIEW_TOOLBAR_LABEL | Base View | 基本视图
+  UG_DRAFT_DRW_IMPORT_VIEW_POPUP_LABEL | Add &Base View... | 添加基本视图(&B)...
+  UG_DRAFT_DRW_PROJECT_VIEW_TOOLBAR_LABEL | Projected View | 投影视图
+  UG_DRAFT_DRW_PROJECT_VIEW_POPUP_LABEL | Add Pro&jected View... | 添加投影视图(&J)...
+  UG_DRAFT_DRW_DETAIL_VIEW_LABEL | &Detail... | 局部放大图(&D)...
+  UG_DRAFT_DRW_DETAIL_VIEW_TOOLBAR_LABEL | Detail View | 局部放大图
+  UG_DRAFT_DRW_DETAIL_VIEW_POPUP_LABEL | Add &Detail View... | 添加局部放大图(&D)...
+  UG_DRAFT_DRW_SECTION_VIEW_LABEL | &Section... | 剖视图(&S)...
+  UG_DRAFT_DRW_SECTION_VIEW_TOOLBAR_LABEL | Section View | 剖视图
+  UG_DRAFT_DRW_SECTION_VIEW_POPUP_LABEL | Add &Section View... | 添加剖视图(&S)...
+  UG_DRAFT_DRW_UNFOLDED_ANGLE_SECTION_VIEW_TOOLBAR_LABEL | Unfolded Point and Angle Section View | 展开的点和角度剖视图
+  UG_DRAFT_DRW_UNFOLDED_ANGLE_SECTION_VIEW_POPUP_LABEL | Add U&nfolded Point and Angle Section View... | 添加展开的点和角度剖视图(&N)...
+  UG_DRAFT_DRW_SIMPLE_3D_SECTION_VIEW_TOOLBAR_LABEL | Oriented Section View | 定向剖视图
+  UG_DRAFT_DRW_SIMPLE_3D_SECTION_VIEW_POPUP_LABEL | Add Orien&ted Section View... | 添加定向剖视图(&T)...
+  UG_DRAFT_DRW_PICTORIAL_SECTION_VIEW_TOOLBAR_LABEL | Pictorial Section View | 轴测剖视图
+  UG_DRAFT_DRW_PICTORIAL_SECTION_VIEW_POPUP_LABEL | Add &Pictorial Section View... | 添加轴测剖视图(&P)...
+  UG_DRAFT_DRW_PICTORIAL_HALF_SECTION_VIEW_TOOLBAR_LABEL | Half Pictorial Section View | 半轴测剖视图
+  UG_DRAFT_DRW_PICTORIAL_HALF_SECTION_VIEW_POPUP_LABEL | Add P&ictorial Half Section View... | 添加轴测半剖视图(&I)...
+  UG_DRAFT_DRW_BREAKOUT_TOOLBAR_LABEL | Break-out Section View | 局部剖视图
+  UG_DRAFT_CRE_TABULAR_NOTE_LABEL | &Tabular Note... | 表格注释(&T)...
+  UG_DRAFT_CRE_TABULAR_NOTE_TOOLBAR_LABEL | Tabular Note | 表格注释
+  UG_DRAWING_AUTOMATION_ANNOTATE_VIEWS_LABEL | &Annotate Views... | 注释视图(&A)...
+  UG_DRAWING_AUTOMATION_ANNOTATE_VIEWS_TOOLBAR_LABEL | Annotate Views | 注释视图
+  UG_DRAWING_AUTOMATION_DISTRIBUTE_ANNOTATIONS_LABEL | &Distribute Annotation... | 分布注释(&D)...
+  UG_DRAWING_AUTOMATION_DISTRIBUTE_ANNOTATIONS_TOOLBAR_LABEL | Distribute Annotation | 分布注释
+== ug_cam.men (101) ==
+  UG_CAM_INSERT_OPERATION_LABEL | Op&eration... | 工序(&E)...
+  UG_CAM_INSERT_OPERATION_TOOLBAR_LABEL | Create Operation | 创建工序
+  UG_CAM_INSERT_PROGRAM_LABEL | &Program... | 程序(&P)...
+  UG_CAM_INSERT_PROGRAM_TOOLBAR_LABEL | Create Program | 创建程序
+  UG_CAM_INSERT_TOOL_LABEL | &Tool... | 刀具(&T)...
+  UG_CAM_INSERT_TOOL_TOOLBAR_LABEL | Create Tool | 创建刀具
+  UG_CAM_INSERT_GEOMETRY_LABEL | &Geometry... | 几何体(&G)...
+  UG_CAM_INSERT_GEOMETRY_TOOLBAR_LABEL | Create Geometry | 创建几何体
+  UG_CAM_INSERT_METHOD_LABEL | &Method... | 方法(&M)...
+  UG_CAM_INSERT_METHOD_TOOLBAR_LABEL | Create Method | 创建方法
+  UG_CAM_CREATE_OPERATION_LABEL | &Operation Navigator | 工序导航器(&O)
+  UG_CAM_ONT_LABEL | &Operation Navigator | 工序导航器(&O)
+  UG_CAM_TOOLPATH_DISPLAY_LABEL | &Tool Path Display | 刀轨显示(&T)
+  UG_MACHINE_KITS_DIALOG_LABEL | M&achine Tool Utilities | 机床实用工具(&A)
+  UG_CAM_INSTALL_POST_LABEL | Install NC &Postprocessor... | 安装 NC 后处理器(&P)...
+  UG_CAM_INSTALL_POST_TOOLBAR_LABEL | Install NC Postprocessor | 安装 NC 后处理器
+  UG_CAM_CONVERT_TOOL_LIBRARY_LABEL | Convert Tool Librar&y... | 转换刀具库(&Y)...
+  UG_CAM_CONVERT_TOOL_LIBRARY_TOOLBAR_LABEL | Convert Tool Library | 转换刀具库
+  UG_CAM_START_POST_CONFIGURATOR_LABEL | Post Configurato&r... | 后处理配置器(&R)...
+  UG_CAM_START_POST_CONFIGURATOR_TOOLBAR_LABEL | Post Configurator | 后处理配置器
+  UG_CAM_ISV_PROGRAM_MANAGER_LABEL | &Program Manager... | 程序管理器(&P)...
+  UG_CAM_ISV_PROGRAM_MANAGER_TOOLBAR_LABEL | Program Manager | 程序管理器
+  UG_CAM_DIALOG_MACHINE_LIB_LABEL | &Machine Library... | 机床库(&M)...
+  UG_CAM_DIALOG_MACHINE_LIB_TOOLBAR_LABEL | Machine Library | 机床库
+  UG_CAM_DIALOG_IMPORT_MACHINE_KIT_LABEL | &Import Machine Kit... | 导入机床工具包(&I)...
+  UG_CAM_DIALOG_IMPORT_MACHINE_KIT_TOOLBAR_LABEL | Import Machine Kit | 导入机床工具包
+  UG_CAM_HELP_TEC_POSTLIB_LABEL | Download &NC Postprocessor | 下载 &NC 后处理器
+  UG_CAM_HELP_TEC_POSTLIB_TOOLBAR_LABEL | Download NC Postprocessor | 下载 NC 后处理器
+  UG_CAM_ONT_EXPORT_HTML_TOOLBAR_LABEL | Export Operation Navigator to Browser | 导出工序导航树至浏览器
+  UG_CAM_ONT_EXPORT_SPREADSHEET_TOOLBAR_LABEL | Export Operation Navigator to Spreadsheet | 工序导航器导出至电子表格
+  UG_CAM_ONT_TOOLPATH_LABEL | Too&l Path | 刀轨(&L)
+  UG_CAM_DISPLAY_TOOL_PATH_LABEL | D&isplay Tool Path | 显示刀轨(&I)
+  UG_CAM_DISPLAY_TOOL_PATH_TOOLBAR_LABEL | Display Tool Path | 显示刀轨
+  UG_CAM_DISPLAY_TOOL_CENTER_LABEL | Sho&w Tool Center | 显示刀具中心(&W)
+  UG_CAM_DISPLAY_TOOL_CENTER_TOOLBAR_LABEL | Show Tool Center | 显示刀具中心
+  UG_CAM_DISPLAY_COLOR_OPERATION_LABEL | &Operation | 工序(&O)
+  UG_CAM_DISPLAY_COLOR_OPERATION_TOOLBAR_LABEL | Operation | 工序
+  UG_CAM_DISPLAY_COLOR_TOOL_LABEL | &Tool | 刀具(&T)
+  UG_CAM_DISPLAY_COLOR_TOOL_TOOLBAR_LABEL | Tool | 刀具
+  UG_CAM_DISPLAY_COLOR_MOTION_GEOMETRY_LABEL | Motion &Geometry | 运动几何体(&G)
+  UG_CAM_DISPLAY_COLOR_MOTION_GEOMETRY_TOOLBAR_LABEL | Motion Geometry | 运动几何体
+  UG_CAM_DISPLAY_COLOR_FINDING_LABEL | Tool Path Fi&ndings | 刀轨查找结果(&N)
+  UG_CAM_DISPLAY_COLOR_FINDING_TOOLBAR_LABEL | Tool Path Findings | 刀轨查找结果
+  UG_CAM_DISPLAY_COLOR_MOTION_LENGTH_LABEL | Tool Path &Analysis | 刀轨分析(&A)
+  UG_CAM_DISPLAY_COLOR_MOTION_LENGTH_TOOLBAR_LABEL | Tool Path Analysis | 刀轨分析
+  UG_CAM_DISPLAY_DEBUG_SAVE_TOOL_LABEL | Save T&ool | 保存刀具(&O)
+  UG_CAM_DISPLAY_DEBUG_SAVE_TOOL_TOOLBAR_LABEL | Save Tool | 保存刀具
+  UG_CAM_DISPLAY_TOOL_PATH_SELECTION_LABEL | Tool Path &Selection | 刀轨选择(&S)
+  UG_CAM_DISPLAY_TOOL_PATH_SELECTION_TOOLBAR_LABEL | Select Tool Path | 选择刀轨
+  UG_CAM_DISPLAY_TOOL_TYPE_PARAMETRIC_WITH_HOLDER_LABEL | Display Tool with &Holder | 显示带夹持器的刀具(&H)
+  UG_CAM_DISPLAY_TOOL_TYPE_PARAMETRIC_WITH_HOLDER_TOOLBAR_LABEL | Display Tool with Holder | 显示带夹持器的刀具
+  UG_CAM_DISPLAY_TOOL_TYPE_PARAMETRIC_WITH_HOLDER_RIBBON_LABEL | Tool | 刀具
+  UG_CAM_DISPLAY_TOOL_TYPE_PARAMETRIC_WITHOUT_HOLDER_LABEL | Display Tool witho&ut Holder | 显示不带夹持器的刀具(&U)
+  UG_CAM_DISPLAY_TOOL_TYPE_PARAMETRIC_WITHOUT_HOLDER_TOOLBAR_LABEL | Display Tool without Holder | 显示不带夹持器的刀具
+  UG_CAM_DISPLAY_TOOL_TYPE_PARAMETRIC_WITHOUT_HOLDER_RIBBON_LABEL | Tool without Holder | 不带夹持器的刀具
+  UG_CAM_DISPLAY_TOOL_TYPE_ASSEMBLY_HOLDER_LABEL | Display Tool Assem&bly | 显示刀具装配
+  UG_CAM_DISPLAY_TOOL_TYPE_ASSEMBLY_HOLDER_TOOLBAR_LABEL | Display Tool Assembly | 显示刀具装配
+  UG_CAM_DISPLAY_TOOL_TYPE_ASSEMBLY_HOLDER_RIBBON_LABEL | Tool Assembly | 刀具装配
+  UG_CAM_DISPLAY_TOOL_TYPE_POINT_LABEL | &Display Tool Point | 显示刀具点(&D)
+  UG_CAM_DISPLAY_TOOL_TYPE_POINT_TOOLBAR_LABEL | Display Tool Point | 显示刀具点
+  UG_CAM_DISPLAY_TOOL_TYPE_MACHINE_LABEL | Display Tool with &Machine | 显示刀具及机床(&M)
+  UG_CAM_DISPLAY_TOOL_TYPE_MACHINE_TOOLBAR_LABEL | Display Tool with Machine | 显示刀具及机床
+  UG_CAM_DISPLAY_TOOL_TYPE_MACHINE_RIBBON_LABEL | Machine | 机床
+  UG_CAM_DISPLAY_TOOL_SNAP_NEAREST_ENDPOINT_LABEL | Tool Snap - &Nearest End Point | 刀具对齐 - 最近的终点(&N)
+  UG_CAM_DISPLAY_TOOL_SNAP_NEAREST_ENDPOINT_TOOLBAR_LABEL | Tool Snap - Nearest End Point | 刀具对齐 - 最近的终点
+  UG_CAM_DISPLAY_TOOL_SNAP_POINT_LABEL | Too&l Snap - Point | 刀具对齐 - 点(&L)
+  UG_CAM_DISPLAY_TOOL_SNAP_POINT_TOOLBAR_LABEL | Tool Snap - Point | 刀具对齐 - 点
+  UG_CAM_DISPLAY_TOOL_SNAP_ENDPOINT_LABEL | Tool Snap - &End Point | 刀具对齐 - 终点(&E)
+  UG_CAM_DISPLAY_TOOL_SNAP_ENDPOINT_TOOLBAR_LABEL | Tool Snap - End Point | 刀具对齐 - 终点
+  UG_CAM_ONT_MIRROR_TOOLBAR_LABEL | Mirror Operation | 镜像工序
+  UG_CAM_ONT_EDIT_MIRROR_TOOLBAR_LABEL | Edit Mirror Operation | 编辑镜像工序
+  UG_CAM_ONT_UPDATE_LIBRARY_TOOL_LABEL | Update T&ool from Library | 从库更新刀具(&O)
+  UG_CAM_ONT_UPDATE_LIBRARY_TOOL_TOOLBAR_LABEL | Update Tool from Library | 从库中更新刀具
+  UG_CAM_ONT_FEEDRATES_LABEL | &Feed Rates... | 进给率(&F)...
+  UG_CAM_ONT_FEEDRATES_TOOLBAR_LABEL | Feed Rates | 进给率
+  UG_CAM_ONT_TP_GENERATE_TOOLBAR_LABEL | Generate Tool Path | 生成刀轨
+  UG_CAM_ONT_TP_PARALLEL_GENERATE_TOOLBAR_LABEL | Parallel Generate Tool Path | 并行生成刀轨
+  UG_CAM_ONT_TP_EDIT_TOOLBAR_LABEL | Edit Tool Path | 编辑刀轨
+  UG_CAM_ONT_TP_DIVIDE_TOOLBAR_LABEL | Divide Tool Path | 分割刀轨
+  UG_CAM_ONT_TP_DELETE_TOOLBAR_LABEL | Delete Tool Path | 删除刀轨
+  UG_CAM_ONT_TP_REPLAY_TOOLBAR_LABEL | Replay Tool Path | 重播刀轨
+  UG_CAM_ONT_TP_LIST_TOOLBAR_LABEL | List Tool Path | 列出刀轨
+  UG_CAM_ONT_TP_OPT_FEEDRATE_LABEL | Optimi&ze Feed Rate | 优化进给率(&Z)
+  UG_CAM_ONT_TP_OPT_FEEDRATE_TOOLBAR_LABEL | Optimize Feed Rate | 优化进给率
+  UG_CAM_ONT_TP_VERIFY_TOOLBAR_LABEL | Verify Tool Path | 确认刀轨
+  UG_APPCAM_SIMULATE_TASK_ENV_TOOLBAR_LABEL | Simulate Machine | 机床仿真
+  UG_CAM_ONT_TP_MIN_TOOL_LEN_LABEL | &Minimum Tool Length | 最小刀具长度(&M)
+  UG_CAM_ONT_TP_MIN_TOOL_LEN_TOOLBAR_LABEL | Minimum Tool Length | 最小刀具长度
+  UG_CAM_ONT_TP_TRIM_TOOLBAR_LABEL | Trim Tool Path | 修剪刀轨
+  UG_CAM_ONT_TP_LOAD_TOOLBAR_LABEL | Load Tool Path | 加载刀轨
+  UG_CAM_ONT_TP_UNLOAD_TOOLBAR_LABEL | Unload Tool Path | 卸载刀轨
+  UG_CAM_ONT_OUT_MACHINE_DATA_LABEL | &Postprocess... | 后处理(&P)...
+  UG_CAM_ONT_OUT_MACHINE_DATA_TOOLBAR_LABEL | Post Process | 后处理
+  UG_CAM_ONT_TASK_LABEL | &Program Order View | 程序顺序视图(&P)
+  UG_CAM_ONT_TASK_TOOLBAR_LABEL | Program Order View | 程序顺序视图
+  UG_CAM_ONT_MTHD_LABEL | &Machining Method View | 加工方法视图(&M)
+  UG_CAM_ONT_MTHD_TOOLBAR_LABEL | Machining Method View | 加工方法视图
+  UG_CAM_ONT_TOOL_LABEL | Machine T&ool View | 机床视图(&O)
+  UG_CAM_ONT_TOOL_TOOLBAR_LABEL | Machine Tool View | 机床视图
+  UG_CAM_ONT_COLUMNS_TOOLBAR_LABEL | Configure Operation Navigator Columns | 配置工序导航器列
+  UG_CAM_ONT_PROPERTIES_TOOLBAR_LABEL | Operation Navigator Properties | 工序导航器属性
+== ug_main.men (0) ==

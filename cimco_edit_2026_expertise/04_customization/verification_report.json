@@ -1,0 +1,90 @@
+{
+  "run_at": "2026-11-18 23:35:54",
+  "total": 6,
+  "passed": 6,
+  "all_pass": true,
+  "results": [
+    {
+      "type": "post_processor",
+      "file": "PP_CASE1_Fanuc_NOK_Increment.js",
+      "base": "_base_fanuc_reference.js",
+      "bytes": 36460,
+      "missing_generic": [],
+      "funcs_lost_vs_base": [],
+      "func_count": 21,
+      "meta": {
+        "title": "Fanuc NO-K Increment (Custom)",
+        "version": "1.1-CUSTOM",
+        "description": "Derived from CIMCO fanuc.js: N1000/inc10, longhand drilling for controls without G81 K support",
+        "author": "Virtu CNC Support (derived from Cimco A/S)",
+        "type": "POST_TYPE_MILL"
+      },
+      "brace_balance": 0,
+      "status": "PASS"
+    },
+    {
+      "type": "post_processor",
+      "file": "PP_CASE2_Huazhong_ISO_Generic.js",
+      "base": "_base_fanuc_reference.js",
+      "bytes": 36507,
+      "missing_generic": [],
+      "funcs_lost_vs_base": [],
+      "func_count": 21,
+      "meta": {
+        "title": "Huazhong HNC ISO Generic (B-03 non-native)",
+        "version": "1.0-HNC-ISO",
+        "description": "ISO_G-Code generic adaptation for Huazhong controllers - NOT officially supported by CIMCO (B-03); requires on-machine verification",
+        "author": "Virtu CNC Support (derived from Cimco A/S)",
+        "type": "POST_TYPE_MILL"
+      },
+      "brace_balance": 0,
+      "status": "PASS"
+    },
+    {
+      "type": "post_processor",
+      "file": "PP_CASE3_Heidenhain_Metric_Finish.js",
+      "base": "_base_heidenhain_reference.js",
+      "bytes": 40972,
+      "missing_generic": [],
+      "funcs_lost_vs_base": [],
+      "func_count": 22,
+      "meta": {
+        "title": "Heidenhain Metric Finish (Custom)",
+        "version": "1.2-FINISH",
+        "description": "Derived from CIMCO heidenhain.js: tightened tolerance 0.005mm for finishing passes",
+        "author": "Virtu CNC Support (derived from Cimco A/S)",
+        "type": "POST_TYPE_MILL"
+      },
+      "brace_balance": 0,
+      "status": "PASS"
+    },
+    {
+      "type": "derive_report",
+      "status": "PASS",
+      "not_applied": []
+    },
+    {
+      "type": "macro1_batch_validate",
+      "status": "PASS",
+      "returncode": 0,
+      "verdicts": {
+        "bad.nc": "FAIL",
+        "good.nc": "PASS"
+      },
+      "stdout": "[macro1] total=2 pass=1 fail=1 -> D:\\Virtu模型\\cimco_edit_2026_expertise\\04_customization\\macros\\_verify_batch_report.json",
+      "stderr": ""
+    },
+    {
+      "type": "macro2_renumber_format",
+      "status": "PASS",
+      "returncode": 0,
+      "sample_lines": [
+        "N100G90 G54 G21",
+        "N110G01 X10 F100",
+        "N120G01 Y20"
+      ],
+      "stdout": "[macro2] processed=1 start=100 step=10",
+      "stderr": ""
+    }
+  ]
+}

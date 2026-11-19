@@ -1,0 +1,98 @@
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title></title>
+<link href="../../helper_css.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar">
+  <tr>
+    <td>辅助功能(M 
+    功能)</td>
+  </tr>
+</table>
+<TABLE border=0 cellPadding=0 cellSpacing=0 width="100%" height="449">
+  <TR>
+    <TD class=contents1 vAlign=top height="18">&nbsp;</TD>
+  </TR>
+  <TR>
+    <TD class=contents1 vAlign=top height="38">代码及其含义<br>
+    包括各种支持机床操作的功能，像主轴的启停、程序停止和切削液节门开关等等。</TD>
+  </TR>
+  <TR>
+    <td height="307" class="contents1"><table width="590" border="0" cellpadding="2" cellspacing="1" bgcolor="#00309C">
+      <tr class="contents1">
+        <td width="50" height="20" align="center" bgcolor="b2d4f6"><b>M代码</b></td>
+        <td height="20" bgcolor="#FFFFFF" width="292"><b>模态</b></td>
+        <td height="20" bgcolor="#FFFFFF" width="650"><b>说明</b></td>
+      </tr>
+      <tr class="contents1">
+        <td width="50" height="20" align="center" bgcolor="b2d4f6">M00</td>
+        <td height="20" bgcolor="#FFFFFF" width="292">非模态</td>
+        <td height="20" bgcolor="#FFFFFF" width="650">程序停止</td>
+      </tr>
+      <tr class="contents1">
+        <td width="50" height="20" align="center" bgcolor="b2d4f6">M02</td>
+        <td height="20" bgcolor="#FFFFFF" width="292">非模态</td>
+        <td height="20" bgcolor="#FFFFFF" width="650">程序结束</td>
+      </tr>
+      <tr class="contents1">
+        <td width="50" height="20" align="center" bgcolor="b2d4f6">M03</td>
+        <td height="20" bgcolor="#FFFFFF" width="292">模态</td>
+        <td height="20" bgcolor="#FFFFFF" width="650">主轴正转 (CW)</td>
+      </tr>
+      <tr class="contents1">
+        <td width="50" height="20" align="center" bgcolor="b2d4f6">M04</td>
+        <td height="20" bgcolor="#FFFFFF" width="292">模态</td>
+        <td height="20" bgcolor="#FFFFFF" width="650">主轴反转 (CCW)</td>
+      </tr>
+      <tr class="contents1">
+        <td width="50" height="20" align="center" bgcolor="b2d4f6">M05</td>
+        <td height="20" bgcolor="#FFFFFF" width="292">模态</td>
+        <td height="20" bgcolor="#FFFFFF" width="650">主轴停止转动</td>
+      </tr>
+      <tr class="contents1">
+        <td width="50" height="20" align="center" bgcolor="b2d4f6">M06</td>
+        <td height="20" bgcolor="#FFFFFF" width="292">非模态</td>
+        <td height="20" bgcolor="#FFFFFF" width="650">换刀</td>
+      </tr>
+      <tr class="contents1">
+        <td width="50" height="20" align="center" bgcolor="b2d4f6"> M07</td>
+        <td height="20" bgcolor="#FFFFFF" width="292">模态</td>
+        <td height="20" bgcolor="#FFFFFF" width="650">切削液开</td>
+      </tr>
+      <tr class="contents1">
+        <td width="50" height="20" align="center" bgcolor="b2d4f6">M09</td>
+        <td height="20" bgcolor="#FFFFFF" width="292">模态</td>
+        <td height="20" bgcolor="#FFFFFF" width="650">切削液关</td>
+      </tr>
+      <tr class="contents1">
+        <td width="50" height="20" align="center" bgcolor="b2d4f6">M30</td>
+        <td height="20" bgcolor="#FFFFFF" width="292">非模态</td>
+        <td height="20" bgcolor="#FFFFFF" width="650">程序结束(复位) 并回到开头</td>
+      </tr>
+      <tr class="contents1">
+        <td width="50" height="20" align="center" bgcolor="b2d4f6">M98</td>
+        <td height="20" bgcolor="#FFFFFF" width="292">非模态</td>
+        <td height="20" bgcolor="#FFFFFF" width="650">子程序调用</td>
+      </tr>
+      <tr class="contents1">
+        <td width="50" height="20" align="center" bgcolor="b2d4f6">M99</td>
+        <td height="20" bgcolor="#FFFFFF" width="292">非模态</td>
+        <td height="20" bgcolor="#FFFFFF" width="650">子程序结束</td>
+      </tr>
+    </table></TD>
+  </TR>
+  <TR>
+    <TD height="36">其中： 
+        <p>M00、M02、M30、M98、M99 
+          用于控制零件程序的走向，是CNC 
+            內定的辅助功能，不由机床制造商设计决定，也就是说，与PLC 程序无关； </p>
+      <p>其余M 代码用于机床各种辅助功能的开关动作，其功能不由CNC 
+        內定，而是由PLC 程序指定所以有可能因机床制造厂不同而有差异(表內为标准PLC 指定的功能)。</TD>
+  </TR>
+</TABLE>
+</body>
+</html>

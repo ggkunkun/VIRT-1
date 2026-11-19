@@ -1,0 +1,65 @@
+{
+  "recorded_at": "2026-11-18T00:58+08:00",
+  "subject": "SOLIDWORKS 2021 SP5 在本机作为原生验证台的可用性",
+  "baseline": {
+    "product": "SOLIDWORKS 2021 SP5.0",
+    "revision": "29.5.0",
+    "exe": "D:\\SOLIDWORKS (2)\\SLDWORKS.exe",
+    "progid_versioned": "SldWorks.Application.29",
+    "ui_language": "简体中文"
+  },
+  "gate_G1_version": {
+    "status": "PASS",
+    "evidence": [
+      "GetActiveObject('SldWorks.Application.29') 返回 typed ISldWorks（gen_py.SldWorks 2021 Type Library）",
+      "RevisionNumber = 29.5.0",
+      "版本化 ProgID 排除了同机 SOLIDWORKS 2026（34.3.2.3）"
+    ]
+  },
+  "gate_G2_native_operation": {
+    "status": "BLOCKED",
+    "symptom": "文档建立后主窗口 100% 单核空转、Responding=False；任何需要 UI 线程的调用（选面/草图）阻塞至 RPC 超时",
+    "measured": {
+      "idle_cpu_delta_6s": 0.0,
+      "idle_responsive": true,
+      "after_doc_cpu_delta_6s": [6.0, 6.12, 6.23],
+      "after_doc_responsive": false,
+      "select_by_id_rpc_timeout_s": 309,
+      "newdoc_return_s": [5.3, 6.0, 6.7, 12.7],
+      "attach_s": [24.3, 51.0, 60.8]
+    },
+    "isolation_matrix": [
+      {"experiment": "COM 启动（沙箱内）", "result": "connect 60.8s 成功；NewDocument 后 UI 挂起", "conclusion": "非沙箱因素"},
+      {"experiment": "COM 启动（沙箱外，真实桌面）", "result": "connect 24.3s；NewDocument 阻塞；窗口 Responding=False", "conclusion": "非权限因素"},
+      {"experiment": "正常启动 + ROT 附着", "result": "附着成功且为早期绑定；NewDocument 6.0s 返回；随后 100% 空转", "conclusion": "非 COM 绑定方式因素"},
+      {"experiment": "关闭内嵌 Chromium（No Cef=1）", "result": "空载 responsive=True / CPU 0.0；建件后 False / 6.12", "conclusion": "非 CEF/网络因素"},
+      {"experiment": "强制独显 GpuPreference=2", "result": "建件后仍 False / 6.23", "conclusion": "非 GPU 选择因素"},
+      {"experiment": "强制核显 GpuPreference=1 + 前台激活", "result": "标题变为『零件1 *』，CPU 单核 100%，脚本在 COM 调用处挂死", "conclusion": "非窗口遮挡/前台因素"}
+    ],
+    "window_tree_check": {
+      "top_level_windows": 65,
+      "window_total_with_children": 672,
+      "visible_32770_dialogs": 0,
+      "note": "无模态对话框可点；空转不是『等待用户确认』"
+    },
+    "root_cause_assessment": {
+      "primary": "显卡不被 SOLIDWORKS 2021 支持（NVIDIA RTX 4050 Laptop / Intel UHD 均为 2021 发布后硬件），文档打开后进入渲染/重绘空转，UI 线程不再服务消息",
+      "secondary": "本机为双显卡切换机型（Colorful X15 AT 23），2021 的 OpenGL 路径与现驱动 32.0.16.2114 组合未经验证",
+      "ruled_out": ["权限/沙箱", "CEF 内嵌浏览器", "GPU 偏好选择", "窗口遮挡", "模态对话框", "RPC 绑定方式"]
+    }
+  },
+  "artifacts": [
+    "work/pilot.log", "work/final_build.log", "work/gpu_probe_2.json",
+    "work/registry_backup.json", "out/evidence/screen_now.bmp"
+  ],
+  "system_changes": [
+    {"path": "HKCU\\Software\\SolidWorks\\SOLIDWORKS 2021\\General", "values": ["No Cef", "Show Latest News feeds In task pane", "ShowSimulationWelcomeDlg"], "state": "已还原为原值"},
+    {"path": "HKCU\\Software\\Microsoft\\DirectX\\UserGpuPreferences", "value": "D:\\SOLIDWORKS (2)\\SLDWORKS.exe = GpuPreference=2;", "state": "保留（CAD 建议独显）；如需还原为系统默认，删除该值名"}
+  ],
+  "remediation": [
+    "在 SOLIDWORKS 认证工作站上执行 G2（首选：Quadro/RTX A 系列 + 认证驱动）",
+    "或由人工在 2021 界面中关闭『使用软件 OpenGL』/ 关闭 RealView 后复测（本机自动化无法进入该对话框）",
+    "或将 2021 升级到支持 Ada 架构的 SP/热修（会改变 29.x 版本基线，需重新确认合规清单）",
+    "在验证台资质门通过前，禁止把任何样本标记为 screenshot_verified"
+  ]
+}

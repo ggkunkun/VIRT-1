@@ -1,0 +1,89 @@
+{
+  "software": "vericut",
+  "display_name": "VERICUT 9.6 by CGTech",
+  "version": "9.6",
+  "generated": "2026-11-18",
+  "source": "knowledge_base/six_software/vericut; evidence.md; official help cross-check (E-V14/E-V15)",
+  "discipline": {
+    "evidence_levels": ["high", "medium", "low"],
+    "tri_state": ["verified-working", "confirmed-negative", "documented-not-probed"],
+    "answer_flow": ["现象描述", "原因定位", "分步解决", "结果验证"],
+    "output_gates": ["版本门", "证据门", "安全门", "许可门", "通道门"],
+    "hard_rules": [
+      "无证据不写，关键断言必须带 E-ID 与置信度",
+      "COM/stdin/UIA/headless batch 为 confirmed-negative，解法是换通道而非改参数",
+      "Auto-Diff 空场不算绿；红=过切致命/蓝=残料加半精/绿=合格",
+      "默认值无来源时写依工程/以界面为准，不臆造",
+      "严禁触碰许可证/授权/激活机制"
+    ]
+  },
+  "documents": [
+    {"id": "README", "file": "README.md", "role": "身份索引与阅读指南"},
+    {"id": "modules", "file": "modules.md", "role": "GUI 模块树"},
+    {"id": "plugins", "file": "plugins.md", "role": "插件与附加模块"},
+    {"id": "automation_api", "file": "automation_api.md", "role": "自动化通道三态判定"},
+    {"id": "commands", "file": "commands.md", "role": "命令表 VC-01~VC-25"},
+    {"id": "file_formats", "file": "file_formats.md", "role": "文件格式与转换器"},
+    {"id": "workflows", "file": "workflows.md", "role": "端到端工作流 WF-V1~V4"},
+    {"id": "config", "file": "config.md", "role": "配置与环境变量"},
+    {"id": "module_inventory", "file": "module_inventory.json", "role": "机器可读模块清单"},
+    {"id": "evidence", "file": "evidence.md", "role": "证据链 E-V01~V15"},
+    {"id": "ui_reference", "file": "ui_reference.md", "role": "全模块界面/路径/参数/默认值参考", "requirement": 1},
+    {"id": "sop_library", "file": "sop_library.md", "role": "标准化操作流程库", "requirement": 2},
+    {"id": "error_handbook", "file": "error_handbook.md", "role": "报错与故障处理手册", "requirement": 2},
+    {"id": "advanced_scenarios", "file": "advanced_scenarios.md", "role": "高级应用场景手册", "requirement": 3},
+    {"id": "problem_kb", "file": "problem_kb.md", "role": "五类问题知识库", "requirement": 4},
+    {"id": "version_consistency", "file": "version_consistency.md", "role": "版本一致性校验与跨版本排除", "requirement": 5},
+    {"id": "knowledge_index", "file": "knowledge_index.json", "role": "本索引"}
+  ],
+  "category_routes": {
+    "操作类": {"keywords": ["怎么点", "在哪", "快捷键", "界面", "按钮", "导出", "保存", "启动"], "docs": ["ui_reference", "commands", "sop_library"], "section": "problem_kb#1"},
+    "配置类": {"keywords": ["参数", "默认值", "单位", "刀具库", "机床", "控制", "坐标系", "公差"], "docs": ["ui_reference", "config", "advanced_scenarios"], "section": "problem_kb#2"},
+    "仿真异常类": {"keywords": ["不播放", "卡死", "碰撞", "报错", "无刀路", "超程", "批处理"], "docs": ["error_handbook", "workflows", "automation_api"], "section": "problem_kb#3"},
+    "结果异常类": {"keywords": ["Auto-Diff", "过切", "残料", "全绿", "体积异常", "报告"], "docs": ["error_handbook", "version_consistency"], "skill": "vericut-autodiff-triage", "section": "problem_kb#4"},
+    "接口对接类": {"keywords": ["UG", "NX", "Mastercam", "PowerMILL", "接口", "导入", "后处理", "多工序"], "docs": ["advanced_scenarios", "file_formats"], "section": "problem_kb#5"}
+  },
+  "scenario_index": [
+    {"id": "E-S01", "title": "COM 创建失败 -2147221005", "category": "仿真异常类", "fix": "换 GUI+文件回读", "evidence": ["E-V02"]},
+    {"id": "E-S02", "title": "batch 自退无产物", "category": "仿真异常类", "fix": "confirmed-negative，走 GUI", "evidence": ["E-V02", "E-V14"]},
+    {"id": "E-S03", "title": "UIA 读不到控件", "category": "仿真异常类", "fix": "物理像素+文件回读", "evidence": ["E-V03", "E-V05"]},
+    {"id": "E-S04", "title": "DETACHED 启动无 GUI", "category": "仿真异常类", "fix": "cmd /c bat", "evidence": ["E-V06"]},
+    {"id": "E-F01", "title": "引用文件找不到", "category": "配置类", "fix": "按四级查找顺序排查", "evidence": ["E-V14", "E-V01"]},
+    {"id": "E-F02", "title": "单位/数量级错误", "category": "配置类", "fix": "统一 MILLIMETER", "evidence": ["E-V02", "E-V14"]},
+    {"id": "E-F03", "title": "xmch/xctl 改不了", "category": "配置类", "fix": "用可编辑原件", "evidence": ["E-V14"]},
+    {"id": "E-F04", "title": "NC 双字节乱码", "category": "配置类", "fix": "CGTECH_NC_PROGRAM_ENCODING", "evidence": ["E-V01"]},
+    {"id": "E-N01", "title": "NC 语法错误", "category": "仿真异常类", "fix": "Syntax Check + G-Code Log", "evidence": ["E-V15", "E-V14"]},
+    {"id": "E-N02", "title": "G 代码/宏不识别", "category": "仿真异常类", "fix": "补 ctl 规则或 cme", "evidence": ["E-V13", "E-V14"]},
+    {"id": "E-N03", "title": "子程序/刀具缺失", "category": "仿真异常类", "fix": "补 sub/tls", "evidence": ["E-V14", "E-V02"]},
+    {"id": "E-R01", "title": "点播放无反应", "category": "仿真异常类", "fix": "校准坐标+前置窗口+点击", "evidence": ["E-V02", "E-V05", "E-V06"]},
+    {"id": "E-R02", "title": "仿真卡死", "category": "仿真异常类", "fix": "监控日志+单进程链", "evidence": ["E-V02"]},
+    {"id": "E-R03", "title": "无刀路不切削", "category": "仿真异常类", "fix": "补齐程序+控制+刀具", "evidence": ["E-V02"]},
+    {"id": "E-C01", "title": "碰撞报警", "category": "仿真异常类", "fix": "回 CAM 修刀路", "evidence": ["E-V02", "E-V07"]},
+    {"id": "E-C02", "title": "Auto-Diff 红过切", "category": "结果异常类", "fix": "停修刀路", "evidence": ["E-V15"], "skill": "vericut-autodiff-triage"},
+    {"id": "E-C03", "title": "Auto-Diff 蓝残料", "category": "结果异常类", "fix": "加半精加工", "evidence": ["E-V15"]},
+    {"id": "E-C04", "title": "模型不水密", "category": "结果异常类", "fix": "polyfix/一致性检查", "evidence": ["E-V14", "E-V15", "E-V12"]},
+    {"id": "E-A01", "title": "Auto-Diff 空白全绿", "category": "结果异常类", "fix": "空场不算绿", "evidence": ["E-V15"], "skill": "vericut-autodiff-triage"},
+    {"id": "E-A02", "title": "去除体积异常", "category": "结果异常类", "fix": "先排碰撞与单位", "evidence": ["E-V02"]},
+    {"id": "E-A03", "title": "结论与证据打架", "category": "结果异常类", "fix": "以证据为准 STOP_AND_FIX", "evidence": ["E-V15"], "skill": "vericut-autodiff-triage"},
+    {"id": "E-X01", "title": "几何导出未落盘", "category": "接口对接类", "fix": "改可写目录+重校准", "evidence": ["E-V02"]},
+    {"id": "E-X02", "title": "vcreview 打不开", "category": "接口对接类", "fix": "ZIP 校验+Reviewer 9.6", "evidence": ["E-V02", "E-V12"]},
+    {"id": "E-X03", "title": "CAM 接口不通", "category": "接口对接类", "fix": "接口 bat 或中性格式兜底", "evidence": ["E-V04", "E-V12"]}
+  ],
+  "version_anchors": {
+    "display_name": "9.6 by CGTech",
+    "install_root": "E:\\windows64",
+    "prefs": "cgtech_96_<user>.prefs",
+    "transaction_log": "cgtech_96_transaction.log",
+    "main_class": "com.cgtech.Vericut",
+    "com": "confirmed-negative",
+    "play_shortcut": "none"
+  },
+  "excluded_cross_version": [
+    "prefs 命名含非 96 版本号",
+    "COM/ActiveX 自动化可用（泛化误述）",
+    "UIA/JAB 可读深树（泛化误述）",
+    "headless batch 可靠无人值守（本机判死）",
+    "C:\\Program Files\\Vericut 安装路径（本机为 E:\\windows64）",
+    "VDAF 工程与主工程互通（官方明确不互通）"
+  ]
+}

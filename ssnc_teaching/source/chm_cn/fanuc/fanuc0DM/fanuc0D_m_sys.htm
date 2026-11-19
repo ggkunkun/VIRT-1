@@ -1,0 +1,206 @@
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title></title>
+<link href="../../helper_css.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<table width="100%"  border="0" cellpadding="0" cellspacing="0" class="bar">
+  <tr>
+    <td >FANUC 0MD数控系统操作</td>
+  </tr>
+</table>
+<br>在“视图”下拉菜单或者浮动菜单中选择“控制面板切换”后，数控系统操作键盘会出现在视窗的右上角，其左侧为数控系统显示屏，如下图所示。用操作键盘结合显示屏可以进行数控系统操作。<br>
+                  
+                  <br>
+                  <img border="0" src="Pic/fanuccrt.GIF" width="629" height="316"><p>　</p>
+                  <p><b>数字/字母键</b><br>
+                  <img border="0" src="Pic/fanuccrtnumkey.GIF" width="131" height="188"><br>
+                  <br>
+                  <br>
+                  数字/字母键用于输入数据到输入区域（如下图所示），系统自动判别取字母还是取数字。<br>
+                  <img border="0" src="Pic/fanuccrtinputarea.GIF" width="347" height="316"><br>
+                  <br>
+                  <br>
+                  <img border="0" src="Pic/keybd/OperationIUp.GIF" width="34" height="34">键的输入顺序是：K→J→I→K&#8226;&#8226;&#8226;循环。<br>
+                  <br>
+                  <br>
+                  <b>编辑键</b><br>
+                  <img border="0" src="Pic/keybd/AlterUp.GIF" width="34" height="34">替代键。用输入的数据替代光标所在的数据。<br>
+                  <img border="0" src="Pic/keybd/DeleteUp.GIF" width="34" height="34">删除键。删除光标所在的数据；或者删除一个数控程序或者删除全部数控程序。<br>
+                  <img border="0" src="Pic/keybd/InsertUp.GIF" width="34" height="34">插入键。把输入域之中的数据插入到当前光标之后的位置。<br>
+                  <img border="0" src="Pic/keybd/CanUp.GIF" width="34" height="34">修改键。消除输入域内的数据。<br>
+                  <img border="0" src="Pic/keybd/EobUp.GIF" width="34" height="34">回撤换行键。结束一行程序的输入并且换行。<br>
+                  　<p>
+                  <b>页面切换键</b><br>
+                  <img border="0" src="Pic/keybd/ProgramUp.GIF" width="34" height="34">数控程序显示与编辑页面。<br>
+                  <img border="0" src="Pic/keybd/PosUp.GIF" width="34" height="34">位置显示页面。位置显示有三种方式，用PAGE按钮选择。<br>
+                  <img border="0" src="Pic/keybd/MenuOfsetUp.GIF" width="34" height="34">参数输入页面。按第一次进入坐标系设置页面，按第二次进入刀具补偿参数页面。进入不同的页面以后，用PAGE 按钮切换。<br>
+                  　<p>
+                  <b>翻页按钮（PAGE）</b><br>
+                  <img border="0" src="Pic/keybd/page.GIF" width="51" height="95"><br>
+                  向下或向上翻页。 <br>
+                  　<p>
+                  <b>光标移动（CURSOR）</b><br>
+                  <img border="0" src="Pic/keybd/cursor.GIF" width="51" height="98"><br>
+                  向下或向上移动光标。<br>
+                  　<p>
+                  <b>输入键</b><br>
+                  <img border="0" src="Pic/keybd/InputUp.GIF" width="34" height="34">输入键。把输入域内的数据输入参数页面或者输入一个外部的数控程序。<br>
+                  　<p>
+                  <b>输出键</b><br>
+                  <img border="0" src="Pic/keybd/OutputStartUp.GIF" width="34" height="34">输出键。把当前数控程序输出到计算机。<br>
+                  <br>
+                  <br>
+                  手动操作虚拟数控铣床<br>
+                  <b>回参考点</b><br>
+                  *置模式旋钮在“HOME”位置<br>
+                  <img border="0" src="Pic/home_D.gif" width="39" height="39"><br>
+                  *选择各轴,按住按钮,即回参考点.<br>
+                  <img border="0" src="Pic/fctrlstdaxis.gif" width="141" height="153"><br>
+                  　<p>
+                  <b>移动</b><br>
+                  手动移动机床的方法有三种：<br>
+                  方法一: 连续移动。这种方法用于较长距离的台面移动。<br>
+                  <br>
+                  (1) 置模式旋钮在“JOG”位置： 
+                  <img border="0" src="Pic/jog_D.gif" width="39" height="39"><br>
+                  (2) 选择各轴,按方向钮，按住按钮机床台面运动，松开后停止运动。<br>
+                  (3) 用旋钮<img width="207" height="180" src="Pic/fanuc0D_m_sys_clip_image002.jpg">调节移动速度。<br>
+                  <br>
+                  方法二: 点动（JOG），这种方法用于微量调整，如用在对基准操作中。<br>
+                  (1) 置模式旋钮在“JOG INC”位置：<img border="0" src="Pic/joginc_D.gif" width="39" height="39"><br>
+                  (2) 选择各轴,按按钮，每按一次，台面移动一步。<br>
+                  (3) 用单步进给量控制旋钮<img border="0" src="Pic/fctrlstdpulse.gif" width="141" height="110">调节每一步移动距离。<br>
+                  <br>
+                  方法三: 操纵“手脉”（MPG），这种方法用于微量调整。在实际生产中，使用手脉可以让操作者容易调整自己的工作位置。<br>
+                  (1) 置模式旋钮在“MPG”位置：<br>
+                  (2) 把光标置于“手轮”之上<img border="0" src="Pic/fctrlstdhand.gif" width="118" height="205">,按住鼠标旋转，松开鼠标键停止机床移动。<br>
+                  (3) 用单步进给量控制旋钮调节手轮每转过一格的移动距离。<br>
+                  
+                  <p>
+                  <b>开、关主轴</b><br>
+                  置模式旋钮在“JOG”, &quot;JOG INC&quot;或“MPG”位置。<br>
+                  按<img border="0" src="Pic/fctrlstdspdlctrl.gif" width="141" height="70">按钮开、关机床主轴<p>
+                  <br>
+                  <b>启动程序加工零件</b><br>
+                  置模式旋钮在“AUTO”位置<img border="0" src="Pic/a_auto_u.gif" width="39" height="39"><br>
+                  选择一个数控程序<br>
+                  按数控程序运行控制开关中的<img border="0" src="Pic/a_cyclesta_U.gif" width="39" height="39">按钮<p>
+                  <br>
+                  <b>试运行程序</b><br>
+                  试运行程序时，机床和刀具不切削零件，仅运行程序.<br>
+                  置在机床锁“ON”位置<img border="0" src="Pic/a_axisinh_U.gif" width="39" height="39"><br>
+                  选择一个数控程序<br>
+                  按数控程序运行控制开关中的<img border="0" src="Pic/a_cyclesta_U.gif" width="39" height="39">按钮。<b><br>
+　</b><p>
+                  <b>单步运行</b><br>
+                  置单步开关于“ON”位置<img border="0" src="Pic/a_singleb_U.gif" width="39" height="39"><br>
+                  数控程序运行过程中，每按一次<img border="0" src="Pic/a_cyclesta_U.gif" width="39" height="39">执行一条指令。<br>
+　<p>
+                  <b>选择一个数控程序</b><br>
+                  有二种方法进行选择<br>
+                  方法一:按编号搜索<br>
+                  选择默模式放在EDIT <br>
+                  按<img border="0" src="Pic/keybd/ProgramUp.GIF" width="34" height="34">键入字母“O”<br>
+                  按<img border="0" src="Pic/keybd/OperationOUp.GIF" width="34" height="34">键入数子“7”<br>
+                  键入搜索的号码：“O7”<br>
+                  按CURSOR<img border="0" src="Pic/keybd/CursorDownUp.GIF" width="34" height="34"> 开始搜索；找到后，“O7”显示在屏幕右上角程序编号位置，NC程序显示在屏幕上。<br>
+                  <br>
+                  方法二: 选择模式AUTO位置<br>
+                  按<img border="0" src="Pic/keybd/ProgramUp.GIF" width="34" height="34">键入字母“O”<br>
+                  按<img border="0" src="Pic/keybd/OperationOUp.GIF" width="34" height="34">键入字母“7”，键入搜索的号码：“O7”<br>
+                  按<img border="0" src="Pic/keybd/InputUp.GIF" width="34" height="34">开始搜索， “O7”显示在屏幕右上角，NC程序显示在屏幕上。<p>
+                  <br>
+                  <b>删除一个数控程序</b><br>
+                  选择模式在EDIT<br>
+                  按<img border="0" src="Pic/keybd/ProgramUp.GIF" width="34" height="34">键入字母“O”<br>
+                  按<img border="0" src="Pic/keybd/OperationOUp.GIF" width="34" height="34">键入字母“7”<br>
+                  键入要删除的程序的号码：“O7”<br>
+                  按<img border="0" src="Pic/keybd/DeleteUp.GIF" width="34" height="34">, “O7”NC程序被删除。<p>
+                  <br>
+                  <b>删除全部数控程序</b><br>
+                  选择模式在EDIT<br>
+                  按<img border="0" src="Pic/keybd/ProgramUp.GIF" width="34" height="34"><br>
+                  按<img border="0" src="Pic/keybd/OperationOUp.GIF" width="34" height="34">键入字母“O”<br>
+                  键入“9999”<br>
+                  按<img border="0" src="Pic/keybd/DeleteUp.GIF" width="34" height="34">全部数控程序被删除<p>
+                  <br>
+                  <b>搜索一个指定的代码</b><br>
+                  一个指定的代码可以是：一个字母或一个完整的代码。例如：“N0010”，“M”，“F”，“G03”等等。搜索在当前数控程序内进行。操作步骤如下：<br>
+                  在AUTO或EDIT<br>
+                  按<img border="0" src="Pic/keybd/ProgramUp.GIF" width="34" height="34"><br>
+                  选择一个NC程序<br>
+                  输入需要搜索的字母或代码<br>
+                  按 CURSOR<img border="0" src="Pic/keybd/CursorDownUp.GIF" width="34" height="34"> 开始在当前数控程序中搜索。<p>
+                  <br>
+                  <b>编辑NC程序（删除、插入、替换操作）</b><br>
+                  模式置于EDIT<br>
+                  选择<img border="0" src="Pic/keybd/ProgramUp.GIF" width="34" height="34"><br>
+                  输入被编辑的NC程序名如“07”，按<img border="0" src="Pic/keybd/InsertUp.GIF" width="34" height="34">即可编辑。<p>
+                  <br>
+                  <b>移动光标</b><br>
+                  方法一：按 PAGE<img border="0" src="Pic/keybd/PageDownUp.GIF" width="34" height="34">或<img border="0" src="Pic/keybd/PageUpUp.GIF" width="34" height="34">翻页，按 CURSOR<img border="0" src="Pic/keybd/CursorDownUp.GIF" width="34" height="34">或<img border="0" src="Pic/keybd/CursorUpUp.GIF" width="34" height="34">移动光标。 <br>
+                  方法二：用搜索一个指定的代码的方法移动光标。<br>
+                  输入数据：用光标点击数字/字母键，数据被输入到输入域。  
+                  <img border="0" src="Pic/keybd/CanUp.GIF" width="34" height="34">键用于删除输入域内的数据。<p>
+                  <br>
+                  <b>删除、插入、替代</b><br>
+                  按<img border="0" src="Pic/keybd/DeleteUp.GIF" width="34" height="34">键，删除光标所在的代码<br>
+                  按<img border="0" src="Pic/keybd/InsertUp.GIF" width="34" height="34">键，把输入域的内容插入到光标所在代码后面。<br>
+                  按<img border="0" src="Pic/keybd/AlterUp.GIF" width="34" height="34">键，把输入域的内容替代光标所在的代码。<p>
+                  <br>
+                  <b>通过控制箱操作面板手工输入NC程序</b><br>
+                  置模式开关在EDIT<br>
+                  按<img border="0" src="Pic/keybd/ProgramUp.GIF" width="34" height="34">键，进入程序页面。<br>
+                  按<img border="0" src="Pic/keybd/OperationOUp.GIF" width="34" height="34">键入“O7” 程序编名<br>
+                  键入程序名，但不可以与已有程序名的重复。<br>
+                  按<img border="0" src="Pic/keybd/InsertUp.GIF" width="34" height="34">键，开始程序输入。<br>
+                  <br>
+                  输入程序，每次可以输入一个代码；方法见编辑NC程序中的输入数据操作和删除、插入、替换操作。<br>
+                  用回车换行键<img border="0" src="Pic/keybd/EobUp.GIF" width="34" height="34">结束一行的输入后换行。再继续输入。<p>
+                  <br>
+                  <b>从计算机输入一个数控程序</b><br>
+                  置模式于DNC位置<br>
+                  在用232电缆线连接PC机 和数控机床 ，选择数控程序文件传输。<br>
+                  按<img border="0" src="Pic/keybd/ProgramUp.GIF" width="34" height="34">键切换到PROGRAM 页面<br>
+                  输入程序编号“Oxxxx”<br>
+                  按<img border="0" src="Pic/keybd/InputUp.GIF" width="34" height="34">键，读入数控程序。<p>
+                  <br>
+                  <b>输入零件原点参数</b><br>
+                  置开关在EDIT或AUTO<br>
+                  按<img border="0" src="Pic/keybd/MenuOfsetUp.GIF" width="34" height="34">键进入参数设定页面，按“工件”<br>
+                  用PAGE<img border="0" src="Pic/keybd/PageDownUp.GIF" width="34" height="34">和<img border="0" src="Pic/keybd/PageUpUp.GIF" width="34" height="34">键在No1～No3坐标系页面和No4～No6坐标系页面之间切换,No1~No6分别对应G54~G59。<br>
+                  <img border="0" src="Pic/fanuc0mdcrtoffsetw.GIF" width="347" height="315"><br>
+                  <br>
+                  用CURSOR<img border="0" src="Pic/keybd/CursorDownUp.GIF" width="34" height="34">和<img border="0" src="Pic/keybd/CursorUpUp.GIF" width="34" height="34">选择坐标系。<br>
+                  输入地址字（X/Y/Z）和数值到输入域。方法参考“输入数据”操作<br>
+                  按<img border="0" src="Pic/keybd/InputUp.GIF" width="34" height="34">键，把输入域中间的内容输入到所指定的位置。<p>
+                  <br>
+                  <b>输入刀具补偿参数</b><br>
+                  置模式开关在EDIT或AUTO<br>
+                  按<img border="0" src="Pic/keybd/MenuOfsetUp.GIF" width="34" height="34">键进入参数设定页面，按“补正”<br>
+                  用PAGE<img border="0" src="Pic/keybd/PageDownUp.GIF" width="34" height="34">和<img border="0" src="Pic/keybd/PageUpUp.GIF" width="34" height="34">键选择长度补偿,半径补偿 
+                  <br>
+                  <img border="0" src="Pic/fanuc0mdcrtoffseth.GIF" width="347" height="315"><br>
+                  <br>
+                  用CURSOR<img border="0" src="Pic/keybd/CursorDownUp.GIF" width="34" height="34">和<img border="0" src="Pic/keybd/CursorUpUp.GIF" width="34" height="34">键选择补偿参数编号<br>
+                  输入补偿值到长度补偿H或半经补偿D<br>
+　<p>
+                  <b>位置显示</b><br>
+                  按<img border="0" src="Pic/keybd/PosUp.GIF" width="34" height="34">键切换到位置显示页面。<br>
+                  位置显示有三种方式，用PAGE<img border="0" src="Pic/keybd/PageDownUp.GIF" width="34" height="34">和<img border="0" src="Pic/keybd/PageUpUp.GIF" width="34" height="34">键或按键切换。<br>
+                  零件坐标系（绝对坐标系）位置：显示刀位点在当前零件坐标系中的位置。<br>
+                  相对坐标系位置：显示操作者预先设定为零的相对位置。<br>
+                  综合显示：同时显示当时刀位点在以下坐标系中的位置<br>
+                  <img border="0" src="Pic/fanuc0mdcrtposall.GIF" width="347" height="315"><br>
+                  <br>
+                  零件坐标系中的位置（ABSOLUTE）<br>
+                  相对坐标系中的位置（RELATIVE）<br>
+                  机床坐标系中的位置（MACHINE）<br>
+                  当前运动指令的剩余移动量（DISTANCE TO GO）<br>
+                  
+</body>
+</html>

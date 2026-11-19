@@ -1,0 +1,72 @@
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title></title>
+<link href="../../helper_css.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="bar">
+  <tr>
+    <td><span class="title2">辅助功能(M 
+    功能)</span></td>
+  </tr>
+</table>
+<TABLE border=0 cellPadding=0 cellSpacing=0 width="100%">
+  <TR>
+    <TD class=contents1 vAlign=top>&nbsp;</TD>
+  </TR>
+  <TR>
+    <TD class=contents1 vAlign=top>代码及其含义</span><br>
+    辅助功能包括各种支持机床操作的功能，像主轴的启停、程序停止和切削液节门开关等等。</TD>
+  </TR>
+  <TR>
+    <td height="150" class="contents1"><table width="590" border="0" cellpadding="2" cellspacing="1" bgcolor="#00309C">
+      <tr class="contents1">
+        <td width="83" height="20" align="center" bgcolor="b2d4f6"><b>M代码</b></td>
+        <td height="20" bgcolor="#FFFFFF" width="438"><b>说明</b></td>
+      </tr>
+      <tr class="contents1">
+        <td width="83" height="20" align="center" bgcolor="b2d4f6">M00</td>
+        <td height="20" bgcolor="#FFFFFF" width="438">程序停</td>
+      </tr>
+      <tr class="contents1">
+        <td width="83" height="20" align="center" bgcolor="b2d4f6">M01</td>
+        <td height="20" bgcolor="#FFFFFF" width="438">选择停止</td>
+      </tr>
+      <tr class="contents1">
+        <td width="83" height="20" align="center" bgcolor="b2d4f6">M02</td>
+        <td height="20" bgcolor="#FFFFFF" width="438">程序结束</td>
+      </tr>
+      <tr class="contents1">
+        <td width="83" height="20" align="center" bgcolor="b2d4f6"> M30</td>
+        <td height="20" bgcolor="#FFFFFF" width="438">程序结束</td>
+      </tr>
+      <tr class="contents1">
+        <td width="83" height="20" align="center" bgcolor="b2d4f6">M98</td>
+        <td height="20" bgcolor="#FFFFFF" width="438">子程序调用</td>
+      </tr>
+      <tr class="contents1">
+        <td width="83" height="20" align="center" bgcolor="b2d4f6">M99</td>
+        <td height="20" bgcolor="#FFFFFF" width="438">子程序结束</td>
+      </tr>
+    </table></TD>
+  </TR>
+  <TR>
+    <TD>&nbsp;<br>
+      辅助机能称做M机能，主轴的正转、反转、停止、冷却油的ON和OFF等NC机械的辅助机能。本数值控制装置位址M可指定8位数（0&#12316;99999999），在1单节中可指定4组辅助机能。<br>
+      例：G00 Xx1 Mm1 Mm2 Mm3 Mm4；<br>
+      在1单节内5个以上的指令指定时，仅最后4个有效。输出信号为8位数BCD码和起动信号。<br>
+      M00, M01, M02, M30, M98, M99 
+      等6种M指令已被用作特定用途的M指令，不可做为一般的辅助指令。除此6种；尚可指定94种指令。其次，M00, M01, M02, 
+      M30 
+      等先读禁止处理的原因，其后的单节无法进入缓冲器。M指令可与其它指令在同一单节中指定，与移动指令在同一单节时，指令的执行顺序有下列两种。<br>
+      (a) 移动完了后，M机能执行。<br>
+      (b) M 指令与移动指令同时执行。上述中，那一种方式执行视机械使用而定。除M98，M99指令外，其余的M指令需经顺序控制处理。<br>
+      <br>
+    </span></font></TD>
+  </TR>
+</TABLE>
+</body>
+</html>

@@ -1,0 +1,116 @@
+<?xml version="1.0"?><!--
+Warning! Do not edit the contents of this file.
+If you attempt to edit this file using an XML editor, you could lose
+customization and migration functionality. If you need to change
+information in the customization file, use the Customize User Interface
+dialog in the product.
+To access the Customize User Interface dialog, click the Tools menu,
+Customization panel, User Interface button, or enter CUI on the command line.
+--><MouseButtonRoot xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ButtonGroup UID="BG_0003">
+    <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    <Alias>AUX1</Alias>
+    <ButtonItem BlankLine="false" UID="BI_0011">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_0001"/>
+      </MenuItem>
+    </ButtonItem>
+    <ButtonItem BlankLine="false" UID="BI_0012">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_0002"/>
+      </MenuItem>
+    </ButtonItem>
+    <ButtonItem BlankLine="false" UID="BI_0013">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_0003"/>
+      </MenuItem>
+    </ButtonItem>
+    <ButtonItem BlankLine="false" UID="BI_0014">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_0004"/>
+      </MenuItem>
+    </ButtonItem>
+    <ButtonItem BlankLine="false" UID="BI_0015">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_0005"/>
+      </MenuItem>
+    </ButtonItem>
+    <ButtonItem BlankLine="false" UID="BI_0016">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_0006"/>
+      </MenuItem>
+    </ButtonItem>
+    <ButtonItem BlankLine="false" UID="BI_0017">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_0007"/>
+      </MenuItem>
+    </ButtonItem>
+    <ButtonItem BlankLine="false" UID="BI_0018">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_0008"/>
+      </MenuItem>
+    </ButtonItem>
+    <ButtonItem BlankLine="false" UID="BI_0019">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_0009"/>
+      </MenuItem>
+    </ButtonItem>
+  </ButtonGroup>
+  <ButtonGroup UID="BG_0004">
+    <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    <Alias>AUX2</Alias>
+    <ButtonItem BlankLine="false" UID="BI_0021">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_0002"/>
+      </MenuItem>
+    </ButtonItem>
+    <ButtonItem BlankLine="false" UID="BI_0020">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_XPARENT_Orbit"/>
+      </MenuItem>
+    </ButtonItem>
+  </ButtonGroup>
+  <ButtonGroup UID="BG_0005">
+    <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    <Alias>AUX3</Alias>
+    <ButtonItem BlankLine="false" UID="BI_0022">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_0002"/>
+      </MenuItem>
+    </ButtonItem>
+    <ButtonItem BlankLine="false" UID="BI_0024">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_XPARENT_SWIVEL"/>
+      </MenuItem>
+    </ButtonItem>
+  </ButtonGroup>
+  <ButtonGroup UID="BG_0006">
+    <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+    <Alias>AUX4</Alias>
+    <ButtonItem BlankLine="false" UID="BI_0023">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <MenuItem>
+        <MacroRef MenuMacroID="MM_0002"/>
+      </MenuItem>
+    </ButtonItem>
+    <ButtonItem BlankLine="false" UID="BI_0025">
+      <ModifiedRev MajorVersion="16" MinorVersion="2" UserVersion="0"/>
+      <MenuItem>
+        <MacroRef MenuMacroID="ID_XPARENT_Orbit"/>
+      </MenuItem>
+    </ButtonItem>
+  </ButtonGroup>
+</MouseButtonRoot>

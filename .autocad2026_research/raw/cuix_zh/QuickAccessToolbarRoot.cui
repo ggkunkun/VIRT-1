@@ -1,0 +1,41 @@
+<?xml version="1.0"?><!--
+Warning! Do not edit the contents of this file.
+If you attempt to edit this file using an XML editor, you could lose
+customization and migration functionality. If you need to change
+information in the customization file, use the Customize User Interface
+dialog in the product.
+To access the Customize User Interface dialog, click the Tools menu,
+Customization panel, User Interface button, or enter CUI on the command line.
+--><QuickAccessToolbarRoot xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <QuickAccessToolbar UID="QAT_TOOLBAR1">
+    <ModifiedRev MajorVersion="20" MinorVersion="0" UserVersion="0"/>
+    <Name xlate="true" UID="XLS_QAT_Name">快速访问工具栏 1</Name>
+    <QuickAccessToolbarStandardItem UID="ID_QAT_New" Id="AcQATNew">
+      <ModifiedRev MajorVersion="18" MinorVersion="0" UserVersion="0"/>
+    </QuickAccessToolbarStandardItem>
+    <QuickAccessToolbarStandardItem UID="ID_QAT_Open" Id="AcQATOpen">
+      <ModifiedRev MajorVersion="18" MinorVersion="0" UserVersion="0"/>
+    </QuickAccessToolbarStandardItem>
+    <QuickAccessToolbarStandardItem UID="ID_QAT_Save" Id="AcQATSave">
+      <ModifiedRev MajorVersion="18" MinorVersion="0" UserVersion="0"/>
+    </QuickAccessToolbarStandardItem>
+    <QuickAccessToolbarStandardItem UID="ID_QAT_SaveAs" Id="AcQATSaveAs">
+      <ModifiedRev MajorVersion="18" MinorVersion="1" UserVersion="0"/>
+    </QuickAccessToolbarStandardItem>
+    <QuickAccessToolbarStandardItem UID="ID_QAT_OpenFromWebMob" Id="AcQATOpenFromWebMob">
+      <ModifiedRev MajorVersion="23" MinorVersion="0" UserVersion="0"/>
+    </QuickAccessToolbarStandardItem>
+    <QuickAccessToolbarStandardItem UID="ID_QAT_SaveToWebMob" Id="AcQATSaveToWebMob">
+      <ModifiedRev MajorVersion="23" MinorVersion="0" UserVersion="0"/>
+    </QuickAccessToolbarStandardItem>
+    <QuickAccessToolbarStandardItem UID="ID_QAT_Plot" Id="AcQATPlot">
+      <ModifiedRev MajorVersion="18" MinorVersion="0" UserVersion="0"/>
+    </QuickAccessToolbarStandardItem>
+    <QuickAccessToolbarStandardItem UID="ID_QAT_Undo" Id="AcQATUndo">
+      <ModifiedRev MajorVersion="18" MinorVersion="0" UserVersion="0"/>
+    </QuickAccessToolbarStandardItem>
+    <QuickAccessToolbarStandardItem UID="ID_QAT_Redo" Id="AcQATRedo">
+      <ModifiedRev MajorVersion="18" MinorVersion="0" UserVersion="0"/>
+    </QuickAccessToolbarStandardItem>
+  </QuickAccessToolbar>
+</QuickAccessToolbarRoot>
